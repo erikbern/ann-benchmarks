@@ -1,8 +1,3 @@
-import sys
-sys.path.insert(0, '/Users/erikbern/tmp/lib/python/')
-sys.path.insert(0, '/usr/local/share/flann/python')
-sys.path.insert(0, '/Users/erikbern/tmp/panns')
-
 import sklearn.neighbors
 import annoy
 import pyflann
@@ -107,20 +102,16 @@ class BruteForce(BaseANN):
         return list(self._nbrs.kneighbors(v, return_distance=False, n_neighbors=n)[0])
 
 
-def get_dataset(which='glove_twitter_100'):
-    if which == 'glove_twitter_100':
-        local_fn = os.path.join('datasets', 'glove_twitter_100.gz')
-        if not os.path.exists(local_fn):
-            # Download GloVe pretrained vectors: http://nlp.stanford.edu/projects/glove/
-            url = 'http://www-nlp.stanford.edu/data/glove.twitter.27B.%dd.txt.gz' % 100
-            print('downloading', url, '->', local_fn)
-            urlretrieve(url, local_fn)
-        f = gzip.open(local_fn, 'rb')
+def get_dataset(which='glove'):
+    local_fn = os.path.join('install', which + '.txt')
+    f = open(local_fn)
 
     X = []
     for i, line in enumerate(f):
         v = [float(x) for x in line.strip().split()[1:]]
         X.append(v)
+        if len(X) == 20000: # just for debugging purposes right now
+            break
 
     X = numpy.vstack(X)
     X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=0.01, random_state=42)
@@ -132,14 +123,14 @@ bf = BruteForce()
 
 algos = {
     'lshf': [LSHF(10, 50)],
-    'flann': [FLANN(10), FLANN(20), FLANN(50)],
+    'flann': [FLANN(10), FLANN(20), FLANN(50), FLANN(100), FLANN(200)],
     'panns': [PANNS(10, 100)],
-    'annoy': [Annoy(10, 100), Annoy(20, 100), Annoy(10, 25)],
+    'annoy': [Annoy(3, 10), Annoy(5, 25), Annoy(10, 100), Annoy(20, 100)],
     'nearpy': [NearPy(10), NearPy(12), NearPy(15), NearPy(20)],
     'bruteforce': [bf],
 }
 
-X_train, X_test = get_dataset()
+X_train, X_test = get_dataset(which='sift')
 
 # Prepare queries
 bf.fit(X_train)
