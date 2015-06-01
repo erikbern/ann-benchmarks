@@ -156,7 +156,7 @@ for library in algos.keys():
             for v, correct in queries:
                 found = algo.query(v, 10)
                 k += len(set(found).intersection(correct))
-            search_time = time.time() - t0
+            search_time = (time.time() - t0) / len(queries)
             precision = k / (len(queries) * 10)
 
             output = [library, algo.name, build_time, search_time, precision]
