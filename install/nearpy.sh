@@ -1,1 +1,1 @@
-sudo pip install nearpy
+sudo pip install nearpy bitarray
