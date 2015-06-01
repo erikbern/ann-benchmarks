@@ -29,7 +29,7 @@ Install
 
 Clone the repo and run ``bash install.sh``. This will install all libraries as well as downloading and preprocessing all data sets. It could take a while. It has been tested in Ubuntu 14.04. 
 
-Princinples
+Princniples
 -----------
 
 * Everyone is welcome to submit pull requests with tweaks and changes to how each library is being used.
@@ -43,10 +43,12 @@ Princinples
 * Use single core benchmarks. I believe most real world scenarios could be parallelized in other ways (eg. do multiple queries in parallel).
 * Avoid extremely costly index building (more than several hours).
 * Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
+* Do proper train/test set of index data and query points.
 
 Results
 -------
 
+Currently this is on the top 100k vectors from GloVe (27B Twitter version with 100 dimensions).
 This is very much a work in progress... more results coming later!
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/plot.png
