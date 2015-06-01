@@ -24,6 +24,11 @@ Motivation
 
 Doing fast searching of nearest neighbors in high dimensional spaces is an increasingly important problem, but with little attempt at objectively comparing methods.
 
+Install
+-------
+
+Clone the repo and run ``bash install.sh``. This will install all libraries as well as downloading and preprocessing all data sets. It could take a while. It has been tested in Ubuntu 14.04. 
+
 Princinples
 -----------
 
