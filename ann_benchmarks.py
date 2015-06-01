@@ -8,7 +8,7 @@ try:
     from urllib import urlretrieve
 except ImportError:
     from urllib.request import urlretrieve # Python 3
-import sklearn.cross_validation
+import sklearn.cross_validation, sklearn.preprocessing
 
 n_iter = 50
 n_neighbors = 100
@@ -31,14 +31,16 @@ class LSHF(BaseANN):
 
 
 class FLANN(BaseANN):
-    def __init__(self, n_trees=10):
-        self._flann = pyflann.FLANN(trees=n_trees)
-        self.name = 'FLANN(n_trees=%d)' % n_trees
+    def __init__(self, target_precision):
+        self._flann = pyflann.FLANN(target_precision=target_precision, algorithm='autotuned', log_level='info')
+        self.name = 'FLANN(target_precision=%f)' % target_precision
 
     def fit(self, X):
+        X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._flann.build_index(X)
 
     def query(self, v, n):
+        v = sklearn.preprocessing.normalize(v, axis=1, norm='l2')[0]
         return self._flann.nn_index(v, n)[0][0]
 
 
@@ -110,8 +112,8 @@ def get_dataset(which='glove'):
     for i, line in enumerate(f):
         v = [float(x) for x in line.strip().split()[1:]]
         X.append(v)
-        if len(X) == 20000: # just for debugging purposes right now
-            break
+        #if len(X) == 10000: # just for debugging purposes right now
+        #    break
 
     X = numpy.vstack(X)
     X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=0.01, random_state=42)
@@ -123,9 +125,9 @@ bf = BruteForce()
 
 algos = {
     'lshf': [LSHF(10, 50)],
-    'flann': [FLANN(10), FLANN(20), FLANN(50), FLANN(100), FLANN(200)],
+    'flann': [FLANN(0.7), FLANN(0.8), FLANN(0.9), FLANN(0.95), FLANN(0.97), FLANN(0.98), FLANN(0.99), FLANN(0.995)],
     'panns': [PANNS(10, 100)],
-    'annoy': [Annoy(3, 10), Annoy(5, 25), Annoy(10, 100), Annoy(20, 100)],
+    'annoy': [Annoy(3, 10), Annoy(5, 25), Annoy(10, 10), Annoy(10, 100), Annoy(20, 100), Annoy(40, 100)],
     'nearpy': [NearPy(10), NearPy(12), NearPy(15), NearPy(20)],
     'bruteforce': [bf],
 }
@@ -148,15 +150,16 @@ for library in algos.keys():
             algo.fit(X_train)
         build_time = time.time() - t0
 
-        t0 = time.time()
-        k = 0.0
-        for v, correct in queries:
-            found = algo.query(v, 10)
-            k += len(set(found).intersection(correct))
-        search_time = time.time() - t0
-        precision = k / (len(queries) * 10)
+        for i in xrange(3): # Do multiple times to warm up page cache
+            t0 = time.time()
+            k = 0.0
+            for v, correct in queries:
+                found = algo.query(v, 10)
+                k += len(set(found).intersection(correct))
+            search_time = time.time() - t0
+            precision = k / (len(queries) * 10)
 
-        output = [library, algo.name, build_time, search_time, precision]
-        print output
+            output = [library, algo.name, build_time, search_time, precision]
+            print output
         f.write('\t'.join(map(str, output)) + '\n')
 f.close()
