@@ -112,7 +112,7 @@ def get_dataset(which='glove'):
     for i, line in enumerate(f):
         v = [float(x) for x in line.strip().split()]
         X.append(v)
-        if len(X) == 100000: # just for debugging purposes right now
+        if len(X) == 50000: # just for debugging purposes right now
             break
 
     X = numpy.vstack(X)
@@ -124,10 +124,10 @@ def get_dataset(which='glove'):
 bf = BruteForce()
 
 algos = {
-    'lshf': [LSHF(10, 50)],
-    'flann': [FLANN(0.7), FLANN(0.8), FLANN(0.9), FLANN(0.95), FLANN(0.97), FLANN(0.98), FLANN(0.99), FLANN(0.995)],
-    'panns': [PANNS(10, 100)],
-    'annoy': [Annoy(3, 10), Annoy(5, 25), Annoy(10, 10), Annoy(10, 100), Annoy(20, 100), Annoy(40, 100)],
+    'lshf': [LSHF(5, 10), LSHF(5, 20), LSHF(10, 20), LSHF(10, 50), LSHF(20, 100)],
+    'flann': [FLANN(0.2), FLANN(0.5), FLANN(0.7), FLANN(0.8), FLANN(0.9), FLANN(0.95), FLANN(0.97), FLANN(0.98), FLANN(0.99), FLANN(0.995)],
+    'panns': [PANNS(5, 20), PANNS(10, 10), PANNS(10, 50), PANNS(10, 100), PANNS(20, 100), PANNS(40, 100)],
+    'annoy': [Annoy(3, 10), Annoy(5, 25), Annoy(10, 10), Annoy(10, 40), Annoy(10, 100), Annoy(10, 200), Annoy(10, 400), Annoy(10, 1000), Annoy(20, 20), Annoy(20, 100), Annoy(20, 200), Annoy(20, 400), Annoy(40, 40), Annoy(40, 100), Annoy(40, 400), Annoy(100, 100), Annoy(100, 200), Annoy(100, 400), Annoy(100, 1000)],
     'nearpy': [NearPy(10), NearPy(12), NearPy(15), NearPy(20)],
     'bruteforce': [bf],
 }
@@ -141,10 +141,9 @@ for x in X_test:
     correct = bf.query(x, 10)
     queries.append((x, correct))
 
-f = open('data.tsv', 'w')
 for library in algos.keys():
     for algo in algos[library]:
-        print library, algo, '...'
+        print algo.name, '...'
         t0 = time.time()
         if algo != 'bf':
             algo.fit(X_train)
@@ -161,5 +160,7 @@ for library in algos.keys():
 
             output = [library, algo.name, build_time, search_time, precision]
             print output
+
+        f = open('data.tsv', 'a')
         f.write('\t'.join(map(str, output)) + '\n')
-f.close()
+        f.close()
