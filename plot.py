@@ -20,7 +20,8 @@ for algo, data in all_data.iteritems():
 
 plt.gca().set_xscale('log')     
 
-plt.show()
+plt.savefig('plot.png')
+
 
                                        
 

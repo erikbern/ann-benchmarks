@@ -6,18 +6,18 @@ This project contains some tools to benchmark various implementations of approxi
 Evaluated
 ---------
 
- * Annoy
- * FLANN
- * scikit-learn
- * PANNS
- * NearPy
- * KGraph
+* Annoy
+* FLANN
+* scikit-learn
+* PANNS
+* NearPy
+* KGraph
 
 Data sets
 ---------
 
- * GloVe
- * SIFT
+* GloVe
+* SIFT
 
 Motivation
 ----------
@@ -27,12 +27,17 @@ Doing fast searching of nearest neighbors in high dimensional spaces is an incre
 Princinples
 -----------
 
- * Everyone is welcome to submit pull requests with tweaks and changes to how each library is being used.
- * This is meant to be an ongoing project and represent the current state.
- * Make everything easy to replicate, including installing and preparing the datasets.
- * To make it simpler, look only at the precision-performance tradeoff.
- * Try many different values of parameters for each library and ignore the points that are not on the precision-performance frontier.
- * High-dimensional datasets with approximately 100-1000 dimensions. This is challenging but also realistic. Not more than 1000 dimensions because those problems should probably be solved by doing dimensionality reduction separately.
+* Everyone is welcome to submit pull requests with tweaks and changes to how each library is being used.
+* In particular: if you are the author of any of these libraries, and you think the benchmark can be improved, consider making the improvement and submitting a pull request.
+* This is meant to be an ongoing project and represent the current state.
+* Make everything easy to replicate, including installing and preparing the datasets.
+* To make it simpler, look only at the precision-performance tradeoff.
+* Try many different values of parameters for each library and ignore the points that are not on the precision-performance frontier.
+* High-dimensional datasets with approximately 100-1000 dimensions. This is challenging but also realistic. Not more than 1000 dimensions because those problems should probably be solved by doing dimensionality reduction separately.
+* Use cosine similarity. For libraries where this is not supported, this is trivially achieved by normalizing all vectors.
+* Use single core benchmarks. I believe most real world scenarios could be parallelized in other ways (eg. do multiple queries in parallel).
+* Avoid extremely costly index building (more than several hours).
+* Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
 
 Results
 -------
