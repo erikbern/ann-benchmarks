@@ -110,10 +110,10 @@ def get_dataset(which='glove'):
 
     X = []
     for i, line in enumerate(f):
-        v = [float(x) for x in line.strip().split()[1:]]
+        v = [float(x) for x in line.strip().split()]
         X.append(v)
-        #if len(X) == 10000: # just for debugging purposes right now
-        #    break
+        if len(X) == 100000: # just for debugging purposes right now
+            break
 
     X = numpy.vstack(X)
     X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=0.01, random_state=42)
@@ -132,7 +132,7 @@ algos = {
     'bruteforce': [bf],
 }
 
-X_train, X_test = get_dataset(which='sift')
+X_train, X_test = get_dataset(which='glove')
 
 # Prepare queries
 bf.fit(X_train)
