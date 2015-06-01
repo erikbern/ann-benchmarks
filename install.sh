@@ -1,5 +1,5 @@
 cd install
-for fn in annoy.sh panns.sh nearpy.sh sklearn.sh flann.sh
+for fn in annoy.sh panns.sh nearpy.sh sklearn.sh flann.sh glove.sh sift.sh
 do
     source $fn
 done
