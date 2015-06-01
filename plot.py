@@ -13,14 +13,15 @@ for algo, data in all_data.iteritems():
     ys = [t[-1] for t in data]
     ls = [t[0] for t in data]
     plt.plot(xs, ys, 'x-', label=algo)
-    for i, l in enumerate(ls):
-        plt.annotate(ls[i], (xs[i], ys[i]), color='lightgray', fontsize=8)
+    #for i, l in enumerate(ls):
+    #    plt.annotate(ls[i], (xs[i], ys[i]), color='lightgray', fontsize=8)
 
 plt.gca().set_xscale('log')
 plt.gca().set_title('Precision-Performance tradeoff - up and to the left is better')
 plt.gca().set_xlabel('Time per query (s) - lower is better')
 plt.gca().set_ylabel('10-NN precision - higher is better')
 plt.gca().legend()
+plt.grid(b=True, which='both', color='0.65',linestyle='-')
 
 plt.savefig('plot.png')
 
