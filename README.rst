@@ -48,7 +48,7 @@ Princniples
 Results
 -------
 
-Currently this is on the top 100k vectors from GloVe (27B Twitter version with 100 dimensions).
+Currently this is on the top 50k vectors from GloVe (27B Twitter version with 100 dimensions).
 This is very much a work in progress... more results coming later!
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/plot.png
