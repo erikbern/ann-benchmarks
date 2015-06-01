@@ -1,1 +1,1 @@
-sudo pip install nearpy bitarray
+sudo pip install nearpy bitarray redis
