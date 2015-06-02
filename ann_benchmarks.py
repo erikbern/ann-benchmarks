@@ -3,6 +3,7 @@ import annoy
 import pyflann
 import panns
 import nearpy, nearpy.hashes, nearpy.distances
+import pykgraph
 import gzip, numpy, time, os, multiprocessing
 try:
     from urllib import urlretrieve
@@ -32,10 +33,11 @@ class LSHF(BaseANN):
 
 class FLANN(BaseANN):
     def __init__(self, target_precision):
-        self._flann = pyflann.FLANN(target_precision=target_precision, algorithm='autotuned', log_level='info')
+        self._target_precision = target_precision
         self.name = 'FLANN(target_precision=%f)' % target_precision
 
     def fit(self, X):
+        self._flann = pyflann.FLANN(target_precision=target_precision, algorithm='autotuned', log_level='info')
         X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._flann.build_index(X)
 
@@ -92,12 +94,27 @@ class NearPy(BaseANN):
         return [y for x, y, z in self._nearpy_engine.neighbours(v)]
 
 
+class KGraph(BaseANN):
+    # TODO: KGraph only supports batch queries!
+    def __init__(self):
+        self.name = 'KGraph()'
+
+    def fit(self, X):
+        self._kgraph = pykgraph.KGraph()
+        self._kgraph.build(X)
+        self._X = X # ???
+
+    def query(self, v, n):
+        result = self._kgraph.search(self._X, numpy.array([v]), K=n, threads=1)
+        return result[0]
+
+
 class BruteForce(BaseANN):
     def __init__(self):
-        self._nbrs = sklearn.neighbors.NearestNeighbors(algorithm='brute', metric='cosine')
         self.name = 'BruteForce()'
 
     def fit(self, X):
+        self._nbrs = sklearn.neighbors.NearestNeighbors(algorithm='brute', metric='cosine')
         self._nbrs.fit(X)
 
     def query(self, v, n):
@@ -112,7 +129,7 @@ def get_dataset(which='glove'):
     for i, line in enumerate(f):
         v = [float(x) for x in line.strip().split()]
         X.append(v)
-        #if len(X) == 5000: # just for debugging purposes right now
+        #if len(X) == 10000: # just for debugging purposes right now
         #    break
 
     X = numpy.vstack(X)
@@ -138,7 +155,7 @@ def run_algo(algo):
         output = [library, algo.name, build_time, search_time, precision]
         print output
 
-    f = open('data.tsv', 'a')
+    f = open('data_blah.tsv', 'a')
     f.write('\t'.join(map(str, output)) + '\n')
     f.close()
 
@@ -150,6 +167,7 @@ algos = {
     'panns': [PANNS(5, 20), PANNS(10, 10), PANNS(10, 50), PANNS(10, 100), PANNS(20, 100), PANNS(40, 100)],
     'annoy': [Annoy(3, 10), Annoy(5, 25), Annoy(10, 10), Annoy(10, 40), Annoy(10, 100), Annoy(10, 200), Annoy(10, 400), Annoy(10, 1000), Annoy(20, 20), Annoy(20, 100), Annoy(20, 200), Annoy(20, 400), Annoy(40, 40), Annoy(40, 100), Annoy(40, 400), Annoy(100, 100), Annoy(100, 200), Annoy(100, 400), Annoy(100, 1000)],
     'nearpy': [NearPy(10), NearPy(12), NearPy(15), NearPy(20)],
+    'kgraph': [KGraph()],
     'bruteforce': [bf],
 }
 
