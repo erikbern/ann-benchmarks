@@ -3,7 +3,7 @@ import annoy
 import pyflann
 import panns
 import nearpy, nearpy.hashes, nearpy.distances
-import gzip, numpy, time, os
+import gzip, numpy, time, os, multiprocessing
 try:
     from urllib import urlretrieve
 except ImportError:
@@ -112,14 +112,35 @@ def get_dataset(which='glove'):
     for i, line in enumerate(f):
         v = [float(x) for x in line.strip().split()]
         X.append(v)
-        if len(X) == 50000: # just for debugging purposes right now
-            break
+        #if len(X) == 5000: # just for debugging purposes right now
+        #    break
 
     X = numpy.vstack(X)
-    X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=0.01, random_state=42)
+    X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=1000, random_state=42)
     print X_train.shape, X_test.shape
     return X_train, X_test
 
+def run_algo(algo):
+    t0 = time.time()
+    if algo != 'bf':
+        algo.fit(X_train)
+    build_time = time.time() - t0
+
+    for i in xrange(3): # Do multiple times to warm up page cache
+        t0 = time.time()
+        k = 0.0
+        for v, correct in queries:
+            found = algo.query(v, 10)
+            k += len(set(found).intersection(correct))
+        search_time = (time.time() - t0) / len(queries)
+        precision = k / (len(queries) * 10)
+
+        output = [library, algo.name, build_time, search_time, precision]
+        print output
+
+    f = open('data.tsv', 'a')
+    f.write('\t'.join(map(str, output)) + '\n')
+    f.close()
 
 bf = BruteForce()
 
@@ -140,27 +161,13 @@ queries = []
 for x in X_test:
     correct = bf.query(x, 10)
     queries.append((x, correct))
+    if len(queries) % 100 == 0:
+        print len(queries), '...'
 
 for library in algos.keys():
     for algo in algos[library]:
         print algo.name, '...'
-        t0 = time.time()
-        if algo != 'bf':
-            algo.fit(X_train)
-        build_time = time.time() - t0
-
-        for i in xrange(3): # Do multiple times to warm up page cache
-            t0 = time.time()
-            k = 0.0
-            for v, correct in queries:
-                found = algo.query(v, 10)
-                k += len(set(found).intersection(correct))
-            search_time = (time.time() - t0) / len(queries)
-            precision = k / (len(queries) * 10)
-
-            output = [library, algo.name, build_time, search_time, precision]
-            print output
-
-        f = open('data.tsv', 'a')
-        f.write('\t'.join(map(str, output)) + '\n')
-        f.close()
+        # Spawn a subprocess to force the memory to be reclaimed at the end
+        p = multiprocessing.Process(target=run_algo, args=(algo,))
+        p.start()
+        p.join()
