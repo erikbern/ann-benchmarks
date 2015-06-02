@@ -9,7 +9,7 @@ try:
     from urllib import urlretrieve
 except ImportError:
     from urllib.request import urlretrieve # Python 3
-import sklearn.cross_validation, sklearn.preprocessing
+import sklearn.cross_validation, sklearn.preprocessing, random
 
 n_iter = 50
 n_neighbors = 100
@@ -37,7 +37,7 @@ class FLANN(BaseANN):
         self.name = 'FLANN(target_precision=%f)' % target_precision
 
     def fit(self, X):
-        self._flann = pyflann.FLANN(target_precision=target_precision, algorithm='autotuned', log_level='info')
+        self._flann = pyflann.FLANN(target_precision=self._target_precision, algorithm='autotuned', log_level='info')
         X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._flann.build_index(X)
 
@@ -95,17 +95,20 @@ class NearPy(BaseANN):
 
 
 class KGraph(BaseANN):
-    # TODO: KGraph only supports batch queries!
-    def __init__(self):
-        self.name = 'KGraph()'
+    def __init__(self, P, L):
+        self.name = 'KGraph(P=%d, L=%d)' % (P, L)
+        self._P = P
+        self._L = L
 
     def fit(self, X):
+        X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._kgraph = pykgraph.KGraph()
-        self._kgraph.build(X)
+        self._kgraph.build(X, L=self._L)
         self._X = X # ???
 
     def query(self, v, n):
-        result = self._kgraph.search(self._X, numpy.array([v]), K=n, threads=1)
+        v = sklearn.preprocessing.normalize(v, axis=1, norm='l2')[0]
+        result = self._kgraph.search(self._X, numpy.array([v]), K=n, threads=1, P=self._P)
         return result[0]
 
 
@@ -129,15 +132,15 @@ def get_dataset(which='glove'):
     for i, line in enumerate(f):
         v = [float(x) for x in line.strip().split()]
         X.append(v)
-        #if len(X) == 10000: # just for debugging purposes right now
-        #    break
+        if len(X) == 100000: # just for debugging purposes right now
+            break
 
     X = numpy.vstack(X)
     X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=1000, random_state=42)
     print X_train.shape, X_test.shape
     return X_train, X_test
 
-def run_algo(algo):
+def run_algo(library, algo):
     t0 = time.time()
     if algo != 'bf':
         algo.fit(X_train)
@@ -155,7 +158,7 @@ def run_algo(algo):
         output = [library, algo.name, build_time, search_time, precision]
         print output
 
-    f = open('data_blah.tsv', 'a')
+    f = open('data.tsv', 'a')
     f.write('\t'.join(map(str, output)) + '\n')
     f.close()
 
@@ -167,7 +170,7 @@ algos = {
     'panns': [PANNS(5, 20), PANNS(10, 10), PANNS(10, 50), PANNS(10, 100), PANNS(20, 100), PANNS(40, 100)],
     'annoy': [Annoy(3, 10), Annoy(5, 25), Annoy(10, 10), Annoy(10, 40), Annoy(10, 100), Annoy(10, 200), Annoy(10, 400), Annoy(10, 1000), Annoy(20, 20), Annoy(20, 100), Annoy(20, 200), Annoy(20, 400), Annoy(40, 40), Annoy(40, 100), Annoy(40, 400), Annoy(100, 100), Annoy(100, 200), Annoy(100, 400), Annoy(100, 1000)],
     'nearpy': [NearPy(10), NearPy(12), NearPy(15), NearPy(20)],
-    'kgraph': [KGraph()],
+    'kgraph': [KGraph(20, 20), KGraph(50, 20), KGraph(100, 20), KGraph(100, 40), KGraph(200, 20), KGraph(200, 40), KGraph(200, 100), KGraph(400, 20), KGraph(400, 40), KGraph(400, 100), KGraph(1000, 20), KGraph(1000, 40), KGraph(1000, 100)],
     'bruteforce': [bf],
 }
 
@@ -182,10 +185,17 @@ for x in X_test:
     if len(queries) % 100 == 0:
         print len(queries), '...'
 
+algos_flat = []
+
 for library in algos.keys():
     for algo in algos[library]:
-        print algo.name, '...'
-        # Spawn a subprocess to force the memory to be reclaimed at the end
-        p = multiprocessing.Process(target=run_algo, args=(algo,))
-        p.start()
-        p.join()
+        algos_flat.append((library, algo))
+
+random.shuffle(algos_flat)
+
+for library, algo in algos_flat:
+    print algo.name, '...'
+    # Spawn a subprocess to force the memory to be reclaimed at the end
+    p = multiprocessing.Process(target=run_algo, args=(library, algo))
+    p.start()
+    p.join()
