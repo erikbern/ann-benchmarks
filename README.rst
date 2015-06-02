@@ -6,18 +6,18 @@ This project contains some tools to benchmark various implementations of approxi
 Evaluated
 ---------
 
-* Annoy
-* FLANN
-* scikit-learn
-* PANNS
-* NearPy
-* KGraph
+* `Annoy <https://github.com/spotify/annoy>`__
+* `FLANN <http://www.cs.ubc.ca/research/flann/>`__
+* `scikit-learn <http://scikit-learn.org/stable/modules/neighbors.html>`__
+* `PANNS <https://github.com/ryanrhymes/panns>`__
+* `NearPy <http://nearpy.io>`__
+* `KGraph <https://github.com/aaalgo/kgraph>`__
 
 Data sets
 ---------
 
-* GloVe
-* SIFT
+* `GloVe <http://nlp.stanford.edu/projects/glove/>`__
+* `SIFT <http://corpus-texmex.irisa.fr/>`__
 
 Motivation
 ----------
@@ -53,3 +53,10 @@ This is very much a work in progress... more results coming later!
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/plot.png
    :align: center
+
+References
+----------
+
+* `sim-shootout <https://github.com/piskvorky/sim-shootout>`__ by Radim Řehůřek
+* `NonMetricSpaceLib <https://github.com/searchivarius/NonMetricSpaceLib>`__
+* This `blog post <http://maheshakya.github.io/gsoc/2014/08/17/performance-comparison-among-lsh-forest-annoy-and-flann.html>`__
