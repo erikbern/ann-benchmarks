@@ -125,15 +125,14 @@ class NearPy(BaseANN):
 
 
 class KGraph(BaseANN):
-    def __init__(self, P, L):
-        self.name = 'KGraph(P=%d, L=%d)' % (P, L)
+    def __init__(self, P):
+        self.name = 'KGraph(P=%d)' % P
         self._P = P
-        self._L = L
 
     def fit(self, X):
         X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._kgraph = pykgraph.KGraph()
-        self._kgraph.build(X, L=self._L)
+        self._kgraph.build(X, iterations=30, L=100, delta=0.002, recall=0.99, K=25)
         self._X = X # ???
 
     def query(self, v, n):
@@ -200,7 +199,7 @@ algos = {
     'panns': [PANNS(5, 20), PANNS(10, 10), PANNS(10, 50), PANNS(10, 100), PANNS(20, 100), PANNS(40, 100)],
     'annoy': [Annoy(3, 10), Annoy(5, 25), Annoy(10, 10), Annoy(10, 40), Annoy(10, 100), Annoy(10, 200), Annoy(10, 400), Annoy(10, 1000), Annoy(20, 20), Annoy(20, 100), Annoy(20, 200), Annoy(20, 400), Annoy(40, 40), Annoy(40, 100), Annoy(40, 400), Annoy(100, 100), Annoy(100, 200), Annoy(100, 400), Annoy(100, 1000)],
     'nearpy': [NearPy(10), NearPy(12), NearPy(15), NearPy(20)],
-    'kgraph': [KGraph(20, 20), KGraph(50, 20), KGraph(100, 20), KGraph(100, 40), KGraph(200, 20), KGraph(200, 40), KGraph(200, 100), KGraph(400, 20), KGraph(400, 40), KGraph(400, 100), KGraph(1000, 20), KGraph(1000, 40), KGraph(1000, 100)],
+    'kgraph': [KGraph(20), KGraph(50)], KGraph(100), KGraph(200), KGraph(500), KGraph(1000)],
     'bruteforce': [bf],
     'ball': [BallTree(10), BallTree(20), BallTree(40), BallTree(100), BallTree(200), BallTree(400), BallTree(1000)],
     'kd': [KDTree(10), KDTree(20), KDTree(40), KDTree(100), KDTree(200), KDTree(400), KDTree(1000)]
