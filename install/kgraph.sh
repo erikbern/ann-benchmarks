@@ -8,4 +8,4 @@ make
 cd ..
 sudo cp python/pykgraph.so /usr/local/lib/python2.7/dist-packages
 sudo cp bin/libkgraph.so /usr/lib
-cd ../../..
+cd ../..
