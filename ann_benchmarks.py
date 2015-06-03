@@ -11,24 +11,54 @@ except ImportError:
     from urllib.request import urlretrieve # Python 3
 import sklearn.cross_validation, sklearn.preprocessing, random
 
-n_iter = 50
-n_neighbors = 100
-
-
 class BaseANN(object):
     pass
 
         
 class LSHF(BaseANN):
     def __init__(self, n_estimators=10, n_candidates=50):
-        self._lshf = sklearn.neighbors.LSHForest(n_candidates=50, n_neighbors=n_neighbors)
         self.name = 'LSHF(n_est=%d, n_cand=%d)' % (n_estimators, n_candidates)
+        self._n_estimators = n_estimators
+        self._n_candidates = n_candidates
 
     def fit(self, X):
+        self._lshf = sklearn.neighbors.LSHForest(n_estimators=self._n_estimators, n_candidates=self._n_candidates)
+        X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._lshf.fit(X)
 
     def query(self, v, n):
-        return self._lshf.kneighbors(v, return_distance=False)[0]
+        v = sklearn.preprocessing.normalize(v, axis=1, norm='l2')[0]
+        return self._lshf.kneighbors(v, return_distance=False, n_neighbors=n)[0]
+
+
+class BallTree(BaseANN):
+    def __init__(self, leaf_size=20):
+        self.name = 'BallTree(leaf_size=%d)' % leaf_size
+        self._leaf_size = leaf_size
+
+    def fit(self, X):
+        X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
+        self._tree = sklearn.neighbors.BallTree(X, leaf_size=self._leaf_size)
+
+    def query(self, v, n):
+        v = sklearn.preprocessing.normalize(v, axis=1, norm='l2')[0]
+        dist, ind = self._tree.query(v, k=n)
+        return ind[0]
+
+
+class KDTree(BaseANN):
+    def __init__(self, leaf_size=20):
+        self.name = 'KDTree(leaf_size=%d)' % leaf_size
+        self._leaf_size = leaf_size
+
+    def fit(self, X):
+        X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
+        self._tree = sklearn.neighbors.KDTree(X, leaf_size=self._leaf_size)
+
+    def query(self, v, n):
+        v = sklearn.preprocessing.normalize(v, axis=1, norm='l2')[0]
+        dist, ind = self._tree.query(v, k=n)
+        return ind[0]
 
 
 class FLANN(BaseANN):
@@ -132,8 +162,8 @@ def get_dataset(which='glove'):
     for i, line in enumerate(f):
         v = [float(x) for x in line.strip().split()]
         X.append(v)
-        if len(X) == 100000: # just for debugging purposes right now
-            break
+        #if len(X) == 100: # just for debugging purposes right now
+        #    break
 
     X = numpy.vstack(X)
     X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=1000, random_state=42)
@@ -172,6 +202,8 @@ algos = {
     'nearpy': [NearPy(10), NearPy(12), NearPy(15), NearPy(20)],
     'kgraph': [KGraph(20, 20), KGraph(50, 20), KGraph(100, 20), KGraph(100, 40), KGraph(200, 20), KGraph(200, 40), KGraph(200, 100), KGraph(400, 20), KGraph(400, 40), KGraph(400, 100), KGraph(1000, 20), KGraph(1000, 40), KGraph(1000, 100)],
     'bruteforce': [bf],
+    'ball': [BallTree(10), BallTree(20), BallTree(40), BallTree(100), BallTree(200), BallTree(400), BallTree(1000)],
+    'kd': [KDTree(10), KDTree(20), KDTree(40), KDTree(100), KDTree(200), KDTree(400), KDTree(1000)]
 }
 
 X_train, X_test = get_dataset(which='glove')
@@ -185,11 +217,17 @@ for x in X_test:
     if len(queries) % 100 == 0:
         print len(queries), '...'
 
+algos_already_ran = set()
+if os.path.exists('data.tsv'):
+    for line in open('data.tsv'):
+        algos_already_ran.add(line.strip().split('\t')[1])
+
 algos_flat = []
 
 for library in algos.keys():
     for algo in algos[library]:
-        algos_flat.append((library, algo))
+        if algo.name not in algos_already_ran:
+            algos_flat.append((library, algo))
 
 random.shuffle(algos_flat)
 
