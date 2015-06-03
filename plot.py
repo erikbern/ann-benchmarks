@@ -40,8 +40,8 @@ plt.gca().set_xscale('log')
 plt.gca().set_title('Precision-Performance tradeoff - up and to the left is better')
 plt.gca().set_xlabel('Time per query (s) - lower is better')
 plt.gca().set_ylabel('10-NN precision - higher is better')
-plt.gca().legend(handles, labels, 'upper left')
+plt.gca().legend(handles=handles, labels=labels, loc='upper left')
 plt.grid(b=True, which='both', color='0.65',linestyle='-')
-
+plt.ylim([0, 1.03])
 plt.savefig('plot.png')
 
