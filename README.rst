@@ -8,7 +8,7 @@ Evaluated
 
 * `Annoy <https://github.com/spotify/annoy>`__
 * `FLANN <http://www.cs.ubc.ca/research/flann/>`__
-* `scikit-learn <http://scikit-learn.org/stable/modules/neighbors.html>`__
+* `scikit-learn <http://scikit-learn.org/stable/modules/neighbors.html>`__: LSHForest, KDTree, BallTree
 * `PANNS <https://github.com/ryanrhymes/panns>`__
 * `NearPy <http://nearpy.io>`__
 * `KGraph <https://github.com/aaalgo/kgraph>`__
