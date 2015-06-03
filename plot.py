@@ -1,4 +1,6 @@
 import numpy
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 all_data = {}
@@ -9,6 +11,7 @@ for line in open('data.tsv'):
 
 colors = plt.cm.rainbow(numpy.linspace(0, 1, len(all_data)))
 handles = []
+labels = []
 
 for algo, color in zip(all_data.keys(), colors):
     data = all_data[algo]
@@ -31,17 +34,14 @@ for algo, color in zip(all_data.keys(), colors):
             xs.append(t[-2])
     handle, = plt.plot(xs, ys, 'o-', label=algo, color=color)
     handles.append(handle)
+    labels.append(algo)
 
 plt.gca().set_xscale('log')
 plt.gca().set_title('Precision-Performance tradeoff - up and to the left is better')
 plt.gca().set_xlabel('Time per query (s) - lower is better')
 plt.gca().set_ylabel('10-NN precision - higher is better')
-plt.gca().legend(handles=handles)
+plt.gca().legend(handles, labels, 'upper left')
 plt.grid(b=True, which='both', color='0.65',linestyle='-')
 
 plt.savefig('plot.png')
 
-
-                                       
-
-    
