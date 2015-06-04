@@ -29,8 +29,10 @@ Install
 
 Clone the repo and run ``bash install.sh``. This will install all libraries as well as downloading and preprocessing all data sets. It could take a while. It has been tested in Ubuntu 14.04. 
 
-Princniples
------------
+There is also a Docker image available under `erikbern/ann <https://registry.hub.docker.com/u/erikbern/ann/>`__ containing all libraries and data sets.
+
+Principles
+----------
 
 * Everyone is welcome to submit pull requests with tweaks and changes to how each library is being used.
 * In particular: if you are the author of any of these libraries, and you think the benchmark can be improved, consider making the improvement and submitting a pull request.
@@ -48,7 +50,7 @@ Princniples
 Results
 -------
 
-Currently this is on the full 1.15M vectors from GloVe (100 dimensions, trained from tweets).
+Currently this is on the full 1.15M vectors from GloVe (100 dimensions, trained from tweets). It's run on a c4.4xlarge instance on EC2.
 This is very much a work in progress... more results coming later!
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/plot.png
