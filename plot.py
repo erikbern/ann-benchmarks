@@ -19,7 +19,7 @@ for algo, color in zip(all_data.keys(), colors):
     xs = [t[-2] for t in data]
     ys = [t[-1] for t in data]
     ls = [t[0] for t in data]
-    plt.plot(xs, ys, 'o', label=algo, color=color)
+    plt.plot(xs, ys, 'o', label=algo, color=color, markersize=3)
     #for i, l in enumerate(ls):
     #    plt.annotate(ls[i], (xs[i], ys[i]), color='lightgray', fontsize=8)
 

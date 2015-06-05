@@ -107,3 +107,9 @@ nearpy	NearPy(n_bits=15, hash_counts=30)	396.058663845	0.0781076109409	0.1974
 panns	PANNS(n_trees=40, n_cand=40)	1769.60750198	0.0176924889088	0.1142
 nearpy	NearPy(n_bits=8, hash_counts=20)	209.152528048	3.21080163693	0.4969
 nearpy	NearPy(n_bits=8, hash_counts=10)	110.969229937	1.24518692493	0.4366
+nearpy	NearPy(n_bits=8, hash_counts=30)	310.483169079	4.84766932487	0.425
+nearpy	NearPy(n_bits=10, hash_counts=10)	121.753831148	0.523249212027	0.3152
+panns	PANNS(n_trees=5, n_cand=20)	233.900981903	0.00187102079391	0.0243
+nearpy	NearPy(n_bits=10, hash_counts=30)	343.630779028	1.42709247589	0.4725
+lshf	LSHF(n_est=10, n_cand=10)	42.5377039909	0.177566866875	0.0206
+nearpy	NearPy(n_bits=30, hash_counts=30)	513.778717995	0.000341849803925	0.01
