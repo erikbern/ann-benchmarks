@@ -263,6 +263,7 @@ if __name__ == '__main__':
         queries = get_queries(args)
         f = open(queries_fn, 'w')
         pickle.dump(queries, f)
+        f.close()
     else:
         queries = pickle.load(open(queries_fn))
 
@@ -281,6 +282,8 @@ if __name__ == '__main__':
                 algos_flat.append((library, algo))
                 
     random.shuffle(algos_flat)
+
+    print 'order:', algos_flat
 
     for library, algo in algos_flat:
         print algo.name, '...'
