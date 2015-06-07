@@ -4,7 +4,7 @@ import pyflann
 import panns
 import nearpy, nearpy.hashes, nearpy.distances
 import pykgraph
-import gzip, numpy, time, os, multiprocessing
+import gzip, numpy, time, os, multiprocessing, argparse, pickle
 try:
     from urllib import urlretrieve
 except ImportError:
@@ -159,7 +159,7 @@ class BruteForce(BaseANN):
         return list(self._nbrs.kneighbors(v, return_distance=False, n_neighbors=n)[0])
 
 
-def get_dataset(which='glove'):
+def get_dataset(which='glove', limit=-1):
     local_fn = os.path.join('install', which + '.txt')
     f = open(local_fn)
 
@@ -167,15 +167,18 @@ def get_dataset(which='glove'):
     for i, line in enumerate(f):
         v = [float(x) for x in line.strip().split()]
         X.append(v)
-        #if len(X) == 100: # just for debugging purposes right now
-        #    break
+        if limit != -1 and len(X) == limit:
+            break
 
     X = numpy.vstack(X)
     X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=1000, random_state=42)
     print X_train.shape, X_test.shape
     return X_train, X_test
 
-def run_algo(library, algo):
+
+def run_algo(args, library, algo, results_fn):
+    X_train, X_test = get_dataset(which=args.dataset, limit=args.limit)
+
     t0 = time.time()
     if algo != 'bf':
         algo.fit(X_train)
@@ -193,11 +196,28 @@ def run_algo(library, algo):
         output = [library, algo.name, build_time, search_time, precision]
         print output
 
-    f = open('data.tsv', 'a')
+    f = open(results_fn, 'a')
     f.write('\t'.join(map(str, output)) + '\n')
     f.close()
 
-bf = BruteForce()
+
+def get_queries(args):
+    print 'computing queries with correct results...'
+
+    bf = BruteForce()
+    X_train, X_test = get_dataset(which=args.dataset, limit=args.limit)
+
+    # Prepare queries
+    bf.fit(X_train)
+    queries = []
+    for x in X_test:
+        correct = bf.query(x, 10)
+        queries.append((x, correct))
+        if len(queries) % 100 == 0:
+            print len(queries), '...'
+
+    return queries
+            
 
 algos = {
     'lshf': [LSHF(5, 10), LSHF(5, 20), LSHF(10, 20), LSHF(10, 50), LSHF(20, 100)],
@@ -206,39 +226,65 @@ algos = {
     'annoy': [Annoy(3, 10), Annoy(5, 25), Annoy(10, 10), Annoy(10, 40), Annoy(10, 100), Annoy(10, 200), Annoy(10, 400), Annoy(10, 1000), Annoy(20, 20), Annoy(20, 100), Annoy(20, 200), Annoy(20, 400), Annoy(40, 40), Annoy(40, 100), Annoy(40, 400), Annoy(100, 100), Annoy(100, 200), Annoy(100, 400), Annoy(100, 1000)],
     'nearpy': [NearPy(8, 100), NearPy(14, 100), NearPy(18, 100), NearPy(8, 150), NearPy(14, 150), NearPy(18, 150), NearPy(8, 200), NearPy(14, 200), NearPy(18, 200)],
     'kgraph': [KGraph(20), KGraph(50), KGraph(100), KGraph(200), KGraph(500), KGraph(1000)],
-    'bruteforce': [bf],
+    'bruteforce': [BruteForce()],
     'ball': [BallTree(10), BallTree(20), BallTree(40), BallTree(100), BallTree(200), BallTree(400), BallTree(1000)],
     'kd': [KDTree(10), KDTree(20), KDTree(40), KDTree(100), KDTree(200), KDTree(400), KDTree(1000)]
 }
 
-X_train, X_test = get_dataset(which='glove')
 
-# Prepare queries
-bf.fit(X_train)
-queries = []
-for x in X_test:
-    correct = bf.query(x, 10)
-    queries.append((x, correct))
-    if len(queries) % 100 == 0:
-        print len(queries), '...'
+def get_fn(base, args):
+    fn = os.path.join(base, args.dataset)
 
-algos_already_ran = set()
-if os.path.exists('data.tsv'):
-    for line in open('data.tsv'):
-        algos_already_ran.add(line.strip().split('\t')[1])
+    if args.limit != -1:
+        fn += '-%d' % args.limit
+    fn += '.txt'
 
-algos_flat = []
+    d = os.path.dirname(fn)
+    if not os.path.exists(d):
+        os.makedirs(d)
 
-for library in algos.keys():
-    for algo in algos[library]:
-        if algo.name not in algos_already_ran:
-            algos_flat.append((library, algo))
+    return fn
 
-random.shuffle(algos_flat)
 
-for library, algo in algos_flat:
-    print algo.name, '...'
-    # Spawn a subprocess to force the memory to be reclaimed at the end
-    p = multiprocessing.Process(target=run_algo, args=(library, algo))
-    p.start()
-    p.join()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--dataset', help='Which dataset',  default='glove')
+    parser.add_argument('--distance', help='Distance', default='angular')
+    parser.add_argument('--limit', help='Limit', type=int, default=-1)
+
+    args = parser.parse_args()
+
+    results_fn = get_fn('results', args)
+    queries_fn = get_fn('queries', args)
+
+    print 'storing queries in', queries_fn, 'and results in', results_fn
+
+    if not os.path.exists(queries_fn):
+        queries = get_queries(args)
+        f = open(queries_fn, 'w')
+        pickle.dump(queries, f)
+    else:
+        queries = pickle.load(open(queries_fn))
+
+    print 'got', len(queries), 'queries'
+
+    algos_already_ran = set()
+    if os.path.exists(results_fn):
+        for line in open(results_fn):
+            algos_already_ran.add(line.strip().split('\t')[1])
+            
+    algos_flat = []
+    
+    for library in algos.keys():
+        for algo in algos[library]:
+            if algo.name not in algos_already_ran:
+                algos_flat.append((library, algo))
+                
+    random.shuffle(algos_flat)
+
+    for library, algo in algos_flat:
+        print algo.name, '...'
+        # Spawn a subprocess to force the memory to be reclaimed at the end
+        p = multiprocessing.Process(target=run_algo, args=(args, library, algo, results_fn))
+        p.start()
+        p.join()
