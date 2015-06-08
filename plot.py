@@ -2,10 +2,17 @@ import numpy
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--input', default='results/glove.txt')
+parser.add_argument('--output', default='results/glove.png')
+
+args = parser.parse_args()
 
 all_data = {}
 
-for line in open('data.tsv'):
+for line in open(args.input):
     algo, algo_name, build_time, search_time, precision = line.strip().split('\t')
     all_data.setdefault(algo, []).append((algo_name, float(build_time), float(search_time), float(precision)))
 
@@ -43,5 +50,5 @@ plt.gca().set_ylabel('10-NN precision - higher is better')
 plt.gca().legend(handles, labels, loc='upper left')
 plt.grid(b=True, which='both', color='0.65',linestyle='-')
 plt.ylim([0, 1.03])
-plt.savefig('plot.png')
+plt.savefig(args.output)
 

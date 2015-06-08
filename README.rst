@@ -53,7 +53,7 @@ Results
 Currently this is on the full 1.15M vectors from GloVe (100 dimensions, trained from tweets). It's run on a c4.4xlarge instance on EC2.
 This is very much a work in progress... more results coming later!
 
-.. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/plot.png
+.. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/glove.png
    :align: center
 
 References
