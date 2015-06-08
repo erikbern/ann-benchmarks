@@ -4,12 +4,20 @@ import pyflann
 import panns
 import nearpy, nearpy.hashes, nearpy.distances
 import pykgraph
-import gzip, numpy, time, os, multiprocessing, argparse, pickle
+import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource
 try:
     from urllib import urlretrieve
 except ImportError:
     from urllib.request import urlretrieve # Python 3
 import sklearn.cross_validation, sklearn.preprocessing, random
+
+# Set resource limits to 24GB to prevent memory bombs
+memory_limit = 24 * 2**30
+soft, hard = resource.getrlimit(resource.RLIMIT_DATA)
+if soft >= memory_limit:
+    print 'resetting memory limit from', soft, 'to', memory_limit
+    resource.setrlimit(resource.RLIMIT_DATA, (memory_limit, hard))
+
 
 class BaseANN(object):
     pass
