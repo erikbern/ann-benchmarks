@@ -14,7 +14,7 @@ import sklearn.cross_validation, sklearn.preprocessing, random
 # Set resource limits to 24GB to prevent memory bombs
 memory_limit = 24 * 2**30
 soft, hard = resource.getrlimit(resource.RLIMIT_DATA)
-if soft >= memory_limit:
+if soft == resource.RLIM_INFINITY or soft >= memory_limit:
     print 'resetting memory limit from', soft, 'to', memory_limit
     resource.setrlimit(resource.RLIMIT_DATA, (memory_limit, hard))
 
