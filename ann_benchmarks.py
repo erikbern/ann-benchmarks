@@ -11,8 +11,8 @@ except ImportError:
     from urllib.request import urlretrieve # Python 3
 import sklearn.cross_validation, sklearn.preprocessing, random
 
-# Set resource limits to 24GB to prevent memory bombs
-memory_limit = 24 * 2**30
+# Set resource limits to prevent memory bombs
+memory_limit = 12 * 2**30
 soft, hard = resource.getrlimit(resource.RLIMIT_DATA)
 if soft == resource.RLIM_INFINITY or soft >= memory_limit:
     print 'resetting memory limit from', soft, 'to', memory_limit
@@ -232,7 +232,8 @@ algos = {
     'flann': [FLANN(0.2), FLANN(0.5), FLANN(0.7), FLANN(0.8), FLANN(0.9), FLANN(0.95), FLANN(0.97), FLANN(0.98), FLANN(0.99), FLANN(0.995)],
     'panns': [PANNS(5, 20), PANNS(10, 10), PANNS(10, 50), PANNS(10, 100), PANNS(20, 100), PANNS(40, 100)],
     'annoy': [Annoy(3, 10), Annoy(5, 25), Annoy(10, 10), Annoy(10, 40), Annoy(10, 100), Annoy(10, 200), Annoy(10, 400), Annoy(10, 1000), Annoy(20, 20), Annoy(20, 100), Annoy(20, 200), Annoy(20, 400), Annoy(40, 40), Annoy(40, 100), Annoy(40, 400), Annoy(100, 100), Annoy(100, 200), Annoy(100, 400), Annoy(100, 1000)],
-    'nearpy': [NearPy(8, 100), NearPy(14, 100), NearPy(18, 100), NearPy(8, 150), NearPy(14, 150), NearPy(18, 150), NearPy(8, 200), NearPy(14, 200), NearPy(18, 200)],
+    'nearpy': [NearPy(14, 100), NearPy(18, 100), NearPy(14, 150), NearPy(18, 150), NearPy(14, 200), NearPy(18, 200),
+               NearPy(16, 5), NearPy(16, 10), NearPy(16, 15), NearPy(16, 20), NearPy(16, 25), NearPy(16, 30), NearPy(16, 40), NearPy(16, 50), NearPy(16, 70), NearPy(16, 90), NearPy(16, 120), NearPy(16, 150)],
     'kgraph': [KGraph(20), KGraph(50), KGraph(100), KGraph(200), KGraph(500), KGraph(1000)],
     'bruteforce': [BruteForce()],
     'ball': [BallTree(10), BallTree(20), BallTree(40), BallTree(100), BallTree(200), BallTree(400), BallTree(1000)],
