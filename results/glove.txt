@@ -120,3 +120,4 @@ panns	PANNS(n_trees=40, n_cand=100)	2391.24518299	0.0154535620213	0.0817
 nearpy	NearPy(n_bits=16, hash_counts=90)	1612.58840704	0.0459457559586	0.3853
 nearpy	NearPy(n_bits=14, hash_counts=200)	3425.61965799	0.275113962889	0.7808
 nearpy	NearPy(n_bits=16, hash_counts=10)	207.159377813	0.00462707805634	0.0759
+nearpy	NearPy(n_bits=10, hash_counts=10)	179.262103796	0.107666340113	0.3167

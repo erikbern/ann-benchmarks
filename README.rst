@@ -41,7 +41,6 @@ Principles
 * To make it simpler, look only at the precision-performance tradeoff.
 * Try many different values of parameters for each library and ignore the points that are not on the precision-performance frontier.
 * High-dimensional datasets with approximately 100-1000 dimensions. This is challenging but also realistic. Not more than 1000 dimensions because those problems should probably be solved by doing dimensionality reduction separately.
-* Use cosine similarity. For libraries where this is not supported, this is trivially achieved by normalizing all vectors.
 * Use single core benchmarks. I believe most real world scenarios could be parallelized in other ways (eg. do multiple queries in parallel).
 * Avoid extremely costly index building (more than several hours).
 * Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
@@ -50,10 +49,16 @@ Principles
 Results
 -------
 
-Currently this is on the full 1.15M vectors from GloVe (100 dimensions, trained from tweets). It's run on a c4.4xlarge instance on EC2.
 This is very much a work in progress... more results coming later!
 
+1.19M vectors from GloVe (100 dimensions, trained from tweets), cosine similarity, run on a c4.4xlarge instance on EC2.
+
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/glove.png
+   :align: center
+
+1M SIFT features (128 dimensions), Euclidean distance, also run on a c4.4xlarge:
+
+.. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/sift.png
    :align: center
 
 References
