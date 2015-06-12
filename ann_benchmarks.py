@@ -2,6 +2,7 @@ import sklearn.neighbors
 import annoy
 import pyflann
 import panns
+import nmslib
 import nearpy, nearpy.hashes, nearpy.distances
 import pykgraph
 import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource
