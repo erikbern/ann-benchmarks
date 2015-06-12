@@ -5,7 +5,7 @@ rm -rf NonMetricSpaceLib
 git clone https://github.com/searchivarius/NonMetricSpaceLib.git
 cd NonMetricSpaceLib/similarity_search
 git checkout ann-benchmark  
-sudo apt-get install -y cmake libeigen3-dev libgsl0-dev libboost-all-dev g++-4.8
+sudo apt-get install -y cmake libeigen3-dev libgsl0-dev libboost-all-dev g++-4.8 g++ 
 cmake .
 make -j 4
 cd ../python_binding
