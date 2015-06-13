@@ -177,21 +177,35 @@ class KGraph(BaseANN):
 class BruteForce(BaseANN):
     """kNN search that uses a linear scan = brute force."""
     def __init__(self, metric):
-        if metric not in ('angular', ):
+        if metric not in ('angular', 'euclidean'):
             raise NotImplementedError("BruteForce doesn't support metric %s" % metric)
         self._metric = metric
         self.name = 'BruteForce()'
 
     def fit(self, X):
         """Initialize the search index."""
-        # normalize vectors to unit length
-        self.index = X / numpy.sqrt((X ** 2).sum(-1))[..., numpy.newaxis]
+        self.lengths = (X ** 2).sum(-1)  # record (squared) length of each vector
+        if self._metric == 'angular':
+            # for cossim, normalize index vectors to unit length
+            self.index = numpy.ascontiguousarray(X / numpy.sqrt(self.lengths)[..., numpy.newaxis])
+        elif self._metric == 'euclidean':
+            self.index = numpy.ascontiguousarray(X)
+        else:
+            assert False, "invalid metric"  # shouldn't get past the constructor!
 
     def query(self, v, n):
         """Find indices of `n` most similar vectors from the index to query vector `v`."""
-        query = v / numpy.sqrt((v ** 2).sum())  # normalize query to unit length
-        cossims = numpy.dot(self.index, query)  # cossim = dot product over normalized vectors
-        indices = numpy.argsort(cossims)[::-1]  # sort by cossim, highest first
+        if self._metric == 'angular':
+            query = v / numpy.sqrt((v ** 2).sum())  # normalize query to unit length
+            cossims = numpy.dot(self.index, query)  # cossim = dot product over normalized vectors
+            indices = numpy.argsort(cossims)[::-1]  # sort by cossim, highest first
+        elif self._metric == 'euclidean':
+            # HACK we ignore query length as that's a constant not affecting the final ordering:
+            # argmax_a (a - b)^2 = argmax_a a^2 - 2ab + b^2 = argmax_a a^2 - 2ab
+            squared_dists = self.lengths - 2 * numpy.dot(self.index, v)
+            indices = numpy.argsort(squared_dists)  # sort by l2 distance, lowest first
+        else:
+            assert False, "invalid metric"  # shouldn't get past the constructor!
         return indices[:n]  # return top `n` most similar
 
 
