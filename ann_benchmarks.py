@@ -184,7 +184,7 @@ class BruteForce(BaseANN):
 
     def fit(self, X):
         """Initialize the search index."""
-        self.lengths = (X ** 2).sum(-1)  # record (squared) length of each vector
+        self.lengths = (X ** 2).sum(-1)  # precompute (squared) length of each vector
         if self._metric == 'angular':
             # for cossim, normalize index vectors to unit length
             self.index = numpy.ascontiguousarray(X / numpy.sqrt(self.lengths)[..., numpy.newaxis])
@@ -198,15 +198,15 @@ class BruteForce(BaseANN):
         if self._metric == 'angular':
             query = v / numpy.sqrt((v ** 2).sum())  # normalize query to unit length
             cossims = numpy.dot(self.index, query)  # cossim = dot product over normalized vectors
-            indices = numpy.argsort(cossims)[::-1]  # sort by cossim, highest first
+            dists = -cossims  # just for convenience, so that lowest = best
         elif self._metric == 'euclidean':
             # HACK we ignore query length as that's a constant not affecting the final ordering:
             # argmax_a (a - b)^2 = argmax_a a^2 - 2ab + b^2 = argmax_a a^2 - 2ab
-            squared_dists = self.lengths - 2 * numpy.dot(self.index, v)
-            indices = numpy.argsort(squared_dists)  # sort by l2 distance, lowest first
+            dists = self.lengths - 2 * numpy.dot(self.index, v)
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
-        return indices[:n]  # return top `n` most similar
+        indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
+        return sorted(indices, key=lambda index: dists[index])  # resort `n` closest into final order
 
 
 def get_dataset(which='glove', limit=-1):
