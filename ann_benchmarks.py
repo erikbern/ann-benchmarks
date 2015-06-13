@@ -195,13 +195,12 @@ class BruteForce(BaseANN):
 
     def query(self, v, n):
         """Find indices of `n` most similar vectors from the index to query vector `v`."""
+        # HACK we ignore query length as that's a constant not affecting the final ordering
         if self._metric == 'angular':
-            query = v / numpy.sqrt((v ** 2).sum())  # normalize query to unit length
-            cossims = numpy.dot(self.index, query)  # cossim = dot product over normalized vectors
-            dists = -cossims  # just for convenience, so that lowest = best
+            # argmax_a cossim(a, b) = argmax_a dot(a, b) / |a||b| = argmin_a -dot(a, b)
+            dists = -numpy.dot(self.index, v)
         elif self._metric == 'euclidean':
-            # HACK we ignore query length as that's a constant not affecting the final ordering:
-            # argmax_a (a - b)^2 = argmax_a a^2 - 2ab + b^2 = argmax_a a^2 - 2ab
+            # argmin_a (a - b)^2 = argmin_a a^2 - 2ab + b^2 = argmin_a a^2 - 2ab
             dists = self.lengths - 2 * numpy.dot(self.index, v)
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
