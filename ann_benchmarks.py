@@ -233,8 +233,11 @@ def run_algo(args, library, algo, results_fn):
     if algo != 'bf':
         algo.fit(X_train)
     build_time = time.time() - t0
+    print 'Built index in', build_time
 
-    for i in xrange(3): # Do multiple times to warm up page cache
+    best_search_time = float('inf')
+    best_precision = 0.0 # should be deterministic but paranoid
+    for i in xrange(3): # Do multiple times to warm up page cache, use fastest
         t0 = time.time()
         k = 0.0
         for v, correct in queries:
@@ -242,9 +245,12 @@ def run_algo(args, library, algo, results_fn):
             k += len(set(found).intersection(correct))
         search_time = (time.time() - t0) / len(queries)
         precision = k / (len(queries) * 10)
+        best_search_time = min(best_search_time, search_time)
+        best_precision = max(best_precision, precision)
+        print search_time, precision
 
-        output = [library, algo.name, build_time, search_time, precision]
-        print output
+    output = [library, algo.name, build_time, best_search_time, best_precision]
+    print output
 
     f = open(results_fn, 'a')
     f.write('\t'.join(map(str, output)) + '\n')
