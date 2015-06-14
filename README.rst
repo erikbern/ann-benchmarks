@@ -12,6 +12,7 @@ Evaluated
 * `PANNS <https://github.com/ryanrhymes/panns>`__
 * `NearPy <http://nearpy.io>`__
 * `KGraph <https://github.com/aaalgo/kgraph>`__
+* `NonMetricSpaceLib <https://github.com/searchivarius/NonMetricSpaceLib>`__
 
 Data sets
 ---------
@@ -65,5 +66,4 @@ References
 ----------
 
 * `sim-shootout <https://github.com/piskvorky/sim-shootout>`__ by Radim Řehůřek
-* `NonMetricSpaceLib <https://github.com/searchivarius/NonMetricSpaceLib>`__
 * This `blog post <http://maheshakya.github.io/gsoc/2014/08/17/performance-comparison-among-lsh-forest-annoy-and-flann.html>`__

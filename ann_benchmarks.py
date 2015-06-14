@@ -2,6 +2,7 @@ import sklearn.neighbors
 import annoy
 import pyflann
 import panns
+import nmslib
 import nearpy, nearpy.hashes, nearpy.distances
 import pykgraph
 import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource
@@ -173,6 +174,26 @@ class KGraph(BaseANN):
         result = self._kgraph.search(self._X, numpy.array([v]), K=n, threads=1, P=self._P)
         return result[0]
 
+class Nmslib(BaseANN):
+    def __init__(self, metric, method_name, method_param):
+        self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
+        self._method_name = method_name
+        self._method_param = method_param
+        self.name = 'Nmslib(method_name=%s, method_param=%s)' % (method_name, method_param)
+
+    def fit(self, X):
+        self._index = nmslib.initIndex(X.shape[0], self._nmslib_metric, [], self._method_name, self._method_param, nmslib.DataType.VECTOR, nmslib.DistType.FLOAT)
+	
+        for i, x in enumerate(X):
+            nmslib.setData(self._index, i, x.tolist())
+        nmslib.buildIndex(self._index)
+
+    def query(self, v, n):
+        return nmslib.knnQuery(self._index, n, v.tolist())
+
+    def freeIndex(self):
+        nmslib.freeIndex(self._index)
+
 
 class BruteForce(BaseANN):
     def __init__(self, metric):
@@ -260,7 +281,58 @@ def get_algos(m):
         'kgraph': [KGraph(m, 20), KGraph(m, 50), KGraph(m, 100), KGraph(m, 200), KGraph(m, 500), KGraph(m, 1000)],
         'bruteforce': [BruteForce(m)],
         'ball': [BallTree(m, 10), BallTree(m, 20), BallTree(m, 40), BallTree(m, 100), BallTree(m, 200), BallTree(m, 400), BallTree(m, 1000)],
-        'kd': [KDTree(m, 10), KDTree(m, 20), KDTree(m, 40), KDTree(m, 100), KDTree(m, 200), KDTree(m, 400), KDTree(m, 1000)]
+        'kd': [KDTree(m, 10), KDTree(m, 20), KDTree(m, 40), KDTree(m, 100), KDTree(m, 200), KDTree(m, 400), KDTree(m, 1000)],
+
+    # START: Non-Metric Space Library (nmslib) entries
+    'MP-lsh(lshkit)':[
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.99','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.97','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.95','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.90','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.85','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.80','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.7','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.6','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.5','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.4','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.3','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.2','H=1200001','T=10','L=50','tuneK=10']),
+                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.1','H=1200001','T=10','L=50','tuneK=10']),
+               ],
+
+    'bruteforce0(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=0'])],
+    'bruteforce1(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=1'])],
+
+    'BallTree(nmslib)': [
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.99', 'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.95', 'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.90', 'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.85', 'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.8',  'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.7',  'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.6',  'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.5',  'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.4',  'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.3',  'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.2',  'bucketSize=100']),
+                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.1',  'bucketSize=100']),
+                ],
+
+    'SW-graph(nmslib)':[
+                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=48']),
+                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=32']),
+                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=16']),
+                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=8']),
+                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=4']),
+                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=2']),
+                Nmslib(m, 'small_world_rand', ['NN=17', 'initIndexAttempts=4', 'initSearchAttempts=2']),
+                Nmslib(m, 'small_world_rand', ['NN=14', 'initIndexAttempts=4', 'initSearchAttempts=2']),
+                Nmslib(m, 'small_world_rand', ['NN=11', 'initIndexAttempts=5', 'initSearchAttempts=2']),
+                Nmslib(m, 'small_world_rand', ['NN=8',  'initIndexAttempts=5', 'initSearchAttempts=2']),
+                Nmslib(m, 'small_world_rand', ['NN=5',  'initIndexAttempts=5', 'initSearchAttempts=2']),
+                Nmslib(m, 'small_world_rand', ['NN=3',  'initIndexAttempts=5', 'initSearchAttempts=2']),
+               ]
+    # END: Non-Metric Space Library (nmslib) entries
     }
 
 
