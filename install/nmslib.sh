@@ -13,4 +13,4 @@ make -j 4
 cd ../python_binding
 make
 sudo make install
-cd ..
+cd ../..
