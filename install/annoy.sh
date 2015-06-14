@@ -1,2 +1,5 @@
-sudo apt-get install -y python-pip python-dev
-sudo pip install annoy
+sudo apt-get install -y python-dev
+git clone https://github.com/spotify/annoy
+cd annoy
+sudo python setup.py install
+cd ..
