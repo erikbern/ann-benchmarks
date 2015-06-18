@@ -1,10 +1,3 @@
-import sklearn.neighbors
-import annoy
-import pyflann
-import panns
-import nmslib
-import nearpy, nearpy.hashes, nearpy.distances
-import pykgraph
 import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource
 try:
     from urllib import urlretrieve
@@ -32,6 +25,7 @@ class LSHF(BaseANN):
         self._n_candidates = n_candidates
 
     def fit(self, X):
+        import sklearn.neighbors
         self._lshf = sklearn.neighbors.LSHForest(n_estimators=self._n_estimators, n_candidates=self._n_candidates)
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
@@ -86,6 +80,7 @@ class FLANN(BaseANN):
         self._metric = metric
 
     def fit(self, X):
+        import pyflann
         self._flann = pyflann.FLANN(target_precision=self._target_precision, algorithm='autotuned', log_level='info')
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
@@ -105,6 +100,7 @@ class Annoy(BaseANN):
         self.name = 'Annoy(n_trees=%d, n_cand=%d)' % (n_trees, n_candidates)
 
     def fit(self, X):
+        import annoy
         self._annoy = annoy.AnnoyIndex(f=X.shape[1], metric=self._metric)
         for i, x in enumerate(X):
             self._annoy.add_item(i, x.tolist())
@@ -122,6 +118,7 @@ class PANNS(BaseANN):
         self.name = 'PANNS(n_trees=%d, n_cand=%d)' % (n_trees, n_candidates)        
 
     def fit(self, X):
+        import panns
         self._panns = panns.PannsIndex(X.shape[1], metric=self._metric)
         for x in X:
             self._panns.add_vector(x)
@@ -139,6 +136,8 @@ class NearPy(BaseANN):
         self.name = 'NearPy(n_bits=%d, hash_counts=%d)' % (n_bits, hash_counts)
 
     def fit(self, X):
+        import nearpy, nearpy.hashes, nearpy.distances
+
         hashes = []
 
         # TODO: doesn't seem like the NearPy code is using the metric??
@@ -162,6 +161,8 @@ class KGraph(BaseANN):
         self._metric = metric
 
     def fit(self, X):
+        import pykgraph
+
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._kgraph = pykgraph.KGraph()
@@ -182,6 +183,7 @@ class Nmslib(BaseANN):
         self.name = 'Nmslib(method_name=%s, method_param=%s)' % (method_name, method_param)
 
     def fit(self, X):
+        import nmslib
         self._index = nmslib.initIndex(X.shape[0], self._nmslib_metric, [], self._method_name, self._method_param, nmslib.DataType.VECTOR, nmslib.DistType.FLOAT)
 	
         for i, x in enumerate(X):
