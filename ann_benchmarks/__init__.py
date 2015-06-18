@@ -1,15 +1,15 @@
-import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource
+import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource, random
 try:
     from urllib import urlretrieve
 except ImportError:
     from urllib.request import urlretrieve # Python 3
-import sklearn.cross_validation, sklearn.preprocessing, random
+import sklearn.preprocessing
 
 # Set resource limits to prevent memory bombs
 memory_limit = 12 * 2**30
 soft, hard = resource.getrlimit(resource.RLIMIT_DATA)
 if soft == resource.RLIM_INFINITY or soft >= memory_limit:
-    print 'resetting memory limit from', soft, 'to', memory_limit
+    print('resetting memory limit from', soft, 'to', memory_limit)
     resource.setrlimit(resource.RLIMIT_DATA, (memory_limit, hard))
 
 
@@ -203,6 +203,7 @@ class BruteForce(BaseANN):
         self.name = 'BruteForce()'
 
     def fit(self, X):
+        import sklearn.neighbors
         metric = {'angular': 'cosine', 'euclidean': 'l2'}[self._metric]
         self._nbrs = sklearn.neighbors.NearestNeighbors(algorithm='brute', metric=metric)
         self._nbrs.fit(X)
@@ -223,8 +224,10 @@ def get_dataset(which='glove', limit=-1):
             break
 
     X = numpy.vstack(X)
+    import sklearn.cross_validation
+
     X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=1000, random_state=42)
-    print X_train.shape, X_test.shape
+    print(X_train.shape, X_test.shape)
     return X_train, X_test
 
 
@@ -235,7 +238,7 @@ def run_algo(args, library, algo, results_fn):
     if algo != 'bf':
         algo.fit(X_train)
     build_time = time.time() - t0
-    print 'Built index in', build_time
+    print('Built index in', build_time)
 
     best_search_time = float('inf')
     best_precision = 0.0 # should be deterministic but paranoid
@@ -249,10 +252,10 @@ def run_algo(args, library, algo, results_fn):
         precision = k / (len(queries) * 10)
         best_search_time = min(best_search_time, search_time)
         best_precision = max(best_precision, precision)
-        print search_time, precision
+        print(search_time, precision)
 
     output = [library, algo.name, build_time, best_search_time, best_precision]
-    print output
+    print(output)
 
     f = open(results_fn, 'a')
     f.write('\t'.join(map(str, output)) + '\n')
@@ -260,7 +263,7 @@ def run_algo(args, library, algo, results_fn):
 
 
 def get_queries(args):
-    print 'computing queries with correct results...'
+    print('computing queries with correct results...')
 
     bf = BruteForce(args.distance)
     X_train, X_test = get_dataset(which=args.dataset, limit=args.limit)
@@ -272,7 +275,7 @@ def get_queries(args):
         correct = bf.query(x, 10)
         queries.append((x, correct))
         if len(queries) % 100 == 0:
-            print len(queries), '...'
+            print(len(queries), '...')
 
     return queries
             
@@ -369,7 +372,7 @@ if __name__ == '__main__':
     results_fn = get_fn('results', args)
     queries_fn = get_fn('queries', args)
 
-    print 'storing queries in', queries_fn, 'and results in', results_fn
+    print('storing queries in', queries_fn, 'and results in', results_fn)
 
     if not os.path.exists(queries_fn):
         queries = get_queries(args)
@@ -379,7 +382,7 @@ if __name__ == '__main__':
     else:
         queries = pickle.load(open(queries_fn))
 
-    print 'got', len(queries), 'queries'
+    print('got', len(queries), 'queries')
 
     algos_already_ran = set()
     if os.path.exists(results_fn):
@@ -396,10 +399,10 @@ if __name__ == '__main__':
                 
     random.shuffle(algos_flat)
 
-    print 'order:', algos_flat
+    print('order:', algos_flat)
 
     for library, algo in algos_flat:
-        print algo.name, '...'
+        print(algo.name, '...')
         # Spawn a subprocess to force the memory to be reclaimed at the end
         p = multiprocessing.Process(target=run_algo, args=(args, library, algo, results_fn))
         p.start()
