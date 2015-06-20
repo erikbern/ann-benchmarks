@@ -28,7 +28,9 @@ Doing fast searching of nearest neighbors in high dimensional spaces is an incre
 Install
 -------
 
-Clone the repo and run ``bash install.sh``. This will install all libraries as well as downloading and preprocessing all data sets. It could take a while. It has been tested in Ubuntu 14.04. 
+Clone the repo and run ``bash install.sh``. This will install all libraries. It could take a while. It has been tested in Ubuntu 14.04.
+
+To download and preprocess the data sets, run ``bash install/glove.sh`` and ``bash install/sift.sh``.
 
 There is also a Docker image available under `erikbern/ann <https://registry.hub.docker.com/u/erikbern/ann/>`__ containing all libraries and data sets.
 

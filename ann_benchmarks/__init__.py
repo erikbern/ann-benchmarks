@@ -1,22 +1,15 @@
-import sklearn.neighbors
-import annoy
-import pyflann
-import panns
-import nmslib
-import nearpy, nearpy.hashes, nearpy.distances
-import pykgraph
-import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource
+import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource, random
 try:
     from urllib import urlretrieve
 except ImportError:
     from urllib.request import urlretrieve # Python 3
-import sklearn.cross_validation, sklearn.preprocessing, random
+import sklearn.preprocessing
 
 # Set resource limits to prevent memory bombs
 memory_limit = 12 * 2**30
 soft, hard = resource.getrlimit(resource.RLIMIT_DATA)
 if soft == resource.RLIM_INFINITY or soft >= memory_limit:
-    print 'resetting memory limit from', soft, 'to', memory_limit
+    print('resetting memory limit from', soft, 'to', memory_limit)
     resource.setrlimit(resource.RLIMIT_DATA, (memory_limit, hard))
 
 
@@ -32,6 +25,7 @@ class LSHF(BaseANN):
         self._n_candidates = n_candidates
 
     def fit(self, X):
+        import sklearn.neighbors
         self._lshf = sklearn.neighbors.LSHForest(n_estimators=self._n_estimators, n_candidates=self._n_candidates)
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
@@ -86,6 +80,7 @@ class FLANN(BaseANN):
         self._metric = metric
 
     def fit(self, X):
+        import pyflann
         self._flann = pyflann.FLANN(target_precision=self._target_precision, algorithm='autotuned', log_level='info')
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
@@ -105,6 +100,7 @@ class Annoy(BaseANN):
         self.name = 'Annoy(n_trees=%d, n_cand=%d)' % (n_trees, n_candidates)
 
     def fit(self, X):
+        import annoy
         self._annoy = annoy.AnnoyIndex(f=X.shape[1], metric=self._metric)
         for i, x in enumerate(X):
             self._annoy.add_item(i, x.tolist())
@@ -122,6 +118,7 @@ class PANNS(BaseANN):
         self.name = 'PANNS(n_trees=%d, n_cand=%d)' % (n_trees, n_candidates)        
 
     def fit(self, X):
+        import panns
         self._panns = panns.PannsIndex(X.shape[1], metric=self._metric)
         for x in X:
             self._panns.add_vector(x)
@@ -139,6 +136,8 @@ class NearPy(BaseANN):
         self.name = 'NearPy(n_bits=%d, hash_counts=%d)' % (n_bits, hash_counts)
 
     def fit(self, X):
+        import nearpy, nearpy.hashes, nearpy.distances
+
         hashes = []
 
         # TODO: doesn't seem like the NearPy code is using the metric??
@@ -162,6 +161,8 @@ class KGraph(BaseANN):
         self._metric = metric
 
     def fit(self, X):
+        import pykgraph
+
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._kgraph = pykgraph.KGraph()
@@ -182,6 +183,13 @@ class Nmslib(BaseANN):
         self.name = 'Nmslib(method_name=%s, method_param=%s)' % (method_name, method_param)
 
     def fit(self, X):
+        import nmslib
+        if self._method_name == 'vptree':
+            # To avoid this issue:
+            # terminate called after throwing an instance of 'std::runtime_error'
+            # what():  The data size is too small or the bucket size is too big. Select the parameters so that <total # of records> is NOT less than <bucket size> * 1000
+            # Aborted (core dumped)
+            self._method_param.append('bucketSize=%d' % min(int(X.shape[0] * 0.0005), 1000))
         self._index = nmslib.initIndex(X.shape[0], self._nmslib_metric, [], self._method_name, self._method_param, nmslib.DataType.VECTOR, nmslib.DistType.FLOAT)
 	
         for i, x in enumerate(X):
@@ -189,9 +197,11 @@ class Nmslib(BaseANN):
         nmslib.buildIndex(self._index)
 
     def query(self, v, n):
+        import nmslib
         return nmslib.knnQuery(self._index, n, v.tolist())
 
     def freeIndex(self):
+        import nmslib
         nmslib.freeIndex(self._index)
 
 
@@ -201,6 +211,7 @@ class BruteForce(BaseANN):
         self.name = 'BruteForce()'
 
     def fit(self, X):
+        import sklearn.neighbors
         metric = {'angular': 'cosine', 'euclidean': 'l2'}[self._metric]
         self._nbrs = sklearn.neighbors.NearestNeighbors(algorithm='brute', metric=metric)
         self._nbrs.fit(X)
@@ -221,8 +232,10 @@ def get_dataset(which='glove', limit=-1):
             break
 
     X = numpy.vstack(X)
+    import sklearn.cross_validation
+
     X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=1000, random_state=42)
-    print X_train.shape, X_test.shape
+    print(X_train.shape, X_test.shape)
     return X_train, X_test
 
 
@@ -233,7 +246,7 @@ def run_algo(args, library, algo, results_fn):
     if algo != 'bf':
         algo.fit(X_train)
     build_time = time.time() - t0
-    print 'Built index in', build_time
+    print('Built index in', build_time)
 
     best_search_time = float('inf')
     best_precision = 0.0 # should be deterministic but paranoid
@@ -247,10 +260,10 @@ def run_algo(args, library, algo, results_fn):
         precision = k / (len(queries) * 10)
         best_search_time = min(best_search_time, search_time)
         best_precision = max(best_precision, precision)
-        print search_time, precision
+        print(search_time, precision)
 
     output = [library, algo.name, build_time, best_search_time, best_precision]
-    print output
+    print(output)
 
     f = open(results_fn, 'a')
     f.write('\t'.join(map(str, output)) + '\n')
@@ -258,7 +271,7 @@ def run_algo(args, library, algo, results_fn):
 
 
 def get_queries(args):
-    print 'computing queries with correct results...'
+    print('computing queries with correct results...')
 
     bf = BruteForce(args.distance)
     X_train, X_test = get_dataset(which=args.dataset, limit=args.limit)
@@ -270,12 +283,12 @@ def get_queries(args):
         correct = bf.query(x, 10)
         queries.append((x, correct))
         if len(queries) % 100 == 0:
-            print len(queries), '...'
+            print(len(queries), '...')
 
     return queries
             
 def get_algos(m):
-    return {
+    algos = {
         'lshf': [LSHF(m, 5, 10), LSHF(m, 5, 20), LSHF(m, 10, 20), LSHF(m, 10, 50), LSHF(m, 20, 100)],
         'flann': [FLANN(m, 0.2), FLANN(m, 0.5), FLANN(m, 0.7), FLANN(m, 0.8), FLANN(m, 0.9), FLANN(m, 0.95), FLANN(m, 0.97), FLANN(m, 0.98), FLANN(m, 0.99), FLANN(m, 0.995)],
         'panns': [PANNS(m, 5, 20), PANNS(m, 10, 10), PANNS(m, 10, 50), PANNS(m, 10, 100), PANNS(m, 20, 100), PANNS(m, 40, 100)],
@@ -289,57 +302,62 @@ def get_algos(m):
         'ball': [BallTree(m, 10), BallTree(m, 20), BallTree(m, 40), BallTree(m, 100), BallTree(m, 200), BallTree(m, 400), BallTree(m, 1000)],
         'kd': [KDTree(m, 10), KDTree(m, 20), KDTree(m, 40), KDTree(m, 100), KDTree(m, 200), KDTree(m, 400), KDTree(m, 1000)],
 
-    # START: Non-Metric Space Library (nmslib) entries
-    'MP-lsh(lshkit)':[
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.99','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.97','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.95','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.90','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.85','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.80','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.7','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.6','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.5','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.4','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.3','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.2','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.1','H=1200001','T=10','L=50','tuneK=10']),
-               ],
+        # START: Non-Metric Space Library (nmslib) entries
+        'bruteforce0(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=0'])],
+        'bruteforce1(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=1'])],
 
-    'bruteforce0(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=0'])],
-    'bruteforce1(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=1'])],
+        'BallTree(nmslib)': [
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.99']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.95']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.90']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.85']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.8']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.7']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.6']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.5']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.4']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.3']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.2']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.1']),
+        ],
 
-    'BallTree(nmslib)': [
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.99', 'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.95', 'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.90', 'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.85', 'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.8',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.7',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.6',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.5',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.4',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.3',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.2',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.1',  'bucketSize=100']),
-                ],
-
-    'SW-graph(nmslib)':[
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=48']),
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=32']),
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=16']),
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=8']),
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=4']),
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=17', 'initIndexAttempts=4', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=14', 'initIndexAttempts=4', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=11', 'initIndexAttempts=5', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=8',  'initIndexAttempts=5', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=5',  'initIndexAttempts=5', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=3',  'initIndexAttempts=5', 'initSearchAttempts=2']),
-               ]
-    # END: Non-Metric Space Library (nmslib) entries
+        'SW-graph(nmslib)':[
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=48']),
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=32']),
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=16']),
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=8']),
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=4']),
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=17', 'initIndexAttempts=4', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=14', 'initIndexAttempts=4', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=11', 'initIndexAttempts=5', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=8',  'initIndexAttempts=5', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=5',  'initIndexAttempts=5', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=3',  'initIndexAttempts=5', 'initSearchAttempts=2']),
+        ]
     }
+
+    if m == 'euclidean':
+        # Only works for euclidean distance
+        algos['MP-lsh(lshkit)'] = [
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.99','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.97','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.95','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.90','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.85','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.80','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.7','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.6','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.5','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.4','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.3','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.2','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.1','H=1200001','T=10','L=50','tuneK=10']),
+        ]
+
+    # END: Non-Metric Space Library (nmslib) entries
+
+    return algos
 
 
 def get_fn(base, args):
@@ -367,7 +385,7 @@ if __name__ == '__main__':
     results_fn = get_fn('results', args)
     queries_fn = get_fn('queries', args)
 
-    print 'storing queries in', queries_fn, 'and results in', results_fn
+    print('storing queries in', queries_fn, 'and results in', results_fn)
 
     if not os.path.exists(queries_fn):
         queries = get_queries(args)
@@ -377,7 +395,7 @@ if __name__ == '__main__':
     else:
         queries = pickle.load(open(queries_fn))
 
-    print 'got', len(queries), 'queries'
+    print('got', len(queries), 'queries')
 
     algos_already_ran = set()
     if os.path.exists(results_fn):
@@ -394,10 +412,10 @@ if __name__ == '__main__':
                 
     random.shuffle(algos_flat)
 
-    print 'order:', algos_flat
+    print('order:', algos_flat)
 
     for library, algo in algos_flat:
-        print algo.name, '...'
+        print(algo.name, '...')
         # Spawn a subprocess to force the memory to be reclaimed at the end
         p = multiprocessing.Process(target=run_algo, args=(args, library, algo, results_fn))
         p.start()
