@@ -184,6 +184,12 @@ class Nmslib(BaseANN):
 
     def fit(self, X):
         import nmslib
+        if self._method_name == 'vptree':
+            # To avoid this issue:
+            # terminate called after throwing an instance of 'std::runtime_error'
+            # what():  The data size is too small or the bucket size is too big. Select the parameters so that <total # of records> is NOT less than <bucket size> * 1000
+            # Aborted (core dumped)
+            self._method_param.append('bucketSize=%d' % min(int(X.shape[0] * 0.0005), 1000))
         self._index = nmslib.initIndex(X.shape[0], self._nmslib_metric, [], self._method_name, self._method_param, nmslib.DataType.VECTOR, nmslib.DistType.FLOAT)
 	
         for i, x in enumerate(X):
@@ -191,9 +197,11 @@ class Nmslib(BaseANN):
         nmslib.buildIndex(self._index)
 
     def query(self, v, n):
+        import nmslib
         return nmslib.knnQuery(self._index, n, v.tolist())
 
     def freeIndex(self):
+        import nmslib
         nmslib.freeIndex(self._index)
 
 
@@ -280,7 +288,7 @@ def get_queries(args):
     return queries
             
 def get_algos(m):
-    return {
+    algos = {
         'lshf': [LSHF(m, 5, 10), LSHF(m, 5, 20), LSHF(m, 10, 20), LSHF(m, 10, 50), LSHF(m, 20, 100)],
         'flann': [FLANN(m, 0.2), FLANN(m, 0.5), FLANN(m, 0.7), FLANN(m, 0.8), FLANN(m, 0.9), FLANN(m, 0.95), FLANN(m, 0.97), FLANN(m, 0.98), FLANN(m, 0.99), FLANN(m, 0.995)],
         'panns': [PANNS(m, 5, 20), PANNS(m, 10, 10), PANNS(m, 10, 50), PANNS(m, 10, 100), PANNS(m, 20, 100), PANNS(m, 40, 100)],
@@ -294,57 +302,62 @@ def get_algos(m):
         'ball': [BallTree(m, 10), BallTree(m, 20), BallTree(m, 40), BallTree(m, 100), BallTree(m, 200), BallTree(m, 400), BallTree(m, 1000)],
         'kd': [KDTree(m, 10), KDTree(m, 20), KDTree(m, 40), KDTree(m, 100), KDTree(m, 200), KDTree(m, 400), KDTree(m, 1000)],
 
-    # START: Non-Metric Space Library (nmslib) entries
-    'MP-lsh(lshkit)':[
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.99','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.97','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.95','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.90','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.85','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.80','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.7','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.6','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.5','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.4','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.3','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.2','H=1200001','T=10','L=50','tuneK=10']),
-                Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.1','H=1200001','T=10','L=50','tuneK=10']),
-               ],
+        # START: Non-Metric Space Library (nmslib) entries
+        'bruteforce0(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=0'])],
+        'bruteforce1(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=1'])],
 
-    'bruteforce0(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=0'])],
-    'bruteforce1(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=1'])],
+        'BallTree(nmslib)': [
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.99']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.95']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.90']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.85']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.8']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.7']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.6']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.5']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.4']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.3']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.2']),
+            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.1']),
+        ],
 
-    'BallTree(nmslib)': [
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.99', 'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.95', 'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.90', 'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.85', 'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.8',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.7',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.6',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.5',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.4',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.3',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.2',  'bucketSize=100']),
-                  Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.1',  'bucketSize=100']),
-                ],
-
-    'SW-graph(nmslib)':[
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=48']),
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=32']),
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=16']),
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=8']),
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=4']),
-                Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=17', 'initIndexAttempts=4', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=14', 'initIndexAttempts=4', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=11', 'initIndexAttempts=5', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=8',  'initIndexAttempts=5', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=5',  'initIndexAttempts=5', 'initSearchAttempts=2']),
-                Nmslib(m, 'small_world_rand', ['NN=3',  'initIndexAttempts=5', 'initSearchAttempts=2']),
-               ]
-    # END: Non-Metric Space Library (nmslib) entries
+        'SW-graph(nmslib)':[
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=48']),
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=32']),
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=16']),
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=8']),
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=4']),
+            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=17', 'initIndexAttempts=4', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=14', 'initIndexAttempts=4', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=11', 'initIndexAttempts=5', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=8',  'initIndexAttempts=5', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=5',  'initIndexAttempts=5', 'initSearchAttempts=2']),
+            Nmslib(m, 'small_world_rand', ['NN=3',  'initIndexAttempts=5', 'initSearchAttempts=2']),
+        ]
     }
+
+    if m == 'euclidean':
+        # Only works for euclidean distance
+        algos['MP-lsh(lshkit)'] = [
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.99','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.97','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.95','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.90','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.85','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.80','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.7','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.6','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.5','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.4','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.3','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.2','H=1200001','T=10','L=50','tuneK=10']),
+            Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.1','H=1200001','T=10','L=50','tuneK=10']),
+        ]
+
+    # END: Non-Metric Space Library (nmslib) entries
+
+    return algos
 
 
 def get_fn(base, args):
