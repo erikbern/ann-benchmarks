@@ -1,5 +1,5 @@
 apt-get update
-apt-get install -y python-numpy python-scipy python-pip python-nose
+apt-get install -y python-numpy python-scipy python-pip python-nose build-essential
 pip install scikit-learn
 
 # Install GCC 4.8
