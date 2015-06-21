@@ -1,3 +1,6 @@
+.. image:: https://img.shields.io/travis/erikbern/ann-benchmarks/master.svg?style=flat
+    :target: https://travis-ci.org/erikbern/ann-benchmarks
+
 Benchmarking nearest neighbors
 ------------------------------
 
@@ -63,6 +66,11 @@ This is very much a work in progress... more results coming later!
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/sift.png
    :align: center
+
+Testing
+-------
+
+The project is fully tested using Travis, with unit tests run for all different libraries and algorithms.
 
 References
 ----------
