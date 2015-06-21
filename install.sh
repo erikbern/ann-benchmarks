@@ -6,6 +6,7 @@ pip install scikit-learn
 add-apt-repository ppa:ubuntu-toolchain-r/test -y
 apt-get update -qq
 apt-get install -y libboost1.48-all-dev g++-4.8
+apt-get autoremove -y
 export CXX="g++-4.8" CC="gcc-4.8"
 
 cd install
