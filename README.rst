@@ -62,7 +62,7 @@ This is very much a work in progress... more results coming later!
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/glove.png
    :align: center
 
-1M SIFT features (128 dimensions), Euclidean distance, also run on a c4.4xlarge:
+1M SIFT features (128 dimensions), Euclidean distance, run on an m1.large:
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/sift.png
    :align: center
