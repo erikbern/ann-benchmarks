@@ -41,3 +41,21 @@ flann	FLANN(target_precision=0.700000)	933.616957188	0.00032758307457	0.3938
 lshf	LSHF(n_est=10, n_cand=20)	108.113799095	0.11187720108	0.2002
 annoy	Annoy(n_trees=10, n_cand=200)	62.2008860111	0.0013605530262	0.6785
 MP-lsh(lshkit)	Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.2', 'H=1200001', 'T=10', 'L=50', 'tuneK=10'])	397.121582031	0.00060756278038	0.2097
+nearpy	NearPy(n_bits=10, hash_counts=40)	2474.28863001	6.2274943409	0.9929
+MP-lsh(lshkit)	Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.80', 'H=1200001', 'T=10', 'L=50', 'tuneK=10'])	394.988795996	0.00361166095734	0.8267
+nearpy	NearPy(n_bits=16, hash_counts=25)	1724.66850114	1.17157335806	0.9182
+BallTree(nmslib)	Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.6'])	108.414122105	0.00324291110039	0.6974
+BallTree(nmslib)	Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.2'])	113.602307081	0.000399894952774	0.3003
+annoy	Annoy(n_trees=10, n_cand=10)	59.4737200737	0.000173429965973	0.1901
+MP-lsh(lshkit)	Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.97', 'H=1200001', 'T=10', 'L=50', 'tuneK=10'])	381.748559952	0.0220965549946	0.9855
+nearpy	NearPy(n_bits=16, hash_counts=30)	2038.76202297	1.14026958609	0.9243
+lshf	LSHF(n_est=20, n_cand=100)	211.618880033	0.305420207977	0.3443
+nearpy	NearPy(n_bits=12, hash_counts=10)	698.346647978	1.11948386407	0.8325
+SW-graph(nmslib)	Nmslib(method_name=small_world_rand, method_param=['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=32'])	933.527738094	0.0259697601795	0.9991
+MP-lsh(lshkit)	Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.85', 'H=1200001', 'T=10', 'L=50', 'tuneK=10'])	401.416086197	0.00589214491844	0.8892
+annoy	Annoy(n_trees=3, n_cand=10)	22.7788422108	9.09140110016e-05	0.1236
+lshf	LSHF(n_est=5, n_cand=10)	58.8162090778	0.0555821430683	0.1205
+nearpy	NearPy(n_bits=16, hash_counts=40)	2689.25678992	1.5009472332	0.9558
+flann	FLANN(target_precision=0.500000)	909.874325991	0.000199952125549	0.2007
+bruteforce	BruteForce()	0.203589916229	0.744261413097	1.0
+flann	FLANN(target_precision=0.970000)	1713.85552406	0.00541697478294	0.8703
