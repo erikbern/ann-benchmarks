@@ -60,3 +60,80 @@ flann	FLANN(target_precision=0.500000)	909.874325991	0.000199952125549	0.2007
 bruteforce	BruteForce()	0.203589916229	0.744261413097	1.0
 flann	FLANN(target_precision=0.970000)	1713.85552406	0.00541697478294	0.8703
 nearpy	NearPy(n_bits=16, hash_counts=5)	420.568459034	0.211184137106	0.4588
+nearpy	NearPy(n_bits=16, hash_counts=50)	3335.673141	1.60587169194	0.9699
+annoy	Annoy(n_trees=20, n_cand=400)	113.179023981	0.00473741889	0.925
+annoy	Annoy(n_trees=10, n_cand=40)	62.0165829659	0.000408014059067	0.3713
+kd	KDTree(leaf_size=20)	54.7905271053	0.391674235106	0.9992
+kgraph	KGraph(P=100)	1022.17784786	0.00298425602913	0.954
+SW-graph(nmslib)	Nmslib(method_name=small_world_rand, method_param=['NN=11', 'initIndexAttempts=5', 'initSearchAttempts=2'])	621.861545086	0.00128862380981	0.9061
+nearpy	NearPy(n_bits=14, hash_counts=40)	2606.89685202	2.12815844798	0.9797
+ball	BallTree(leaf_size=10)	58.0772910118	0.38312334609	0.9995
+kd	KDTree(leaf_size=40)	51.8140120506	0.382120043993	0.9993
+panns	PANNS(n_trees=10, n_cand=10)	1581.87397599	0.0220794050694	0.1583
+annoy	Annoy(n_trees=10, n_cand=100)	58.8784108162	0.000809909105301	0.5389
+nearpy	NearPy(n_bits=12, hash_counts=40)	2533.732831	3.96225451398	0.9905
+MP-lsh(lshkit)	Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.7', 'H=1200001', 'T=10', 'L=50', 'tuneK=10'])	381.143103123	0.00196147799492	0.7232
+SW-graph(nmslib)	Nmslib(method_name=small_world_rand, method_param=['NN=5', 'initIndexAttempts=5', 'initSearchAttempts=2'])	337.453510046	0.000724517822266	0.7058
+ball	BallTree(leaf_size=20)	54.970717907	0.398630247116	0.9992
+MP-lsh(lshkit)	Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.1', 'H=1200001', 'T=10', 'L=50', 'tuneK=10'])	398.858729124	0.000603433847427	0.1151
+flann	FLANN(target_precision=0.900000)	1058.86594605	0.000976017951965	0.6837
+lshf	LSHF(n_est=10, n_cand=50)	109.223716974	0.135463000059	0.2174
+nearpy	NearPy(n_bits=16, hash_counts=20)	1373.54076791	0.632205318928	0.8346
+kd	KDTree(leaf_size=1000)	43.3759479523	0.483933795929	0.9992
+nearpy	NearPy(n_bits=16, hash_counts=15)	1078.49193501	0.702182641983	0.7996
+flann	FLANN(target_precision=0.950000)	1184.53669715	0.00199439096451	0.8356
+BallTree(nmslib)	Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.95'])	175.497577906	0.0166156308651	0.9719
+bruteforce0(nmslib)	Nmslib(method_name=seq_search, method_param=['copyMem=0'])	6.95027899742	0.290548867941	0.9991
+BallTree(nmslib)	Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.90'])	169.708508968	0.0120907201767	0.936
+nearpy	NearPy(n_bits=14, hash_counts=5)	410.33930707	0.352554181099	0.5546
+SW-graph(nmslib)	Nmslib(method_name=small_world_rand, method_param=['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=16'])	928.201787949	0.0149790508747	0.9988
+MP-lsh(lshkit)	Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.99', 'H=1200001', 'T=10', 'L=50', 'tuneK=10'])	382.155314207	0.0376665129662	0.9969
+nearpy	NearPy(n_bits=10, hash_counts=5)	382.228471994	1.47328812504	0.7605
+bruteforce1(nmslib)	Nmslib(method_name=seq_search, method_param=['copyMem=1'])	7.53654003143	0.144334431887	0.9989
+annoy	Annoy(n_trees=20, n_cand=200)	113.895729065	0.00259014105797	0.8433
+annoy	Annoy(n_trees=20, n_cand=100)	114.120355844	0.0014716758728	0.7197
+kgraph	KGraph(P=500)	1039.11510897	0.0102220199108	0.9879
+annoy	Annoy(n_trees=5, n_cand=20)	35.5056920052	0.000143018960953	0.1748
+MP-lsh(lshkit)	Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.3', 'H=1200001', 'T=10', 'L=50', 'tuneK=10'])	430.296798944	0.000708459854126	0.3092
+BallTree(nmslib)	Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.3'])	144.670022964	0.000769559144974	0.4259
+annoy	Annoy(n_trees=3, n_cand=40)	25.9746451378	0.000159515857697	0.176
+annoy	Annoy(n_trees=10, n_cand=2000)	64.7669329643	0.0113140749931	0.9669
+annoy	Annoy(n_trees=100, n_cand=100)	553.508510113	0.00621367001534	0.972
+SW-graph(nmslib)	Nmslib(method_name=small_world_rand, method_param=['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=4'])	941.252451897	0.00396639299393	0.9911
+MP-lsh(lshkit)	Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.5', 'H=1200001', 'T=10', 'L=50', 'tuneK=10'])	401.393885851	0.000928261995316	0.5149
+SW-graph(nmslib)	Nmslib(method_name=small_world_rand, method_param=['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=8'])	900.629418135	0.0076773018837	0.9978
+panns	PANNS(n_trees=10, n_cand=50)	1598.389709	0.0224274821281	0.1636
+annoy	Annoy(n_trees=3, n_cand=100)	26.9759340286	0.000283116102219	0.2595
+panns	PANNS(n_trees=40, n_cand=100)	6548.05956101	0.0897572069168	0.3936
+annoy	Annoy(n_trees=100, n_cand=400)	561.695483923	0.019189139843	0.9973
+annoy	Annoy(n_trees=100, n_cand=200)	545.720282078	0.0106260740757	0.9914
+annoy	Annoy(n_trees=5, n_cand=200)	36.0275819302	0.000736577033997	0.4876
+annoy	Annoy(n_trees=3, n_cand=200)	26.6086018085	0.00048787689209	0.357
+kgraph	KGraph(P=1000)	1031.30931115	0.0190010330677	0.9943
+annoy	Annoy(n_trees=100, n_cand=4000)	548.153949022	0.107761051893	0.999
+annoy	Annoy(n_trees=40, n_cand=200)	220.437235832	0.00472798800468	0.9457
+annoy	Annoy(n_trees=10, n_cand=20)	63.1254389286	0.000255187034607	0.2692
+annoy	Annoy(n_trees=5, n_cand=400)	36.6194620132	0.00142077612877	0.6206
+annoy	Annoy(n_trees=40, n_cand=40)	225.993699074	0.00139087796211	0.7243
+annoy	Annoy(n_trees=20, n_cand=40)	116.629197121	0.000730456113815	0.5426
+annoy	Annoy(n_trees=100, n_cand=10000)	548.314074993	0.219961977959	0.999
+BallTree(nmslib)	Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.99'])	245.529902935	0.0277303571701	0.9942
+SW-graph(nmslib)	Nmslib(method_name=small_world_rand, method_param=['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=48'])	936.864511013	0.0368707208633	0.9994
+annoy	Annoy(n_trees=20, n_cand=1000)	115.633155107	0.0105802659988	0.9812
+annoy	Annoy(n_trees=40, n_cand=4000)	222.218369961	0.0578242630959	0.999
+annoy	Annoy(n_trees=40, n_cand=400)	221.916517973	0.00909742093086	0.9814
+annoy	Annoy(n_trees=3, n_cand=20)	25.9104750156	0.000106982946396	0.1331
+annoy	Annoy(n_trees=100, n_cand=2000)	546.910485983	0.0644404001236	0.999
+annoy	Annoy(n_trees=20, n_cand=2000)	119.492213011	0.0198112020493	0.9949
+annoy	Annoy(n_trees=5, n_cand=100)	37.8151938915	0.000441301107407	0.3683
+annoy	Annoy(n_trees=100, n_cand=1000)	541.816176176	0.0383142199516	0.999
+BallTree(nmslib)	Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.8'])	138.130925894	0.00681255984306	0.8698
+MP-lsh(lshkit)	Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.6', 'H=1200001', 'T=10', 'L=50', 'tuneK=10'])	396.077006102	0.00122037315369	0.6238
+annoy	Annoy(n_trees=40, n_cand=100)	221.99405098	0.00283836507797	0.8719
+nearpy	NearPy(n_bits=16, hash_counts=10)	716.374135971	0.427151757002	0.6823
+annoy	Annoy(n_trees=40, n_cand=2000)	222.457479	0.0329488708973	0.9983
+nearpy	NearPy(n_bits=10, hash_counts=10)	682.398884058	2.11921111584	0.9201
+annoy	Annoy(n_trees=20, n_cand=4000)	116.190145969	0.0344106361866	0.9986
+annoy	Annoy(n_trees=5, n_cand=40)	34.8123970032	0.000209527015686	0.2444
+BallTree(nmslib)	Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.4'])	99.4204790592	0.00121621203423	0.519
+annoy	Annoy(n_trees=40, n_cand=1000)	219.27146697	0.0184295670986	0.9966
