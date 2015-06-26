@@ -44,6 +44,7 @@ class BallTree(BaseANN):
         self._metric = metric
 
     def fit(self, X):
+        import sklearn.neighbors
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._tree = sklearn.neighbors.BallTree(X, leaf_size=self._leaf_size)
@@ -62,6 +63,7 @@ class KDTree(BaseANN):
         self._metric = metric
 
     def fit(self, X):
+        import sklearn.neighbors
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._tree = sklearn.neighbors.KDTree(X, leaf_size=self._leaf_size)
@@ -93,11 +95,11 @@ class FLANN(BaseANN):
 
 
 class Annoy(BaseANN):
-    def __init__(self, metric, n_trees, n_candidates):
+    def __init__(self, metric, n_trees, search_k):
         self._n_trees = n_trees
-        self._n_candidates = n_candidates
+        self._search_k = search_k
         self._metric = metric
-        self.name = 'Annoy(n_trees=%d, n_cand=%d)' % (n_trees, n_candidates)
+        self.name = 'Annoy(n_trees=%d, search_k=%d)' % (n_trees, search_k)
 
     def fit(self, X):
         import annoy
@@ -107,7 +109,7 @@ class Annoy(BaseANN):
         self._annoy.build(self._n_trees)
 
     def query(self, v, n):
-        return self._annoy.get_nns_by_vector(v.tolist(), self._n_candidates)[:n]
+        return self._annoy.get_nns_by_vector(v.tolist(), n, self._search_k)
 
 
 class PANNS(BaseANN):
@@ -292,11 +294,16 @@ def get_algos(m):
         'lshf': [LSHF(m, 5, 10), LSHF(m, 5, 20), LSHF(m, 10, 20), LSHF(m, 10, 50), LSHF(m, 20, 100)],
         'flann': [FLANN(m, 0.2), FLANN(m, 0.5), FLANN(m, 0.7), FLANN(m, 0.8), FLANN(m, 0.9), FLANN(m, 0.95), FLANN(m, 0.97), FLANN(m, 0.98), FLANN(m, 0.99), FLANN(m, 0.995)],
         'panns': [PANNS(m, 5, 20), PANNS(m, 10, 10), PANNS(m, 10, 50), PANNS(m, 10, 100), PANNS(m, 20, 100), PANNS(m, 40, 100)],
-        'annoy': [Annoy(m, 3, 10), Annoy(m, 5, 25), Annoy(m, 10, 10), Annoy(m, 10, 40), Annoy(m, 10, 100), Annoy(m, 10, 200), Annoy(m, 10, 400), Annoy(m, 10, 1000), Annoy(m, 20, 20), Annoy(m, 20, 100), Annoy(m, 20, 200), Annoy(m, 20, 400), Annoy(m, 40, 40), Annoy(m, 40, 100), Annoy(m, 40, 400), Annoy(m, 100, 100), Annoy(m, 100, 200), Annoy(m, 100, 400), Annoy(m, 100, 1000)],
-        'nearpy': [NearPy(m, 10, 5), NearPy(m, 10, 10), NearPy(m, 10, 20), NearPy(m, 10, 40), NearPy(m, 10, 100),
-                   NearPy(m, 12, 5), NearPy(m, 12, 10), NearPy(m, 12, 20), NearPy(m, 12, 40), NearPy(m, 12, 100),
-                   NearPy(m, 14, 5), NearPy(m, 14, 10), NearPy(m, 14, 20), NearPy(m, 14, 40), NearPy(m, 14, 100),
-                   NearPy(m, 16, 5), NearPy(m, 16, 10), NearPy(m, 16, 15), NearPy(m, 16, 20), NearPy(m, 16, 25), NearPy(m, 16, 30), NearPy(m, 16, 40), NearPy(m, 16, 50), NearPy(m, 16, 70), NearPy(m, 16, 90), NearPy(m, 16, 120), NearPy(m, 16, 150)],
+        'annoy': [Annoy(m, 3, 100), Annoy(m, 3, 200), Annoy(m, 3, 400), Annoy(m, 3, 1000),
+                  Annoy(m, 5, 200), Annoy(m, 5, 400), Annoy(m, 5, 1000), Annoy(m, 5, 2000),
+                  Annoy(m, 10, 200), Annoy(m, 10, 400), Annoy(m, 10, 1000), Annoy(m, 10, 2000), Annoy(m, 10, 4000), Annoy(m, 10, 10000), Annoy(m, 10, 20000), Annoy(m, 10, 40000), Annoy(m, 10, 100000),
+                  Annoy(m, 20, 200), Annoy(m, 20, 400), Annoy(m, 20, 1000), Annoy(m, 20, 2000), Annoy(m, 20, 4000), Annoy(m, 20, 10000), Annoy(m, 20, 20000), Annoy(m, 20, 40000), Annoy(m, 20, 100000),
+                  Annoy(m, 40, 200), Annoy(m, 40, 400), Annoy(m, 40, 1000), Annoy(m, 40, 2000), Annoy(m, 40, 4000), Annoy(m, 40, 10000), Annoy(m, 40, 20000), Annoy(m, 40, 40000), Annoy(m, 40, 100000),
+                  Annoy(m, 100, 200), Annoy(m, 100, 400), Annoy(m, 100, 1000), Annoy(m, 100, 2000), Annoy(m, 100, 4000), Annoy(m, 100, 10000), Annoy(m, 100, 20000), Annoy(m, 100, 40000), Annoy(m, 100, 100000)],
+        'nearpy': [NearPy(m, 10, 5), NearPy(m, 10, 10), NearPy(m, 10, 20), NearPy(m, 10, 40), # NearPy(m, 10, 100),
+                   NearPy(m, 12, 5), NearPy(m, 12, 10), NearPy(m, 12, 20), NearPy(m, 12, 40), # NearPy(m, 12, 100),
+                   NearPy(m, 14, 5), NearPy(m, 14, 10), NearPy(m, 14, 20), NearPy(m, 14, 40), # NearPy(m, 14, 100),
+                   NearPy(m, 16, 5), NearPy(m, 16, 10), NearPy(m, 16, 15), NearPy(m, 16, 20), NearPy(m, 16, 25), NearPy(m, 16, 30), NearPy(m, 16, 40)], #, NearPy(m, 16, 50), NearPy(m, 16, 70), NearPy(m, 16, 90), NearPy(m, 16, 120), NearPy(m, 16, 150)],
         'kgraph': [KGraph(m, 20), KGraph(m, 50), KGraph(m, 100), KGraph(m, 200), KGraph(m, 500), KGraph(m, 1000)],
         'bruteforce': [BruteForce(m)],
         'ball': [BallTree(m, 10), BallTree(m, 20), BallTree(m, 40), BallTree(m, 100), BallTree(m, 200), BallTree(m, 400), BallTree(m, 1000)],
@@ -400,14 +407,15 @@ if __name__ == '__main__':
     algos_already_ran = set()
     if os.path.exists(results_fn):
         for line in open(results_fn):
-            algos_already_ran.add(line.strip().split('\t')[1])
+            library, algo_name = line.strip().split('\t')[:2]
+            algos_already_ran.add((library, algo_name))
             
     algos = get_algos(args.distance)
     algos_flat = []
 
     for library in algos.keys():
         for algo in algos[library]:
-            if algo.name not in algos_already_ran:
+            if (library, algo.name) not in algos_already_ran:
                 algos_flat.append((library, algo))
                 
     random.shuffle(algos_flat)
