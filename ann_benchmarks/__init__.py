@@ -294,17 +294,12 @@ def get_algos(m):
         'lshf': [LSHF(m, 5, 10), LSHF(m, 5, 20), LSHF(m, 10, 20), LSHF(m, 10, 50), LSHF(m, 20, 100)],
         'flann': [FLANN(m, 0.2), FLANN(m, 0.5), FLANN(m, 0.7), FLANN(m, 0.8), FLANN(m, 0.9), FLANN(m, 0.95), FLANN(m, 0.97), FLANN(m, 0.98), FLANN(m, 0.99), FLANN(m, 0.995)],
         'panns': [PANNS(m, 5, 20), PANNS(m, 10, 10), PANNS(m, 10, 50), PANNS(m, 10, 100), PANNS(m, 20, 100), PANNS(m, 40, 100)],
-        'annoy': [Annoy(m, 3, 100), Annoy(m, 3, 200), Annoy(m, 3, 400), Annoy(m, 3, 1000),
-                  Annoy(m, 5, 200), Annoy(m, 5, 400), Annoy(m, 5, 1000), Annoy(m, 5, 2000),
-                  Annoy(m, 10, 200), Annoy(m, 10, 400), Annoy(m, 10, 1000), Annoy(m, 10, 2000), Annoy(m, 10, 4000), Annoy(m, 10, 10000), Annoy(m, 10, 20000), Annoy(m, 10, 40000), Annoy(m, 10, 100000),
-                  Annoy(m, 20, 200), Annoy(m, 20, 400), Annoy(m, 20, 1000), Annoy(m, 20, 2000), Annoy(m, 20, 4000), Annoy(m, 20, 10000), Annoy(m, 20, 20000), Annoy(m, 20, 40000), Annoy(m, 20, 100000),
-                  Annoy(m, 40, 200), Annoy(m, 40, 400), Annoy(m, 40, 1000), Annoy(m, 40, 2000), Annoy(m, 40, 4000), Annoy(m, 40, 10000), Annoy(m, 40, 20000), Annoy(m, 40, 40000), Annoy(m, 40, 100000),
-                  Annoy(m, 100, 200), Annoy(m, 100, 400), Annoy(m, 100, 1000), Annoy(m, 100, 2000), Annoy(m, 100, 4000), Annoy(m, 100, 10000), Annoy(m, 100, 20000), Annoy(m, 100, 40000), Annoy(m, 100, 100000)],
+        'annoy': [Annoy(m, n_trees, search_k) for n_trees in [3, 5, 10, 20, 40, 100, 200, 400] for search_k in [100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000, 100000, 200000, 400000]],
         'nearpy': [NearPy(m, 10, 5), NearPy(m, 10, 10), NearPy(m, 10, 20), NearPy(m, 10, 40), # NearPy(m, 10, 100),
                    NearPy(m, 12, 5), NearPy(m, 12, 10), NearPy(m, 12, 20), NearPy(m, 12, 40), # NearPy(m, 12, 100),
                    NearPy(m, 14, 5), NearPy(m, 14, 10), NearPy(m, 14, 20), NearPy(m, 14, 40), # NearPy(m, 14, 100),
                    NearPy(m, 16, 5), NearPy(m, 16, 10), NearPy(m, 16, 15), NearPy(m, 16, 20), NearPy(m, 16, 25), NearPy(m, 16, 30), NearPy(m, 16, 40)], #, NearPy(m, 16, 50), NearPy(m, 16, 70), NearPy(m, 16, 90), NearPy(m, 16, 120), NearPy(m, 16, 150)],
-        'kgraph': [KGraph(m, 20), KGraph(m, 50), KGraph(m, 100), KGraph(m, 200), KGraph(m, 500), KGraph(m, 1000)],
+        'kgraph': [KGraph(m, 20), KGraph(m, 50), KGraph(m, 100), KGraph(m, 200), KGraph(m, 500), KGraph(m, 1000), KGraph(m, 2000), KGraph(m, 4000), KGraph(m, 10000)],
         'bruteforce': [BruteForce(m)],
         'ball': [BallTree(m, 10), BallTree(m, 20), BallTree(m, 40), BallTree(m, 100), BallTree(m, 200), BallTree(m, 400), BallTree(m, 1000)],
         'kd': [KDTree(m, 10), KDTree(m, 20), KDTree(m, 40), KDTree(m, 100), KDTree(m, 200), KDTree(m, 400), KDTree(m, 1000)],
@@ -420,7 +415,7 @@ if __name__ == '__main__':
                 
     random.shuffle(algos_flat)
 
-    print('order:', algos_flat)
+    print('order:', [a.name for l, a in algos_flat])
 
     for library, algo in algos_flat:
         print(algo.name, '...')
