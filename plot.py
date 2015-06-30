@@ -26,7 +26,7 @@ for algo, color in zip(all_data.keys(), colors):
     ys = [1.0 / t[-2] for t in data] # queries per second
     xs = [t[-1] for t in data]
     ls = [t[0] for t in data]
-    plt.plot(xs, ys, 'o', label=algo, color=color, markersize=3)
+    plt.plot(xs, ys, 'x', label=algo, color=color, markersize=2)
     #for i, l in enumerate(ls):
     #    plt.annotate(ls[i], (xs[i], ys[i]), color='lightgray', fontsize=8)
 
@@ -39,7 +39,7 @@ for algo, color in zip(all_data.keys(), colors):
             last_y = y
             xs.append(t[-1])
             ys.append(1.0 / t[-2])
-    handle, = plt.plot(xs, ys, 'o-', label=algo, color=color)
+    handle, = plt.plot(xs, ys, 'x-', label=algo, color=color, markersize=3)
     handles.append(handle)
     labels.append(algo)
 
