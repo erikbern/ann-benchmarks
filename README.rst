@@ -57,12 +57,12 @@ Results
 
 This is very much a work in progress... more results coming later!
 
-1.19M vectors from GloVe (100 dimensions, trained from tweets), cosine similarity, run on a c4.4xlarge instance on EC2.
+1.19M vectors from GloVe (100 dimensions, trained from tweets), cosine similarity, run on an m1.xlarge instance on EC2.
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/glove.png
    :align: center
 
-1M SIFT features (128 dimensions), Euclidean distance, run on an m1.large:
+1M SIFT features (128 dimensions), Euclidean distance, run on an m1.xlarge:
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/sift.png
    :align: center
