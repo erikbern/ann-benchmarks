@@ -20,7 +20,7 @@ colors = plt.cm.rainbow(numpy.linspace(0, 1, len(all_data)))
 handles = []
 labels = []
 
-for algo, color in zip(all_data.keys(), colors):
+for algo, color in zip(sorted(all_data.keys()), colors):
     data = all_data[algo]
     data.sort(key=lambda t: t[-2]) # sort by time
     ys = [1.0 / t[-2] for t in data] # queries per second
