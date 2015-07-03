@@ -31,7 +31,7 @@ Doing fast searching of nearest neighbors in high dimensional spaces is an incre
 Install
 -------
 
-Clone the repo and run ``bash install.sh``. This will install all libraries. It could take a while. It has been tested in Ubuntu 14.04.
+Clone the repo and run ``bash install.sh``. This will install all libraries. It could take a while. It has been tested in Ubuntu 12.04 and 14.04.
 
 To download and preprocess the data sets, run ``bash install/glove.sh`` and ``bash install/sift.sh``.
 
