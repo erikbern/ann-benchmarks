@@ -12,7 +12,7 @@ export CXX="g++-4.8" CC="gcc-4.8"
 pip install scikit-learn
 
 cd install
-for fn in annoy.sh panns.sh nearpy.sh sklearn.sh flann.sh kgraph.sh nmslib.sh
+for fn in annoy.sh panns.sh nearpy.sh sklearn.sh flann.sh kgraph.sh nmslib.sh rpforest.sh
 do
     source $fn
 done

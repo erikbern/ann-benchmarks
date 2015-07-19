@@ -207,6 +207,19 @@ class Nmslib(BaseANN):
         nmslib.freeIndex(self._index)
 
 
+class RPForest(BaseANN):
+    def __init__(self, leaf_size, n_trees):
+        from rpforest import RPForest
+        self.name = 'RPForest(leaf_size=%d, n_trees=%d)' % (leaf_size, n_trees)
+        self._model = RPForest(leaf_size=leaf_size, no_trees=n_trees)
+
+    def fit(self, X):
+        self._model.fit(X)
+
+    def query(self, v, n):
+        return self._model.query(v, n)
+
+
 class BruteForce(BaseANN):
     def __init__(self, metric):
         self._metric = metric
@@ -358,6 +371,10 @@ def get_algos(m):
         ]
 
     # END: Non-Metric Space Library (nmslib) entries
+
+    if m == 'angular':
+        # RPForest only works for cosine
+        algos['rpforest'] = [RPForest(leaf_size, n_trees) for n_trees in [3, 5, 10, 20, 40, 100, 200, 400] for leaf_size in [3, 5, 10, 20, 40, 100, 200, 400]]
 
     return algos
 
