@@ -16,6 +16,7 @@ Evaluated
 * `NearPy <http://nearpy.io>`__
 * `KGraph <https://github.com/aaalgo/kgraph>`__
 * `NonMetricSpaceLib <https://github.com/searchivarius/NonMetricSpaceLib>`__
+* `RPForest <https://github.com/lyst/rpforest>`__
 
 Data sets
 ---------
@@ -57,7 +58,7 @@ Results
 
 This is very much a work in progress... more results coming later!
 
-1.19M vectors from GloVe (100 dimensions, trained from tweets), cosine similarity, run on an m1.xlarge instance on EC2.
+1.19M vectors from GloVe (100 dimensions, trained from tweets), cosine similarity, run on an c2.4xlarge instance on EC2.
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/glove.png
    :align: center
