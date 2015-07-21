@@ -12,6 +12,7 @@ if soft == resource.RLIM_INFINITY or soft >= memory_limit:
     print('resetting memory limit from', soft, 'to', memory_limit)
     resource.setrlimit(resource.RLIMIT_DATA, (memory_limit, hard))
 
+os.environ['OMP_THREAD_LIMIT'] = '1' # just to limit number of processors                                                                                                                                                                    
 
 class BaseANN(object):
     pass
