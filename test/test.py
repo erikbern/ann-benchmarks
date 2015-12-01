@@ -6,7 +6,7 @@ import warnings
 import multiprocessing
 
 # Generate dataset
-X, labels_true = make_blobs(n_samples=10000, n_features=10,
+X, labels_true = make_blobs(n_samples=10000, n_features=12,
                             centers=10, cluster_std=5,
                             random_state=0)
 
