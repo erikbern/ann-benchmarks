@@ -58,7 +58,7 @@ Results
 
 This is very much a work in progress... more results coming later!
 
-1.19M vectors from GloVe (100 dimensions, trained from tweets), cosine similarity, run on an c2.4xlarge instance on EC2.
+1.19M vectors from GloVe (100 dimensions, trained from tweets), cosine similarity, run on an c4.2xlarge instance on EC2.
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/glove.png
    :align: center
