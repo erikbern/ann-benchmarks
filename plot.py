@@ -32,7 +32,7 @@ for fn_in, fn_out in zip(args.input, args.output):
     handles = []
     labels = []
 
-    plt.clf()
+    plt.figure(figsize=(7, 7))
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
         data = all_data[algo]
         data.sort(key=lambda t: t[-2]) # sort by time
@@ -60,7 +60,7 @@ for fn_in, fn_out in zip(args.input, args.output):
     plt.gca().set_xlabel('10-NN precision - larger is better')
     box = plt.gca().get_position()
     # plt.gca().set_position([box.x0, box.y0, box.width * 0.8, box.height])
-    plt.gca().legend(handles, labels, loc='center left', bbox_to_anchor=(1, 0.5))
-    plt.grid(b=True, which='both', color='0.65',linestyle='-')
+    plt.gca().legend(handles, labels, loc='center left', bbox_to_anchor=(1, 0.5), prop={'size': 9})
+    plt.grid(b=True, which='major', color='0.65',linestyle='-')
     plt.xlim([0.0, 1.03])
     plt.savefig(fn_out, bbox_inches='tight')
