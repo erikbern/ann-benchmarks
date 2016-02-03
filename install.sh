@@ -1,5 +1,5 @@
 apt-get update
-apt-get install -y python-numpy python-scipy python-pip python-nose build-essential software-properties-common
+apt-get install -y python-numpy python-scipy python-pip python-nose build-essential software-properties-common unzip
 
 # Install GCC 4.8
 add-apt-repository ppa:ubuntu-toolchain-r/test -y
