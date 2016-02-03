@@ -9,6 +9,6 @@ if [ ! -f /usr/lib/openblas-base ]; then
 fi
 
 cd kgraph
-make libkgraph.a python
+make CC=$CC libkgraph.a python
 sudo cp python/pykgraph.so /usr/local/lib/python2.7/dist-packages
 cd ..
