@@ -237,8 +237,11 @@ class BruteForce(BaseANN):
 
 
 def get_dataset(which='glove', limit=-1):
-    local_fn = os.path.join('install', which + '.txt')
-    f = open(local_fn)
+    local_fn = os.path.join('install', which)
+    if os.path.exists(local_fn + '.gz'):
+        f = gzip.open(local_fn + '.gz')
+    else:
+        f = open(local_fn + '.txt')
 
     X = []
     for i, line in enumerate(f):
@@ -385,7 +388,10 @@ def get_fn(base, args):
 
     if args.limit != -1:
         fn += '-%d' % args.limit
-    fn += '.txt'
+    if os.path.exists(fn + '.gz'):
+        fn += '.gz'
+    else:
+        fn += '.txt'
 
     d = os.path.dirname(fn)
     if not os.path.exists(d):
@@ -422,7 +428,7 @@ if __name__ == '__main__':
         for line in open(results_fn):
             library, algo_name = line.strip().split('\t')[:2]
             algos_already_ran.add((library, algo_name))
-            
+
     algos = get_algos(args.distance)
     algos_flat = []
 
