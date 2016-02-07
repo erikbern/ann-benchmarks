@@ -63,10 +63,13 @@ This is very much a work in progress... more results coming later!
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/glove.png
    :align: center
 
-1M SIFT features (128 dimensions), Euclidean distance, run on an m1.xlarge:
+1M SIFT features (128 dimensions), Euclidean distance, run on an c4.2xlarge:
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/sift.png
    :align: center
+
+Note that KGraph has a substantial performance regression in the latest version.
+Once the author has confirmed and fixed, I will rerun the KGraph benchmarks.
 
 Testing
 -------
