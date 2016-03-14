@@ -1,4 +1,4 @@
-import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource, random
+import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource, random, math
 try:
     from urllib import urlretrieve
 except ImportError:
@@ -18,6 +18,48 @@ class BaseANN(object):
     pass
 
         
+class FALCONN(BaseANN):
+    def __init__(self, metric, num_bits, num_tables, num_probes):
+        self.name = 'FALCONN(K={}, L={}, T={})'.format(num_bits, num_tables, num_probes)
+        self._metric = metric
+        self._num_bits = num_bits
+        self._num_tables = num_tables
+        self._num_probes = num_probes
+        self._center = None
+        self._params = None
+        self._index = None
+        self._buf = None
+
+    def fit(self, X):
+        if X.dtype != numpy.float32:
+            X = X.astype(numpy.float32)
+        if self._metric == 'angular':
+            X /= numpy.linalg.norm(X, axis=1).reshape(-1,  1)
+        self._center = numpy.mean(X, axis=0)
+        X -= self._center
+        import falconn
+        self._params = falconn.LSHConstructionParameters()
+        self._params.dimension = X.shape[1]
+        self._params.distance_function = 'euclidean_squared'
+        self._params.lsh_family = 'cross_polytope'
+        falconn.compute_number_of_hash_functions(self._num_bits, self._params)
+        self._params.l = self._num_tables
+        self._params.num_rotations = 1
+        self._params.num_setup_threads = 0
+        self._params.storage_hash_table = 'flat_hash_table'
+        self._params.seed = 95225714
+        self._index = falconn.LSHIndex(self._params)
+        self._index.fit(X)
+        self._index.set_num_probes(self._num_probes)
+        self._buf = numpy.zeros((X.shape[1],), dtype=numpy.float32)
+
+    def query(self, v, n):
+        numpy.copyto(self._buf, v)
+        if self._metric == 'angular':
+            self._buf /= numpy.linalg.norm(self._buf)
+        self._buf -= self._center
+        return self._index.find_k_nearest_neighbors(self._buf, n)
+
 class LSHF(BaseANN):
     def __init__(self, metric, n_estimators=10, n_candidates=50):
         self.name = 'LSHF(n_est=%d, n_cand=%d)' % (n_estimators, n_candidates)
@@ -382,6 +424,14 @@ def get_algos(m):
     if m == 'angular':
         # RPForest only works for cosine
         algos['rpforest'] = [RPForest(leaf_size, n_trees) for n_trees in [3, 5, 10, 20, 40, 100, 200, 400] for leaf_size in [3, 5, 10, 20, 40, 100, 200, 400]]
+        L = []
+        x = 1
+        while True:
+            L.append(x)
+            if x >= 1400:
+                break
+            x = int(math.ceil(x * 1.1))
+        algos['falconn'] = [FALCONN(m, 16, l, l) for l in L]
 
     return algos
 
