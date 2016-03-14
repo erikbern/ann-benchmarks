@@ -259,7 +259,10 @@ def get_dataset(which='glove', limit=-1):
 
 
 def run_algo(args, library, algo, results_fn):
-    X_train, X_test = get_dataset(which=args.dataset, limit=args.limit)
+    pool = multiprocessing.Pool()
+    X_train, X_test = pool.apply(get_dataset, [args.dataset, args.limit])
+    pool.close()
+    pool.join()
 
     t0 = time.time()
     if algo != 'bf':
