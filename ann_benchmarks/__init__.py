@@ -49,7 +49,7 @@ class FALCONN(BaseANN):
         self._params.storage_hash_table = 'flat_hash_table'
         self._params.seed = 95225714
         self._index = falconn.LSHIndex(self._params)
-        self._index.fit(X)
+        self._index.setup(X)
         self._index.set_num_probes(self._num_probes)
         self._buf = numpy.zeros((X.shape[1],), dtype=numpy.float32)
 
