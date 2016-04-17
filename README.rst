@@ -17,6 +17,7 @@ Evaluated
 * `KGraph <https://github.com/aaalgo/kgraph>`__
 * `NonMetricSpaceLib <https://github.com/searchivarius/NonMetricSpaceLib>`__
 * `RPForest <https://github.com/lyst/rpforest>`__
+* `FALCONN <http://falconn-lib.org/>`__
 
 Data sets
 ---------
