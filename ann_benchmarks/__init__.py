@@ -14,6 +14,13 @@ if soft == resource.RLIM_INFINITY or soft >= memory_limit:
 
 os.environ['OMP_THREAD_LIMIT'] = '1' # just to limit number of processors                                                                                                                                                                    
 
+# Nmslib specific code
+# Remove old indices stored on disk
+INDEX_DIR='indices'    
+import shutil
+if os.path.exists(INDEX_DIR):
+  shutil.rmtree(INDEX_DIR)
+
 class BaseANN(object):
     pass
 
@@ -220,7 +227,57 @@ class KGraph(BaseANN):
         result = self._kgraph.search(self._X, numpy.array([v]), K=n, threads=1, P=self._P)
         return result[0]
 
-class Nmslib(BaseANN):
+class NmslibReuseIndex(BaseANN):
+    def __init__(self, metric, method_name, index_param, query_param):
+        self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
+        self._method_name = method_name
+        self._index_param = index_param
+        self._query_param = query_param
+        self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (method_name, index_param, query_param)
+        self._index_name = os.path.join(INDEX_DIR, "nmslib_%s_%s_%s" % (self._method_name, metric, '_'.join(self._index_param))) 
+
+        d = os.path.dirname(self._index_name)
+        if not os.path.exists(d):
+          os.makedirs(d)
+
+    def fit(self, X):
+        os.environ['OMP_THREAD_LIMIT'] = '40'
+        import nmslib_vector
+        if self._method_name == 'vptree':
+            # To avoid this issue:
+            # terminate called after throwing an instance of 'std::runtime_error'
+            # what():  The data size is too small or the bucket size is too big. Select the parameters so that <total # of records> is NOT less than <bucket size> * 1000
+            # Aborted (core dumped)
+            self._index_param.append('bucketSize=%d' % min(int(X.shape[0] * 0.0005), 1000))
+                                        
+        self._index = nmslib_vector.init(self._nmslib_metric, [], self._method_name, nmslib_vector.DataType.VECTOR, nmslib_vector.DistType.FLOAT)
+	
+        for i, x in enumerate(X):
+            nmslib_vector.addDataPoint(self._index, i, x.tolist())
+
+
+        if os.path.exists(self._index_name):
+            print "Loading index from file"
+            nmslib_vector.loadIndex(self._index, self._index_name)
+        else:
+
+            nmslib_vector.createIndex(self._index, self._index_param)
+            nmslib_vector.saveIndex(self._index, self._index_name)
+
+
+        nmslib_vector.setQueryTimeParams(self._index, self._query_param)
+
+        os.environ['OMP_THREAD_LIMIT'] = '1'
+
+    def query(self, v, n):
+        import nmslib_vector
+        return nmslib_vector.knnQuery(self._index, n, v.tolist())
+
+    def freeIndex(self):
+        import nmslib_vector
+        nmslib_vector.freeIndex(self._index)
+
+class NmslibNewIndex(BaseANN):
     def __init__(self, metric, method_name, method_param):
         self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
         self._method_name = method_name
@@ -228,26 +285,28 @@ class Nmslib(BaseANN):
         self.name = 'Nmslib(method_name=%s, method_param=%s)' % (method_name, method_param)
 
     def fit(self, X):
-        import nmslib
+        import nmslib_vector
         if self._method_name == 'vptree':
             # To avoid this issue:
             # terminate called after throwing an instance of 'std::runtime_error'
             # what():  The data size is too small or the bucket size is too big. Select the parameters so that <total # of records> is NOT less than <bucket size> * 1000
             # Aborted (core dumped)
             self._method_param.append('bucketSize=%d' % min(int(X.shape[0] * 0.0005), 1000))
-        self._index = nmslib.initIndex(X.shape[0], self._nmslib_metric, [], self._method_name, self._method_param, nmslib.DataType.VECTOR, nmslib.DistType.FLOAT)
+                                        
+        self._index = nmslib_vector.init(self._nmslib_metric, [], self._method_name, nmslib_vector.DataType.VECTOR, nmslib_vector.DistType.FLOAT)
 	
         for i, x in enumerate(X):
-            nmslib.setData(self._index, i, x.tolist())
-        nmslib.buildIndex(self._index)
+            nmslib_vector.addDataPoint(self._index, i, x.tolist())
+
+        nmslib_vector.createIndex(self._index, self._method_param)
 
     def query(self, v, n):
-        import nmslib
-        return nmslib.knnQuery(self._index, n, v.tolist())
+        import nmslib_vector
+        return nmslib_vector.knnQuery(self._index, n, v.tolist())
 
     def freeIndex(self):
-        import nmslib
-        nmslib.freeIndex(self._index)
+        import nmslib_vector
+        nmslib_vector.freeIndex(self._index)
 
 
 class RPForest(BaseANN):
@@ -385,24 +444,21 @@ def get_algos(m):
             Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.1']),
         ],
 
-        'SW-graph(nmslib)':[
-            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=48']),
-            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=32']),
-            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=16']),
-            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=8']),
-            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=4']),
-            Nmslib(m, 'small_world_rand', ['NN=20', 'initIndexAttempts=4', 'initSearchAttempts=2']),
-            Nmslib(m, 'small_world_rand', ['NN=17', 'initIndexAttempts=4', 'initSearchAttempts=2']),
-            Nmslib(m, 'small_world_rand', ['NN=14', 'initIndexAttempts=4', 'initSearchAttempts=2']),
-            Nmslib(m, 'small_world_rand', ['NN=11', 'initIndexAttempts=5', 'initSearchAttempts=2']),
-            Nmslib(m, 'small_world_rand', ['NN=8',  'initIndexAttempts=5', 'initSearchAttempts=2']),
-            Nmslib(m, 'small_world_rand', ['NN=5',  'initIndexAttempts=5', 'initSearchAttempts=2']),
-            Nmslib(m, 'small_world_rand', ['NN=3',  'initIndexAttempts=5', 'initSearchAttempts=2']),
-        ]
+        'hnsw(nmslib)': []
     }
 
     if m == 'euclidean':
         # Only works for euclidean distance
+        MsAndEfs=[
+                [32,[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200, 300, 400]],
+                [4,[1, 2, 5, 10, 20, 30,  50,  70,  90,  120]],
+                [8,[1,2,5,10,20, 30, 50, 70, 90, 120, 160, ]],
+                [20, [2, 5, 10, 15, 20, 30, 40, 50, 70, 80,120,200,400]],
+                [12, [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80,120]]]
+        for MsAndEf in MsAndEfs:
+            for ef in MsAndEf[1]:
+                algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', ['M='+str(MsAndEf[0]), 'efConstruction=400'], ['ef=' + str(ef), 'searchMethod=3']))
+        
         algos['MP-lsh(lshkit)'] = [
             Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.99','H=1200001','T=10','L=50','tuneK=10']),
             Nmslib(m, 'lsh_multiprobe', ['desiredRecall=0.97','H=1200001','T=10','L=50','tuneK=10']),
@@ -422,6 +478,15 @@ def get_algos(m):
     # END: Non-Metric Space Library (nmslib) entries
 
     if m == 'angular':
+        MsAndEfs=[
+                [32,[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200, 300, 400, 600, 700, 800, 1000, 1200, 1400,1600, 2000]],
+                [64,[10,  30,  50,  70,  90,  120,  160,  200, 400, 600, 700, 800, 1000, 1400, 1600, 2000]],
+                [96,[10, 30, 50, 70, 90, 120, 160, 200, 400, 700, 1000, 1400,1600, 2000]],
+                [20, [2, 5, 10, 15, 20, 30, 40, 50, 70, 80]],
+                [12, [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]]
+        for MsAndEf in MsAndEfs:
+            for ef in MsAndEf[1]:
+                algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', ['M='+str(MsAndEf[0]), 'efConstruction=1600'], ['ef=' + str(ef), 'searchMethod=4']))
         # RPForest only works for cosine
         algos['rpforest'] = [RPForest(leaf_size, n_trees) for n_trees in [3, 5, 10, 20, 40, 100, 200, 400] for leaf_size in [3, 5, 10, 20, 40, 100, 200, 400]]
         L = []
