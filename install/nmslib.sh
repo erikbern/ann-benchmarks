@@ -1,10 +1,10 @@
 cd "$(dirname "$0")"
 echo "Installing Python interface for the Non-Metric Space Library"
 # Remove the previous version if existed
-rm -rf NonMetricSpaceLib 
-# Note that we use the develop branch here:
+rm -rf nmslib 
+# Note that we use the pserv branch here:
 git clone https://github.com/yurymalkov/nmslib.git
-cd NonMetricSpaceLib/similarity_search
+cd nmslib/similarity_search
 git checkout pserv
 apt-get install -y cmake libeigen3-dev libgsl0-dev
 echo "CC: $CC, CXX: $CXX"
