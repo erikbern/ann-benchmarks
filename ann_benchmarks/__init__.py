@@ -426,22 +426,22 @@ def get_algos(m):
         'kd': [KDTree(m, 10), KDTree(m, 20), KDTree(m, 40), KDTree(m, 100), KDTree(m, 200), KDTree(m, 400), KDTree(m, 1000)],
 
         # START: Non-Metric Space Library (nmslib) entries
-        'bruteforce0(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=0'])],
-        'bruteforce1(nmslib)': [Nmslib(m, 'seq_search', ['copyMem=1'])],
+        'bruteforce0(nmslib)': [NmslibNewIndex(m, 'seq_search', ['copyMem=0'])],
+        'bruteforce1(nmslib)': [NmslibNewIndex(m, 'seq_search', ['copyMem=1'])],
 
         'BallTree(nmslib)': [
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.99']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.95']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.90']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.85']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.8']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.7']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.6']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.5']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.4']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.3']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.2']),
-            Nmslib(m, 'vptree', ['tuneK=10', 'desiredRecall=0.1']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.99']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.95']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.90']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.85']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.8']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.7']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.6']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.5']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.4']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.3']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.2']),
+            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.1']),
         ],
 
         'hnsw(nmslib)': []
