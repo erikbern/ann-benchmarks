@@ -427,7 +427,8 @@ def get_algos(m):
 
         # START: Non-Metric Space Library (nmslib) entries
         'bruteforce0(nmslib)': [NmslibNewIndex(m, 'seq_search', ['copyMem=0'])],
-        'bruteforce1(nmslib)': [NmslibNewIndex(m, 'seq_search', ['copyMem=1'])],
+        # We don't need copyMem=1 now, because the new Python wrapper already re-creates data points.
+        #'bruteforce1(nmslib)': [NmslibNewIndex(m, 'seq_search', ['copyMem=1'])],
 
         'BallTree(nmslib)': [
             NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.99']),
@@ -444,7 +445,9 @@ def get_algos(m):
             NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.1']),
         ],
 
-        'hnsw(nmslib)': []
+        'hnsw(nmslib)': [],
+
+        'SW-graph(nmslib)' :[]
     }
 
     if m == 'euclidean':
@@ -475,6 +478,32 @@ def get_algos(m):
             NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.1','H=1200001','T=10','L=50','tuneK=10']),
         ]
 
+        algos['SW-graph(nmslib)'] = [
+            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=800',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=400',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=200',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=100',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=50',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=30',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=20',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=15',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=10',   'initSearchAttempts=1']),
+
+
+            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=30',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=25',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=20',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=15',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=10',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=5',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=4',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=3',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=2',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=1',   'initSearchAttempts=1']),
+        ]
+
+
+
     # END: Non-Metric Space Library (nmslib) entries
 
     if m == 'angular':
@@ -497,6 +526,40 @@ def get_algos(m):
                 break
             x = int(math.ceil(x * 1.1))
         algos['falconn'] = [FALCONN(m, 16, l, l) for l in L]
+
+        # START: Non-Metric Space Library (nmslib) entries
+        algos['SW-graph(nmslib)'] = [
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=700',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=650',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=550',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=450',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=350',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=275',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=200',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=150',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=120',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=80',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=50',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=30',   'initSearchAttempts=1']),
+
+            NmslibReuseIndex(m, 'sw-graph', ['NN=15', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=80',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=15', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=50',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=15', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=30',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=15', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=20',   'initSearchAttempts=1']),
+
+            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=120',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=80',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=60',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=40',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=20',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=10',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=8',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=4',   'initSearchAttempts=1']),
+            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=2',   'initSearchAttempts=1']),
+        ]
+
+
+        # END: Non-Metric Space Library (nmslib) entries
 
     return algos
 
