@@ -3,7 +3,7 @@ echo "Installing Python interface for the Non-Metric Space Library"
 # Remove the previous version if existed
 rm -rf nmslib 
 # Note that we use the pserv branch here:
-git clone https://github.com/yurymalkov/nmslib.git
+git clone https://github.com/searchivarius/nmslib.git
 cd nmslib/similarity_search
 git checkout pserv
 apt-get install -y cmake libeigen3-dev libgsl0-dev
