@@ -15,7 +15,7 @@ Evaluated
 * `PANNS <https://github.com/ryanrhymes/panns>`__
 * `NearPy <http://nearpy.io>`__
 * `KGraph <https://github.com/aaalgo/kgraph>`__
-* `NonMetricSpaceLib <https://github.com/searchivarius/NonMetricSpaceLib>`__
+* `NMSLIB (Non-Metric Space Library) <https://github.com/searchivarius/nmslib>`__
 * `RPForest <https://github.com/lyst/rpforest>`__
 * `FALCONN <http://falconn-lib.org/>`__
 
@@ -70,7 +70,12 @@ This is very much a work in progress... more results coming later!
    :align: center
 
 Note that KGraph has a substantial performance regression in the latest version.
-Once the author has confirmed and fixed, I will rerun the KGraph benchmarks.
+Once the author has confirmed and fixed, I will rerun the KGraph benchmarks. 
+
+Also note that NMSLIB saves indices in the directory indices. 
+If the tests are re-run using a different seed and/or a different number of queries, the
+content of this directory should be deleted.
+
 
 Testing
 -------
