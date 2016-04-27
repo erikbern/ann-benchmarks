@@ -354,11 +354,10 @@ def get_dataset(which='glove', limit=-1):
     X = numpy.vstack(X)
     import sklearn.cross_validation
 
-    # Here Eric is most welcome to use any other random_state
-    # Last time, Leo was testing using random_state==1
+    # Here Erik is most welcome to use any other random_state
     # However, it is best to use a new random seed for each major re-evaluation,
     # so that we test on a trully bind data.
-    X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=10000, random_state=2016)
+    X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=10000, random_state=2)
     print(X_train.shape, X_test.shape)
     return X_train, X_test
 
