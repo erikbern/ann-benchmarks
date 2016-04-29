@@ -260,10 +260,8 @@ class NmslibReuseIndex(BaseANN):
             print "Loading index from file"
             nmslib_vector.loadIndex(self._index, self._index_name)
         else:
-
             nmslib_vector.createIndex(self._index, self._index_param)
-            nmslib_vector.saveIndex(self._index, self._index_name)
-
+            # nmslib_vector.saveIndex(self._index, self._index_name)
 
         nmslib_vector.setQueryTimeParams(self._index, self._query_param)
 
