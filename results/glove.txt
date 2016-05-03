@@ -128,3 +128,77 @@ ball	BallTree(leaf_size=400)	12.0417780876	0.335959160089	1.0
 rpforest	RPForest(leaf_size=100, n_trees=100)	655.93829608	0.00277264118195	0.3749
 flann	FLANN(target_precision=0.700000)	1288.26174283	0.00151859402657	0.5877
 rpforest	RPForest(leaf_size=3, n_trees=100)	847.26354599	0.000533706903458	0.075
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=96', 'efConstruction=1600'], query_param=['ef=70', 'searchMethod=4'])	11006.9505651	0.00133603649139	0.93352
+falconn	FALCONN(K=16, L=85, T=85)	26.9710600376	0.000785456180573	0.51341
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=32', 'efConstruction=1600'], query_param=['ef=200', 'searchMethod=4'])	4483.445997	0.00131375658512	0.93087
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=12', 'efConstruction=1600'], query_param=['ef=50', 'searchMethod=4'])	2057.36057901	0.000200386810303	0.68569
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=64', 'efConstruction=1600'], query_param=['ef=1600', 'searchMethod=4'])	7979.61168194	0.0149044574976	0.99949
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=32', 'efConstruction=1600'], query_param=['ef=140', 'searchMethod=4'])	4551.18882203	0.000967787003517	0.90889
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=32', 'efConstruction=1600'], query_param=['ef=120', 'searchMethod=4'])	4509.59407377	0.00085599219799	0.89829
+annoy	Annoy(n_trees=200, search_k=20000)	798.626737118	0.00516156659126	0.8609
+annoy	Annoy(n_trees=100, search_k=20000)	398.423210859	0.0048475703001	0.8372
+annoy	Annoy(n_trees=400, search_k=40000)	1620.76823997	0.00946337070465	0.93352
+falconn	FALCONN(K=16, L=494, T=494)	147.652902126	0.00427597689629	0.9048
+falconn	FALCONN(K=16, L=2, T=2)	2.27622294426	3.72921228409e-05	0.02819
+annoy	Annoy(n_trees=100, search_k=1000)	401.233208179	0.000459538602829	0.41679
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=120', 'initSearchAttempts=1'])	5894.04741907	0.00273896710873	0.91338
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=80', 'initSearchAttempts=1'])	5919.4214859	0.00202317531109	0.88642
+annoy	Annoy(n_trees=100, search_k=4000)	404.936742067	0.00128601818085	0.62819
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=15', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=20', 'initSearchAttempts=1'])	3765.90429688	0.000503439211845	0.66999
+annoy	Annoy(n_trees=400, search_k=4000)	1546.40072584	0.00166693809032	0.6859
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=2', 'initSearchAttempts=1'])	1253.29363585	5.98123073578e-05	0.02307
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=32', 'efConstruction=1600'], query_param=['ef=100', 'searchMethod=4'])	4166.14423513	0.000732411003113	0.88484
+annoy	Annoy(n_trees=200, search_k=2000)	795.035322905	0.000920067000389	0.55484
+kgraph	KGraph(P=50)	3585.532722	0.383897088695	0.65798
+falconn	FALCONN(K=16, L=878, T=878)	278.069324017	0.00765269269943	0.96824
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=64', 'efConstruction=1600'], query_param=['ef=400', 'searchMethod=4'])	8085.95193195	0.00433937270641	0.9885
+falconn	FALCONN(K=16, L=207, T=207)	62.747838974	0.00180964338779	0.73541
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=96', 'efConstruction=1600'], query_param=['ef=700', 'searchMethod=4'])	11080.0042961	0.00992055361271	0.99868
+falconn	FALCONN(K=16, L=37, T=37)	12.415448904	0.000366408514977	0.32287
+falconn	FALCONN(K=16, L=966, T=966)	287.765678883	0.00829294600487	0.97421
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=60', 'initSearchAttempts=1'])	1252.826612	0.000350489187241	0.48875
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=12', 'efConstruction=1600'], query_param=['ef=70', 'searchMethod=4'])	2042.85659003	0.000244769096375	0.72822
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=20', 'efConstruction=1600'], query_param=['ef=50', 'searchMethod=4'])	2984.62838006	0.000279323101044	0.76761
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=64', 'efConstruction=1600'], query_param=['ef=120', 'searchMethod=4'])	7833.66259003	0.00153626828194	0.94435
+annoy	Annoy(n_trees=400, search_k=200)	1511.59197593	0.00041084549427	0.25583
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=20', 'efConstruction=1600'], query_param=['ef=2', 'searchMethod=4'])	2814.28886509	3.76070022583e-05	0.15668
+falconn	FALCONN(K=16, L=10, T=10)	4.76886892319	0.000114721298218	0.12229
+annoy	Annoy(n_trees=400, search_k=100000)	1439.86055398	0.0213468501091	0.97727
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=40', 'initSearchAttempts=1'])	1172.93814111	0.000264890384674	0.42521
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=20', 'efConstruction=1600'], query_param=['ef=30', 'searchMethod=4'])	2961.3563602	0.000195828104019	0.70366
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=20', 'efConstruction=1600'], query_param=['ef=20', 'searchMethod=4'])	2962.11014318	0.000148515105247	0.64926
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=96', 'efConstruction=1600'], query_param=['ef=1600', 'searchMethod=4'])	10744.8174739	0.0193190326929	0.99988
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=120', 'initSearchAttempts=1'])	1183.13391685	0.000631931114197	0.60475
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=30', 'initSearchAttempts=1'])	5612.94525623	0.00100551509857	0.80442
+annoy	Annoy(n_trees=100, search_k=200000)	377.802002907	0.0374343816996	0.98793
+falconn	FALCONN(K=16, L=27, T=27)	10.0431799889	0.000267061305046	0.26149
+annoy	Annoy(n_trees=400, search_k=2000)	1513.03913593	0.00107235269547	0.58679
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=32', 'efConstruction=1600'], query_param=['ef=50', 'searchMethod=4'])	4337.90576506	0.000408904099464	0.8225
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=80', 'initSearchAttempts=1'])	1128.77342105	0.000396519804001	0.54362
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=12', 'efConstruction=1600'], query_param=['ef=30', 'searchMethod=4'])	1979.34454799	0.000137959384918	0.61337
+falconn	FALCONN(K=16, L=127, T=127)	38.4607319832	0.00110540511608	0.61541
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=12', 'efConstruction=1600'], query_param=['ef=80', 'searchMethod=4'])	1964.51335692	0.000271424508095	0.7453
+annoy	Annoy(n_trees=400, search_k=10000)	1492.62995815	0.003051384902	0.80609
+annoy	Annoy(n_trees=400, search_k=200000)	1512.43588901	0.0364363059998	0.99227
+falconn	FALCONN(K=16, L=24, T=24)	8.04642009735	0.0002407310009	0.24105
+kgraph	KGraph(P=20)	3573.02786708	0.382321954513	0.49432
+falconn	FALCONN(K=16, L=228, T=228)	69.1647889614	0.00193595359325	0.75759
+falconn	FALCONN(K=16, L=6, T=6)	2.93770313263	7.70136117935e-05	0.07787
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=32', 'efConstruction=1600'], query_param=['ef=2000', 'searchMethod=4'])	4190.23336601	0.00989440591335	0.99675
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=32', 'efConstruction=1600'], query_param=['ef=700', 'searchMethod=4'])	4317.37480497	0.00380385630131	0.9816
+falconn	FALCONN(K=16, L=30, T=30)	10.0241091251	0.000296378207207	0.28168
+falconn	FALCONN(K=16, L=1, T=1)	2.06673192978	2.64998912811e-05	0.01462
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=96', 'efConstruction=1600'], query_param=['ef=90', 'searchMethod=4'])	10888.472723	0.00159651730061	0.94881
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=20', 'initSearchAttempts=1'])	1139.88742495	0.000173136997223	0.30498
+falconn	FALCONN(K=16, L=33, T=33)	11.3411588669	0.000318251991272	0.2996
+falconn	FALCONN(K=16, L=70, T=70)	22.020622015	0.000635130500793	0.46667
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=50', 'initSearchAttempts=1'])	5807.52729297	0.00138274710178	0.85042
+falconn	FALCONN(K=16, L=77, T=77)	24.0566689968	0.00068402159214	0.48909
+SW-graph(nmslib)	Nmslib(method_name=sw-graph, index_param=['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], query_param=['efSearch=200', 'initSearchAttempts=1'])	5827.94230509	0.00395307660103	0.94168
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=96', 'efConstruction=1600'], query_param=['ef=160', 'searchMethod=4'])	10721.7875102	0.00254075739384	0.97561
+falconn	FALCONN(K=16, L=3, T=3)	3.13532805443	4.52369213104e-05	0.04098
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=64', 'efConstruction=1600'], query_param=['ef=700', 'searchMethod=4'])	7501.1434741	0.00695029659271	0.99616
+kgraph	KGraph(P=100)	3559.10266805	0.3836365026	0.75301
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=12', 'efConstruction=1600'], query_param=['ef=20', 'searchMethod=4'])	1893.10731602	0.000102979588509	0.54462
+hnsw(nmslib)	Nmslib(method_name=hnsw, index_param=['M=20', 'efConstruction=1600'], query_param=['ef=10', 'searchMethod=4'])	2949.96949315	9.53280925751e-05	0.53429
+falconn	FALCONN(K=16, L=41, T=41)	13.7853739262	0.000387864303589	0.34447

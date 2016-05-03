@@ -19,7 +19,7 @@ for fn in args.input:
 colors = plt.cm.Set1(numpy.linspace(0, 1, len(all_algos)))
 linestyles = {}
 for i, algo in enumerate(all_algos):
-    linestyles[algo] = (colors[i], ['--', '-.', '-', ':'][i%4], ['+', '<', '8', 'o', '*', 'x'][i%6])
+    linestyles[algo] = (colors[i], ['--', '-.', '-', ':'][i%4], ['+', '<', 'o', 'D', '*', 'x', 's'][i%7])
 
 # Now generate each plot
 for fn_in, fn_out in zip(args.input, args.output):
