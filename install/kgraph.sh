@@ -1,15 +1,14 @@
+rm -rf kgraph
 git clone https://github.com/aaalgo/kgraph
-apt-get install -y libboost-timer1.48-dev libboost-chrono1.48-dev libboost-program-options1.48-dev libboost-system1.48-dev
-apt-get install -y libopenblas-dev
+apt-get install -y libboost-timer-dev libboost-chrono-dev libboost-program-options-dev libboost-system-dev
 apt-get autoremove -y
 
-ls /usr/lib/openblas-base
-if [ ! -f /usr/lib/openblas-base ]; then
-   sudo mkdir /usr/lib/openblas-base
-   sudo ln -s /usr/lib/libblas.a /usr/lib/openblas-base
-fi
-
 cd kgraph
-make CC=$CC libkgraph.a python
+if [ -z "$CC" ]
+then
+CC=g++
+fi
+make CC=$CC libkgraph.so python
 sudo cp python/pykgraph.so /usr/local/lib/python2.7/dist-packages
+sudo cp libkgraph.so /usr/lib
 cd ..

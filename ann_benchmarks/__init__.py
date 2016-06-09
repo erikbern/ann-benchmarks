@@ -213,18 +213,28 @@ class KGraph(BaseANN):
         self._metric = metric
 
     def fit(self, X):
+        os.environ['OMP_THREAD_LIMIT'] = '40'
         import pykgraph
 
-        if self._metric == 'angular':
-            X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
-        self._kgraph = pykgraph.KGraph()
-        self._kgraph.build(X, iterations=30, L=100, delta=0.002, recall=0.99, K=25)
-        self._X = X # ???
+        if X.dtype != numpy.float32:
+            X = X.astype(numpy.float32)
+        #if self._metric == 'angular':
+        #    X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
+        self._kgraph = pykgraph.KGraph(X, self._metric)
+        path = os.path.join(INDEX_DIR, 'kgraph-index-%s' % self._metric)
+        if os.path.exists(path):
+            self._kgraph.load(path)
+        else:
+            self._kgraph.build(iterations=30, L=100, delta=0.002, recall=0.99, K=25)
+            if not os.path.exists(INDEX_DIR):
+              os.makedirs(INDEX_DIR)
+            self._kgraph.save(path)
+        os.environ['OMP_THREAD_LIMIT'] = '1'
 
     def query(self, v, n):
-        if self._metric == 'angular':
-            v = sklearn.preprocessing.normalize(v, axis=1, norm='l2')[0]
-        result = self._kgraph.search(self._X, numpy.array([v]), K=n, threads=1, P=self._P)
+        if v.dtype != numpy.float32:
+            v = v.astype(numpy.float32)
+        result = self._kgraph.search(numpy.array([v]), K=n, threads=1, P=self._P)
         return result[0]
 
 class NmslibReuseIndex(BaseANN):
@@ -251,7 +261,7 @@ class NmslibReuseIndex(BaseANN):
             self._index_param.append('bucketSize=%d' % min(int(X.shape[0] * 0.0005), 1000))
                                         
         self._index = nmslib_vector.init(self._nmslib_metric, [], self._method_name, nmslib_vector.DataType.VECTOR, nmslib_vector.DistType.FLOAT)
-	
+    
         for i, x in enumerate(X):
             nmslib_vector.addDataPoint(self._index, i, x.tolist())
 
@@ -292,7 +302,7 @@ class NmslibNewIndex(BaseANN):
             self._method_param.append('bucketSize=%d' % min(int(X.shape[0] * 0.0005), 1000))
                                         
         self._index = nmslib_vector.init(self._nmslib_metric, [], self._method_name, nmslib_vector.DataType.VECTOR, nmslib_vector.DistType.FLOAT)
-	
+    
         for i, x in enumerate(X):
             nmslib_vector.addDataPoint(self._index, i, x.tolist())
 
@@ -371,8 +381,14 @@ class BruteForceBLAS(BaseANN):
         indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
         return sorted(indices, key=lambda index: dists[index])  # sort `n` closest into correct order
 
-
-def get_dataset(which='glove', limit=-1):
+def get_dataset(which='glove', limit=-1, random_state = 2, test_size = 10000):
+    cache = 'queries/%s-%d-%d-%d.npz' % (which, test_size, limit, random_state)
+    if os.path.exists(cache):
+        v = numpy.load(cache)
+        X_train = v['train']
+        X_test = v['test']
+        print(X_train.shape, X_test.shape)
+        return X_train, X_test
     local_fn = os.path.join('install', which)
     if os.path.exists(local_fn + '.gz'):
         f = gzip.open(local_fn + '.gz')
@@ -392,8 +408,11 @@ def get_dataset(which='glove', limit=-1):
     # Here Erik is most welcome to use any other random_state
     # However, it is best to use a new random seed for each major re-evaluation,
     # so that we test on a trully bind data.
-    X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=10000, random_state=2)
+    X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=test_size, random_state=random_state)
+    X_train = X_train.astype(numpy.float)
+    X_test = X_test.astype(numpy.float)
     print(X_train.shape, X_test.shape)
+    numpy.savez(cache, train=X_train, test=X_test)
     return X_train, X_test
 
 
