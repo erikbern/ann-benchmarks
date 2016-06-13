@@ -202,10 +202,14 @@ class NearPy(BaseANN):
         else: # Default (angular) = Cosine distance
             self._nearpy_engine = nearpy.Engine(X.shape[1], lshashes=hashes)
 
+        if self._metric == 'angular':
+            X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         for i, x in enumerate(X):
             self._nearpy_engine.store_vector(x.tolist(), i)
 
     def query(self, v, n):
+        if self._metric == 'angular':
+            v = sklearn.preprocessing.normalize(v, axis=1, norm='l2')[0]
         return [y for x, y, z in self._nearpy_engine.neighbours(v)]
 
 
