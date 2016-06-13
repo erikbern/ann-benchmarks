@@ -188,16 +188,19 @@ class NearPy(BaseANN):
         self.name = 'NearPy(n_bits=%d, hash_counts=%d)' % (n_bits, hash_counts)
 
     def fit(self, X):
-        import nearpy, nearpy.hashes, nearpy.distances
+        import nearpy
 
         hashes = []
 
-        # TODO: doesn't seem like the NearPy code is using the metric??
         for k in xrange(self._hash_counts):
             nearpy_rbp = nearpy.hashes.RandomBinaryProjections('rbp_%d' % k, self._n_bits)
             hashes.append(nearpy_rbp)
 
-        self._nearpy_engine = nearpy.Engine(X.shape[1], lshashes=hashes)
+        if self._metric == 'euclidean':
+            dist = nearpy.distances.EuclideanDistance()
+            self._nearpy_engine = nearpy.Engine(X.shape[1], lshashes=hashes, distance=dist)
+        else: # Default (angular) = Cosine distance
+            self._nearpy_engine = nearpy.Engine(X.shape[1], lshashes=hashes)
 
         for i, x in enumerate(X):
             self._nearpy_engine.store_vector(x.tolist(), i)
