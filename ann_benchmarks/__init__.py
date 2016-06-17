@@ -214,10 +214,11 @@ class NearPy(BaseANN):
 
 
 class KGraph(BaseANN):
-    def __init__(self, metric, P):
-        self.name = 'KGraph(P=%d)' % P
+    def __init__(self, metric, P, index_params):
+        self.name = 'KGraph(%s,P=%d)' % (metric, P)
         self._P = P
         self._metric = metric
+        self._index_params = index_params
 
     def fit(self, X):
         os.environ['OMP_THREAD_LIMIT'] = '40'
@@ -232,7 +233,7 @@ class KGraph(BaseANN):
         if os.path.exists(path):
             self._kgraph.load(path)
         else:
-            self._kgraph.build(iterations=30, L=100, delta=0.002, recall=0.99, K=25)
+            self._kgraph.build(**self._index_params) #iterations=30, L=100, delta=0.002, recall=0.99, K=25)
             if not os.path.exists(INDEX_DIR):
               os.makedirs(INDEX_DIR)
             self._kgraph.save(path)
@@ -484,7 +485,6 @@ def get_algos(m):
                    NearPy(m, 12, 5), NearPy(m, 12, 10), NearPy(m, 12, 20), NearPy(m, 12, 40), # NearPy(m, 12, 100),
                    NearPy(m, 14, 5), NearPy(m, 14, 10), NearPy(m, 14, 20), NearPy(m, 14, 40), # NearPy(m, 14, 100),
                    NearPy(m, 16, 5), NearPy(m, 16, 10), NearPy(m, 16, 15), NearPy(m, 16, 20), NearPy(m, 16, 25), NearPy(m, 16, 30), NearPy(m, 16, 40)], #, NearPy(m, 16, 50), NearPy(m, 16, 70), NearPy(m, 16, 90), NearPy(m, 16, 120), NearPy(m, 16, 150)],
-        'kgraph': [KGraph(m, 20), KGraph(m, 50), KGraph(m, 100), KGraph(m, 200), KGraph(m, 500), KGraph(m, 1000), KGraph(m, 2000), KGraph(m, 4000), KGraph(m, 10000)],
         'bruteforce': [BruteForce(m)],
         'ball': [BallTree(m, 10), BallTree(m, 20), BallTree(m, 40), BallTree(m, 100), BallTree(m, 200), BallTree(m, 400), BallTree(m, 1000)],
         'kd': [KDTree(m, 10), KDTree(m, 20), KDTree(m, 40), KDTree(m, 100), KDTree(m, 200), KDTree(m, 400), KDTree(m, 1000)],
@@ -515,6 +515,12 @@ def get_algos(m):
     }
 
     if m == 'euclidean':
+        # kgraph 
+        kgraph_preset ={'reverse':-1};
+        kgraph_Ps = [10,20,30,40,50,60,70,80,90,100]
+        algos['kgraph'] = [KGraph(m, P, kgraph_preset) for P in kgraph_Ps]
+
+        # nmslib algorithms
         # Only works for euclidean distance
         MsAndEfs=[
                 [32,[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200, 300, 400]],
@@ -571,6 +577,12 @@ def get_algos(m):
     # END: Non-Metric Space Library (nmslib) entries
 
     if m == 'angular':
+        # kgraph 
+        kgraph_preset ={'reverse':-1, 'K':200, 'L':300, 'S':20};
+        kgraph_Ps = [10,20,30,40,50,55,60]
+        algos['kgraph'] = [KGraph(m, P, kgraph_preset) for P in kgraph_Ps]
+
+        # nmslib algorithms
         MsAndEfs=[
                 [32,[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200, 300, 400, 600, 700, 800, 1000, 1200, 1400,1600, 2000]],
                 [64,[10,  30,  50,  70,  90,  120,  160,  200, 400, 600, 700, 800, 1000, 1400, 1600, 2000]],
@@ -650,6 +662,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset', help='Which dataset',  default='glove')
     parser.add_argument('--distance', help='Distance', default='angular')
     parser.add_argument('--limit', help='Limit', type=int, default=-1)
+    parser.add_argument('--algo', help='run only this algorithm', default=None)
 
     args = parser.parse_args()
 
@@ -675,6 +688,11 @@ if __name__ == '__main__':
             algos_already_ran.add((library, algo_name))
 
     algos = get_algos(args.distance)
+
+    if args.algo:
+        print('running only', args.algo)
+        algos = {args.algo: algos[args.algo]}
+
     algos_flat = []
 
     for library in algos.keys():
