@@ -579,7 +579,7 @@ def get_algos(m):
     if m == 'angular':
         # kgraph 
         kgraph_preset ={'reverse':-1, 'K':200, 'L':300, 'S':20};
-        kgraph_Ps = [10,20,30,40,50,55,60]
+        kgraph_Ps = [10,20,30,40,50,60,70,80,90,100]
         algos['kgraph'] = [KGraph(m, P, kgraph_preset) for P in kgraph_Ps]
 
         # nmslib algorithms
