@@ -448,7 +448,9 @@ def run_algo(args, library, algo, results_fn):
             found = algo.query(v, 10)
             return len(set(found).intersection(correct))
         pool = multiprocessing.pool.ThreadPool()
-        k = sum(pool.map(single_query, queries))
+        results = pool.map(single_query, queries)
+
+        k = float(sum(results))
         search_time = (time.time() - t0) / len(queries)
         precision = k / (len(queries) * 10)
         best_search_time = min(best_search_time, search_time)
