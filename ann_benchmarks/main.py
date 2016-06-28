@@ -392,7 +392,7 @@ class BruteForceBLAS(BaseANN):
         return sorted(indices, key=lambda index: dists[index])  # sort `n` closest into correct order
 
 
-def get_dataset(which='glove', limit=-1, random_state = 2, test_size = 10000):
+def get_dataset(which='glove', limit=-1, random_state = 3, test_size = 10000):
     cache = 'queries/%s-%d-%d-%d.npz' % (which, test_size, limit, random_state)
     if os.path.exists(cache):
         v = numpy.load(cache)
@@ -443,13 +443,12 @@ def run_algo(args, library, algo, results_fn):
     best_precision = 0.0 # should be deterministic but paranoid
     for i in xrange(3): # Do multiple times to warm up page cache, use fastest
         t0 = time.time()
-        k = 0.0
         def single_query(t):
             v, correct = t
             found = algo.query(v, 10)
-            k += len(set(found).intersection(correct))
+            return len(set(found).intersection(correct))
         pool = multiprocessing.pool.ThreadPool()
-        pool.map(single_query, queries)
+        k = sum(pool.map(single_query, queries))
         search_time = (time.time() - t0) / len(queries)
         precision = k / (len(queries) * 10)
         best_search_time = min(best_search_time, search_time)
