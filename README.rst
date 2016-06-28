@@ -49,7 +49,7 @@ Principles
 * To make it simpler, look only at the precision-performance tradeoff.
 * Try many different values of parameters for each library and ignore the points that are not on the precision-performance frontier.
 * High-dimensional datasets with approximately 100-1000 dimensions. This is challenging but also realistic. Not more than 1000 dimensions because those problems should probably be solved by doing dimensionality reduction separately.
-* Use single core benchmarks. I believe most real world scenarios could be parallelized in other ways (eg. do multiple queries in parallel).
+* No batching of queries, use single queries by default. ann-benchmarks saturates CPU cores by using a thread pool.
 * Avoid extremely costly index building (more than several hours).
 * Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
 * Do proper train/test set of index data and query points.
