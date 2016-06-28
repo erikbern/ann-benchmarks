@@ -12,14 +12,12 @@ if soft == resource.RLIM_INFINITY or soft >= memory_limit:
     print('resetting memory limit from', soft, 'to', memory_limit)
     resource.setrlimit(resource.RLIMIT_DATA, (memory_limit, hard))
 
-os.environ['OMP_THREAD_LIMIT'] = '1' # just to limit number of processors                                                                                                                                                                    
-
 # Nmslib specific code
 # Remove old indices stored on disk
 INDEX_DIR='indices'    
-#import shutil
-#if os.path.exists(INDEX_DIR):
-#  shutil.rmtree(INDEX_DIR)
+import shutil
+if os.path.exists(INDEX_DIR):
+    shutil.rmtree(INDEX_DIR)
 
 class BaseANN(object):
     pass
@@ -222,7 +220,6 @@ class KGraph(BaseANN):
         self._save_index = save_index
 
     def fit(self, X):
-        os.environ['OMP_THREAD_LIMIT'] = '40'
         import pykgraph
 
         if X.dtype != numpy.float32:
@@ -237,9 +234,13 @@ class KGraph(BaseANN):
             self._kgraph.build(**self._index_params) #iterations=30, L=100, delta=0.002, recall=0.99, K=25)
             if not os.path.exists(INDEX_DIR):
               os.makedirs(INDEX_DIR)
+<<<<<<< 9467c0df281b03597098ef968f180de8bf4d4671
             if self._save_index:
               self._kgraph.save(path)
         os.environ['OMP_THREAD_LIMIT'] = '1'
+=======
+            self._kgraph.save(path)
+>>>>>>> no thread limits, instead use thread pool for queries
 
     def query(self, v, n):
         if v.dtype != numpy.float32:
@@ -262,7 +263,6 @@ class NmslibReuseIndex(BaseANN):
           os.makedirs(d)
 
     def fit(self, X):
-        os.environ['OMP_THREAD_LIMIT'] = '40'
         import nmslib_vector
         if self._method_name == 'vptree':
             # To avoid this issue:
@@ -286,8 +286,6 @@ class NmslibReuseIndex(BaseANN):
               nmslib_vector.saveIndex(self._index, self._index_name)
 
         nmslib_vector.setQueryTimeParams(self._index, self._query_param)
-
-        os.environ['OMP_THREAD_LIMIT'] = '1'
 
     def query(self, v, n):
         import nmslib_vector
@@ -393,6 +391,7 @@ class BruteForceBLAS(BaseANN):
         indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
         return sorted(indices, key=lambda index: dists[index])  # sort `n` closest into correct order
 
+
 def get_dataset(which='glove', limit=-1, random_state = 2, test_size = 10000):
     cache = 'queries/%s-%d-%d-%d.npz' % (which, test_size, limit, random_state)
     if os.path.exists(cache):
@@ -445,9 +444,12 @@ def run_algo(args, library, algo, results_fn):
     for i in xrange(3): # Do multiple times to warm up page cache, use fastest
         t0 = time.time()
         k = 0.0
-        for v, correct in queries:
+        def single_query(t):
+            v, correct = t
             found = algo.query(v, 10)
             k += len(set(found).intersection(correct))
+        pool = multiprocessing.pool.ThreadPool()
+        pool.map(single_query, queries)
         search_time = (time.time() - t0) / len(queries)
         precision = k / (len(queries) * 10)
         best_search_time = min(best_search_time, search_time)
