@@ -500,6 +500,8 @@ def get_algos(m, save_index):
         'hnsw(nmslib)': [],
 
         'SW-graph(nmslib)' :[]
+
+        'MP-lsh(lshkit)' :[]
     }
 
     for r in [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
