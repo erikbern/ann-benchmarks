@@ -559,7 +559,7 @@ def get_algos(m, save_index):
 
         for oneCase in MsPostsEfs:
             for ef in oneCase[2]:
-                algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', ['M=%d' % oneCase[0], 'post=%d' % oneCase[1], 'efConstruction=1600'], 
+                algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', ['M=%d' % oneCase[0], 'post=%d' % oneCase[1], 'efConstruction=800'], 
                                                                          save_index,
                                                                          ['ef=%d' %ef]))
 
