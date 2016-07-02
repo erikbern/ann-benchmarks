@@ -499,7 +499,7 @@ def get_algos(m, save_index):
 
         'hnsw(nmslib)': [],
 
-        'SW-graph(nmslib)' :[]
+        'SW-graph(nmslib)' :[],
 
         'MP-lsh(lshkit)' :[]
     }
