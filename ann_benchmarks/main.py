@@ -219,6 +219,7 @@ class KGraph(BaseANN):
         self._P = P
         self._metric = metric
         self._index_params = index_params
+        self._save_index = save_index
 
     def fit(self, X):
         os.environ['OMP_THREAD_LIMIT'] = '40'
@@ -236,7 +237,7 @@ class KGraph(BaseANN):
             self._kgraph.build(**self._index_params) #iterations=30, L=100, delta=0.002, recall=0.99, K=25)
             if not os.path.exists(INDEX_DIR):
               os.makedirs(INDEX_DIR)
-            if save_index:
+            if self._save_index:
               self._kgraph.save(path)
         os.environ['OMP_THREAD_LIMIT'] = '1'
 
@@ -250,6 +251,7 @@ class NmslibReuseIndex(BaseANN):
     def __init__(self, metric, method_name, index_param, save_index, query_param):
         self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
         self._method_name = method_name
+        self._save_index = save_index
         self._index_param = index_param
         self._query_param = query_param
         self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (method_name, index_param, query_param)
@@ -280,7 +282,8 @@ class NmslibReuseIndex(BaseANN):
             nmslib_vector.loadIndex(self._index, self._index_name)
         else:
             nmslib_vector.createIndex(self._index, self._index_param)
-            if save_index: nmslib_vector.saveIndex(self._index, self._index_name)
+            if self._save_index: 
+              nmslib_vector.saveIndex(self._index, self._index_name)
 
         nmslib_vector.setQueryTimeParams(self._index, self._query_param)
 
