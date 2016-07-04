@@ -17,9 +17,9 @@ os.environ['OMP_THREAD_LIMIT'] = '1' # just to limit number of processors
 # Nmslib specific code
 # Remove old indices stored on disk
 INDEX_DIR='indices'    
-import shutil
-if os.path.exists(INDEX_DIR):
-  shutil.rmtree(INDEX_DIR)
+#import shutil
+#if os.path.exists(INDEX_DIR):
+#  shutil.rmtree(INDEX_DIR)
 
 class BaseANN(object):
     pass
