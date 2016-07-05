@@ -17,9 +17,9 @@ os.environ['OMP_THREAD_LIMIT'] = '1' # just to limit number of processors
 # Nmslib specific code
 # Remove old indices stored on disk
 INDEX_DIR='indices'    
-import shutil
-if os.path.exists(INDEX_DIR):
-  shutil.rmtree(INDEX_DIR)
+#import shutil
+#if os.path.exists(INDEX_DIR):
+#  shutil.rmtree(INDEX_DIR)
 
 class BaseANN(object):
     pass
@@ -214,11 +214,12 @@ class NearPy(BaseANN):
 
 
 class KGraph(BaseANN):
-    def __init__(self, metric, P, index_params):
+    def __init__(self, metric, P, index_params, save_index):
         self.name = 'KGraph(%s,P=%d)' % (metric, P)
         self._P = P
         self._metric = metric
         self._index_params = index_params
+        self._save_index = save_index
 
     def fit(self, X):
         os.environ['OMP_THREAD_LIMIT'] = '40'
@@ -236,7 +237,8 @@ class KGraph(BaseANN):
             self._kgraph.build(**self._index_params) #iterations=30, L=100, delta=0.002, recall=0.99, K=25)
             if not os.path.exists(INDEX_DIR):
               os.makedirs(INDEX_DIR)
-            self._kgraph.save(path)
+            if self._save_index:
+              self._kgraph.save(path)
         os.environ['OMP_THREAD_LIMIT'] = '1'
 
     def query(self, v, n):
@@ -246,9 +248,10 @@ class KGraph(BaseANN):
         return result[0]
 
 class NmslibReuseIndex(BaseANN):
-    def __init__(self, metric, method_name, index_param, query_param):
+    def __init__(self, metric, method_name, index_param, save_index, query_param):
         self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
         self._method_name = method_name
+        self._save_index = save_index
         self._index_param = index_param
         self._query_param = query_param
         self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (method_name, index_param, query_param)
@@ -279,7 +282,8 @@ class NmslibReuseIndex(BaseANN):
             nmslib_vector.loadIndex(self._index, self._index_name)
         else:
             nmslib_vector.createIndex(self._index, self._index_param)
-            # nmslib_vector.saveIndex(self._index, self._index_name)
+            if self._save_index: 
+              nmslib_vector.saveIndex(self._index, self._index_name)
 
         nmslib_vector.setQueryTimeParams(self._index, self._query_param)
 
@@ -475,7 +479,7 @@ def get_queries(args):
 
     return queries
             
-def get_algos(m):
+def get_algos(m, save_index):
     algos = {
         'lshf': [LSHF(m, 5, 10), LSHF(m, 5, 20), LSHF(m, 10, 20), LSHF(m, 10, 50), LSHF(m, 20, 100)],
         'flann': [FLANN(m, 0.2), FLANN(m, 0.5), FLANN(m, 0.7), FLANN(m, 0.8), FLANN(m, 0.9), FLANN(m, 0.95), FLANN(m, 0.97), FLANN(m, 0.98), FLANN(m, 0.99), FLANN(m, 0.995)],
@@ -494,104 +498,81 @@ def get_algos(m):
         # We don't need copyMem=1 now, because the new Python wrapper already re-creates data points.
         #'bruteforce1(nmslib)': [NmslibNewIndex(m, 'seq_search', ['copyMem=1'])],
 
-        'BallTree(nmslib)': [
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.99']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.95']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.90']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.85']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.8']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.7']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.6']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.5']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.4']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.3']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.2']),
-            NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=0.1']),
-        ],
+        'BallTree(nmslib)': [],
 
         'hnsw(nmslib)': [],
 
-        'SW-graph(nmslib)' :[]
+        'SW-graph(nmslib)' :[],
+
     }
+
+    for r in [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
+      algos['BallTree(nmslib)'].append(NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=%f' % r]))
 
     if m == 'euclidean':
         # kgraph 
         kgraph_preset ={'reverse':-1};
-        kgraph_Ps = [10,20,30,40,50,60,70,80,90,100]
-        algos['kgraph'] = [KGraph(m, P, kgraph_preset) for P in kgraph_Ps]
+        kgraph_Ps = [1,2,3,4,5,10,20,30,40,50,60,70,80,90,100]
+        algos['kgraph'] = [KGraph(m, P, kgraph_preset, save_index) for P in kgraph_Ps]
 
         # nmslib algorithms
         # Only works for euclidean distance
-        MsAndEfs=[
-                [32,[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200, 300, 400]],
-                [4,[1, 2, 5, 10, 20, 30,  50,  70,  90,  120]],
-                [8,[1,2,5,10,20, 30, 50, 70, 90, 120, 160, ]],
-                [20, [2, 5, 10, 15, 20, 30, 40, 50, 70, 80,120,200,400]],
-                [12, [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80,120]]]
-        for MsAndEf in MsAndEfs:
-            for ef in MsAndEf[1]:
-                algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', ['M='+str(MsAndEf[0]), 'efConstruction=400'], ['ef=' + str(ef), 'searchMethod=3']))
+        MsPostsEfs=[
+                (32, 2, [20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200, 300, 400]),
+                (20, 2, [2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120, 200, 400]),
+                (12, 0, [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120]),
+                (4,  0, [1, 2, 5, 10, 20, 30, 50, 70, 90, 120]),
+                (8,  0, [1, 2, 5, 10, 20, 30, 50, 70, 90, 120, 160])  ]
+        for oneCase in MsPostsEfs:
+            for ef in oneCase[2]:
+                algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', 
+                                                              ['M=%d' % oneCase[0], 'post=%d' % oneCase[1], 'efConstruction=400'], save_index,
+                                                              ['ef=%d' % ef]))
         
-        algos['MP-lsh(lshkit)'] = [
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.99','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.97','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.95','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.90','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.85','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.80','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.7','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.6','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.5','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.4','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.3','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.2','H=1200001','T=10','L=50','tuneK=10']),
-            NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=0.1','H=1200001','T=10','L=50','tuneK=10']),
-        ]
+        algos['MP-lsh(lshkit)'] = []
+        for r in [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
+          algos['MP-lsh(lshkit)'].append(NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=%f' % r,'H=1200001','T=10','L=50','tuneK=10']))
 
-        algos['SW-graph(nmslib)'] = [
-            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=800',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=400',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=200',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=100',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=50',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=30',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=20',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=15',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=10', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=10',   'initSearchAttempts=1']),
-
-
-            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=30',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=25',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=20',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=15',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=10',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=5',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=4',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=3',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=2',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=5', 'efConstruction=400', 'initIndexAttempts=1'], ['efSearch=1',   'initSearchAttempts=1']),
-        ]
-
-
+        NNsAndEfs = [ (10, [800, 400, 200, 100, 50, 30, 20, 15, 10]),
+                     (5,  [30, 25, 20, 15, 10, 5, 4, 3, 2, 1]) ]
+        for oneCase in NNsAndEfs:
+          for ef in oneCase[1]:
+            algos['SW-graph(nmslib)'].append(NmslibReuseIndex(m, 'sw-graph', 
+                                            ['NN=%d' % oneCase[0], 'efConstruction=400', 'initIndexAttempts=1'], save_index,
+                                            ['efSearch=%d' % ef,   'initSearchAttempts=1']))
 
     # END: Non-Metric Space Library (nmslib) entries
 
     if m == 'angular':
         # kgraph 
         kgraph_preset ={'reverse':-1, 'K':200, 'L':300, 'S':20};
-        kgraph_Ps = [10,20,30,40,50,60,70,80,90,100]
-        algos['kgraph'] = [KGraph(m, P, kgraph_preset) for P in kgraph_Ps]
+        kgraph_Ps = [1,2,3,4,5,10,20,30,40,50,60,70,80,90,100]
+        algos['kgraph'] = [KGraph(m, P, kgraph_preset, save_index) for P in kgraph_Ps]
 
         # nmslib algorithms
-        MsAndEfs=[
-                [32,[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200, 300, 400, 600, 700, 800, 1000, 1200, 1400,1600, 2000]],
-                [64,[10,  30,  50,  70,  90,  120,  160,  200, 400, 600, 700, 800, 1000, 1400, 1600, 2000]],
-                [96,[10, 30, 50, 70, 90, 120, 160, 200, 400, 700, 1000, 1400,1600, 2000]],
-                [20, [2, 5, 10, 15, 20, 30, 40, 50, 70, 80]],
-                [12, [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]]
-        for MsAndEf in MsAndEfs:
-            for ef in MsAndEf[1]:
-                algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', ['M='+str(MsAndEf[0]), 'efConstruction=1600'], ['ef=' + str(ef), 'searchMethod=4']))
+        MsPostsEfs=[
+                (48, 2, [50,  70,  90,  120,  160,  200, 400, 600, 700, 800, 1000, 1400, 1600, 2000]),
+                (32, 2, [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200, 300, 400, 600, 700, 800, 1000, 1200, 1400,1600, 2000]),
+                (20, 0, [2, 5, 10, 15, 20, 30, 40, 50, 70, 80]),
+                (12, 0, [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80])]
+
+        for oneCase in MsPostsEfs:
+            for ef in oneCase[2]:
+                algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', ['M=%d' % oneCase[0], 'post=%d' % oneCase[1], 'efConstruction=800'], 
+                                                                         save_index,
+                                                                         ['ef=%d' %ef]))
+
+        NNsAndEfs = [ (30, [700, 650, 550, 450, 350, 275, 200, 150, 120, 80, 50, 30]),
+                      (15, [80, 50, 30, 20]),
+                      (3,  [120, 80, 60, 40, 20, 10, 8, 4, 2]) ]
+
+        for oneCase in NNsAndEfs:
+          for ef in oneCase[1]:
+            algos['SW-graph(nmslib)'].append(NmslibReuseIndex(m, 'sw-graph', 
+                                            ['NN=%d' % oneCase[0], 'efConstruction=800', 'initIndexAttempts=1'], save_index,
+                                            ['efSearch=%d' % ef,   'initSearchAttempts=1']))
+
+        # END: Non-Metric Space Library (nmslib) entries
         # RPForest only works for cosine
         algos['rpforest'] = [RPForest(leaf_size, n_trees) for n_trees in [3, 5, 10, 20, 40, 100, 200, 400] for leaf_size in [3, 5, 10, 20, 40, 100, 200, 400]]
         L = []
@@ -602,40 +583,6 @@ def get_algos(m):
                 break
             x = int(math.ceil(x * 1.1))
         algos['falconn'] = [FALCONN(m, 16, l, l) for l in L]
-
-        # START: Non-Metric Space Library (nmslib) entries
-        algos['SW-graph(nmslib)'] = [
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=700',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=650',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=550',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=450',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=350',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=275',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=200',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=150',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=120',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=80',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=50',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=30', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=30',   'initSearchAttempts=1']),
-
-            NmslibReuseIndex(m, 'sw-graph', ['NN=15', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=80',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=15', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=50',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=15', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=30',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=15', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=20',   'initSearchAttempts=1']),
-
-            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=120',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=80',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=60',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=40',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=20',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=10',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=8',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=4',   'initSearchAttempts=1']),
-            NmslibReuseIndex(m, 'sw-graph', ['NN=3', 'efConstruction=1600', 'initIndexAttempts=1'], ['efSearch=2',   'initSearchAttempts=1']),
-        ]
-
-
-        # END: Non-Metric Space Library (nmslib) entries
 
     return algos
 
@@ -663,6 +610,7 @@ if __name__ == '__main__':
     parser.add_argument('--distance', help='Distance', default='angular')
     parser.add_argument('--limit', help='Limit', type=int, default=-1)
     parser.add_argument('--algo', help='run only this algorithm', default=None)
+    parser.add_argument('--no_save_index', help='Do not save indices', action='store_true')
 
     args = parser.parse_args()
 
@@ -687,7 +635,7 @@ if __name__ == '__main__':
             library, algo_name = line.strip().split('\t')[:2]
             algos_already_ran.add((library, algo_name))
 
-    algos = get_algos(args.distance)
+    algos = get_algos(args.distance, not args.no_save_index)
 
     if args.algo:
         print('running only', args.algo)
