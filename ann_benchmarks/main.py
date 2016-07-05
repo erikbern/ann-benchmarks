@@ -504,7 +504,6 @@ def get_algos(m, save_index):
 
         'SW-graph(nmslib)' :[],
 
-        'MP-lsh(lshkit)' :[]
     }
 
     for r in [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
@@ -530,6 +529,7 @@ def get_algos(m, save_index):
                                                               ['M=%d' % oneCase[0], 'post=%d' % oneCase[1], 'efConstruction=400'], save_index,
                                                               ['ef=%d' % ef]))
         
+        algos['MP-lsh(lshkit)'] = []
         for r in [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
           algos['MP-lsh(lshkit)'].append(NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=%f' % r,'H=1200001','T=10','L=50','tuneK=10']))
 
