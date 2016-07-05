@@ -34,7 +34,7 @@ def check_algo(algo_name, algo):
 
 def test_all_algos():
     for metric in ['angular', 'euclidean']:
-        algos = ann_benchmarks.get_algos(metric)
+        algos = ann_benchmarks.get_algos(metric,False) # false means: don't save any indices
         for algo_key in algos.keys():
             algo = random.choice(algos[algo_key]) # Just pick one of each
             yield check_algo, algo.name, algo # pass name just so unittest can capture it
