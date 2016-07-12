@@ -234,13 +234,7 @@ class KGraph(BaseANN):
             self._kgraph.build(**self._index_params) #iterations=30, L=100, delta=0.002, recall=0.99, K=25)
             if not os.path.exists(INDEX_DIR):
               os.makedirs(INDEX_DIR)
-<<<<<<< 9467c0df281b03597098ef968f180de8bf4d4671
-            if self._save_index:
-              self._kgraph.save(path)
-        os.environ['OMP_THREAD_LIMIT'] = '1'
-=======
             self._kgraph.save(path)
->>>>>>> no thread limits, instead use thread pool for queries
 
     def query(self, v, n):
         if v.dtype != numpy.float32:
