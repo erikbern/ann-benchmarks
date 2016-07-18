@@ -20,7 +20,8 @@ if os.path.exists(INDEX_DIR):
     shutil.rmtree(INDEX_DIR)
 
 class BaseANN(object):
-    pass
+    def use_threads(self):
+        return True
 
         
 class FALCONN(BaseANN):
@@ -64,6 +65,11 @@ class FALCONN(BaseANN):
             self._buf /= numpy.linalg.norm(self._buf)
         self._buf -= self._center
         return self._index.find_k_nearest_neighbors(self._buf, n)
+
+    def use_threads(self):
+        # See https://github.com/FALCONN-LIB/FALCONN/issues/6
+        return False
+
 
 class LSHF(BaseANN):
     def __init__(self, metric, n_estimators=10, n_candidates=50):
@@ -441,8 +447,11 @@ def run_algo(args, library, algo, results_fn):
             v, correct = t
             found = algo.query(v, 10)
             return len(set(found).intersection(correct))
-        pool = multiprocessing.pool.ThreadPool()
-        results = pool.map(single_query, queries)
+        if algo.use_threads():
+            pool = multiprocessing.pool.ThreadPool()
+            results = pool.map(single_query, queries)
+        else:
+            results = map(single_query, queries)
 
         k = float(sum(results))
         search_time = (time.time() - t0) / len(queries)
