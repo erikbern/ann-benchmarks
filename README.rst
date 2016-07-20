@@ -57,8 +57,6 @@ Principles
 Results
 -------
 
-This is very much a work in progress... more results coming later!
-
 1.19M vectors from GloVe (100 dimensions, trained from tweets), cosine similarity, run on an c4.2xlarge instance on EC2.
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/glove.png
@@ -68,6 +66,8 @@ This is very much a work in progress... more results coming later!
 
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/sift.png
    :align: center
+
+Starting 2016-07-20 these results now reflect multi-threaded benchmarks so the results are not consistent with earlier results.
 
 Note that FALCONN doesn't support multiple threads so the benchmark is affected by that.
 
