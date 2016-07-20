@@ -69,8 +69,7 @@ This is very much a work in progress... more results coming later!
 .. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/sift.png
    :align: center
 
-Note that KGraph has a substantial performance regression in the latest version.
-Once the author has confirmed and fixed, I will rerun the KGraph benchmarks. 
+Note that FALCONN doesn't support multiple threads so the benchmark is affected by that.
 
 Also note that NMSLIB saves indices in the directory indices. 
 If the tests are re-run using a different seed and/or a different number of queries, the
