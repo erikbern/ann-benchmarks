@@ -12,17 +12,16 @@ if soft == resource.RLIM_INFINITY or soft >= memory_limit:
     print('resetting memory limit from', soft, 'to', memory_limit)
     resource.setrlimit(resource.RLIMIT_DATA, (memory_limit, hard))
 
-os.environ['OMP_THREAD_LIMIT'] = '1' # just to limit number of processors                                                                                                                                                                    
-
 # Nmslib specific code
 # Remove old indices stored on disk
 INDEX_DIR='indices'    
-#import shutil
-#if os.path.exists(INDEX_DIR):
-#  shutil.rmtree(INDEX_DIR)
+import shutil
+if os.path.exists(INDEX_DIR):
+    shutil.rmtree(INDEX_DIR)
 
 class BaseANN(object):
-    pass
+    def use_threads(self):
+        return True
 
         
 class FALCONN(BaseANN):
@@ -66,6 +65,11 @@ class FALCONN(BaseANN):
             self._buf /= numpy.linalg.norm(self._buf)
         self._buf -= self._center
         return self._index.find_k_nearest_neighbors(self._buf, n)
+
+    def use_threads(self):
+        # See https://github.com/FALCONN-LIB/FALCONN/issues/6
+        return False
+
 
 class LSHF(BaseANN):
     def __init__(self, metric, n_estimators=10, n_candidates=50):
@@ -222,7 +226,6 @@ class KGraph(BaseANN):
         self._save_index = save_index
 
     def fit(self, X):
-        os.environ['OMP_THREAD_LIMIT'] = '40'
         import pykgraph
 
         if X.dtype != numpy.float32:
@@ -237,9 +240,7 @@ class KGraph(BaseANN):
             self._kgraph.build(**self._index_params) #iterations=30, L=100, delta=0.002, recall=0.99, K=25)
             if not os.path.exists(INDEX_DIR):
               os.makedirs(INDEX_DIR)
-            if self._save_index:
-              self._kgraph.save(path)
-        os.environ['OMP_THREAD_LIMIT'] = '1'
+            self._kgraph.save(path)
 
     def query(self, v, n):
         if v.dtype != numpy.float32:
@@ -262,7 +263,6 @@ class NmslibReuseIndex(BaseANN):
           os.makedirs(d)
 
     def fit(self, X):
-        os.environ['OMP_THREAD_LIMIT'] = '40'
         import nmslib_vector
         if self._method_name == 'vptree':
             # To avoid this issue:
@@ -286,8 +286,6 @@ class NmslibReuseIndex(BaseANN):
               nmslib_vector.saveIndex(self._index, self._index_name)
 
         nmslib_vector.setQueryTimeParams(self._index, self._query_param)
-
-        os.environ['OMP_THREAD_LIMIT'] = '1'
 
     def query(self, v, n):
         import nmslib_vector
@@ -393,7 +391,8 @@ class BruteForceBLAS(BaseANN):
         indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
         return sorted(indices, key=lambda index: dists[index])  # sort `n` closest into correct order
 
-def get_dataset(which='glove', limit=-1, random_state = 2, test_size = 10000):
+
+def get_dataset(which='glove', limit=-1, random_state = 3, test_size = 10000):
     cache = 'queries/%s-%d-%d-%d.npz' % (which, test_size, limit, random_state)
     if os.path.exists(cache):
         v = numpy.load(cache)
@@ -444,10 +443,17 @@ def run_algo(args, library, algo, results_fn):
     best_precision = 0.0 # should be deterministic but paranoid
     for i in xrange(3): # Do multiple times to warm up page cache, use fastest
         t0 = time.time()
-        k = 0.0
-        for v, correct in queries:
+        def single_query(t):
+            v, correct = t
             found = algo.query(v, 10)
-            k += len(set(found).intersection(correct))
+            return len(set(found).intersection(correct))
+        if algo.use_threads():
+            pool = multiprocessing.pool.ThreadPool()
+            results = pool.map(single_query, queries)
+        else:
+            results = map(single_query, queries)
+
+        k = float(sum(results))
         search_time = (time.time() - t0) / len(queries)
         precision = k / (len(queries) * 10)
         best_search_time = min(best_search_time, search_time)
@@ -490,6 +496,7 @@ def get_algos(m, save_index):
                    NearPy(m, 14, 5), NearPy(m, 14, 10), NearPy(m, 14, 20), NearPy(m, 14, 40), # NearPy(m, 14, 100),
                    NearPy(m, 16, 5), NearPy(m, 16, 10), NearPy(m, 16, 15), NearPy(m, 16, 20), NearPy(m, 16, 25), NearPy(m, 16, 30), NearPy(m, 16, 40)], #, NearPy(m, 16, 50), NearPy(m, 16, 70), NearPy(m, 16, 90), NearPy(m, 16, 120), NearPy(m, 16, 150)],
         'bruteforce': [BruteForce(m)],
+        'bruteforce-blas': [BruteForceBLAS(m)],
         'ball': [BallTree(m, 10), BallTree(m, 20), BallTree(m, 40), BallTree(m, 100), BallTree(m, 200), BallTree(m, 400), BallTree(m, 1000)],
         'kd': [KDTree(m, 10), KDTree(m, 20), KDTree(m, 40), KDTree(m, 100), KDTree(m, 200), KDTree(m, 400), KDTree(m, 1000)],
 
