@@ -37,8 +37,6 @@ Clone the repo and run ``bash install.sh``. This will install all libraries. It 
 
 To download and preprocess the data sets, run ``bash install/glove.sh`` and ``bash install/sift.sh``.
 
-There is also a Docker image available under `erikbern/ann <https://registry.hub.docker.com/u/erikbern/ann/>`__ containing all libraries and data sets.
-
 Principles
 ----------
 
