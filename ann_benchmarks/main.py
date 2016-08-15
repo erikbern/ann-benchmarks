@@ -23,6 +23,39 @@ class BaseANN(object):
     def use_threads(self):
         return True
 
+import locality_sensitive
+class ITUFilteringDouble(BaseANN):
+    def __init__(self, metric, alpha = None, beta = None, threshold = None, tau = None, kappa = None, m = None):
+        self._loader = locality_sensitive.double_vector_loader()
+        self._context = None
+        self._strategy = None
+        self._metric = metric
+        self._alpha = alpha
+        self._beta = beta
+        self._threshold = threshold
+        self._tau = tau
+        self._kappa = kappa
+        self._m = m
+        self.name = ("ITUFilteringDouble(..., threshold = %f, ...)" % threshold)
+
+    def fit(self, X):
+        if self._metric == 'angular':
+            X /= numpy.linalg.norm(X, axis=1).reshape(-1,  1)
+        self._loader.add(X)
+        self._context = locality_sensitive.double_vector_context(
+            self._loader, self._alpha, self._beta)
+        self._strategy = locality_sensitive.factories.make_double_filtering(
+            self._context, self._threshold,
+            locality_sensitive.filtering_configuration.from_values(
+                self._kappa, self._tau, self._m))
+
+    def query(self, v, n):
+        if self._metric == 'angular':
+            v /= numpy.linalg.norm(v)
+        return self._strategy.find(v, n, None)
+
+    def use_threads(self):
+        return False
         
 class FALCONN(BaseANN):
     def __init__(self, metric, num_bits, num_tables, num_probes):
@@ -590,6 +623,7 @@ def get_algos(m, save_index):
                 break
             x = int(math.ceil(x * 1.1))
         algos['falconn'] = [FALCONN(m, 16, l, l) for l in L]
+        algos['itu-fd'] = [ITUFilteringDouble("angular", 0.8, 0.3, threshold, 2, 2, 1000) for threshold in [1.5, 1.45, 1.4, 1.375]]
 
     return algos
 
