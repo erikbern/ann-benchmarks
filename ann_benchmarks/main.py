@@ -424,8 +424,16 @@ class BruteForceBLAS(BaseANN):
         indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
         return sorted(indices, key=lambda index: dists[index])  # sort `n` closest into correct order
 
+ds_loaders = {
+    'float': lambda line: [float(x) for x in line.strip().split()]
+}
 
-def get_dataset(which='glove', limit=-1, random_state = 3, test_size = 10000):
+ds_finishers = {
+    'float': lambda X: numpy.vstack(X)
+}
+
+def get_dataset(which = 'glove',
+        limit = -1, random_state = 3, test_size = 10000):
     cache = 'queries/%s-%d-%d-%d.npz' % (which, test_size, limit, random_state)
     if os.path.exists(cache):
         v = numpy.load(cache)
@@ -439,14 +447,23 @@ def get_dataset(which='glove', limit=-1, random_state = 3, test_size = 10000):
     else:
         f = open(local_fn + '.txt')
 
+    point_type = 'float'
+
+    loader = None
+    if not point_type in ds_loaders:
+        assert False, \
+            "dataset %s: unknown point type '%s'" % (which, point_type)
+    else:
+        loader = ds_loaders[point_type]
+
     X = []
     for i, line in enumerate(f):
-        v = [float(x) for x in line.strip().split()]
-        X.append(v)
+        X.append(loader(line))
         if limit != -1 and len(X) == limit:
             break
 
-    X = numpy.vstack(X)
+    if point_type in ds_finishers:
+        X = ds_finishers[point_type](X)
     import sklearn.cross_validation
 
     # Here Erik is most welcome to use any other random_state
