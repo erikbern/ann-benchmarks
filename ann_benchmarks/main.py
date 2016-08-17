@@ -23,6 +23,8 @@ class BaseANN(object):
     def use_threads(self):
         return True
 
+import sys
+sys.path.append('install/ann-filters/build/wrappers/swig/')
 import locality_sensitive
 class ITUFilteringDouble(BaseANN):
     def __init__(self, metric, alpha = None, beta = None, threshold = None, tau = None, kappa1 = None, kappa2 = None, m1 = None, m2 = None):
@@ -625,7 +627,7 @@ def get_algos(m, save_index):
                 break
             x = int(math.ceil(x * 1.1))
         algos['falconn'] = [FALCONN(m, 16, l, l) for l in L]
-        algos['itu-fd'] = [ITUFilteringDouble("angular", 0.8, 0.3, threshold, 2, 2, 1000) for threshold in [1.5, 1.45, 1.4, 1.375]]
+        algos['itu-fd'] = [ITUFilteringDouble("angular", 0.7, 0.3, threshold, 3, 1, 0, 1500, 0) for threshold in [2.5,2.4,2.3,2.2,2.1,2.0]]
 
     return algos
 
