@@ -25,7 +25,7 @@ class BaseANN(object):
 
 import locality_sensitive
 class ITUFilteringDouble(BaseANN):
-    def __init__(self, metric, alpha = None, beta = None, threshold = None, tau = None, kappa = None, m = None):
+    def __init__(self, metric, alpha = None, beta = None, threshold = None, tau = None, kappa1 = None, kappa2 = None, m1 = None, m2 = None):
         self._loader = locality_sensitive.double_vector_loader()
         self._context = None
         self._strategy = None
@@ -34,8 +34,10 @@ class ITUFilteringDouble(BaseANN):
         self._beta = beta
         self._threshold = threshold
         self._tau = tau
-        self._kappa = kappa
-        self._m = m
+        self._kappa1 = kappa1
+        self._kappa2 = kappa2
+        self._m1 = m1
+	self._m2 = m2
         self.name = ("ITUFilteringDouble(..., threshold = %f, ...)" % threshold)
 
     def fit(self, X):
@@ -47,7 +49,7 @@ class ITUFilteringDouble(BaseANN):
         self._strategy = locality_sensitive.factories.make_double_filtering(
             self._context, self._threshold,
             locality_sensitive.filtering_configuration.from_values(
-                self._kappa, self._tau, self._m))
+                self._kappa1, self._kappa2, self._tau, self._m1, self._m2))
 
     def query(self, v, n):
         if self._metric == 'angular':
