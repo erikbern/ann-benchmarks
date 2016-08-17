@@ -1,4 +1,4 @@
-import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource, random, math
+import gzip, numpy, time, os, multiprocessing, argparse, pickle, resource, random, math, yaml
 try:
     from urllib import urlretrieve
 except ImportError:
@@ -447,7 +447,15 @@ def get_dataset(which = 'glove',
     else:
         f = open(local_fn + '.txt')
 
+    manifest = {}
+    if os.path.exists(local_fn + '.yaml'):
+        y = yaml.load(open(local_fn + '.yaml'))
+        if 'dataset' in y:
+            manifest = y['dataset']
+
     point_type = 'float'
+    if 'point_type' in manifest:
+        point_type = manifest['point_type']
 
     loader = None
     if not point_type in ds_loaders:
