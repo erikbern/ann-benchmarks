@@ -429,7 +429,8 @@ class BruteForceBLAS(BaseANN):
         return sorted(indices, key=lambda index: dists[index])  # sort `n` closest into correct order
 
 ds_loaders = {
-    'float': lambda line: [float(x) for x in line.strip().split()]
+    'float': lambda line: [float(x) for x in line.strip().split()],
+    'bit': lambda line: [bool(int(x)) for x in list(line.strip())]
 }
 
 ds_finishers = {
@@ -483,9 +484,13 @@ def get_dataset(which = 'glove',
     # However, it is best to use a new random seed for each major re-evaluation,
     # so that we test on a trully bind data.
     X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=test_size, random_state=random_state)
-    X_train = X_train.astype(numpy.float)
-    X_test = X_test.astype(numpy.float)
-    print(X_train.shape, X_test.shape)
+    # FIXME: this is terrible
+    try:
+      X_train = X_train.astype(numpy.float)
+      X_test = X_test.astype(numpy.float)
+      print(X_train.shape, X_test.shape)
+    except AttributeError:
+      pass
     numpy.savez(cache, train=X_train, test=X_test)
     return X_train, X_test
 
