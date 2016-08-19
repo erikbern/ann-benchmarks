@@ -743,7 +743,11 @@ if __name__ == '__main__':
             library, algo_name = line.strip().split('\t')[:2]
             algos_already_ran.add((library, algo_name))
 
-    algos = get_algos('float', args.distance, not args.no_save_index)
+    point_type = 'float'
+    # FIXME
+    if args.distance == 'hamming':
+        point_type = 'bit'
+    algos = get_algos(point_type, args.distance, not args.no_save_index)
 
     if args.algo:
         print('running only', args.algo)
