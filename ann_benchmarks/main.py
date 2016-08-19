@@ -60,7 +60,30 @@ class ITUFilteringDouble(BaseANN):
 
     def use_threads(self):
         return False
-        
+
+class ITUHashing(BaseANN):
+    def __init__(self, c = 2.0, r = 2.0):
+        self._loader = locality_sensitive.bit_vector_loader()
+        self._context = None
+        self._strategy = None
+        self._c = c
+        self._r = r
+        self.name = ("ITUHashing(c = %f, r = %f)" % (c, r))
+
+    def fit(self, X):
+        for entry in X:
+            locality_sensitive.hacks.add(self._loader, entry.tolist())
+        self._context = locality_sensitive.bit_vector_context(
+            self._loader, self._c, self._r)
+        self._strategy = locality_sensitive.factories.make_hashing(
+            self._context)
+
+    def query(self, v, n):
+        return locality_sensitive.hacks.find(self._strategy, n, v)
+
+    def use_threads(self):
+        return False
+
 class FALCONN(BaseANN):
     def __init__(self, metric, num_bits, num_tables, num_probes):
         self.name = 'FALCONN(K={}, L={}, T={})'.format(num_bits, num_tables, num_probes)
