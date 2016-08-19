@@ -39,7 +39,7 @@ class ITUFilteringDouble(BaseANN):
         self._kappa1 = kappa1
         self._kappa2 = kappa2
         self._m1 = m1
-	self._m2 = m2
+        self._m2 = m2
         self.name = ("ITUFilteringDouble(..., threshold = %f, ...)" % threshold)
 
     def fit(self, X):
@@ -384,7 +384,7 @@ class BruteForce(BaseANN):
 
     def fit(self, X):
         import sklearn.neighbors
-        metric = {'angular': 'cosine', 'euclidean': 'l2'}[self._metric]
+        metric = {'angular': 'cosine', 'euclidean': 'l2', 'hamming': 'hamming'}[self._metric]
         self._nbrs = sklearn.neighbors.NearestNeighbors(algorithm='brute', metric=metric)
         self._nbrs.fit(X)
 
@@ -539,7 +539,7 @@ def run_algo(args, library, algo, results_fn):
 def get_queries(args):
     print('computing queries with correct results...')
 
-    bf = BruteForceBLAS(args.distance)
+    bf = BruteForce(args.distance)
     X_train, X_test = get_dataset(which=args.dataset, limit=args.limit)
 
     # Prepare queries
