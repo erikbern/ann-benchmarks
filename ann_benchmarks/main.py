@@ -685,6 +685,12 @@ def get_algos(p, m, save_index):
             algos['itu-fd'] = [ITUFilteringDouble("angular", 0.7, 0.3, threshold, 3, 1, 0, 1500, 0) for threshold in [2.5,2.4,2.3,2.2,2.1,2.0]]
 
         return algos
+    elif p == 'bit':
+        algos = {
+            'itu-hashing': [ITUHashing(c, r) for c in [1.5, 2.0, 2.5, 3.0, 3.5] for r in [1.5, 2.0, 2.5, 3.0, 3.5]]
+        }
+
+        return algos
     else:
         assert False, "no algorithms support the point type '%s'" % p
 
