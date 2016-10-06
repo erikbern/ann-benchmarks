@@ -4,6 +4,7 @@ try:
 except ImportError:
     from urllib.request import urlretrieve # Python 3
 import sklearn.preprocessing
+import shlex, subprocess
 
 # Set resource limits to prevent memory bombs
 memory_limit = 12 * 2**30
@@ -80,6 +81,67 @@ class ITUHashing(BaseANN):
 
     def query(self, v, n):
         return locality_sensitive.hacks.find(self._strategy, n, v)
+
+    def use_threads(self):
+        return False
+
+class Subprocess(BaseANN):
+    def __raw_line(self):
+        return shlex.split(self._program.stdout.readline().strip())
+    def __line(self):
+        line = self.__raw_line()
+        while len(line) < 1 or line[0] != "epbprtv0":
+            line = self.__raw_line()
+        return line[1:]
+
+    @staticmethod
+    def __quote(token):
+        return "'" + str(token).replace("'", "'\\'") + "'"
+
+    def __write(self, string):
+        self._program.stdin.write(string + "\n")
+
+    def __init__(self, args, encoder, **kwargs):
+        self.name = "Subprocess(program = %s, { %s })" % (args[0], str(kwargs))
+        self._program = subprocess.Popen(
+            args,
+            bufsize = 1, # line buffering
+            stdin = subprocess.PIPE,
+            stdout = subprocess.PIPE,
+            universal_newlines = True)
+        self._encoder = encoder
+        for key, value in kwargs.iteritems():
+            self.__write("%s %s" % \
+                (Subprocess.__quote(key), Subprocess.__quote(value)))
+            assert(self.__line()[0] == "ok")
+        self._program.stdin.write("\n")
+        assert(self.__line()[0] == "ok")
+
+    def fit(self, X):
+        self._ds = X
+        for entry in X:
+            self.__write(self._encoder(entry))
+            assert(self.__line()[0] == "ok")
+        self._program.stdin.write("\n")
+        assert(self.__line()[0] == "ok")
+
+    def query(self, v, n):
+        self.__write("%s %d" % \
+            (Subprocess.__quote(self._encoder(v)), n))
+        status = self.__line()
+        if status[0] == "ok":
+            count = int(status[1])
+            results = []
+            i = 0
+            while i < count:
+                line = self.__line()
+                results.append(int(line[0]))
+                i += 1
+            assert(len(results) == count)
+            return results
+        else:
+            assert(status[0] == "fail")
+            return []
 
     def use_threads(self):
         return False
