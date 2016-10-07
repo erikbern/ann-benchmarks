@@ -63,15 +63,17 @@ class ITUFilteringDouble(BaseANN):
         return False
 
 class ITUHashing(BaseANN):
-    def __init__(self, c = 2.0, r = 2.0):
+    def __init__(self, seed, c = 2.0, r = 2.0):
         self._loader = locality_sensitive.bit_vector_loader()
         self._context = None
         self._strategy = None
         self._c = c
         self._r = r
-        self.name = ("ITUHashing(c = %f, r = %f)" % (c, r))
+        self._seed = seed
+        self.name = ("ITUHashing(c = %f, r = %f, seed = %u)" % (c, r, seed))
 
     def fit(self, X):
+        locality_sensitive.set_seed(self._seed)
         for entry in X:
             locality_sensitive.hacks.add(self._loader, entry.tolist())
         self._context = locality_sensitive.bit_vector_context(
@@ -748,8 +750,9 @@ def get_algos(p, m, save_index):
 
         return algos
     elif p == 'bit':
+        seed = 0x12345678
         algos = {
-            'itu-hashing': [ITUHashing(c, r) for c in [1.5, 2.0, 2.5, 3.0, 3.5] for r in [1.5, 2.0, 2.5, 3.0, 3.5]]
+            'itu-hashing': [ITUHashing(seed, c, r) for c in [1.5, 2.0, 2.5, 3.0, 3.5] for r in [1.5, 2.0, 2.5, 3.0, 3.5]]
         }
 
         return algos
