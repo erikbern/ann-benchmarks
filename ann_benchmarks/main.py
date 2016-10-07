@@ -476,8 +476,13 @@ class BruteForce(BaseANN):
         self._nbrs.fit(X)
 
     def query(self, v, n):
-        return list(self._nbrs.kneighbors(v, return_distance=False, n_neighbors=n)[0])
+        return list(self._nbrs.kneighbors([v],
+            return_distance = False, n_neighbors = n)[0])
 
+    def query_with_distances(self, v, n):
+        (distances, positions) = self._nbrs.kneighbors([v],
+            return_distance = True, n_neighbors = n)
+        return zip(list(positions[0]), list(distances[0]))
 
 class BruteForceBLAS(BaseANN):
     """kNN search that uses a linear scan = brute force."""
