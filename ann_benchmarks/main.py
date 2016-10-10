@@ -487,8 +487,10 @@ class BruteForce(BaseANN):
 class BruteForceBLAS(BaseANN):
     """kNN search that uses a linear scan = brute force."""
     def __init__(self, metric, precision=numpy.float32):
-        if metric not in ('angular', 'euclidean'):
+        if metric not in ('angular', 'euclidean', 'hamming'):
             raise NotImplementedError("BruteForceBLAS doesn't support metric %s" % metric)
+        elif metric == 'hamming' and precision != numpy.uint8:
+            raise NotImplementedError("BruteForceBLAS doesn't support precision %s with Hamming distances" % precision)
         self._metric = metric
         self._precision = precision
         self.name = 'BruteForceBLAS()'
@@ -502,10 +504,16 @@ class BruteForceBLAS(BaseANN):
         elif self._metric == 'euclidean':
             self.index = numpy.ascontiguousarray(X, dtype=self._precision)
             self.lengths = numpy.ascontiguousarray(lens, dtype=self._precision)
+        elif self._metric == 'hamming':
+            self.index = numpy.ascontiguousarray(
+                map(numpy.packbits, X), dtype=self._precision)
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
 
     def query(self, v, n):
+        return map(lambda (_, index): index, self.query_with_distances(v, n))
+
+    def query_with_distances(self, v, n):
         """Find indices of `n` most similar vectors from the index to query vector `v`."""
         v = numpy.ascontiguousarray(v, dtype=self._precision)  # use same precision for query as for index
         # HACK we ignore query length as that's a constant not affecting the final ordering
@@ -515,10 +523,15 @@ class BruteForceBLAS(BaseANN):
         elif self._metric == 'euclidean':
             # argmin_a (a - b)^2 = argmin_a a^2 - 2ab + b^2 = argmin_a a^2 - 2ab
             dists = self.lengths - 2 * numpy.dot(self.index, v)
+        elif self._metric == 'hamming':
+            t = numpy.bitwise_xor(self.index, numpy.packbits(v))
+            dists = [sum(map(lambda e: bin(e).count("1") / float(len(v)), vec)) for vec in t]
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
         indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
-        return sorted(indices, key=lambda index: dists[index])  # sort `n` closest into correct order
+        return sorted(
+            map(lambda i: (dists[i], i), indices),
+            key=lambda (dist, _): dist)  # sort `n` closest into correct order
 
 ds_loaders = {
     'float': lambda line: [float(x) for x in line.strip().split()],
