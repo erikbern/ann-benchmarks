@@ -20,6 +20,14 @@ import shutil
 if os.path.exists(INDEX_DIR):
     shutil.rmtree(INDEX_DIR)
 
+from scipy.spatial.distance import pdist
+
+pd = {
+    'hamming': lambda a, b: pdist([a, b], metric = "hamming")[0],
+    'euclidean': lambda a, b: pdist([a, b], metric = "euclidean")[0],
+    'angular': lambda a, b: pdist([a, b], metric = "cosine")[0]
+}
+
 class BaseANN(object):
     def use_threads(self):
         return True
@@ -615,19 +623,24 @@ def run_algo(args, library, algo, results_fn):
     best_search_time = float('inf')
     best_precision = 0.0 # should be deterministic but paranoid
     for i in xrange(3): # Do multiple times to warm up page cache, use fastest
-        t0 = time.time()
         def single_query(t):
-            v, correct = t
+            v, max_distance = t
+            start = time.time()
             found = algo.query(v, 10)
-            return len(set(found).intersection(correct))
+            total = (time.time() - start)
+            with_distances = \
+                map(lambda p: (p, pd[args.distance](v, X_train[p])), found)
+            within = filter(lambda (p, d): d <= max_distance, with_distances)
+            return (total, len(within))
         if algo.use_threads():
             pool = multiprocessing.pool.ThreadPool()
             results = pool.map(single_query, queries)
         else:
             results = map(single_query, queries)
 
-        k = float(sum(results))
-        search_time = (time.time() - t0) / len(queries)
+        k = float(sum(map(lambda (_, count): count, results)))
+        total_time = sum(map(lambda (time, _): time, results))
+        search_time = total_time / len(queries)
         precision = k / (len(queries) * 10)
         best_search_time = min(best_search_time, search_time)
         best_precision = max(best_precision, precision)
@@ -651,8 +664,9 @@ def get_queries(args):
     bf.fit(X_train)
     queries = []
     for x in X_test:
-        correct = bf.query(x, 10)
-        queries.append((x, correct))
+        correct = bf.query_with_distances(x, 10)
+        max_distance = max(correct, key = lambda (_, distance): distance)[1]
+        queries.append((x, max_distance))
         if len(queries) % 100 == 0:
             print(len(queries), '...')
 
