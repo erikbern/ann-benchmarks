@@ -124,7 +124,7 @@ class Subprocess(BaseANN):
             self.__write("%s %s" % \
                 (Subprocess.__quote(key), Subprocess.__quote(value)))
             assert(self.__line()[0] == "ok")
-        self._program.stdin.write("\n")
+        self.__write("")
         assert(self.__line()[0] == "ok")
 
     def fit(self, X):
@@ -132,7 +132,7 @@ class Subprocess(BaseANN):
         for entry in X:
             self.__write(self._encoder(entry))
             assert(self.__line()[0] == "ok")
-        self._program.stdin.write("\n")
+        self.__write("")
         assert(self.__line()[0] == "ok")
 
     def query(self, v, n):
