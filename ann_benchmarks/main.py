@@ -644,7 +644,7 @@ def run_algo(args, library, algo, results_fn):
 def get_queries(args):
     print('computing queries with correct results...')
 
-    bf = BruteForce(args.distance)
+    bf = BruteForceBLAS(args.distance)
     X_train, X_test = get_dataset(which=args.dataset, limit=args.limit)
 
     # Prepare queries
