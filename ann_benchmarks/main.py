@@ -90,7 +90,7 @@ class ITUHashing(BaseANN):
             self._context)
 
     def query(self, v, n):
-        return locality_sensitive.hacks.find(self._strategy, n, v)
+        return locality_sensitive.hacks.find(self._strategy, n, v.tolist())
 
     def use_threads(self):
         return False
@@ -496,7 +496,7 @@ class BruteForceBLAS(BaseANN):
     def __init__(self, metric, precision=numpy.float32):
         if metric not in ('angular', 'euclidean', 'hamming'):
             raise NotImplementedError("BruteForceBLAS doesn't support metric %s" % metric)
-        elif metric == 'hamming' and precision != numpy.uint8:
+        elif metric == 'hamming' and precision != numpy.bool:
             raise NotImplementedError("BruteForceBLAS doesn't support precision %s with Hamming distances" % precision)
         self._metric = metric
         self._precision = precision
@@ -550,6 +550,11 @@ ds_printers = {
     'bit': lambda X: "".join(map(lambda el: "1" if el else "0", X))
 }
 
+ds_numpy_types = {
+    'float': numpy.float,
+    'bit': numpy.bool_
+}
+
 ds_finishers = {
     'float': lambda X: numpy.vstack(X)
 }
@@ -561,23 +566,24 @@ def get_dataset(which = 'glove',
         v = numpy.load(cache)
         X_train = v['train']
         X_test = v['test']
-        print(X_train.shape, X_test.shape)
-        return X_train, X_test
+        manifest = v['manifest'][0]
+        print(manifest, X_train.shape, X_test.shape)
+        return manifest, X_train, X_test
     local_fn = os.path.join('install', which)
     if os.path.exists(local_fn + '.gz'):
         f = gzip.open(local_fn + '.gz')
     else:
         f = open(local_fn + '.txt')
 
-    manifest = {}
+    manifest = {
+      'point_type': 'float'
+    }
     if os.path.exists(local_fn + '.yaml'):
         y = yaml.load(open(local_fn + '.yaml'))
         if 'dataset' in y:
-            manifest = y['dataset']
+            manifest.update(y['dataset'])
 
-    point_type = 'float'
-    if 'point_type' in manifest:
-        point_type = manifest['point_type']
+    point_type = manifest['point_type']
 
     loader = None
     if not point_type in ds_loaders:
@@ -600,24 +606,19 @@ def get_dataset(which = 'glove',
     # Here Erik is most welcome to use any other random_state
     # However, it is best to use a new random seed for each major re-evaluation,
     # so that we test on a trully bind data.
-    X_train, X_test = sklearn.cross_validation.train_test_split(X, test_size=test_size, random_state=random_state)
-    # FIXME: this is terrible
-    try:
-      X_train = X_train.astype(numpy.float)
-      X_test = X_test.astype(numpy.float)
-      print(X_train.shape, X_test.shape)
-    except AttributeError:
-      pass
-    numpy.savez(cache, train=X_train, test=X_test)
-    return X_train, X_test
+    X_train, X_test = \
+      sklearn.cross_validation.train_test_split(
+          X, test_size = test_size, random_state = random_state)
 
+    if point_type in ds_numpy_types:
+        X_train = X_train.astype(ds_numpy_types[point_type])
+        X_test = X_test.astype(ds_numpy_types[point_type])
+        print(X_train.shape, X_test.shape)
 
-def run_algo(args, library, algo, results_fn):
-    pool = multiprocessing.Pool()
-    X_train, X_test = pool.apply(get_dataset, [args.dataset, args.limit])
-    pool.close()
-    pool.join()
+    numpy.savez(cache, manifest = [manifest], train = X_train, test = X_test)
+    return manifest, X_train, X_test
 
+def run_algo(X_train, queries, library, algo, distance, results_fn):
     t0 = time.time()
     if algo != 'bf':
         algo.fit(X_train)
@@ -633,7 +634,7 @@ def run_algo(args, library, algo, results_fn):
             found = algo.query(v, 10)
             total = (time.time() - start)
             with_distances = \
-                map(lambda p: (p, pd[args.distance](v, X_train[p])), found)
+                map(lambda p: (p, pd[distance](v, X_train[p])), found)
             within = filter(lambda (p, d): d <= max_distance, with_distances)
             return (total, len(within))
         if algo.use_threads():
@@ -658,12 +659,10 @@ def run_algo(args, library, algo, results_fn):
     f.close()
 
 
-def get_queries(args):
-    print('computing queries with correct results...')
+def compute_distances(distance, X_train, X_test):
+    print('computing max distances for queries...')
 
-    bf = BruteForceBLAS(args.distance)
-    X_train, X_test = get_dataset(which=args.dataset, limit=args.limit)
-
+    bf = BruteForceBLAS(distance, precision = X_train.dtype)
     # Prepare queries
     bf.fit(X_train)
     queries = []
@@ -844,13 +843,15 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
+    manifest, X_train, X_test = get_dataset(args.dataset, args.limit)
+
     results_fn = get_fn('results', args)
     queries_fn = get_fn('queries', args)
 
     print('storing queries in', queries_fn, 'and results in', results_fn)
 
     if not os.path.exists(queries_fn):
-        queries = get_queries(args)
+        queries = compute_distances(args.distance, X_train, X_test)
         f = open(queries_fn, 'w')
         pickle.dump(queries, f)
         f.close()
@@ -865,10 +866,7 @@ if __name__ == '__main__':
             library, algo_name = line.strip().split('\t')[:2]
             algos_already_ran.add((library, algo_name))
 
-    point_type = 'float'
-    # FIXME
-    if args.distance == 'hamming':
-        point_type = 'bit'
+    point_type = manifest['point_type']
     algos = get_algos(point_type, args.distance, not args.no_save_index)
 
     if args.algo:
@@ -889,6 +887,9 @@ if __name__ == '__main__':
     for library, algo in algos_flat:
         print(algo.name, '...')
         # Spawn a subprocess to force the memory to be reclaimed at the end
-        p = multiprocessing.Process(target=run_algo, args=(args, library, algo, results_fn))
+        p = multiprocessing.Process(
+            target = run_algo,
+            args =
+                (X_train, queries, library, algo, args.distance, results_fn))
         p.start()
         p.join()
