@@ -128,7 +128,6 @@ class Subprocess(BaseANN):
         assert(self.__line()[0] == "ok")
 
     def fit(self, X):
-        self._ds = X
         for entry in X:
             self.__write(self._encoder(entry))
             assert(self.__line()[0] == "ok")
