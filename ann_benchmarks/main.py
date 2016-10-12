@@ -785,33 +785,36 @@ def get_algos(p, m, save_index):
 
         return algos
     elif p == 'bit':
-        seed = 0x12345678
-        algos = {
-            'itu-hashing':
-              [ITUHashing(seed, c, r)
-                  for c in [1.5, 2.0, 2.5, 3.0, 3.5]
-                  for r in [1.5, 2.0, 2.5, 3.0, 3.5]]
-        }
-        if os.path.isdir("install/ann-filters/build/wrappers/frontend"):
-            algos.update({
-                'itu-linear':
-                  [Subprocess(["install/ann-filters/build/wrappers/frontend/fr-linear"],
-                      ds_printers["bit"], c = c, r = r)
+        if m == 'hamming':
+            seed = 0x12345678
+            algos = {
+                'itu-hashing':
+                  [ITUHashing(seed, c, r)
                       for c in [1.5, 2.0, 2.5, 3.0, 3.5]
-                      for r in [1.5, 2.0, 2.5, 3.0, 3.5]],
-                'itu-dummy':
-                  [Subprocess(["install/ann-filters/build/wrappers/frontend/fr-dummy"],
-                      ds_printers["bit"], c = c, r = r)
-                      for c in [1.5, 2.0, 2.5, 3.0, 3.5]
-                      for r in [1.5, 2.0, 2.5, 3.0, 3.5]],
-                'itu-hashing-e':
-                  [Subprocess(["install/ann-filters/build/wrappers/frontend/fr-hashing"],
-                      ds_printers["bit"], c = c, r = r, seed = seed)
-                       for c in [1.5, 2.0, 2.5, 3.0, 3.5]
-                       for r in [1.5, 2.0, 2.5, 3.0, 3.5]]
-            })
+                      for r in [1.5, 2.0, 2.5, 3.0, 3.5]]
+            }
+            if os.path.isdir("install/ann-filters/build/wrappers/frontend"):
+                algos.update({
+                    'itu-linear':
+                      [Subprocess(["install/ann-filters/build/wrappers/frontend/fr-linear"],
+                          ds_printers["bit"], c = c, r = r)
+                          for c in [1.5, 2.0, 2.5, 3.0, 3.5]
+                          for r in [1.5, 2.0, 2.5, 3.0, 3.5]],
+                    'itu-dummy':
+                      [Subprocess(["install/ann-filters/build/wrappers/frontend/fr-dummy"],
+                          ds_printers["bit"], c = c, r = r)
+                          for c in [1.5, 2.0, 2.5, 3.0, 3.5]
+                          for r in [1.5, 2.0, 2.5, 3.0, 3.5]],
+                    'itu-hashing-e':
+                      [Subprocess(["install/ann-filters/build/wrappers/frontend/fr-hashing"],
+                          ds_printers["bit"], c = c, r = r, seed = seed)
+                           for c in [1.5, 2.0, 2.5, 3.0, 3.5]
+                           for r in [1.5, 2.0, 2.5, 3.0, 3.5]]
+                })
 
-        return algos
+            return algos
+        else:
+            assert False, "no algorithms for point type '%s' support the distance metric '%s'" % (p, m)
     else:
         assert False, "no algorithms support the point type '%s'" % p
 
