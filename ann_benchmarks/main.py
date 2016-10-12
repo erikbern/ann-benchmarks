@@ -597,6 +597,7 @@ def get_dataset(which = 'glove',
         X.append(loader(line))
         if limit != -1 and len(X) == limit:
             break
+    X = numpy.array(X, dtype = ds_numpy_types.get(point_type))
 
     if point_type in ds_finishers:
         X = ds_finishers[point_type](X)
@@ -609,11 +610,7 @@ def get_dataset(which = 'glove',
     X_train, X_test = \
       sklearn.cross_validation.train_test_split(
           X, test_size = test_size, random_state = random_state)
-
-    if point_type in ds_numpy_types:
-        X_train = X_train.astype(ds_numpy_types[point_type])
-        X_test = X_test.astype(ds_numpy_types[point_type])
-        print(X_train.shape, X_test.shape)
+    print(X_train.shape, X_test.shape)
 
     numpy.savez(cache, manifest = [manifest], train = X_train, test = X_test)
     return manifest, X_train, X_test
