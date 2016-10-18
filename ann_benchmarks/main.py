@@ -839,6 +839,7 @@ if __name__ == '__main__':
     parser.add_argument('--distance', help='Distance', default='angular')
     parser.add_argument('--limit', help='Limit', type=int, default=-1)
     parser.add_argument('--algo', help='run only this algorithm', default=None)
+    parser.add_argument('--sub-algo', help='run only the named algorithm instance', default=None)
     parser.add_argument('--no_save_index', help='Do not save indices', action='store_true')
 
     args = parser.parse_args()
@@ -872,6 +873,9 @@ if __name__ == '__main__':
     if args.algo:
         print('running only', args.algo)
         algos = {args.algo: algos[args.algo]}
+        if args.sub_algo:
+            algos[args.algo] = \
+              [algo for algo in algos[args.algo] if algo.name == args.sub_algo]
 
     algos_flat = []
 
