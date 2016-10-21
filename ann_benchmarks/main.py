@@ -630,9 +630,9 @@ def run_algo(X_train, queries, library, algo, distance, results_fn):
             start = time.time()
             found = algo.query(v, 10)
             total = (time.time() - start)
-            with_distances = \
-                map(lambda p: (p, pd[distance](v, X_train[p])), found)
-            within = filter(lambda (p, d): d <= max_distance, with_distances)
+            within = filter(
+                lambda idx: pd[distance](v, X_train[idx]) <= max_distance,
+                found)
             return (total, len(within))
         if algo.use_threads():
             pool = multiprocessing.pool.ThreadPool()
