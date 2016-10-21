@@ -537,7 +537,7 @@ class BruteForceBLAS(BaseANN):
             assert False, "invalid metric"  # shouldn't get past the constructor!
         indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
         return sorted(
-            map(lambda i: (dists[i], i), indices),
+            map(lambda i: (i, pd[self._metric](self.index[i], v)), indices),
             key=lambda (dist, _): dist)  # sort `n` closest into correct order
 
 ds_loaders = {
