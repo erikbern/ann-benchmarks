@@ -5,6 +5,7 @@ except ImportError:
     from urllib.request import urlretrieve # Python 3
 import sklearn.preprocessing
 import shlex, subprocess
+import json
 
 # Set resource limits to prevent memory bombs
 memory_limit = 12 * 2**30
@@ -626,35 +627,36 @@ def run_algo(X_train, queries, library, algo, distance, results_fn):
     best_precision = 0.0 # should be deterministic but paranoid
     for i in xrange(3): # Do multiple times to warm up page cache, use fastest
         def single_query(t):
-            v, max_distance = t
+            v, _, _ = t
             start = time.time()
             found = algo.query(v, 10)
             total = (time.time() - start)
-            within = filter(
-                lambda idx: pd[distance](v, X_train[idx]) <= max_distance,
-                found)
-            return (total, len(within))
+            found = map(
+                lambda idx: (int(idx), float(pd[distance](v, X_train[idx]))),
+                list(found))
+            return (total, found)
         if algo.use_threads():
             pool = multiprocessing.pool.ThreadPool()
             results = pool.map(single_query, queries)
         else:
             results = map(single_query, queries)
 
-        k = float(sum(map(lambda (_, count): count, results)))
         total_time = sum(map(lambda (time, _): time, results))
         search_time = total_time / len(queries)
-        precision = k / (len(queries) * 10)
         best_search_time = min(best_search_time, search_time)
-        best_precision = max(best_precision, precision)
-        print(search_time, precision)
 
-    output = [library, algo.name, build_time, best_search_time, best_precision]
+    output = {
+        "library": library,
+        "name": algo.name,
+        "build_time": build_time,
+        "best_search_time": best_search_time,
+        "results": results
+    }
     print(output)
 
     f = open(results_fn, 'a')
-    f.write('\t'.join(map(str, output)) + '\n')
+    f.write(json.dumps(output) + "\n")
     f.close()
-
 
 def compute_distances(distance, X_train, X_test):
     print('computing max distances for queries...')
@@ -666,7 +668,7 @@ def compute_distances(distance, X_train, X_test):
     for x in X_test:
         correct = bf.query_with_distances(x, 10)
         max_distance = max(correct, key = lambda (_, distance): distance)[1]
-        queries.append((x, max_distance))
+        queries.append((x, max_distance, correct))
         if len(queries) % 100 == 0:
             print(len(queries), '...')
 
@@ -864,8 +866,8 @@ if __name__ == '__main__':
     algos_already_ran = set()
     if os.path.exists(results_fn):
         for line in open(results_fn):
-            library, algo_name = line.strip().split('\t')[:2]
-            algos_already_ran.add((library, algo_name))
+            run = json.loads(line)
+            algos_already_ran.add((run["library"], run["name"]))
 
     point_type = manifest['point_type']
     algos = get_algos(point_type, args.distance, not args.no_save_index)

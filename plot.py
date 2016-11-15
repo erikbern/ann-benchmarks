@@ -1,3 +1,4 @@
+import os, json, pickle
 import numpy
 import matplotlib as mpl
 mpl.use('Agg')
@@ -5,16 +6,74 @@ import matplotlib.pyplot as plt
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--input', action='append')
-parser.add_argument('--output', action='append')
-
+parser.add_argument(
+    '--dataset',
+    nargs = 2,
+    metavar = ("DATASET", "OUTPUT"),
+    action='append')
+parser.add_argument(
+    '--precision',
+    help = 'Which precision metric to use',
+    choices = ['k-nn', 'epsilon', 'rel'],
+    default = 'k-nn')
 args = parser.parse_args()
 
+metrics = {
+    "k-nn": {
+        "description": "10-NN precision - larger is better",
+        "initial-y": float("-inf"),
+        "plot": lambda y, last_y: y > last_y,
+        "xlim": [0.0, 1.03]
+    },
+    "epsilon": {
+        "description": "(epsilon)",
+        "initial-y": float("-inf"),
+        "plot": lambda y, last_y: y > last_y
+    },
+    "rel": {
+        "description": "(rel)",
+        "initial-y": float("inf"),
+        "plot": lambda y, last_y: y < last_y
+    }
+}
+
+# XXX: this is copied-and-pasted from main.py
+def get_fn(base, dataset, limit = -1):
+    fn = os.path.join(base, dataset)
+
+    if limit != -1:
+        fn += '-%d' % limit
+    if os.path.exists(fn + '.gz'):
+        fn += '.gz'
+    else:
+        fn += '.txt'
+
+    d = os.path.dirname(fn)
+    if not os.path.exists(d):
+        os.makedirs(d)
+
+    return fn
+
+queries = {}
+
 # Construct palette by reading all inputs
+runs = {}
 all_algos = set()
-for fn in args.input:
-    for line in open(fn):
-        all_algos.add(line.strip().split('\t')[0])
+for ds, _ in args.dataset:
+    results_fn = get_fn("results", ds)
+    queries_fn = get_fn("queries", ds)
+    if not os.path.exists(queries_fn):
+        assert False, "the queries file '%s' is missing" % queries_fn
+    else:
+        queries[ds] = pickle.load(open(queries_fn))
+        runs[ds] = []
+        for line in open(get_fn("results", ds)):
+            run = json.loads(line)
+            runs[ds].append(run)
+            all_algos.add(run["library"])
+
+# print queries
+# print runs
 
 colors = plt.cm.Set1(numpy.linspace(0, 1, len(all_algos)))
 linestyles = {}
@@ -22,11 +81,59 @@ for i, algo in enumerate(all_algos):
     linestyles[algo] = (colors[i], ['--', '-.', '-', ':'][i%4], ['+', '<', 'o', 'D', '*', 'x', 's'][i%7])
 
 # Now generate each plot
-for fn_in, fn_out in zip(args.input, args.output):
+for ds, fn_out in args.dataset:
     all_data = {}
 
-    for line in open(fn_in):
-        algo, algo_name, build_time, search_time, precision = line.strip().split('\t')
+    for run in runs[ds]:
+        algo = run["library"]
+        algo_name = run["name"]
+        build_time = run["build_time"]
+        search_time = run["best_search_time"]
+        results = zip(queries[ds], run["results"])
+
+        precision = None
+        print "--"
+        print algo_name
+        if args.precision == "k-nn" or args.precision == "epsilon":
+            total = 0
+            actual = 0
+            for (query, max_distance, closest), [time, candidates] in results:
+                # Both these metrics actually use an epsilon, although k-nn
+                # does so only because comparing floating-point numbers for
+                # true equality is a terrible idea
+                comparator = None
+                if args.precision == "k-nn":
+                    epsilon = 1e-10
+                    comparator = \
+                        lambda (index, distance): \
+                            distance <= (max_distance + epsilon)
+                elif args.precision == "epsilon":
+                    epsilon = 0.01
+                    comparator = \
+                        lambda (index, distance): \
+                            distance <= ((1 + epsilon) * max_distance)
+
+                within = filter(comparator, candidates)
+                if "brute" in algo_name.lower():
+                    if len(within) != len(closest):
+                        print "? what? brute-force strategy failed on ", \
+                                closest, candidates
+                total += len(closest)
+                actual += len(within)
+            print "total = ", total, ", actual = ", actual
+            precision = float(actual) / float(total)
+        elif args.precision == "rel":
+            total_closest_distance = 0.0
+            total_candidate_distance = 0.0
+            for (query, max_distance, closest), [time, candidates] in results:
+                for (ridx, rdist), (cidx, cdist) in zip(closest, candidates):
+                    total_closest_distance += rdist
+                    total_candidate_distance += cdist
+            precision = total_candidate_distance / total_closest_distance
+        else:
+            assert False, "precision metric '%s' is not supported" % args.precision
+        print precision
+
         all_data.setdefault(algo, []).append((algo_name, float(build_time), float(search_time), float(precision)))
 
     handles = []
@@ -42,10 +149,10 @@ for fn_in, fn_out in zip(args.input, args.output):
 
         # Plot Pareto frontier
         xs, ys = [], []
-        last_y = float('-inf')
+        last_y = metrics[args.precision]["initial-y"]
         for t in data:
             y = t[-1]
-            if y > last_y:
+            if metrics[args.precision]["plot"](y, last_y):
                 last_y = y
                 xs.append(t[-1])
                 ys.append(1.0 / t[-2])
@@ -57,10 +164,11 @@ for fn_in, fn_out in zip(args.input, args.output):
     plt.gca().set_yscale('log')
     plt.gca().set_title('Precision-Performance tradeoff - up and to the right is better')
     plt.gca().set_ylabel('Queries per second ($s^{-1}$) - larger is better')
-    plt.gca().set_xlabel('10-NN precision - larger is better')
+    plt.gca().set_xlabel(metrics[args.precision]["description"])
     box = plt.gca().get_position()
     # plt.gca().set_position([box.x0, box.y0, box.width * 0.8, box.height])
     plt.gca().legend(handles, labels, loc='center left', bbox_to_anchor=(1, 0.5), prop={'size': 9})
     plt.grid(b=True, which='major', color='0.65',linestyle='-')
-    plt.xlim([0.0, 1.03])
+    if "xlim" in metrics[args.precision]:
+        plt.xlim(metrics[args.precision]["xlim"])
     plt.savefig(fn_out, bbox_inches='tight')
