@@ -518,7 +518,7 @@ class BruteForceBLAS(BaseANN):
             assert False, "invalid metric"  # shouldn't get past the constructor!
 
     def query(self, v, n):
-        return map(lambda (_, index): index, self.query_with_distances(v, n))
+        return map(lambda (index, _): index, self.query_with_distances(v, n))
 
     def query_with_distances(self, v, n):
         """Find indices of `n` most similar vectors from the index to query vector `v`."""
@@ -538,7 +538,7 @@ class BruteForceBLAS(BaseANN):
         indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
         return sorted(
             map(lambda i: (i, pd[self._metric](self.index[i], v)), indices),
-            key=lambda (dist, _): dist)  # sort `n` closest into correct order
+            key=lambda (_, dist): dist)  # sort `n` closest into correct order
 
 ds_loaders = {
     'float': lambda line: [float(x) for x in line.strip().split()],
