@@ -514,16 +514,25 @@ class BruteForceBLAS(BaseANN):
             self.lengths = numpy.ascontiguousarray(lens, dtype=self._precision)
         elif self._metric == 'hamming':
             self.index = numpy.ascontiguousarray(
-                map(numpy.packbits, X), dtype=self._precision)
+                map(numpy.packbits, X), dtype=numpy.uint8)
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
 
     def query(self, v, n):
         return map(lambda (index, _): index, self.query_with_distances(v, n))
 
+    popcount = []
+    for i in xrange(256):
+      popcount.append(bin(i).count("1"))
+
     def query_with_distances(self, v, n):
         """Find indices of `n` most similar vectors from the index to query vector `v`."""
-        v = numpy.ascontiguousarray(v, dtype=self._precision)  # use same precision for query as for index
+        if self._metric == 'hamming':
+            v = numpy.packbits(v)
+
+        # use same precision for query as for index
+        v = numpy.ascontiguousarray(v, dtype = self.index.dtype)
+
         # HACK we ignore query length as that's a constant not affecting the final ordering
         if self._metric == 'angular':
             # argmax_a cossim(a, b) = argmax_a dot(a, b) / |a||b| = argmin_a -dot(a, b)
@@ -532,14 +541,21 @@ class BruteForceBLAS(BaseANN):
             # argmin_a (a - b)^2 = argmin_a a^2 - 2ab + b^2 = argmin_a a^2 - 2ab
             dists = self.lengths - 2 * numpy.dot(self.index, v)
         elif self._metric == 'hamming':
-            t = numpy.bitwise_xor(self.index, numpy.packbits(v))
-            dists = [sum(map(lambda e: bin(e).count("1") / float(len(v)), vec)) for vec in t]
+            diff = numpy.bitwise_xor(v, self.index)
+            pc = BruteForceBLAS.popcount
+            den = float(len(v) * 8)
+            dists = [sum([pc[part] for part in point]) / den for point in diff]
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
         indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
-        return sorted(
-            map(lambda i: (i, pd[self._metric](self.index[i], v)), indices),
-            key=lambda (_, dist): dist)  # sort `n` closest into correct order
+        def fix(index):
+            ep = self.index[index]
+            ev = v
+            if self._metric == "hamming":
+                ep = numpy.unpackbits(ep)
+                ev = numpy.unpackbits(ev)
+            return (index, pd[self._metric](ep, ev))
+        return map(fix, indices)
 
 ds_loaders = {
     'float': lambda line: [float(x) for x in line.strip().split()],
