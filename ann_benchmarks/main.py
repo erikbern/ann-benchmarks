@@ -131,12 +131,12 @@ class Subprocess(BaseANN):
             assert(self.__line()[0] == "ok")
         return self._program
 
-    def __init__(self, args, encoder, **kwargs):
-        self.name = "Subprocess(program = %s, { %s })" % (args[0], str(kwargs))
+    def __init__(self, args, encoder, params):
+        self.name = "Subprocess(program = %s, %s)" % (args[0], str(params))
         self._program = None
         self._args = args
         self._encoder = encoder
-        self._params = kwargs
+        self._params = params
 
     def fit(self, X):
         for entry in X:
@@ -828,17 +828,17 @@ def get_algos(p, m, save_index):
                 algos.update({
                     'itu-linear':
                       [Subprocess(["install/ann-filters/build/wrappers/frontend/fr-linear"],
-                          ds_printers["bit"], c = c, r = r)
+                          ds_printers["bit"], {"c": c, "r": r})
                           for c in [1.5, 2.0, 2.5, 3.0, 3.5]
                           for r in [1.5, 2.0, 2.5, 3.0, 3.5]],
                     'itu-dummy':
                       [Subprocess(["install/ann-filters/build/wrappers/frontend/fr-dummy"],
-                          ds_printers["bit"], c = c, r = r)
+                          ds_printers["bit"], {"c": c, "r": r})
                           for c in [1.5, 2.0, 2.5, 3.0, 3.5]
                           for r in [1.5, 2.0, 2.5, 3.0, 3.5]],
                     'itu-hashing-e':
                       [Subprocess(["install/ann-filters/build/wrappers/frontend/fr-hashing"],
-                          ds_printers["bit"], c = c, r = r, seed = seed)
+                          ds_printers["bit"], {"c": c, "r": r, "seed": seed})
                            for c in [1.5, 2.0, 2.5, 3.0, 3.5]
                            for r in [1.5, 2.0, 2.5, 3.0, 3.5]]
                 })
