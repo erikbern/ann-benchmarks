@@ -32,6 +32,8 @@ pd = {
 class BaseANN(object):
     def use_threads(self):
         return True
+    def done(self):
+        pass
 
 import sys
 sys.path.append('install/ann-filters/build/wrappers/swig/')
@@ -163,6 +165,9 @@ class Subprocess(BaseANN):
 
     def use_threads(self):
         return False
+    def done(self):
+        if self._program:
+            self._program.terminate()
 
 class FALCONN(BaseANN):
     def __init__(self, metric, num_bits, num_tables, num_probes):
@@ -641,46 +646,49 @@ def get_dataset(which = 'glove',
     return manifest, X_train, X_test
 
 def run_algo(X_train, queries, library, algo, distance, results_fn):
-    t0 = time.time()
-    if algo != 'bf':
-        algo.fit(X_train)
-    build_time = time.time() - t0
-    print('Built index in', build_time)
+    try:
+        t0 = time.time()
+        if algo != 'bf':
+            algo.fit(X_train)
+        build_time = time.time() - t0
+        print('Built index in', build_time)
 
-    best_search_time = float('inf')
-    best_precision = 0.0 # should be deterministic but paranoid
-    for i in xrange(3): # Do multiple times to warm up page cache, use fastest
-        def single_query(t):
-            v, _, _ = t
-            start = time.time()
-            found = algo.query(v, 10)
-            total = (time.time() - start)
-            found = map(
-                lambda idx: (int(idx), float(pd[distance](v, X_train[idx]))),
-                list(found))
-            return (total, found)
-        if algo.use_threads():
-            pool = multiprocessing.pool.ThreadPool()
-            results = pool.map(single_query, queries)
-        else:
-            results = map(single_query, queries)
+        best_search_time = float('inf')
+        best_precision = 0.0 # should be deterministic but paranoid
+        for i in xrange(3): # Do multiple times to warm up page cache, use fastest
+            def single_query(t):
+                v, _, _ = t
+                start = time.time()
+                found = algo.query(v, 10)
+                total = (time.time() - start)
+                found = map(
+                    lambda idx: (int(idx), float(pd[distance](v, X_train[idx]))),
+                    list(found))
+                return (total, found)
+            if algo.use_threads():
+                pool = multiprocessing.pool.ThreadPool()
+                results = pool.map(single_query, queries)
+            else:
+                results = map(single_query, queries)
 
-        total_time = sum(map(lambda (time, _): time, results))
-        search_time = total_time / len(queries)
-        best_search_time = min(best_search_time, search_time)
+            total_time = sum(map(lambda (time, _): time, results))
+            search_time = total_time / len(queries)
+            best_search_time = min(best_search_time, search_time)
 
-    output = {
-        "library": library,
-        "name": algo.name,
-        "build_time": build_time,
-        "best_search_time": best_search_time,
-        "results": results
-    }
-    print(output)
+        output = {
+            "library": library,
+            "name": algo.name,
+            "build_time": build_time,
+            "best_search_time": best_search_time,
+            "results": results
+        }
+        print(output)
 
-    f = open(results_fn, 'a')
-    f.write(json.dumps(output) + "\n")
-    f.close()
+        f = open(results_fn, 'a')
+        f.write(json.dumps(output) + "\n")
+        f.close()
+    finally:
+        algo.done()
 
 def compute_distances(distance, X_train, X_test):
     print('computing max distances for queries...')
