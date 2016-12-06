@@ -394,14 +394,17 @@ class KGraph(BaseANN):
         return result[0]
 
 class NmslibReuseIndex(BaseANN):
+    @staticmethod
+    def encode(d):
+        return ["%s=%s" % (a, b) for (a, b) in d.iteritems()]
     def __init__(self, metric, method_name, index_param, save_index, query_param):
         self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
         self._method_name = method_name
         self._save_index = save_index
-        self._index_param = index_param
-        self._query_param = query_param
-        self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (method_name, index_param, query_param)
-        self._index_name = os.path.join(INDEX_DIR, "nmslib_%s_%s_%s" % (self._method_name, metric, '_'.join(self._index_param))) 
+        self._index_param = NmslibReuseIndex.encode(index_param)
+        self._query_param = NmslibReuseIndex.encode(query_param)
+        self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (self._method_name, self._index_param, self._query_param)
+        self._index_name = os.path.join(INDEX_DIR, "nmslib_%s_%s_%s" % (self._method_name, metric, '_'.join(self._index_param)))
 
         d = os.path.dirname(self._index_name)
         if not os.path.exists(d):
@@ -444,8 +447,8 @@ class NmslibNewIndex(BaseANN):
     def __init__(self, metric, method_name, method_param):
         self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
         self._method_name = method_name
-        self._method_param = method_param
-        self.name = 'Nmslib(method_name=%s, method_param=%s)' % (method_name, method_param)
+        self._method_param = NmslibReuseIndex.encode(method_param)
+        self.name = 'Nmslib(method_name=%s, method_param=%s)' % (self._method_name, self._method_param)
 
     def fit(self, X):
         import nmslib_vector
@@ -723,9 +726,9 @@ def get_algos(p, m, save_index):
             'kd': [KDTree(m, 10), KDTree(m, 20), KDTree(m, 40), KDTree(m, 100), KDTree(m, 200), KDTree(m, 400), KDTree(m, 1000)],
 
             # START: Non-Metric Space Library (nmslib) entries
-            'bruteforce0(nmslib)': [NmslibNewIndex(m, 'seq_search', ['copyMem=0'])],
+            'bruteforce0(nmslib)': [NmslibNewIndex(m, 'seq_search', {'copyMem': 0})],
             # We don't need copyMem=1 now, because the new Python wrapper already re-creates data points.
-            #'bruteforce1(nmslib)': [NmslibNewIndex(m, 'seq_search', ['copyMem=1'])],
+            #'bruteforce1(nmslib)': [NmslibNewIndex(m, 'seq_search', {'copyMem': 1})],
 
             'BallTree(nmslib)': [],
 
@@ -736,7 +739,7 @@ def get_algos(p, m, save_index):
         }
 
         for r in [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
-          algos['BallTree(nmslib)'].append(NmslibNewIndex(m, 'vptree', ['tuneK=10', 'desiredRecall=%f' % r]))
+          algos['BallTree(nmslib)'].append(NmslibNewIndex(m, 'vptree', {'tuneK': 10, 'desiredRecall': r}))
 
         if m == 'euclidean':
             # kgraph 
@@ -755,20 +758,20 @@ def get_algos(p, m, save_index):
             for oneCase in MsPostsEfs:
                 for ef in oneCase[2]:
                     algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', 
-                                                                  ['M=%d' % oneCase[0], 'post=%d' % oneCase[1], 'efConstruction=400'], save_index,
-                                                                  ['ef=%d' % ef]))
+                                                                  {'M': oneCase[0], 'post': oneCase[1], 'efConstruction': 400}, save_index,
+                                                                  {'ef': ef}))
             
             algos['MP-lsh(lshkit)'] = []
             for r in [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
-              algos['MP-lsh(lshkit)'].append(NmslibNewIndex(m, 'lsh_multiprobe', ['desiredRecall=%f' % r,'H=1200001','T=10','L=50','tuneK=10']))
+              algos['MP-lsh(lshkit)'].append(NmslibNewIndex(m, 'lsh_multiprobe', {'desiredRecall': r, 'H': 1200001, 'T': 10, 'L': 50, 'tuneK': 10}))
 
             NNsAndEfs = [ (10, [800, 400, 200, 100, 50, 30, 20, 15, 10]),
                          (5,  [30, 25, 20, 15, 10, 5, 4, 3, 2, 1]) ]
             for oneCase in NNsAndEfs:
               for ef in oneCase[1]:
                 algos['SW-graph(nmslib)'].append(NmslibReuseIndex(m, 'sw-graph', 
-                                                ['NN=%d' % oneCase[0], 'efConstruction=400', 'initIndexAttempts=1'], save_index,
-                                                ['efSearch=%d' % ef,   'initSearchAttempts=1']))
+                                                {'NN': oneCase[0], 'efConstruction': 400, 'initIndexAttempts': 1}, save_index,
+                                                {'efSearch': ef, 'initSearchAttempts': 1}))
 
         # END: Non-Metric Space Library (nmslib) entries
 
@@ -787,9 +790,9 @@ def get_algos(p, m, save_index):
 
             for oneCase in MsPostsEfs:
                 for ef in oneCase[2]:
-                    algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', ['M=%d' % oneCase[0], 'post=%d' % oneCase[1], 'efConstruction=800'], 
+                    algos['hnsw(nmslib)'].append(NmslibReuseIndex(m, 'hnsw', {'M': oneCase[0], 'post': oneCase[1], 'efConstruction': 800},
                                                                              save_index,
-                                                                             ['ef=%d' %ef]))
+                                                                             {'ef': ef}))
 
             NNsAndEfs = [ (30, [700, 650, 550, 450, 350, 275, 200, 150, 120, 80, 50, 30]),
                           (15, [80, 50, 30, 20]),
@@ -798,8 +801,8 @@ def get_algos(p, m, save_index):
             for oneCase in NNsAndEfs:
               for ef in oneCase[1]:
                 algos['SW-graph(nmslib)'].append(NmslibReuseIndex(m, 'sw-graph', 
-                                                ['NN=%d' % oneCase[0], 'efConstruction=800', 'initIndexAttempts=1'], save_index,
-                                                ['efSearch=%d' % ef,   'initSearchAttempts=1']))
+                                                {'NN': oneCase[0], 'efConstruction': 800, 'initIndexAttempts': 1}, save_index,
+                                                {'efSearch': ef, 'initSearchAttempts': 1}))
 
             # END: Non-Metric Space Library (nmslib) entries
             # RPForest only works for cosine
