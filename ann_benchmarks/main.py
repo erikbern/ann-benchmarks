@@ -170,7 +170,9 @@ class Subprocess(BaseANN):
             self._program.terminate()
 
 class FALCONN(BaseANN):
-    def __init__(self, metric, num_bits, num_tables, num_probes):
+    def __init__(self, metric, num_bits, num_tables, num_probes = None):
+        if not num_probes:
+            num_probes = num_tables
         self.name = 'FALCONN(K={}, L={}, T={})'.format(num_bits, num_tables, num_probes)
         self._metric = metric
         self._num_bits = num_bits
