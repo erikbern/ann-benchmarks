@@ -48,6 +48,30 @@ outputdir = ""
 if args.outputdir != None:
     outputdir = args.outputdir
 
+def get_html_header(title):
+    return """
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>%(title)s</title>
+        <script src="js/Chart.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+      </head>""" % {"title" : title}
 
 # XXX: this is copied-and-pasted from main.py
 def get_fn(base, dataset, limit = -1):
@@ -220,19 +244,17 @@ for ds in args.dataset:
 
 # Build a website for each dataset
 for ds in args.dataset:
-    output_str = """
-<html>
-    <head>
-        <title>%(id)s dataset</title>
-        <script src="js/Chart.min.js"></script>
-    </head>
+    output_str = get_html_header(ds)
+    output_str += """
     <body>
+        <div class="container">
         <h2>Plots for %(id)s""" % { "id" : ds }
     for metric in args.precision:
         print "Processing '%s' with %s" % (ds, metrics[metric]["description"])
         output_str += process_dataset(ds, runs, all_algos, queries, metrics[metric])
 
     output_str += """
+    </div>
     </body>
 </html>
 """
@@ -241,12 +263,10 @@ for ds in args.dataset:
 
 # Build an index page
 with open(outputdir + "index.html", "w") as text_file:
-    output_str = """
-<html>
-    <head>
-        <title>ANN-Benchmarks</title>
-    </head>
+    output_str = get_html_header("ANN-Benchmarks")
+    output_str += """
     <body>
+        <div class="container">
         <h2>Overview over Datasets</h2>
         <p>Click on a dataset to see the performance/quality plots.</p>
         <ul>"""
@@ -254,7 +274,8 @@ with open(outputdir + "index.html", "w") as text_file:
         output_str += """
             <li><a href="%(id)s.html">%(id)s</a></li>""" % { "id" : ds }
     output_str += """
-        <ul>
+        </ul>
+        </div>
     </body>
 </html>"""
     text_file.write(output_str)
