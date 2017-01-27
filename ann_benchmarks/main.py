@@ -871,6 +871,91 @@ def get_fn(base, args):
 
     return fn
 
+def BitSubprocess(args, params):
+    return Subprocess(args, ds_printers["bit"], params)
+
+from itertools import product
+
+with open("algos.yaml", "r") as file:
+    algorithms = yaml.load(file)
+
+def handle_args(args):
+    if isinstance(args, list):
+        args = map(lambda el: el if isinstance(el, list) else [el], args)
+        return map(list, product(*args))
+    elif isinstance(args, dict):
+        flat = []
+        for k, v in args.iteritems():
+            if isinstance(v, list):
+                flat.append(map(lambda el: (k, el), v))
+            else:
+                flat.append([(k, v)])
+        return map(dict, product(*flat))
+    else:
+        raise TypeError("No args handling exists for %s" % type(args).__name__)
+
+point_type = "float"
+distance_metric = "euclidean"
+
+def get_definitions(point_type, distance_metric):
+    algorithm_definitions = {}
+    if "any" in algorithms[point_type]:
+        algorithm_definitions.update(algorithms[point_type]["any"])
+    algorithm_definitions.update(algorithms[point_type][distance_metric])
+
+    algos = {}
+    for (name, algo) in algorithm_definitions.iteritems():
+        assert "constructor" in algo, \
+                "group %s does not specify a constructor" % name
+        cn = algo["constructor"]
+        assert cn in globals(), \
+                "group %s specifies the nonexistent constructor %s" % (name, cn)
+        constructor = globals()[cn]
+
+        algos[name] = []
+
+        base_args = []
+        vs = {
+            "@metric": distance_metric
+        }
+        if "base-args" in algo:
+            base_args = map(lambda arg: arg \
+                            if not isinstance(arg, str) or \
+                            not arg in vs else vs[arg],
+                            algo["base-args"])
+
+        for run_group in algo["run-groups"].values():
+            if "arg-groups" in run_group:
+                groups = []
+                for arg_group in run_group["arg-groups"]:
+                    if isinstance(arg_group, dict):
+                        # Dictionaries need to be expanded into lists in order
+                        # for the subsequent call to handle_args to do the
+                        # right thing
+                        groups.append(handle_args(arg_group))
+                    else:
+                        groups.append(arg_group)
+                args = handle_args(groups)
+            elif "args" in run_group:
+                args = handle_args(run_group["args"])
+            else:
+                assert False, "? what? %s" % run_group
+
+            for arg_group in args:
+                obj = None
+                try:
+                    aargs = []
+                    aargs.extend(base_args)
+                    if isinstance(arg_group, list):
+                        aargs.extend(arg_group)
+                    else:
+                        aargs.append(arg_group)
+                    obj = constructor(*aargs)
+                    algos[name].append(obj)
+                except Exception as e:
+                    print e
+                    pass
+    return algos
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
