@@ -1,0 +1,246 @@
+float:
+  any:
+    lshf:
+      constructor: LSHF
+      base-args: ["@metric"]
+      run-groups:
+        five-estimators:
+          args: [5, [10, 20]]
+        ten-estimators:
+          args: [10, [20, 50]]
+        twenty-estimators:
+          args: [20, 100]
+    flann:
+      constructor: FLANN
+      base-args: ["@metric"]
+      run-groups:
+        flann:
+          args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97, 0.98, 0.99, 0.995]]
+    panns:
+      constructor: PANNS
+      base-args: ["@metric"]
+      run-groups:
+        five-trees:
+          args: [5, 20]
+        ten-trees:
+          args: [10, [10, 50]]
+        hundred-candidates:
+          args: [[10, 20, 40], 100]
+    annoy:
+      constructor: Annoy
+      base-args: ["@metric"]
+      run-groups:
+        annoy:
+          args: [[100, 200, 400], [100, 200, 400, 1000, 2000, 4000, 10000,
+                20000, 40000, 100000, 200000, 400000]]
+    nearpy:
+      constructor: NearPy
+      base-args: ["@metric"]
+      run-groups:
+        nearpy:
+          args: [[10, 12, 14, 16], [5, 10, 20, 40]]
+        extra:
+          args: [16, [5, 10, 15, 20, 25, 30, 40]]
+    bruteforce:
+      constructor: BruteForce
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
+    bruteforce-blas:
+      constructor: BruteForceBLAS
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
+    ball:
+      constructor: BallTree
+      base-args: ["@metric"]
+      run-groups:
+        ball:
+          args: &treeargs [[10, 20, 40, 100, 200, 400, 1000]]
+    kd:
+      constructor: KDTree
+      base-args: ["@metric"]
+      run-groups:
+        ball:
+          args: *treeargs
+    bruteforce0(nmslib):
+      constructor: NmslibNewIndex
+      base-args: ["@metric"]
+      run-groups:
+        base:
+          args: ["seq_search", {"copyMem": 0}]
+    BallTree(nmslib):
+      constructor: NmslibNewIndex
+      base-args: ["@metric", "vptree"]
+      run-groups:
+        base:
+          args: {"tuneK": 10, "desiredRecall": [0.99, 0.97, 0.95, 0.9, 0.85, 0.8,
+                0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]}
+  euclidean:
+    kgraph:
+      constructor: KGraph
+      base-args: ["@metric"]
+      run-groups:
+        kgraph:
+          args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                 {'reverse': -1}, True] # XXX: hard-codes save_index as True
+    hnsw(nmslib):
+      constructor: NmslibReuseIndex
+      base-args: ["@metric", "hnsw"]
+      run-groups:
+        M-32:
+          arg-groups:
+            - {"M": 32, "post": 2, "efConstruction": 400}
+            - True # XXX: hard-codes save_index as True
+            - {"ef": [20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200,
+              300, 400]}
+        M-20:
+          arg-groups:
+            - {"M": 20, "post": 2, "efConstruction": 400}
+            - True
+            - {"ef": [2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120, 200, 400]}
+        M-12:
+          arg-groups:
+            - {"M": 12, "post": 0, "efConstruction": 400}
+            - True
+            - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120]}
+        M-4:
+          arg-groups:
+            - {"M": 4, "post": 0, "efConstruction": 400}
+            - True
+            - {"ef": [1, 2, 5, 10, 20, 30, 50, 70, 90, 120]}
+        M-8:
+          arg-groups:
+            - {"M": 8, "post": 0, "efConstruction": 400}
+            - True
+            - {"ef": [1, 2, 5, 10, 20, 30, 50, 70, 90, 120, 160]}
+    MP-lsh(lshkit):
+      constructor: NmslibNewIndex
+      base-args: ["@metric", "lsh_multiprobe"]
+      run-groups:
+        base:
+          args: {"desiredRecall": [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5,
+                0.4, 0.3, 0.2, 0.1], "H": 1200001, "T": 10, "L": 50, "tuneK": 10}
+    SW-graph(nmslib):
+      constructor: NmslibReuseIndex
+      base-args: ["@metric", "sw-graph"]
+      run-groups:
+        NN-10:
+          arg-groups:
+            - {"NN": 10, "efConstruction": 400, "initIndexAttempts": 1}
+            - True
+            - {"efSearch": [800, 400, 200, 100, 50, 30, 20, 15, 10],
+              "initSearchAttempts": 1}
+        NN-5:
+          arg-groups:
+            - {"NN": 5, "efConstruction": 400, "initIndexAttempts": 1}
+            - True
+            - {"efSearch": [30, 25, 20, 15, 10, 5, 4, 3, 2, 1],
+              "initSearchAttempts": 1}
+  angular:
+    kgraph:
+      constructor: KGraph
+      base-args: ["@metric"]
+      run-groups:
+        kgraph:
+          args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                 {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
+    hnsw(nmslib):
+      constructor: NmslibReuseIndex
+      base-args: ["@metric", "hnsw"]
+      run-groups:
+        M-48:
+          arg-groups:
+            - {"M": 48, "post": 2, "efConstruction": 800}
+            - True # XXX: hard-codes save_index as True
+            - {"ef": [50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000,
+              1400, 1600, 2000]}
+        M-32:
+          arg-groups:
+            - {"M": 32, "post": 2, "efConstruction": 800}
+            - True
+            - {"ef": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160,
+              200, 300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]}
+        M-20:
+          arg-groups:
+            - {"M": 20, "post": 0, "efConstruction": 800}
+            - True
+            - {"ef": [2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+        M-12:
+          arg-groups:
+            - {"M": 12, "post": 0, "efConstruction": 800}
+            - True
+            - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+    SW-graph(nmslib):
+      constructor: NmslibReuseIndex
+      base-args: ["@metric", "sw-graph"]
+      run-groups:
+        NN-30:
+          arg-groups:
+            - {"NN": 30, "efConstruction": 800, "initIndexAttempts": 1}
+            - True
+            - {"efSearch": [700, 650, 550, 450, 350, 275, 200, 150, 120, 80,
+              50, 30], "initSearchAttempts": 1}
+        NN-15:
+          arg-groups:
+            - {"NN": 15, "efConstruction": 800, "initIndexAttempts": 1}
+            - True
+            - {"efSearch": [80, 50, 30, 20], "initSearchAttempts": 1}
+        NN-3:
+          arg-groups:
+            - {"NN": 3, "efConstruction": 800, "initIndexAttempts": 1}
+            - True
+            - {"efSearch": [120, 80, 60, 40, 20, 10, 8, 4, 2],
+              "initSearchAttempts": 1}
+    rpforest:
+      constructor: RPForest
+      run-groups:
+        base:
+          args: [[3, 5, 10, 20, 40, 100, 200, 400],
+                [3, 5, 10, 20, 40, 100, 200, 400]]
+    falconn:
+      constructor: FALCONN
+      base-args: ["@metric", 16]
+      run-groups:
+        base:
+          L: &l [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 21, 24, 27,
+             30, 33, 37, 41, 46, 51, 57, 63, 70, 77, 85, 94, 104, 115, 127,
+             140, 154, 170, 188, 207, 228, 251, 277, 305, 336, 370, 408, 449,
+             494, 544, 599, 659, 725, 798, 878, 966, 1063, 1170, 1287, 1416]
+          args: [*l]
+    itu-fd:
+      constructor: ITUFilteringDouble
+      base-args: ["angular", 0.7, 0.3]
+      run-groups:
+        base:
+          args: [[2.5, 2.4, 2.3, 2.2, 2.1, 2.0], 3, 10, 0, 1500, 0]
+bit:
+  hamming:
+    itu-hashing:
+      constructor: ITUHashing
+      seed: &seed 0x12345678
+      c: &hashingc [1.5, 2.0, 2.5, 3.0, 3.5]
+      base-args: [*seed]
+      run-groups:
+        base:
+          args: [*hashingc, *hashingc]
+    itu-linear:
+      constructor: BitSubprocess
+      base-args: [["install/ann-filters/build/wrappers/frontend/fr-linear"]]
+      run-groups:
+        base:
+          args: {}
+    itu-dummy:
+      constructor: BitSubprocess
+      base-args: [["install/ann-filters/build/wrappers/frontend/fr-dummy"]]
+      run-groups:
+        base:
+          args: {}
+    itu-hashing-e:
+      constructor: BitSubprocess
+      base-args: [["install/ann-filters/build/wrappers/frontend/fr-hashing"]]
+      run-groups:
+        base:
+          args: {"c": *hashingc, "r": *hashingc, "seed": *seed}
