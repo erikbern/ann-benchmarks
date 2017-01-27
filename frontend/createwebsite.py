@@ -218,7 +218,7 @@ for ds in args.dataset:
             runs[ds].append(run)
             all_algos.add(run["library"])
 
-# Now generate each plot
+# Build a website for each dataset
 for ds in args.dataset:
     output_str = """
 <html>
@@ -238,4 +238,24 @@ for ds in args.dataset:
 """
     with open(outputdir + ds + ".html", "w") as text_file:
         text_file.write(output_str)
+
+# Build an index page
+with open(outputdir + "index.html", "w") as text_file:
+    output_str = """
+<html>
+    <head>
+        <title>ANN-Benchmarks</title>
+    </head>
+    <body>
+        <h2>Overview over Datasets</h2>
+        <p>Click on a dataset to see the performance/quality plots.</p>
+        <ul>"""
+    for ds in args.dataset:
+        output_str += """
+            <li><a href="%(id)s.html">%(id)s</a></li>""" % { "id" : ds }
+    output_str += """
+        <ul>
+    </body>
+</html>"""
+    text_file.write(output_str)
 
