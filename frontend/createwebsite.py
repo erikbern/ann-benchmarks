@@ -64,6 +64,7 @@ def get_html_header(title):
         <script src="js/bootstrap.min.js"></script>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -71,7 +72,21 @@ def get_html_header(title):
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-      </head>""" % {"title" : title}
+      </head>
+         <body>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">ANN Benchmarks</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>""" % {"title" : title}
 
 # XXX: this is copied-and-pasted from main.py
 def get_fn(base, dataset, limit = -1):
@@ -246,7 +261,6 @@ for ds in args.dataset:
 for ds in args.dataset:
     output_str = get_html_header(ds)
     output_str += """
-    <body>
         <div class="container">
         <h2>Plots for %(id)s""" % { "id" : ds }
     for metric in args.precision:
@@ -265,7 +279,6 @@ for ds in args.dataset:
 with open(outputdir + "index.html", "w") as text_file:
     output_str = get_html_header("ANN-Benchmarks")
     output_str += """
-    <body>
         <div class="container">
         <h2>Overview over Datasets</h2>
         <p>Click on a dataset to see the performance/quality plots.</p>
