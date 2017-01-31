@@ -34,7 +34,7 @@ ds_loaders = {
 
 ds_printers = {
     'float': lambda X: " ".join(map(str, X)),
-    'bit': lambda X: "".join(map(lambda el: "1" if el else "0", X))
+    'bit': lambda X: "".join(["1" if el else "0" for el in X])
 }
 
 ds_numpy_types = {
@@ -117,9 +117,7 @@ def run_algo(X_train, queries, library, algo, distance, results_fn):
                 start = time.time()
                 found = algo.query(v, 10)
                 total = (time.time() - start)
-                found = map(
-                    lambda idx: (int(idx), float(pd[distance](v, X_train[idx]))),
-                    list(found))
+                found = [(int(idx), float(pd[distance](v, X_train[idx]))) for idx in list(found)]
                 return (total, found)
             if algo.use_threads():
                 pool = multiprocessing.pool.ThreadPool()
@@ -127,7 +125,7 @@ def run_algo(X_train, queries, library, algo, distance, results_fn):
             else:
                 results = map(single_query, queries)
 
-            total_time = sum(map(lambda (time, _): time, results))
+            total_time = sum([time for time, _ in results])
             search_time = total_time / len(queries)
             best_search_time = min(best_search_time, search_time)
 
@@ -188,13 +186,13 @@ with open("algos.yaml", "r") as f:
 
 def handle_args(args):
     if isinstance(args, list):
-        args = map(lambda el: el if isinstance(el, list) else [el], args)
+        args = [el if isinstance(el, list) else [el] for el in args]
         return map(list, product(*args))
     elif isinstance(args, dict):
         flat = []
         for k, v in args.iteritems():
             if isinstance(v, list):
-                flat.append(map(lambda el: (k, el), v))
+                flat.append([(k, el) for el in v])
             else:
                 flat.append([(k, v)])
         return map(dict, product(*flat))
@@ -225,11 +223,11 @@ def get_definitions(point_type, distance_metric):
         vs = {
             "@metric": distance_metric
         }
+        def is_vn(arg):
+            return isinstance(arg, str) and arg in vs
         if "base-args" in algo:
-            base_args = map(lambda arg: arg \
-                            if not isinstance(arg, str) or \
-                            not arg in vs else vs[arg],
-                            algo["base-args"])
+            base_args = \
+              [vs[arg] if is_vn(arg) else arg for arg in algo["base-args"]]
 
         for run_group in algo["run-groups"].values():
             if "arg-groups" in run_group:

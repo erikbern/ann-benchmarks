@@ -50,7 +50,7 @@ class BruteForceBLAS(BaseANN):
             assert False, "invalid metric"  # shouldn't get past the constructor!
 
     def query(self, v, n):
-        return map(lambda (index, _): index, self.query_with_distances(v, n))
+        return [index for index, _ in self.query_with_distances(v, n)]
 
     popcount = []
     for i in xrange(256):
