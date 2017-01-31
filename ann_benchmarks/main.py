@@ -46,8 +46,7 @@ ds_finishers = {
     'float': numpy.vstack
 }
 
-def get_dataset(which = 'glove',
-        limit = -1, random_state = 3, test_size = 10000):
+def get_dataset(which='glove', limit=-1, random_state=3, test_size=10000):
     cache = 'queries/%s-%d-%d-%d.npz' % (which, test_size, limit, random_state)
     if os.path.exists(cache):
         v = numpy.load(cache)
@@ -84,7 +83,7 @@ def get_dataset(which = 'glove',
         X.append(loader(line))
         if limit != -1 and len(X) == limit:
             break
-    X = numpy.array(X, dtype = ds_numpy_types.get(point_type))
+    X = numpy.array(X, dtype=ds_numpy_types.get(point_type))
 
     if point_type in ds_finishers:
         X = ds_finishers[point_type](X)
@@ -96,10 +95,10 @@ def get_dataset(which = 'glove',
     # so that we test on a trully bind data.
     X_train, X_test = \
       sklearn.cross_validation.train_test_split(
-          X, test_size = test_size, random_state = random_state)
+          X, test_size=test_size, random_state=random_state)
     print(X_train.shape, X_test.shape)
 
-    numpy.savez(cache, manifest = [manifest], train = X_train, test = X_test)
+    numpy.savez(cache, manifest=[manifest], train=X_train, test=X_test)
     return manifest, X_train, X_test
 
 def run_algo(X_train, queries, library, algo, distance, results_fn):
@@ -150,13 +149,13 @@ def run_algo(X_train, queries, library, algo, distance, results_fn):
 def compute_distances(distance, X_train, X_test):
     print('computing max distances for queries...')
 
-    bf = BruteForceBLAS(distance, precision = X_train.dtype)
+    bf = BruteForceBLAS(distance, precision=X_train.dtype)
     # Prepare queries
     bf.fit(X_train)
     queries = []
     for x in X_test:
         correct = bf.query_with_distances(x, 10)
-        max_distance = max(correct, key = lambda (_, distance): distance)[1]
+        max_distance = max(correct, key=lambda (_, distance): distance)[1]
         queries.append((x, max_distance, correct))
         if len(queries) % 100 == 0:
             print(len(queries), '...')
@@ -279,7 +278,7 @@ def main():
         shutil.rmtree(INDEX_DIR)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', help='Which dataset',  default='glove')
+    parser.add_argument('--dataset', help='Which dataset', default='glove')
     parser.add_argument('--distance', help='Distance', default='angular')
     parser.add_argument('--limit', help='Limit', type=int, default=-1)
     parser.add_argument('--algo', help='run only this algorithm', default=None)
@@ -336,9 +335,8 @@ def main():
         print(algo.name, '...')
         # Spawn a subprocess to force the memory to be reclaimed at the end
         p = multiprocessing.Process(
-            target = run_algo,
-            args =
-                (X_train, queries, library, algo, args.distance, results_fn))
+            target=run_algo,
+            args=(X_train, queries, library, algo, args.distance, results_fn))
         p.start()
         p.join()
 
