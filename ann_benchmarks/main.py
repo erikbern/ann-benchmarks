@@ -18,9 +18,9 @@ from ann_benchmarks.algorithms.nearpy import NearPy
 from ann_benchmarks.algorithms.nmslib import NmslibNewIndex, NmslibReuseIndex
 from ann_benchmarks.algorithms.falconn import FALCONN
 from ann_benchmarks.algorithms.balltree import BallTree
-from ann_benchmarks.algorithms.external import Subprocess
 from ann_benchmarks.algorithms.rpforest import RPForest
 from ann_benchmarks.algorithms.bruteforce import BruteForce, BruteForceBLAS
+from ann_benchmarks.algorithms.subprocess import Subprocess
 
 from ann_benchmarks.algorithms.base import BaseANN
 
