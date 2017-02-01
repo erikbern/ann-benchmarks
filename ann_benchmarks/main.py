@@ -20,7 +20,7 @@ from ann_benchmarks.algorithms.falconn import FALCONN
 from ann_benchmarks.algorithms.balltree import BallTree
 from ann_benchmarks.algorithms.rpforest import RPForest
 from ann_benchmarks.algorithms.bruteforce import BruteForce, BruteForceBLAS
-from ann_benchmarks.algorithms.subprocess import Subprocess
+from ann_benchmarks.algorithms.subprocess import Subprocess, BitSubprocess
 
 from ann_benchmarks.algorithms.base import BaseANN
 
@@ -160,9 +160,6 @@ def get_fn(base, args):
         os.makedirs(d)
 
     return fn
-
-def BitSubprocess(args, params):
-    return Subprocess(args, type_info["bit"]["unparse_entry"], params)
 
 from itertools import product
 

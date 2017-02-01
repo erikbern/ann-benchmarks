@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 import shlex
 import subprocess
+from ann_benchmarks.data import bit_unparse_entry
 from ann_benchmarks.algorithms.base import BaseANN
 
 class Subprocess(BaseANN):
@@ -73,3 +74,6 @@ class Subprocess(BaseANN):
     def done(self):
         if self._program:
             self._program.terminate()
+
+def BitSubprocess(args, params):
+    return Subprocess(args, bit_unparse_entry, params)
