@@ -24,27 +24,9 @@ from ann_benchmarks.algorithms.bruteforce import BruteForce, BruteForceBLAS
 
 from ann_benchmarks.algorithms.base import BaseANN
 
+from ann_benchmarks.data import type_info
 from ann_benchmarks.distance import metrics as pd
 from ann_benchmarks.constants import INDEX_DIR
-
-ds_loaders = {
-    'float': lambda line: [float(x) for x in line.strip().split()],
-    'bit': lambda line: [bool(int(x)) for x in list(line.strip())]
-}
-
-ds_printers = {
-    'float': lambda X: " ".join(map(str, X)),
-    'bit': lambda X: "".join(map(lambda el: "1" if el else "0", X))
-}
-
-ds_numpy_types = {
-    'float': numpy.float,
-    'bit': numpy.bool_
-}
-
-ds_finishers = {
-    'float': numpy.vstack
-}
 
 def get_dataset(which='glove', limit=-1, random_state=3, test_size=10000):
     cache = 'queries/%s-%d-%d-%d.npz' % (which, test_size, limit, random_state)
@@ -71,22 +53,23 @@ def get_dataset(which='glove', limit=-1, random_state=3, test_size=10000):
 
     point_type = manifest['point_type']
 
-    loader = None
-    if not point_type in ds_loaders:
-        assert False, \
-            "dataset %s: unknown point type '%s'" % (which, point_type)
-    else:
-        loader = ds_loaders[point_type]
+    assert point_type in type_info, """\
+dataset %s: unknown point type '%s'""" % (which, point_type)
+    info = type_info[point_type]
+
+    assert "parse_entry" in info, """\
+dataset %s: no parser for points of type '%s'""" % (which, point_type)
+    loader = info["parse_entry"]
 
     X = []
     for i, line in enumerate(f):
         X.append(loader(line))
         if limit != -1 and len(X) == limit:
             break
-    X = numpy.array(X, dtype=ds_numpy_types.get(point_type))
+    X = numpy.array(X, dtype=info.get("type"))
 
-    if point_type in ds_finishers:
-        X = ds_finishers[point_type](X)
+    if "finish_entries" in info:
+        X = info["finish_entries"](X)
 
     import sklearn.cross_validation
 
@@ -179,7 +162,7 @@ def get_fn(base, args):
     return fn
 
 def BitSubprocess(args, params):
-    return Subprocess(args, ds_printers["bit"], params)
+    return Subprocess(args, type_info["bit"]["unparse_entry"], params)
 
 from itertools import product
 
