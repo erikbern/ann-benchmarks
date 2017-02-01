@@ -6,23 +6,7 @@ except ImportError:
     from urllib.request import urlretrieve # Python 3
 import json
 import shutil
-
-from ann_benchmarks.algorithms.itu import ITUHashing, ITUFilteringDouble
-from ann_benchmarks.algorithms.lshf import LSHF
-from ann_benchmarks.algorithms.annoy import Annoy
-from ann_benchmarks.algorithms.flann import FLANN
-from ann_benchmarks.algorithms.panns import PANNS
-from ann_benchmarks.algorithms.kdtree import KDTree
-from ann_benchmarks.algorithms.kgraph import KGraph
-from ann_benchmarks.algorithms.nearpy import NearPy
-from ann_benchmarks.algorithms.nmslib import NmslibNewIndex, NmslibReuseIndex
-from ann_benchmarks.algorithms.falconn import FALCONN
-from ann_benchmarks.algorithms.balltree import BallTree
-from ann_benchmarks.algorithms.rpforest import RPForest
-from ann_benchmarks.algorithms.bruteforce import BruteForce, BruteForceBLAS
-from ann_benchmarks.algorithms.subprocess import Subprocess, BitSubprocess
-
-from ann_benchmarks.algorithms.base import BaseANN
+import importlib
 
 from ann_benchmarks.data import type_info
 from ann_benchmarks.distance import metrics as pd
@@ -181,10 +165,8 @@ def handle_args(args):
     else:
         raise TypeError("No args handling exists for %s" % type(args).__name__)
 
-point_type = "float"
-distance_metric = "euclidean"
-
-def get_definitions(point_type, distance_metric):
+def get_algorithms(constructors,
+        point_type="float", distance_metric="euclidean"):
     algorithm_definitions = {}
     if "any" in _algorithms[point_type]:
         algorithm_definitions.update(_algorithms[point_type]["any"])
@@ -192,12 +174,17 @@ def get_definitions(point_type, distance_metric):
 
     algos = {}
     for (name, algo) in algorithm_definitions.iteritems():
-        assert "constructor" in algo, \
-                "group %s does not specify a constructor" % name
+        assert "constructor" in algo, """\
+group %s does not specify a constructor""" % name
         cn = algo["constructor"]
-        assert cn in globals(), \
-                "group %s specifies the nonexistent constructor %s" % (name, cn)
-        constructor = globals()[cn]
+        assert cn in constructors, """\
+group %s specifies the unknown constructor %s""" % (name, cn)
+        constructor = constructors[cn]
+        if not constructor:
+            print """\
+warning: group %s specifies the known, but missing, constructor \
+%s; skipping""" % (name, cn)
+            continue
 
         algos[name] = []
 
@@ -257,6 +244,52 @@ def main():
     if os.path.exists(INDEX_DIR):
         shutil.rmtree(INDEX_DIR)
 
+    constructors_ = [
+      ("ann_benchmarks.algorithms.itu",
+          ["ITUHashing", "ITUFilteringDouble"]),
+      ("ann_benchmarks.algorithms.lshf",
+          ["LSHF"]),
+      ("ann_benchmarks.algorithms.annoy",
+          ["Annoy"]),
+      ("ann_benchmarks.algorithms.flann",
+          ["FLANN"]),
+      ("ann_benchmarks.algorithms.panns",
+          ["PANNS"]),
+      ("ann_benchmarks.algorithms.kdtree",
+          ["KDTree"]),
+      ("ann_benchmarks.algorithms.kgraph",
+          ["KGraph"]),
+      ("ann_benchmarks.algorithms.nearpy",
+          ["NearPy"]),
+      ("ann_benchmarks.algorithms.nmslib",
+          ["NmslibNewIndex", "NmslibReuseIndex"]),
+      ("ann_benchmarks.algorithms.falconn",
+          ["FALCONN"]),
+      ("ann_benchmarks.algorithms.balltree",
+          ["BallTree"]),
+      ("ann_benchmarks.algorithms.rpforest",
+          ["RPForest"]),
+      ("ann_benchmarks.algorithms.bruteforce",
+          ["BruteForce", "BruteForceBLAS"]),
+      ("ann_benchmarks.algorithms.subprocess",
+          ["Subprocess", "BitSubprocess"])
+    ]
+    constructors = {}
+    for name, symbols in constructors_:
+        print name
+        try:
+            module = importlib.import_module(name)
+            for symbol in symbols:
+                assert hasattr(module, symbol), """\
+import error: module %s does not define symbol %s""" % (name, symbol)
+                constructors[symbol] = getattr(module, symbol)
+        except ImportError:
+            print """\
+warning: module %s is missing, some algorithm constructors will not be \
+available""" % name
+            for symbol in symbols:
+                constructors[symbol] = None
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', help='Which dataset', default='glove')
     parser.add_argument('--distance', help='Distance', default='angular')
@@ -291,7 +324,7 @@ def main():
             algos_already_ran.add((run["library"], run["name"]))
 
     point_type = manifest['point_type']
-    algos = get_definitions(point_type, args.distance)
+    algos = get_algorithms(constructors, point_type, args.distance)
 
     if args.algo:
         print('running only', args.algo)
