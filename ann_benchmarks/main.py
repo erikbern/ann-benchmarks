@@ -4,9 +4,11 @@ try:
     from urllib import urlretrieve
 except ImportError:
     from urllib.request import urlretrieve # Python 3
+import sys
 import json
 import shutil
 import importlib
+import traceback
 
 from ann_benchmarks.data import type_info
 from ann_benchmarks.distance import metrics as pd
@@ -227,8 +229,14 @@ warning: group %s specifies the known, but missing, constructor \
                     obj = constructor(*aargs)
                     algos[name].append(obj)
                 except Exception as e:
-                    print e
-                    pass
+                    try:
+                        t, v, tb = sys.exc_info()
+                        traceback.print_exception(t, v, tb)
+                    finally:
+                        del tb
+                    print """\
+warning: constructor %s (with parameters %s) failed, \
+skipping""" % (cn, str(aargs))
     return algos
 
 def main():
@@ -276,7 +284,6 @@ def main():
     ]
     constructors = {}
     for name, symbols in constructors_:
-        print name
         try:
             module = importlib.import_module(name)
             for symbol in symbols:
@@ -284,9 +291,14 @@ def main():
 import error: module %s does not define symbol %s""" % (name, symbol)
                 constructors[symbol] = getattr(module, symbol)
         except ImportError:
+            try:
+                t, v, tb = sys.exc_info()
+                traceback.print_exception(t, v, tb)
+            finally:
+                del tb
             print """\
-warning: module %s is missing, some algorithm constructors will not be \
-available""" % name
+warning: module %s could not be loaded, some algorithm constructors will not \
+be available""" % name
             for symbol in symbols:
                 constructors[symbol] = None
 
