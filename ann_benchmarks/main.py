@@ -13,6 +13,7 @@ import traceback
 from ann_benchmarks.data import type_info
 from ann_benchmarks.distance import metrics as pd
 from ann_benchmarks.constants import INDEX_DIR
+from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
 
 def get_dataset(which='glove', limit=-1, random_state=3, test_size=10000):
     cache = 'queries/%s-%d-%d-%d.npz' % (which, test_size, limit, random_state)
