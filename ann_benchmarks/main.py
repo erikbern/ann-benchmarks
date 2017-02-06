@@ -15,15 +15,18 @@ from ann_benchmarks.distance import metrics as pd
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
 
-def get_dataset(which='glove', limit=-1, random_state=3, test_size=10000):
-    cache = 'queries/%s-%d-%d-%d.npz' % (which, test_size, limit, random_state)
-    if os.path.exists(cache):
-        v = numpy.load(cache)
-        X_train = v['train']
-        X_test = v['test']
-        manifest = v['manifest'][0]
-        print(manifest, X_train.shape, X_test.shape)
-        return manifest, X_train, X_test
+def get_dataset(which='glove', limit=-1):
+    cache = 'queries/%s-%d.npz' % (which, limit)
+    try:
+        with numpy.load(cache) as f:
+            X = f["data"]
+            manifest = f["manifest"][0]
+            return manifest, X
+    except IOError:
+        pass
+    except KeyError:
+        pass
+
     local_fn = os.path.join('install', which)
     if os.path.exists(local_fn + '.gz'):
         f = gzip.open(local_fn + '.gz')
@@ -58,6 +61,10 @@ dataset %s: no parser for points of type '%s'""" % (which, point_type)
     if "finish_entries" in info:
         X = info["finish_entries"](X)
 
+    numpy.savez(cache, manifest=[manifest], data=X)
+    return manifest, X
+
+def split_dataset(X, random_state=3, test_size=10000):
     import sklearn.cross_validation
 
     # Here Erik is most welcome to use any other random_state
@@ -68,8 +75,7 @@ dataset %s: no parser for points of type '%s'""" % (which, point_type)
           X, test_size=test_size, random_state=random_state)
     print(X_train.shape, X_test.shape)
 
-    numpy.savez(cache, manifest=[manifest], train=X_train, test=X_test)
-    return manifest, X_train, X_test
+    return X_train, X_test
 
 def run_algo(X_train, queries, library, algo, distance, results_fn):
     try:
@@ -313,7 +319,8 @@ be available""" % name
 
     args = parser.parse_args()
 
-    manifest, X_train, X_test = get_dataset(args.dataset, args.limit)
+    manifest, X = get_dataset(args.dataset, args.limit)
+    X_train, X_test = split_dataset(X)
 
     results_fn = get_fn('results', args)
     queries_fn = get_fn('queries', args)
