@@ -309,13 +309,14 @@ be available""" % name
             for symbol in symbols:
                 constructors[symbol] = None
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', help='Which dataset', default='glove')
-    parser.add_argument('--distance', help='Distance', default='angular')
-    parser.add_argument('--limit', help='Limit', type=int, default=-1)
-    parser.add_argument('--algo', help='run only this algorithm', default=None)
-    parser.add_argument('--sub-algo', help='run only the named algorithm instance', default=None)
-    parser.add_argument('--no_save_index', help='Do not save indices', action='store_true')
+    parser = argparse.ArgumentParser(
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--dataset', help='the dataset to load points from', default='glove')
+    parser.add_argument('--distance', help='the metric used to calculate the distance between points', default='angular')
+    parser.add_argument('--limit', help='the maximum number of points to load from the dataset, or -1 to load all of them', type=int, default=-1)
+    parser.add_argument('--algo', help='run only the named algorithm', default=None)
+    parser.add_argument('--sub-algo', help='run only the named instance of an algorithm (requires --algo)', default=None)
+    parser.add_argument('--no_save_index', help='do not save indices', action='store_true')
 
     args = parser.parse_args()
 
