@@ -37,9 +37,10 @@ def get_dataset(which='glove', limit=-1):
       'point_type': 'float'
     }
     if os.path.exists(local_fn + '.yaml'):
-        y = yaml.load(open(local_fn + '.yaml'))
-        if 'dataset' in y:
-            manifest.update(y['dataset'])
+        with open(local_fn + '.yaml') as mf:
+            y = yaml.load(mf)
+            if 'dataset' in y:
+                manifest.update(y['dataset'])
 
     point_type = manifest['point_type']
 
