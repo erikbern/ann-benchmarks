@@ -312,8 +312,20 @@ be available""" % name
 
     parser = argparse.ArgumentParser(
             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--dataset', help='the dataset to load points from', default='glove')
-    parser.add_argument('--distance', help='the metric used to calculate the distance between points', default='angular')
+    parser.add_argument(
+            '--dataset',
+            metavar='NAME',
+            help='the dataset to load training points from',
+            default='glove')
+    parser.add_argument(
+            '--query-dataset',
+            metavar='NAME',
+            help='load query points from another dataset instead of choosing them randomly from the training dataset',
+            default=None)
+    parser.add_argument(
+            '--distance',
+            help='the metric used to calculate the distance between points',
+            default='angular')
     parser.add_argument('--limit', help='the maximum number of points to load from the dataset, or -1 to load all of them', type=int, default=-1)
     parser.add_argument('--algo', help='run only the named algorithm', default=None)
     parser.add_argument('--sub-algo', help='run only the named instance of an algorithm (requires --algo)', default=None)
@@ -322,7 +334,13 @@ be available""" % name
     args = parser.parse_args()
 
     manifest, X = get_dataset(args.dataset, args.limit)
-    X_train, X_test = split_dataset(X)
+    if not args.query_dataset:
+        X_train, X_test = split_dataset(X)
+    else:
+        X_train = X
+        query_manifest, X_test = get_dataset(args.query_dataset)
+        assert manifest == query_manifest, """\
+error: the training dataset and query dataset have incompatible manifests"""
 
     results_fn = get_fn('results', args)
     queries_fn = get_fn('queries', args)
