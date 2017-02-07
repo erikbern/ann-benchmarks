@@ -248,6 +248,29 @@ skipping""" % (cn, str(aargs))
     return algos
 
 def main():
+    parser = argparse.ArgumentParser(
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(
+            '--dataset',
+            metavar='NAME',
+            help='the dataset to load training points from',
+            default='glove')
+    parser.add_argument(
+            '--query-dataset',
+            metavar='NAME',
+            help='load query points from another dataset instead of choosing them randomly from the training dataset',
+            default=None)
+    parser.add_argument(
+            '--distance',
+            help='the metric used to calculate the distance between points',
+            default='angular')
+    parser.add_argument('--limit', help='the maximum number of points to load from the dataset, or -1 to load all of them', type=int, default=-1)
+    parser.add_argument('--algo', help='run only the named algorithm', default=None)
+    parser.add_argument('--sub-algo', help='run only the named instance of an algorithm (requires --algo)', default=None)
+    parser.add_argument('--no_save_index', help='do not save indices', action='store_true')
+
+    args = parser.parse_args()
+
     # Set resource limits to prevent memory bombs
     memory_limit = 12 * 2**30
     soft, hard = resource.getrlimit(resource.RLIMIT_DATA)
@@ -309,29 +332,6 @@ warning: module %s could not be loaded, some algorithm constructors will not \
 be available""" % name
             for symbol in symbols:
                 constructors[symbol] = None
-
-    parser = argparse.ArgumentParser(
-            formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument(
-            '--dataset',
-            metavar='NAME',
-            help='the dataset to load training points from',
-            default='glove')
-    parser.add_argument(
-            '--query-dataset',
-            metavar='NAME',
-            help='load query points from another dataset instead of choosing them randomly from the training dataset',
-            default=None)
-    parser.add_argument(
-            '--distance',
-            help='the metric used to calculate the distance between points',
-            default='angular')
-    parser.add_argument('--limit', help='the maximum number of points to load from the dataset, or -1 to load all of them', type=int, default=-1)
-    parser.add_argument('--algo', help='run only the named algorithm', default=None)
-    parser.add_argument('--sub-algo', help='run only the named instance of an algorithm (requires --algo)', default=None)
-    parser.add_argument('--no_save_index', help='do not save indices', action='store_true')
-
-    args = parser.parse_args()
 
     manifest, X = get_dataset(args.dataset, args.limit)
     if not args.query_dataset:
