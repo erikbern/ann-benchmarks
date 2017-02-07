@@ -396,12 +396,12 @@ error: the training dataset and query dataset have incompatible manifests"""
     point_type = manifest['point_type']
     algos = get_algorithms(constructors, point_type, args.distance)
 
-    if args.algo:
-        print('running only', args.algo)
-        algos = {args.algo: algos[args.algo]}
-        if args.sub_algo:
-            algos[args.algo] = \
-              [algo for algo in algos[args.algo] if algo.name == args.sub_algo]
+    if args.algorithm:
+        print('running only', args.algorithm)
+        algos = {args.algorithm: algos[args.algorithm]}
+        if args.sub_algorithm:
+            algos[args.algorithm] = \
+              [algo for algo in algos[args.algorithm] if algo.name == args.sub_algorithm]
 
     algos_flat = []
 
