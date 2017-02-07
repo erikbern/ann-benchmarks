@@ -291,7 +291,7 @@ def main():
 
     args = parser.parse_args()
 
-    if args.list_algorithms:
+    if hasattr(args, "list_algorithms"):
         print "The following algorithms are supported..."
         for point in _algorithms:
             print "\t... for the point type '%s'..." % point
