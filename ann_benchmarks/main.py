@@ -115,7 +115,6 @@ def run_algo(X_train, queries, library, algo, distance, results_fn):
             "best_search_time": best_search_time,
             "results": results
         }
-        print(output)
 
         f = open(results_fn, 'a')
         f.write(json.dumps(output) + "\n")
