@@ -264,12 +264,42 @@ def main():
             '--distance',
             help='the metric used to calculate the distance between points',
             default='angular')
-    parser.add_argument('--limit', help='the maximum number of points to load from the dataset, or -1 to load all of them', type=int, default=-1)
-    parser.add_argument('--algo', help='run only the named algorithm', default=None)
-    parser.add_argument('--sub-algo', help='run only the named instance of an algorithm (requires --algo)', default=None)
-    parser.add_argument('--no_save_index', help='do not save indices', action='store_true')
+    parser.add_argument(
+            '--limit',
+            help='the maximum number of points to load from the dataset, or -1 to load all of them',
+            type=int,
+            default=-1)
+    parser.add_argument(
+            '--algorithm',
+            metavar='NAME',
+            help='run only the named algorithm',
+            default=None)
+    parser.add_argument(
+            '--sub-algorithm',
+            metavar='NAME',
+            help='run only the named instance of an algorithm (requires --algo)',
+            default=None)
+    parser.add_argument(
+            '--list-algorithms',
+            help='print the names of all known algorithms and exit',
+            action='store_true',
+            default=argparse.SUPPRESS)
+    parser.add_argument(
+            '--no_save_index',
+            help='do not save indices',
+            action='store_true')
 
     args = parser.parse_args()
+
+    if args.list_algorithms:
+        print "The following algorithms are supported..."
+        for point in _algorithms:
+            print "\t... for the point type '%s'..." % point
+            for metric in _algorithms[point]:
+                print "\t\t... and the distance metric '%s':" % metric
+                for algorithm in _algorithms[point][metric]:
+                    print "\t\t\t%s" % algorithm
+        sys.exit(0)
 
     # Set resource limits to prevent memory bombs
     memory_limit = 12 * 2**30
