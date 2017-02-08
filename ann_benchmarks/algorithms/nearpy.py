@@ -26,7 +26,7 @@ class NearPy(BaseANN):
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         for i, x in enumerate(X):
-            self._nearpy_engine.store_vector(x.tolist(), i)
+            self._nearpy_engine.store_vector(x, i)
 
     def query(self, v, n):
         if self._metric == 'angular':
