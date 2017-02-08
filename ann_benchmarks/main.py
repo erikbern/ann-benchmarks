@@ -78,7 +78,8 @@ def split_dataset(X, random_state=3, test_size=10000):
 
     return X_train, X_test
 
-def run_algo(X_train, queries, library, algo, distance, results_fn):
+def run_algo(X_train, queries, library, algo, distance, results_fn,
+        run_count=3, force_single=False):
     try:
         t0 = time.time()
         if algo != 'bf':
@@ -87,8 +88,7 @@ def run_algo(X_train, queries, library, algo, distance, results_fn):
         print('Built index in', build_time)
 
         best_search_time = float('inf')
-        best_precision = 0.0 # should be deterministic but paranoid
-        for i in xrange(3): # Do multiple times to warm up page cache, use fastest
+        for i in xrange(run_count):
             def single_query(t):
                 v, _, _ = t
                 start = time.time()
@@ -98,7 +98,7 @@ def run_algo(X_train, queries, library, algo, distance, results_fn):
                     lambda idx: (int(idx), float(pd[distance](v, X_train[idx]))),
                     list(found))
                 return (total, found)
-            if algo.use_threads():
+            if algo.use_threads() and not force_single:
                 pool = multiprocessing.pool.ThreadPool()
                 results = pool.map(single_query, queries)
             else:
@@ -113,7 +113,9 @@ def run_algo(X_train, queries, library, algo, distance, results_fn):
             "name": algo.name,
             "build_time": build_time,
             "best_search_time": best_search_time,
-            "results": results
+            "results": results,
+            "run_count": run_count,
+            "run_alone": force_single
         }
 
         f = open(results_fn, 'a')
@@ -246,6 +248,16 @@ warning: constructor %s (with parameters %s) failed, \
 skipping""" % (cn, str(aargs))
     return algos
 
+def positive_int(s):
+    i = None
+    try:
+        i = int(s)
+    except ValueError:
+        pass
+    if not i or i < 1:
+        raise argparse.ArgumentTypeError("%r is not a positive integer" % s)
+    return i
+
 def main():
     parser = argparse.ArgumentParser(
             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -283,6 +295,16 @@ def main():
             help='print the names of all known algorithms and exit',
             action='store_true',
             default=argparse.SUPPRESS)
+    parser.add_argument(
+            '--runs',
+            metavar='COUNT',
+            type=positive_int,
+            help='run each algorithm instance %(metavar)s times and use only the best result',
+            default=3)
+    parser.add_argument(
+            '--single',
+            help='run only a single algorithm instance at a time',
+            action='store_true')
     parser.add_argument(
             '--no_save_index',
             help='do not save indices',
@@ -418,7 +440,7 @@ error: the training dataset and query dataset have incompatible manifests"""
         # Spawn a subprocess to force the memory to be reclaimed at the end
         p = multiprocessing.Process(
             target=run_algo,
-            args=(X_train, queries, library, algo, args.distance, results_fn))
+            args=(X_train, queries, library, algo, args.distance, results_fn, args.runs, args.single))
         p.start()
         p.join()
 
