@@ -17,5 +17,5 @@ class FLANN(BaseANN):
 
     def query(self, v, n):
         if self._metric == 'angular':
-            v = sklearn.preprocessing.normalize(v, axis=1, norm='l2')[0]
+            v = sklearn.preprocessing.normalize([v], axis=1, norm='l2')[0]
         return self._flann.nn_index(v, n)[0][0]

@@ -30,5 +30,5 @@ class NearPy(BaseANN):
 
     def query(self, v, n):
         if self._metric == 'angular':
-            v = sklearn.preprocessing.normalize(v, axis=1, norm='l2')[0]
+            v = sklearn.preprocessing.normalize([v], axis=1, norm='l2')[0]
         return [y for x, y, z in self._nearpy_engine.neighbours(v)]
