@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 import os
-import nmslib_vector
+import nmslib
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.base import BaseANN
 
@@ -29,27 +29,27 @@ class NmslibReuseIndex(BaseANN):
             # Aborted (core dumped)
             self._index_param.append('bucketSize=%d' % min(int(X.shape[0] * 0.0005), 1000))
                                         
-        self._index = nmslib_vector.init(self._nmslib_metric, [], self._method_name, nmslib_vector.DataType.VECTOR, nmslib_vector.DistType.FLOAT)
+        self._index = nmslib.init(self._nmslib_metric, [], self._method_name, nmslib.DataType.DENSE_VECTOR, nmslib.DistType.FLOAT)
     
         for i, x in enumerate(X):
-            nmslib_vector.addDataPoint(self._index, i, x.tolist())
+            nmslib.addDataPoint(self._index, i, x.tolist())
 
 
         if os.path.exists(self._index_name):
             print "Loading index from file"
-            nmslib_vector.loadIndex(self._index, self._index_name)
+            nmslib.loadIndex(self._index, self._index_name)
         else:
-            nmslib_vector.createIndex(self._index, self._index_param)
+            nmslib.createIndex(self._index, self._index_param)
             if self._save_index: 
-              nmslib_vector.saveIndex(self._index, self._index_name)
+              nmslib.saveIndex(self._index, self._index_name)
 
-        nmslib_vector.setQueryTimeParams(self._index, self._query_param)
+        nmslib.setQueryTimeParams(self._index, self._query_param)
 
     def query(self, v, n):
-        return nmslib_vector.knnQuery(self._index, n, v.tolist())
+        return nmslib.knnQuery(self._index, n, v.tolist())
 
     def freeIndex(self):
-        nmslib_vector.freeIndex(self._index)
+        nmslib.freeIndex(self._index)
 
 class NmslibNewIndex(BaseANN):
     def __init__(self, metric, method_name, method_param):
@@ -66,15 +66,15 @@ class NmslibNewIndex(BaseANN):
             # Aborted (core dumped)
             self._method_param.append('bucketSize=%d' % min(int(X.shape[0] * 0.0005), 1000))
                                         
-        self._index = nmslib_vector.init(self._nmslib_metric, [], self._method_name, nmslib_vector.DataType.VECTOR, nmslib_vector.DistType.FLOAT)
+        self._index = nmslib.init(self._nmslib_metric, [], self._method_name, nmslib.DataType.DENSE_VECTOR, nmslib.DistType.FLOAT)
     
         for i, x in enumerate(X):
-            nmslib_vector.addDataPoint(self._index, i, x.tolist())
+            nmslib.addDataPoint(self._index, i, x.tolist())
 
-        nmslib_vector.createIndex(self._index, self._method_param)
+        nmslib.createIndex(self._index, self._method_param)
 
     def query(self, v, n):
-        return nmslib_vector.knnQuery(self._index, n, v.tolist())
+        return nmslib.knnQuery(self._index, n, v.tolist())
 
     def freeIndex(self):
-        nmslib_vector.freeIndex(self._index)
+        nmslib.freeIndex(self._index)
