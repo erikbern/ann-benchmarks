@@ -139,6 +139,12 @@ float:
             - True
             - {"efSearch": [30, 25, 20, 15, 10, 5, 4, 3, 2, 1],
               "initSearchAttempts": 1}
+    dolphinn:
+      constructor: IntSubprocess
+      base-args: [["protocol/fr-dolphinn"]]
+      run-groups:
+        base:
+          args: {"entry_length": 784}
   angular:
     kgraph:
       constructor: KGraph
