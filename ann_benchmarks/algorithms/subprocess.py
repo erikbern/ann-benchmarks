@@ -33,9 +33,11 @@ class Subprocess(BaseANN):
             for key, value in self._params.iteritems():
                 self.__write("%s %s" % \
                     (Subprocess.__quote(key), Subprocess.__quote(value)))
-                assert(self.__line()[0] == "ok")
+                assert self.__line()[0] == "ok", """\
+assigning value '%s' to option '%s' failed""" % (value, key)
             self.__write("")
-            assert(self.__line()[0] == "ok")
+            assert self.__line()[0] == "ok", """\
+transitioning to training mode failed"""
         return self._program
 
     def __init__(self, args, encoder, params):
@@ -47,14 +49,17 @@ class Subprocess(BaseANN):
 
     def fit(self, X):
         for entry in X:
-            self.__write(Subprocess.__quote(self._encoder(entry)))
-            assert(self.__line()[0] == "ok")
+            d = Subprocess.__quote(self._encoder(entry))
+            self.__write(d)
+            assert self.__line()[0] == "ok", """\
+encoded training point '%s' was rejected""" % d
         self.__write("")
-        assert(self.__line()[0] == "ok")
+        assert self.__line()[0] == "ok", """\
+transitioning to query mode failed"""
 
     def query(self, v, n):
-        self.__write("%s %d" % \
-            (Subprocess.__quote(self._encoder(v)), n))
+        d = Subprocess.__quote(self._encoder(v))
+        self.__write("%s %d" % (d, n))
         status = self.__line()
         if status[0] == "ok":
             count = int(status[1])
@@ -64,10 +69,11 @@ class Subprocess(BaseANN):
                 line = self.__line()
                 results.append(int(line[0]))
                 i += 1
-            assert(len(results) == count)
+            assert len(results) == count
             return results
         else:
-            assert(status[0] == "fail")
+            assert status[0] == "fail", """\
+searching for encoded query point '%s' neither succeeded nor failed""" % d
             return []
 
     def use_threads(self):
