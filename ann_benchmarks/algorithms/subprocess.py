@@ -47,7 +47,7 @@ class Subprocess(BaseANN):
 
     def fit(self, X):
         for entry in X:
-            self.__write(self._encoder(entry))
+            self.__write(Subprocess.__quote(self._encoder(entry)))
             assert(self.__line()[0] == "ok")
         self.__write("")
         assert(self.__line()[0] == "ok")
