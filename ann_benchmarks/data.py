@@ -5,6 +5,8 @@ def float_parse_entry(line):
     return [float(x) for x in line.strip().split()]
 def float_unparse_entry(entry):
     return " ".join(map(str, entry))
+def int_unparse_entry(entry):
+    return " ".join(map(str, map(int, entry)))
 
 def bit_parse_entry(line):
     return [bool(int(x)) for x in list(line.strip())]

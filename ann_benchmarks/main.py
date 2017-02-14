@@ -362,7 +362,7 @@ def main():
       ("ann_benchmarks.algorithms.bruteforce",
           ["BruteForce", "BruteForceBLAS"]),
       ("ann_benchmarks.algorithms.subprocess",
-          ["Subprocess", "BitSubprocess"])
+          ["BitSubprocess", "IntSubprocess", "FloatSubprocess"])
     ]
     constructors = {}
     for name, symbols in constructors_:
