@@ -1,1 +1,4 @@
 *.pyc
+*.o
+protocol/fr-*
+protocol/*/
