@@ -5,6 +5,60 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import argparse
 
+def precision_knn(queries, run, epsilon=1e-10):
+    results = zip(queries, run["results"])
+    total = 0
+    actual = 0
+    for (query, max_distance, closest), [time, candidates] in results:
+        within = filter(lambda (index, distance): \
+                        distance <= (max_distance + epsilon), candidates)
+        total += len(closest)
+        actual += len(within)
+    return float(actual) / float(total)
+
+def precision_epsilon(queries, run, epsilon=0.01):
+    results = zip(queries, run["results"])
+    total = 0
+    actual = 0
+    for (query, max_distance, closest), [time, candidates] in results:
+        within = filter(lambda (index, distance): \
+                        distance <= ((1 + epsilon) * max_distance), candidates)
+        total += len(closest)
+        actual += len(within)
+    return float(actual) / float(total)
+
+def precision_rel(queries, run):
+    results = zip(queries, run["results"])
+    total_closest_distance = 0.0
+    total_candidate_distance = 0.0
+    for (query, max_distance, closest), [time, candidates] in results:
+        for (ridx, rdist), (cidx, cdist) in zip(closest, candidates):
+            total_closest_distance += rdist
+            total_candidate_distance += cdist
+    precision = total_candidate_distance / total_closest_distance
+
+metrics = {
+    "k-nn": {
+        "description": "10-NN precision - larger is better",
+        "function": precision_knn,
+        "initial-y": float("-inf"),
+        "plot": lambda y, last_y: y > last_y,
+        "xlim": [0.0, 1.03]
+    },
+    "epsilon": {
+        "description": "(epsilon)",
+        "function": precision_epsilon,
+        "initial-y": float("-inf"),
+        "plot": lambda y, last_y: y > last_y
+    },
+    "rel": {
+        "description": "(rel)",
+        "function": precision_rel,
+        "initial-y": float("inf"),
+        "plot": lambda y, last_y: y < last_y
+    }
+}
+
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '--dataset',
@@ -14,28 +68,9 @@ parser.add_argument(
 parser.add_argument(
     '--precision',
     help = 'Which precision metric to use',
-    choices = ['k-nn', 'epsilon', 'rel'],
-    default = 'k-nn')
+    choices = metrics.keys(),
+    default = metrics.keys()[0])
 args = parser.parse_args()
-
-metrics = {
-    "k-nn": {
-        "description": "10-NN precision - larger is better",
-        "initial-y": float("-inf"),
-        "plot": lambda y, last_y: y > last_y,
-        "xlim": [0.0, 1.03]
-    },
-    "epsilon": {
-        "description": "(epsilon)",
-        "initial-y": float("-inf"),
-        "plot": lambda y, last_y: y > last_y
-    },
-    "rel": {
-        "description": "(rel)",
-        "initial-y": float("inf"),
-        "plot": lambda y, last_y: y < last_y
-    }
-}
 
 # XXX: this is copied-and-pasted from main.py
 def get_fn(base, dataset, limit = -1):
@@ -56,7 +91,6 @@ def get_fn(base, dataset, limit = -1):
 
 queries = {}
 
-# Construct palette by reading all inputs
 runs = {}
 all_algos = set()
 for ds, _ in args.dataset:
@@ -70,65 +104,25 @@ the queries file '%s' is missing""" % queries_fn
     with open(get_fn("results", ds)) as f:
         for line in f:
             run = json.loads(line)
-            all_algos.add(run["library"])
-
             algo = run["library"]
             algo_name = run["name"]
             build_time = run["build_time"]
             search_time = run["best_search_time"]
-            results = zip(queries[ds], run["results"])
 
-            precision = None
             print "--"
             print algo_name
-            if args.precision == "k-nn" or args.precision == "epsilon":
-                total = 0
-                actual = 0
-                for (query, max_distance, closest), [time, candidates] in results:
-                    # Both these metrics actually use an epsilon, although k-nn
-                    # does so only because comparing floating-point numbers for
-                    # true equality is a terrible idea
-                    comparator = None
-                    if args.precision == "k-nn":
-                        epsilon = 1e-10
-                        comparator = \
-                            lambda (index, distance): \
-                                distance <= (max_distance + epsilon)
-                    elif args.precision == "epsilon":
-                        epsilon = 0.01
-                        comparator = \
-                            lambda (index, distance): \
-                                distance <= ((1 + epsilon) * max_distance)
-
-                    within = filter(comparator, candidates)
-                    if "brute" in algo_name.lower():
-                        if len(within) != len(closest):
-                            print "? what? brute-force strategy failed on ", \
-                                    closest, candidates
-                    total += len(closest)
-                    actual += len(within)
-                print "total = ", total, ", actual = ", actual
-                precision = float(actual) / float(total)
-            elif args.precision == "rel":
-                total_closest_distance = 0.0
-                total_candidate_distance = 0.0
-                for (query, max_distance, closest), [time, candidates] in results:
-                    for (ridx, rdist), (cidx, cdist) in zip(closest, candidates):
-                        total_closest_distance += rdist
-                        total_candidate_distance += cdist
-                precision = total_candidate_distance / total_closest_distance
-            else:
-                assert False, "precision metric '%s' is not supported" % args.precision
+            precision = metrics[args.precision]["function"](queries[ds], run)
             print precision
+            if not precision:
+                continue
+
+            all_algos.add(algo)
             if not algo in runs[ds]:
                 runs[ds][algo] = []
-
             runs[ds][algo].append(
                     (algo, algo_name, build_time, search_time, precision))
 
-# print queries
-# print runs
-
+# Construct palette from the algorithm list
 colors = plt.cm.Set1(numpy.linspace(0, 1, len(all_algos)))
 linestyles = {}
 for i, algo in enumerate(all_algos):
