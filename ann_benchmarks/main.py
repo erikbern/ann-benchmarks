@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-import gzip, time, os, multiprocessing, argparse, pickle, resource, random, math, yaml
+import time, os, multiprocessing, argparse, pickle, resource, random, math, yaml
 try:
     from urllib import urlretrieve
 except ImportError:
