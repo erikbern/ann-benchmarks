@@ -62,15 +62,69 @@ all_algos = set()
 for ds, _ in args.dataset:
     results_fn = get_fn("results", ds)
     queries_fn = get_fn("queries", ds)
-    if not os.path.exists(queries_fn):
-        assert False, "the queries file '%s' is missing" % queries_fn
-    else:
-        queries[ds] = pickle.load(open(queries_fn))
-        runs[ds] = []
-        for line in open(get_fn("results", ds)):
+    assert os.path.exists(queries_fn), """\
+the queries file '%s' is missing""" % queries_fn
+
+    queries[ds] = pickle.load(open(queries_fn))
+    runs[ds] = {}
+    with open(get_fn("results", ds)) as f:
+        for line in f:
             run = json.loads(line)
-            runs[ds].append(run)
             all_algos.add(run["library"])
+
+            algo = run["library"]
+            algo_name = run["name"]
+            build_time = run["build_time"]
+            search_time = run["best_search_time"]
+            results = zip(queries[ds], run["results"])
+
+            precision = None
+            print "--"
+            print algo_name
+            if args.precision == "k-nn" or args.precision == "epsilon":
+                total = 0
+                actual = 0
+                for (query, max_distance, closest), [time, candidates] in results:
+                    # Both these metrics actually use an epsilon, although k-nn
+                    # does so only because comparing floating-point numbers for
+                    # true equality is a terrible idea
+                    comparator = None
+                    if args.precision == "k-nn":
+                        epsilon = 1e-10
+                        comparator = \
+                            lambda (index, distance): \
+                                distance <= (max_distance + epsilon)
+                    elif args.precision == "epsilon":
+                        epsilon = 0.01
+                        comparator = \
+                            lambda (index, distance): \
+                                distance <= ((1 + epsilon) * max_distance)
+
+                    within = filter(comparator, candidates)
+                    if "brute" in algo_name.lower():
+                        if len(within) != len(closest):
+                            print "? what? brute-force strategy failed on ", \
+                                    closest, candidates
+                    total += len(closest)
+                    actual += len(within)
+                print "total = ", total, ", actual = ", actual
+                precision = float(actual) / float(total)
+            elif args.precision == "rel":
+                total_closest_distance = 0.0
+                total_candidate_distance = 0.0
+                for (query, max_distance, closest), [time, candidates] in results:
+                    for (ridx, rdist), (cidx, cdist) in zip(closest, candidates):
+                        total_closest_distance += rdist
+                        total_candidate_distance += cdist
+                precision = total_candidate_distance / total_closest_distance
+            else:
+                assert False, "precision metric '%s' is not supported" % args.precision
+            print precision
+            if not algo in runs[ds]:
+                runs[ds][algo] = []
+
+            runs[ds][algo].append(
+                    (algo, algo_name, build_time, search_time, precision))
 
 # print queries
 # print runs
@@ -82,59 +136,7 @@ for i, algo in enumerate(all_algos):
 
 # Now generate each plot
 for ds, fn_out in args.dataset:
-    all_data = {}
-
-    for run in runs[ds]:
-        algo = run["library"]
-        algo_name = run["name"]
-        build_time = run["build_time"]
-        search_time = run["best_search_time"]
-        results = zip(queries[ds], run["results"])
-
-        precision = None
-        print "--"
-        print algo_name
-        if args.precision == "k-nn" or args.precision == "epsilon":
-            total = 0
-            actual = 0
-            for (query, max_distance, closest), [time, candidates] in results:
-                # Both these metrics actually use an epsilon, although k-nn
-                # does so only because comparing floating-point numbers for
-                # true equality is a terrible idea
-                comparator = None
-                if args.precision == "k-nn":
-                    epsilon = 1e-10
-                    comparator = \
-                        lambda (index, distance): \
-                            distance <= (max_distance + epsilon)
-                elif args.precision == "epsilon":
-                    epsilon = 0.01
-                    comparator = \
-                        lambda (index, distance): \
-                            distance <= ((1 + epsilon) * max_distance)
-
-                within = filter(comparator, candidates)
-                if "brute" in algo_name.lower():
-                    if len(within) != len(closest):
-                        print "? what? brute-force strategy failed on ", \
-                                closest, candidates
-                total += len(closest)
-                actual += len(within)
-            print "total = ", total, ", actual = ", actual
-            precision = float(actual) / float(total)
-        elif args.precision == "rel":
-            total_closest_distance = 0.0
-            total_candidate_distance = 0.0
-            for (query, max_distance, closest), [time, candidates] in results:
-                for (ridx, rdist), (cidx, cdist) in zip(closest, candidates):
-                    total_closest_distance += rdist
-                    total_candidate_distance += cdist
-            precision = total_candidate_distance / total_closest_distance
-        else:
-            assert False, "precision metric '%s' is not supported" % args.precision
-        print precision
-
-        all_data.setdefault(algo, []).append((algo_name, float(build_time), float(search_time), float(precision)))
+    all_data = runs[ds]
 
     handles = []
     labels = []
