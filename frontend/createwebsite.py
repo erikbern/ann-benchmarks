@@ -162,7 +162,7 @@ def create_plot(ds, all_data, metric):
         """
     return output_str
 
-def process_dataset(ds, runs, all_algos, queries, metric):
+def process_dataset(ds, runs, queries, metric):
     all_data = {}
 
     for run in runs[ds]:
@@ -186,7 +186,6 @@ def process_dataset(ds, runs, all_algos, queries, metric):
 
 # Construct palette by reading all inputs
 runs = {}
-all_algos = set()
 queries = {}
 
 for ds in args.dataset:
@@ -200,7 +199,6 @@ for ds in args.dataset:
         for line in open(get_fn("results", ds)):
             run = json.loads(line)
             runs[ds].append(run)
-            all_algos.add(run["library"])
 
 # Build a website for each dataset
 for ds in args.dataset:
@@ -210,7 +208,7 @@ for ds in args.dataset:
         <h2>Plots for %(id)s""" % { "id" : ds }
     for metric in args.precision:
         print "Processing '%s' with %s" % (ds, metrics[metric]["description"])
-        output_str += process_dataset(ds, runs, all_algos, queries, metrics[metric])
+        output_str += process_dataset(ds, runs, queries, metrics[metric])
 
     output_str += """
     </div>
