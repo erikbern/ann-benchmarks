@@ -172,50 +172,12 @@ def process_dataset(ds, runs, all_algos, queries, metric):
         search_time = run["best_search_time"]
         results = zip(queries[ds], run["results"])
 
-        precision = None
         print "--"
         print algo_name
-        if metric == metrics["k-nn"] or metric == metrics["epsilon"]:
-            total = 0
-            actual = 0
-            for (query, max_distance, closest), [time, candidates] in results:
-                # Both these metrics actually use an epsilon, although k-nn
-                # does so only because comparing floating-point numbers for
-                # true equality is a terrible idea
-                comparator = None
-                if metric == metrics["k-nn"]:
-                    epsilon = 1e-10
-                    comparator = \
-                        lambda (index, distance): \
-                            distance <= (max_distance + epsilon)
-                elif metric == metrics["epsilon"]:
-                    epsilon = 0.01
-                    comparator = \
-                        lambda (index, distance): \
-                            distance <= ((1 + epsilon) * max_distance)
-
-                within = filter(comparator, candidates)
-                if "brute" in algo_name.lower():
-                    if len(within) != len(closest):
-                        print "? what? brute-force strategy failed on ", \
-                                closest, candidates
-                total += len(closest)
-                actual += len(within)
-            print "total = ", total, ", actual = ", actual
-            precision = float(actual) / float(total)
-        elif metric == metrics["rel"]:
-            total_closest_distance = 0.0
-            total_candidate_distance = 0.0
-            for (query, max_distance, closest), [time, candidates] in results:
-                for (ridx, rdist), (cidx, cdist) in zip(closest, candidates):
-                    total_closest_distance += rdist
-                    total_candidate_distance += cdist
-            precision = 0.0
-            if total_closest_distance > 0.0001:
-                precision = total_candidate_distance / total_closest_distance
-        else:
-            assert False, "precision metric '%s' is not supported" % metric["description"]
+        precision = metric["function"](queries[ds], run)
         print precision
+        if not precision:
+            continue
 
         all_data.setdefault(algo, []).append((algo_name, float(build_time), float(search_time), float(precision)))
     return create_plot(ds, all_data, metric)
