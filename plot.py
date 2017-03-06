@@ -5,6 +5,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import argparse
 
+from ann_benchmarks.main import get_fn
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 
 parser = argparse.ArgumentParser()
@@ -19,23 +20,6 @@ parser.add_argument(
     choices = metrics.keys(),
     default = metrics.keys()[0])
 args = parser.parse_args()
-
-# XXX: this is copied-and-pasted from main.py
-def get_fn(base, dataset, limit = -1):
-    fn = os.path.join(base, dataset)
-
-    if limit != -1:
-        fn += '-%d' % limit
-    if os.path.exists(fn + '.gz'):
-        fn += '.gz'
-    else:
-        fn += '.txt'
-
-    d = os.path.dirname(fn)
-    if not os.path.exists(d):
-        os.makedirs(d)
-
-    return fn
 
 runs = {}
 all_algos = set()

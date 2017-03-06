@@ -3,6 +3,7 @@ import os, json, pickle
 import numpy
 from collections import deque
 
+from ann_benchmarks.main import get_fn
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 
 colors = deque(["rgba(151,187,205,1)", "rgba(220,220,220,1)", "rgba(247,70,74,1)", "rgba(70,191,189,1)",
@@ -70,23 +71,6 @@ def get_html_header(title):
             </div><!--/.nav-collapse -->
           </div>
         </nav>""" % {"title" : title}
-
-# XXX: this is copied-and-pasted from main.py
-def get_fn(base, dataset, limit = -1):
-    fn = os.path.join(base, dataset)
-
-    if limit != -1:
-        fn += '-%d' % limit
-    if os.path.exists(fn + '.gz'):
-        fn += '.gz'
-    else:
-        fn += '.txt'
-
-    d = os.path.dirname(fn)
-    if not os.path.exists(d):
-        os.makedirs(d)
-
-    return fn
 
 def create_plot(ds, all_data, metric):
     output_str = """

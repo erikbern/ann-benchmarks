@@ -77,11 +77,11 @@ def compute_distances(distance, X_train, X_test):
 
     return queries
 
-def get_fn(base, args):
-    fn = os.path.join(base, args.dataset)
+def get_fn(base, dataset, limit=-1):
+    fn = os.path.join(base, dataset)
 
-    if args.limit != -1:
-        fn += '-%d' % args.limit
+    if limit != -1:
+        fn += '-%d' % limit
     if os.path.exists(fn + '.gz'):
         fn += '.gz'
     else:
@@ -332,8 +332,8 @@ be available""" % name
         assert manifest == query_manifest, """\
 error: the training dataset and query dataset have incompatible manifests"""
 
-    results_fn = get_fn('results', args)
-    queries_fn = get_fn('queries', args)
+    results_fn = get_fn('results', args.dataset, args.limit)
+    queries_fn = get_fn('queries', args.dataset, args.limit)
 
     print('storing queries in', queries_fn, 'and results in', results_fn)
 
