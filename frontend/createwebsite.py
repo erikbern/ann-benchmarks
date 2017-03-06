@@ -162,43 +162,36 @@ def create_plot(ds, all_data, metric):
         """
     return output_str
 
-def process_dataset(ds, runs, queries, metric):
-    all_data = {}
-
-    for run in runs[ds]:
-        algo = run["library"]
-        algo_name = run["name"]
-        build_time = run["build_time"]
-        search_time = run["best_search_time"]
-        results = zip(queries[ds], run["results"])
-
-        print "--"
-        print algo_name
-        precision = metric["function"](queries[ds], run)
-        print precision
-        if not precision:
-            continue
-
-        all_data.setdefault(algo, []).append((algo_name, float(build_time), float(search_time), float(precision)))
-    return create_plot(ds, all_data, metric)
-
-
-
-# Construct palette by reading all inputs
-runs = {}
-queries = {}
-
+all_data = {} # all_data[metric][algo] = []
 for ds in args.dataset:
     results_fn = get_fn("results", ds)
     queries_fn = get_fn("queries", ds)
-    if not os.path.exists(queries_fn):
-        assert False, "the queries file '%s' is missing" % queries_fn
-    else:
-        queries[ds] = pickle.load(open(queries_fn))
-        runs[ds] = []
-        for line in open(get_fn("results", ds)):
+    assert os.path.exists(queries_fn), """\
+the queries file '%s' is missing""" % queries_fn
+
+    queries = pickle.load(open(queries_fn))
+    with open(get_fn("results", ds)) as f:
+        for line in f:
             run = json.loads(line)
-            runs[ds].append(run)
+            algo = run["library"]
+            algo_name = run["name"]
+            build_time = run["build_time"]
+            search_time = run["best_search_time"]
+
+            print "--"
+            print algo_name
+            for metric_name in args.precision:
+                metric = metrics[metric_name]
+                precision = metric["function"](queries, run)
+                print "%s: %g" % (metric_name, precision)
+                # Should build_time and search_time really go in here?
+                all_data.setdefault(
+                    metric_name, {}).setdefault(
+                    algo, []).append((algo,
+                            algo_name,
+                            float(build_time),
+                            float(search_time),
+                            precision))
 
 # Build a website for each dataset
 for ds in args.dataset:
@@ -206,9 +199,10 @@ for ds in args.dataset:
     output_str += """
         <div class="container">
         <h2>Plots for %(id)s""" % { "id" : ds }
-    for metric in args.precision:
-        print "Processing '%s' with %s" % (ds, metrics[metric]["description"])
-        output_str += process_dataset(ds, runs, queries, metrics[metric])
+    for metric_name in args.precision:
+        metric = metrics[metric_name]
+        print "Processing '%s' with %s" % (ds, metric["description"])
+        output_str += create_plot(ds, all_data[metric_name], metric)
 
     output_str += """
     </div>
