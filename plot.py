@@ -5,55 +5,25 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import argparse
 
-def precision_knn(queries, run, epsilon=1e-10):
-    results = zip(queries, run["results"])
-    total = 0
-    actual = 0
-    for (query, max_distance, closest), [time, candidates] in results:
-        within = filter(lambda (index, distance): \
-                        distance <= (max_distance + epsilon), candidates)
-        total += len(closest)
-        actual += len(within)
-    return float(actual) / float(total)
-
-def precision_epsilon(queries, run, epsilon=0.01):
-    results = zip(queries, run["results"])
-    total = 0
-    actual = 0
-    for (query, max_distance, closest), [time, candidates] in results:
-        within = filter(lambda (index, distance): \
-                        distance <= ((1 + epsilon) * max_distance), candidates)
-        total += len(closest)
-        actual += len(within)
-    return float(actual) / float(total)
-
-def precision_rel(queries, run):
-    results = zip(queries, run["results"])
-    total_closest_distance = 0.0
-    total_candidate_distance = 0.0
-    for (query, max_distance, closest), [time, candidates] in results:
-        for (ridx, rdist), (cidx, cdist) in zip(closest, candidates):
-            total_closest_distance += rdist
-            total_candidate_distance += cdist
-    precision = total_candidate_distance / total_closest_distance
+from ann_benchmarks.plotting import metrics
 
 metrics = {
     "k-nn": {
         "description": "10-NN precision - larger is better",
-        "function": precision_knn,
+        "function": metrics.knn,
         "initial-y": float("-inf"),
         "plot": lambda y, last_y: y > last_y,
         "xlim": [0.0, 1.03]
     },
     "epsilon": {
         "description": "(epsilon)",
-        "function": precision_epsilon,
+        "function": metrics.epsilon,
         "initial-y": float("-inf"),
         "plot": lambda y, last_y: y > last_y
     },
     "rel": {
         "description": "(rel)",
-        "function": precision_rel,
+        "function": metrics.rel,
         "initial-y": float("inf"),
         "plot": lambda y, last_y: y < last_y
     }
