@@ -5,29 +5,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import argparse
 
-from ann_benchmarks.plotting import metrics
-
-metrics = {
-    "k-nn": {
-        "description": "10-NN precision - larger is better",
-        "function": metrics.knn,
-        "initial-y": float("-inf"),
-        "plot": lambda y, last_y: y > last_y,
-        "xlim": [0.0, 1.03]
-    },
-    "epsilon": {
-        "description": "(epsilon)",
-        "function": metrics.epsilon,
-        "initial-y": float("-inf"),
-        "plot": lambda y, last_y: y > last_y
-    },
-    "rel": {
-        "description": "(rel)",
-        "function": metrics.rel,
-        "initial-y": float("inf"),
-        "plot": lambda y, last_y: y < last_y
-    }
-}
+from ann_benchmarks.plotting.metrics import all_metrics as metrics
 
 parser = argparse.ArgumentParser()
 parser.add_argument(

@@ -31,3 +31,25 @@ def rel(queries, run):
             total_closest_distance += rdist
             total_candidate_distance += cdist
     return total_candidate_distance / total_closest_distance
+
+all_metrics = {
+    "k-nn": {
+        "description": "10-NN precision - larger is better",
+        "function": knn,
+        "initial-y": float("-inf"),
+        "plot": lambda y, last_y: y > last_y,
+        "xlim": [0.0, 1.03]
+    },
+    "epsilon": {
+        "description": "(epsilon)",
+        "function": epsilon,
+        "initial-y": float("-inf"),
+        "plot": lambda y, last_y: y > last_y
+    },
+    "rel": {
+        "description": "(rel)",
+        "function": rel,
+        "initial-y": float("inf"),
+        "plot": lambda y, last_y: y < last_y
+    }
+}

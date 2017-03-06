@@ -3,27 +3,10 @@ import os, json, pickle
 import numpy
 from collections import deque
 
+from ann_benchmarks.plotting.metrics import all_metrics as metrics
+
 colors = deque(["rgba(151,187,205,1)", "rgba(220,220,220,1)", "rgba(247,70,74,1)", "rgba(70,191,189,1)",
           "rgba(253,180,92,1)", "rgba(148,159,177,1)", "rgba(77,83,96,1)"])
-
-metrics = {
-    "k-nn": {
-        "description": "10-NN precision - larger is better",
-        "initial-y": float("-inf"),
-        "plot": lambda y, last_y: y > last_y,
-        "xlim": [0.0, 1.03]
-    },
-    "epsilon": {
-        "description": "(epsilon)",
-        "initial-y": float("-inf"),
-        "plot": lambda y, last_y: y > last_y
-    },
-    "rel": {
-        "description": "(rel)",
-        "initial-y": float("inf"),
-        "plot": lambda y, last_y: y < last_y
-    }
-}
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -32,9 +15,9 @@ parser.add_argument(
 parser.add_argument(
     '--precision',
     help = 'Which precision metric to use',
-    nargs = '*'
-    #choices = list(metrics.keys()),
-    #default = 'k-nn',
+    nargs = '*',
+    choices = metrics.keys(),
+    default = metrics.keys()[0],
     )
 parser.add_argument(
     '--outputdir',
