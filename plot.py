@@ -59,8 +59,6 @@ def get_fn(base, dataset, limit = -1):
 
     return fn
 
-queries = {}
-
 runs = {}
 all_algos = set()
 for ds, _ in args.dataset:
@@ -69,7 +67,7 @@ for ds, _ in args.dataset:
     assert os.path.exists(queries_fn), """\
 the queries file '%s' is missing""" % queries_fn
 
-    queries[ds] = pickle.load(open(queries_fn))
+    queries = pickle.load(open(queries_fn))
     runs[ds] = {}
     with open(get_fn("results", ds)) as f:
         for line in f:
@@ -81,7 +79,7 @@ the queries file '%s' is missing""" % queries_fn
 
             print "--"
             print algo_name
-            precision = metrics[args.precision]["function"](queries[ds], run)
+            precision = metrics[args.precision]["function"](queries, run)
             print precision
             if not precision:
                 continue
