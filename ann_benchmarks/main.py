@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-import time, os, multiprocessing, argparse, pickle, resource, random, math, yaml
+import time, os, multiprocessing, argparse, pickle, resource, random, math
 try:
     from urllib import urlretrieve
 except ImportError:
@@ -14,6 +14,7 @@ from ann_benchmarks.datasets import get_dataset, split_dataset
 from ann_benchmarks.distance import metrics as pd
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
+from ann_benchmarks.algorithms.definitions import get_algorithms, get_definitions
 
 def run_algo(X_train, queries, library, algo, distance, results_fn,
         run_count=3, force_single=False):
@@ -93,98 +94,6 @@ def get_fn(base, dataset, limit=-1):
 
     return fn
 
-from itertools import product
-
-with open("algos.yaml", "r") as f:
-    _algorithms = yaml.load(f)
-
-def handle_args(args):
-    if isinstance(args, list):
-        args = map(lambda el: el if isinstance(el, list) else [el], args)
-        return map(list, product(*args))
-    elif isinstance(args, dict):
-        flat = []
-        for k, v in args.iteritems():
-            if isinstance(v, list):
-                flat.append(map(lambda el: (k, el), v))
-            else:
-                flat.append([(k, v)])
-        return map(dict, product(*flat))
-    else:
-        raise TypeError("No args handling exists for %s" % type(args).__name__)
-
-def get_algorithms(constructors,
-        point_type="float", distance_metric="euclidean"):
-    algorithm_definitions = {}
-    if "any" in _algorithms[point_type]:
-        algorithm_definitions.update(_algorithms[point_type]["any"])
-    algorithm_definitions.update(_algorithms[point_type][distance_metric])
-
-    algos = {}
-    for (name, algo) in algorithm_definitions.iteritems():
-        assert "constructor" in algo, """\
-group %s does not specify a constructor""" % name
-        cn = algo["constructor"]
-        assert cn in constructors, """\
-group %s specifies the unknown constructor %s""" % (name, cn)
-        constructor = constructors[cn]
-        if not constructor:
-            print """\
-warning: group %s specifies the known, but missing, constructor \
-%s; skipping""" % (name, cn)
-            continue
-
-        algos[name] = []
-
-        base_args = []
-        vs = {
-            "@metric": distance_metric
-        }
-        if "base-args" in algo:
-            base_args = map(lambda arg: arg \
-                            if not isinstance(arg, str) or \
-                            not arg in vs else vs[arg],
-                            algo["base-args"])
-
-        for run_group in algo["run-groups"].values():
-            if "arg-groups" in run_group:
-                groups = []
-                for arg_group in run_group["arg-groups"]:
-                    if isinstance(arg_group, dict):
-                        # Dictionaries need to be expanded into lists in order
-                        # for the subsequent call to handle_args to do the
-                        # right thing
-                        groups.append(handle_args(arg_group))
-                    else:
-                        groups.append(arg_group)
-                args = handle_args(groups)
-            elif "args" in run_group:
-                args = handle_args(run_group["args"])
-            else:
-                assert False, "? what? %s" % run_group
-
-            for arg_group in args:
-                obj = None
-                try:
-                    aargs = []
-                    aargs.extend(base_args)
-                    if isinstance(arg_group, list):
-                        aargs.extend(arg_group)
-                    else:
-                        aargs.append(arg_group)
-                    obj = constructor(*aargs)
-                    algos[name].append(obj)
-                except Exception as e:
-                    try:
-                        t, v, tb = sys.exc_info()
-                        traceback.print_exception(t, v, tb)
-                    finally:
-                        del tb
-                    print """\
-warning: constructor %s (with parameters %s) failed, \
-skipping""" % (cn, str(aargs))
-    return algos
-
 def positive_int(s):
     i = None
     try:
@@ -249,13 +158,14 @@ def main():
 
     args = parser.parse_args()
 
+    definitions = get_definitions("algos.yaml")
     if hasattr(args, "list_algorithms"):
         print "The following algorithms are supported..."
-        for point in _algorithms:
+        for point in definitions:
             print "\t... for the point type '%s'..." % point
-            for metric in _algorithms[point]:
+            for metric in definitions[point]:
                 print "\t\t... and the distance metric '%s':" % metric
-                for algorithm in _algorithms[point][metric]:
+                for algorithm in definitions[point][metric]:
                     print "\t\t\t%s" % algorithm
         sys.exit(0)
 
@@ -356,7 +266,8 @@ error: the training dataset and query dataset have incompatible manifests"""
             algos_already_ran.add((run["library"], run["name"]))
 
     point_type = manifest['point_type']
-    algos = get_algorithms(constructors, point_type, args.distance)
+    algos = get_algorithms(
+        definitions, constructors, point_type, args.distance)
 
     if args.algorithm:
         print('running only', args.algorithm)

@@ -3,7 +3,7 @@ float:
     faiss-lsh:
       # @constructor specifies the name of the Python constructor for this
       # algorithm's wrapper. Only the constructors explicitly specified in
-      # main.py:275 are available.
+      # main.py:186 are available.
       constructor: FaissLSH
       run-groups:
         base:
