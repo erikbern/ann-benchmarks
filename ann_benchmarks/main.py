@@ -271,6 +271,8 @@ def main():
     if os.path.exists(INDEX_DIR):
         shutil.rmtree(INDEX_DIR)
 
+    # Note that algos.yaml references this; it should be somewhere more
+    # permanent
     constructors_ = [
       ("ann_benchmarks.algorithms.itu",
           ["ITUHashing", "ITUFilteringDouble"]),

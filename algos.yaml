@@ -1,20 +1,37 @@
 float:
   any:
     faiss-lsh:
+      # @constructor specifies the name of the Python constructor for this
+      # algorithm's wrapper. Only the constructors explicitly specified in
+      # main.py:275 are available.
       constructor: FaissLSH
       run-groups:
         base:
+          # When @args is a list, the result is the Cartesian product of all of
+          # the things it contains; entries that aren't a list will be treated
+          # as lists of length one.
           args: [[32, 64, 128, 256, 512, 1024, 2048, 4096]]
+          # This run group will produce eight algorithm instances:
+          # FaissLSH(32), FaissLSH(64), and so on up to FaissLSH(4096).
     lshf:
       constructor: LSHF
+      # The @base-args list specifies arguments that should always be prepended
+      # to the constructor's argument list. (The special value "@metric" will
+      # be replaced with the name of the distance metric.)
       base-args: ["@metric"]
       run-groups:
         five-estimators:
           args: [5, [10, 20]]
+          # This run group will produce two algorithm instances:
+          # LSHF("angular", 5, 10) and LSHF("angular", 5, 20).
         ten-estimators:
           args: [10, [20, 50]]
+          # This run group will produce two more algorithm instances:
+          # LSHF("angular", 10, 20) and LSHF("angular", 10, 50).
         twenty-estimators:
           args: [20, 100]
+          # Finally, this run group will only produce one:
+          # LSHF("angular", 20, 100).
     flann:
       constructor: FLANN
       base-args: ["@metric"]
@@ -38,6 +55,9 @@ float:
         annoy:
           args: [[100, 200, 400], [100, 200, 400, 1000, 2000, 4000, 10000,
                 20000, 40000, 100000, 200000, 400000]]
+          # This run group produces (3 * 12 =) 36 algorithm instances:
+          # Annoy("angular", 100, 100), Annoy("angular", 100, 200), and so on
+          # up to Annoy("angular", 400, 400000).
     nearpy:
       constructor: NearPy
       base-args: ["@metric"]
@@ -81,8 +101,16 @@ float:
       base-args: ["@metric", "vptree"]
       run-groups:
         base:
+          # When @args is a dictionary, algorithm instances will be generated
+          # by taking the Cartesian product of all of its values.
           args: {"tuneK": 10, "desiredRecall": [0.99, 0.97, 0.95, 0.9, 0.85, 0.8,
                 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]}
+          # This run group produces thirteen algorithm instances:
+          # NmslibNewIndex("angular", "vptree", {"tuneK": 10,
+          # "desiredRecall": 0.99}), NmslibNewIndex("angular", "vptree",
+          # {"tuneK": 10, "desiredRecall": 0.97}), and so on up to
+          # NmslibNewIndex("angular", "vptree", {"tuneK": 10, "desiredRecall":
+          # 0.1}).
   euclidean:
     kgraph:
       constructor: KGraph
@@ -96,6 +124,15 @@ float:
       base-args: ["@metric", "hnsw"]
       run-groups:
         M-32:
+          # If a run group has an array called @arg-groups instead of one
+          # called @args, then every element in that array will be separately
+          # expanded before then taking the Cartesian product of all of those
+          # expansions.
+          #
+          # Yes, this is a bit of a hack, but some constructors are weird.
+          # (This one used to require that dictionaries be encoded as lists
+          # of environment variable-style strings -- ["M=32", "post=2",
+          # "efConstruction=400"] -- which didn't work with this at all...)
           arg-groups:
             - {"M": 32, "post": 2, "efConstruction": 400}
             - True # XXX: hard-codes save_index as True
