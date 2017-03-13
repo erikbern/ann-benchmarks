@@ -20,3 +20,20 @@ ins_git_get() {
 ins_deb_require() {
 	dpkg-query --show "$@"
 }
+
+# $1: URL of file containing gzipped dataset
+# $2: expected SHA-512 checksum of that file
+ins_data_get() {
+  url="$1"
+  sha512sum="$2"
+  filename="${url##*/}"
+  unzipped="${filename%.gz}"
+  if [ ! -f "$unzipped" ]; then
+    if [ ! -f "$filename" ]; then
+      wget "$url"
+    fi
+    sha512sum --check - <<END && gunzip "$filename"
+$sha512sum $filename
+END
+  fi
+}
