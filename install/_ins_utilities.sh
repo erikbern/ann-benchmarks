@@ -15,3 +15,8 @@ ins_git_get() {
 	cd "$dir" &&
 	git apply ../${dir}_*.patch || true
 }
+
+# $@: package names
+ins_deb_require() {
+	dpkg-query --show "$@"
+}
