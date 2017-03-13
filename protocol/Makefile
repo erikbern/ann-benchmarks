@@ -8,7 +8,7 @@ fr-dolphinn: Dolphinn frontend.o dolphinn.o
 Dolphinn:
 	git clone https://github.com/gsamaras/Dolphinn || true
 
-frontend.o: ../install/ann-filters/wrappers/frontend/frontend.c
+frontend.o: ../install/lib-annitu/wrappers/frontend/frontend.c
 	gcc -c -o $@ $(CFLAGS) $^
 
 clean:
