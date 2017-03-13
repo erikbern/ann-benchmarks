@@ -1,0 +1,19 @@
+diff --git a/example_makefiles/makefile.inc.Linux b/makefile.inc
+similarity index 98%
+rename from example_makefiles/makefile.inc.Linux
+rename to makefile.inc
+index 5634f58..01cbc6e 100644
+--- a/example_makefiles/makefile.inc.Linux
++++ b/makefile.inc
+@@ -11,7 +11,7 @@
+ 
+ CC=g++
+ 
+-CFLAGS=-fPIC -m64 -Wall -g -O3  -msse4 -mpopcnt -fopenmp -Wno-sign-compare -Dnullptr=NULL -Doverride= -fopenmp
++CFLAGS=-fPIC -m64 -Wall -g -O3  -msse4 -mpopcnt -fopenmp -Wno-sign-compare -Doverride= -fopenmp
+ LDFLAGS=-g -fPIC  -fopenmp
+ 
+ # common linux flags
+-- 
+2.11.0
+
