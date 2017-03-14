@@ -7,7 +7,7 @@ apt-get autoremove -y
 pip install scikit-learn
 
 cd install
-for fn in lib-*.sh panns.sh nearpy.sh falconn.sh
+for fn in lib-*.sh
 do
   source $fn
 done
