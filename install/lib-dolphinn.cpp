@@ -8,8 +8,8 @@
 #include <sstream>
 #include <iostream>
 
-#include "Dolphinn/src/IO.h"
-#include "Dolphinn/src/hypercube.h"
+#include "lib-dolphinn/src/IO.h"
+#include "lib-dolphinn/src/hypercube.h"
 
 extern "C" {
 

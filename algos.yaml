@@ -183,7 +183,7 @@ float:
               "initSearchAttempts": 1}
     dolphinn:
       constructor: IntSubprocess
-      base-args: [["protocol/fr-dolphinn"]]
+      base-args: [["install/lib-dolphinn/fr-dolphinn"]]
       run-groups:
         base:
           args: {"entry_length": 784}
