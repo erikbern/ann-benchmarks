@@ -4,4 +4,5 @@ cd "$(dirname "$0")"
 
 ins_deb_require libopenblas-dev &&
   ins_git_get https://github.com/facebookresearch/faiss.git &&
+  cp example_makefiles/makefile.inc.Linux makefile.inc &&
   make -j4 py BLASLDFLAGS=/usr/lib/libopenblas.so.0

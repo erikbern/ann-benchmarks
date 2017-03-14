@@ -13,7 +13,7 @@ ins_git_get() {
 		git pull
 	) fi
 	cd "$dir" &&
-	git apply ../${dir}_*.patch || true
+	git am ../${dir}_*.patch || true
 }
 
 # $@: package names
