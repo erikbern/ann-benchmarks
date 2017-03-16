@@ -18,7 +18,7 @@ parser.add_argument(
     help = 'Which precision metric to use',
     nargs = '*',
     choices = metrics.keys(),
-    default = metrics.keys()[0],
+    default = [metrics.keys()[0]],
     )
 parser.add_argument(
     '--outputdir',
