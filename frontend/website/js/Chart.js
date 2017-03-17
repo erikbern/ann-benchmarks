@@ -8886,7 +8886,8 @@ module.exports = function(Chart) {
 			// Args are: (tooltipItems, data)
 			beforeFooter: helpers.noop,
 			footer: function(tooltipItem, data) {
-				var customLabel = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].label || ''; 
+                tooltipItem = tooltipItem[0];
+				var customLabel = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].label || '';
 				return  "Parameters: " + customLabel;
 			},
 			afterFooter: helpers.noop
