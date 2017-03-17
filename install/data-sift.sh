@@ -9,5 +9,6 @@ if [ ! -f "sift.txt" ]; then
     tar -xf sift.tar &&
     rm -f sift.tar &&
     python convert_texmex_fvec.py sift/sift_base.fvecs > sift.txt &&
+    head -n 50000 sift.txt > siffette.txt && 
     rm -rf sift
 fi
