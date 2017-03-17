@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# This script is free software; its author gives unlimited permission to copy,
+# distribute and modify it.
+
 import io
 import sys
 import argparse

@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 import sys
-sys.path.append('install/ann-filters/build/wrappers/swig/')
+sys.path.append('install/lib-annitu/build/wrappers/swig/')
 import numpy
 import locality_sensitive
 from ann_benchmarks.algorithms.base import BaseANN
