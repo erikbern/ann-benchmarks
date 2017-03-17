@@ -1,0 +1,26 @@
+From fe770f78985143aa9ccae9af807cf0f9ed023f1c Mon Sep 17 00:00:00 2001
+From: Alec Faithfull <alef@itu.dk>
+Date: Tue, 14 Mar 2017 11:55:51 +0000
+Subject: [PATCH] Fixed the name of the variable containing the libhdf5 include
+ directories
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index acc6808..a01fb7a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -77,7 +77,7 @@ find_hdf5()
+ if (NOT HDF5_FOUND)
+ 	message(WARNING "hdf5 library not found, some tests will not be run")
+ else()
+-    include_directories(${HDF5_INCLUDE_DIR})
++    include_directories(${HDF5_INCLUDE_DIRS})
+ endif()
+ 
+ if (USE_MPI OR HDF5_IS_PARALLEL)
+-- 
+2.11.0
+

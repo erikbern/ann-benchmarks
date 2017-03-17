@@ -1,0 +1,32 @@
+From 1f07d772d9396167868e410ca1484de4081879ad Mon Sep 17 00:00:00 2001
+From: Alec Faithfull <alef@itu.dk>
+Date: Tue, 14 Mar 2017 11:47:50 +0000
+Subject: [PATCH 2/2] Produce a static library for some of the parts of the mih
+ program
+
+This should hopefully be enough to write a benchmarkable wrapper around the
+mihasher class
+---
+ CMakeLists.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 33d1754..420dc63 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -8,8 +8,10 @@ set (CMAKE_CXX_FLAGS "-DSINGLE_CORE -O2 -fopenmp -DNDEBUG")
+ 
+ include_directories ("${PROJECT_SOURCE_DIR}/include" "${HDF5_INCLUDE_DIRS}")
+ 
+-add_executable (mih src/array32.cpp src/mihasher.cpp src/sparse_hashtable.cpp src/bucket_group.cpp interface/mih_interface.cpp src/reorder.cpp interface/loadVar.cpp interface/saveRes.cpp)
+-target_link_libraries (mih ${HDF5_LIBRARIES})
++add_library(mihlib src/array32.cpp src/mihasher.cpp src/sparse_hashtable.cpp src/bucket_group.cpp src/reorder.cpp)
++
++add_executable (mih interface/mih_interface.cpp interface/loadVar.cpp interface/saveRes.cpp)
++target_link_libraries (mih ${HDF5_LIBRARIES} mihlib)
+ 
+ project (linscan)
+ add_executable (linscan interface/linscan_interface.cpp src/linscan.cpp interface/loadVar.cpp interface/saveRes.cpp)
+-- 
+2.11.0
+

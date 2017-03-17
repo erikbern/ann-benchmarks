@@ -7,7 +7,7 @@ apt-get autoremove -y
 pip install scikit-learn
 
 cd install
-for fn in annitu.sh annoy.sh panns.sh nearpy.sh sklearn.sh flann.sh kgraph.sh nmslib.sh rpforest.sh falconn.sh
+for fn in lib-*.sh
 do
-    source $fn
+  source $fn
 done

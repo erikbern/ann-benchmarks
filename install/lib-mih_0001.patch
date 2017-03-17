@@ -1,0 +1,40 @@
+From b76963a30cfb8d45e2ecc4df3862c410fa120d09 Mon Sep 17 00:00:00 2001
+From: Alec Faithfull <alef@itu.dk>
+Date: Tue, 14 Mar 2017 11:45:15 +0000
+Subject: [PATCH 1/2] Use the find_package command to find libhdf5, not
+ find_library
+
+This commit also takes advantage of this change by adding the include
+directories for the library to the include path
+---
+ CMakeLists.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f9d173c..33d1754 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,16 +1,16 @@
+ cmake_minimum_required(VERSION 2.6)
+ project (mih)
+ 
+-find_library (HDF5_LIB hdf5)
++find_package(HDF5 REQUIRED)
+ 
+ set (CMAKE_CXX_FLAGS "-DSINGLE_CORE -O2 -fopenmp -DNDEBUG")
+ # -Wall -march=native -mtune=native")
+ 
+-include_directories ("${PROJECT_SOURCE_DIR}/include")
++include_directories ("${PROJECT_SOURCE_DIR}/include" "${HDF5_INCLUDE_DIRS}")
+ 
+ add_executable (mih src/array32.cpp src/mihasher.cpp src/sparse_hashtable.cpp src/bucket_group.cpp interface/mih_interface.cpp src/reorder.cpp interface/loadVar.cpp interface/saveRes.cpp)
+-target_link_libraries (mih ${HDF5_LIB})
++target_link_libraries (mih ${HDF5_LIBRARIES})
+ 
+ project (linscan)
+ add_executable (linscan interface/linscan_interface.cpp src/linscan.cpp interface/loadVar.cpp interface/saveRes.cpp)
+-target_link_libraries (linscan ${HDF5_LIB})
++target_link_libraries (linscan ${HDF5_LIBRARIES})
+-- 
+2.11.0
+
