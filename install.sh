@@ -4,10 +4,12 @@ apt-get install -y python-numpy python-scipy python-pip python-nose build-essent
 apt-get install -y libboost1.58-all-dev
 apt-get autoremove -y
 
-pip install scikit-learn
+pip install scikit-learn pyyaml
 
 cd install
 for fn in lib-*.sh
 do
-  source $fn
+  sh $fn
 done
+
+sh data-sift.sh
