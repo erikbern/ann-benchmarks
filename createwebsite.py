@@ -42,7 +42,7 @@ def get_html_header(title):
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title>%(title)s</title>
-        <script src="js/Chart.min.js"></script>
+        <script src="js/Chart.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.min.js"></script>
@@ -86,10 +86,14 @@ def create_plot(ds, all_data, metric):
             data.sort(key=lambda t: t[-2]) # sort by time
             ys = [1.0 / t[-2] for t in data] # queries per second
             xs = [t[-1] for t in data]
-            ls = [t[0] for t in data]
-
+            ls = [t[1] for t in data]
+# TODO Put this somewhere else
+# pretty print subprocess parameter settings.
+            for i in range(len(ls)):
+                if "Subprocess" in ls[i]:
+                    ls[i] = ls[i].split("(")[1].split(",")[1].split(")")[0]
             # Plot Pareto frontier
-            xs, ys = [], []
+            xs, ys, sl = [], [], []
             last_y = metric["initial-y"]
             for t in data:
                 y = t[-1]
@@ -97,16 +101,17 @@ def create_plot(ds, all_data, metric):
                     last_y = y
                     xs.append(t[-1])
                     ys.append(1.0 / t[-2])
+		    ls.append(t[1])
             output_str += """
                 {
-                    label: "%(algo)s ",
+                    label: "%(algo)s",
                     fill: false,
                     borderColor: "%(color)s",
                     data: [ """ % {"algo" : algo, "color" : colors[0] }
 
             for i in range(len(xs)):
                 output_str += """
-                        { x: %(x)s, y: %(y)s },""" % {"x" : str(xs[i]), "y" : str(ys[i]) }
+                        { x: %(x)s, y: %(y)s, label: "%(label)s" },""" % {"x" : str(xs[i]), "y" : str(ys[i]), "label" : ls[i] }
             output_str += """
                 ]},"""
             colors.rotate(1)
