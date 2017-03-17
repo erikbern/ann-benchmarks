@@ -91,7 +91,7 @@ def create_plot(ds, all_data, metric):
 # pretty print subprocess parameter settings.
             for i in range(len(ls)):
                 if "Subprocess" in ls[i]:
-                    ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0]
+                    ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
             # Plot Pareto frontier
             xs, ys, sl = [], [], []
             last_y = metric["initial-y"]
