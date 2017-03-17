@@ -3,7 +3,7 @@ override LDFLAGS += -pthread
 all: fr-dolphinn
 
 fr-dolphinn: Dolphinn frontend.o dolphinn.o
-	g++ -o fr-dolphinn frontend.o dolphinn.o $(LDFLAGS)
+	g++ -o -std=c++14 fr-dolphinn frontend.o dolphinn.o $(LDFLAGS)
 
 Dolphinn:
 	git clone https://github.com/gsamaras/Dolphinn || true
