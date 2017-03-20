@@ -142,6 +142,12 @@ def main():
             action='store_true',
             default=argparse.SUPPRESS)
     parser.add_argument(
+            '--force',
+            help='''\
+run algorithms even if results for them already exist (note that this option \
+will produce results files with duplicate entries)''',
+            action='store_true')
+    parser.add_argument(
             '--runs',
             metavar='COUNT',
             type=positive_int,
@@ -260,7 +266,7 @@ error: the training dataset and query dataset have incompatible manifests"""
     print('got', len(queries), 'queries')
 
     algos_already_ran = set()
-    if os.path.exists(results_fn):
+    if os.path.exists(results_fn) and not args.force:
         for line in open(results_fn):
             run = json.loads(line)
             algos_already_ran.add((run["library"], run["name"]))
