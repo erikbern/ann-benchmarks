@@ -41,7 +41,7 @@ bool configure(const char* var, const char* val) {
   } else return false;
 }
 
-static std::vector<std::vector<float>> pointset;
+static std::vector<std::vector<double>> pointset;
 
 bool end_configure(void) {
   return true;
@@ -49,8 +49,8 @@ bool end_configure(void) {
 
 static size_t entry_count = 0;
 
-std::vector<float> parseEntry(const char* entry) {
-  std::vector<float> e;
+std::vector<double> parseEntry(const char* entry) {
+  std::vector<double> e;
   std::string line(entry);
   double x;
   auto sstr = std::istringstream(line);
@@ -67,22 +67,27 @@ bool train(const char* entry) {
   return true;
 }
 
-static AnnoyIndex<int, float, Euclidean, Kiss32Random>* ds = nullptr;
+static AnnoyIndex<int, double, Euclidean, Kiss32Random>* ds = nullptr;
 static std::vector<int> results_idxs;
+static std::vector<double> parsed_entry; 
 static size_t position = 0;
 
 void end_train(void) {
-  ds = new AnnoyIndex<int, float, Euclidean, Kiss32Random>((pointset[0]).size());
+  ds = new AnnoyIndex<int, double, Euclidean, Kiss32Random>((pointset[0]).size());
   for (int i = 0; i < pointset.size(); i++) {
 	ds->add_item(i, &((pointset[i])[0]));
   }
   ds->build(num_trees);
 }
 
-size_t query(const char* entry, size_t k) {
-  auto parsed_entry = parseEntry(entry);
+bool prepare_query(const char* entry) {
   position = 0;
   results_idxs.clear();
+  parsed_entry = parseEntry(entry);
+  return true;
+}
+
+size_t query(const char* entry, size_t k) {
   ds->get_nns_by_vector(&(parsed_entry[0]), k, search_k, &results_idxs, nullptr);
   return results_idxs.size();
 }
