@@ -114,10 +114,10 @@ preparing the query '%s' failed""" % d
             self._program.terminate()
 
 def BitSubprocess(args, params):
-    return Subprocess(args, bit_unparse_entry, params)
+    return Subprocess(args, bit_unparse_entry, params, True)
 
 def FloatSubprocess(args, params):
-    return Subprocess(args, float_unparse_entry, params)
+    return Subprocess(args, float_unparse_entry, params, True)
 
 def IntSubprocess(args, params):
-    return Subprocess(args, int_unparse_entry, params)
+    return Subprocess(args, int_unparse_entry, params, True)
