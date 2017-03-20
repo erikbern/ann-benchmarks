@@ -276,19 +276,19 @@ bit:
           args: [*hashingc, *hashingc]
     itu-linear:
       constructor: BitSubprocess
-      base-args: [["install/ann-filters/build/wrappers/frontend/fr-linear"]]
+      base-args: [["install/lib-annitu/build/wrappers/frontend/fr-linear"]]
       run-groups:
         base:
           args: {}
     itu-dummy:
       constructor: BitSubprocess
-      base-args: [["install/ann-filters/build/wrappers/frontend/fr-dummy"]]
+      base-args: [["install/lib-annitu/build/wrappers/frontend/fr-dummy"]]
       run-groups:
         base:
           args: {}
     itu-hashing-e:
       constructor: BitSubprocess
-      base-args: [["install/ann-filters/build/wrappers/frontend/fr-hashing"]]
+      base-args: [["install/lib-annitu/build/wrappers/frontend/fr-hashing"]]
       run-groups:
         base:
           args: {"c": *hashingc, "r": *hashingc, "seed": *seed}
