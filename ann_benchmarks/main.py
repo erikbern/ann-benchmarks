@@ -19,6 +19,10 @@ from ann_benchmarks.algorithms.definitions import get_algorithms, get_definition
 def run_algo(X_train, queries, library, algo, distance, results_fn,
         run_count=3, force_single=False):
     try:
+        prepared_queries = False
+        if hasattr(algo, "supports_prepared_queries"):
+            prepared_queries = algo.supports_prepared_queries()
+
         t0 = time.time()
         if algo != 'bf':
             algo.fit(X_train)
@@ -29,9 +33,15 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
         for i in xrange(run_count):
             def single_query(t):
                 v, _, _ = t
-                start = time.time()
-                found = algo.query(v, 10)
-                total = (time.time() - start)
+                if prepared_queries:
+                    algo.prepare_query(v, 10)
+                    start = time.time()
+                    found = algo.run_prepared_query()
+                    total = (time.time() - start)
+                else:
+                    start = time.time()
+                    found = algo.query(v, 10)
+                    total = (time.time() - start)
                 found = map(
                     lambda idx: (int(idx), float(pd[distance](v, X_train[idx]))),
                     list(found))
