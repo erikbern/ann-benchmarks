@@ -4,6 +4,6 @@ cd "$(dirname "$0")"
 
 sh lib-annitu.sh --just-get || exit 1
 
-ins_git_get https://github.com/gsamaras/Dolphinn &&
+ins_git_get https://github.com/ipsarros/Dolphinn &&
   gcc -c -o frontend.o ../lib-annitu/wrappers/frontend/frontend.c &&
-  g++ -o fr-dolphinn frontend.o ../lib-dolphinn.cpp -pthread
+  g++ -std=c++14 -o fr-dolphinn frontend.o ../lib-dolphinn.cpp -pthread
