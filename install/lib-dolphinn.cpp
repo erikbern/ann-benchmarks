@@ -6,14 +6,17 @@
 #include <cstring>
 #include <vector>
 #include <sstream>
+#include <fstream>
 #include <iostream>
 
-#include "lib-dolphinn/src/IO.h"
-#include "lib-dolphinn/src/hypercube.h"
+#include "lib-dolphinn/IO.h"
+#include "lib-dolphinn/hypercube.h"
 
 extern "C" {
 
 static int entry_length = 0;
+static int max_number_of_points = 0;
+static int r = 0;
 
 bool configure(const char* var, const char* val) {
   if (strcmp(var, "entry_length") == 0) {
@@ -26,34 +29,51 @@ bool configure(const char* var, const char* val) {
       entry_length = k;
       return true;
     }
+  } else if (strcmp(var, "r") == 0) {
+    char* end;
+    errno = 0;
+    long k = strtol(val, &end, 10);
+    if (errno != 0 || *val == 0 || *end != 0 || k < 0) {
+      return false;
+    } else {
+      r = k;
+      return true;
+    }
+  } else if (strcmp(var, "numpoints") == 0) {
+    char* end;
+    errno = 0;
+    long k = strtol(val, &end, 10);
+    if (errno != 0 || *val == 0 || *end != 0 || k < 0) {
+      return false;
+    } else {
+      max_number_of_points = k;
+      return true;
+    }
   } else return false;
 }
 
-static std::vector<int>* pointset = nullptr;
+static std::vector<float>* pointset = nullptr;
 
 bool end_configure(void) {
-  pointset = new std::vector<int>();
+  pointset = new std::vector<float>();
   return true;
 }
 
 static size_t entry_count = 0;
 
-bool train(const char* entry) {
-  std::vector<int> parsed_entry;
-  std::istringstream es(entry);
-  std::string r;
-  std::cout << "entry is " << entry << std::endl;
-  while (getline(es, r, ' ')) {
-    size_t pos;
-    try {
-      int k = std::stoi(r, &pos, 10);
-      parsed_entry.push_back(k);
-    } catch (const std::invalid_argument& e) {
-      return false;
-    } catch (const std::out_of_range& e) {
-      return false;
-    }
+std::vector<float> parseEntry(const char* entry) {
+  std::vector<float> e;
+  std::string line(entry);
+  double x;
+  auto sstr = std::istringstream(line);
+  while (sstr >> x) {
+    e.push_back(x);
   }
+  return e;
+}
+
+bool train(const char* entry) {
+  auto parsed_entry = parseEntry(entry);
   if (parsed_entry.size() != entry_length)
     return false;
   pointset->insert(pointset->end(), parsed_entry.begin(), parsed_entry.end());
@@ -61,54 +81,42 @@ bool train(const char* entry) {
   return true;
 }
 
-static Dolphinn::Hypercube<int, char>* hypercube = nullptr;
-static std::vector<int>* result_indices = nullptr;
+static Dolphinn::Hypercube<float, char>* hypercube = nullptr;
+static std::vector<std::vector<std::pair<int,float>>> results_distances(1);
+static size_t position = 0;
 
 void end_train(void) {
-  hypercube = new Dolphinn::Hypercube<int, char>(
+  hypercube = new Dolphinn::Hypercube<float, char>(
       *pointset,
       entry_count,
       entry_length,
       /* hypercube_dimension */ floor(log2(entry_count)/2),
-      2);
+      1,
+      r);
 }
 
 size_t query(const char* entry, size_t k) {
-  std::vector<int> parsed_entry;
-  std::istringstream es(entry);
-  std::string r;
-  std::cout << "entry is " << entry << std::endl;
-  while (getline(es, r, ' ')) {
-    size_t pos;
-    try {
-      int k = std::stoi(r, &pos, 10);
-      parsed_entry.push_back(k);
-    } catch (const std::invalid_argument& e) {
-      return 0;
-    } catch (const std::out_of_range& e) {
-      return 0;
-    }
-  }
+  auto parsed_entry = parseEntry(entry);
+  position = 0;
   if (parsed_entry.size() != entry_length)
     return 0;
-  if (result_indices)
-    delete result_indices;
-  result_indices = new std::vector<int>(k);
-  hypercube->radius_query(
+  results_distances.clear();
+  results_distances[0].resize(k);
+  hypercube->m_nearest_neighbors_query(
       parsed_entry,
       1,
-      /* RADIUS */ 1, 
-      /* max_candidate_count */ entry_count * 1 / 100,
-      *result_indices,
-      2);
-  return result_indices->size();
+      /* Number of nearest neighbors*/ k, 
+      /* max_candidate_count */ max_number_of_points, 
+      results_distances,
+      1);
+  return results_distances[0].size();
 }
 
-size_t position = 0;
 
 size_t query_result(void) {
-  if (position < result_indices->size()) {
-    return (*result_indices)[position++];
+  if (position < results_distances[0].size()) {
+    auto elem = std::get<0>(results_distances[0][position++]);
+    return elem;
   } else return SIZE_MAX;
 }
 
