@@ -36,8 +36,9 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
                 if prepared_queries:
                     algo.prepare_query(v, 10)
                     start = time.time()
-                    found = algo.run_prepared_query()
+                    algo.run_prepared_query()
                     total = (time.time() - start)
+                    found = algo.get_prepared_query_results()
                 else:
                     start = time.time()
                     found = algo.query(v, 10)
