@@ -16,8 +16,10 @@ float:
     lshf:
       constructor: LSHF
       # The @base-args list specifies arguments that should always be prepended
-      # to the constructor's argument list. (The special value "@metric" will
-      # be replaced with the name of the distance metric.)
+      # to the constructor's argument list. (The special value "@metric", when
+      # it occurs somewhere in that argument list, will be replaced with the
+      # name of the distance metric; "@dimension" will be replaced with an
+      # integer specifying the length of a data point.)
       base-args: ["@metric"]
       run-groups:
         five-estimators:

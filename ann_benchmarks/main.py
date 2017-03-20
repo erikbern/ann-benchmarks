@@ -283,7 +283,7 @@ error: the training dataset and query dataset have incompatible manifests"""
 
     point_type = manifest['point_type']
     algos = get_algorithms(
-        definitions, constructors, point_type, args.distance)
+        definitions, constructors, len(X_train[0]), point_type, args.distance)
 
     if args.algorithm:
         print('running only', args.algorithm)
