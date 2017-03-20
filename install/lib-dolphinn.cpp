@@ -15,6 +15,8 @@
 extern "C" {
 
 static int entry_length = 0;
+static int max_number_of_points = 0;
+static int r = 0;
 
 bool configure(const char* var, const char* val) {
   if (strcmp(var, "entry_length") == 0) {
@@ -25,6 +27,26 @@ bool configure(const char* var, const char* val) {
       return false;
     } else {
       entry_length = k;
+      return true;
+    }
+  } else if (strcmp(var, "r") == 0) {
+    char* end;
+    errno = 0;
+    long k = strtol(val, &end, 10);
+    if (errno != 0 || *val == 0 || *end != 0 || k < 0) {
+      return false;
+    } else {
+      r = k;
+      return true;
+    }
+  } else if (strcmp(var, "numpoints") == 0) {
+    char* end;
+    errno = 0;
+    long k = strtol(val, &end, 10);
+    if (errno != 0 || *val == 0 || *end != 0 || k < 0) {
+      return false;
+    } else {
+      max_number_of_points = k;
       return true;
     }
   } else return false;
@@ -69,7 +91,8 @@ void end_train(void) {
       entry_count,
       entry_length,
       /* hypercube_dimension */ floor(log2(entry_count)/2),
-      1);
+      1,
+      r);
 }
 
 size_t query(const char* entry, size_t k) {
@@ -83,7 +106,7 @@ size_t query(const char* entry, size_t k) {
       parsed_entry,
       1,
       /* Number of nearest neighbors*/ k, 
-      /* max_candidate_count */ entry_count * 1 / 100,
+      /* max_candidate_count */ max_number_of_points, 
       results_distances,
       1);
   return results_distances[0].size();
