@@ -47,7 +47,7 @@ warning: group %s specifies the known, but missing, constructor \
         algos[name] = []
 
         base_args = []
-        if "base_args" in algo:
+        if "base-args" in algo:
             base_args = algo["base-args"]
 
         for run_group in algo["run-groups"].values():
@@ -84,7 +84,6 @@ warning: group %s specifies the known, but missing, constructor \
                     aargs = [arg \
                         if not isinstance(arg, str) \
                         or not arg in vs else vs[arg] for arg in aargs]
-                    print aargs
                     obj = constructor(*aargs)
                     algos[name].append(obj)
                 except Exception:
