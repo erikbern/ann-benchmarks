@@ -36,20 +36,17 @@ all_metrics = {
     "k-nn": {
         "description": "10-NN precision - larger is better",
         "function": knn,
-        "initial-y": float("-inf"),
-        "plot": lambda y, last_y: y > last_y,
-        "xlim": [0.0, 1.03]
+        "worst": float("-inf"),
+        "lim": [0.0, 1.03]
     },
     "epsilon": {
         "description": "(epsilon)",
         "function": epsilon,
-        "initial-y": float("-inf"),
-        "plot": lambda y, last_y: y > last_y
+        "worst": float("-inf")
     },
     "rel": {
         "description": "(rel)",
         "function": rel,
-        "initial-y": float("inf"),
-        "plot": lambda y, last_y: y < last_y
+        "worst": float("inf")
     }
 }

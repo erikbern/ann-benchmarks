@@ -75,13 +75,13 @@ for ds, fn_out in args.dataset:
 
         # Plot Pareto frontier
         xs, ys = [], []
-        last_y = metrics[args.precision]["initial-y"]
-        for t in data:
-            y = t[-1]
-            if metrics[args.precision]["plot"](y, last_y):
-                last_y = y
-                xs.append(t[-1])
-                ys.append(1.0 / t[-2])
+        last_p = metrics[args.precision]["worst"]
+        for algo, algo_name, build_time, search_time, precision in data:
+            if precision > last_p:
+                last_p = precision
+                xs.append(precision)
+                ys.append(1.0 / search_time)
+
         color, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         handles.append(handle)
@@ -95,6 +95,6 @@ for ds, fn_out in args.dataset:
     # plt.gca().set_position([box.x0, box.y0, box.width * 0.8, box.height])
     plt.gca().legend(handles, labels, loc='center left', bbox_to_anchor=(1, 0.5), prop={'size': 9})
     plt.grid(b=True, which='major', color='0.65',linestyle='-')
-    if "xlim" in metrics[args.precision]:
-        plt.xlim(metrics[args.precision]["xlim"])
+    if "lim" in metrics[args.precision]:
+        plt.xlim(metrics[args.precision]["lim"])
     plt.savefig(fn_out, bbox_inches='tight')
