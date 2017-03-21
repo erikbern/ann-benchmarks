@@ -1,13 +1,30 @@
 import argparse
 import os, json, pickle
 import numpy
-from collections import deque
 
 from ann_benchmarks.main import get_fn
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 
-colors = deque(["rgba(151,187,205,1)", "rgba(220,220,220,1)", "rgba(247,70,74,1)", "rgba(70,191,189,1)",
-          "rgba(253,180,92,1)", "rgba(148,159,177,1)", "rgba(77,83,96,1)"])
+colors = [
+    "rgba(166,206,227,1)",
+    "rgba(31,120,180,1)",
+    "rgba(178,223,138,1)",
+    "rgba(51,160,44,1)",
+    "rgba(251,154,153,1)",
+    "rgba(227,26,28,1)",
+    "rgba(253,191,111,1)",
+    "rgba(255,127,0,1)",
+    "rgba(202,178,214,1)"
+    ]
+
+point_styles = [
+        "circle",
+        "triangle",
+        "star",
+        "cross"
+        ]
+
+color_scheme = [[x,y] for y in point_styles for x in colors]
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -81,6 +98,7 @@ def create_plot(ds, all_data, metric):
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [""" % { "id" : ds, "metric" :  metric["description"] }
+    color_index = 0
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
             data = all_data[algo]
             data.sort(key=lambda t: t[-2]) # sort by time
@@ -106,15 +124,16 @@ def create_plot(ds, all_data, metric):
                 {
                     label: "%(algo)s",
                     fill: false,
+                    pointStyle: "%(ps)s",
                     borderColor: "%(color)s",
-                    data: [ """ % {"algo" : algo, "color" : colors[0] }
+                    data: [ """ % {"algo" : algo, "color" : color_scheme[color_index % len(color_scheme)][0], "ps" : color_scheme[color_index % len(color_scheme)][1] }
 
             for i in range(len(xs)):
                 output_str += """
                         { x: %(x)s, y: %(y)s, label: "%(label)s" },""" % {"x" : str(xs[i]), "y" : str(ys[i]), "label" : ls[i] }
             output_str += """
                 ]},"""
-            colors.rotate(1)
+            color_index += 1
 
     output_str += """
             ]}, options: {
