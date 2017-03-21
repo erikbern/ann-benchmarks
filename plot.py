@@ -24,6 +24,14 @@ parser.add_argument(
     help = 'Which metric to use on the Y-axis',
     choices = metrics.keys(),
     default = "qps")
+parser.add_argument(
+    '-X', '--x-log',
+    help='Draw the X-axis using a logarithmic scale',
+    action='store_true')
+parser.add_argument(
+    '-Y', '--y-log',
+    help='Draw the Y-axis using a logarithmic scale',
+    action='store_true')
 args = parser.parse_args()
 
 xm = metrics[args.x_axis]
@@ -94,7 +102,10 @@ for ds, fn_out in args.dataset:
         handles.append(handle)
         labels.append(algo)
 
-    plt.gca().set_yscale('log')
+    if args.x_log:
+        plt.gca().set_xscale('log')
+    if args.y_log:
+        plt.gca().set_yscale('log')
     plt.gca().set_title('Plot')
     plt.gca().set_ylabel(ym['description'])
     plt.gca().set_xlabel(xm['description'])
