@@ -59,6 +59,22 @@ transitioning to training mode failed"""
             self.query = self.__query_prepared
         self._result_count = None
 
+    def get_index_size(self):
+	statusfile = open("/proc/%(pid)d/status" % {"pid" : self._program.pid}, "r")
+	for line in statusfile.readlines():
+	    if "VmRSS" in line:
+		mem_usage = line.split(":")[1].strip()
+		usage, unit = mem_usage.split(" ")
+		val = int(usage)
+		# Assume output to be in kB
+		if val == "B":
+			val /= 1000.0
+		if val == "mB":
+			val *= 1e3
+		if val == "gB":
+			val *= 1e6
+		return val
+
     def supports_prepared_queries(self):
         return self._prepared
 
