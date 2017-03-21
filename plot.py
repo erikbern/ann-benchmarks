@@ -32,6 +32,10 @@ parser.add_argument(
     '-Y', '--y-log',
     help='Draw the Y-axis using a logarithmic scale',
     action='store_true')
+parser.add_argument(
+    '--raw',
+    help='Also show raw results in faded colours',
+    action='store_true')
 args = parser.parse_args()
 
 xm = metrics[args.x_axis]
@@ -70,9 +74,10 @@ the queries file '%s' is missing""" % queries_fn
 
 # Construct palette from the algorithm list
 colors = plt.cm.Set1(numpy.linspace(0, 1, len(all_algos)))
+faded = [[r, g, b, 0.3] for [r, g, b, a] in colors]
 linestyles = {}
 for i, algo in enumerate(all_algos):
-    linestyles[algo] = (colors[i], ['--', '-.', '-', ':'][i%4], ['+', '<', 'o', 'D', '*', 'x', 's'][i%7])
+    linestyles[algo] = (colors[i], faded[i], ['--', '-.', '-', ':'][i%4], ['+', '<', 'o', 'D', '*', 'x', 's'][i%7])
 
 # Now generate each plot
 for ds, fn_out in args.dataset:
@@ -86,20 +91,25 @@ for ds, fn_out in args.dataset:
         data = all_data[algo]
         data.sort(key=lambda (a, n, xv, yv): yv, reverse=True) # sort by time
 
+        axs, ays = [], []
         # Plot Pareto frontier
         xs, ys = [], []
         last_x = xm["worst"]
         comparator = \
           (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
         for algo, algo_name, xv, yv in data:
+            axs.append(xv)
+            ays.append(yv)
             if comparator(xv, last_x):
                 last_x = xv
                 xs.append(xv)
                 ys.append(yv)
 
-        color, linestyle, marker = linestyles[algo]
+        color, faded, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         handles.append(handle)
+        if args.raw:
+            handle2, = plt.plot(axs, ays, '-', label=algo, color=faded, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         labels.append(algo)
 
     if args.x_log:
