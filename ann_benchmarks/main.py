@@ -19,6 +19,10 @@ from ann_benchmarks.algorithms.definitions import get_algorithms, get_definition
 def run_algo(X_train, queries, library, algo, distance, results_fn,
         run_count=3, force_single=False):
     try:
+        prepared_queries = False
+        if hasattr(algo, "supports_prepared_queries"):
+            prepared_queries = algo.supports_prepared_queries()
+
         t0 = time.time()
         if algo != 'bf':
             algo.fit(X_train)
@@ -29,9 +33,16 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
         for i in xrange(run_count):
             def single_query(t):
                 v, _, _ = t
-                start = time.time()
-                found = algo.query(v, 10)
-                total = (time.time() - start)
+                if prepared_queries:
+                    algo.prepare_query(v, 10)
+                    start = time.time()
+                    algo.run_prepared_query()
+                    total = (time.time() - start)
+                    found = algo.get_prepared_query_results()
+                else:
+                    start = time.time()
+                    found = algo.query(v, 10)
+                    total = (time.time() - start)
                 found = map(
                     lambda idx: (int(idx), float(pd[distance](v, X_train[idx]))),
                     list(found))
@@ -141,6 +152,12 @@ def main():
             help='print the names of all known algorithms and exit',
             action='store_true',
             default=argparse.SUPPRESS)
+    parser.add_argument(
+            '--force',
+            help='''\
+run algorithms even if results for them already exist (note that this option \
+will produce results files with duplicate entries)''',
+            action='store_true')
     parser.add_argument(
             '--runs',
             metavar='COUNT',
@@ -260,14 +277,14 @@ error: the training dataset and query dataset have incompatible manifests"""
     print('got', len(queries), 'queries')
 
     algos_already_ran = set()
-    if os.path.exists(results_fn):
+    if os.path.exists(results_fn) and not args.force:
         for line in open(results_fn):
             run = json.loads(line)
             algos_already_ran.add((run["library"], run["name"]))
 
     point_type = manifest['point_type']
     algos = get_algorithms(
-        definitions, constructors, point_type, args.distance)
+        definitions, constructors, len(X_train[0]), point_type, args.distance)
 
     if args.algorithm:
         print('running only', args.algorithm)

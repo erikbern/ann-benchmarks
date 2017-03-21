@@ -23,7 +23,7 @@ def get_definitions(definition_file):
     with open(definition_file, "r") as f:
         return yaml.load(f)
 
-def get_algorithms(definitions, constructor_map,
+def get_algorithms(definitions, constructor_map, dimension,
         point_type="float", distance_metric="euclidean"):
     algorithm_definitions = {}
     if "any" in definitions[point_type]:
@@ -47,14 +47,8 @@ warning: group %s specifies the known, but missing, constructor \
         algos[name] = []
 
         base_args = []
-        vs = {
-            "@metric": distance_metric
-        }
         if "base-args" in algo:
-            base_args = map(lambda arg: arg \
-                            if not isinstance(arg, str) or \
-                            not arg in vs else vs[arg],
-                            algo["base-args"])
+            base_args = algo["base-args"]
 
         for run_group in algo["run-groups"].values():
             if "arg-groups" in run_group:
@@ -82,6 +76,14 @@ warning: group %s specifies the known, but missing, constructor \
                         aargs.extend(arg_group)
                     else:
                         aargs.append(arg_group)
+
+                    vs = {
+                        "@metric": distance_metric,
+                        "@dimension": dimension
+                    }
+                    aargs = [arg \
+                        if not isinstance(arg, str) \
+                        or not arg in vs else vs[arg] for arg in aargs]
                     obj = constructor(*aargs)
                     algos[name].append(obj)
                 except Exception:

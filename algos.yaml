@@ -16,8 +16,10 @@ float:
     lshf:
       constructor: LSHF
       # The @base-args list specifies arguments that should always be prepended
-      # to the constructor's argument list. (The special value "@metric" will
-      # be replaced with the name of the distance metric.)
+      # to the constructor's argument list. (The special value "@metric", when
+      # it occurs somewhere in that argument list, will be replaced with the
+      # name of the distance metric; "@dimension" will be replaced with an
+      # integer specifying the length of a data point.)
       base-args: ["@metric"]
       run-groups:
         five-estimators:
@@ -276,19 +278,19 @@ bit:
           args: [*hashingc, *hashingc]
     itu-linear:
       constructor: BitSubprocess
-      base-args: [["install/ann-filters/build/wrappers/frontend/fr-linear"]]
+      base-args: [["install/lib-annitu/build/wrappers/frontend/fr-linear"]]
       run-groups:
         base:
           args: {}
     itu-dummy:
       constructor: BitSubprocess
-      base-args: [["install/ann-filters/build/wrappers/frontend/fr-dummy"]]
+      base-args: [["install/lib-annitu/build/wrappers/frontend/fr-dummy"]]
       run-groups:
         base:
           args: {}
     itu-hashing-e:
       constructor: BitSubprocess
-      base-args: [["install/ann-filters/build/wrappers/frontend/fr-hashing"]]
+      base-args: [["install/lib-annitu/build/wrappers/frontend/fr-hashing"]]
       run-groups:
         base:
           args: {"c": *hashingc, "r": *hashingc, "seed": *seed}
