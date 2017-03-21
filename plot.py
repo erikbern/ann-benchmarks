@@ -81,8 +81,10 @@ for ds, fn_out in args.dataset:
         # Plot Pareto frontier
         xs, ys = [], []
         last_x = xm["worst"]
+        comparator = \
+          (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
         for algo, algo_name, xv, yv in data:
-            if xv > last_x:
+            if comparator(xv, last_x):
                 last_x = xv
                 xs.append(xv)
                 ys.append(yv)
