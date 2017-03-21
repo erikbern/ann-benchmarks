@@ -26,8 +26,10 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
         t0 = time.time()
         if algo != 'bf':
             algo.fit(X_train)
-        build_time = time.time() - t0
-        print('Built index in', build_time)
+            build_time = time.time() - t0
+            index_size = algo.get_index_size()
+            print('Built index in', build_time)
+            print('Index size: ', index_size)
 
         best_search_time = float('inf')
         for i in xrange(run_count):
@@ -62,6 +64,7 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
             "name": algo.name,
             "build_time": build_time,
             "best_search_time": best_search_time,
+            "index_size" : index_size,
             "results": results,
             "run_count": run_count,
             "run_alone": force_single
