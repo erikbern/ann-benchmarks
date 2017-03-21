@@ -57,6 +57,7 @@ transitioning to training mode failed"""
             self.query = self.__query_normal
         else:
             self.query = self.__query_prepared
+        self._result_count = None
 
     def supports_prepared_queries(self):
         return self._prepared
@@ -94,7 +95,7 @@ transitioning to query mode failed"""
             return results
         else:
             assert status[0] == "fail", """\
-searching for encoded query point '%s' neither succeeded nor failed""" % d
+query neither succeeded nor failed"""
             return []
 
     def prepare_query(self, v, n):
@@ -105,7 +106,23 @@ preparing the query '%s' failed""" % d
 
     def run_prepared_query(self):
         self.__write("query")
-        return self.__handle_query_response()
+        status = self.__line()
+        if status[0] == "ok":
+            self._result_count = int(status[1])
+        else:
+            assert status[0] == "fail", """\
+query neither succeeded nor failed"""
+            self._result_count = 0
+
+    def get_prepared_query_results(self):
+        results = []
+        i = 0
+        while i < self._result_count:
+            line = self.__line()
+            results.append(int(line[0]))
+            i += 1
+        self._result_count = 0
+        return results
 
     def use_threads(self):
         return False
