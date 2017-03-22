@@ -15,11 +15,31 @@ parser.add_argument(
     metavar = ("DATASET", "OUTPUT"),
     action='append')
 parser.add_argument(
-    '--precision',
-    help = 'Which precision metric to use',
+    '-x', '--x-axis',
+    help = 'Which metric to use on the X-axis',
     choices = metrics.keys(),
-    default = metrics.keys()[0])
+    default = "k-nn")
+parser.add_argument(
+    '-y', '--y-axis',
+    help = 'Which metric to use on the Y-axis',
+    choices = metrics.keys(),
+    default = "qps")
+parser.add_argument(
+    '-X', '--x-log',
+    help='Draw the X-axis using a logarithmic scale',
+    action='store_true')
+parser.add_argument(
+    '-Y', '--y-log',
+    help='Draw the Y-axis using a logarithmic scale',
+    action='store_true')
+parser.add_argument(
+    '--raw',
+    help='Also show raw results in faded colours',
+    action='store_true')
 args = parser.parse_args()
+
+xm = metrics[args.x_axis]
+ym = metrics[args.y_axis]
 
 runs = {}
 all_algos = set()
@@ -41,22 +61,23 @@ the queries file '%s' is missing""" % queries_fn
 
             print "--"
             print algo_name
-            precision = metrics[args.precision]["function"](queries, run)
-            print precision
-            if not precision:
+            xv = xm["function"](queries, run)
+            yv = ym["function"](queries, run)
+            print xv, yv
+            if not xv or not yv:
                 continue
 
             all_algos.add(algo)
             if not algo in runs[ds]:
                 runs[ds][algo] = []
-            runs[ds][algo].append(
-                    (algo, algo_name, build_time, search_time, precision))
+            runs[ds][algo].append((algo, algo_name, xv, yv))
 
 # Construct palette from the algorithm list
 colors = plt.cm.Set1(numpy.linspace(0, 1, len(all_algos)))
+faded = [[r, g, b, 0.3] for [r, g, b, a] in colors]
 linestyles = {}
 for i, algo in enumerate(all_algos):
-    linestyles[algo] = (colors[i], ['--', '-.', '-', ':'][i%4], ['+', '<', 'o', 'D', '*', 'x', 's'][i%7])
+    linestyles[algo] = (colors[i], faded[i], ['--', '-.', '-', ':'][i%4], ['+', '<', 'o', 'D', '*', 'x', 's'][i%7])
 
 # Now generate each plot
 for ds, fn_out in args.dataset:
@@ -68,33 +89,42 @@ for ds, fn_out in args.dataset:
     plt.figure(figsize=(7, 7))
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
         data = all_data[algo]
-        data.sort(key=lambda t: t[-2]) # sort by time
-        ys = [1.0 / t[-2] for t in data] # queries per second
-        xs = [t[-1] for t in data]
-        ls = [t[0] for t in data]
+        data.sort(key=lambda (a, n, xv, yv): yv, reverse=True) # sort by time
 
+        axs, ays = [], []
         # Plot Pareto frontier
         xs, ys = [], []
-        last_y = metrics[args.precision]["initial-y"]
-        for t in data:
-            y = t[-1]
-            if metrics[args.precision]["plot"](y, last_y):
-                last_y = y
-                xs.append(t[-1])
-                ys.append(1.0 / t[-2])
-        color, linestyle, marker = linestyles[algo]
+        last_x = xm["worst"]
+        comparator = \
+          (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
+        for algo, algo_name, xv, yv in data:
+            axs.append(xv)
+            ays.append(yv)
+            if comparator(xv, last_x):
+                last_x = xv
+                xs.append(xv)
+                ys.append(yv)
+
+        color, faded, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         handles.append(handle)
+        if args.raw:
+            handle2, = plt.plot(axs, ays, '-', label=algo, color=faded, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         labels.append(algo)
 
-    plt.gca().set_yscale('log')
-    plt.gca().set_title('Precision-Performance tradeoff - up and to the right is better')
-    plt.gca().set_ylabel('Queries per second ($s^{-1}$) - larger is better')
-    plt.gca().set_xlabel(metrics[args.precision]["description"])
+    if args.x_log:
+        plt.gca().set_xscale('log')
+    if args.y_log:
+        plt.gca().set_yscale('log')
+    plt.gca().set_title('Plot')
+    plt.gca().set_ylabel(ym['description'])
+    plt.gca().set_xlabel(xm['description'])
     box = plt.gca().get_position()
     # plt.gca().set_position([box.x0, box.y0, box.width * 0.8, box.height])
     plt.gca().legend(handles, labels, loc='center left', bbox_to_anchor=(1, 0.5), prop={'size': 9})
     plt.grid(b=True, which='major', color='0.65',linestyle='-')
-    if "xlim" in metrics[args.precision]:
-        plt.xlim(metrics[args.precision]["xlim"])
+    if 'lim' in xm:
+        plt.xlim(xm['lim'])
+    if 'lim' in ym:
+        plt.ylim(ym['lim'])
     plt.savefig(fn_out, bbox_inches='tight')

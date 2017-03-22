@@ -32,24 +32,37 @@ def rel(queries, run):
             total_candidate_distance += cdist
     return total_candidate_distance / total_closest_distance
 
+def queries_per_second(queries, run):
+    return 1.0 / run["best_search_time"]
+
+def build_time(queries, run):
+    return run["build_time"]
+
 all_metrics = {
     "k-nn": {
         "description": "10-NN precision - larger is better",
         "function": knn,
-        "initial-y": float("-inf"),
-        "plot": lambda y, last_y: y > last_y,
-        "xlim": [0.0, 1.03]
+        "worst": float("-inf"),
+        "lim": [0.0, 1.03]
     },
     "epsilon": {
         "description": "(epsilon)",
         "function": epsilon,
-        "initial-y": float("-inf"),
-        "plot": lambda y, last_y: y > last_y
+        "worst": float("-inf")
     },
     "rel": {
         "description": "(rel)",
         "function": rel,
-        "initial-y": float("inf"),
-        "plot": lambda y, last_y: y < last_y
+        "worst": float("inf")
+    },
+    "qps": {
+        "description": "Queries per second ($s^{-1}$) - larger is better",
+        "function": queries_per_second,
+        "worst": float("-inf")
+    },
+    "build": {
+        "description": "Build time (s) - smaller is better",
+        "function": build_time,
+        "worst": float("inf")
     }
 }
