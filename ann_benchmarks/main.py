@@ -25,9 +25,10 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
 
         t0 = time.time()
         if algo != 'bf':
+            index_size_before = algo.get_index_size("self")
             algo.fit(X_train)
             build_time = time.time() - t0
-            index_size = algo.get_index_size()
+            index_size = algo.get_index_size("self") - index_size_before
             print('Built index in', build_time)
             print('Index size: ', index_size)
 
@@ -56,7 +57,9 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
                 results = map(single_query, queries)
 
             total_time = sum(map(lambda (time, _): time, results))
+            total_found = sum(map(lambda (_, found): len(found), results))
             search_time = total_time / len(queries)
+	    avg_found = total_time / len(queries)
             best_search_time = min(best_search_time, search_time)
 
         output = {
@@ -64,8 +67,9 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
             "name": algo.name,
             "build_time": build_time,
             "best_search_time": best_search_time,
-            "index_size" : index_size,
+            "index_size": index_size,
             "results": results,
+            "retrieved_points": avg_found,
             "run_count": run_count,
             "run_alone": force_single
         }
