@@ -14,11 +14,11 @@ class BaseANN(object):
 		usage, unit = mem_usage.split(" ")
 		val = int(usage)
 		# Assume output to be in kB
-		if val == "B":
+		if unit == "B":
 			val /= 1000.0
-		if val == "mB":
+		if unit == "mB":
 			val *= 1e3
-		if val == "gB":
+		if unit == "gB":
 			val *= 1e6
 		return val
 	return -1
