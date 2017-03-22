@@ -37,6 +37,13 @@ Clone the repo and run ``bash install.sh``. This will install all libraries. It 
 
 To download and preprocess the data sets, run ``bash install/glove.sh`` and ``bash install/sift.sh``.
 
+Run
+---
+
+Run `python ann_benchmarks/main.py` (this will take a few hours).
+
+Then `python plot.py` to plot the results.
+
 Principles
 ----------
 
