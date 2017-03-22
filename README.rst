@@ -40,9 +40,9 @@ To download and preprocess the data sets, run ``bash install/glove.sh`` and ``ba
 Run
 ---
 
-Run `python ann_benchmarks/main.py` (this will take a few hours).
+Run ``python ann_benchmarks/main.py`` (this will take a few hours).
 
-Then `python plot.py` to plot the results.
+Then ``python plot.py`` to plot the results.
 
 Principles
 ----------
