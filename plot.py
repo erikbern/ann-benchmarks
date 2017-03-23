@@ -5,8 +5,8 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import argparse
 
-from ann_benchmarks.main import get_fn
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
+from ann_benchmarks.plotting.utils  import get_plot_label, load_results, create_linestyles, create_pointset
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -37,74 +37,19 @@ parser.add_argument(
     help='Also show raw results in faded colours',
     action='store_true')
 args = parser.parse_args()
-
 xm = metrics[args.x_axis]
 ym = metrics[args.y_axis]
-
-runs = {}
-all_algos = set()
-for ds, _ in args.dataset:
-    results_fn = get_fn("results", ds)
-    queries_fn = get_fn("queries", ds)
-    assert os.path.exists(queries_fn), """\
-the queries file '%s' is missing""" % queries_fn
-
-    queries = pickle.load(open(queries_fn))
-    runs[ds] = {}
-    with open(get_fn("results", ds)) as f:
-        for line in f:
-            run = json.loads(line)
-            algo = run["library"]
-            algo_name = run["name"]
-            build_time = run["build_time"]
-            search_time = run["best_search_time"]
-
-            print "--"
-            print algo_name
-            xv = xm["function"](queries, run)
-            yv = ym["function"](queries, run)
-            print xv, yv
-            if not xv or not yv:
-                continue
-
-            all_algos.add(algo)
-            if not algo in runs[ds]:
-                runs[ds][algo] = []
-            runs[ds][algo].append((algo, algo_name, xv, yv))
-
-# Construct palette from the algorithm list
-colors = plt.cm.Set1(numpy.linspace(0, 1, len(all_algos)))
-faded = [[r, g, b, 0.3] for [r, g, b, a] in colors]
-linestyles = {}
-for i, algo in enumerate(all_algos):
-    linestyles[algo] = (colors[i], faded[i], ['--', '-.', '-', ':'][i%4], ['+', '<', 'o', 'D', '*', 'x', 's'][i%7])
+runs, all_algos = load_results([ds for ds, _ in args.dataset], xm, ym)
+linestyles = create_linestyles(all_algos)
 
 # Now generate each plot
 for ds, fn_out in args.dataset:
     all_data = runs[ds]
-
     handles = []
     labels = []
-
     plt.figure(figsize=(7, 7))
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-        data = all_data[algo]
-        data.sort(key=lambda (a, n, xv, yv): yv, reverse=True) # sort by time
-
-        axs, ays = [], []
-        # Plot Pareto frontier
-        xs, ys = [], []
-        last_x = xm["worst"]
-        comparator = \
-          (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
-        for algo, algo_name, xv, yv in data:
-            axs.append(xv)
-            ays.append(yv)
-            if comparator(xv, last_x):
-                last_x = xv
-                xs.append(xv)
-                ys.append(yv)
-
+        xs, ys, axs, ays, ls = create_pointset(algo, all_data, xm, ym)
         color, faded, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         handles.append(handle)
@@ -116,7 +61,7 @@ for ds, fn_out in args.dataset:
         plt.gca().set_xscale('log')
     if args.y_log:
         plt.gca().set_yscale('log')
-    plt.gca().set_title('Plot')
+    plt.gca().set_title(get_plot_label(xm, ym))
     plt.gca().set_ylabel(ym['description'])
     plt.gca().set_xlabel(xm['description'])
     box = plt.gca().get_position()

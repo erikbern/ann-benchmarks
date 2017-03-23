@@ -3,7 +3,8 @@ import os, json, pickle
 import numpy
 
 from ann_benchmarks.main import get_fn
-from ann_benchmarks.plotting.metrics import all_metrics as metrics
+from ann_benchmarks.plotting.plot_variants import all_plot_variants as plot_variants
+from ann_benchmarks.plotting.utils  import get_plot_label, create_pointset, load_results, create_linestyles
 
 colors = [
     "rgba(166,206,227,1)",
@@ -17,25 +18,37 @@ colors = [
     "rgba(202,178,214,1)"
     ]
 
-point_styles = [
-        "circle",
-        "triangle",
-        "star",
-        "cross"
-        ]
+point_styles = {
+        "o" : "circle",
+        "<" : "triangle",
+        "*" : "star",
+        "x" : "cross",
+        "+" : "rect",
+        }
 
-color_scheme = [[x,y] for y in point_styles for x in colors]
+def convert_color(color):
+    r, g, b, a = color
+    return "rgba(%(r)d, %(g)d, %(b)d, %(a)d)" % {
+            "r" : r * 255, "g" : g * 255,  "b" : b * 255 , "a" : a}
+
+def convert_linestyle(ls):
+    new_ls = {}
+    for algo in ls.keys():
+        algostyle = ls[algo]
+        new_ls[algo] = (convert_color(algostyle[0]), convert_color(algostyle[1]),
+                algostyle[2], point_styles[algostyle[3]])
+    return new_ls
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '--dataset',
     nargs = '*')
 parser.add_argument(
-    '--precision',
-    help = 'Which precision metric to use',
+    '--plottype',
+    help = 'Which plots to generate',
     nargs = '*',
-    choices = metrics.keys(),
-    default = [metrics.keys()[0]],
+    choices = plot_variants.keys(),
+    default = [plot_variants.keys()[0]],
     )
 parser.add_argument(
     '--outputdir',
@@ -89,44 +102,30 @@ def get_html_header(title):
           </div>
         </nav>""" % {"title" : title}
 
-def create_plot(ds, all_data, metric):
+def create_plot(ds, all_data, xm, ym, linestyle):
     output_str = """
-        <h2>%(id)s with %(metric)s</h2>
-        <canvas id="chart%(metric)s" width="800" height="600"></canvas>
+        <h2>%(id)s with %(xmetric)s/%(ymetric)s</h2>
+        <canvas id="chart%(xmetric)s%(ymetric)s" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chart%(metric)s");
+            var ctx = document.getElementById("chart%(xmetric)s%(ymetric)s");
             var chart = new Chart(ctx, {
                 type: "line",
-                data: { datasets: [""" % { "id" : ds, "metric" :  metric["description"] }
+                data: { datasets: [""" % { "id" : ds, "xmetric" :  xm["description"], "ymetric" : ym["description"] }
     color_index = 0
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-            data = all_data[algo]
-            data.sort(key=lambda t: t[-2]) # sort by time
-            ys = [1.0 / t[-2] for t in data] # queries per second
-            xs = [t[-1] for t in data]
-            ls = [t[1] for t in data]
+            xs, ys, axs, ays, ls = create_pointset(algo, all_data, xm, ym)
 # TODO Put this somewhere else
 # pretty print subprocess parameter settings.
             for i in range(len(ls)):
                 if "Subprocess" in ls[i]:
                     ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
-            # Plot Pareto frontier
-            xs, ys, sl = [], [], []
-            last_y = metric["initial-y"]
-            for t in data:
-                y = t[-1]
-                if metric["plot"](y, last_y):
-                    last_y = y
-                    xs.append(t[-1])
-                    ys.append(1.0 / t[-2])
-		    ls.append(t[1])
             output_str += """
                 {
                     label: "%(algo)s",
                     fill: false,
                     pointStyle: "%(ps)s",
                     borderColor: "%(color)s",
-                    data: [ """ % {"algo" : algo, "color" : color_scheme[color_index % len(color_scheme)][0], "ps" : color_scheme[color_index % len(color_scheme)][1] }
+                    data: [ """ % {"algo" : algo, "color" : linestyle[algo][0], "ps" : linestyle[algo][3] }
 
             for i in range(len(xs)):
                 output_str += """
@@ -140,7 +139,7 @@ def create_plot(ds, all_data, metric):
                         responsive: false,
                         title:{
                             display:true,
-                            text:'Precision-Performance tradeoff - up and to the right is better'
+                            text: '%(plotlabel)s'
                         },
                         scales: {
                             xAxes: [{
@@ -158,48 +157,18 @@ def create_plot(ds, all_data, metric):
                                 type: 'logarithmic',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: 'Queries per second - larger is better'
+                                    labelString: ' %(ylabel)s '
                                 }
                             }]
                         }
                     }
-                }); """ % { "xlabel" :  metric["description"]}
+                }); """ % { "xlabel" :  xm["description"], "ylabel" : ym["description"],
+                        "plotlabel" : get_plot_label(xm, ym)}
 
     output_str += """
         </script>
         """
     return output_str
-
-all_data = {} # all_data[metric][algo] = []
-for ds in args.dataset:
-    results_fn = get_fn("results", ds)
-    queries_fn = get_fn("queries", ds)
-    assert os.path.exists(queries_fn), """\
-the queries file '%s' is missing""" % queries_fn
-
-    queries = pickle.load(open(queries_fn))
-    with open(get_fn("results", ds)) as f:
-        for line in f:
-            run = json.loads(line)
-            algo = run["library"]
-            algo_name = run["name"]
-            build_time = run["build_time"]
-            search_time = run["best_search_time"]
-
-            print "--"
-            print algo_name
-            for metric_name in args.precision:
-                metric = metrics[metric_name]
-                precision = metric["function"](queries, run)
-                print "%s: %g" % (metric_name, precision)
-                # Should build_time and search_time really go in here?
-                all_data.setdefault(
-                    metric_name, {}).setdefault(
-                    algo, []).append((algo,
-                            algo_name,
-                            float(build_time),
-                            float(search_time),
-                            precision))
 
 # Build a website for each dataset
 for ds in args.dataset:
@@ -207,10 +176,12 @@ for ds in args.dataset:
     output_str += """
         <div class="container">
         <h2>Plots for %(id)s""" % { "id" : ds }
-    for metric_name in args.precision:
-        metric = metrics[metric_name]
-        print "Processing '%s' with %s" % (ds, metric["description"])
-        output_str += create_plot(ds, all_data[metric_name], metric)
+    for plottype in args.plottype:
+        xm, ym = plot_variants[plottype]
+        runs, all_algos = load_results(args.dataset, xm, ym)
+        linestyles = convert_linestyle(create_linestyles(all_algos))
+        print "Processing '%s' with %s" % (ds, plottype)
+        output_str += create_plot(ds, runs[ds], xm, ym, linestyles)
 
     output_str += """
     </div>
@@ -237,4 +208,5 @@ with open(outputdir + "index.html", "w") as text_file:
     </body>
 </html>"""
     text_file.write(output_str)
+
 
