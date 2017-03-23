@@ -49,7 +49,7 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
                 candidates = map(
                     lambda idx: (int(idx), float(pd[distance](v, X_train[idx]))),
                     list(candidates))
-                return (total, found)
+                return (total, candidates)
             if algo.use_threads() and not force_single:
                 pool = multiprocessing.pool.ThreadPool()
                 results = pool.map(single_query, queries)
