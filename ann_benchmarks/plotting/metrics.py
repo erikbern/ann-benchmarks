@@ -35,34 +35,50 @@ def rel(queries, run):
 def queries_per_second(queries, run):
     return 1.0 / run["best_search_time"]
 
+def index_size(queries, run):
+    return run["index_size"]
+
 def build_time(queries, run):
     return run["build_time"]
 
+def candidates(queries, run):
+    return run["candidates"]
+
 all_metrics = {
     "k-nn": {
-        "description": "10-NN precision - larger is better",
+        "description": "10-NN precision",
         "function": knn,
         "worst": float("-inf"),
         "lim": [0.0, 1.03]
     },
     "epsilon": {
-        "description": "(epsilon)",
+        "description": "Epsilon Recall",
         "function": epsilon,
         "worst": float("-inf")
     },
     "rel": {
-        "description": "(rel)",
+        "description": "Relative Distance",
         "function": rel,
         "worst": float("inf")
     },
     "qps": {
-        "description": "Queries per second ($s^{-1}$) - larger is better",
+        "description": "Queries per second (1/s)",
         "function": queries_per_second,
         "worst": float("-inf")
     },
     "build": {
-        "description": "Build time (s) - smaller is better",
+        "description": "Build time (s)",
         "function": build_time,
+        "worst": float("inf")
+    },
+    "candidates" : {
+        "description": "Candidates generated",
+        "function": candidates,
+        "worst": float("inf")
+    },
+    "indexsize" : {
+        "description": "Index size (kB)",
+        "function": index_size,
         "worst": float("inf")
     }
 }

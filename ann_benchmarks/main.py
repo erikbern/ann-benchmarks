@@ -41,14 +41,14 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
                     start = time.time()
                     algo.run_prepared_query()
                     total = (time.time() - start)
-                    found = algo.get_prepared_query_results()
+                    candidates = algo.get_prepared_query_results()
                 else:
                     start = time.time()
-                    found = algo.query(v, 10)
+                    candidates = algo.query(v, 10)
                     total = (time.time() - start)
-                found = map(
+                candidates = map(
                     lambda idx: (int(idx), float(pd[distance](v, X_train[idx]))),
-                    list(found))
+                    list(candidates))
                 return (total, found)
             if algo.use_threads() and not force_single:
                 pool = multiprocessing.pool.ThreadPool()
@@ -57,9 +57,9 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
                 results = map(single_query, queries)
 
             total_time = sum(map(lambda (time, _): time, results))
-            total_found = sum(map(lambda (_, found): len(found), results))
+            total_candidates = sum(map(lambda (_, candidates): len(candidates), results))
             search_time = total_time / len(queries)
-	    avg_found = total_time / len(queries)
+	    avg_candidates = total_candidates / len(queries)
             best_search_time = min(best_search_time, search_time)
 
         output = {
@@ -69,7 +69,7 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
             "best_search_time": best_search_time,
             "index_size": index_size,
             "results": results,
-            "retrieved_points": avg_found,
+            "candidates": avg_candidates,
             "run_count": run_count,
             "run_alone": force_single
         }
