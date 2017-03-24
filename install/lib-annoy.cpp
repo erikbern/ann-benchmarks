@@ -77,6 +77,8 @@ void end_train(void) {
   for (int i = 0; i < pointset.size(); i++) {
 	ds->add_item(i, &((pointset[i])[0]));
   }
+  pointset.clear();
+  pointset.shrink_to_fit();
   ds->build(num_trees);
 }
 
