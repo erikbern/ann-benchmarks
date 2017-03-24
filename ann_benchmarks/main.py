@@ -145,6 +145,11 @@ def main():
             type=int,
             default=-1)
     parser.add_argument(
+            '--definitions',
+            metavar='FILE',
+            help='load algorithm definitions from FILE',
+            default='algos.yaml')
+    parser.add_argument(
             '--algorithm',
             metavar='NAME',
             help='run only the named algorithm',
@@ -182,7 +187,7 @@ will produce results files with duplicate entries)''',
 
     args = parser.parse_args()
 
-    definitions = get_definitions("algos.yaml")
+    definitions = get_definitions(args.definitions)
     if hasattr(args, "list_algorithms"):
         print "The following algorithms are supported..."
         for point in definitions:
