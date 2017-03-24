@@ -274,17 +274,22 @@ be available""" % name
 error: the training dataset and query dataset have incompatible manifests"""
 
     results_fn = get_fn('results', args.dataset, args.limit)
-    queries_fn = get_fn('queries', args.dataset, args.limit)
+    if not args.query_dataset:
+        queries_fn = \
+          "queries/%(dataset)s_%(limit)s_%(distance)s.p" % vars(args)
+    else:
+        queries_fn = \
+          "queries/%(dataset)s_%(limit)s_%(query_dataset)s_%(distance)s.p" % vars(args)
 
     print('storing queries in', queries_fn, 'and results in', results_fn)
 
     if not os.path.exists(queries_fn):
         queries = compute_distances(args.distance, X_train, X_test)
-        f = open(queries_fn, 'w')
-        pickle.dump(queries, f)
-        f.close()
+        with open(queries_fn, 'w') as f:
+            pickle.dump(queries, f)
     else:
-        queries = pickle.load(open(queries_fn))
+        with open(queries_fn) as f:
+            queries = pickle.load(f)
 
     print('got', len(queries), 'queries')
 
