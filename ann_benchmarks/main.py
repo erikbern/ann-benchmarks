@@ -10,7 +10,7 @@ import shutil
 import importlib
 import traceback
 
-from ann_benchmarks.datasets import get_dataset, split_dataset
+from ann_benchmarks.datasets import get_dataset, split_dataset, get_query_cache_path
 from ann_benchmarks.distance import metrics as pd
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
@@ -274,12 +274,8 @@ be available""" % name
 error: the training dataset and query dataset have incompatible manifests"""
 
     results_fn = get_fn('results', args.dataset, args.limit)
-    if not args.query_dataset:
-        queries_fn = \
-          "queries/%(dataset)s_%(limit)s_%(distance)s.p" % vars(args)
-    else:
-        queries_fn = \
-          "queries/%(dataset)s_%(limit)s_%(query_dataset)s_%(distance)s.p" % vars(args)
+    queries_fn = get_query_cache_path(
+        args.dataset, args.limit, args.distance, args.query_dataset)
 
     print('storing queries in', queries_fn, 'and results in', results_fn)
 

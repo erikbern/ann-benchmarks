@@ -68,3 +68,10 @@ def split_dataset(X, random_state=3, test_size=10000):
     print(X_train.shape, X_test.shape)
 
     return X_train, X_test
+
+def get_query_cache_path(dataset, limit, distance, query_dataset = None):
+    if not query_dataset:
+        return "queries/%s_%s_s.p" % (dataset, limit, distance)
+    else:
+        return \
+          "queries/%s_%s_%s_%s.p" % (dataset, limit, query_dataset, distance)
