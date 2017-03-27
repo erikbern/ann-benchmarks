@@ -91,7 +91,7 @@ void end_train(void) {
       *pointset,
       entry_count,
       entry_length,
-      /* hypercube_dimension */ floor(log2(entry_count)/2),
+      /* hypercube_dimension */ floor(log2(entry_count)) - 2,
       1,
       r);
 }

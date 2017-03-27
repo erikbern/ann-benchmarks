@@ -237,7 +237,9 @@ will produce results files with duplicate entries)''',
       ("ann_benchmarks.algorithms.subprocess",
           ["BitSubprocess", "IntSubprocess", "FloatSubprocess"]),
       ("ann_benchmarks.algorithms.faiss",
-          ["FaissLSH"])
+          ["FaissLSH"]),
+      ("ann_benchmarks.algorithms.dolphinnpy",
+	  ["DolphinnPy"])
     ]
     constructors = {}
     for name, symbols in constructors_:
