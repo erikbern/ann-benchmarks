@@ -24,14 +24,24 @@ def create_pointset(algo, all_data, xm, ym):
             ys.append(yv)
     return xs, ys, axs, ays, ls
 
+def enumerate_query_caches(ds):
+    for f in os.listdir("queries/"):
+        if f.startswith(ds + "_") and f.endswith(".p"):
+            yield "queries/" + f
+
 def load_results(datasets, xm, ym):
     runs = {}
     all_algos = set()
     for ds in datasets:
         results_fn = get_fn("results", ds)
-        queries_fn = get_fn("queries", ds)
-        assert os.path.exists(queries_fn), """\
-    the queries file '%s' is missing""" % queries_fn
+        queries_fn = list(enumerate_query_caches(ds))
+        assert len(queries_fn) > 0, '''\
+no query cache files exist for dataset "%s"''' % ds
+        if len(queries_fn) > 1:
+            print """\
+warning: more than one query cache file exists for dataset "%s", using only the
+first (%s)""" % (ds, queries_fn[0])
+        queries_fn = queries_fn[0]
 
         queries = pickle.load(open(queries_fn))
         runs[ds] = {}
