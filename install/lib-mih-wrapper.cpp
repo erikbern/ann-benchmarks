@@ -28,7 +28,7 @@ bool configure(const char* var, const char* val) {
     if (errno != 0 || *val == 0 || *end != 0 || k < 0) {
       return false;
     } else {
-      r = 1e6 * k;
+      r = k;
       return true;
     }
   } else if (strcmp(var, "chunks") == 0) {
@@ -104,6 +104,7 @@ void end_train(void) {
   pointset.clear();
   pointset.shrink_to_fit();
   if (r > 0) { 
+    r = n / r; // use r-fraction of the dataset for ordering.
 	int* order = new int[B];
 	greedyorder(order, dataset, r, B, chunks);
     UINT8* new_dataset = new UINT8[n * B/8];
