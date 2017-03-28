@@ -9,9 +9,9 @@ def int_unparse_entry(entry):
     return " ".join(map(str, map(int, entry)))
 
 def bit_parse_entry(line):
-    return [bool(int(x)) for x in list(line.strip())]
+    return [bool(int(x)) for x in list(line.replace(" ", "").replace("\t", ""))]
 def bit_unparse_entry(entry):
-    return "".join(map(lambda el: "1" if el else "0", entry))
+    return " ".join(map(lambda el: "1" if el else "0", entry))
 
 type_info = {
     "float": {
