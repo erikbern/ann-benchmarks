@@ -276,6 +276,13 @@ bit:
       run-groups:
         base:
           args: [*hashingc, *hashingc]
+    mih:
+      constructor: BitSubprocess
+      base-args: [["install/lib-mih/build/mihwrapper"]]
+      run-groups:
+        base:
+            # Not that MIH assumes that 5 <= bitlength/chunks <= 37 and segfaults otherwise.
+            args: { "r" : [0], "chunks" : [12, 16, 20] }
     itu-linear:
       constructor: BitSubprocess
       base-args: [["install/lib-annitu/build/wrappers/frontend/fr-linear"]]
