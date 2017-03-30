@@ -136,6 +136,9 @@ query neither succeeded nor failed"""
             self._program.terminate()
 
 def BitSubprocess(args, params):
+    return Subprocess(args, bit_unparse_entry, params, False)
+
+def BitSubprocessPrepared(args, params):
     return Subprocess(args, bit_unparse_entry, params, True)
 
 def FloatSubprocess(args, params):
