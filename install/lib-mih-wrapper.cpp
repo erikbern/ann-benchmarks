@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cstdbool>
 
+#include <algorithm>
 #include <string>
 #include <cstring>
 #include <vector>
@@ -20,6 +21,9 @@ static int r = 0;
 static int chunks = 1;
 static int B = 0;
 
+// Note that MIH assumes that the bitlength of the input 
+// divided by the number of chunks is between 6 and 37
+// (and segfaults otherwise).
 bool configure(const char* var, const char* val) {
   if (strcmp(var, "r") == 0) {
     char* end;
@@ -54,6 +58,7 @@ static size_t entry_count = 0;
 
 std::vector<bool> parseEntry(const char* entry) {
   std::string line(entry);
+  line.erase(std::remove(line.begin(), line.end(), ' '), line.end());
   std::vector<bool> e;
   for (int i = 0; i < line.length(); i++) {
       e.push_back(line[i] == '1');
@@ -156,7 +161,7 @@ size_t query(const char* entry, size_t k) {
 size_t query_result(void) {
   //if (position < results_idxs.size()) {
     auto elem = results[0][position++];
-    return elem;
+    return elem - 1;
   //} else return SIZE_MAX;
 }
 
