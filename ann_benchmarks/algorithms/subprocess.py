@@ -5,6 +5,11 @@ from ann_benchmarks.data import \
     bit_unparse_entry, int_unparse_entry, float_unparse_entry
 from ann_benchmarks.algorithms.base import BaseANN
 
+class SubprocessStoppedError(Exception):
+    def __init__(self, code):
+        super(Exception, self).__init__(code)
+        self.code = code
+
 class Subprocess(BaseANN):
     def __raw_line(self):
         return shlex.split( \
@@ -23,7 +28,11 @@ class Subprocess(BaseANN):
         self.__get_program_handle().stdin.write(string + "\n")
 
     def __get_program_handle(self):
-        if not self._program:
+        if self._program:
+            self._program.poll()
+            if self._program.returncode:
+                raise SubprocessStoppedError(self._program.returncode)
+        else:
             self._program = subprocess.Popen(
                 self._args,
                 bufsize = 1, # line buffering
@@ -133,7 +142,9 @@ query neither succeeded nor failed"""
         return False
     def done(self):
         if self._program:
-            self._program.terminate()
+            self._program.poll()
+            if not self._program.returncode:
+                self._program.terminate()
 
 def BitSubprocess(args, params):
     return Subprocess(args, bit_unparse_entry, params, False)
