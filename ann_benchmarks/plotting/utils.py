@@ -6,7 +6,8 @@ import numpy
 
 def create_pointset(algo, all_data, xm, ym):
     data = all_data[algo]
-    data.sort(key=lambda (a, n, xv, yv): yv, reverse=True) # sort by time
+    rev = ym["worst"] < 0
+    data.sort(key=lambda (a, n, xv, yv): yv, reverse=rev) # sort by y coordinate
     ls = [t[1] for t in data]
 
     axs, ays = [], []
