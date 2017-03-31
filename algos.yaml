@@ -277,12 +277,26 @@ bit:
         base:
           args: [*hashingc, *hashingc]
     mih:
-      constructor: BitSubprocess
+      constructor: BitSubprocessPrepared
       base-args: [["install/lib-mih/build/mihwrapper"]]
       run-groups:
         base:
             # Not that MIH assumes that 5 <= bitlength/chunks <= 37 and segfaults otherwise.
-            args: { "r" : [0], "chunks" : [12, 16, 20] }
+            # The r parameter denotes a reordering with n / r steps. If r is 0, no  reordering 
+            # takes places. Note that MIH requires either r = 0 or r >= 2.
+            args: { "r" : [0, 2], "chunks" : [14] }
+    trie-multiprobe:
+      constructor: BitSubprocessPrepared
+      base-args: [["install/lib-lshtrie/build/wrapper/ann-benchmarks/wrapper-hamming-multiprobe"]]
+      run-groups:
+        base:
+            args: {"d" : [256], "M" : [0], "k" : [17, 19, 31], "l" : [1, 5] }
+    trie-block:
+      constructor: BitSubprocessPrepared
+      base-args: [["install/lib-lshtrie/build/wrapper/ann-benchmarks/wrapper-hamming-block"]]
+      run-groups:
+        base:
+            args: {"d" : [256], "m" : [0], "b" : [5, 10, 20, 40], "k" : [17, 19, 31], "l" : [1, 5] }
     itu-linear:
       constructor: BitSubprocess
       base-args: [["install/lib-annitu/build/wrappers/frontend/fr-linear"]]
