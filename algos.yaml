@@ -291,6 +291,12 @@ bit:
       run-groups:
         base:
             args: {"d" : [256], "M" : [0], "k" : [17, 19, 31], "l" : [1, 5] }
+    annoy-hamming:
+      constructor: BitSubprocessPrepared
+      base-args: [["install/lib-annoy-hamming/fr-annoy-hamming"]]
+      run-groups:
+        base:
+            args: {"num_trees" : [1, 2, 5, 10, 20, 50, 100], "search_k" : [50, 100, 200, 400, 2000, 4000, 10000] }
     trie-block:
       constructor: BitSubprocessPrepared
       base-args: [["install/lib-lshtrie/build/wrapper/ann-benchmarks/wrapper-hamming-block"]]
