@@ -315,3 +315,9 @@ bit:
       run-groups:
         base:
           args: {"c": *hashingc, "r": *hashingc, "seed": *seed}
+    bitsampling:
+      constructor: BitSubprocessPrepared
+      base-args: [["install/lib-bitsampling/build/wrapper/bitsampling-wrapper"]]
+      run-groups:
+        base:
+          args: {"d" : 256, "l" : [1,5,10,20,50], "k" : [17, 19, 25, 31], "m" : [0]}
