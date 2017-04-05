@@ -327,3 +327,11 @@ bit:
       run-groups:
         base:
           args: {"d" : 256, "l" : [1,5,10,20,50], "k" : [17, 19, 25, 31], "m" : [0]}
+integer:
+    jaccard:
+      constructor: BruteForceJaccard
+      base-args:
+      run-groups:
+        base:
+          args:
+

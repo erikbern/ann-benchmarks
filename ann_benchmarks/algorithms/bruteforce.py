@@ -6,6 +6,8 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class BruteForce(BaseANN):
     def __init__(self, metric):
+        if metric not in ('angular', 'euclidean', 'hamming'):
+            raise NotImplementedError("BruteForce doesn't support metric %s" % metric)
         self._metric = metric
         self.name = 'BruteForce()'
 
@@ -22,6 +24,27 @@ class BruteForce(BaseANN):
         (distances, positions) = self._nbrs.kneighbors([v],
             return_distance = True, n_neighbors = n)
         return zip(list(positions[0]), list(distances[0]))
+
+class BruteForceJaccard(BaseANN):
+    def __init__(self, metric):
+        if metric not in ("jaccard"):
+            raise NotImplementedError("BruteForceJaccard doesn't support metric %s" % metric)
+        self._metric = metric
+        self.name = 'BruteForceJaccard()'
+
+    def fit(self, X):
+        print X
+        self._X = X
+
+    def query(self, v, n):
+        return list(self._nbrs.kneighbors([v],
+            return_distance = False, n_neighbors = n)[0])
+
+    def query_with_distances(self, v, n):
+        (distances, positions) = self._nbrs.kneighbors([v],
+            return_distance = True, n_neighbors = n)
+        return zip(list(positions[0]), list(distances[0]))
+
 
 class BruteForceBLAS(BaseANN):
     """kNN search that uses a linear scan = brute force."""
