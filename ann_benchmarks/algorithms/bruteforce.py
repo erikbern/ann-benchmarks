@@ -66,8 +66,9 @@ class BruteForceBLAS(BaseANN):
         if self._metric == 'hamming':
             v = numpy.packbits(v)
 
-        # use same precision for query as for index
-        v = numpy.ascontiguousarray(v, dtype = self.index.dtype)
+        if self._metric != 'jaccard':
+            # use same precision for query as for index
+            v = numpy.ascontiguousarray(v, dtype = self.index.dtype)
 
         # HACK we ignore query length as that's a constant not affecting the final ordering
         if self._metric == 'angular':

@@ -33,8 +33,8 @@ def get_dataset(which='glove', limit=-1):
             y = yaml.load(mf)
             if 'dataset' in y:
                 manifest.update(y['dataset'])
-            if 'testsize' in y:
-                manifest.update(int(y['testsize']))
+            if 'test_size' in y:
+                manifest['test_size'] = int(y['test_size'])
 
     point_type = manifest['point_type']
 

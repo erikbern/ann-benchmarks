@@ -10,7 +10,7 @@ def jaccard(a, b):
     if len(a) == 0 or len(b) == 0:
         return 0
     intersect = len(a & b)
-    return intersect / (len(a) + len(b) - intersect)
+    return  1 - intersect / (float)(len(a) + len(b) - intersect)
 
 
 metrics = {

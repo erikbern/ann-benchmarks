@@ -14,15 +14,14 @@ class DataSketch(BaseANN):
     def fit(self, X):
         self._index = MinHashLSHForest(num_perm = self._n_perm, l = self._n_rep)
         for i, x in enumerate(X):
-            m = MinHash(n_perm = self.n_perm)
+            m = MinHash(num_perm = self._n_perm)
             for e in x:
-                m.update(e)
-            forest.add(str(i), m)
+                m.update(str(e))
+            self._index.add(str(i), m)
         self._index.index()
 
     def query(self, v, n):
-        m = MinHash(n_perm = self._n_perm)
+        m = MinHash(num_perm = self._n_perm)
         for e in v:
-            m.update(e)
-        print self._index.query(m, n)
-        return result = self._index.query(m, n)
+            m.update(str(e))
+        return map(int, self._index.query(m, n))

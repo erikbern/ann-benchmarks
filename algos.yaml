@@ -335,3 +335,9 @@ int:
       run-groups:
         base:
           args: {}
+    datasketch:
+      constructor: DataSketch
+      base-args: ["@metric"]
+      run-groups:
+        base:
+          args:  [[16, 32, 64, 128],[5, 10, 20, 40]]

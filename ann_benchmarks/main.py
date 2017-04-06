@@ -247,7 +247,7 @@ will produce results files with duplicate entries)''',
       ("ann_benchmarks.algorithms.dolphinnpy",
 	  ["DolphinnPy"]),
       ("ann_benchmarks.algorithms.datasketch",
-	  ["Datasketch"])
+	  ["DataSketch"])
     ]
     constructors = {}
     for name, symbols in constructors_:
@@ -271,7 +271,7 @@ be available""" % name
 
     manifest, X = get_dataset(args.dataset, args.limit)
     if not args.query_dataset:
-        X_train, X_test = split_dataset(X, test_size = manifest['testsize'] )
+        X_train, X_test = split_dataset(X, test_size = manifest['test_size'] )
     else:
         X_train = X
         query_manifest, X_test = get_dataset(args.query_dataset)

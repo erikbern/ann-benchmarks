@@ -30,7 +30,7 @@ def enumerate_query_caches(ds):
         if f.startswith(ds + "_") and f.endswith(".p"):
             yield "queries/" + f
 
-def load_results(datasets, xm, ym):
+def load_results(datasets, xm, ym, limit = -1):
     runs = {}
     all_algos = set()
     for ds in datasets:
@@ -46,7 +46,7 @@ first (%s)""" % (ds, queries_fn[0])
 
         queries = pickle.load(open(queries_fn))
         runs[ds] = {}
-        with open(get_fn("results", ds)) as f:
+        with open(get_fn("results", ds, limit)) as f:
             for line in f:
                 run = json.loads(line)
                 algo = run["library"]
