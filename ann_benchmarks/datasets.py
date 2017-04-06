@@ -25,13 +25,16 @@ def get_dataset(which='glove', limit=-1):
         f = open(local_fn + '.txt')
 
     manifest = {
-      'point_type': 'float'
+      'point_type': 'float',
+      'test_size' : 10000
     }
     if os.path.exists(local_fn + '.yaml'):
         with open(local_fn + '.yaml') as mf:
             y = yaml.load(mf)
             if 'dataset' in y:
                 manifest.update(y['dataset'])
+            if 'test_size' in y:
+                manifest['test_size'] = int(y['test_size'])
 
     point_type = manifest['point_type']
 
@@ -71,7 +74,7 @@ def split_dataset(X, random_state=3, test_size=10000):
 
 def get_query_cache_path(dataset, limit, distance, query_dataset = None):
     if not query_dataset:
-        return "queries/%s_%s_s.p" % (dataset, limit, distance)
+        return "queries/%s_%s_%s.p" % (dataset, limit, distance)
     else:
         return \
           "queries/%s_%s_%s_%s.p" % (dataset, limit, query_dataset, distance)

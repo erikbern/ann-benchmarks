@@ -55,6 +55,11 @@ parser.add_argument(
     help = 'Select output directory',
     action = 'store'
     )
+parser.add_argument(
+    '--limit',
+    help='the maximum number of points to load from the dataset, or -1 to load all of them',
+    type=int,
+    default=-1)
 args = parser.parse_args()
 
 outputdir = ""
@@ -178,7 +183,7 @@ for ds in args.dataset:
         <h2>Plots for %(id)s""" % { "id" : ds }
     for plottype in args.plottype:
         xm, ym = plot_variants[plottype]
-        runs, all_algos = load_results(args.dataset, xm, ym)
+        runs, all_algos = load_results(args.dataset, xm, ym, args.limit)
         linestyles = convert_linestyle(create_linestyles(all_algos))
         print "Processing '%s' with %s" % (ds, plottype)
         output_str += create_plot(ds, runs[ds], xm, ym, linestyles)
