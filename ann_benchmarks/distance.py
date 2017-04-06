@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 from scipy.spatial.distance import pdist as scipy_pdist
-import numpy
 
 def pdist(a, b, metric):
     return scipy_pdist([a, b], metric=metric)[0]
