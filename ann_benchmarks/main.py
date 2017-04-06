@@ -239,7 +239,7 @@ will produce results files with duplicate entries)''',
       ("ann_benchmarks.algorithms.rpforest",
           ["RPForest"]),
       ("ann_benchmarks.algorithms.bruteforce",
-          ["BruteForce", "BruteForceJaccard", "BruteForceBLAS"]),
+          ["BruteForce", "BruteForceBLAS"]),
       ("ann_benchmarks.algorithms.subprocess",
           ["BitSubprocess", "BitSubprocessPrepared", "IntSubprocess", "FloatSubprocess"]),
       ("ann_benchmarks.algorithms.faiss",
@@ -269,7 +269,7 @@ be available""" % name
 
     manifest, X = get_dataset(args.dataset, args.limit)
     if not args.query_dataset:
-        X_train, X_test = split_dataset(X)
+        X_train, X_test = split_dataset(X, test_size = manifest['testsize'] )
     else:
         X_train = X
         query_manifest, X_test = get_dataset(args.query_dataset)

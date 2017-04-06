@@ -5,6 +5,8 @@ def float_parse_entry(line):
     return [float(x) for x in line.strip().split()]
 def float_unparse_entry(entry):
     return " ".join(map(str, entry))
+def int_parse_entry(line):
+    return frozenset([int(x) for x in line.strip().split()])
 def int_unparse_entry(entry):
     return " ".join(map(str, map(int, entry)))
 
@@ -24,6 +26,11 @@ type_info = {
         "type": numpy.bool_,
         "parse_entry": bit_parse_entry,
         "unparse_entry": bit_unparse_entry
-    }
+    },
+    "int" : {
+        "type": numpy.object,
+        "parse_entry": int_parse_entry,
+        "unparse_entry": int_unparse_entry,
+    },
 }
 

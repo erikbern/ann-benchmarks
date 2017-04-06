@@ -25,31 +25,10 @@ class BruteForce(BaseANN):
             return_distance = True, n_neighbors = n)
         return zip(list(positions[0]), list(distances[0]))
 
-class BruteForceJaccard(BaseANN):
-    def __init__(self, metric):
-        if metric not in ("jaccard"):
-            raise NotImplementedError("BruteForceJaccard doesn't support metric %s" % metric)
-        self._metric = metric
-        self.name = 'BruteForceJaccard()'
-
-    def fit(self, X):
-        print X
-        self._X = X
-
-    def query(self, v, n):
-        return list(self._nbrs.kneighbors([v],
-            return_distance = False, n_neighbors = n)[0])
-
-    def query_with_distances(self, v, n):
-        (distances, positions) = self._nbrs.kneighbors([v],
-            return_distance = True, n_neighbors = n)
-        return zip(list(positions[0]), list(distances[0]))
-
-
 class BruteForceBLAS(BaseANN):
     """kNN search that uses a linear scan = brute force."""
     def __init__(self, metric, precision=numpy.float32):
-        if metric not in ('angular', 'euclidean', 'hamming'):
+        if metric not in ('angular', 'euclidean', 'hamming', 'jaccard'):
             raise NotImplementedError("BruteForceBLAS doesn't support metric %s" % metric)
         elif metric == 'hamming' and precision != numpy.bool:
             raise NotImplementedError("BruteForceBLAS doesn't support precision %s with Hamming distances" % precision)
@@ -59,16 +38,19 @@ class BruteForceBLAS(BaseANN):
 
     def fit(self, X):
         """Initialize the search index."""
-        lens = (X ** 2).sum(-1)  # precompute (squared) length of each vector
         if self._metric == 'angular':
+            lens = (X ** 2).sum(-1)  # precompute (squared) length of each vector
             X /= numpy.sqrt(lens)[..., numpy.newaxis]  # normalize index vectors to unit length
             self.index = numpy.ascontiguousarray(X, dtype=self._precision)
         elif self._metric == 'euclidean':
+            lens = (X ** 2).sum(-1)  # precompute (squared) length of each vector
             self.index = numpy.ascontiguousarray(X, dtype=self._precision)
             self.lengths = numpy.ascontiguousarray(lens, dtype=self._precision)
         elif self._metric == 'hamming':
             self.index = numpy.ascontiguousarray(
                 map(numpy.packbits, X), dtype=numpy.uint8)
+        elif self._metric == 'jaccard':
+            self.index = X # use numpy? 
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
 
@@ -99,6 +81,8 @@ class BruteForceBLAS(BaseANN):
             pc = BruteForceBLAS.popcount
             den = float(len(v) * 8)
             dists = [sum([pc[part] for part in point]) / den for point in diff]
+        elif self._metric == 'jaccard':
+            dists = [pd[self._metric](v, e) for e in self.index]
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
         indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
