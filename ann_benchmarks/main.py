@@ -245,7 +245,9 @@ will produce results files with duplicate entries)''',
       ("ann_benchmarks.algorithms.faiss",
           ["FaissLSH"]),
       ("ann_benchmarks.algorithms.dolphinnpy",
-	  ["DolphinnPy"])
+	  ["DolphinnPy"]),
+      ("ann_benchmarks.algorithms.datasketch",
+	  ["Datasketch"])
     ]
     constructors = {}
     for name, symbols in constructors_:
