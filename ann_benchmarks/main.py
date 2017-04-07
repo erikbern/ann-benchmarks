@@ -89,6 +89,7 @@ def compute_distances(distance, X_train, X_test):
     queries = []
     for x in X_test:
         correct = bf.query_with_distances(x, 10)
+	# disregard queries that don't have near neighbors.
         if len(correct) > 0:
             max_distance = max(correct, key=lambda (_, distance): distance)[1]
             queries.append((x, max_distance, correct))
