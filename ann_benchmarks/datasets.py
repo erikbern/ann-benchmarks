@@ -25,13 +25,16 @@ def get_dataset(which='glove', limit=-1):
         f = open(local_fn + '.txt')
 
     manifest = {
-      'point_type': 'float'
+      'point_type': 'float',
+      'test_size' : 10000
     }
     if os.path.exists(local_fn + '.yaml'):
         with open(local_fn + '.yaml') as mf:
             y = yaml.load(mf)
             if 'dataset' in y:
                 manifest.update(y['dataset'])
+            if 'test_size' in y:
+                manifest['test_size'] = int(y['test_size'])
 
     point_type = manifest['point_type']
 
