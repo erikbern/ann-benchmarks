@@ -50,7 +50,7 @@ class BruteForceBLAS(BaseANN):
             self.index = numpy.ascontiguousarray(
                 map(numpy.packbits, X), dtype=numpy.uint8)
         elif self._metric == 'jaccard':
-            self.index = X # use numpy? 
+            self.index = X
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
 
@@ -83,15 +83,16 @@ class BruteForceBLAS(BaseANN):
             den = float(len(v) * 8)
             dists = [sum([pc[part] for part in point]) / den for point in diff]
         elif self._metric == 'jaccard':
-            dists = [pd[self._metric](v, e) for e in self.index]
+            dists = [pd[self._metric]['distance'](v, e) for e in self.index]
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
-        indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
+        nearest_indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
+        indices = [idx for idx in nearest_indices if pd[self.metric]["distance_valid"](dists[idx])]
         def fix(index):
             ep = self.index[index]
             ev = v
             if self._metric == "hamming":
                 ep = numpy.unpackbits(ep)
                 ev = numpy.unpackbits(ev)
-            return (index, pd[self._metric](ep, ev))
+            return (index, pd[self._metric]['distance'](ep, ev))
         return map(fix, indices)

@@ -9,12 +9,25 @@ def jaccard(a, b):
     if len(a) == 0 or len(b) == 0:
         return 0
     intersect = len(a & b)
-    return  1 - intersect / (float)(len(a) + len(b) - intersect)
+    return  intersect / (float)(len(a) + len(b) - intersect)
 
 
 metrics = {
-    'hamming': lambda a, b: pdist(a, b, "hamming"),
-    'jaccard': lambda a, b: jaccard(a, b),
-    'euclidean': lambda a, b: pdist(a, b, "euclidean"),
-    'angular': lambda a, b: pdist(a, b, "cosine")
+    'hamming': {
+        'distance' : lambda a, b: pdist(a, b, "hamming"),
+        'distance_valid' : lambda a: true
+        }
+    # return 1 - jaccard similarity, because smaller distances are better.
+    'jaccard': {
+        'distance' : lambda a, b:  1 - jaccard(a, b),
+        'distance_valid' : lambda a: a < 1 - 1e-5
+        }
+    'euclidean': {
+        'distance' : lambda a, b: pdist(a, b, "euclidean"),
+        'distance_valid' : lambda a: true
+        }
+    'angular': {
+        'distance' : lambda a, b: pdist(a, b, "cosine"),
+        'distance_valid' : lambda a: true
+        }
 }
