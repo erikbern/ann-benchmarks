@@ -5,5 +5,5 @@ cd "$(dirname "$0")"
 ins_deb_require python-dev python-setuptools &&
   ins_git_get https://github.com/maumueller/annoy
 
- gcc -O3 -march=native -ffast-math -c -o frontend.o ../lib-annitu/wrappers/frontend/frontend.c
+ gcc -O3 -march=native -ffast-math -c -o frontend.o ../frontend.c
  g++ -O3 -march=native -ffast-math -std=c++14 -o fr-annoy-hamming frontend.o ../lib-annoy-hamming.cpp -pthread
