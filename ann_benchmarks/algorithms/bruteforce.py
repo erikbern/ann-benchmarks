@@ -87,7 +87,7 @@ class BruteForceBLAS(BaseANN):
         else:
             assert False, "invalid metric"  # shouldn't get past the constructor!
         nearest_indices = numpy.argpartition(dists, n)[:n]  # partition-sort by distance, get `n` closest
-        indices = [idx for idx in nearest_indices if pd[self.metric]["distance_valid"](dists[idx])]
+        indices = [idx for idx in nearest_indices if pd[self._metric]["distance_valid"](dists[idx])]
         def fix(index):
             ep = self.index[index]
             ev = v
