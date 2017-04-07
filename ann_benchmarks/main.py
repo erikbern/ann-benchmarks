@@ -42,13 +42,12 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
                     algo.run_prepared_query()
                     total = (time.time() - start)
                     candidates = algo.get_prepared_query_results()
-		    print candidates
                 else:
                     start = time.time()
                     candidates = algo.query(v, 10)
                     total = (time.time() - start)
                 candidates = map(
-                    lambda idx: (int(idx), float(pd[distance](v, X_train[idx]))),
+                    lambda idx: (int(idx), float(pd[distance]['distance'](v, X_train[idx]))),
                     list(candidates))
                 return (total, candidates)
             if algo.use_threads() and not force_single:
@@ -60,7 +59,7 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
             total_time = sum(map(lambda (time, _): time, results))
             total_candidates = sum(map(lambda (_, candidates): len(candidates), results))
             search_time = total_time / len(queries)
-	    avg_candidates = total_candidates / len(queries)
+            avg_candidates = total_candidates / len(queries)
             best_search_time = min(best_search_time, search_time)
 
         output = {
@@ -90,8 +89,10 @@ def compute_distances(distance, X_train, X_test):
     queries = []
     for x in X_test:
         correct = bf.query_with_distances(x, 10)
-        max_distance = max(correct, key=lambda (_, distance): distance)[1]
-        queries.append((x, max_distance, correct))
+	# disregard queries that don't have near neighbors.
+        if len(correct) > 0:
+            max_distance = max(correct, key=lambda (_, distance): distance)[1]
+            queries.append((x, max_distance, correct))
         if len(queries) % 100 == 0:
             print(len(queries), '...')
 
