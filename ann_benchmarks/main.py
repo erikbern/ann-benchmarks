@@ -179,6 +179,11 @@ will produce results files with duplicate entries)''',
             help='run each algorithm instance %(metavar)s times and use only the best result',
             default=3)
     parser.add_argument(
+            '--timeout',
+            type=int,
+            help='Timeout (in seconds) for each individual algorithm run, or -1 if no timeout should be set',
+            default=-1)
+    parser.add_argument(
             '--single',
             help='run only a single algorithm instance at a time',
             action='store_true')
@@ -246,9 +251,9 @@ will produce results files with duplicate entries)''',
       ("ann_benchmarks.algorithms.faiss",
           ["FaissLSH"]),
       ("ann_benchmarks.algorithms.dolphinnpy",
-	  ["DolphinnPy"]),
+          ["DolphinnPy"]),
       ("ann_benchmarks.algorithms.datasketch",
-	  ["DataSketch"])
+          ["DataSketch"])
     ]
     constructors = {}
     for name, symbols in constructors_:
@@ -330,7 +335,14 @@ error: the training dataset and query dataset have incompatible manifests"""
             target=run_algo,
             args=(X_train, queries, library, algo, args.distance, results_fn, args.runs, args.single))
         p.start()
-        p.join()
+        if args.timeout >= 0:
+            p.join(args.timeout)
+            if p.is_alive():
+                print(algo.name, " has timed out after %d seconds " % (args.timeout))
+                p.terminate()
+                p.join()
+        else:
+            p.join()
 
 if __name__ == '__main__':
     main()
