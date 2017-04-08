@@ -15,7 +15,7 @@ def jaccard(a, b):
 metrics = {
     'hamming': {
         'distance' : lambda a, b: pdist(a, b, "hamming"),
-        'distance_valid' : lambda a: true
+        'distance_valid' : lambda a: True
         },
     # return 1 - jaccard similarity, because smaller distances are better.
     'jaccard': {
@@ -24,10 +24,10 @@ metrics = {
         },
     'euclidean': {
         'distance' : lambda a, b: pdist(a, b, "euclidean"),
-        'distance_valid' : lambda a: true
+        'distance_valid' : lambda a: True
         },
     'angular': {
         'distance' : lambda a, b: pdist(a, b, "cosine"),
-        'distance_valid' : lambda a: true
+        'distance_valid' : lambda a: True
         }
 }
