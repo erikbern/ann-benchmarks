@@ -196,6 +196,33 @@ for ds in args.dataset:
     with open(outputdir + ds + ".html", "w") as text_file:
         text_file.write(output_str)
 
+# Build a website for each algorithm
+# Get all algorithms
+xm, ym = plot_variants[args.plottype[0]]
+_, all_algos = load_results(args.dataset, xm, ym, args.limit)
+# Build website. TODO Refactor with dataset code.
+for algo in all_algos:
+    output_str = get_html_header(algo)
+    output_str += """
+        <div class="container">
+        <h2>Plots for %(id)s""" % { "id" : algo }
+    for plottype in args.plottype:
+        xm, ym = plot_variants[plottype]
+        runs, all_algos = load_results(args.dataset, xm, ym, args.limit)
+        all_data = {}
+        for ds in runs:
+            all_data[ds] = runs[ds][algo]
+        linestyles = convert_linestyle(create_linestyles(args.dataset))
+        print "Processing '%s' with %s" % (algo, plottype)
+        output_str += create_plot(algo, all_data, xm, ym, linestyles)
+    output_str += """
+    </div>
+    </body>
+</html>
+"""
+    with open(outputdir + algo + ".html", "w") as text_file:
+        text_file.write(output_str)
+
 # Build an index page
 with open(outputdir + "index.html", "w") as text_file:
     output_str = get_html_header("ANN-Benchmarks")
@@ -207,6 +234,14 @@ with open(outputdir + "index.html", "w") as text_file:
     for ds in args.dataset:
         output_str += """
             <li><a href="%(id)s.html">%(id)s</a></li>""" % { "id" : ds }
+    output_str += """
+        </ul>
+        <h2>Overview over Algorithms</h2>
+        <p>Click on an algorithm to see its performance/quality plots.</p>
+        <ul>"""
+    for algo in all_algos:
+        output_str += """
+            <li><a href="%(id)s.html">%(id)s</a></li>""" % { "id" : algo }
     output_str += """
         </ul>
         </div>
