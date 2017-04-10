@@ -5,6 +5,7 @@ import numpy
 from ann_benchmarks.main import get_fn
 from ann_benchmarks.plotting.plot_variants import all_plot_variants as plot_variants
 from ann_benchmarks.plotting.utils  import get_plot_label, create_pointset, load_results, create_linestyles
+import plot
 
 colors = [
     "rgba(166,206,227,1)",
@@ -235,6 +236,10 @@ for ds in args.dataset:
         linestyles = convert_linestyle(create_linestyles(all_algos))
         print "Processing '%s' with %s" % (ds, plottype)
         output_str += create_plot(ds, runs[ds], xm, ym, linestyles)
+        # create png plot for summary page
+        plot.create_plot(runs[ds], True, False,
+                False, True, xm, ym, outputdir + ds + ".png",
+                create_linestyles(all_algos))
 
     output_str += """
     </div>
@@ -263,6 +268,9 @@ for algo in all_algos:
         linestyles = convert_linestyle(create_linestyles(args.dataset))
         print "Processing '%s' with %s" % (algo, plottype)
         output_str += create_plot(algo, all_data, xm, ym, linestyles)
+        plot.create_plot(all_data, True, False,
+                False, True, xm, ym, outputdir + algo + ".png",
+                create_linestyles(args.dataset))
     output_str += """
     </div>
     </body>
@@ -279,14 +287,18 @@ with open(outputdir + "index.html", "w") as text_file:
             <h2>Info</h2>
             <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms.</p>
             <h2>Benchmarking Results</h2>
-            Results are split by dataset and by algorithm. Click on the plot to get details.
+            Results are split by dataset and by algorithm. Click on the plot to get detailled interactive plots.
             <div class="results">
             <h3>... by dataset</h3>
-        """
+            <ul class="list-inline"><b>Datasets</b>: """
+    for ds in args.dataset:
+        output_str += "<li><a href=%(name)s>%(name)s</a></li>" % {"name" : ds}
+    output_str += "</ul>"
     for ds in args.dataset:
         output_str += """
-            <div class="row">
-                <div class = "col-md-4">
+            <a href="./%(name)s.html">
+            <div class="row %(name)s">
+                <div class = "col-md-4 bg-success">
                     <h4>%(name)s</h4>
                     <dl class="dl-horizontal">
                         <dt>points</dt>
@@ -300,20 +312,28 @@ with open(outputdir + "index.html", "w") as text_file:
                 <div class = "col-md-8">
                     <img class = "img-responsive" src="%(name)s.png" />
                 </div>
-            </div>""" % { "name" : ds, "points" : "", "metric" : "", "dimension" : "" }
+            </div>
+            </a>
+            <hr />""" % { "name" : ds, "points" : "", "metric" : "", "dimension" : "" }
     output_str += """
         <h3>... by algorithm</h3>
-        """
+        <ul class="list-inline"><b>Algorithms:</b>"""
+    for algo in all_algos:
+        output_str += "<li><a href=%(name)s>%(name)s</a></li>" % {"name" : algo}
+    output_str += "</ul>"
     for algo in all_algos:
         output_str += """
-            <div class="row">
-                <div class = "col-md-4">
+            <a href="./%(name)s.html">
+            <div class="row %(name)s">
+                <div class = "col-md-4 bg-success">
                     <h4>%(name)s</h4>
                 </div>
                 <div class = "col-md-8">
                     <img class = "img-responsive" src="%(name)s.png" />
                 </div>
-            </div>""" % { "name" : algo}
+            </div>
+            </a>
+            <hr />""" % { "name" : algo}
     output_str += """
             <div class="contact">
             <h2>Contact</h2>
