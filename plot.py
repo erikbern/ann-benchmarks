@@ -33,6 +33,10 @@ parser.add_argument(
     help='Draw the Y-axis using a logarithmic scale',
     action='store_true')
 parser.add_argument(
+    '-G', '--golden',
+    help='Use golden ratio as plotsize',
+    action='store_true')
+parser.add_argument(
     '--raw',
     help='Also show raw results in faded colours',
     action='store_true')
@@ -47,7 +51,10 @@ for ds, fn_out in args.dataset:
     all_data = runs[ds]
     handles = []
     labels = []
-    plt.figure(figsize=(7, 7))
+    if args.golden:
+        plt.figure(figsize=(7, 4.35))
+    else:
+        plt.figure(figsize=(7, 7))
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
         xs, ys, axs, ays, ls = create_pointset(algo, all_data, xm, ym)
         color, faded, linestyle, marker = linestyles[algo]
