@@ -1,5 +1,5 @@
 import argparse
-import os, json, pickle
+import os, json, pickle, yaml
 import numpy
 
 from ann_benchmarks.main import get_fn
@@ -49,13 +49,15 @@ parser.add_argument(
     help = 'Which plots to generate',
     nargs = '*',
     choices = plot_variants.keys(),
-    default = [plot_variants.keys()[0]],
-    )
+    default = [plot_variants.keys()[0]])
 parser.add_argument(
     '--outputdir',
     help = 'Select output directory',
-    action = 'store'
-    )
+    action = 'store')
+parser.add_argument(
+    '--definitions',
+    help = 'YAML file with dataset and algorithm annotations',
+    action = 'store')
 parser.add_argument(
     '--limit',
     help='the maximum number of points to load from the dataset, or -1 to load all of them',
@@ -229,6 +231,7 @@ def create_plot(ds, all_data, xm, ym, linestyle):
 for ds in args.dataset:
     output_str = get_html_header(ds)
     output_str += """
+        <div class="container">
         <h2>Plots for %(id)s""" % { "id" : ds }
     for plottype in args.plottype:
         xm, ym = plot_variants[plottype]
@@ -242,6 +245,7 @@ for ds in args.dataset:
                 create_linestyles(all_algos))
 
     output_str += """
+        </div>
     </div>
     </body>
 </html>
@@ -281,14 +285,20 @@ for algo in all_algos:
 
 # Build an index page
 with open(outputdir + "index.html", "w") as text_file:
+    try:
+        with open(args.definitions) as f:
+            definitions = yaml.load(f)
+    except:
+        print "Could not load definitions file, annotations not available."
+        definitions = {}
     output_str = get_html_header("ANN-Benchmarks")
     output_str += """
         <div class="container">
             <h2>Info</h2>
             <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms.</p>
+            <div id="results">
             <h2>Benchmarking Results</h2>
             Results are split by dataset and by algorithm. Click on the plot to get detailled interactive plots.
-            <div class="results">
             <h3>... by dataset</h3>
             <ul class="list-inline"><b>Datasets</b>: """
     for ds in args.dataset:
@@ -297,16 +307,18 @@ with open(outputdir + "index.html", "w") as text_file:
     for ds in args.dataset:
         output_str += """
             <a href="./%(name)s.html">
-            <div class="row %(name)s">
+            <div class="row" id="%(name)s">
                 <div class = "col-md-4 bg-success">
                     <h4>%(name)s</h4>
                     <dl class="dl-horizontal">
-                        <dt>points</dt>
-                        <dd>%(points)s</dd>
-                        <dt>metric</dt>
-                        <dd>%(metric)s</dd>
-                        <dt>dimensions</dt>
-                        <dd>%(dimension)s</dd>
+                    """ % { "name" : ds }
+        if definitions["datasets"] != None and definitions["datasets"][ds] != None:
+            for k in definitions["datasets"][ds]:
+                output_str += """
+                        <dt>%s</dt>
+                        <dd>%s</dd>
+                        """ % (k, str(definitions["datasets"][ds][k]))
+            output_str += """
                     </dl>
                 </div>
                 <div class = "col-md-8">
@@ -314,7 +326,7 @@ with open(outputdir + "index.html", "w") as text_file:
                 </div>
             </div>
             </a>
-            <hr />""" % { "name" : ds, "points" : "", "metric" : "", "dimension" : "" }
+            <hr />""" % { "name" : ds }
     output_str += """
         <h3>... by algorithm</h3>
         <ul class="list-inline"><b>Algorithms:</b>"""
@@ -324,9 +336,19 @@ with open(outputdir + "index.html", "w") as text_file:
     for algo in all_algos:
         output_str += """
             <a href="./%(name)s.html">
-            <div class="row %(name)s">
+            <div class="row" id="%(name)s">
                 <div class = "col-md-4 bg-success">
                     <h4>%(name)s</h4>
+                    <dl class="dl-horizontal">
+                    """ % { "name" : algo }
+        if definitions["algos"] != None and definitions["algos"][algo] != None:
+            for k in definitions["algos"][algo]:
+                output_str += """
+                        <dt>%s</dt>
+                        <dd>%s</dd>
+                        """ % (k, str(definitions["algos"][algo][k]))
+            output_str += """
+                    </dl>
                 </div>
                 <div class = "col-md-8">
                     <img class = "img-responsive" src="%(name)s.png" />
@@ -335,7 +357,7 @@ with open(outputdir + "index.html", "w") as text_file:
             </a>
             <hr />""" % { "name" : algo}
     output_str += """
-            <div class="contact">
+            <div id="contact">
             <h2>Contact</h2>
             </div>
         </div>
