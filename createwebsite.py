@@ -107,6 +107,12 @@ def get_html_header(title):
               <ul class="nav navbar-nav">
                 <li class="active"><a href="index.html">Home</a></li>
               </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#results">Results</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#contact">Contact</a></li>
+              </ul>
             </div><!--/.nav-collapse -->
           </div>
         </nav>""" % {"title" : title}
@@ -217,11 +223,11 @@ def create_plot(ds, all_data, xm, ym, linestyle):
         """ % { "caption" : get_plot_label(xm, ym) }
     return output_str
 
+
 # Build a website for each dataset
 for ds in args.dataset:
     output_str = get_html_header(ds)
     output_str += """
-        <div class="container">
         <h2>Plots for %(id)s""" % { "id" : ds }
     for plottype in args.plottype:
         xm, ym = plot_variants[plottype]
@@ -270,22 +276,48 @@ with open(outputdir + "index.html", "w") as text_file:
     output_str = get_html_header("ANN-Benchmarks")
     output_str += """
         <div class="container">
-        <h2>Overview over Datasets</h2>
-        <p>Click on a dataset to see the performance/quality plots.</p>
-        <ul>"""
+            <h2>Info</h2>
+            <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms.</p>
+            <h2>Benchmarking Results</h2>
+            Results are split by dataset and by algorithm. Click on the plot to get details.
+            <div class="results">
+            <h3>... by dataset</h3>
+        """
     for ds in args.dataset:
         output_str += """
-            <li><a href="%(id)s.html">%(id)s</a></li>""" % { "id" : ds }
+            <div class="row">
+                <div class = "col-md-4">
+                    <h4>%(name)s</h4>
+                    <dl class="dl-horizontal">
+                        <dt>points</dt>
+                        <dd>%(points)s</dd>
+                        <dt>metric</dt>
+                        <dd>%(metric)s</dd>
+                        <dt>dimensions</dt>
+                        <dd>%(dimension)s</dd>
+                    </dl>
+                </div>
+                <div class = "col-md-8">
+                    <img class = "img-responsive" src="%(name)s.png" />
+                </div>
+            </div>""" % { "name" : ds, "points" : "", "metric" : "", "dimension" : "" }
     output_str += """
-        </ul>
-        <h2>Overview over Algorithms</h2>
-        <p>Click on an algorithm to see its performance/quality plots.</p>
-        <ul>"""
+        <h3>... by algorithm</h3>
+        """
     for algo in all_algos:
         output_str += """
-            <li><a href="%(id)s.html">%(id)s</a></li>""" % { "id" : algo }
+            <div class="row">
+                <div class = "col-md-4">
+                    <h4>%(name)s</h4>
+                </div>
+                <div class = "col-md-8">
+                    <img class = "img-responsive" src="%(name)s.png" />
+                </div>
+            </div>""" % { "name" : algo}
     output_str += """
-        </ul>
+            <div class="contact">
+            <h2>Contact</h2>
+            </div>
         </div>
     </body>
 </html>"""
