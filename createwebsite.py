@@ -60,6 +60,10 @@ parser.add_argument(
     help='the maximum number of points to load from the dataset, or -1 to load all of them',
     type=int,
     default=-1)
+parser.add_argument(
+    '--latex',
+    help='generates latex code for each plot',
+    action = 'store_true')
 args = parser.parse_args()
 
 outputdir = ""
@@ -173,6 +177,44 @@ def create_plot(ds, all_data, xm, ym, linestyle):
     output_str += """
         </script>
         """
+    if args.latex:
+        output_str += """
+        <h3>Latex code for plot</h3>
+        <pre>
+\\begin{figure}
+    \\centering
+    \\begin{tikzpicture}
+        \\begin{axis}[
+            xlabel={%(xlabel)s},
+            ylabel={%(ylabel)s},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+        """ % {"xlabel" : xm["description"], "ylabel" : ym["description"]}
+        color_index = 0
+        for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
+                xs, ys, axs, ays, ls = create_pointset(algo, all_data, xm, ym)
+                for i in range(len(ls)):
+                    if "Subprocess" in ls[i]:
+                        ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
+                output_str += """
+            \\addplot coordinates {"""
+                for i in range(len(xs)):
+                    output_str += "(%s, %s)" % (str(xs[i]), str(ys[i]))
+                output_str += " };"
+                output_str += """
+            \\addlegendentry{%s};
+                """ % (algo)
+        output_str += """
+        \\end{axis}
+    \\end{tikzpicture}
+    \\caption{%(caption)s}
+    \\label{}
+\\end{figure}
+</pre>
+        """ % { "caption" : get_plot_label(xm, ym) }
     return output_str
 
 # Build a website for each dataset
