@@ -8,50 +8,12 @@ import argparse
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, load_results, create_linestyles, create_pointset
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    '--dataset',
-    nargs = 2,
-    metavar = ("DATASET", "OUTPUT"),
-    action='append')
-parser.add_argument(
-    '-x', '--x-axis',
-    help = 'Which metric to use on the X-axis',
-    choices = metrics.keys(),
-    default = "k-nn")
-parser.add_argument(
-    '-y', '--y-axis',
-    help = 'Which metric to use on the Y-axis',
-    choices = metrics.keys(),
-    default = "qps")
-parser.add_argument(
-    '-X', '--x-log',
-    help='Draw the X-axis using a logarithmic scale',
-    action='store_true')
-parser.add_argument(
-    '-Y', '--y-log',
-    help='Draw the Y-axis using a logarithmic scale',
-    action='store_true')
-parser.add_argument(
-    '-G', '--golden',
-    help='Use golden ratio as plotsize',
-    action='store_true')
-parser.add_argument(
-    '--raw',
-    help='Also show raw results in faded colours',
-    action='store_true')
-args = parser.parse_args()
-xm = metrics[args.x_axis]
-ym = metrics[args.y_axis]
-runs, all_algos = load_results([ds for ds, _ in args.dataset], xm, ym)
-linestyles = create_linestyles(all_algos)
 
+def create_plot(all_data, golden, raw, x_log, y_log, xm, ym, fn_out, linestyles):
 # Now generate each plot
-for ds, fn_out in args.dataset:
-    all_data = runs[ds]
     handles = []
     labels = []
-    if args.golden:
+    if golden:
         plt.figure(figsize=(7, 4.35))
     else:
         plt.figure(figsize=(7, 7))
@@ -60,13 +22,13 @@ for ds, fn_out in args.dataset:
         color, faded, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         handles.append(handle)
-        if args.raw:
+        if raw:
             handle2, = plt.plot(axs, ays, '-', label=algo, color=faded, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         labels.append(algo)
 
-    if args.x_log:
+    if x_log:
         plt.gca().set_xscale('log')
-    if args.y_log:
+    if y_log:
         plt.gca().set_yscale('log')
     plt.gca().set_title(get_plot_label(xm, ym))
     plt.gca().set_ylabel(ym['description'])
@@ -80,3 +42,46 @@ for ds, fn_out in args.dataset:
     if 'lim' in ym:
         plt.ylim(ym['lim'])
     plt.savefig(fn_out, bbox_inches='tight')
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--dataset',
+        nargs = 2,
+        metavar = ("DATASET", "OUTPUT"),
+        action='append')
+    parser.add_argument(
+        '-x', '--x-axis',
+        help = 'Which metric to use on the X-axis',
+        choices = metrics.keys(),
+        default = "k-nn")
+    parser.add_argument(
+        '-y', '--y-axis',
+        help = 'Which metric to use on the Y-axis',
+        choices = metrics.keys(),
+        default = "qps")
+    parser.add_argument(
+        '-X', '--x-log',
+        help='Draw the X-axis using a logarithmic scale',
+        action='store_true')
+    parser.add_argument(
+        '-Y', '--y-log',
+        help='Draw the Y-axis using a logarithmic scale',
+        action='store_true')
+    parser.add_argument(
+        '-G', '--golden',
+        help='Use golden ratio as plotsize',
+        action='store_true')
+    parser.add_argument(
+        '--raw',
+        help='Also show raw results in faded colours',
+        action='store_true')
+    args = parser.parse_args()
+    xm = metrics[args.x_axis]
+    ym = metrics[args.y_axis]
+    runs, all_algos = load_results([ds for ds, _ in args.dataset], xm, ym)
+    linestyles = create_linestyles(all_algos)
+    for ds, fn_out in args.dataset:
+        all_data = runs[ds]
+        create_plot(all_data, args.golden, args.raw, args.x_log,
+                args.y_log, xm, ym, fn_out, linestyles)
