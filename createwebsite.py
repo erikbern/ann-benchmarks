@@ -1,10 +1,11 @@
 import argparse
-import os, json, pickle
+import os, json, pickle, yaml
 import numpy
 
 from ann_benchmarks.main import get_fn
 from ann_benchmarks.plotting.plot_variants import all_plot_variants as plot_variants
 from ann_benchmarks.plotting.utils  import get_plot_label, create_pointset, load_results, create_linestyles
+import plot
 
 colors = [
     "rgba(166,206,227,1)",
@@ -48,18 +49,24 @@ parser.add_argument(
     help = 'Which plots to generate',
     nargs = '*',
     choices = plot_variants.keys(),
-    default = [plot_variants.keys()[0]],
-    )
+    default = [plot_variants.keys()[0]])
 parser.add_argument(
     '--outputdir',
     help = 'Select output directory',
-    action = 'store'
-    )
+    action = 'store')
+parser.add_argument(
+    '--definitions',
+    help = 'YAML file with dataset and algorithm annotations',
+    action = 'store')
 parser.add_argument(
     '--limit',
     help='the maximum number of points to load from the dataset, or -1 to load all of them',
     type=int,
     default=-1)
+parser.add_argument(
+    '--latex',
+    help='generates latex code for each plot',
+    action = 'store_true')
 args = parser.parse_args()
 
 outputdir = ""
@@ -102,6 +109,12 @@ def get_html_header(title):
             <div id="navbar" class="collapse navbar-collapse">
               <ul class="nav navbar-nav">
                 <li class="active"><a href="index.html">Home</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#results">Results</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#contact">Contact</a></li>
               </ul>
             </div><!--/.nav-collapse -->
           </div>
@@ -173,7 +186,46 @@ def create_plot(ds, all_data, xm, ym, linestyle):
     output_str += """
         </script>
         """
+    if args.latex:
+        output_str += """
+        <h3>Latex code for plot</h3>
+        <pre>
+\\begin{figure}
+    \\centering
+    \\begin{tikzpicture}
+        \\begin{axis}[
+            xlabel={%(xlabel)s},
+            ylabel={%(ylabel)s},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+        """ % {"xlabel" : xm["description"], "ylabel" : ym["description"]}
+        color_index = 0
+        for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
+                xs, ys, axs, ays, ls = create_pointset(algo, all_data, xm, ym)
+                for i in range(len(ls)):
+                    if "Subprocess" in ls[i]:
+                        ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
+                output_str += """
+            \\addplot coordinates {"""
+                for i in range(len(xs)):
+                    output_str += "(%s, %s)" % (str(xs[i]), str(ys[i]))
+                output_str += " };"
+                output_str += """
+            \\addlegendentry{%s};
+                """ % (algo)
+        output_str += """
+        \\end{axis}
+    \\end{tikzpicture}
+    \\caption{%(caption)s}
+    \\label{}
+\\end{figure}
+</pre>
+        """ % { "caption" : get_plot_label(xm, ym) }
     return output_str
+
 
 # Build a website for each dataset
 for ds in args.dataset:
@@ -187,8 +239,13 @@ for ds in args.dataset:
         linestyles = convert_linestyle(create_linestyles(all_algos))
         print "Processing '%s' with %s" % (ds, plottype)
         output_str += create_plot(ds, runs[ds], xm, ym, linestyles)
+        # create png plot for summary page
+        plot.create_plot(runs[ds], True, False,
+                False, True, xm, ym, outputdir + ds + ".png",
+                create_linestyles(all_algos))
 
     output_str += """
+        </div>
     </div>
     </body>
 </html>
@@ -196,19 +253,113 @@ for ds in args.dataset:
     with open(outputdir + ds + ".html", "w") as text_file:
         text_file.write(output_str)
 
+# Build a website for each algorithm
+# Get all algorithms
+xm, ym = plot_variants[args.plottype[0]]
+_, all_algos = load_results(args.dataset, xm, ym, args.limit)
+# Build website. TODO Refactor with dataset code.
+for algo in all_algos:
+    output_str = get_html_header(algo)
+    output_str += """
+        <div class="container">
+        <h2>Plots for %(id)s""" % { "id" : algo }
+    for plottype in args.plottype:
+        xm, ym = plot_variants[plottype]
+        runs, all_algos = load_results(args.dataset, xm, ym, args.limit)
+        all_data = {}
+        for ds in runs:
+            all_data[ds] = runs[ds][algo]
+        linestyles = convert_linestyle(create_linestyles(args.dataset))
+        print "Processing '%s' with %s" % (algo, plottype)
+        output_str += create_plot(algo, all_data, xm, ym, linestyles)
+        plot.create_plot(all_data, True, False,
+                False, True, xm, ym, outputdir + algo + ".png",
+                create_linestyles(args.dataset))
+    output_str += """
+    </div>
+    </body>
+</html>
+"""
+    with open(outputdir + algo + ".html", "w") as text_file:
+        text_file.write(output_str)
+
 # Build an index page
 with open(outputdir + "index.html", "w") as text_file:
+    try:
+        with open(args.definitions) as f:
+            definitions = yaml.load(f)
+    except:
+        print "Could not load definitions file, annotations not available."
+        definitions = {}
     output_str = get_html_header("ANN-Benchmarks")
     output_str += """
         <div class="container">
-        <h2>Overview over Datasets</h2>
-        <p>Click on a dataset to see the performance/quality plots.</p>
-        <ul>"""
+            <h2>Info</h2>
+            <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms.</p>
+            <div id="results">
+            <h2>Benchmarking Results</h2>
+            Results are split by dataset and by algorithm. Click on the plot to get detailled interactive plots.
+            <h3>... by dataset</h3>
+            <ul class="list-inline"><b>Datasets</b>: """
+    for ds in args.dataset:
+        output_str += "<li><a href=%(name)s>%(name)s</a></li>" % {"name" : ds}
+    output_str += "</ul>"
     for ds in args.dataset:
         output_str += """
-            <li><a href="%(id)s.html">%(id)s</a></li>""" % { "id" : ds }
+            <a href="./%(name)s.html">
+            <div class="row" id="%(name)s">
+                <div class = "col-md-4 bg-success">
+                    <h4>%(name)s</h4>
+                    <dl class="dl-horizontal">
+                    """ % { "name" : ds }
+        if definitions["datasets"] != None and definitions["datasets"][ds] != None:
+            for k in definitions["datasets"][ds]:
+                output_str += """
+                        <dt>%s</dt>
+                        <dd>%s</dd>
+                        """ % (k, str(definitions["datasets"][ds][k]))
+            output_str += """
+                    </dl>
+                </div>
+                <div class = "col-md-8">
+                    <img class = "img-responsive" src="%(name)s.png" />
+                </div>
+            </div>
+            </a>
+            <hr />""" % { "name" : ds }
     output_str += """
-        </ul>
+        <h3>... by algorithm</h3>
+        <ul class="list-inline"><b>Algorithms:</b>"""
+    for algo in all_algos:
+        output_str += "<li><a href=%(name)s>%(name)s</a></li>" % {"name" : algo}
+    output_str += "</ul>"
+    for algo in all_algos:
+        output_str += """
+            <a href="./%(name)s.html">
+            <div class="row" id="%(name)s">
+                <div class = "col-md-4 bg-success">
+                    <h4>%(name)s</h4>
+                    <dl class="dl-horizontal">
+                    """ % { "name" : algo }
+        if definitions["algos"] != None and definitions["algos"][algo] != None:
+            for k in definitions["algos"][algo]:
+                output_str += """
+                        <dt>%s</dt>
+                        <dd>%s</dd>
+                        """ % (k, str(definitions["algos"][algo][k]))
+            output_str += """
+                    </dl>
+                </div>
+                <div class = "col-md-8">
+                    <img class = "img-responsive" src="%(name)s.png" />
+                </div>
+            </div>
+            </a>
+            <hr />""" % { "name" : algo}
+    output_str += """
+            <div id="contact">
+            <h2>Contact</h2>
+            </div>
         </div>
     </body>
 </html>"""
