@@ -3,6 +3,7 @@ mpl.use('Agg')
 import argparse
 import os, json, pickle, yaml
 import numpy
+import hashlib
 
 from ann_benchmarks.main import get_fn
 from ann_benchmarks.plotting.plot_variants import all_plot_variants as plot_variants
@@ -202,7 +203,17 @@ def create_plot(ds, all_data, xm, ym, linestyle):
         """
     if args.latex:
         output_str += """
-        <h3>Latex code for plot</h3>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_%(buttonlabel)s" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_%(buttonlabel)s").click(function() {
+            $("#plot_%(buttonlabel)s").toggle();
+        });
+        </script>
+        <div id="plot_%(buttonlabel)s" style="display:none">
         <pre>
 \\begin{figure}
     \\centering
@@ -215,7 +226,7 @@ def create_plot(ds, all_data, xm, ym, linestyle):
             legend style = { anchor=west},
             cycle list name = black white
             ]
-        """ % {"xlabel" : xm["description"], "ylabel" : ym["description"]}
+        """ % {"xlabel" : xm["description"], "ylabel" : ym["description"], "buttonlabel" : hashlib.sha224(get_plot_label(xm, ym)).hexdigest()}
         color_index = 0
         for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
                 xs, ys, axs, ays, ls = create_pointset(algo, all_data, xm, ym)
@@ -237,6 +248,7 @@ def create_plot(ds, all_data, xm, ym, linestyle):
     \\label{}
 \\end{figure}
 </pre>
+</div>
         """ % { "caption" : get_plot_label(xm, ym) }
     return output_str
 
