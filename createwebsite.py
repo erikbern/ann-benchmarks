@@ -1,9 +1,12 @@
+import matplotlib as mpl
+mpl.use('Agg')
 import argparse
 import os, json, pickle, yaml
 import numpy
 
 from ann_benchmarks.main import get_fn
 from ann_benchmarks.plotting.plot_variants import all_plot_variants as plot_variants
+from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, create_pointset, load_results, create_linestyles
 import plot
 
@@ -239,11 +242,10 @@ for ds in args.dataset:
         linestyles = convert_linestyle(create_linestyles(all_algos))
         print "Processing '%s' with %s" % (ds, plottype)
         output_str += create_plot(ds, runs[ds], xm, ym, linestyles)
-        # create png plot for summary page
-        plot.create_plot(runs[ds], True, False,
-                False, True, xm, ym, outputdir + ds + ".png",
-                create_linestyles(all_algos))
-
+    # create png plot for summary page
+    plot.create_plot(runs[ds], True, False,
+            False, True, metrics['k-nn'], metrics['qps'], outputdir + ds + ".png",
+            create_linestyles(all_algos))
     output_str += """
         </div>
     </div>
@@ -272,9 +274,9 @@ for algo in all_algos:
         linestyles = convert_linestyle(create_linestyles(args.dataset))
         print "Processing '%s' with %s" % (algo, plottype)
         output_str += create_plot(algo, all_data, xm, ym, linestyles)
-        plot.create_plot(all_data, True, False,
-                False, True, xm, ym, outputdir + algo + ".png",
-                create_linestyles(args.dataset))
+    plot.create_plot(all_data, True, False,
+            False, True, metrics['k-nn'], metrics['qps'], outputdir + algo + ".png",
+            create_linestyles(args.dataset))
     output_str += """
     </div>
     </body>
@@ -312,21 +314,21 @@ with open(outputdir + "index.html", "w") as text_file:
                     <h4>%(name)s</h4>
                     <dl class="dl-horizontal">
                     """ % { "name" : ds }
-        if definitions["datasets"] != None and definitions["datasets"][ds] != None:
+        if "datasets" in definitions and ds in definitions["datasets"]:
             for k in definitions["datasets"][ds]:
                 output_str += """
                         <dt>%s</dt>
                         <dd>%s</dd>
                         """ % (k, str(definitions["datasets"][ds][k]))
-            output_str += """
-                    </dl>
-                </div>
-                <div class = "col-md-8">
-                    <img class = "img-responsive" src="%(name)s.png" />
-                </div>
+        output_str += """
+                </dl>
             </div>
-            </a>
-            <hr />""" % { "name" : ds }
+            <div class = "col-md-8">
+                <img class = "img-responsive" src="%(name)s.png" />
+            </div>
+        </div>
+        </a>
+        <hr />""" % { "name" : ds }
     output_str += """
         <h3>... by algorithm</h3>
         <ul class="list-inline"><b>Algorithms:</b>"""
@@ -341,21 +343,21 @@ with open(outputdir + "index.html", "w") as text_file:
                     <h4>%(name)s</h4>
                     <dl class="dl-horizontal">
                     """ % { "name" : algo }
-        if definitions["algos"] != None and definitions["algos"][algo] != None:
+        if "alogs" in definitions and algo in definitions["algos"]:
             for k in definitions["algos"][algo]:
                 output_str += """
                         <dt>%s</dt>
                         <dd>%s</dd>
                         """ % (k, str(definitions["algos"][algo][k]))
-            output_str += """
-                    </dl>
-                </div>
-                <div class = "col-md-8">
-                    <img class = "img-responsive" src="%(name)s.png" />
-                </div>
+        output_str += """
+                </dl>
             </div>
-            </a>
-            <hr />""" % { "name" : algo}
+            <div class = "col-md-8">
+                <img class = "img-responsive" src="%(name)s.png" />
+            </div>
+        </div>
+        </a>
+        <hr />""" % { "name" : algo}
     output_str += """
             <div id="contact">
             <h2>Contact</h2>
