@@ -18,7 +18,7 @@ ins_git_get() {
 
 # $@: package names
 ins_deb_require() {
-  apt-get install -y "$@"
+  dpkg-query --show "$@" || apt-get install -y "$@"
 }
 
 ins_pip_get() {
