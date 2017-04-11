@@ -48,7 +48,8 @@ def load_results_wrapper(ds, xm, ym, limit, convert = False):
     if convert:
         all_data = {}
         for ds in runs:
-            all_data[ds] = runs[ds][algo]
+            if algo in runs[ds]:
+                all_data[ds] = runs[ds][algo]
         return (runs, all_data)
     return (runs, all_algos)
 
@@ -267,12 +268,11 @@ for ds in args.dataset:
     with open(outputdir + ds + ".html", "w") as text_file:
         text_file.write(output_str)
 
+_, algorithms = load_results_wrapper(args.dataset, xm, ym, args.limit)
 # Build a website for each algorithm
 # Get all algorithms
-xm, ym = plot_variants[args.plottype[0]]
-_, all_algos = load_results(args.dataset, xm, ym, args.limit)
 # Build website. TODO Refactor with dataset code.
-for algo in all_algos:
+for algo in algorithms:
     output_str = get_html_header(algo)
     output_str += """
         <div class="container">
@@ -285,7 +285,7 @@ for algo in all_algos:
         output_str += create_plot(algo, all_algos, xm, ym, linestyles)
     xm, ym = metrics['k-nn'], metrics['qps']
     runs, all_algos = load_results_wrapper(args.dataset, xm, ym, args.limit, convert = True)
-    plot.create_plot(all_data, True, False,
+    plot.create_plot(all_algos, True, False,
             False, True, xm, ym,  outputdir + algo + ".png",
             create_linestyles(args.dataset))
     output_str += """
@@ -343,10 +343,10 @@ with open(outputdir + "index.html", "w") as text_file:
     output_str += """
         <h3>... by algorithm</h3>
         <ul class="list-inline"><b>Algorithms:</b>"""
-    for algo in all_algos:
+    for algo in algorithms:
         output_str += "<li><a href=%(name)s>%(name)s</a></li>" % {"name" : algo}
     output_str += "</ul>"
-    for algo in all_algos:
+    for algo in algorithms:
         output_str += """
             <a href="./%(name)s.html">
             <div class="row" id="%(name)s">
