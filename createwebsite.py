@@ -43,6 +43,16 @@ def convert_linestyle(ls):
                 algostyle[2], point_styles[algostyle[3]])
     return new_ls
 
+def load_results_wrapper(ds, xm, ym, limit, convert = False):
+    runs, all_algos = load_results(ds, xm, ym, limit)
+    if convert:
+        all_data = {}
+        for ds in runs:
+            all_data[ds] = runs[ds][algo]
+        return (runs, all_data)
+    return (runs, all_algos)
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '--dataset',
@@ -238,13 +248,15 @@ for ds in args.dataset:
         <h2>Plots for %(id)s""" % { "id" : ds }
     for plottype in args.plottype:
         xm, ym = plot_variants[plottype]
-        runs, all_algos = load_results(args.dataset, xm, ym, args.limit)
+        runs, all_algos = load_results_wrapper(args.dataset, xm, ym, args.limit)
         linestyles = convert_linestyle(create_linestyles(all_algos))
         print "Processing '%s' with %s" % (ds, plottype)
         output_str += create_plot(ds, runs[ds], xm, ym, linestyles)
     # create png plot for summary page
+    xm, ym = metrics['k-nn'], metrics['qps']
+    runs, all_algos = load_results_wrapper(args.dataset, xm, ym, args.limit)
     plot.create_plot(runs[ds], True, False,
-            False, True, metrics['k-nn'], metrics['qps'], outputdir + ds + ".png",
+            False, True, xm, ym,  outputdir + ds + ".png",
             create_linestyles(all_algos))
     output_str += """
         </div>
@@ -267,15 +279,14 @@ for algo in all_algos:
         <h2>Plots for %(id)s""" % { "id" : algo }
     for plottype in args.plottype:
         xm, ym = plot_variants[plottype]
-        runs, all_algos = load_results(args.dataset, xm, ym, args.limit)
-        all_data = {}
-        for ds in runs:
-            all_data[ds] = runs[ds][algo]
+        runs, all_algos = load_results_wrapper(args.dataset, xm, ym, args.limit, convert = True)
         linestyles = convert_linestyle(create_linestyles(args.dataset))
         print "Processing '%s' with %s" % (algo, plottype)
-        output_str += create_plot(algo, all_data, xm, ym, linestyles)
+        output_str += create_plot(algo, all_algos, xm, ym, linestyles)
+    xm, ym = metrics['k-nn'], metrics['qps']
+    runs, all_algos = load_results_wrapper(args.dataset, xm, ym, args.limit, convert = True)
     plot.create_plot(all_data, True, False,
-            False, True, metrics['k-nn'], metrics['qps'], outputdir + algo + ".png",
+            False, True, xm, ym,  outputdir + algo + ".png",
             create_linestyles(args.dataset))
     output_str += """
     </div>
