@@ -19,4 +19,4 @@ class LSHF(BaseANN):
     def query(self, v, n):
         if self._metric == 'angular':
             v = sklearn.preprocessing.normalize([v], axis=1, norm='l2')[0]
-        return self._lshf.kneighbors(v, return_distance=False, n_neighbors=n)[0]
+        return self._lshf.kneighbors([v], return_distance=False, n_neighbors=n)[0]

@@ -16,6 +16,6 @@ class KDTree(BaseANN):
 
     def query(self, v, n):
         if self._metric == 'angular':
-            v = sklearn.preprocessing.normalize(v, axis=1, norm='l2')[0]
-        dist, ind = self._tree.query(v, k=n)
+            v = sklearn.preprocessing.normalize([v], axis=1, norm='l2')[0]
+        dist, ind = self._tree.query([v], k=n)
         return ind[0]
