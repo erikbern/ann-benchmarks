@@ -16,8 +16,8 @@ from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
 from ann_benchmarks.algorithms.definitions import get_algorithms, get_definitions
 
-def run_algo(X_train, queries, library, algo, distance, results_fn,
-        run_count=3, force_single=False):
+def run_algo(X_train, queries, library, algo, distance, result_pipe,
+        runner_finished, run_count=3, force_single=False):
     try:
         prepared_queries = False
         if hasattr(algo, "supports_prepared_queries"):
@@ -62,7 +62,8 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
             avg_candidates = total_candidates / len(queries)
             best_search_time = min(best_search_time, search_time)
 
-        output = {
+        runner_finished.acquire()
+        result_pipe.send({
             "library": library,
             "name": algo.name,
             "build_time": build_time,
@@ -72,11 +73,9 @@ def run_algo(X_train, queries, library, algo, distance, results_fn,
             "candidates": avg_candidates,
             "run_count": run_count,
             "run_alone": force_single
-        }
-
-        f = open(results_fn, 'a')
-        f.write(json.dumps(output) + "\n")
-        f.close()
+        })
+        runner_finished.notify()
+        runner_finished.release()
     finally:
         algo.done()
 
@@ -193,6 +192,8 @@ will produce results files with duplicate entries)''',
             action='store_true')
 
     args = parser.parse_args()
+    if args.timeout == -1:
+        args.timeout = None
 
     definitions = get_definitions(args.definitions)
     if hasattr(args, "list_algorithms"):
@@ -328,21 +329,48 @@ error: the training dataset and query dataset have incompatible manifests"""
 
     print('order:', [a.name for l, a in algos_flat])
 
-    for library, algo in algos_flat:
-        print(algo.name, '...')
-        # Spawn a subprocess to force the memory to be reclaimed at the end
-        p = multiprocessing.Process(
-            target=run_algo,
-            args=(X_train, queries, library, algo, args.distance, results_fn, args.runs, args.single))
-        p.start()
-        if args.timeout >= 0:
-            p.join(args.timeout)
-            if p.is_alive():
-                print(algo.name, " has timed out after %d seconds " % (args.timeout))
-                p.terminate()
-                p.join()
-        else:
+    with open("results/%s.txt" % args.dataset, "a") as fp:
+        recv_pipe, send_pipe = multiprocessing.Pipe(False)
+        for library, algo in algos_flat:
+            subprocess_finished = multiprocessing.Condition()
+
+            print(algo.name, '...')
+            # Spawn a subprocess to force the memory to be reclaimed at the end
+            p = multiprocessing.Process(
+                target=run_algo,
+                args=(X_train, queries, library, algo, args.distance,
+                      send_pipe, subprocess_finished, args.runs, args.single))
+
+            subprocess_finished.acquire()
+            p.start()
+
+            seconds = 0
+            while True:
+                subprocess_finished.wait(1)
+                # If it hasn't already finished, the subprocess can't do so
+                # until we release the condition variable by waiting again
+                seconds += 1
+                if not p.is_alive() or recv_pipe.poll():
+                    # If there's something ready for us in the pipe, then we
+                    # treat the subprocess as having finished
+                    break
+                elif args.timeout and seconds >= args.timeout:
+                    # If we've exceeded the timeout, then terminate the process
+                    # (XXX: what should we do about algo.done() here?)
+                    p.terminate()
+                    seconds = None
+                    break
             p.join()
+            subprocess_finished.release()
+
+            if recv_pipe.poll():
+                result = recv_pipe.recv()
+                fp.write(json.dumps(result) + "\n")
+                fp.flush()
+            elif not seconds:
+                print "(algorithm worker process took too long)"
+            else:
+                print "(algorithm worker process stopped unexpectedly)"
 
 if __name__ == '__main__':
     main()
