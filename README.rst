@@ -5,7 +5,7 @@ Benchmarking nearest neighbors
 ==============================
 
 This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics. Visit
-<https://maumueller.github.io/ann-benchmarks/index.html> to see the results of this benchmark.
+https://maumueller.github.io/ann-benchmarks/index.html to see the results of this benchmark.
 
 Evaluated
 =========
