@@ -44,18 +44,18 @@
         </nav>
         <div class="container">
         <h2>Plots for ball
-        <h2>ball with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>ball with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "rand-unit-data",
                     fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 129, 0, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(191, 135, 43, 1)",
                     data: [ 
                         { x: 1.0, y: 2.58084344234, label: "BallTree(leaf_size=10)" },
                 ]},
@@ -63,7 +63,7 @@
                         responsive: false,
                         title:{
                             display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -73,7 +73,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' 10-NN precision   '
+                                    labelString: ' Epsilon Recall   '
                                 }
                             }],
                             yAxes: [{
@@ -88,201 +88,6 @@
                     }
                 }); 
         </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
-            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
-        });
-        </script>
-        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(1.0, 2.58084344234) };
-            \addlegendentry{rand-unit-data};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>ball with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "rand-unit-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 129, 0, 1)",
-                    data: [ 
-                        { x: 1.0, y: 782216, label: "BallTree(leaf_size=1000)" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
-            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
-        });
-        </script>
-        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Index size (kB)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(1.0, 782216) };
-            \addlegendentry{rand-unit-data};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>ball with Relative Distance/Queries per second (1/s)</h2>
-        <canvas id="chartRelative DistanceQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chartRelative DistanceQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "rand-unit-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 129, 0, 1)",
-                    data: [ 
-                        { x: 1.0, y: 2.58084344234, label: "BallTree(leaf_size=10)" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: 'Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Relative Distance   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").click(function() {
-            $("#plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").toggle();
-        });
-        </script>
-        <div id="plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={Relative Distance},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(1.0, 2.58084344234) };
-            \addlegendentry{rand-unit-data};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
         
     </div>
     </body>

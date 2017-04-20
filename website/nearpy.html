@@ -44,41 +44,57 @@
         </nav>
         <div class="container">
         <h2>Plots for nearpy
-        <h2>nearpy with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>nearpy with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
+                    label: "glove",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(57, 132, 169, 1)",
+                    data: [ 
+                        { x: 0.03889, y: 51.6808005177, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.07398, y: 21.5229884122, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.07812, y: 18.6163329605, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.10445, y: 14.7925093098, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.14051, y: 10.3705225743, label: "NearPy(n_bits=16, hash_counts=15)" },
+                        { x: 0.14136, y: 9.01161956534, label: "NearPy(n_bits=14, hash_counts=5)" },
+                        { x: 0.15854, y: 8.95339940412, label: "NearPy(n_bits=16, hash_counts=20)" },
+                ]},
+                {
                     label: "rand-unit-data",
                     fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 129, 0, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(191, 135, 43, 1)",
                     data: [ 
-                        { x: 0.423, y: 37.7079347702, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.428, y: 36.7995670846, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.479, y: 25.7236446293, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 0.4816, y: 25.3526599202, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 0.4955, y: 20.6367692125, label: "NearPy(n_bits=14, hash_counts=5)" },
-                        { x: 0.5038, y: 17.3320179145, label: "NearPy(n_bits=16, hash_counts=15)" },
-                        { x: 0.5052, y: 16.8601249902, label: "NearPy(n_bits=16, hash_counts=20)" },
-                        { x: 0.5066, y: 14.7467750703, label: "NearPy(n_bits=16, hash_counts=20)" },
-                        { x: 0.5121, y: 13.2148427404, label: "NearPy(n_bits=16, hash_counts=25)" },
-                        { x: 0.5144, y: 10.581601373, label: "NearPy(n_bits=14, hash_counts=10)" },
-                        { x: 0.5154, y: 5.42166181256, label: "NearPy(n_bits=16, hash_counts=30)" },
-                        { x: 0.5353, y: 4.61085336176, label: "NearPy(n_bits=16, hash_counts=40)" },
-                        { x: 0.5415, y: 2.92105771506, label: "NearPy(n_bits=16, hash_counts=40)" },
-                        { x: 0.5452, y: 1.71134854262, label: "NearPy(n_bits=12, hash_counts=5)" },
-                        { x: 0.5783, y: 1.51052204912, label: "NearPy(n_bits=14, hash_counts=20)" },
-                        { x: 0.5953, y: 0.839550968321, label: "NearPy(n_bits=12, hash_counts=10)" },
+                        { x: 0.445, y: 37.7079347702, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.4494, y: 36.7995670846, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.4924, y: 25.7236446293, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.4929, y: 25.3526599202, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.5026, y: 20.6367692125, label: "NearPy(n_bits=14, hash_counts=5)" },
+                        { x: 0.5086, y: 17.3320179145, label: "NearPy(n_bits=16, hash_counts=15)" },
+                        { x: 0.5104, y: 16.8601249902, label: "NearPy(n_bits=16, hash_counts=20)" },
+                        { x: 0.5111, y: 14.7467750703, label: "NearPy(n_bits=16, hash_counts=20)" },
+                        { x: 0.5169, y: 13.2148427404, label: "NearPy(n_bits=16, hash_counts=25)" },
+                        { x: 0.519, y: 10.581601373, label: "NearPy(n_bits=14, hash_counts=10)" },
+                        { x: 0.5195, y: 10.5284809698, label: "NearPy(n_bits=16, hash_counts=30)" },
+                        { x: 0.5208, y: 8.46639102023, label: "NearPy(n_bits=16, hash_counts=40)" },
+                        { x: 0.5295, y: 5.42166181256, label: "NearPy(n_bits=16, hash_counts=40)" },
+                        { x: 0.5469, y: 4.61085336176, label: "NearPy(n_bits=12, hash_counts=5)" },
+                        { x: 0.5566, y: 2.92105771506, label: "NearPy(n_bits=14, hash_counts=20)" },
+                        { x: 0.5656, y: 1.71134854262, label: "NearPy(n_bits=12, hash_counts=10)" },
+                        { x: 0.6066, y: 1.51052204912, label: "NearPy(n_bits=14, hash_counts=40)" },
+                        { x: 0.6328, y: 0.839550968321, label: "NearPy(n_bits=10, hash_counts=5)" },
                 ]},
             ]}, options: {
                         responsive: false,
                         title:{
                             display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -88,7 +104,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' 10-NN precision   '
+                                    labelString: ' Epsilon Recall   '
                                 }
                             }],
                             yAxes: [{
@@ -103,221 +119,6 @@
                     }
                 }); 
         </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
-            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
-        });
-        </script>
-        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(0.423, 37.7079347702)(0.428, 36.7995670846)(0.479, 25.7236446293)(0.4816, 25.3526599202)(0.4955, 20.6367692125)(0.5038, 17.3320179145)(0.5052, 16.8601249902)(0.5066, 14.7467750703)(0.5121, 13.2148427404)(0.5144, 10.581601373)(0.5154, 5.42166181256)(0.5353, 4.61085336176)(0.5415, 2.92105771506)(0.5452, 1.71134854262)(0.5783, 1.51052204912)(0.5953, 0.839550968321) };
-            \addlegendentry{rand-unit-data};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>nearpy with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "rand-unit-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 129, 0, 1)",
-                    data: [ 
-                        { x: 0.428, y: 476864, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.5062, y: 477520, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.5452, y: 878520, label: "NearPy(n_bits=10, hash_counts=5)" },
-                        { x: 0.5953, y: 1680044, label: "NearPy(n_bits=12, hash_counts=5)" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
-            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
-        });
-        </script>
-        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Index size (kB)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(0.428, 476864)(0.5062, 477520)(0.5452, 878520)(0.5953, 1680044) };
-            \addlegendentry{rand-unit-data};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>nearpy with Relative Distance/Queries per second (1/s)</h2>
-        <canvas id="chartRelative DistanceQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chartRelative DistanceQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "rand-unit-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 129, 0, 1)",
-                    data: [ 
-                        { x: 1.28704602541, y: 37.7079347702, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 1.28490900216, y: 36.7995670846, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 1.22480333723, y: 25.7236446293, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 1.20542984158, y: 22.9191594592, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 1.19749455469, y: 20.6367692125, label: "NearPy(n_bits=14, hash_counts=5)" },
-                        { x: 1.179562605, y: 17.3320179145, label: "NearPy(n_bits=16, hash_counts=15)" },
-                        { x: 1.17593748789, y: 16.8601249902, label: "NearPy(n_bits=16, hash_counts=20)" },
-                        { x: 1.1672823323, y: 14.7467750703, label: "NearPy(n_bits=16, hash_counts=20)" },
-                        { x: 1.16267603756, y: 14.0436927684, label: "NearPy(n_bits=16, hash_counts=25)" },
-                        { x: 1.15556159505, y: 13.2148427404, label: "NearPy(n_bits=14, hash_counts=10)" },
-                        { x: 1.13831197505, y: 10.581601373, label: "NearPy(n_bits=16, hash_counts=30)" },
-                        { x: 1.13279580444, y: 8.46639102023, label: "NearPy(n_bits=16, hash_counts=40)" },
-                        { x: 1.11630532587, y: 5.42166181256, label: "NearPy(n_bits=16, hash_counts=40)" },
-                        { x: 1.09574515503, y: 4.61085336176, label: "NearPy(n_bits=12, hash_counts=5)" },
-                        { x: 1.08714381928, y: 2.92105771506, label: "NearPy(n_bits=14, hash_counts=20)" },
-                        { x: 1.07952998923, y: 1.71134854262, label: "NearPy(n_bits=12, hash_counts=10)" },
-                        { x: 1.06157828033, y: 1.51052204912, label: "NearPy(n_bits=14, hash_counts=40)" },
-                        { x: 1.05293172436, y: 0.839550968321, label: "NearPy(n_bits=10, hash_counts=5)" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: 'Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Relative Distance   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").click(function() {
-            $("#plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").toggle();
-        });
-        </script>
-        <div id="plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={Relative Distance},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(1.28704602541, 37.7079347702)(1.28490900216, 36.7995670846)(1.22480333723, 25.7236446293)(1.20542984158, 22.9191594592)(1.19749455469, 20.6367692125)(1.179562605, 17.3320179145)(1.17593748789, 16.8601249902)(1.1672823323, 14.7467750703)(1.16267603756, 14.0436927684)(1.15556159505, 13.2148427404)(1.13831197505, 10.581601373)(1.13279580444, 8.46639102023)(1.11630532587, 5.42166181256)(1.09574515503, 4.61085336176)(1.08714381928, 2.92105771506)(1.07952998923, 1.71134854262)(1.06157828033, 1.51052204912)(1.05293172436, 0.839550968321) };
-            \addlegendentry{rand-unit-data};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
         
     </div>
     </body>

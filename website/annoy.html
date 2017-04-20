@@ -44,18 +44,36 @@
         </nav>
         <div class="container">
         <h2>Plots for annoy
-        <h2>annoy with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>annoy with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
+                    label: "glove",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(57, 132, 169, 1)",
+                    data: [ 
+                        { x: 0.17755, y: 3434.18269019, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.23931, y: 3124.49362885, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.32451, y: 2585.74428497, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.46654, y: 1878.16466728, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.58244, y: 1249.59913835, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.69545, y: 724.198133016, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.82597, y: 361.525989723, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.90147, y: 171.841802808, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.95926, y: 89.9276238868, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.99182, y: 39.0012790581, label: "Annoy(n_trees=100, search_k=100000)" },
+                        { x: 0.99835, y: 20.9823689234, label: "Annoy(n_trees=100, search_k=200000)" },
+                ]},
+                {
                     label: "nytimes-hamming-data",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(98, 146, 99, 1)",
                     data: [ 
                         { x: 0.05022, y: 4406.33647032, label: "Annoy(n_trees=100, search_k=100)" },
                         { x: 0.07098, y: 3803.06967265, label: "Annoy(n_trees=100, search_k=200)" },
@@ -76,111 +94,106 @@
                 {
                     label: "nytimes.tfidf.256.data",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(61, 141, 149, 1)",
+                    pointStyle: "star",
+                    borderColor: "rgba(195, 98, 94, 1)",
                     data: [ 
-                        { x: 0.128558375635, y: 5010.39512295, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.143878172589, y: 4288.90817037, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.150670050761, y: 3678.36331734, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 0.16723857868, y: 3400.73533249, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 0.175461928934, y: 2912.96084041, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.184243654822, y: 2138.31477654, label: "Annoy(n_trees=400, search_k=100)" },
-                        { x: 0.204426395939, y: 2042.56249548, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 0.214020304569, y: 1893.33930932, label: "Annoy(n_trees=400, search_k=200)" },
-                        { x: 0.225177664975, y: 1386.50029068, label: "Annoy(n_trees=400, search_k=400)" },
-                        { x: 0.236710659898, y: 1246.56391897, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 0.24752284264, y: 1138.37381587, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 0.258903553299, y: 879.959425575, label: "Annoy(n_trees=400, search_k=1000)" },
-                        { x: 0.274913705584, y: 574.708536448, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 0.284538071066, y: 542.163480856, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 0.294192893401, y: 455.171065113, label: "Annoy(n_trees=400, search_k=2000)" },
-                        { x: 0.333756345178, y: 202.481064451, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 0.339796954315, y: 198.295281147, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 0.344375634518, y: 182.18637857, label: "Annoy(n_trees=400, search_k=4000)" },
-                        { x: 0.386883248731, y: 103.477492321, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.388436548223, y: 101.556675288, label: "Annoy(n_trees=200, search_k=10000)" },
-                        { x: 0.389888324873, y: 97.5986736298, label: "Annoy(n_trees=400, search_k=10000)" },
-                        { x: 0.457299492386, y: 57.2093805716, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 0.584944162437, y: 30.8385827495, label: "Annoy(n_trees=200, search_k=20000)" },
-                        { x: 0.712020304569, y: 19.7769586869, label: "Annoy(n_trees=400, search_k=20000)" },
-                        { x: 0.843116751269, y: 11.793294296, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.135746192893, y: 5010.39512295, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.153411167513, y: 4288.90817037, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.160791878173, y: 3678.36331734, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.18021319797, y: 3400.73533249, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.189766497462, y: 2912.96084041, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.198873096447, y: 2138.31477654, label: "Annoy(n_trees=400, search_k=100)" },
+                        { x: 0.224284263959, y: 2042.56249548, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.23421319797, y: 1893.33930932, label: "Annoy(n_trees=400, search_k=200)" },
+                        { x: 0.246172588832, y: 1386.50029068, label: "Annoy(n_trees=400, search_k=400)" },
+                        { x: 0.264487309645, y: 1246.56391897, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.274436548223, y: 1138.37381587, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.286263959391, y: 879.959425575, label: "Annoy(n_trees=400, search_k=1000)" },
+                        { x: 0.317441624365, y: 574.708536448, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.324131979695, y: 542.163480856, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.332121827411, y: 455.171065113, label: "Annoy(n_trees=400, search_k=2000)" },
+                        { x: 0.412162436548, y: 202.481064451, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.515908629442, y: 103.477492321, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.652609137056, y: 57.2093805716, label: "Annoy(n_trees=400, search_k=4000)" },
+                        { x: 0.854507614213, y: 30.8385827495, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.958335025381, y: 19.7769586869, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.994162436548, y: 11.793294296, label: "Annoy(n_trees=400, search_k=10000)" },
                 ]},
                 {
                     label: "rand-unit-data",
                     fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 129, 0, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(191, 135, 43, 1)",
                     data: [ 
-                        { x: 0.0881, y: 2129.39854689, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.1279, y: 1918.01952543, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.1891, y: 1780.07596817, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.3134, y: 1422.71959904, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 0.4613, y: 1069.91491808, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 0.526, y: 806.595527046, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 0.5568, y: 409.493347777, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.61, y: 234.040125319, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 0.6785, y: 123.381812144, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 0.8104, y: 53.5787048235, label: "Annoy(n_trees=100, search_k=100000)" },
-                        { x: 0.9072, y: 28.1904931354, label: "Annoy(n_trees=100, search_k=200000)" },
-                        { x: 0.9691, y: 13.7998713915, label: "Annoy(n_trees=100, search_k=400000)" },
+                        { x: 0.1022, y: 2129.39854689, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.1492, y: 1918.01952543, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.2196, y: 1780.07596817, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.3537, y: 1422.71959904, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.4959, y: 1069.91491808, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.5387, y: 806.595527046, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.581, y: 409.493347777, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.654, y: 234.040125319, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.7476, y: 123.381812144, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.9014, y: 53.5787048235, label: "Annoy(n_trees=100, search_k=100000)" },
+                        { x: 0.9754, y: 28.1904931354, label: "Annoy(n_trees=100, search_k=200000)" },
+                        { x: 0.9962, y: 13.7998713915, label: "Annoy(n_trees=100, search_k=400000)" },
                 ]},
                 {
                     label: "rand7-data",
                     fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(127, 110, 133, 1)",
+                    pointStyle: "cross",
+                    borderColor: "rgba(255, 201, 29, 1)",
                     data: [ 
-                        { x: 0.1584, y: 4107.02157744, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.2268, y: 3649.71537068, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.3339, y: 3118.42076893, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.4678, y: 2260.31388817, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 0.4805, y: 1716.3806717, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 0.529, y: 1605.31852393, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 0.5336, y: 1269.89640225, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 0.5623, y: 1032.97167168, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 0.5723, y: 857.624947757, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 0.6239, y: 485.77761522, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 0.6342, y: 427.707916857, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 0.6981, y: 259.376806122, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 0.7075, y: 237.868696695, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.803, y: 133.310893975, label: "Annoy(n_trees=200, search_k=10000)" },
-                        { x: 0.9244, y: 58.7964949455, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 0.9788, y: 31.5237693827, label: "Annoy(n_trees=200, search_k=20000)" },
-                        { x: 0.996, y: 14.3207335945, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.2223, y: 4107.02157744, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.3171, y: 3649.71537068, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.442, y: 3118.42076893, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.5321, y: 2260.31388817, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.5367, y: 1716.3806717, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.5661, y: 1605.31852393, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.5724, y: 1269.89640225, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.6161, y: 1032.97167168, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.6263, y: 857.624947757, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.7274, y: 485.77761522, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.7421, y: 427.707916857, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.8502, y: 259.376806122, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.8665, y: 237.868696695, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.9642, y: 133.310893975, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.9666, y: 129.015576379, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.9991, y: 58.7964949455, label: "Annoy(n_trees=200, search_k=20000)" },
+                        { x: 1.0, y: 31.5237693827, label: "Annoy(n_trees=100, search_k=40000)" },
                 ]},
                 {
                     label: "sift-data",
                     fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(225, 198, 47, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
-                        { x: 0.31821, y: 4484.03978212, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.41904, y: 3908.45194122, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.54353, y: 3189.64761359, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.56312, y: 2303.76302906, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 0.70677, y: 2238.74082785, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 0.7281, y: 1656.60570847, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 0.81451, y: 1656.53027086, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 0.82903, y: 1190.23290863, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 0.89581, y: 1050.71533523, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 0.9036, y: 812.673989774, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 0.95778, y: 451.474021502, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 0.9607, y: 404.416455275, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 0.98232, y: 256.639228105, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.9829, y: 246.553716608, label: "Annoy(n_trees=200, search_k=10000)" },
-                        { x: 0.9934, y: 142.109963292, label: "Annoy(n_trees=200, search_k=20000)" },
-                        { x: 0.99839, y: 70.9426423017, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 0.99862, y: 67.758643699, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 0.99947, y: 40.01532745, label: "Annoy(n_trees=200, search_k=40000)" },
-                        { x: 0.99954, y: 37.8408142387, label: "Annoy(n_trees=200, search_k=100000)" },
-                        { x: 0.99989, y: 22.2422441647, label: "Annoy(n_trees=100, search_k=100000)" },
-                        { x: 0.99992, y: 20.8971286149, label: "Annoy(n_trees=200, search_k=200000)" },
+                        { x: 0.36823, y: 4484.03978212, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.48816, y: 3908.45194122, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.63281, y: 3189.64761359, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.65571, y: 2303.76302906, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.80903, y: 2238.74082785, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.83067, y: 1656.60570847, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.9081, y: 1656.53027086, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.92005, y: 1190.23290863, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.96347, y: 1050.71533523, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.96829, y: 812.673989774, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.99152, y: 451.474021502, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.99266, y: 404.416455275, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.99774, y: 256.639228105, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.99926, y: 142.109963292, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.99936, y: 141.973936808, label: "Annoy(n_trees=200, search_k=20000)" },
+                        { x: 0.99983, y: 70.9426423017, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.99993, y: 67.758643699, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.99995, y: 40.01532745, label: "Annoy(n_trees=200, search_k=40000)" },
+                        { x: 0.99999, y: 37.8408142387, label: "Annoy(n_trees=200, search_k=100000)" },
+                        { x: 1.0, y: 22.2422441647, label: "Annoy(n_trees=100, search_k=100000)" },
                 ]},
                 {
                     label: "sift-hamming-data",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(221, 115, 143, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(236, 123, 171, 1)",
                     data: [ 
                         { x: 0.4415, y: 3753.99392334, label: "Annoy(n_trees=100, search_k=100)" },
                         { x: 0.50857, y: 3247.28119912, label: "Annoy(n_trees=100, search_k=200)" },
@@ -197,7 +210,7 @@
                 {
                     label: "webspam-data",
                     fill: false,
-                    pointStyle: "triangle",
+                    pointStyle: "circle",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.83859, y: 3443.0667703, label: "Annoy(n_trees=100, search_k=100)" },
@@ -223,7 +236,7 @@
                         responsive: false,
                         title:{
                             display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -233,7 +246,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' 10-NN precision   '
+                                    labelString: ' Epsilon Recall   '
                                 }
                             }],
                             yAxes: [{
@@ -248,478 +261,6 @@
                     }
                 }); 
         </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
-            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
-        });
-        </script>
-        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(0.05022, 4406.33647032)(0.07098, 3803.06967265)(0.09732, 3146.16036109)(0.10846, 2309.33407685)(0.14292, 2061.73854783)(0.15831, 1621.01505676)(0.1805, 1349.01495114)(0.1964, 1099.27776867)(0.21103, 816.224638008)(0.22303, 772.292762736)(0.23309, 661.020254468)(0.24448, 533.633829424)(0.27229, 292.102245452)(0.27867, 255.685530518)(0.29511, 138.176424642) };
-            \addlegendentry{nytimes-hamming-data};
-                
-            \addplot coordinates {(0.128558375635, 5010.39512295)(0.143878172589, 4288.90817037)(0.150670050761, 3678.36331734)(0.16723857868, 3400.73533249)(0.175461928934, 2912.96084041)(0.184243654822, 2138.31477654)(0.204426395939, 2042.56249548)(0.214020304569, 1893.33930932)(0.225177664975, 1386.50029068)(0.236710659898, 1246.56391897)(0.24752284264, 1138.37381587)(0.258903553299, 879.959425575)(0.274913705584, 574.708536448)(0.284538071066, 542.163480856)(0.294192893401, 455.171065113)(0.333756345178, 202.481064451)(0.339796954315, 198.295281147)(0.344375634518, 182.18637857)(0.386883248731, 103.477492321)(0.388436548223, 101.556675288)(0.389888324873, 97.5986736298)(0.457299492386, 57.2093805716)(0.584944162437, 30.8385827495)(0.712020304569, 19.7769586869)(0.843116751269, 11.793294296) };
-            \addlegendentry{nytimes.tfidf.256.data};
-                
-            \addplot coordinates {(0.0881, 2129.39854689)(0.1279, 1918.01952543)(0.1891, 1780.07596817)(0.3134, 1422.71959904)(0.4613, 1069.91491808)(0.526, 806.595527046)(0.5568, 409.493347777)(0.61, 234.040125319)(0.6785, 123.381812144)(0.8104, 53.5787048235)(0.9072, 28.1904931354)(0.9691, 13.7998713915) };
-            \addlegendentry{rand-unit-data};
-                
-            \addplot coordinates {(0.1584, 4107.02157744)(0.2268, 3649.71537068)(0.3339, 3118.42076893)(0.4678, 2260.31388817)(0.4805, 1716.3806717)(0.529, 1605.31852393)(0.5336, 1269.89640225)(0.5623, 1032.97167168)(0.5723, 857.624947757)(0.6239, 485.77761522)(0.6342, 427.707916857)(0.6981, 259.376806122)(0.7075, 237.868696695)(0.803, 133.310893975)(0.9244, 58.7964949455)(0.9788, 31.5237693827)(0.996, 14.3207335945) };
-            \addlegendentry{rand7-data};
-                
-            \addplot coordinates {(0.31821, 4484.03978212)(0.41904, 3908.45194122)(0.54353, 3189.64761359)(0.56312, 2303.76302906)(0.70677, 2238.74082785)(0.7281, 1656.60570847)(0.81451, 1656.53027086)(0.82903, 1190.23290863)(0.89581, 1050.71533523)(0.9036, 812.673989774)(0.95778, 451.474021502)(0.9607, 404.416455275)(0.98232, 256.639228105)(0.9829, 246.553716608)(0.9934, 142.109963292)(0.99839, 70.9426423017)(0.99862, 67.758643699)(0.99947, 40.01532745)(0.99954, 37.8408142387)(0.99989, 22.2422441647)(0.99992, 20.8971286149) };
-            \addlegendentry{sift-data};
-                
-            \addplot coordinates {(0.4415, 3753.99392334)(0.50857, 3247.28119912)(0.6088, 2629.01765044)(0.63078, 1919.48179029)(0.7109, 1708.63497578)(0.72228, 1348.28026523)(0.75005, 1120.79109183)(0.76771, 684.090675339)(0.7694, 581.990479082)(0.77016, 452.89646411)(0.77488, 285.484840914) };
-            \addlegendentry{sift-hamming-data};
-                
-            \addplot coordinates {(0.83859, 3443.0667703)(0.87288, 3171.84681045)(0.92729, 2694.40828106)(0.96883, 1996.51772378)(0.98486, 1481.85179327)(0.98638, 1083.34993497)(0.99304, 969.9957697)(0.99375, 755.04514155)(0.99479, 546.479266094)(0.99716, 406.679970298)(0.9976, 395.993579402)(0.99776, 318.250351484)(0.99868, 215.749790685)(0.9988, 202.686767768)(0.99917, 125.521387373)(0.99927, 64.9194500422)(0.99928, 41.5382644833)(0.99934, 24.9358181084) };
-            \addlegendentry{webspam-data};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>annoy with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "nytimes-hamming-data",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.05022, y: 536892, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.24567, y: 536896, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 0.2558, y: 536896, label: "Annoy(n_trees=100, search_k=200000)" },
-                        { x: 0.25586, y: 907520, label: "Annoy(n_trees=100, search_k=100000)" },
-                        { x: 0.27229, y: 945104, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.29511, y: 1993504, label: "Annoy(n_trees=100, search_k=20000)" },
-                ]},
-                {
-                    label: "nytimes.tfidf.256.data",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(61, 141, 149, 1)",
-                    data: [ 
-                        { x: 0.16723857868, y: 855664, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.274913705584, y: 855668, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.843116751269, y: 855668, label: "Annoy(n_trees=100, search_k=4000)" },
-                ]},
-                {
-                    label: "rand-unit-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 129, 0, 1)",
-                    data: [ 
-                        { x: 0.9072, y: 3435384, label: "Annoy(n_trees=100, search_k=200000)" },
-                        { x: 0.9691, y: 3435456, label: "Annoy(n_trees=100, search_k=400)" },
-                ]},
-                {
-                    label: "rand7-data",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(127, 110, 133, 1)",
-                    data: [ 
-                        { x: 0.3339, y: 2016032, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.9948, y: 2016032, label: "Annoy(n_trees=100, search_k=400000)" },
-                        { x: 0.996, y: 3401872, label: "Annoy(n_trees=100, search_k=40000)" },
-                ]},
-                {
-                    label: "sift-data",
-                    fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 0.99992, y: 2043884, label: "Annoy(n_trees=100, search_k=400000)" },
-                ]},
-                {
-                    label: "sift-hamming-data",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(221, 115, 143, 1)",
-                    data: [ 
-                        { x: 0.4415, y: 2330116, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.7734, y: 2331984, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 0.77488, y: 2332028, label: "Annoy(n_trees=100, search_k=400)" },
-                ]},
-                {
-                    label: "webspam-data",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 0.83859, y: 505492, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.99716, y: 505500, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.99866, y: 505500, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 0.99914, y: 505500, label: "Annoy(n_trees=100, search_k=100000)" },
-                        { x: 0.99931, y: 505556, label: "Annoy(n_trees=100, search_k=400000)" },
-                        { x: 0.99934, y: 1406156, label: "Annoy(n_trees=100, search_k=400)" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
-            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
-        });
-        </script>
-        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Index size (kB)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(0.05022, 536892)(0.24567, 536896)(0.2558, 536896)(0.25586, 907520)(0.27229, 945104)(0.29511, 1993504) };
-            \addlegendentry{nytimes-hamming-data};
-                
-            \addplot coordinates {(0.16723857868, 855664)(0.274913705584, 855668)(0.843116751269, 855668) };
-            \addlegendentry{nytimes.tfidf.256.data};
-                
-            \addplot coordinates {(0.9072, 3435384)(0.9691, 3435456) };
-            \addlegendentry{rand-unit-data};
-                
-            \addplot coordinates {(0.3339, 2016032)(0.9948, 2016032)(0.996, 3401872) };
-            \addlegendentry{rand7-data};
-                
-            \addplot coordinates {(0.99992, 2043884) };
-            \addlegendentry{sift-data};
-                
-            \addplot coordinates {(0.4415, 2330116)(0.7734, 2331984)(0.77488, 2332028) };
-            \addlegendentry{sift-hamming-data};
-                
-            \addplot coordinates {(0.83859, 505492)(0.99716, 505500)(0.99866, 505500)(0.99914, 505500)(0.99931, 505556)(0.99934, 1406156) };
-            \addlegendentry{webspam-data};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>annoy with Relative Distance/Queries per second (1/s)</h2>
-        <canvas id="chartRelative DistanceQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chartRelative DistanceQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "nytimes-hamming-data",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 1.33961225579, y: 4406.33647032, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 1.30956675761, y: 3803.06967265, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 1.28097124371, y: 3146.16036109, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 1.26859115536, y: 2309.33407685, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 1.24754698902, y: 2061.73854783, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 1.23367516681, y: 1621.01505676, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 1.22500457469, y: 1349.01495114, label: "Annoy(n_trees=400, search_k=100)" },
-                        { x: 1.22241639569, y: 1130.70248306, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 1.21191651975, y: 1099.27776867, label: "Annoy(n_trees=400, search_k=200)" },
-                        { x: 1.20224956311, y: 816.224638008, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 1.19478704448, y: 661.020254468, label: "Annoy(n_trees=400, search_k=400)" },
-                        { x: 1.18600837716, y: 533.633829424, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 1.18414681883, y: 292.102245452, label: "Annoy(n_trees=400, search_k=1000)" },
-                        { x: 1.17576492074, y: 255.685530518, label: "Annoy(n_trees=200, search_k=2000)" },
-                ]},
-                {
-                    label: "nytimes.tfidf.256.data",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(61, 141, 149, 1)",
-                    data: [ 
-                        { x: 1.16562470104, y: 5010.39512295, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 1.14004302073, y: 4288.90817037, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 1.13879181659, y: 3678.36331734, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 1.10963854559, y: 3400.73533249, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 1.10854513817, y: 2912.96084041, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 1.10738661193, y: 2138.31477654, label: "Annoy(n_trees=400, search_k=100)" },
-                        { x: 1.07820022471, y: 2042.56249548, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 1.07691046886, y: 1893.33930932, label: "Annoy(n_trees=400, search_k=200)" },
-                        { x: 1.07564477295, y: 1386.50029068, label: "Annoy(n_trees=400, search_k=400)" },
-                        { x: 1.05896905946, y: 1246.56391897, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 1.05807912825, y: 1138.37381587, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 1.05695581169, y: 879.959425575, label: "Annoy(n_trees=400, search_k=1000)" },
-                        { x: 1.04305156792, y: 574.708536448, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 1.04254941368, y: 542.163480856, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 1.04216838774, y: 455.171065113, label: "Annoy(n_trees=400, search_k=2000)" },
-                        { x: 1.02698187525, y: 202.481064451, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 1.01816808485, y: 103.477492321, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 1.01158642097, y: 57.2093805716, label: "Annoy(n_trees=400, search_k=4000)" },
-                        { x: 1.00560657088, y: 30.8385827495, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 1.00275885225, y: 19.7769586869, label: "Annoy(n_trees=200, search_k=10000)" },
-                        { x: 1.00112002672, y: 11.793294296, label: "Annoy(n_trees=400, search_k=10000)" },
-                ]},
-                {
-                    label: "rand-unit-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 129, 0, 1)",
-                    data: [ 
-                        { x: 1.23194575101, y: 2129.39854689, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 1.20646118375, y: 1918.01952543, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 1.18641171364, y: 1780.07596817, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 1.16216245029, y: 1422.71959904, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 1.13952559295, y: 1069.91491808, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 1.11381534708, y: 806.595527046, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 1.07908912902, y: 409.493347777, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 1.05321765968, y: 234.040125319, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 1.03398320816, y: 123.381812144, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 1.01479972673, y: 53.5787048235, label: "Annoy(n_trees=100, search_k=100000)" },
-                        { x: 1.00589286251, y: 28.1904931354, label: "Annoy(n_trees=100, search_k=200000)" },
-                        { x: 1.00160271698, y: 13.7998713915, label: "Annoy(n_trees=100, search_k=400000)" },
-                ]},
-                {
-                    label: "rand7-data",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(127, 110, 133, 1)",
-                    data: [ 
-                        { x: 1.09803696606, y: 4107.02157744, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 1.08300089931, y: 3649.71537068, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 1.06870113172, y: 3118.42076893, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 1.05071590737, y: 2260.31388817, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 1.04967682138, y: 1716.3806717, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 1.0396650626, y: 1605.31852393, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 1.03814668021, y: 1269.89640225, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 1.02963535945, y: 1032.97167168, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 1.0284110341, y: 857.624947757, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 1.01853149292, y: 485.77761522, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 1.01741546421, y: 427.707916857, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 1.01162914155, y: 259.376806122, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 1.01081028533, y: 237.868696695, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 1.00596507614, y: 133.310893975, label: "Annoy(n_trees=200, search_k=10000)" },
-                        { x: 1.00577786946, y: 129.015576379, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 1.00169181743, y: 58.7964949455, label: "Annoy(n_trees=200, search_k=20000)" },
-                        { x: 1.00040561349, y: 31.5237693827, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 1.00006076349, y: 14.3207335945, label: "Annoy(n_trees=200, search_k=40000)" },
-                ]},
-                {
-                    label: "sift-data",
-                    fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 1.07387503669, y: 4484.03978212, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 1.04998564008, y: 3908.45194122, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 1.03136288974, y: 3189.64761359, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 1.02878367268, y: 2303.76302906, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 1.0154651269, y: 2238.74082785, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 1.01370833384, y: 1656.60570847, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 1.00821763484, y: 1656.53027086, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 1.00730117521, y: 1190.23290863, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 1.00398698908, y: 1050.71533523, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 1.00356789742, y: 812.673989774, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 1.00144120575, y: 451.474021502, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 1.001301412, y: 404.416455275, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 1.00053277299, y: 256.639228105, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 1.00020867298, y: 142.109963292, label: "Annoy(n_trees=200, search_k=10000)" },
-                        { x: 1.00019590636, y: 141.973936808, label: "Annoy(n_trees=200, search_k=20000)" },
-                        { x: 1.0000475478, y: 70.9426423017, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 1.00003744019, y: 67.758643699, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 1.00001752359, y: 40.01532745, label: "Annoy(n_trees=200, search_k=40000)" },
-                        { x: 1.00001395199, y: 37.8408142387, label: "Annoy(n_trees=200, search_k=100000)" },
-                        { x: 1.0000049132, y: 22.2422441647, label: "Annoy(n_trees=100, search_k=100000)" },
-                        { x: 1.00000488481, y: 20.8971286149, label: "Annoy(n_trees=200, search_k=200000)" },
-                ]},
-                {
-                    label: "sift-hamming-data",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(221, 115, 143, 1)",
-                    data: [ 
-                        { x: 1.11789568086, y: 3753.99392334, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 1.09561350736, y: 3247.28119912, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 1.06580504962, y: 2629.01765044, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 1.06016755454, y: 1919.48179029, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 1.04079030404, y: 1708.63497578, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 1.03792191355, y: 1348.28026523, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 1.03115544638, y: 1120.79109183, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 1.02677832256, y: 684.090675339, label: "Annoy(n_trees=400, search_k=100)" },
-                        { x: 1.0261283976, y: 581.990479082, label: "Annoy(n_trees=400, search_k=200)" },
-                        { x: 1.02583819991, y: 452.89646411, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 1.02502888719, y: 285.484840914, label: "Annoy(n_trees=400, search_k=400)" },
-                        { x: 1.02494168058, y: 272.89966664, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 1.02490072882, y: 243.281040324, label: "Annoy(n_trees=400, search_k=1000)" },
-                ]},
-                {
-                    label: "webspam-data",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 1.09633624698, y: 3443.0667703, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 1.07318773197, y: 3171.84681045, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 1.04034899047, y: 2694.40828106, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 1.01761609431, y: 1996.51772378, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 1.00884766841, y: 1481.85179327, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 1.00795174293, y: 1083.34993497, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 1.00440847086, y: 969.9957697, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 1.00395889093, y: 755.04514155, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 1.00320042694, y: 546.479266094, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 1.00181772606, y: 406.679970298, label: "Annoy(n_trees=400, search_k=100)" },
-                        { x: 1.00143606828, y: 395.993579402, label: "Annoy(n_trees=400, search_k=200)" },
-                        { x: 1.00133095067, y: 318.250351484, label: "Annoy(n_trees=400, search_k=400)" },
-                        { x: 1.0007568468, y: 215.749790685, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 1.0006468776, y: 202.686767768, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 1.00038489217, y: 125.521387373, label: "Annoy(n_trees=400, search_k=1000)" },
-                        { x: 1.00027977456, y: 64.9194500422, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 1.00025713385, y: 41.5382644833, label: "Annoy(n_trees=400, search_k=2000)" },
-                        { x: 1.00019244609, y: 24.9358181084, label: "Annoy(n_trees=400, search_k=4000)" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: 'Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Relative Distance   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").click(function() {
-            $("#plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").toggle();
-        });
-        </script>
-        <div id="plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={Relative Distance},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(1.33961225579, 4406.33647032)(1.30956675761, 3803.06967265)(1.28097124371, 3146.16036109)(1.26859115536, 2309.33407685)(1.24754698902, 2061.73854783)(1.23367516681, 1621.01505676)(1.22500457469, 1349.01495114)(1.22241639569, 1130.70248306)(1.21191651975, 1099.27776867)(1.20224956311, 816.224638008)(1.19478704448, 661.020254468)(1.18600837716, 533.633829424)(1.18414681883, 292.102245452)(1.17576492074, 255.685530518) };
-            \addlegendentry{nytimes-hamming-data};
-                
-            \addplot coordinates {(1.16562470104, 5010.39512295)(1.14004302073, 4288.90817037)(1.13879181659, 3678.36331734)(1.10963854559, 3400.73533249)(1.10854513817, 2912.96084041)(1.10738661193, 2138.31477654)(1.07820022471, 2042.56249548)(1.07691046886, 1893.33930932)(1.07564477295, 1386.50029068)(1.05896905946, 1246.56391897)(1.05807912825, 1138.37381587)(1.05695581169, 879.959425575)(1.04305156792, 574.708536448)(1.04254941368, 542.163480856)(1.04216838774, 455.171065113)(1.02698187525, 202.481064451)(1.01816808485, 103.477492321)(1.01158642097, 57.2093805716)(1.00560657088, 30.8385827495)(1.00275885225, 19.7769586869)(1.00112002672, 11.793294296) };
-            \addlegendentry{nytimes.tfidf.256.data};
-                
-            \addplot coordinates {(1.23194575101, 2129.39854689)(1.20646118375, 1918.01952543)(1.18641171364, 1780.07596817)(1.16216245029, 1422.71959904)(1.13952559295, 1069.91491808)(1.11381534708, 806.595527046)(1.07908912902, 409.493347777)(1.05321765968, 234.040125319)(1.03398320816, 123.381812144)(1.01479972673, 53.5787048235)(1.00589286251, 28.1904931354)(1.00160271698, 13.7998713915) };
-            \addlegendentry{rand-unit-data};
-                
-            \addplot coordinates {(1.09803696606, 4107.02157744)(1.08300089931, 3649.71537068)(1.06870113172, 3118.42076893)(1.05071590737, 2260.31388817)(1.04967682138, 1716.3806717)(1.0396650626, 1605.31852393)(1.03814668021, 1269.89640225)(1.02963535945, 1032.97167168)(1.0284110341, 857.624947757)(1.01853149292, 485.77761522)(1.01741546421, 427.707916857)(1.01162914155, 259.376806122)(1.01081028533, 237.868696695)(1.00596507614, 133.310893975)(1.00577786946, 129.015576379)(1.00169181743, 58.7964949455)(1.00040561349, 31.5237693827)(1.00006076349, 14.3207335945) };
-            \addlegendentry{rand7-data};
-                
-            \addplot coordinates {(1.07387503669, 4484.03978212)(1.04998564008, 3908.45194122)(1.03136288974, 3189.64761359)(1.02878367268, 2303.76302906)(1.0154651269, 2238.74082785)(1.01370833384, 1656.60570847)(1.00821763484, 1656.53027086)(1.00730117521, 1190.23290863)(1.00398698908, 1050.71533523)(1.00356789742, 812.673989774)(1.00144120575, 451.474021502)(1.001301412, 404.416455275)(1.00053277299, 256.639228105)(1.00020867298, 142.109963292)(1.00019590636, 141.973936808)(1.0000475478, 70.9426423017)(1.00003744019, 67.758643699)(1.00001752359, 40.01532745)(1.00001395199, 37.8408142387)(1.0000049132, 22.2422441647)(1.00000488481, 20.8971286149) };
-            \addlegendentry{sift-data};
-                
-            \addplot coordinates {(1.11789568086, 3753.99392334)(1.09561350736, 3247.28119912)(1.06580504962, 2629.01765044)(1.06016755454, 1919.48179029)(1.04079030404, 1708.63497578)(1.03792191355, 1348.28026523)(1.03115544638, 1120.79109183)(1.02677832256, 684.090675339)(1.0261283976, 581.990479082)(1.02583819991, 452.89646411)(1.02502888719, 285.484840914)(1.02494168058, 272.89966664)(1.02490072882, 243.281040324) };
-            \addlegendentry{sift-hamming-data};
-                
-            \addplot coordinates {(1.09633624698, 3443.0667703)(1.07318773197, 3171.84681045)(1.04034899047, 2694.40828106)(1.01761609431, 1996.51772378)(1.00884766841, 1481.85179327)(1.00795174293, 1083.34993497)(1.00440847086, 969.9957697)(1.00395889093, 755.04514155)(1.00320042694, 546.479266094)(1.00181772606, 406.679970298)(1.00143606828, 395.993579402)(1.00133095067, 318.250351484)(1.0007568468, 215.749790685)(1.0006468776, 202.686767768)(1.00038489217, 125.521387373)(1.00027977456, 64.9194500422)(1.00025713385, 41.5382644833)(1.00019244609, 24.9358181084) };
-            \addlegendentry{webspam-data};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
         
     </div>
     </body>

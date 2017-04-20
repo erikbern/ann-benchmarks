@@ -44,18 +44,18 @@
         </nav>
         <div class="container">
         <h2>Plots for sift-hamming-data
-        <h2>sift-hamming-data with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>sift-hamming-data with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "annoy",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(135, 79, 111, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.4415, y: 3753.99392334, label: "Annoy(n_trees=100, search_k=100)" },
                         { x: 0.50857, y: 3247.28119912, label: "Annoy(n_trees=100, search_k=200)" },
@@ -72,8 +72,8 @@
                 {
                     label: "bitsampling",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(153, 153, 153, 1)",
+                    pointStyle: "star",
+                    borderColor: "rgba(255, 161, 13, 1)",
                     data: [ 
                         { x: 0.04634, y: 26163.0550046, label: "k: 31, m: 0, l: 1" },
                         { x: 0.06369, y: 21785.7515721, label: "k: 25, m: 0, l: 1" },
@@ -85,8 +85,8 @@
                 {
                     label: "falconn",
                     fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(255, 229, 40, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(225, 198, 47, 1)",
                     data: [ 
                         { x: 0.06176, y: 15612.6845915, label: "FALCONN(K=16, L=1, T=1)" },
                         { x: 0.11427, y: 10530.0626059, label: "FALCONN(K=16, L=2, T=2)" },
@@ -133,8 +133,8 @@
                 {
                     label: "hnsw(nmslib)",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(135, 79, 111, 1)",
                     data: [ 
                         { x: 0.05885, y: 9792.8131938, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
                         { x: 0.13707, y: 9336.28582546, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
@@ -175,8 +175,8 @@
                 {
                     label: "mih",
                     fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(87, 162, 85, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 1.0, y: 407.286971944, label: "chunks: 14, r: 0" },
                 ]},
@@ -184,7 +184,7 @@
                         responsive: false,
                         title:{
                             display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -194,7 +194,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' 10-NN precision   '
+                                    labelString: ' Epsilon Recall   '
                                 }
                             }],
                             yAxes: [{
@@ -209,419 +209,6 @@
                     }
                 }); 
         </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
-            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
-        });
-        </script>
-        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(0.4415, 3753.99392334)(0.50857, 3247.28119912)(0.6088, 2629.01765044)(0.63078, 1919.48179029)(0.7109, 1708.63497578)(0.72228, 1348.28026523)(0.75005, 1120.79109183)(0.76771, 684.090675339)(0.7694, 581.990479082)(0.77016, 452.89646411)(0.77488, 285.484840914) };
-            \addlegendentry{annoy};
-                
-            \addplot coordinates {(0.04634, 26163.0550046)(0.06369, 21785.7515721)(0.13196, 20882.8202211)(0.19782, 19017.6297063)(0.32472, 15243.5058976)(0.39315, 12347.0063918) };
-            \addlegendentry{bitsampling};
-                
-            \addplot coordinates {(0.06176, 15612.6845915)(0.11427, 10530.0626059)(0.15739, 7231.27311008)(0.20443, 5328.03532458)(0.24521, 4291.00040687)(0.27477, 3841.61458484)(0.30543, 3624.95983362)(0.33383, 3288.97563362)(0.3628, 2700.13144966)(0.38843, 2572.60583138)(0.40946, 2375.70844818)(0.44898, 2057.39500185)(0.48086, 1687.10466881)(0.5094, 1638.27872898)(0.53479, 1464.14674812)(0.55973, 1311.9775715)(0.59018, 1132.55617277)(0.61486, 1017.66350428)(0.63324, 916.064639161)(0.64967, 834.824573456)(0.66853, 699.390302254)(0.68378, 691.598017952)(0.69886, 620.661345604)(0.71085, 572.65374864)(0.7227, 519.930127646)(0.7322, 474.902631919)(0.74025, 427.505164574)(0.74648, 395.55365784)(0.75223, 368.394269869)(0.75697, 331.68745299)(0.7638, 282.457965553)(0.76606, 258.252386714)(0.76797, 238.818679572)(0.76993, 220.929695163)(0.77116, 203.20316543)(0.77218, 177.033407801)(0.77271, 176.235816718)(0.77315, 162.704397665)(0.77348, 140.240527304)(0.77374, 136.193224891)(0.77376, 119.030504771) };
-            \addlegendentry{falconn};
-                
-            \addplot coordinates {(0.05885, 9792.8131938)(0.13707, 9336.28582546)(0.29677, 9160.42311361)(0.3475, 8674.9346273)(0.45104, 8483.96093373)(0.57068, 8116.08292124)(0.71897, 7535.59384764)(0.81337, 6749.76613289)(0.8528, 6442.90485438)(0.88142, 5931.74630315)(0.90742, 5756.2307299)(0.91762, 5691.93604486)(0.92851, 5451.2463981)(0.95497, 4922.99140311)(0.97265, 4324.26859535)(0.9778, 4208.17371976)(0.9813, 3930.40372366)(0.98152, 3507.21204962)(0.99022, 3477.86747383)(0.99242, 2980.17100707)(0.99476, 2910.76696134)(0.99559, 2662.89156874)(0.99716, 2344.58994059)(0.99801, 2155.6852128)(0.99879, 2006.32064784)(0.99912, 1795.02758617)(0.99929, 1612.3924251)(0.99961, 1403.75909076)(0.99976, 1273.01489022)(0.99977, 1096.88208368)(0.99985, 1006.90090036)(0.99988, 827.704714439)(0.99996, 742.33410199)(0.99997, 453.323429968)(0.99999, 285.507851601) };
-            \addlegendentry{hnsw(nmslib)};
-                
-            \addplot coordinates {(1.0, 407.286971944) };
-            \addlegendentry{mih};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>sift-hamming-data with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(135, 79, 111, 1)",
-                    data: [ 
-                        { x: 0.4415, y: 2330116, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.7734, y: 2331984, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 0.77488, y: 2332028, label: "Annoy(n_trees=100, search_k=400)" },
-                ]},
-                {
-                    label: "bitsampling",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 0.12588, y: 98336, label: "k: 17, m: 0, l: 1" },
-                        { x: 0.19662, y: 134824, label: "k: 19, m: 0, l: 1" },
-                        { x: 0.21713, y: 163584, label: "k: 25, m: 0, l: 1" },
-                        { x: 0.22455, y: 224996, label: "k: 17, m: 0, l: 5" },
-                        { x: 0.25928, y: 441188, label: "k: 31, m: 0, l: 1" },
-                        { x: 0.2596, y: 480680, label: "k: 19, m: 0, l: 5" },
-                        { x: 0.32472, y: 875940, label: "k: 17, m: 0, l: 10" },
-                        { x: 0.38456, y: 2096928, label: "k: 19, m: 0, l: 10" },
-                        { x: 0.39315, y: 3581648, label: "k: 17, m: 0, l: 20" },
-                ]},
-                {
-                    label: "falconn",
-                    fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(255, 229, 40, 1)",
-                    data: [ 
-                        { x: 0.06176, y: 9312, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 0.15739, y: 25584, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 0.20443, y: 33524, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 0.24521, y: 41916, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 0.27477, y: 50032, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 0.3628, y: 70492, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 0.48086, y: 96532, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 0.66853, y: 191600, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 0.76055, y: 480896, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 0.77218, y: 843820, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 0.77348, y: 1116384, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 0.77376, y: 1349720, label: "FALCONN(K=16, L=7, T=7)" },
-                ]},
-                {
-                    label: "hnsw(nmslib)",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.91662, y: 1025356, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                        { x: 0.98975, y: 1056056, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 0.9901, y: 1086228, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
-                        { x: 0.99996, y: 1147176, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
-                        { x: 0.99999, y: 1238876, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=120'])" },
-                ]},
-                {
-                    label: "mih",
-                    fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(87, 162, 85, 1)",
-                    data: [ 
-                        { x: 1.0, y: 122080, label: "chunks: 14, r: 0" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
-            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
-        });
-        </script>
-        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Index size (kB)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(0.4415, 2330116)(0.7734, 2331984)(0.77488, 2332028) };
-            \addlegendentry{annoy};
-                
-            \addplot coordinates {(0.12588, 98336)(0.19662, 134824)(0.21713, 163584)(0.22455, 224996)(0.25928, 441188)(0.2596, 480680)(0.32472, 875940)(0.38456, 2096928)(0.39315, 3581648) };
-            \addlegendentry{bitsampling};
-                
-            \addplot coordinates {(0.06176, 9312)(0.15739, 25584)(0.20443, 33524)(0.24521, 41916)(0.27477, 50032)(0.3628, 70492)(0.48086, 96532)(0.66853, 191600)(0.76055, 480896)(0.77218, 843820)(0.77348, 1116384)(0.77376, 1349720) };
-            \addlegendentry{falconn};
-                
-            \addplot coordinates {(0.91662, 1025356)(0.98975, 1056056)(0.9901, 1086228)(0.99996, 1147176)(0.99999, 1238876) };
-            \addlegendentry{hnsw(nmslib)};
-                
-            \addplot coordinates {(1.0, 122080) };
-            \addlegendentry{mih};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>sift-hamming-data with Relative Distance/Queries per second (1/s)</h2>
-        <canvas id="chartRelative DistanceQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chartRelative DistanceQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(135, 79, 111, 1)",
-                    data: [ 
-                        { x: 1.11789568086, y: 3753.99392334, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 1.09561350736, y: 3247.28119912, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 1.06580504962, y: 2629.01765044, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 1.06016755454, y: 1919.48179029, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 1.04079030404, y: 1708.63497578, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 1.03792191355, y: 1348.28026523, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 1.03115544638, y: 1120.79109183, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 1.02677832256, y: 684.090675339, label: "Annoy(n_trees=400, search_k=100)" },
-                        { x: 1.0261283976, y: 581.990479082, label: "Annoy(n_trees=400, search_k=200)" },
-                        { x: 1.02583819991, y: 452.89646411, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 1.02502888719, y: 285.484840914, label: "Annoy(n_trees=400, search_k=400)" },
-                        { x: 1.02494168058, y: 272.89966664, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 1.02490072882, y: 243.281040324, label: "Annoy(n_trees=400, search_k=1000)" },
-                ]},
-                {
-                    label: "bitsampling",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 1.53801989103, y: 26163.0550046, label: "k: 31, m: 0, l: 1" },
-                        { x: 1.40977636973, y: 20882.8202211, label: "k: 25, m: 0, l: 1" },
-                        { x: 1.3247924077, y: 19017.6297063, label: "k: 31, m: 0, l: 5" },
-                        { x: 1.15490776421, y: 15243.5058976, label: "k: 31, m: 0, l: 10" },
-                        { x: 1.14623623056, y: 12347.0063918, label: "k: 25, m: 0, l: 5" },
-                        { x: 1.11633480033, y: 11885.0930251, label: "k: 19, m: 0, l: 1" },
-                ]},
-                {
-                    label: "falconn",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 1.68500586103, y: 15612.6845915, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 1.46334757083, y: 10530.0626059, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 1.35772662787, y: 7231.27311008, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 1.29427076121, y: 5328.03532458, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 1.25273301401, y: 4291.00040687, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 1.22664586278, y: 3841.61458484, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 1.20389436451, y: 3624.95983362, label: "FALCONN(K=16, L=7, T=7)" },
-                        { x: 1.18584347945, y: 3288.97563362, label: "FALCONN(K=16, L=8, T=8)" },
-                        { x: 1.17018046466, y: 2700.13144966, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 1.15700696298, y: 2572.60583138, label: "FALCONN(K=16, L=10, T=10)" },
-                        { x: 1.14652979549, y: 2375.70844818, label: "FALCONN(K=16, L=11, T=11)" },
-                        { x: 1.12913384388, y: 2057.39500185, label: "FALCONN(K=16, L=13, T=13)" },
-                        { x: 1.11604401341, y: 1687.10466881, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 1.10516233688, y: 1638.27872898, label: "FALCONN(K=16, L=17, T=17)" },
-                        { x: 1.09600063402, y: 1464.14674812, label: "FALCONN(K=16, L=19, T=19)" },
-                        { x: 1.08788069664, y: 1311.9775715, label: "FALCONN(K=16, L=21, T=21)" },
-                        { x: 1.07826764063, y: 1132.55617277, label: "FALCONN(K=16, L=24, T=24)" },
-                        { x: 1.07075137336, y: 1017.66350428, label: "FALCONN(K=16, L=27, T=27)" },
-                        { x: 1.06515483004, y: 916.064639161, label: "FALCONN(K=16, L=30, T=30)" },
-                        { x: 1.06026566198, y: 834.824573456, label: "FALCONN(K=16, L=33, T=33)" },
-                        { x: 1.05484765653, y: 699.390302254, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 1.05049763747, y: 691.598017952, label: "FALCONN(K=16, L=41, T=41)" },
-                        { x: 1.04618768631, y: 620.661345604, label: "FALCONN(K=16, L=46, T=46)" },
-                        { x: 1.0428614611, y: 572.65374864, label: "FALCONN(K=16, L=51, T=51)" },
-                        { x: 1.03955438599, y: 519.930127646, label: "FALCONN(K=16, L=57, T=57)" },
-                        { x: 1.03700712796, y: 474.902631919, label: "FALCONN(K=16, L=63, T=63)" },
-                        { x: 1.03471235665, y: 427.505164574, label: "FALCONN(K=16, L=70, T=70)" },
-                        { x: 1.03288985628, y: 395.55365784, label: "FALCONN(K=16, L=77, T=77)" },
-                        { x: 1.03130658487, y: 368.394269869, label: "FALCONN(K=16, L=85, T=85)" },
-                        { x: 1.02995046311, y: 331.68745299, label: "FALCONN(K=16, L=94, T=94)" },
-                        { x: 1.0279777081, y: 282.457965553, label: "FALCONN(K=16, L=115, T=115)" },
-                        { x: 1.02739289349, y: 258.252386714, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 1.02680719502, y: 238.818679572, label: "FALCONN(K=16, L=127, T=127)" },
-                        { x: 1.02630369467, y: 220.929695163, label: "FALCONN(K=16, L=140, T=140)" },
-                        { x: 1.02599994461, y: 203.20316543, label: "FALCONN(K=16, L=154, T=154)" },
-                        { x: 1.02572359393, y: 177.033407801, label: "FALCONN(K=16, L=170, T=170)" },
-                        { x: 1.02556008153, y: 176.235816718, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 1.02546109024, y: 162.704397665, label: "FALCONN(K=16, L=207, T=207)" },
-                        { x: 1.02535738507, y: 140.240527304, label: "FALCONN(K=16, L=228, T=228)" },
-                        { x: 1.02528432007, y: 136.193224891, label: "FALCONN(K=16, L=251, T=251)" },
-                        { x: 1.02526605382, y: 119.030504771, label: "FALCONN(K=16, L=277, T=277)" },
-                ]},
-                {
-                    label: "hnsw(nmslib)",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 1.4477750252, y: 9792.8131938, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 1.23587231628, y: 9160.42311361, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
-                        { x: 1.19791339586, y: 9135.17267906, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
-                        { x: 1.14185878018, y: 8923.2802443, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
-                        { x: 1.11810250195, y: 8483.96093373, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
-                        { x: 1.08248154667, y: 8116.08292124, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
-                        { x: 1.04614349377, y: 7535.59384764, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
-                        { x: 1.02579194506, y: 6749.76613289, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 1.0227223312, y: 6442.90485438, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
-                        { x: 1.02061140085, y: 6369.84780599, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
-                        { x: 1.01558877132, y: 5931.74630315, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
-                        { x: 1.01430866074, y: 5756.2307299, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
-                        { x: 1.01085575024, y: 5691.93604486, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
-                        { x: 1.00934966847, y: 5451.2463981, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
-                        { x: 1.00615101239, y: 4922.99140311, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
-                        { x: 1.00404037666, y: 4324.26859535, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
-                        { x: 1.00331502977, y: 4208.17371976, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
-                        { x: 1.00294999938, y: 3930.40372366, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
-                        { x: 1.00146689772, y: 3477.86747383, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
-                        { x: 1.00129395758, y: 2980.17100707, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
-                        { x: 1.00080047422, y: 2910.76696134, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
-                        { x: 1.00064638956, y: 2662.89156874, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
-                        { x: 1.00062694484, y: 2254.16035496, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
-                        { x: 1.00030168774, y: 2155.6852128, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
-                        { x: 1.0002035803, y: 2006.32064784, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
-                        { x: 1.00015231696, y: 1795.02758617, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
-                        { x: 1.00010724056, y: 1612.3924251, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
-                        { x: 1.00005833415, y: 1403.75909076, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=40'])" },
-                        { x: 1.00004271946, y: 1273.01489022, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
-                        { x: 1.00004242484, y: 1256.92174605, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                        { x: 1.00003181863, y: 1096.88208368, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=70'])" },
-                        { x: 1.0000209178, y: 1006.90090036, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=50'])" },
-                        { x: 1.00001443623, y: 827.704714439, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=90'])" },
-                        { x: 1.00000913313, y: 742.33410199, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=30'])" },
-                        { x: 1.00000736542, y: 698.788469586, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=20'])" },
-                        { x: 1.00000235694, y: 453.323429968, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=70'])" },
-                        { x: 1.00000029462, y: 285.507851601, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=80'])" },
-                ]},
-                {
-                    label: "mih",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(127, 110, 133, 1)",
-                    data: [ 
-                        { x: 1.0, y: 407.286971944, label: "chunks: 14, r: 0" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: 'Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Relative Distance   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").click(function() {
-            $("#plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").toggle();
-        });
-        </script>
-        <div id="plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={Relative Distance},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(1.11789568086, 3753.99392334)(1.09561350736, 3247.28119912)(1.06580504962, 2629.01765044)(1.06016755454, 1919.48179029)(1.04079030404, 1708.63497578)(1.03792191355, 1348.28026523)(1.03115544638, 1120.79109183)(1.02677832256, 684.090675339)(1.0261283976, 581.990479082)(1.02583819991, 452.89646411)(1.02502888719, 285.484840914)(1.02494168058, 272.89966664)(1.02490072882, 243.281040324) };
-            \addlegendentry{annoy};
-                
-            \addplot coordinates {(1.53801989103, 26163.0550046)(1.40977636973, 20882.8202211)(1.3247924077, 19017.6297063)(1.15490776421, 15243.5058976)(1.14623623056, 12347.0063918)(1.11633480033, 11885.0930251) };
-            \addlegendentry{bitsampling};
-                
-            \addplot coordinates {(1.68500586103, 15612.6845915)(1.46334757083, 10530.0626059)(1.35772662787, 7231.27311008)(1.29427076121, 5328.03532458)(1.25273301401, 4291.00040687)(1.22664586278, 3841.61458484)(1.20389436451, 3624.95983362)(1.18584347945, 3288.97563362)(1.17018046466, 2700.13144966)(1.15700696298, 2572.60583138)(1.14652979549, 2375.70844818)(1.12913384388, 2057.39500185)(1.11604401341, 1687.10466881)(1.10516233688, 1638.27872898)(1.09600063402, 1464.14674812)(1.08788069664, 1311.9775715)(1.07826764063, 1132.55617277)(1.07075137336, 1017.66350428)(1.06515483004, 916.064639161)(1.06026566198, 834.824573456)(1.05484765653, 699.390302254)(1.05049763747, 691.598017952)(1.04618768631, 620.661345604)(1.0428614611, 572.65374864)(1.03955438599, 519.930127646)(1.03700712796, 474.902631919)(1.03471235665, 427.505164574)(1.03288985628, 395.55365784)(1.03130658487, 368.394269869)(1.02995046311, 331.68745299)(1.0279777081, 282.457965553)(1.02739289349, 258.252386714)(1.02680719502, 238.818679572)(1.02630369467, 220.929695163)(1.02599994461, 203.20316543)(1.02572359393, 177.033407801)(1.02556008153, 176.235816718)(1.02546109024, 162.704397665)(1.02535738507, 140.240527304)(1.02528432007, 136.193224891)(1.02526605382, 119.030504771) };
-            \addlegendentry{falconn};
-                
-            \addplot coordinates {(1.4477750252, 9792.8131938)(1.23587231628, 9160.42311361)(1.19791339586, 9135.17267906)(1.14185878018, 8923.2802443)(1.11810250195, 8483.96093373)(1.08248154667, 8116.08292124)(1.04614349377, 7535.59384764)(1.02579194506, 6749.76613289)(1.0227223312, 6442.90485438)(1.02061140085, 6369.84780599)(1.01558877132, 5931.74630315)(1.01430866074, 5756.2307299)(1.01085575024, 5691.93604486)(1.00934966847, 5451.2463981)(1.00615101239, 4922.99140311)(1.00404037666, 4324.26859535)(1.00331502977, 4208.17371976)(1.00294999938, 3930.40372366)(1.00146689772, 3477.86747383)(1.00129395758, 2980.17100707)(1.00080047422, 2910.76696134)(1.00064638956, 2662.89156874)(1.00062694484, 2254.16035496)(1.00030168774, 2155.6852128)(1.0002035803, 2006.32064784)(1.00015231696, 1795.02758617)(1.00010724056, 1612.3924251)(1.00005833415, 1403.75909076)(1.00004271946, 1273.01489022)(1.00004242484, 1256.92174605)(1.00003181863, 1096.88208368)(1.0000209178, 1006.90090036)(1.00001443623, 827.704714439)(1.00000913313, 742.33410199)(1.00000736542, 698.788469586)(1.00000235694, 453.323429968)(1.00000029462, 285.507851601) };
-            \addlegendentry{hnsw(nmslib)};
-                
-            \addplot coordinates {(1.0, 407.286971944) };
-            \addlegendentry{mih};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
         
         </div>
     </div>

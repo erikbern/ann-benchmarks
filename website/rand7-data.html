@@ -44,400 +44,36 @@
         </nav>
         <div class="container">
         <h2>Plots for rand7-data
-        <h2>rand7-data with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>rand7-data with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(135, 79, 111, 1)",
-                    data: [ 
-                        { x: 0.1584, y: 4107.02157744, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.2268, y: 3649.71537068, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.3339, y: 3118.42076893, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.4678, y: 2260.31388817, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 0.4805, y: 1716.3806717, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 0.529, y: 1605.31852393, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 0.5336, y: 1269.89640225, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 0.5623, y: 1032.97167168, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 0.5723, y: 857.624947757, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 0.6239, y: 485.77761522, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 0.6342, y: 427.707916857, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 0.6981, y: 259.376806122, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 0.7075, y: 237.868696695, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.803, y: 133.310893975, label: "Annoy(n_trees=200, search_k=10000)" },
-                        { x: 0.9244, y: 58.7964949455, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 0.9788, y: 31.5237693827, label: "Annoy(n_trees=200, search_k=20000)" },
-                        { x: 0.996, y: 14.3207335945, label: "Annoy(n_trees=100, search_k=40000)" },
-                ]},
-                {
-                    label: "falconn",
-                    fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(255, 229, 40, 1)",
-                    data: [ 
-                        { x: 0.2417, y: 21157.4943756, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 0.3047, y: 15098.2865371, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 0.3265, y: 12497.7026632, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 0.337, y: 10977.267136, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 0.3418, y: 9894.60672143, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 0.3453, y: 9138.57423301, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 0.3464, y: 8510.02909513, label: "FALCONN(K=16, L=7, T=7)" },
-                        { x: 0.3474, y: 8046.99688811, label: "FALCONN(K=16, L=8, T=8)" },
-                        { x: 0.349, y: 7586.52973075, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 0.3498, y: 7211.49078255, label: "FALCONN(K=16, L=10, T=10)" },
-                        { x: 0.3508, y: 6996.94385501, label: "FALCONN(K=16, L=11, T=11)" },
-                        { x: 0.3524, y: 6540.36597822, label: "FALCONN(K=16, L=13, T=13)" },
-                        { x: 0.3537, y: 5942.25352911, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 0.3557, y: 5594.33724446, label: "FALCONN(K=16, L=17, T=17)" },
-                        { x: 0.3566, y: 5353.43512717, label: "FALCONN(K=16, L=19, T=19)" },
-                        { x: 0.3568, y: 4897.98244375, label: "FALCONN(K=16, L=21, T=21)" },
-                        { x: 0.3579, y: 4746.80343954, label: "FALCONN(K=16, L=24, T=24)" },
-                        { x: 0.3596, y: 4306.16967584, label: "FALCONN(K=16, L=27, T=27)" },
-                        { x: 0.3609, y: 4146.88847715, label: "FALCONN(K=16, L=30, T=30)" },
-                        { x: 0.3614, y: 3779.64994363, label: "FALCONN(K=16, L=33, T=33)" },
-                        { x: 0.3633, y: 3523.34318689, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 0.3651, y: 3355.24725356, label: "FALCONN(K=16, L=41, T=41)" },
-                        { x: 0.3674, y: 3098.32441109, label: "FALCONN(K=16, L=46, T=46)" },
-                        { x: 0.3691, y: 2900.60310745, label: "FALCONN(K=16, L=51, T=51)" },
-                        { x: 0.3711, y: 2629.80442169, label: "FALCONN(K=16, L=57, T=57)" },
-                        { x: 0.3741, y: 2418.71955555, label: "FALCONN(K=16, L=63, T=63)" },
-                        { x: 0.3763, y: 2278.97921737, label: "FALCONN(K=16, L=70, T=70)" },
-                        { x: 0.3785, y: 2063.58977589, label: "FALCONN(K=16, L=77, T=77)" },
-                        { x: 0.379, y: 1956.17807113, label: "FALCONN(K=16, L=85, T=85)" },
-                        { x: 0.3811, y: 1737.08041718, label: "FALCONN(K=16, L=94, T=94)" },
-                        { x: 0.3832, y: 1660.48378572, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 0.3851, y: 1519.95677461, label: "FALCONN(K=16, L=115, T=115)" },
-                        { x: 0.389, y: 1354.83162414, label: "FALCONN(K=16, L=127, T=127)" },
-                        { x: 0.3923, y: 1261.65768119, label: "FALCONN(K=16, L=140, T=140)" },
-                        { x: 0.3945, y: 1191.69194638, label: "FALCONN(K=16, L=154, T=154)" },
-                        { x: 0.3984, y: 1086.42205551, label: "FALCONN(K=16, L=170, T=170)" },
-                        { x: 0.4018, y: 996.641272453, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 0.4057, y: 894.897872969, label: "FALCONN(K=16, L=207, T=207)" },
-                        { x: 0.4094, y: 791.618586023, label: "FALCONN(K=16, L=228, T=228)" },
-                        { x: 0.4129, y: 762.289297445, label: "FALCONN(K=16, L=251, T=251)" },
-                        { x: 0.4161, y: 694.853519789, label: "FALCONN(K=16, L=277, T=277)" },
-                        { x: 0.4194, y: 634.481974091, label: "FALCONN(K=16, L=305, T=305)" },
-                        { x: 0.4221, y: 578.646005783, label: "FALCONN(K=16, L=336, T=336)" },
-                        { x: 0.4248, y: 529.514239353, label: "FALCONN(K=16, L=370, T=370)" },
-                        { x: 0.4289, y: 481.2869373, label: "FALCONN(K=16, L=408, T=408)" },
-                        { x: 0.433, y: 439.861989408, label: "FALCONN(K=16, L=449, T=449)" },
-                        { x: 0.4376, y: 400.563766486, label: "FALCONN(K=16, L=494, T=494)" },
-                        { x: 0.4413, y: 364.021867154, label: "FALCONN(K=16, L=544, T=544)" },
-                        { x: 0.446, y: 330.593640561, label: "FALCONN(K=16, L=599, T=599)" },
-                        { x: 0.4491, y: 300.781013015, label: "FALCONN(K=16, L=659, T=659)" },
-                        { x: 0.4509, y: 273.845503961, label: "FALCONN(K=16, L=725, T=725)" },
-                        { x: 0.4547, y: 247.339873782, label: "FALCONN(K=16, L=798, T=798)" },
-                        { x: 0.4588, y: 224.676533969, label: "FALCONN(K=16, L=878, T=878)" },
-                        { x: 0.4618, y: 203.113001723, label: "FALCONN(K=16, L=966, T=966)" },
-                        { x: 0.4633, y: 183.326248204, label: "FALCONN(K=16, L=1063, T=1063)" },
-                        { x: 0.4646, y: 164.65625767, label: "FALCONN(K=16, L=1170, T=1170)" },
-                        { x: 0.4674, y: 149.369752695, label: "FALCONN(K=16, L=1287, T=1287)" },
-                        { x: 0.4693, y: 133.852065573, label: "FALCONN(K=16, L=1416, T=1416)" },
-                ]},
-                {
-                    label: "hnsw(nmslib)",
                     fill: false,
                     pointStyle: "rect",
                     borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
-                        { x: 0.0459, y: 12279.4140035, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
-                        { x: 0.0776, y: 10962.3480829, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
-                        { x: 0.0948, y: 10830.6904129, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
-                        { x: 0.1533, y: 9948.7040819, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
-                        { x: 0.1711, y: 9254.47520956, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
-                        { x: 0.2063, y: 9124.12169835, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
-                        { x: 0.2392, y: 9027.77442962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 0.2479, y: 8922.83603935, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
-                        { x: 0.3172, y: 7858.18079625, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
-                        { x: 0.3638, y: 7847.00753962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
-                        { x: 0.4632, y: 6533.41786388, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
-                        { x: 0.5216, y: 5700.53304411, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 0.5527, y: 5160.30861183, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
-                        { x: 0.5962, y: 4341.97904945, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
-                        { x: 0.6328, y: 3817.92876447, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
-                        { x: 0.6608, y: 3357.9307551, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
-                        { x: 0.6988, y: 2768.95065433, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
-                        { x: 0.7186, y: 2514.30092334, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
-                        { x: 0.7752, y: 1941.97912871, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
-                        { x: 0.8277, y: 1307.98263759, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
-                        { x: 0.8791, y: 683.355026735, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
-            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
-        });
-        </script>
-        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(0.1584, 4107.02157744)(0.2268, 3649.71537068)(0.3339, 3118.42076893)(0.4678, 2260.31388817)(0.4805, 1716.3806717)(0.529, 1605.31852393)(0.5336, 1269.89640225)(0.5623, 1032.97167168)(0.5723, 857.624947757)(0.6239, 485.77761522)(0.6342, 427.707916857)(0.6981, 259.376806122)(0.7075, 237.868696695)(0.803, 133.310893975)(0.9244, 58.7964949455)(0.9788, 31.5237693827)(0.996, 14.3207335945) };
-            \addlegendentry{annoy};
-                
-            \addplot coordinates {(0.2417, 21157.4943756)(0.3047, 15098.2865371)(0.3265, 12497.7026632)(0.337, 10977.267136)(0.3418, 9894.60672143)(0.3453, 9138.57423301)(0.3464, 8510.02909513)(0.3474, 8046.99688811)(0.349, 7586.52973075)(0.3498, 7211.49078255)(0.3508, 6996.94385501)(0.3524, 6540.36597822)(0.3537, 5942.25352911)(0.3557, 5594.33724446)(0.3566, 5353.43512717)(0.3568, 4897.98244375)(0.3579, 4746.80343954)(0.3596, 4306.16967584)(0.3609, 4146.88847715)(0.3614, 3779.64994363)(0.3633, 3523.34318689)(0.3651, 3355.24725356)(0.3674, 3098.32441109)(0.3691, 2900.60310745)(0.3711, 2629.80442169)(0.3741, 2418.71955555)(0.3763, 2278.97921737)(0.3785, 2063.58977589)(0.379, 1956.17807113)(0.3811, 1737.08041718)(0.3832, 1660.48378572)(0.3851, 1519.95677461)(0.389, 1354.83162414)(0.3923, 1261.65768119)(0.3945, 1191.69194638)(0.3984, 1086.42205551)(0.4018, 996.641272453)(0.4057, 894.897872969)(0.4094, 791.618586023)(0.4129, 762.289297445)(0.4161, 694.853519789)(0.4194, 634.481974091)(0.4221, 578.646005783)(0.4248, 529.514239353)(0.4289, 481.2869373)(0.433, 439.861989408)(0.4376, 400.563766486)(0.4413, 364.021867154)(0.446, 330.593640561)(0.4491, 300.781013015)(0.4509, 273.845503961)(0.4547, 247.339873782)(0.4588, 224.676533969)(0.4618, 203.113001723)(0.4633, 183.326248204)(0.4646, 164.65625767)(0.4674, 149.369752695)(0.4693, 133.852065573) };
-            \addlegendentry{falconn};
-                
-            \addplot coordinates {(0.0459, 12279.4140035)(0.0776, 10962.3480829)(0.0948, 10830.6904129)(0.1533, 9948.7040819)(0.1711, 9254.47520956)(0.2063, 9124.12169835)(0.2392, 9027.77442962)(0.2479, 8922.83603935)(0.3172, 7858.18079625)(0.3638, 7847.00753962)(0.4632, 6533.41786388)(0.5216, 5700.53304411)(0.5527, 5160.30861183)(0.5962, 4341.97904945)(0.6328, 3817.92876447)(0.6608, 3357.9307551)(0.6988, 2768.95065433)(0.7186, 2514.30092334)(0.7752, 1941.97912871)(0.8277, 1307.98263759)(0.8791, 683.355026735) };
-            \addlegendentry{hnsw(nmslib)};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>rand7-data with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(135, 79, 111, 1)",
-                    data: [ 
-                        { x: 0.3339, y: 2016032, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.9948, y: 2016032, label: "Annoy(n_trees=100, search_k=400000)" },
-                        { x: 0.996, y: 3401872, label: "Annoy(n_trees=100, search_k=40000)" },
-                ]},
-                {
-                    label: "falconn",
-                    fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(255, 229, 40, 1)",
-                    data: [ 
-                        { x: 0.2417, y: 513244, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 0.3047, y: 521568, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 0.3265, y: 529892, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 0.337, y: 538220, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 0.3418, y: 546536, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 0.3453, y: 554848, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 0.3464, y: 563172, label: "FALCONN(K=16, L=7, T=7)" },
-                        { x: 0.3474, y: 571488, label: "FALCONN(K=16, L=8, T=8)" },
-                        { x: 0.349, y: 575908, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 0.3498, y: 580328, label: "FALCONN(K=16, L=10, T=10)" },
-                        { x: 0.3508, y: 584748, label: "FALCONN(K=16, L=11, T=11)" },
-                        { x: 0.3524, y: 593604, label: "FALCONN(K=16, L=13, T=13)" },
-                        { x: 0.3537, y: 602432, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 0.3557, y: 611268, label: "FALCONN(K=16, L=17, T=17)" },
-                        { x: 0.3566, y: 620100, label: "FALCONN(K=16, L=19, T=19)" },
-                        { x: 0.3568, y: 628932, label: "FALCONN(K=16, L=21, T=21)" },
-                        { x: 0.3579, y: 642180, label: "FALCONN(K=16, L=24, T=24)" },
-                        { x: 0.3596, y: 655440, label: "FALCONN(K=16, L=27, T=27)" },
-                        { x: 0.3609, y: 668708, label: "FALCONN(K=16, L=30, T=30)" },
-                        { x: 0.3614, y: 681960, label: "FALCONN(K=16, L=33, T=33)" },
-                        { x: 0.3633, y: 699640, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 0.3651, y: 717316, label: "FALCONN(K=16, L=41, T=41)" },
-                        { x: 0.3674, y: 739408, label: "FALCONN(K=16, L=46, T=46)" },
-                        { x: 0.3691, y: 761488, label: "FALCONN(K=16, L=51, T=51)" },
-                        { x: 0.3711, y: 788004, label: "FALCONN(K=16, L=57, T=57)" },
-                        { x: 0.3741, y: 814500, label: "FALCONN(K=16, L=63, T=63)" },
-                        { x: 0.3763, y: 845436, label: "FALCONN(K=16, L=70, T=70)" },
-                        { x: 0.3785, y: 876356, label: "FALCONN(K=16, L=77, T=77)" },
-                        { x: 0.379, y: 911704, label: "FALCONN(K=16, L=85, T=85)" },
-                        { x: 0.3811, y: 951484, label: "FALCONN(K=16, L=94, T=94)" },
-                        { x: 0.3832, y: 995680, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 0.3851, y: 1044272, label: "FALCONN(K=16, L=115, T=115)" },
-                        { x: 0.389, y: 1097284, label: "FALCONN(K=16, L=127, T=127)" },
-                        { x: 0.3923, y: 1154724, label: "FALCONN(K=16, L=140, T=140)" },
-                        { x: 0.3945, y: 1216576, label: "FALCONN(K=16, L=154, T=154)" },
-                        { x: 0.3984, y: 1287304, label: "FALCONN(K=16, L=170, T=170)" },
-                        { x: 0.4018, y: 1366800, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 0.4057, y: 1450752, label: "FALCONN(K=16, L=207, T=207)" },
-                        { x: 0.4094, y: 1543540, label: "FALCONN(K=16, L=228, T=228)" },
-                        { x: 0.4129, y: 1645156, label: "FALCONN(K=16, L=251, T=251)" },
-                        { x: 0.4161, y: 1760024, label: "FALCONN(K=16, L=277, T=277)" },
-                        { x: 0.4194, y: 1883744, label: "FALCONN(K=16, L=305, T=305)" },
-                        { x: 0.4221, y: 2020708, label: "FALCONN(K=16, L=336, T=336)" },
-                        { x: 0.4248, y: 2170944, label: "FALCONN(K=16, L=370, T=370)" },
-                        { x: 0.4289, y: 2338820, label: "FALCONN(K=16, L=408, T=408)" },
-                        { x: 0.433, y: 2519968, label: "FALCONN(K=16, L=449, T=449)" },
-                        { x: 0.4376, y: 2718788, label: "FALCONN(K=16, L=494, T=494)" },
-                        { x: 0.4413, y: 2939732, label: "FALCONN(K=16, L=544, T=544)" },
-                        { x: 0.446, y: 3182720, label: "FALCONN(K=16, L=599, T=599)" },
-                        { x: 0.4491, y: 3448280, label: "FALCONN(K=16, L=659, T=659)" },
-                        { x: 0.4509, y: 3740428, label: "FALCONN(K=16, L=725, T=725)" },
-                        { x: 0.4547, y: 4063560, label: "FALCONN(K=16, L=798, T=798)" },
-                        { x: 0.4588, y: 4417688, label: "FALCONN(K=16, L=878, T=878)" },
-                        { x: 0.4618, y: 4807204, label: "FALCONN(K=16, L=966, T=966)" },
-                        { x: 0.4633, y: 5236616, label: "FALCONN(K=16, L=1063, T=1063)" },
-                        { x: 0.4646, y: 5710248, label: "FALCONN(K=16, L=1170, T=1170)" },
-                        { x: 0.4674, y: 6228120, label: "FALCONN(K=16, L=1287, T=1287)" },
-                        { x: 0.4693, y: 6799156, label: "FALCONN(K=16, L=1416, T=1416)" },
-                ]},
-                {
-                    label: "hnsw(nmslib)",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.0776, y: 1177480, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
-                        { x: 0.289, y: 1177480, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
-                        { x: 0.3211, y: 1177480, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
-                        { x: 0.3543, y: 1177480, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
-                        { x: 0.5359, y: 1205700, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
-                        { x: 0.5767, y: 1205700, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 0.6292, y: 1236096, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                        { x: 0.8791, y: 1297936, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
-            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
-        });
-        </script>
-        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Index size (kB)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(0.3339, 2016032)(0.9948, 2016032)(0.996, 3401872) };
-            \addlegendentry{annoy};
-                
-            \addplot coordinates {(0.2417, 513244)(0.3047, 521568)(0.3265, 529892)(0.337, 538220)(0.3418, 546536)(0.3453, 554848)(0.3464, 563172)(0.3474, 571488)(0.349, 575908)(0.3498, 580328)(0.3508, 584748)(0.3524, 593604)(0.3537, 602432)(0.3557, 611268)(0.3566, 620100)(0.3568, 628932)(0.3579, 642180)(0.3596, 655440)(0.3609, 668708)(0.3614, 681960)(0.3633, 699640)(0.3651, 717316)(0.3674, 739408)(0.3691, 761488)(0.3711, 788004)(0.3741, 814500)(0.3763, 845436)(0.3785, 876356)(0.379, 911704)(0.3811, 951484)(0.3832, 995680)(0.3851, 1044272)(0.389, 1097284)(0.3923, 1154724)(0.3945, 1216576)(0.3984, 1287304)(0.4018, 1366800)(0.4057, 1450752)(0.4094, 1543540)(0.4129, 1645156)(0.4161, 1760024)(0.4194, 1883744)(0.4221, 2020708)(0.4248, 2170944)(0.4289, 2338820)(0.433, 2519968)(0.4376, 2718788)(0.4413, 2939732)(0.446, 3182720)(0.4491, 3448280)(0.4509, 3740428)(0.4547, 4063560)(0.4588, 4417688)(0.4618, 4807204)(0.4633, 5236616)(0.4646, 5710248)(0.4674, 6228120)(0.4693, 6799156) };
-            \addlegendentry{falconn};
-                
-            \addplot coordinates {(0.0776, 1177480)(0.289, 1177480)(0.3211, 1177480)(0.3543, 1177480)(0.5359, 1205700)(0.5767, 1205700)(0.6292, 1236096)(0.8791, 1297936) };
-            \addlegendentry{hnsw(nmslib)};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>rand7-data with Relative Distance/Queries per second (1/s)</h2>
-        <canvas id="chartRelative DistanceQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chartRelative DistanceQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(135, 79, 111, 1)",
-                    data: [ 
-                        { x: 1.09803696606, y: 4107.02157744, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 1.08300089931, y: 3649.71537068, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 1.06870113172, y: 3118.42076893, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 1.05071590737, y: 2260.31388817, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 1.04967682138, y: 1716.3806717, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 1.0396650626, y: 1605.31852393, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 1.03814668021, y: 1269.89640225, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 1.02963535945, y: 1032.97167168, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 1.0284110341, y: 857.624947757, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 1.01853149292, y: 485.77761522, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 1.01741546421, y: 427.707916857, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 1.01162914155, y: 259.376806122, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 1.01081028533, y: 237.868696695, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 1.00596507614, y: 133.310893975, label: "Annoy(n_trees=200, search_k=10000)" },
-                        { x: 1.00577786946, y: 129.015576379, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 1.00169181743, y: 58.7964949455, label: "Annoy(n_trees=200, search_k=20000)" },
-                        { x: 1.00040561349, y: 31.5237693827, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 1.00006076349, y: 14.3207335945, label: "Annoy(n_trees=200, search_k=40000)" },
+                        { x: 0.2223, y: 4107.02157744, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.3171, y: 3649.71537068, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.442, y: 3118.42076893, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.5321, y: 2260.31388817, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.5367, y: 1716.3806717, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.5661, y: 1605.31852393, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.5724, y: 1269.89640225, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.6161, y: 1032.97167168, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.6263, y: 857.624947757, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.7274, y: 485.77761522, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.7421, y: 427.707916857, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.8502, y: 259.376806122, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.8665, y: 237.868696695, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.9642, y: 133.310893975, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.9666, y: 129.015576379, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.9991, y: 58.7964949455, label: "Annoy(n_trees=200, search_k=20000)" },
+                        { x: 1.0, y: 31.5237693827, label: "Annoy(n_trees=100, search_k=40000)" },
                 ]},
                 {
                     label: "falconn",
@@ -445,96 +81,98 @@
                     pointStyle: "rect",
                     borderColor: "rgba(225, 198, 47, 1)",
                     data: [ 
-                        { x: 1.20314148948, y: 21157.4943756, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 1.18821930705, y: 15098.2865371, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 1.17470139203, y: 12497.7026632, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 1.16619923257, y: 10977.267136, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 1.15773253762, y: 9894.60672143, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 1.15326677211, y: 9138.57423301, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 1.14828964656, y: 8510.02909513, label: "FALCONN(K=16, L=7, T=7)" },
-                        { x: 1.14492608782, y: 8046.99688811, label: "FALCONN(K=16, L=8, T=8)" },
-                        { x: 1.14269060988, y: 7586.52973075, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 1.13964300235, y: 7211.49078255, label: "FALCONN(K=16, L=10, T=10)" },
-                        { x: 1.13663629738, y: 6996.94385501, label: "FALCONN(K=16, L=11, T=11)" },
-                        { x: 1.13329695116, y: 6540.36597822, label: "FALCONN(K=16, L=13, T=13)" },
-                        { x: 1.12966116483, y: 5942.25352911, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 1.12577617747, y: 5594.33724446, label: "FALCONN(K=16, L=17, T=17)" },
-                        { x: 1.12303542186, y: 5353.43512717, label: "FALCONN(K=16, L=19, T=19)" },
-                        { x: 1.1210245512, y: 4897.98244375, label: "FALCONN(K=16, L=21, T=21)" },
-                        { x: 1.11875002771, y: 4746.80343954, label: "FALCONN(K=16, L=24, T=24)" },
-                        { x: 1.1163411318, y: 4306.16967584, label: "FALCONN(K=16, L=27, T=27)" },
-                        { x: 1.11420059509, y: 4146.88847715, label: "FALCONN(K=16, L=30, T=30)" },
-                        { x: 1.11290340375, y: 3779.64994363, label: "FALCONN(K=16, L=33, T=33)" },
-                        { x: 1.11047628456, y: 3523.34318689, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 1.10798995004, y: 3355.24725356, label: "FALCONN(K=16, L=41, T=41)" },
-                        { x: 1.10539028211, y: 3098.32441109, label: "FALCONN(K=16, L=46, T=46)" },
-                        { x: 1.10307094737, y: 2900.60310745, label: "FALCONN(K=16, L=51, T=51)" },
-                        { x: 1.10058768068, y: 2629.80442169, label: "FALCONN(K=16, L=57, T=57)" },
-                        { x: 1.09830281334, y: 2418.71955555, label: "FALCONN(K=16, L=63, T=63)" },
-                        { x: 1.09730677138, y: 2278.97921737, label: "FALCONN(K=16, L=70, T=70)" },
-                        { x: 1.0953710334, y: 2063.58977589, label: "FALCONN(K=16, L=77, T=77)" },
-                        { x: 1.09401991539, y: 1956.17807113, label: "FALCONN(K=16, L=85, T=85)" },
-                        { x: 1.09260389337, y: 1737.08041718, label: "FALCONN(K=16, L=94, T=94)" },
-                        { x: 1.09164926273, y: 1660.48378572, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 1.08973368188, y: 1519.95677461, label: "FALCONN(K=16, L=115, T=115)" },
-                        { x: 1.08790285483, y: 1354.83162414, label: "FALCONN(K=16, L=127, T=127)" },
-                        { x: 1.0859004078, y: 1261.65768119, label: "FALCONN(K=16, L=140, T=140)" },
-                        { x: 1.08555152168, y: 1191.69194638, label: "FALCONN(K=16, L=154, T=154)" },
-                        { x: 1.08322606486, y: 1086.42205551, label: "FALCONN(K=16, L=170, T=170)" },
-                        { x: 1.08149154389, y: 996.641272453, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 1.07943043679, y: 894.897872969, label: "FALCONN(K=16, L=207, T=207)" },
-                        { x: 1.07789955994, y: 791.618586023, label: "FALCONN(K=16, L=228, T=228)" },
-                        { x: 1.07603901023, y: 762.289297445, label: "FALCONN(K=16, L=251, T=251)" },
-                        { x: 1.07468020588, y: 694.853519789, label: "FALCONN(K=16, L=277, T=277)" },
-                        { x: 1.07318311084, y: 634.481974091, label: "FALCONN(K=16, L=305, T=305)" },
-                        { x: 1.0720814902, y: 578.646005783, label: "FALCONN(K=16, L=336, T=336)" },
-                        { x: 1.07104666114, y: 529.514239353, label: "FALCONN(K=16, L=370, T=370)" },
-                        { x: 1.06956714139, y: 481.2869373, label: "FALCONN(K=16, L=408, T=408)" },
-                        { x: 1.06853317864, y: 439.861989408, label: "FALCONN(K=16, L=449, T=449)" },
-                        { x: 1.06708176299, y: 400.563766486, label: "FALCONN(K=16, L=494, T=494)" },
-                        { x: 1.06547263637, y: 364.021867154, label: "FALCONN(K=16, L=544, T=544)" },
-                        { x: 1.0641713383, y: 330.593640561, label: "FALCONN(K=16, L=599, T=599)" },
-                        { x: 1.06362835679, y: 300.781013015, label: "FALCONN(K=16, L=659, T=659)" },
-                        { x: 1.06290326497, y: 273.845503961, label: "FALCONN(K=16, L=725, T=725)" },
-                        { x: 1.06185025721, y: 247.339873782, label: "FALCONN(K=16, L=798, T=798)" },
-                        { x: 1.06066868962, y: 224.676533969, label: "FALCONN(K=16, L=878, T=878)" },
-                        { x: 1.05986236828, y: 203.113001723, label: "FALCONN(K=16, L=966, T=966)" },
-                        { x: 1.05976511379, y: 183.326248204, label: "FALCONN(K=16, L=1063, T=1063)" },
-                        { x: 1.05933647499, y: 164.65625767, label: "FALCONN(K=16, L=1170, T=1170)" },
-                        { x: 1.0583944246, y: 149.369752695, label: "FALCONN(K=16, L=1287, T=1287)" },
-                        { x: 1.05797337989, y: 133.852065573, label: "FALCONN(K=16, L=1416, T=1416)" },
+                        { x: 0.2881, y: 21157.4943756, label: "FALCONN(K=16, L=1, T=1)" },
+                        { x: 0.3486, y: 15098.2865371, label: "FALCONN(K=16, L=2, T=2)" },
+                        { x: 0.37, y: 12497.7026632, label: "FALCONN(K=16, L=3, T=3)" },
+                        { x: 0.3809, y: 10977.267136, label: "FALCONN(K=16, L=4, T=4)" },
+                        { x: 0.3861, y: 9894.60672143, label: "FALCONN(K=16, L=5, T=5)" },
+                        { x: 0.3893, y: 9138.57423301, label: "FALCONN(K=16, L=6, T=6)" },
+                        { x: 0.3908, y: 8510.02909513, label: "FALCONN(K=16, L=7, T=7)" },
+                        { x: 0.3922, y: 8046.99688811, label: "FALCONN(K=16, L=8, T=8)" },
+                        { x: 0.3942, y: 7586.52973075, label: "FALCONN(K=16, L=9, T=9)" },
+                        { x: 0.3955, y: 7211.49078255, label: "FALCONN(K=16, L=10, T=10)" },
+                        { x: 0.3968, y: 6996.94385501, label: "FALCONN(K=16, L=11, T=11)" },
+                        { x: 0.3984, y: 6540.36597822, label: "FALCONN(K=16, L=13, T=13)" },
+                        { x: 0.4005, y: 5942.25352911, label: "FALCONN(K=16, L=15, T=15)" },
+                        { x: 0.4026, y: 5594.33724446, label: "FALCONN(K=16, L=17, T=17)" },
+                        { x: 0.4042, y: 5353.43512717, label: "FALCONN(K=16, L=19, T=19)" },
+                        { x: 0.4048, y: 4897.98244375, label: "FALCONN(K=16, L=21, T=21)" },
+                        { x: 0.4066, y: 4746.80343954, label: "FALCONN(K=16, L=24, T=24)" },
+                        { x: 0.4089, y: 4306.16967584, label: "FALCONN(K=16, L=27, T=27)" },
+                        { x: 0.4114, y: 4146.88847715, label: "FALCONN(K=16, L=30, T=30)" },
+                        { x: 0.4132, y: 3779.64994363, label: "FALCONN(K=16, L=33, T=33)" },
+                        { x: 0.4156, y: 3523.34318689, label: "FALCONN(K=16, L=37, T=37)" },
+                        { x: 0.4182, y: 3355.24725356, label: "FALCONN(K=16, L=41, T=41)" },
+                        { x: 0.4215, y: 3098.32441109, label: "FALCONN(K=16, L=46, T=46)" },
+                        { x: 0.4236, y: 2900.60310745, label: "FALCONN(K=16, L=51, T=51)" },
+                        { x: 0.4274, y: 2629.80442169, label: "FALCONN(K=16, L=57, T=57)" },
+                        { x: 0.4317, y: 2418.71955555, label: "FALCONN(K=16, L=63, T=63)" },
+                        { x: 0.4343, y: 2278.97921737, label: "FALCONN(K=16, L=70, T=70)" },
+                        { x: 0.4371, y: 2063.58977589, label: "FALCONN(K=16, L=77, T=77)" },
+                        { x: 0.4391, y: 1956.17807113, label: "FALCONN(K=16, L=85, T=85)" },
+                        { x: 0.4428, y: 1737.08041718, label: "FALCONN(K=16, L=94, T=94)" },
+                        { x: 0.4458, y: 1660.48378572, label: "FALCONN(K=16, L=104, T=104)" },
+                        { x: 0.4492, y: 1519.95677461, label: "FALCONN(K=16, L=115, T=115)" },
+                        { x: 0.4542, y: 1354.83162414, label: "FALCONN(K=16, L=127, T=127)" },
+                        { x: 0.4589, y: 1261.65768119, label: "FALCONN(K=16, L=140, T=140)" },
+                        { x: 0.4624, y: 1191.69194638, label: "FALCONN(K=16, L=154, T=154)" },
+                        { x: 0.4675, y: 1086.42205551, label: "FALCONN(K=16, L=170, T=170)" },
+                        { x: 0.4716, y: 996.641272453, label: "FALCONN(K=16, L=188, T=188)" },
+                        { x: 0.477, y: 894.897872969, label: "FALCONN(K=16, L=207, T=207)" },
+                        { x: 0.4826, y: 791.618586023, label: "FALCONN(K=16, L=228, T=228)" },
+                        { x: 0.4863, y: 762.289297445, label: "FALCONN(K=16, L=251, T=251)" },
+                        { x: 0.4904, y: 694.853519789, label: "FALCONN(K=16, L=277, T=277)" },
+                        { x: 0.4938, y: 634.481974091, label: "FALCONN(K=16, L=305, T=305)" },
+                        { x: 0.4985, y: 578.646005783, label: "FALCONN(K=16, L=336, T=336)" },
+                        { x: 0.502, y: 529.514239353, label: "FALCONN(K=16, L=370, T=370)" },
+                        { x: 0.5059, y: 481.2869373, label: "FALCONN(K=16, L=408, T=408)" },
+                        { x: 0.5108, y: 439.861989408, label: "FALCONN(K=16, L=449, T=449)" },
+                        { x: 0.5156, y: 400.563766486, label: "FALCONN(K=16, L=494, T=494)" },
+                        { x: 0.5203, y: 364.021867154, label: "FALCONN(K=16, L=544, T=544)" },
+                        { x: 0.5253, y: 330.593640561, label: "FALCONN(K=16, L=599, T=599)" },
+                        { x: 0.53, y: 300.781013015, label: "FALCONN(K=16, L=659, T=659)" },
+                        { x: 0.5325, y: 273.845503961, label: "FALCONN(K=16, L=725, T=725)" },
+                        { x: 0.5367, y: 247.339873782, label: "FALCONN(K=16, L=798, T=798)" },
+                        { x: 0.5414, y: 224.676533969, label: "FALCONN(K=16, L=878, T=878)" },
+                        { x: 0.5457, y: 203.113001723, label: "FALCONN(K=16, L=966, T=966)" },
+                        { x: 0.5473, y: 183.326248204, label: "FALCONN(K=16, L=1063, T=1063)" },
+                        { x: 0.5485, y: 164.65625767, label: "FALCONN(K=16, L=1170, T=1170)" },
+                        { x: 0.552, y: 149.369752695, label: "FALCONN(K=16, L=1287, T=1287)" },
+                        { x: 0.5542, y: 133.852065573, label: "FALCONN(K=16, L=1416, T=1416)" },
                 ]},
                 {
                     label: "hnsw(nmslib)",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(135, 79, 111, 1)",
                     data: [ 
-                        { x: 1.70905182231, y: 12279.4140035, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
-                        { x: 1.65120982141, y: 10962.3480829, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
-                        { x: 1.57640669538, y: 10830.6904129, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
-                        { x: 1.45200424331, y: 10117.9717277, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
-                        { x: 1.44777212479, y: 9765.16412622, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
-                        { x: 1.38747652649, y: 9027.77442962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
-                        { x: 1.25441291484, y: 8922.83603935, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 1.20716821901, y: 7847.00753962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
-                        { x: 1.15408004699, y: 6533.41786388, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
-                        { x: 1.12485568337, y: 5700.53304411, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
-                        { x: 1.10962623849, y: 5160.30861183, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
-                        { x: 1.08809066592, y: 4341.97904945, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 1.07280168246, y: 3817.92876447, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
-                        { x: 1.06170221694, y: 3357.9307551, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
-                        { x: 1.04654754463, y: 2768.95065433, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
-                        { x: 1.03587750321, y: 2514.30092334, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
-                        { x: 1.01253070775, y: 1941.97912871, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
-                        { x: 1.00782051966, y: 1307.98263759, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
-                        { x: 1.00344657471, y: 683.355026735, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.0598, y: 12279.4140035, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.1049, y: 10962.3480829, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.1304, y: 10830.6904129, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
+                        { x: 0.2006, y: 9948.7040819, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
+                        { x: 0.2051, y: 9765.16412622, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.2476, y: 9124.12169835, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
+                        { x: 0.3001, y: 9027.77442962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.326, y: 8922.83603935, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
+                        { x: 0.3683, y: 7858.18079625, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.4479, y: 7847.00753962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.5437, y: 6533.41786388, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.6043, y: 5700.53304411, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
+                        { x: 0.6461, y: 5160.30861183, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
+                        { x: 0.7078, y: 4341.97904945, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.7627, y: 3817.92876447, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.8021, y: 3357.9307551, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
+                        { x: 0.8525, y: 2768.95065433, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.8763, y: 2514.30092334, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
+                        { x: 0.9323, y: 1941.97912871, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.965, y: 1307.98263759, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
+                        { x: 0.9833, y: 683.355026735, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
                 ]},
             ]}, options: {
                         responsive: false,
                         title:{
                             display:true,
-                            text: 'Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better'
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -544,7 +182,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' Relative Distance   '
+                                    labelString: ' Epsilon Recall   '
                                 }
                             }],
                             yAxes: [{
@@ -559,47 +197,6 @@
                     }
                 }); 
         </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").click(function() {
-            $("#plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").toggle();
-        });
-        </script>
-        <div id="plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={Relative Distance},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(1.09803696606, 4107.02157744)(1.08300089931, 3649.71537068)(1.06870113172, 3118.42076893)(1.05071590737, 2260.31388817)(1.04967682138, 1716.3806717)(1.0396650626, 1605.31852393)(1.03814668021, 1269.89640225)(1.02963535945, 1032.97167168)(1.0284110341, 857.624947757)(1.01853149292, 485.77761522)(1.01741546421, 427.707916857)(1.01162914155, 259.376806122)(1.01081028533, 237.868696695)(1.00596507614, 133.310893975)(1.00577786946, 129.015576379)(1.00169181743, 58.7964949455)(1.00040561349, 31.5237693827)(1.00006076349, 14.3207335945) };
-            \addlegendentry{annoy};
-                
-            \addplot coordinates {(1.20314148948, 21157.4943756)(1.18821930705, 15098.2865371)(1.17470139203, 12497.7026632)(1.16619923257, 10977.267136)(1.15773253762, 9894.60672143)(1.15326677211, 9138.57423301)(1.14828964656, 8510.02909513)(1.14492608782, 8046.99688811)(1.14269060988, 7586.52973075)(1.13964300235, 7211.49078255)(1.13663629738, 6996.94385501)(1.13329695116, 6540.36597822)(1.12966116483, 5942.25352911)(1.12577617747, 5594.33724446)(1.12303542186, 5353.43512717)(1.1210245512, 4897.98244375)(1.11875002771, 4746.80343954)(1.1163411318, 4306.16967584)(1.11420059509, 4146.88847715)(1.11290340375, 3779.64994363)(1.11047628456, 3523.34318689)(1.10798995004, 3355.24725356)(1.10539028211, 3098.32441109)(1.10307094737, 2900.60310745)(1.10058768068, 2629.80442169)(1.09830281334, 2418.71955555)(1.09730677138, 2278.97921737)(1.0953710334, 2063.58977589)(1.09401991539, 1956.17807113)(1.09260389337, 1737.08041718)(1.09164926273, 1660.48378572)(1.08973368188, 1519.95677461)(1.08790285483, 1354.83162414)(1.0859004078, 1261.65768119)(1.08555152168, 1191.69194638)(1.08322606486, 1086.42205551)(1.08149154389, 996.641272453)(1.07943043679, 894.897872969)(1.07789955994, 791.618586023)(1.07603901023, 762.289297445)(1.07468020588, 694.853519789)(1.07318311084, 634.481974091)(1.0720814902, 578.646005783)(1.07104666114, 529.514239353)(1.06956714139, 481.2869373)(1.06853317864, 439.861989408)(1.06708176299, 400.563766486)(1.06547263637, 364.021867154)(1.0641713383, 330.593640561)(1.06362835679, 300.781013015)(1.06290326497, 273.845503961)(1.06185025721, 247.339873782)(1.06066868962, 224.676533969)(1.05986236828, 203.113001723)(1.05976511379, 183.326248204)(1.05933647499, 164.65625767)(1.0583944246, 149.369752695)(1.05797337989, 133.852065573) };
-            \addlegendentry{falconn};
-                
-            \addplot coordinates {(1.70905182231, 12279.4140035)(1.65120982141, 10962.3480829)(1.57640669538, 10830.6904129)(1.45200424331, 10117.9717277)(1.44777212479, 9765.16412622)(1.38747652649, 9027.77442962)(1.25441291484, 8922.83603935)(1.20716821901, 7847.00753962)(1.15408004699, 6533.41786388)(1.12485568337, 5700.53304411)(1.10962623849, 5160.30861183)(1.08809066592, 4341.97904945)(1.07280168246, 3817.92876447)(1.06170221694, 3357.9307551)(1.04654754463, 2768.95065433)(1.03587750321, 2514.30092334)(1.01253070775, 1941.97912871)(1.00782051966, 1307.98263759)(1.00344657471, 683.355026735) };
-            \addlegendentry{hnsw(nmslib)};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
         
         </div>
     </div>

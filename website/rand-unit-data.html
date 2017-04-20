@@ -44,31 +44,31 @@
         </nav>
         <div class="container">
         <h2>Plots for rand-unit-data
-        <h2>rand-unit-data with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>rand-unit-data with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "annoy",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(135, 79, 111, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
-                        { x: 0.0881, y: 2129.39854689, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.1279, y: 1918.01952543, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.1891, y: 1780.07596817, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.3134, y: 1422.71959904, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 0.4613, y: 1069.91491808, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 0.526, y: 806.595527046, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 0.5568, y: 409.493347777, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.61, y: 234.040125319, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 0.6785, y: 123.381812144, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 0.8104, y: 53.5787048235, label: "Annoy(n_trees=100, search_k=100000)" },
-                        { x: 0.9072, y: 28.1904931354, label: "Annoy(n_trees=100, search_k=200000)" },
-                        { x: 0.9691, y: 13.7998713915, label: "Annoy(n_trees=100, search_k=400000)" },
+                        { x: 0.1022, y: 2129.39854689, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.1492, y: 1918.01952543, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.2196, y: 1780.07596817, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.3537, y: 1422.71959904, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.4959, y: 1069.91491808, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.5387, y: 806.595527046, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.581, y: 409.493347777, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.654, y: 234.040125319, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.7476, y: 123.381812144, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.9014, y: 53.5787048235, label: "Annoy(n_trees=100, search_k=100000)" },
+                        { x: 0.9754, y: 28.1904931354, label: "Annoy(n_trees=100, search_k=200000)" },
+                        { x: 0.9962, y: 13.7998713915, label: "Annoy(n_trees=100, search_k=400000)" },
                 ]},
                 {
                     label: "ball",
@@ -81,140 +81,140 @@
                 {
                     label: "BallTree(nmslib)",
                     fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 161, 13, 1)",
+                    pointStyle: "cross",
+                    borderColor: "rgba(255, 229, 40, 1)",
                     data: [ 
-                        { x: 0.3312, y: 825.886291537, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.1'])" },
-                        { x: 0.3985, y: 101.33818072, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.2'])" },
-                        { x: 0.4409, y: 80.9507632309, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.6'])" },
-                        { x: 0.4435, y: 72.2828283768, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.4'])" },
-                        { x: 0.4529, y: 59.9930242067, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.3'])" },
-                        { x: 0.5656, y: 36.1190056506, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.5'])" },
-                        { x: 0.6039, y: 30.3338936717, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.7'])" },
-                        { x: 0.6937, y: 22.5061134091, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.8'])" },
-                        { x: 0.7722, y: 16.6317301402, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.85'])" },
-                        { x: 0.9701, y: 11.0348073794, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.9'])" },
-                        { x: 0.9933, y: 6.72535040128, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.95'])" },
-                        { x: 0.9984, y: 5.65502331603, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.97'])" },
-                        { x: 0.9985, y: 5.58538543474, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.99'])" },
+                        { x: 0.3745, y: 825.886291537, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.1'])" },
+                        { x: 0.4659, y: 101.33818072, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.2'])" },
+                        { x: 0.5113, y: 80.9507632309, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.6'])" },
+                        { x: 0.5161, y: 72.2828283768, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.4'])" },
+                        { x: 0.5325, y: 59.9930242067, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.3'])" },
+                        { x: 0.6796, y: 36.1190056506, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.5'])" },
+                        { x: 0.7183, y: 30.3338936717, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.7'])" },
+                        { x: 0.8127, y: 22.5061134091, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.8'])" },
+                        { x: 0.8752, y: 16.6317301402, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.85'])" },
+                        { x: 0.9864, y: 11.0348073794, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.9'])" },
+                        { x: 0.9975, y: 6.72535040128, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.95'])" },
+                        { x: 0.9988, y: 5.65502331603, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.97'])" },
                 ]},
                 {
                     label: "bruteforce-blas",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(177, 108, 41, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(198, 103, 100, 1)",
                     data: [ 
-                        { x: 0.9987, y: 5.55491624054, label: "BruteForceBLAS()" },
+                        { x: 0.999, y: 5.55491624054, label: "BruteForceBLAS()" },
                 ]},
                 {
                     label: "bruteforce0(nmslib)",
                     fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(203, 140, 173, 1)",
+                    pointStyle: "star",
+                    borderColor: "rgba(241, 126, 180, 1)",
                     data: [ 
-                        { x: 0.9987, y: 3.16130015041, label: "Nmslib(method_name=seq_search, method_param=['copyMem=0'])" },
+                        { x: 0.9989, y: 3.16130015041, label: "Nmslib(method_name=seq_search, method_param=['copyMem=0'])" },
                 ]},
                 {
                     label: "faiss-lsh",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(225, 198, 47, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(177, 108, 41, 1)",
                     data: [ 
-                        { x: 0.0097, y: 897.534996299, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.0208, y: 860.595659744, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.05, y: 543.980502164, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.1005, y: 363.336983188, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.1832, y: 152.439419081, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.2906, y: 87.6321090444, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.4163, y: 47.2379604668, label: "FaissLSH(n_bits=2048)" },
-                        { x: 0.5352, y: 22.5943854598, label: "FaissLSH(n_bits=4096)" },
+                        { x: 0.011, y: 897.534996299, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.0233, y: 860.595659744, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.0588, y: 543.980502164, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.1175, y: 363.336983188, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.2153, y: 152.439419081, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.3364, y: 87.6321090444, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.4767, y: 47.2379604668, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.6071, y: 22.5943854598, label: "FaissLSH(n_bits=4096)" },
                 ]},
                 {
                     label: "falconn",
                     fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(255, 229, 40, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(225, 198, 47, 1)",
                     data: [ 
-                        { x: 0.2755, y: 21124.5674915, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 0.3816, y: 15167.6273822, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 0.4331, y: 12594.9401679, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 0.4636, y: 11103.4446245, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 0.4792, y: 10097.1460899, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 0.4891, y: 9360.09194274, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 0.4961, y: 8715.92588052, label: "FALCONN(K=16, L=7, T=7)" },
-                        { x: 0.5001, y: 8163.92057786, label: "FALCONN(K=16, L=8, T=8)" },
-                        { x: 0.5043, y: 7928.32137429, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 0.5074, y: 7437.60595249, label: "FALCONN(K=16, L=10, T=10)" },
-                        { x: 0.5104, y: 7229.31504016, label: "FALCONN(K=16, L=11, T=11)" },
-                        { x: 0.5141, y: 6499.79389367, label: "FALCONN(K=16, L=13, T=13)" },
-                        { x: 0.5165, y: 6051.97627289, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 0.5189, y: 5673.36040406, label: "FALCONN(K=16, L=17, T=17)" },
-                        { x: 0.5216, y: 5388.81586977, label: "FALCONN(K=16, L=19, T=19)" },
-                        { x: 0.524, y: 5058.29644003, label: "FALCONN(K=16, L=21, T=21)" },
-                        { x: 0.5272, y: 4772.84975603, label: "FALCONN(K=16, L=24, T=24)" },
-                        { x: 0.531, y: 4346.3029052, label: "FALCONN(K=16, L=27, T=27)" },
-                        { x: 0.535, y: 4084.46855606, label: "FALCONN(K=16, L=30, T=30)" },
-                        { x: 0.5375, y: 3863.83769005, label: "FALCONN(K=16, L=33, T=33)" },
-                        { x: 0.5415, y: 3543.58188426, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 0.5452, y: 3385.44638, label: "FALCONN(K=16, L=41, T=41)" },
-                        { x: 0.5498, y: 3111.46224417, label: "FALCONN(K=16, L=46, T=46)" },
-                        { x: 0.5531, y: 2806.39737286, label: "FALCONN(K=16, L=51, T=51)" },
-                        { x: 0.5594, y: 2638.76846265, label: "FALCONN(K=16, L=57, T=57)" },
-                        { x: 0.566, y: 2477.04382644, label: "FALCONN(K=16, L=63, T=63)" },
-                        { x: 0.5722, y: 2280.97832412, label: "FALCONN(K=16, L=70, T=70)" },
-                        { x: 0.5786, y: 2121.36633604, label: "FALCONN(K=16, L=77, T=77)" },
-                        { x: 0.5855, y: 1956.988565, label: "FALCONN(K=16, L=85, T=85)" },
-                        { x: 0.5937, y: 1803.68830534, label: "FALCONN(K=16, L=94, T=94)" },
-                        { x: 0.6027, y: 1648.26641977, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 0.6133, y: 1515.90263218, label: "FALCONN(K=16, L=115, T=115)" },
-                        { x: 0.6231, y: 1398.33532144, label: "FALCONN(K=16, L=127, T=127)" },
-                        { x: 0.6313, y: 1261.75674107, label: "FALCONN(K=16, L=140, T=140)" },
-                        { x: 0.6415, y: 1179.01980351, label: "FALCONN(K=16, L=154, T=154)" },
-                        { x: 0.6541, y: 1080.95353087, label: "FALCONN(K=16, L=170, T=170)" },
-                        { x: 0.6648, y: 989.909975228, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 0.6787, y: 903.40959634, label: "FALCONN(K=16, L=207, T=207)" },
-                        { x: 0.6888, y: 820.866262317, label: "FALCONN(K=16, L=228, T=228)" },
-                        { x: 0.704, y: 750.188651438, label: "FALCONN(K=16, L=251, T=251)" },
-                        { x: 0.7187, y: 688.351165599, label: "FALCONN(K=16, L=277, T=277)" },
-                        { x: 0.7348, y: 629.014607708, label: "FALCONN(K=16, L=305, T=305)" },
-                        { x: 0.7498, y: 574.136308478, label: "FALCONN(K=16, L=336, T=336)" },
-                        { x: 0.7652, y: 521.895435612, label: "FALCONN(K=16, L=370, T=370)" },
-                        { x: 0.7836, y: 477.333481128, label: "FALCONN(K=16, L=408, T=408)" },
-                        { x: 0.8028, y: 433.600283836, label: "FALCONN(K=16, L=449, T=449)" },
-                        { x: 0.8199, y: 396.911206119, label: "FALCONN(K=16, L=494, T=494)" },
-                        { x: 0.8376, y: 360.765493364, label: "FALCONN(K=16, L=544, T=544)" },
-                        { x: 0.8535, y: 330.861831023, label: "FALCONN(K=16, L=599, T=599)" },
-                        { x: 0.8718, y: 300.6145021, label: "FALCONN(K=16, L=659, T=659)" },
-                        { x: 0.8868, y: 272.82781799, label: "FALCONN(K=16, L=725, T=725)" },
-                        { x: 0.9036, y: 248.377594222, label: "FALCONN(K=16, L=798, T=798)" },
-                        { x: 0.9186, y: 225.594515987, label: "FALCONN(K=16, L=878, T=878)" },
-                        { x: 0.9312, y: 203.960346641, label: "FALCONN(K=16, L=966, T=966)" },
-                        { x: 0.9415, y: 185.524444989, label: "FALCONN(K=16, L=1063, T=1063)" },
-                        { x: 0.9508, y: 167.899851195, label: "FALCONN(K=16, L=1170, T=1170)" },
-                        { x: 0.9602, y: 151.086809615, label: "FALCONN(K=16, L=1287, T=1287)" },
-                        { x: 0.9697, y: 138.26114761, label: "FALCONN(K=16, L=1416, T=1416)" },
+                        { x: 0.3034, y: 21124.5674915, label: "FALCONN(K=16, L=1, T=1)" },
+                        { x: 0.411, y: 15167.6273822, label: "FALCONN(K=16, L=2, T=2)" },
+                        { x: 0.4571, y: 12594.9401679, label: "FALCONN(K=16, L=3, T=3)" },
+                        { x: 0.4818, y: 11103.4446245, label: "FALCONN(K=16, L=4, T=4)" },
+                        { x: 0.494, y: 10097.1460899, label: "FALCONN(K=16, L=5, T=5)" },
+                        { x: 0.5004, y: 9360.09194274, label: "FALCONN(K=16, L=6, T=6)" },
+                        { x: 0.5064, y: 8715.92588052, label: "FALCONN(K=16, L=7, T=7)" },
+                        { x: 0.5085, y: 8163.92057786, label: "FALCONN(K=16, L=8, T=8)" },
+                        { x: 0.5123, y: 7928.32137429, label: "FALCONN(K=16, L=9, T=9)" },
+                        { x: 0.5143, y: 7437.60595249, label: "FALCONN(K=16, L=10, T=10)" },
+                        { x: 0.5168, y: 7229.31504016, label: "FALCONN(K=16, L=11, T=11)" },
+                        { x: 0.5209, y: 6499.79389367, label: "FALCONN(K=16, L=13, T=13)" },
+                        { x: 0.5236, y: 6051.97627289, label: "FALCONN(K=16, L=15, T=15)" },
+                        { x: 0.526, y: 5673.36040406, label: "FALCONN(K=16, L=17, T=17)" },
+                        { x: 0.5292, y: 5388.81586977, label: "FALCONN(K=16, L=19, T=19)" },
+                        { x: 0.5322, y: 5058.29644003, label: "FALCONN(K=16, L=21, T=21)" },
+                        { x: 0.5364, y: 4772.84975603, label: "FALCONN(K=16, L=24, T=24)" },
+                        { x: 0.5416, y: 4346.3029052, label: "FALCONN(K=16, L=27, T=27)" },
+                        { x: 0.5461, y: 4084.46855606, label: "FALCONN(K=16, L=30, T=30)" },
+                        { x: 0.5495, y: 3863.83769005, label: "FALCONN(K=16, L=33, T=33)" },
+                        { x: 0.5545, y: 3543.58188426, label: "FALCONN(K=16, L=37, T=37)" },
+                        { x: 0.5599, y: 3385.44638, label: "FALCONN(K=16, L=41, T=41)" },
+                        { x: 0.5652, y: 3111.46224417, label: "FALCONN(K=16, L=46, T=46)" },
+                        { x: 0.5704, y: 2806.39737286, label: "FALCONN(K=16, L=51, T=51)" },
+                        { x: 0.5788, y: 2638.76846265, label: "FALCONN(K=16, L=57, T=57)" },
+                        { x: 0.5868, y: 2477.04382644, label: "FALCONN(K=16, L=63, T=63)" },
+                        { x: 0.5954, y: 2280.97832412, label: "FALCONN(K=16, L=70, T=70)" },
+                        { x: 0.6039, y: 2121.36633604, label: "FALCONN(K=16, L=77, T=77)" },
+                        { x: 0.6134, y: 1956.988565, label: "FALCONN(K=16, L=85, T=85)" },
+                        { x: 0.6242, y: 1803.68830534, label: "FALCONN(K=16, L=94, T=94)" },
+                        { x: 0.636, y: 1648.26641977, label: "FALCONN(K=16, L=104, T=104)" },
+                        { x: 0.6504, y: 1515.90263218, label: "FALCONN(K=16, L=115, T=115)" },
+                        { x: 0.6631, y: 1398.33532144, label: "FALCONN(K=16, L=127, T=127)" },
+                        { x: 0.6745, y: 1261.75674107, label: "FALCONN(K=16, L=140, T=140)" },
+                        { x: 0.6886, y: 1179.01980351, label: "FALCONN(K=16, L=154, T=154)" },
+                        { x: 0.7059, y: 1080.95353087, label: "FALCONN(K=16, L=170, T=170)" },
+                        { x: 0.7226, y: 989.909975228, label: "FALCONN(K=16, L=188, T=188)" },
+                        { x: 0.7398, y: 903.40959634, label: "FALCONN(K=16, L=207, T=207)" },
+                        { x: 0.7545, y: 820.866262317, label: "FALCONN(K=16, L=228, T=228)" },
+                        { x: 0.7737, y: 750.188651438, label: "FALCONN(K=16, L=251, T=251)" },
+                        { x: 0.7924, y: 688.351165599, label: "FALCONN(K=16, L=277, T=277)" },
+                        { x: 0.8139, y: 629.014607708, label: "FALCONN(K=16, L=305, T=305)" },
+                        { x: 0.835, y: 574.136308478, label: "FALCONN(K=16, L=336, T=336)" },
+                        { x: 0.8551, y: 521.895435612, label: "FALCONN(K=16, L=370, T=370)" },
+                        { x: 0.8733, y: 477.333481128, label: "FALCONN(K=16, L=408, T=408)" },
+                        { x: 0.8934, y: 433.600283836, label: "FALCONN(K=16, L=449, T=449)" },
+                        { x: 0.9117, y: 396.911206119, label: "FALCONN(K=16, L=494, T=494)" },
+                        { x: 0.9276, y: 360.765493364, label: "FALCONN(K=16, L=544, T=544)" },
+                        { x: 0.9413, y: 330.861831023, label: "FALCONN(K=16, L=599, T=599)" },
+                        { x: 0.9539, y: 300.6145021, label: "FALCONN(K=16, L=659, T=659)" },
+                        { x: 0.9635, y: 272.82781799, label: "FALCONN(K=16, L=725, T=725)" },
+                        { x: 0.9734, y: 248.377594222, label: "FALCONN(K=16, L=798, T=798)" },
+                        { x: 0.9809, y: 225.594515987, label: "FALCONN(K=16, L=878, T=878)" },
+                        { x: 0.9863, y: 203.960346641, label: "FALCONN(K=16, L=966, T=966)" },
+                        { x: 0.9901, y: 185.524444989, label: "FALCONN(K=16, L=1063, T=1063)" },
+                        { x: 0.9935, y: 167.899851195, label: "FALCONN(K=16, L=1170, T=1170)" },
+                        { x: 0.9953, y: 151.086809615, label: "FALCONN(K=16, L=1287, T=1287)" },
+                        { x: 0.9978, y: 138.26114761, label: "FALCONN(K=16, L=1416, T=1416)" },
                 ]},
                 {
                     label: "hnsw(nmslib)",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(135, 79, 111, 1)",
                     data: [ 
-                        { x: 0.3021, y: 5469.71595792, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=2'])" },
-                        { x: 0.3905, y: 5347.29257158, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=1'])" },
-                        { x: 0.4197, y: 5168.67717826, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=5'])" },
-                        { x: 0.4689, y: 5083.90625152, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=5'])" },
-                        { x: 0.499, y: 5026.18845043, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=10'])" },
-                        { x: 0.5146, y: 4524.75109739, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=15'])" },
-                        { x: 0.5274, y: 4189.78740917, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=2'])" },
-                        { x: 0.5355, y: 4134.7144947, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=10'])" },
-                        { x: 0.5399, y: 4056.71640636, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=20'])" },
-                        { x: 0.5409, y: 3881.063375, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=30'])" },
-                        { x: 0.5561, y: 3876.09948858, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=15'])" },
-                        { x: 0.5686, y: 3601.13263468, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=40'])" },
-                        { x: 0.5791, y: 3407.88094569, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=20'])" },
-                        { x: 0.5951, y: 2957.00249078, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=50'])" },
-                        { x: 0.6002, y: 2863.08627067, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=30'])" },
+                        { x: 0.3422, y: 5469.71595792, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=2'])" },
+                        { x: 0.434, y: 5347.29257158, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=1'])" },
+                        { x: 0.4657, y: 5168.67717826, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.498, y: 5083.90625152, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=5'])" },
+                        { x: 0.518, y: 5026.18845043, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.5263, y: 4684.14363666, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=15'])" },
+                        { x: 0.5293, y: 4524.75109739, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=2'])" },
+                        { x: 0.5417, y: 4189.78740917, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=10'])" },
+                        { x: 0.5481, y: 4179.791763, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=20'])" },
+                        { x: 0.5527, y: 4134.7144947, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=30'])" },
+                        { x: 0.5619, y: 4056.71640636, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=15'])" },
+                        { x: 0.5817, y: 3876.09948858, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=40'])" },
+                        { x: 0.5977, y: 3601.13263468, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=20'])" },
+                        { x: 0.6128, y: 3407.88094569, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=50'])" },
+                        { x: 0.6378, y: 2957.00249078, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=30'])" },
+                        { x: 0.6454, y: 2863.08627067, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=40'])" },
                 ]},
                 {
                     label: "kd",
@@ -230,10 +230,10 @@
                     pointStyle: "star",
                     borderColor: "rgba(68, 155, 118, 1)",
                     data: [ 
-                        { x: 0.2852, y: 3.30351884493, label: "LSHF(n_est=5, n_cand=10)" },
-                        { x: 0.2895, y: 2.9827923879, label: "LSHF(n_est=5, n_cand=20)" },
-                        { x: 0.3603, y: 1.36802414688, label: "LSHF(n_est=10, n_cand=20)" },
-                        { x: 0.3758, y: 1.21910929167, label: "LSHF(n_est=10, n_cand=50)" },
+                        { x: 0.3059, y: 3.30351884493, label: "LSHF(n_est=5, n_cand=10)" },
+                        { x: 0.3109, y: 2.9827923879, label: "LSHF(n_est=5, n_cand=20)" },
+                        { x: 0.3825, y: 1.36802414688, label: "LSHF(n_est=10, n_cand=20)" },
+                        { x: 0.4014, y: 1.21910929167, label: "LSHF(n_est=10, n_cand=50)" },
                 ]},
                 {
                     label: "nearpy",
@@ -241,788 +241,94 @@
                     pointStyle: "rect",
                     borderColor: "rgba(127, 110, 133, 1)",
                     data: [ 
-                        { x: 0.423, y: 37.7079347702, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.428, y: 36.7995670846, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.479, y: 25.7236446293, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 0.4816, y: 25.3526599202, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 0.4955, y: 20.6367692125, label: "NearPy(n_bits=14, hash_counts=5)" },
-                        { x: 0.5038, y: 17.3320179145, label: "NearPy(n_bits=16, hash_counts=15)" },
-                        { x: 0.5052, y: 16.8601249902, label: "NearPy(n_bits=16, hash_counts=20)" },
-                        { x: 0.5066, y: 14.7467750703, label: "NearPy(n_bits=16, hash_counts=20)" },
-                        { x: 0.5121, y: 13.2148427404, label: "NearPy(n_bits=16, hash_counts=25)" },
-                        { x: 0.5144, y: 10.581601373, label: "NearPy(n_bits=14, hash_counts=10)" },
-                        { x: 0.5154, y: 5.42166181256, label: "NearPy(n_bits=16, hash_counts=30)" },
-                        { x: 0.5353, y: 4.61085336176, label: "NearPy(n_bits=16, hash_counts=40)" },
-                        { x: 0.5415, y: 2.92105771506, label: "NearPy(n_bits=16, hash_counts=40)" },
-                        { x: 0.5452, y: 1.71134854262, label: "NearPy(n_bits=12, hash_counts=5)" },
-                        { x: 0.5783, y: 1.51052204912, label: "NearPy(n_bits=14, hash_counts=20)" },
-                        { x: 0.5953, y: 0.839550968321, label: "NearPy(n_bits=12, hash_counts=10)" },
+                        { x: 0.445, y: 37.7079347702, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.4494, y: 36.7995670846, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.4924, y: 25.7236446293, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.4929, y: 25.3526599202, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.5026, y: 20.6367692125, label: "NearPy(n_bits=14, hash_counts=5)" },
+                        { x: 0.5086, y: 17.3320179145, label: "NearPy(n_bits=16, hash_counts=15)" },
+                        { x: 0.5104, y: 16.8601249902, label: "NearPy(n_bits=16, hash_counts=20)" },
+                        { x: 0.5111, y: 14.7467750703, label: "NearPy(n_bits=16, hash_counts=20)" },
+                        { x: 0.5169, y: 13.2148427404, label: "NearPy(n_bits=16, hash_counts=25)" },
+                        { x: 0.519, y: 10.581601373, label: "NearPy(n_bits=14, hash_counts=10)" },
+                        { x: 0.5195, y: 10.5284809698, label: "NearPy(n_bits=16, hash_counts=30)" },
+                        { x: 0.5208, y: 8.46639102023, label: "NearPy(n_bits=16, hash_counts=40)" },
+                        { x: 0.5295, y: 5.42166181256, label: "NearPy(n_bits=16, hash_counts=40)" },
+                        { x: 0.5469, y: 4.61085336176, label: "NearPy(n_bits=12, hash_counts=5)" },
+                        { x: 0.5566, y: 2.92105771506, label: "NearPy(n_bits=14, hash_counts=20)" },
+                        { x: 0.5656, y: 1.71134854262, label: "NearPy(n_bits=12, hash_counts=10)" },
+                        { x: 0.6066, y: 1.51052204912, label: "NearPy(n_bits=14, hash_counts=40)" },
+                        { x: 0.6328, y: 0.839550968321, label: "NearPy(n_bits=10, hash_counts=5)" },
                 ]},
                 {
                     label: "panns",
                     fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(241, 126, 180, 1)",
+                    pointStyle: "cross",
+                    borderColor: "rgba(203, 140, 173, 1)",
                     data: [ 
                         { x: 0.0002, y: 30.5787595763, label: "PANNS(n_trees=5, n_cand=20)" },
                 ]},
                 {
                     label: "rpforest",
                     fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(198, 103, 100, 1)",
-                    data: [ 
-                        { x: 0.0098, y: 16979.8879425, label: "RPForest(leaf_size=3, n_trees=3)" },
-                        { x: 0.0159, y: 15736.2917719, label: "RPForest(leaf_size=5, n_trees=3)" },
-                        { x: 0.0274, y: 14638.5271791, label: "RPForest(leaf_size=10, n_trees=3)" },
-                        { x: 0.0474, y: 13966.4416792, label: "RPForest(leaf_size=3, n_trees=5)" },
-                        { x: 0.0859, y: 11946.1465504, label: "RPForest(leaf_size=5, n_trees=5)" },
-                        { x: 0.1297, y: 8984.2070202, label: "RPForest(leaf_size=20, n_trees=3)" },
-                        { x: 0.1332, y: 8948.91763069, label: "RPForest(leaf_size=10, n_trees=5)" },
-                        { x: 0.1407, y: 7543.4815842, label: "RPForest(leaf_size=40, n_trees=3)" },
-                        { x: 0.2022, y: 6851.62424326, label: "RPForest(leaf_size=20, n_trees=5)" },
-                        { x: 0.205, y: 6149.88863849, label: "RPForest(leaf_size=3, n_trees=10)" },
-                        { x: 0.2311, y: 5865.81487521, label: "RPForest(leaf_size=5, n_trees=10)" },
-                        { x: 0.248, y: 4698.63688913, label: "RPForest(leaf_size=10, n_trees=10)" },
-                        { x: 0.2983, y: 4361.23461617, label: "RPForest(leaf_size=100, n_trees=3)" },
-                        { x: 0.328, y: 4122.40918383, label: "RPForest(leaf_size=40, n_trees=5)" },
-                        { x: 0.3573, y: 3398.2695522, label: "RPForest(leaf_size=20, n_trees=10)" },
-                        { x: 0.3741, y: 2766.43764193, label: "RPForest(leaf_size=100, n_trees=5)" },
-                        { x: 0.393, y: 2554.02025044, label: "RPForest(leaf_size=3, n_trees=20)" },
-                        { x: 0.4244, y: 2495.32769774, label: "RPForest(leaf_size=5, n_trees=20)" },
-                        { x: 0.4497, y: 2258.53444985, label: "RPForest(leaf_size=200, n_trees=3)" },
-                        { x: 0.4668, y: 1996.19256484, label: "RPForest(leaf_size=40, n_trees=10)" },
-                        { x: 0.4925, y: 1421.91268312, label: "RPForest(leaf_size=10, n_trees=20)" },
-                        { x: 0.5114, y: 1362.50852318, label: "RPForest(leaf_size=20, n_trees=20)" },
-                        { x: 0.5263, y: 1278.50565288, label: "RPForest(leaf_size=200, n_trees=5)" },
-                        { x: 0.5417, y: 856.718934853, label: "RPForest(leaf_size=100, n_trees=10)" },
-                        { x: 0.5538, y: 744.139835634, label: "RPForest(leaf_size=3, n_trees=40)" },
-                        { x: 0.5794, y: 555.765148604, label: "RPForest(leaf_size=5, n_trees=40)" },
-                        { x: 0.6183, y: 288.686445233, label: "RPForest(leaf_size=400, n_trees=3)" },
-                        { x: 0.6683, y: 164.714589431, label: "RPForest(leaf_size=40, n_trees=20)" },
-                ]},
-                {
-                    label: "SW-graph(nmslib)",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(227, 113, 43, 1)",
-                    data: [ 
-                        { x: 0.0383, y: 4879.97458967, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
-                        { x: 0.0847, y: 4462.10622958, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
-                        { x: 0.1524, y: 3864.58531048, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
-                        { x: 0.1767, y: 3589.90414778, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
-                        { x: 0.279, y: 2902.68073657, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
-                        { x: 0.3597, y: 2210.10843184, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=40', 'initSearchAttempts=1'])" },
-                        { x: 0.3931, y: 1845.44120183, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=60', 'initSearchAttempts=1'])" },
-                        { x: 0.4089, y: 1672.59076058, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
-                        { x: 0.4268, y: 1381.48619882, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=120', 'initSearchAttempts=1'])" },
-                        { x: 0.5336, y: 1285.04519851, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
-                        { x: 0.5479, y: 1061.19573974, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
-                        { x: 0.5695, y: 818.886520004, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=50', 'initSearchAttempts=1'])" },
-                        { x: 0.5874, y: 732.739334559, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
-            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
-        });
-        </script>
-        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(0.0881, 2129.39854689)(0.1279, 1918.01952543)(0.1891, 1780.07596817)(0.3134, 1422.71959904)(0.4613, 1069.91491808)(0.526, 806.595527046)(0.5568, 409.493347777)(0.61, 234.040125319)(0.6785, 123.381812144)(0.8104, 53.5787048235)(0.9072, 28.1904931354)(0.9691, 13.7998713915) };
-            \addlegendentry{annoy};
-                
-            \addplot coordinates {(1.0, 2.58084344234) };
-            \addlegendentry{ball};
-                
-            \addplot coordinates {(0.3312, 825.886291537)(0.3985, 101.33818072)(0.4409, 80.9507632309)(0.4435, 72.2828283768)(0.4529, 59.9930242067)(0.5656, 36.1190056506)(0.6039, 30.3338936717)(0.6937, 22.5061134091)(0.7722, 16.6317301402)(0.9701, 11.0348073794)(0.9933, 6.72535040128)(0.9984, 5.65502331603)(0.9985, 5.58538543474) };
-            \addlegendentry{BallTree(nmslib)};
-                
-            \addplot coordinates {(0.9987, 5.55491624054) };
-            \addlegendentry{bruteforce-blas};
-                
-            \addplot coordinates {(0.9987, 3.16130015041) };
-            \addlegendentry{bruteforce0(nmslib)};
-                
-            \addplot coordinates {(0.0097, 897.534996299)(0.0208, 860.595659744)(0.05, 543.980502164)(0.1005, 363.336983188)(0.1832, 152.439419081)(0.2906, 87.6321090444)(0.4163, 47.2379604668)(0.5352, 22.5943854598) };
-            \addlegendentry{faiss-lsh};
-                
-            \addplot coordinates {(0.2755, 21124.5674915)(0.3816, 15167.6273822)(0.4331, 12594.9401679)(0.4636, 11103.4446245)(0.4792, 10097.1460899)(0.4891, 9360.09194274)(0.4961, 8715.92588052)(0.5001, 8163.92057786)(0.5043, 7928.32137429)(0.5074, 7437.60595249)(0.5104, 7229.31504016)(0.5141, 6499.79389367)(0.5165, 6051.97627289)(0.5189, 5673.36040406)(0.5216, 5388.81586977)(0.524, 5058.29644003)(0.5272, 4772.84975603)(0.531, 4346.3029052)(0.535, 4084.46855606)(0.5375, 3863.83769005)(0.5415, 3543.58188426)(0.5452, 3385.44638)(0.5498, 3111.46224417)(0.5531, 2806.39737286)(0.5594, 2638.76846265)(0.566, 2477.04382644)(0.5722, 2280.97832412)(0.5786, 2121.36633604)(0.5855, 1956.988565)(0.5937, 1803.68830534)(0.6027, 1648.26641977)(0.6133, 1515.90263218)(0.6231, 1398.33532144)(0.6313, 1261.75674107)(0.6415, 1179.01980351)(0.6541, 1080.95353087)(0.6648, 989.909975228)(0.6787, 903.40959634)(0.6888, 820.866262317)(0.704, 750.188651438)(0.7187, 688.351165599)(0.7348, 629.014607708)(0.7498, 574.136308478)(0.7652, 521.895435612)(0.7836, 477.333481128)(0.8028, 433.600283836)(0.8199, 396.911206119)(0.8376, 360.765493364)(0.8535, 330.861831023)(0.8718, 300.6145021)(0.8868, 272.82781799)(0.9036, 248.377594222)(0.9186, 225.594515987)(0.9312, 203.960346641)(0.9415, 185.524444989)(0.9508, 167.899851195)(0.9602, 151.086809615)(0.9697, 138.26114761) };
-            \addlegendentry{falconn};
-                
-            \addplot coordinates {(0.3021, 5469.71595792)(0.3905, 5347.29257158)(0.4197, 5168.67717826)(0.4689, 5083.90625152)(0.499, 5026.18845043)(0.5146, 4524.75109739)(0.5274, 4189.78740917)(0.5355, 4134.7144947)(0.5399, 4056.71640636)(0.5409, 3881.063375)(0.5561, 3876.09948858)(0.5686, 3601.13263468)(0.5791, 3407.88094569)(0.5951, 2957.00249078)(0.6002, 2863.08627067) };
-            \addlegendentry{hnsw(nmslib)};
-                
-            \addplot coordinates {(1.0, 3.36508524876) };
-            \addlegendentry{kd};
-                
-            \addplot coordinates {(0.2852, 3.30351884493)(0.2895, 2.9827923879)(0.3603, 1.36802414688)(0.3758, 1.21910929167) };
-            \addlegendentry{lshf};
-                
-            \addplot coordinates {(0.423, 37.7079347702)(0.428, 36.7995670846)(0.479, 25.7236446293)(0.4816, 25.3526599202)(0.4955, 20.6367692125)(0.5038, 17.3320179145)(0.5052, 16.8601249902)(0.5066, 14.7467750703)(0.5121, 13.2148427404)(0.5144, 10.581601373)(0.5154, 5.42166181256)(0.5353, 4.61085336176)(0.5415, 2.92105771506)(0.5452, 1.71134854262)(0.5783, 1.51052204912)(0.5953, 0.839550968321) };
-            \addlegendentry{nearpy};
-                
-            \addplot coordinates {(0.0002, 30.5787595763) };
-            \addlegendentry{panns};
-                
-            \addplot coordinates {(0.0098, 16979.8879425)(0.0159, 15736.2917719)(0.0274, 14638.5271791)(0.0474, 13966.4416792)(0.0859, 11946.1465504)(0.1297, 8984.2070202)(0.1332, 8948.91763069)(0.1407, 7543.4815842)(0.2022, 6851.62424326)(0.205, 6149.88863849)(0.2311, 5865.81487521)(0.248, 4698.63688913)(0.2983, 4361.23461617)(0.328, 4122.40918383)(0.3573, 3398.2695522)(0.3741, 2766.43764193)(0.393, 2554.02025044)(0.4244, 2495.32769774)(0.4497, 2258.53444985)(0.4668, 1996.19256484)(0.4925, 1421.91268312)(0.5114, 1362.50852318)(0.5263, 1278.50565288)(0.5417, 856.718934853)(0.5538, 744.139835634)(0.5794, 555.765148604)(0.6183, 288.686445233)(0.6683, 164.714589431) };
-            \addlegendentry{rpforest};
-                
-            \addplot coordinates {(0.0383, 4879.97458967)(0.0847, 4462.10622958)(0.1524, 3864.58531048)(0.1767, 3589.90414778)(0.279, 2902.68073657)(0.3597, 2210.10843184)(0.3931, 1845.44120183)(0.4089, 1672.59076058)(0.4268, 1381.48619882)(0.5336, 1285.04519851)(0.5479, 1061.19573974)(0.5695, 818.886520004)(0.5874, 732.739334559) };
-            \addlegendentry{SW-graph(nmslib)};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>rand-unit-data with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(135, 79, 111, 1)",
-                    data: [ 
-                        { x: 0.9072, y: 3435384, label: "Annoy(n_trees=100, search_k=200000)" },
-                        { x: 0.9691, y: 3435456, label: "Annoy(n_trees=100, search_k=400)" },
-                ]},
-                {
-                    label: "ball",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(56, 129, 176, 1)",
-                    data: [ 
-                        { x: 1.0, y: 782216, label: "BallTree(leaf_size=1000)" },
-                ]},
-                {
-                    label: "BallTree(nmslib)",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 161, 13, 1)",
-                    data: [ 
-                        { x: 0.9701, y: 644084, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.9'])" },
-                        { x: 0.9985, y: 644260, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.8'])" },
-                ]},
-                {
-                    label: "bruteforce-blas",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(177, 108, 41, 1)",
-                    data: [ 
-                        { x: 0.9987, y: 391072, label: "BruteForceBLAS()" },
-                ]},
-                {
-                    label: "bruteforce0(nmslib)",
-                    fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(203, 140, 173, 1)",
-                    data: [ 
-                        { x: 0.9987, y: 604, label: "Nmslib(method_name=seq_search, method_param=['copyMem=0'])" },
-                ]},
-                {
-                    label: "faiss-lsh",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 0.0097, y: 91148, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.0208, y: 91204, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.05, y: 91224, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.1005, y: 122640, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.1832, y: 153996, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.2906, y: 216744, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.4163, y: 358912, label: "FaissLSH(n_bits=2048)" },
-                        { x: 0.5352, y: 657800, label: "FaissLSH(n_bits=4096)" },
-                ]},
-                {
-                    label: "falconn",
-                    fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(255, 229, 40, 1)",
-                    data: [ 
-                        { x: 0.2755, y: 399948, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 0.3816, y: 408264, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 0.4331, y: 416592, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 0.4636, y: 424924, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 0.4792, y: 433224, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 0.4891, y: 441536, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 0.4961, y: 449848, label: "FALCONN(K=16, L=7, T=7)" },
-                        { x: 0.5001, y: 458180, label: "FALCONN(K=16, L=8, T=8)" },
-                        { x: 0.5043, y: 462596, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 0.5074, y: 467016, label: "FALCONN(K=16, L=10, T=10)" },
-                        { x: 0.5104, y: 471440, label: "FALCONN(K=16, L=11, T=11)" },
-                        { x: 0.5141, y: 480276, label: "FALCONN(K=16, L=13, T=13)" },
-                        { x: 0.5165, y: 489120, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 0.5189, y: 497916, label: "FALCONN(K=16, L=17, T=17)" },
-                        { x: 0.5216, y: 506816, label: "FALCONN(K=16, L=19, T=19)" },
-                        { x: 0.524, y: 515620, label: "FALCONN(K=16, L=21, T=21)" },
-                        { x: 0.5272, y: 528868, label: "FALCONN(K=16, L=24, T=24)" },
-                        { x: 0.531, y: 542132, label: "FALCONN(K=16, L=27, T=27)" },
-                        { x: 0.535, y: 555388, label: "FALCONN(K=16, L=30, T=30)" },
-                        { x: 0.5375, y: 568648, label: "FALCONN(K=16, L=33, T=33)" },
-                        { x: 0.5415, y: 586340, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 0.5452, y: 604004, label: "FALCONN(K=16, L=41, T=41)" },
-                        { x: 0.5498, y: 626084, label: "FALCONN(K=16, L=46, T=46)" },
-                        { x: 0.5531, y: 648176, label: "FALCONN(K=16, L=51, T=51)" },
-                        { x: 0.5594, y: 674692, label: "FALCONN(K=16, L=57, T=57)" },
-                        { x: 0.566, y: 701188, label: "FALCONN(K=16, L=63, T=63)" },
-                        { x: 0.5722, y: 732148, label: "FALCONN(K=16, L=70, T=70)" },
-                        { x: 0.5786, y: 763048, label: "FALCONN(K=16, L=77, T=77)" },
-                        { x: 0.5855, y: 798392, label: "FALCONN(K=16, L=85, T=85)" },
-                        { x: 0.5937, y: 838104, label: "FALCONN(K=16, L=94, T=94)" },
-                        { x: 0.6027, y: 882340, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 0.6133, y: 930960, label: "FALCONN(K=16, L=115, T=115)" },
-                        { x: 0.6231, y: 983972, label: "FALCONN(K=16, L=127, T=127)" },
-                        { x: 0.6313, y: 1041416, label: "FALCONN(K=16, L=140, T=140)" },
-                        { x: 0.6415, y: 1103268, label: "FALCONN(K=16, L=154, T=154)" },
-                        { x: 0.6541, y: 1173964, label: "FALCONN(K=16, L=170, T=170)" },
-                        { x: 0.6648, y: 1253496, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 0.6787, y: 1337372, label: "FALCONN(K=16, L=207, T=207)" },
-                        { x: 0.6888, y: 1430236, label: "FALCONN(K=16, L=228, T=228)" },
-                        { x: 0.704, y: 1531844, label: "FALCONN(K=16, L=251, T=251)" },
-                        { x: 0.7187, y: 1646712, label: "FALCONN(K=16, L=277, T=277)" },
-                        { x: 0.7348, y: 1770436, label: "FALCONN(K=16, L=305, T=305)" },
-                        { x: 0.7498, y: 1907412, label: "FALCONN(K=16, L=336, T=336)" },
-                        { x: 0.7652, y: 2057640, label: "FALCONN(K=16, L=370, T=370)" },
-                        { x: 0.7836, y: 2225536, label: "FALCONN(K=16, L=408, T=408)" },
-                        { x: 0.8028, y: 2406688, label: "FALCONN(K=16, L=449, T=449)" },
-                        { x: 0.8199, y: 2605480, label: "FALCONN(K=16, L=494, T=494)" },
-                        { x: 0.8376, y: 2826408, label: "FALCONN(K=16, L=544, T=544)" },
-                        { x: 0.8535, y: 3069408, label: "FALCONN(K=16, L=599, T=599)" },
-                        { x: 0.8718, y: 3334500, label: "FALCONN(K=16, L=659, T=659)" },
-                        { x: 0.8868, y: 3626108, label: "FALCONN(K=16, L=725, T=725)" },
-                        { x: 0.9036, y: 3948656, label: "FALCONN(K=16, L=798, T=798)" },
-                        { x: 0.9186, y: 4302112, label: "FALCONN(K=16, L=878, T=878)" },
-                        { x: 0.9312, y: 4690916, label: "FALCONN(K=16, L=966, T=966)" },
-                        { x: 0.9415, y: 5119488, label: "FALCONN(K=16, L=1063, T=1063)" },
-                        { x: 0.9508, y: 5592240, label: "FALCONN(K=16, L=1170, T=1170)" },
-                        { x: 0.9602, y: 6109184, label: "FALCONN(K=16, L=1287, T=1287)" },
-                        { x: 0.9697, y: 6679168, label: "FALCONN(K=16, L=1416, T=1416)" },
-                ]},
-                {
-                    label: "hnsw(nmslib)",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.5146, y: 520192, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=20'])" },
-                        { x: 0.5274, y: 520192, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=30'])" },
-                        { x: 0.5355, y: 520192, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=5'])" },
-                        { x: 0.5537, y: 520192, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=40'])" },
-                        { x: 0.5577, y: 520196, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=15'])" },
-                        { x: 0.5791, y: 582636, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=10'])" },
-                        { x: 0.6002, y: 582704, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=70'])" },
-                ]},
-                {
-                    label: "kd",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(172, 87, 130, 1)",
-                    data: [ 
-                        { x: 1.0, y: 782220, label: "KDTree(leaf_size=1000)" },
-                ]},
-                {
-                    label: "lshf",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(68, 155, 118, 1)",
-                    data: [ 
-                        { x: 0.2895, y: 988324, label: "LSHF(n_est=5, n_cand=20)" },
-                        { x: 0.3758, y: 1046852, label: "LSHF(n_est=5, n_cand=10)" },
-                ]},
-                {
-                    label: "nearpy",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(127, 110, 133, 1)",
-                    data: [ 
-                        { x: 0.428, y: 476864, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.5062, y: 477520, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.5452, y: 878520, label: "NearPy(n_bits=10, hash_counts=5)" },
-                        { x: 0.5953, y: 1680044, label: "NearPy(n_bits=12, hash_counts=5)" },
-                ]},
-                {
-                    label: "panns",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(241, 126, 180, 1)",
-                    data: [ 
-                        { x: 0.0002, y: 387148, label: "PANNS(n_trees=5, n_cand=20)" },
-                ]},
-                {
-                    label: "rpforest",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(198, 103, 100, 1)",
-                    data: [ 
-                        { x: 0.0098, y: 770148, label: "RPForest(leaf_size=3, n_trees=3)" },
-                        { x: 0.0179, y: 770148, label: "RPForest(leaf_size=3, n_trees=5)" },
-                        { x: 0.0474, y: 770148, label: "RPForest(leaf_size=20, n_trees=3)" },
-                        { x: 0.0774, y: 770152, label: "RPForest(leaf_size=20, n_trees=5)" },
-                        { x: 0.0968, y: 771212, label: "RPForest(leaf_size=5, n_trees=20)" },
-                        { x: 0.1332, y: 771216, label: "RPForest(leaf_size=40, n_trees=3)" },
-                        { x: 0.2311, y: 771216, label: "RPForest(leaf_size=5, n_trees=5)" },
-                        { x: 0.3573, y: 771216, label: "RPForest(leaf_size=5, n_trees=10)" },
-                        { x: 0.5263, y: 790204, label: "RPForest(leaf_size=5, n_trees=3)" },
-                        { x: 0.5794, y: 790208, label: "RPForest(leaf_size=40, n_trees=5)" },
-                        { x: 0.6183, y: 794904, label: "RPForest(leaf_size=40, n_trees=10)" },
-                        { x: 0.6683, y: 1098508, label: "RPForest(leaf_size=40, n_trees=20)" },
-                ]},
-                {
-                    label: "SW-graph(nmslib)",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(227, 113, 43, 1)",
-                    data: [ 
-                        { x: 0.1767, y: 23984, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
-                        { x: 0.4089, y: 23984, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
-                        { x: 0.4268, y: 23984, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
-                        { x: 0.5479, y: 50684, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=120', 'initSearchAttempts=1'])" },
-                        { x: 0.5874, y: 50684, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
-            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
-        });
-        </script>
-        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={10-NN precision},
-            ylabel={Index size (kB)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(0.9072, 3435384)(0.9691, 3435456) };
-            \addlegendentry{annoy};
-                
-            \addplot coordinates {(1.0, 782216) };
-            \addlegendentry{ball};
-                
-            \addplot coordinates {(0.9701, 644084)(0.9985, 644260) };
-            \addlegendentry{BallTree(nmslib)};
-                
-            \addplot coordinates {(0.9987, 391072) };
-            \addlegendentry{bruteforce-blas};
-                
-            \addplot coordinates {(0.9987, 604) };
-            \addlegendentry{bruteforce0(nmslib)};
-                
-            \addplot coordinates {(0.0097, 91148)(0.0208, 91204)(0.05, 91224)(0.1005, 122640)(0.1832, 153996)(0.2906, 216744)(0.4163, 358912)(0.5352, 657800) };
-            \addlegendentry{faiss-lsh};
-                
-            \addplot coordinates {(0.2755, 399948)(0.3816, 408264)(0.4331, 416592)(0.4636, 424924)(0.4792, 433224)(0.4891, 441536)(0.4961, 449848)(0.5001, 458180)(0.5043, 462596)(0.5074, 467016)(0.5104, 471440)(0.5141, 480276)(0.5165, 489120)(0.5189, 497916)(0.5216, 506816)(0.524, 515620)(0.5272, 528868)(0.531, 542132)(0.535, 555388)(0.5375, 568648)(0.5415, 586340)(0.5452, 604004)(0.5498, 626084)(0.5531, 648176)(0.5594, 674692)(0.566, 701188)(0.5722, 732148)(0.5786, 763048)(0.5855, 798392)(0.5937, 838104)(0.6027, 882340)(0.6133, 930960)(0.6231, 983972)(0.6313, 1041416)(0.6415, 1103268)(0.6541, 1173964)(0.6648, 1253496)(0.6787, 1337372)(0.6888, 1430236)(0.704, 1531844)(0.7187, 1646712)(0.7348, 1770436)(0.7498, 1907412)(0.7652, 2057640)(0.7836, 2225536)(0.8028, 2406688)(0.8199, 2605480)(0.8376, 2826408)(0.8535, 3069408)(0.8718, 3334500)(0.8868, 3626108)(0.9036, 3948656)(0.9186, 4302112)(0.9312, 4690916)(0.9415, 5119488)(0.9508, 5592240)(0.9602, 6109184)(0.9697, 6679168) };
-            \addlegendentry{falconn};
-                
-            \addplot coordinates {(0.5146, 520192)(0.5274, 520192)(0.5355, 520192)(0.5537, 520192)(0.5577, 520196)(0.5791, 582636)(0.6002, 582704) };
-            \addlegendentry{hnsw(nmslib)};
-                
-            \addplot coordinates {(1.0, 782220) };
-            \addlegendentry{kd};
-                
-            \addplot coordinates {(0.2895, 988324)(0.3758, 1046852) };
-            \addlegendentry{lshf};
-                
-            \addplot coordinates {(0.428, 476864)(0.5062, 477520)(0.5452, 878520)(0.5953, 1680044) };
-            \addlegendentry{nearpy};
-                
-            \addplot coordinates {(0.0002, 387148) };
-            \addlegendentry{panns};
-                
-            \addplot coordinates {(0.0098, 770148)(0.0179, 770148)(0.0474, 770148)(0.0774, 770152)(0.0968, 771212)(0.1332, 771216)(0.2311, 771216)(0.3573, 771216)(0.5263, 790204)(0.5794, 790208)(0.6183, 794904)(0.6683, 1098508) };
-            \addlegendentry{rpforest};
-                
-            \addplot coordinates {(0.1767, 23984)(0.4089, 23984)(0.4268, 23984)(0.5479, 50684)(0.5874, 50684) };
-            \addlegendentry{SW-graph(nmslib)};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
-        
-        <h2>rand-unit-data with Relative Distance/Queries per second (1/s)</h2>
-        <canvas id="chartRelative DistanceQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chartRelative DistanceQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(135, 79, 111, 1)",
-                    data: [ 
-                        { x: 1.23194575101, y: 2129.39854689, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 1.20646118375, y: 1918.01952543, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 1.18641171364, y: 1780.07596817, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 1.16216245029, y: 1422.71959904, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 1.13952559295, y: 1069.91491808, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 1.11381534708, y: 806.595527046, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 1.07908912902, y: 409.493347777, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 1.05321765968, y: 234.040125319, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 1.03398320816, y: 123.381812144, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 1.01479972673, y: 53.5787048235, label: "Annoy(n_trees=100, search_k=100000)" },
-                        { x: 1.00589286251, y: 28.1904931354, label: "Annoy(n_trees=100, search_k=200000)" },
-                        { x: 1.00160271698, y: 13.7998713915, label: "Annoy(n_trees=100, search_k=400000)" },
-                ]},
-                {
-                    label: "ball",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(56, 129, 176, 1)",
-                    data: [ 
-                        { x: 1.0, y: 2.58084344234, label: "BallTree(leaf_size=10)" },
-                ]},
-                {
-                    label: "BallTree(nmslib)",
-                    fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(255, 229, 40, 1)",
-                    data: [ 
-                        { x: 1.09388661668, y: 825.886291537, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.1'])" },
-                        { x: 1.06308599078, y: 101.33818072, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.2'])" },
-                        { x: 1.06040146725, y: 80.9507632309, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.6'])" },
-                        { x: 1.05656529872, y: 72.2828283768, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.4'])" },
-                        { x: 1.05050781435, y: 59.9930242067, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.3'])" },
-                        { x: 1.02807626567, y: 36.1190056506, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.5'])" },
-                        { x: 1.02446895827, y: 30.3338936717, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.7'])" },
-                        { x: 1.01404580999, y: 22.5061134091, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.8'])" },
-                        { x: 1.00779144034, y: 16.6317301402, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.85'])" },
-                        { x: 1.00011139575, y: 11.0348073794, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.9'])" },
-                        { x: 1.00000359957, y: 6.72535040128, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.95'])" },
-                        { x: 1.00000000068, y: 5.65502331603, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.97'])" },
-                        { x: 1.00000000031, y: 5.58538543474, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.99'])" },
-                ]},
-                {
-                    label: "bruteforce-blas",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(198, 103, 100, 1)",
-                    data: [ 
-                        { x: 1.0000000002, y: 5.55491624054, label: "BruteForceBLAS()" },
-                ]},
-                {
-                    label: "bruteforce0(nmslib)",
-                    fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(203, 140, 173, 1)",
-                    data: [ 
-                        { x: 1.00000000023, y: 3.16130015041, label: "Nmslib(method_name=seq_search, method_param=['copyMem=0'])" },
-                ]},
-                {
-                    label: "faiss-lsh",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(177, 108, 41, 1)",
-                    data: [ 
-                        { x: 1.469154939, y: 897.534996299, label: "FaissLSH(n_bits=32)" },
-                        { x: 1.34131188863, y: 860.595659744, label: "FaissLSH(n_bits=64)" },
-                        { x: 1.22094741166, y: 543.980502164, label: "FaissLSH(n_bits=128)" },
-                        { x: 1.14648925635, y: 363.336983188, label: "FaissLSH(n_bits=256)" },
-                        { x: 1.08778128279, y: 152.439419081, label: "FaissLSH(n_bits=512)" },
-                        { x: 1.0499115616, y: 87.6321090444, label: "FaissLSH(n_bits=1024)" },
-                        { x: 1.02572198127, y: 47.2379604668, label: "FaissLSH(n_bits=2048)" },
-                        { x: 1.01379515359, y: 22.5943854598, label: "FaissLSH(n_bits=4096)" },
-                ]},
-                {
-                    label: "falconn",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 1.36229895378, y: 21124.5674915, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 1.31640423222, y: 15167.6273822, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 1.27261255064, y: 12594.9401679, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 1.24521164009, y: 11103.4446245, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 1.2258479399, y: 10097.1460899, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 1.20982576126, y: 9360.09194274, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 1.20010882715, y: 8715.92588052, label: "FALCONN(K=16, L=7, T=7)" },
-                        { x: 1.19059875381, y: 8163.92057786, label: "FALCONN(K=16, L=8, T=8)" },
-                        { x: 1.1817328908, y: 7928.32137429, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 1.17490624992, y: 7437.60595249, label: "FALCONN(K=16, L=10, T=10)" },
-                        { x: 1.16843299966, y: 7229.31504016, label: "FALCONN(K=16, L=11, T=11)" },
-                        { x: 1.1566768721, y: 6499.79389367, label: "FALCONN(K=16, L=13, T=13)" },
-                        { x: 1.14742754277, y: 6051.97627289, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 1.1395622388, y: 5673.36040406, label: "FALCONN(K=16, L=17, T=17)" },
-                        { x: 1.1333355897, y: 5388.81586977, label: "FALCONN(K=16, L=19, T=19)" },
-                        { x: 1.12734934127, y: 5058.29644003, label: "FALCONN(K=16, L=21, T=21)" },
-                        { x: 1.12110702159, y: 4772.84975603, label: "FALCONN(K=16, L=24, T=24)" },
-                        { x: 1.11442174645, y: 4346.3029052, label: "FALCONN(K=16, L=27, T=27)" },
-                        { x: 1.10898363901, y: 4084.46855606, label: "FALCONN(K=16, L=30, T=30)" },
-                        { x: 1.10377275348, y: 3863.83769005, label: "FALCONN(K=16, L=33, T=33)" },
-                        { x: 1.09855831273, y: 3543.58188426, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 1.0934478768, y: 3385.44638, label: "FALCONN(K=16, L=41, T=41)" },
-                        { x: 1.08866792573, y: 3111.46224417, label: "FALCONN(K=16, L=46, T=46)" },
-                        { x: 1.08459949382, y: 2806.39737286, label: "FALCONN(K=16, L=51, T=51)" },
-                        { x: 1.07985479669, y: 2638.76846265, label: "FALCONN(K=16, L=57, T=57)" },
-                        { x: 1.07537059367, y: 2477.04382644, label: "FALCONN(K=16, L=63, T=63)" },
-                        { x: 1.0710463795, y: 2280.97832412, label: "FALCONN(K=16, L=70, T=70)" },
-                        { x: 1.06724650023, y: 2121.36633604, label: "FALCONN(K=16, L=77, T=77)" },
-                        { x: 1.06327843526, y: 1956.988565, label: "FALCONN(K=16, L=85, T=85)" },
-                        { x: 1.05915060427, y: 1803.68830534, label: "FALCONN(K=16, L=94, T=94)" },
-                        { x: 1.05522547317, y: 1648.26641977, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 1.05129094467, y: 1515.90263218, label: "FALCONN(K=16, L=115, T=115)" },
-                        { x: 1.04783810386, y: 1398.33532144, label: "FALCONN(K=16, L=127, T=127)" },
-                        { x: 1.04505683152, y: 1261.75674107, label: "FALCONN(K=16, L=140, T=140)" },
-                        { x: 1.04190922433, y: 1179.01980351, label: "FALCONN(K=16, L=154, T=154)" },
-                        { x: 1.03845281071, y: 1080.95353087, label: "FALCONN(K=16, L=170, T=170)" },
-                        { x: 1.03560105057, y: 989.909975228, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 1.03256622626, y: 903.40959634, label: "FALCONN(K=16, L=207, T=207)" },
-                        { x: 1.03028546838, y: 820.866262317, label: "FALCONN(K=16, L=228, T=228)" },
-                        { x: 1.02748664961, y: 750.188651438, label: "FALCONN(K=16, L=251, T=251)" },
-                        { x: 1.02493237916, y: 688.351165599, label: "FALCONN(K=16, L=277, T=277)" },
-                        { x: 1.02244507481, y: 629.014607708, label: "FALCONN(K=16, L=305, T=305)" },
-                        { x: 1.02015409574, y: 574.136308478, label: "FALCONN(K=16, L=336, T=336)" },
-                        { x: 1.01808060876, y: 521.895435612, label: "FALCONN(K=16, L=370, T=370)" },
-                        { x: 1.01600694435, y: 477.333481128, label: "FALCONN(K=16, L=408, T=408)" },
-                        { x: 1.01388790517, y: 433.600283836, label: "FALCONN(K=16, L=449, T=449)" },
-                        { x: 1.01207071624, y: 396.911206119, label: "FALCONN(K=16, L=494, T=494)" },
-                        { x: 1.01026063049, y: 360.765493364, label: "FALCONN(K=16, L=544, T=544)" },
-                        { x: 1.00888086695, y: 330.861831023, label: "FALCONN(K=16, L=599, T=599)" },
-                        { x: 1.00747435856, y: 300.6145021, label: "FALCONN(K=16, L=659, T=659)" },
-                        { x: 1.00626085542, y: 272.82781799, label: "FALCONN(K=16, L=725, T=725)" },
-                        { x: 1.00513308103, y: 248.377594222, label: "FALCONN(K=16, L=798, T=798)" },
-                        { x: 1.00418375538, y: 225.594515987, label: "FALCONN(K=16, L=878, T=878)" },
-                        { x: 1.00344328958, y: 203.960346641, label: "FALCONN(K=16, L=966, T=966)" },
-                        { x: 1.00280986496, y: 185.524444989, label: "FALCONN(K=16, L=1063, T=1063)" },
-                        { x: 1.00228001532, y: 167.899851195, label: "FALCONN(K=16, L=1170, T=1170)" },
-                        { x: 1.00176886759, y: 151.086809615, label: "FALCONN(K=16, L=1287, T=1287)" },
-                        { x: 1.00121663644, y: 138.26114761, label: "FALCONN(K=16, L=1416, T=1416)" },
-                ]},
-                {
-                    label: "hnsw(nmslib)",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 1.22717662129, y: 5469.71595792, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=2'])" },
-                        { x: 1.21091907305, y: 5347.29257158, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=1'])" },
-                        { x: 1.15316998178, y: 5168.67717826, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=5'])" },
-                        { x: 1.14139409284, y: 5026.18845043, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=5'])" },
-                        { x: 1.12077237949, y: 4684.14363666, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=10'])" },
-                        { x: 1.11307070693, y: 4189.78740917, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=15'])" },
-                        { x: 1.10487544147, y: 4179.791763, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=2'])" },
-                        { x: 1.10372270544, y: 4134.7144947, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=10'])" },
-                        { x: 1.09619131144, y: 4056.71640636, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=20'])" },
-                        { x: 1.08357547029, y: 3876.09948858, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=30'])" },
-                        { x: 1.07483599208, y: 3601.13263468, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=15'])" },
-                        { x: 1.06965577393, y: 3407.88094569, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=40'])" },
-                        { x: 1.06253336388, y: 2957.00249078, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=20'], query_param=['ef=20'])" },
-                        { x: 1.06057701469, y: 2863.08627067, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=800', 'post=0', 'M=12'], query_param=['ef=50'])" },
-                ]},
-                {
-                    label: "kd",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(227, 113, 43, 1)",
-                    data: [ 
-                        { x: 1.0, y: 3.36508524876, label: "KDTree(leaf_size=40)" },
-                ]},
-                {
-                    label: "lshf",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(68, 155, 118, 1)",
-                    data: [ 
-                        { x: 1.33746138401, y: 3.30351884493, label: "LSHF(n_est=5, n_cand=10)" },
-                        { x: 1.29258807535, y: 2.9827923879, label: "LSHF(n_est=5, n_cand=20)" },
-                        { x: 1.24219609155, y: 1.36802414688, label: "LSHF(n_est=10, n_cand=20)" },
-                        { x: 1.20023796153, y: 1.21910929167, label: "LSHF(n_est=10, n_cand=50)" },
-                ]},
-                {
-                    label: "nearpy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(172, 87, 130, 1)",
-                    data: [ 
-                        { x: 1.28704602541, y: 37.7079347702, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 1.28490900216, y: 36.7995670846, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 1.22480333723, y: 25.7236446293, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 1.20542984158, y: 22.9191594592, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 1.19749455469, y: 20.6367692125, label: "NearPy(n_bits=14, hash_counts=5)" },
-                        { x: 1.179562605, y: 17.3320179145, label: "NearPy(n_bits=16, hash_counts=15)" },
-                        { x: 1.17593748789, y: 16.8601249902, label: "NearPy(n_bits=16, hash_counts=20)" },
-                        { x: 1.1672823323, y: 14.7467750703, label: "NearPy(n_bits=16, hash_counts=20)" },
-                        { x: 1.16267603756, y: 14.0436927684, label: "NearPy(n_bits=16, hash_counts=25)" },
-                        { x: 1.15556159505, y: 13.2148427404, label: "NearPy(n_bits=14, hash_counts=10)" },
-                        { x: 1.13831197505, y: 10.581601373, label: "NearPy(n_bits=16, hash_counts=30)" },
-                        { x: 1.13279580444, y: 8.46639102023, label: "NearPy(n_bits=16, hash_counts=40)" },
-                        { x: 1.11630532587, y: 5.42166181256, label: "NearPy(n_bits=16, hash_counts=40)" },
-                        { x: 1.09574515503, y: 4.61085336176, label: "NearPy(n_bits=12, hash_counts=5)" },
-                        { x: 1.08714381928, y: 2.92105771506, label: "NearPy(n_bits=14, hash_counts=20)" },
-                        { x: 1.07952998923, y: 1.71134854262, label: "NearPy(n_bits=12, hash_counts=10)" },
-                        { x: 1.06157828033, y: 1.51052204912, label: "NearPy(n_bits=14, hash_counts=40)" },
-                        { x: 1.05293172436, y: 0.839550968321, label: "NearPy(n_bits=10, hash_counts=5)" },
-                ]},
-                {
-                    label: "panns",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(255, 161, 13, 1)",
-                    data: [ 
-                        { x: 2.74209901712, y: 30.5787595763, label: "PANNS(n_trees=5, n_cand=20)" },
-                        { x: 2.63192783333, y: 15.9948671257, label: "PANNS(n_trees=10, n_cand=10)" },
-                        { x: 2.62903885082, y: 15.8465895932, label: "PANNS(n_trees=10, n_cand=50)" },
-                ]},
-                {
-                    label: "rpforest",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(241, 126, 180, 1)",
-                    data: [ 
-                        { x: 1.55553962412, y: 16979.8879425, label: "RPForest(leaf_size=3, n_trees=3)" },
-                        { x: 1.4975292563, y: 15736.2917719, label: "RPForest(leaf_size=5, n_trees=3)" },
-                        { x: 1.38598023045, y: 14638.5271791, label: "RPForest(leaf_size=10, n_trees=3)" },
-                        { x: 1.31861755207, y: 13966.4416792, label: "RPForest(leaf_size=3, n_trees=5)" },
-                        { x: 1.27778258851, y: 11946.1465504, label: "RPForest(leaf_size=5, n_trees=5)" },
-                        { x: 1.27565506412, y: 11525.7262825, label: "RPForest(leaf_size=20, n_trees=3)" },
-                        { x: 1.26689729484, y: 9302.05078277, label: "RPForest(leaf_size=10, n_trees=5)" },
-                        { x: 1.23932183059, y: 8984.2070202, label: "RPForest(leaf_size=40, n_trees=3)" },
-                        { x: 1.22713075828, y: 7543.4815842, label: "RPForest(leaf_size=20, n_trees=5)" },
-                        { x: 1.20510658358, y: 6851.62424326, label: "RPForest(leaf_size=3, n_trees=10)" },
-                        { x: 1.19476229518, y: 5865.81487521, label: "RPForest(leaf_size=5, n_trees=10)" },
-                        { x: 1.18442276148, y: 4698.63688913, label: "RPForest(leaf_size=10, n_trees=10)" },
-                        { x: 1.1759462725, y: 4361.23461617, label: "RPForest(leaf_size=100, n_trees=3)" },
-                        { x: 1.1659584474, y: 4122.40918383, label: "RPForest(leaf_size=40, n_trees=5)" },
-                        { x: 1.15471023619, y: 3398.2695522, label: "RPForest(leaf_size=20, n_trees=10)" },
-                        { x: 1.14548361593, y: 2766.43764193, label: "RPForest(leaf_size=100, n_trees=5)" },
-                        { x: 1.13824064381, y: 2495.32769774, label: "RPForest(leaf_size=3, n_trees=20)" },
-                        { x: 1.12982715656, y: 2258.53444985, label: "RPForest(leaf_size=5, n_trees=20)" },
-                        { x: 1.12089671195, y: 1996.19256484, label: "RPForest(leaf_size=200, n_trees=3)" },
-                        { x: 1.11651015944, y: 1421.91268312, label: "RPForest(leaf_size=40, n_trees=10)" },
-                        { x: 1.10606886992, y: 1362.50852318, label: "RPForest(leaf_size=10, n_trees=20)" },
-                        { x: 1.09671334114, y: 1278.50565288, label: "RPForest(leaf_size=20, n_trees=20)" },
-                        { x: 1.08163081476, y: 856.718934853, label: "RPForest(leaf_size=200, n_trees=5)" },
-                        { x: 1.07687898976, y: 744.139835634, label: "RPForest(leaf_size=100, n_trees=10)" },
-                        { x: 1.0608442515, y: 555.765148604, label: "RPForest(leaf_size=3, n_trees=40)" },
-                        { x: 1.04566502535, y: 288.686445233, label: "RPForest(leaf_size=5, n_trees=40)" },
-                        { x: 1.03318856723, y: 164.714589431, label: "RPForest(leaf_size=400, n_trees=3)" },
-                ]},
-                {
-                    label: "SW-graph(nmslib)",
-                    fill: false,
                     pointStyle: "cross",
                     borderColor: "rgba(87, 162, 85, 1)",
                     data: [ 
-                        { x: 2.23923481604, y: 4879.97458967, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
-                        { x: 2.05216289441, y: 4462.10622958, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
-                        { x: 1.82782071173, y: 3864.58531048, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
-                        { x: 1.75770797538, y: 3589.90414778, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
-                        { x: 1.54532479823, y: 2902.68073657, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
-                        { x: 1.38706344896, y: 2210.10843184, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=40', 'initSearchAttempts=1'])" },
-                        { x: 1.32657037259, y: 1845.44120183, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=60', 'initSearchAttempts=1'])" },
-                        { x: 1.29478717321, y: 1672.59076058, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
-                        { x: 1.26839770346, y: 1381.48619882, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=120', 'initSearchAttempts=1'])" },
-                        { x: 1.11893668084, y: 1285.04519851, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
-                        { x: 1.10396431999, y: 1061.19573974, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
-                        { x: 1.08720361843, y: 818.886520004, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=50', 'initSearchAttempts=1'])" },
-                        { x: 1.07591737495, y: 732.739334559, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
+                        { x: 0.0111, y: 16979.8879425, label: "RPForest(leaf_size=3, n_trees=3)" },
+                        { x: 0.0185, y: 15736.2917719, label: "RPForest(leaf_size=5, n_trees=3)" },
+                        { x: 0.0316, y: 14638.5271791, label: "RPForest(leaf_size=10, n_trees=3)" },
+                        { x: 0.0548, y: 13966.4416792, label: "RPForest(leaf_size=3, n_trees=5)" },
+                        { x: 0.097, y: 11946.1465504, label: "RPForest(leaf_size=5, n_trees=5)" },
+                        { x: 0.0978, y: 9302.05078277, label: "RPForest(leaf_size=20, n_trees=3)" },
+                        { x: 0.1483, y: 8984.2070202, label: "RPForest(leaf_size=10, n_trees=5)" },
+                        { x: 0.1509, y: 8948.91763069, label: "RPForest(leaf_size=40, n_trees=3)" },
+                        { x: 0.1622, y: 7543.4815842, label: "RPForest(leaf_size=20, n_trees=5)" },
+                        { x: 0.2302, y: 6851.62424326, label: "RPForest(leaf_size=3, n_trees=10)" },
+                        { x: 0.2365, y: 6149.88863849, label: "RPForest(leaf_size=5, n_trees=10)" },
+                        { x: 0.2619, y: 5865.81487521, label: "RPForest(leaf_size=10, n_trees=10)" },
+                        { x: 0.285, y: 4698.63688913, label: "RPForest(leaf_size=100, n_trees=3)" },
+                        { x: 0.3433, y: 4361.23461617, label: "RPForest(leaf_size=40, n_trees=5)" },
+                        { x: 0.3732, y: 4122.40918383, label: "RPForest(leaf_size=20, n_trees=10)" },
+                        { x: 0.4031, y: 3398.2695522, label: "RPForest(leaf_size=100, n_trees=5)" },
+                        { x: 0.4247, y: 2766.43764193, label: "RPForest(leaf_size=3, n_trees=20)" },
+                        { x: 0.4435, y: 2554.02025044, label: "RPForest(leaf_size=5, n_trees=20)" },
+                        { x: 0.4693, y: 2495.32769774, label: "RPForest(leaf_size=200, n_trees=3)" },
+                        { x: 0.4918, y: 2258.53444985, label: "RPForest(leaf_size=40, n_trees=10)" },
+                        { x: 0.5011, y: 1996.19256484, label: "RPForest(leaf_size=10, n_trees=20)" },
+                        { x: 0.5198, y: 1421.91268312, label: "RPForest(leaf_size=20, n_trees=20)" },
+                        { x: 0.5313, y: 1362.50852318, label: "RPForest(leaf_size=200, n_trees=5)" },
+                        { x: 0.5442, y: 1278.50565288, label: "RPForest(leaf_size=100, n_trees=10)" },
+                        { x: 0.5597, y: 856.718934853, label: "RPForest(leaf_size=3, n_trees=40)" },
+                        { x: 0.573, y: 744.139835634, label: "RPForest(leaf_size=5, n_trees=40)" },
+                        { x: 0.6055, y: 555.765148604, label: "RPForest(leaf_size=400, n_trees=3)" },
+                        { x: 0.661, y: 288.686445233, label: "RPForest(leaf_size=40, n_trees=20)" },
+                        { x: 0.7296, y: 164.714589431, label: "RPForest(leaf_size=10, n_trees=40)" },
+                ]},
+                {
+                    label: "SW-graph(nmslib)",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(227, 113, 43, 1)",
+                    data: [ 
+                        { x: 0.0438, y: 4879.97458967, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
+                        { x: 0.0954, y: 4462.10622958, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
+                        { x: 0.173, y: 3864.58531048, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
+                        { x: 0.1996, y: 3589.90414778, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                        { x: 0.3035, y: 2902.68073657, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.3791, y: 2210.10843184, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=40', 'initSearchAttempts=1'])" },
+                        { x: 0.4112, y: 1845.44120183, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=60', 'initSearchAttempts=1'])" },
+                        { x: 0.4275, y: 1672.59076058, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
+                        { x: 0.4458, y: 1381.48619882, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=120', 'initSearchAttempts=1'])" },
+                        { x: 0.5485, y: 1285.04519851, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.5681, y: 1061.19573974, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
+                        { x: 0.5982, y: 818.886520004, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=50', 'initSearchAttempts=1'])" },
+                        { x: 0.6231, y: 732.739334559, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
                 ]},
             ]}, options: {
                         responsive: false,
                         title:{
                             display:true,
-                            text: 'Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better'
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -1032,7 +338,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' Relative Distance   '
+                                    labelString: ' Epsilon Recall   '
                                 }
                             }],
                             yAxes: [{
@@ -1047,80 +353,6 @@
                     }
                 }); 
         </script>
-        
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").click(function() {
-            $("#plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531").toggle();
-        });
-        </script>
-        <div id="plot_dbafe871a1ed5a3d7a6e4bee4d1cb1d85654a5f05daaf6af9467b531" style="display:none">
-        <pre>
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            xlabel={Relative Distance},
-            ylabel={Queries per second (1/s)},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        
-            \addplot coordinates {(1.23194575101, 2129.39854689)(1.20646118375, 1918.01952543)(1.18641171364, 1780.07596817)(1.16216245029, 1422.71959904)(1.13952559295, 1069.91491808)(1.11381534708, 806.595527046)(1.07908912902, 409.493347777)(1.05321765968, 234.040125319)(1.03398320816, 123.381812144)(1.01479972673, 53.5787048235)(1.00589286251, 28.1904931354)(1.00160271698, 13.7998713915) };
-            \addlegendentry{annoy};
-                
-            \addplot coordinates {(1.0, 2.58084344234) };
-            \addlegendentry{ball};
-                
-            \addplot coordinates {(1.09388661668, 825.886291537)(1.06308599078, 101.33818072)(1.06040146725, 80.9507632309)(1.05656529872, 72.2828283768)(1.05050781435, 59.9930242067)(1.02807626567, 36.1190056506)(1.02446895827, 30.3338936717)(1.01404580999, 22.5061134091)(1.00779144034, 16.6317301402)(1.00011139575, 11.0348073794)(1.00000359957, 6.72535040128)(1.00000000068, 5.65502331603)(1.00000000031, 5.58538543474) };
-            \addlegendentry{BallTree(nmslib)};
-                
-            \addplot coordinates {(1.0000000002, 5.55491624054) };
-            \addlegendentry{bruteforce-blas};
-                
-            \addplot coordinates {(1.00000000023, 3.16130015041) };
-            \addlegendentry{bruteforce0(nmslib)};
-                
-            \addplot coordinates {(1.469154939, 897.534996299)(1.34131188863, 860.595659744)(1.22094741166, 543.980502164)(1.14648925635, 363.336983188)(1.08778128279, 152.439419081)(1.0499115616, 87.6321090444)(1.02572198127, 47.2379604668)(1.01379515359, 22.5943854598) };
-            \addlegendentry{faiss-lsh};
-                
-            \addplot coordinates {(1.36229895378, 21124.5674915)(1.31640423222, 15167.6273822)(1.27261255064, 12594.9401679)(1.24521164009, 11103.4446245)(1.2258479399, 10097.1460899)(1.20982576126, 9360.09194274)(1.20010882715, 8715.92588052)(1.19059875381, 8163.92057786)(1.1817328908, 7928.32137429)(1.17490624992, 7437.60595249)(1.16843299966, 7229.31504016)(1.1566768721, 6499.79389367)(1.14742754277, 6051.97627289)(1.1395622388, 5673.36040406)(1.1333355897, 5388.81586977)(1.12734934127, 5058.29644003)(1.12110702159, 4772.84975603)(1.11442174645, 4346.3029052)(1.10898363901, 4084.46855606)(1.10377275348, 3863.83769005)(1.09855831273, 3543.58188426)(1.0934478768, 3385.44638)(1.08866792573, 3111.46224417)(1.08459949382, 2806.39737286)(1.07985479669, 2638.76846265)(1.07537059367, 2477.04382644)(1.0710463795, 2280.97832412)(1.06724650023, 2121.36633604)(1.06327843526, 1956.988565)(1.05915060427, 1803.68830534)(1.05522547317, 1648.26641977)(1.05129094467, 1515.90263218)(1.04783810386, 1398.33532144)(1.04505683152, 1261.75674107)(1.04190922433, 1179.01980351)(1.03845281071, 1080.95353087)(1.03560105057, 989.909975228)(1.03256622626, 903.40959634)(1.03028546838, 820.866262317)(1.02748664961, 750.188651438)(1.02493237916, 688.351165599)(1.02244507481, 629.014607708)(1.02015409574, 574.136308478)(1.01808060876, 521.895435612)(1.01600694435, 477.333481128)(1.01388790517, 433.600283836)(1.01207071624, 396.911206119)(1.01026063049, 360.765493364)(1.00888086695, 330.861831023)(1.00747435856, 300.6145021)(1.00626085542, 272.82781799)(1.00513308103, 248.377594222)(1.00418375538, 225.594515987)(1.00344328958, 203.960346641)(1.00280986496, 185.524444989)(1.00228001532, 167.899851195)(1.00176886759, 151.086809615)(1.00121663644, 138.26114761) };
-            \addlegendentry{falconn};
-                
-            \addplot coordinates {(1.22717662129, 5469.71595792)(1.21091907305, 5347.29257158)(1.15316998178, 5168.67717826)(1.14139409284, 5026.18845043)(1.12077237949, 4684.14363666)(1.11307070693, 4189.78740917)(1.10487544147, 4179.791763)(1.10372270544, 4134.7144947)(1.09619131144, 4056.71640636)(1.08357547029, 3876.09948858)(1.07483599208, 3601.13263468)(1.06965577393, 3407.88094569)(1.06253336388, 2957.00249078)(1.06057701469, 2863.08627067) };
-            \addlegendentry{hnsw(nmslib)};
-                
-            \addplot coordinates {(1.0, 3.36508524876) };
-            \addlegendentry{kd};
-                
-            \addplot coordinates {(1.33746138401, 3.30351884493)(1.29258807535, 2.9827923879)(1.24219609155, 1.36802414688)(1.20023796153, 1.21910929167) };
-            \addlegendentry{lshf};
-                
-            \addplot coordinates {(1.28704602541, 37.7079347702)(1.28490900216, 36.7995670846)(1.22480333723, 25.7236446293)(1.20542984158, 22.9191594592)(1.19749455469, 20.6367692125)(1.179562605, 17.3320179145)(1.17593748789, 16.8601249902)(1.1672823323, 14.7467750703)(1.16267603756, 14.0436927684)(1.15556159505, 13.2148427404)(1.13831197505, 10.581601373)(1.13279580444, 8.46639102023)(1.11630532587, 5.42166181256)(1.09574515503, 4.61085336176)(1.08714381928, 2.92105771506)(1.07952998923, 1.71134854262)(1.06157828033, 1.51052204912)(1.05293172436, 0.839550968321) };
-            \addlegendentry{nearpy};
-                
-            \addplot coordinates {(2.74209901712, 30.5787595763)(2.63192783333, 15.9948671257)(2.62903885082, 15.8465895932) };
-            \addlegendentry{panns};
-                
-            \addplot coordinates {(1.55553962412, 16979.8879425)(1.4975292563, 15736.2917719)(1.38598023045, 14638.5271791)(1.31861755207, 13966.4416792)(1.27778258851, 11946.1465504)(1.27565506412, 11525.7262825)(1.26689729484, 9302.05078277)(1.23932183059, 8984.2070202)(1.22713075828, 7543.4815842)(1.20510658358, 6851.62424326)(1.19476229518, 5865.81487521)(1.18442276148, 4698.63688913)(1.1759462725, 4361.23461617)(1.1659584474, 4122.40918383)(1.15471023619, 3398.2695522)(1.14548361593, 2766.43764193)(1.13824064381, 2495.32769774)(1.12982715656, 2258.53444985)(1.12089671195, 1996.19256484)(1.11651015944, 1421.91268312)(1.10606886992, 1362.50852318)(1.09671334114, 1278.50565288)(1.08163081476, 856.718934853)(1.07687898976, 744.139835634)(1.0608442515, 555.765148604)(1.04566502535, 288.686445233)(1.03318856723, 164.714589431) };
-            \addlegendentry{rpforest};
-                
-            \addplot coordinates {(2.23923481604, 4879.97458967)(2.05216289441, 4462.10622958)(1.82782071173, 3864.58531048)(1.75770797538, 3589.90414778)(1.54532479823, 2902.68073657)(1.38706344896, 2210.10843184)(1.32657037259, 1845.44120183)(1.29478717321, 1672.59076058)(1.26839770346, 1381.48619882)(1.11893668084, 1285.04519851)(1.10396431999, 1061.19573974)(1.08720361843, 818.886520004)(1.07591737495, 732.739334559) };
-            \addlegendentry{SW-graph(nmslib)};
-                
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Relative Distance-Queries per second (1/s) tradeoff - up and to the left is better}
-    \label{}
-\end{figure}
-</pre>
-</div>
         
         </div>
     </div>
