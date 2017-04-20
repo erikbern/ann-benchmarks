@@ -49,7 +49,21 @@
             <h2>Benchmarking Results</h2>
             Results are split by dataset and by algorithm. Click on the plot to get detailled interactive plots.
             <h3>... by dataset</h3>
-            <ul class="list-inline"><b>Datasets</b>: <li><a href=sift-data>sift-data</a></li><li><a href=glove>glove</a></li><li><a href=nytimes-hamming-data>nytimes-hamming-data</a></li><li><a href=nytimes.tfidf.256.data>nytimes.tfidf.256.data</a></li><li><a href=rand7-data>rand7-data</a></li><li><a href=rand-unit-data>rand-unit-data</a></li><li><a href=sift-hamming-data>sift-hamming-data</a></li><li><a href=webspam-data>webspam-data</a></li></ul>
+            <ul class="list-inline"><b>Datasets</b>: <li><a href=sift>sift</a></li><li><a href=sift-data>sift-data</a></li><li><a href=glove>glove</a></li><li><a href=nytimes-hamming-data>nytimes-hamming-data</a></li><li><a href=nytimes.tfidf.256.data>nytimes.tfidf.256.data</a></li><li><a href=rand7-data>rand7-data</a></li><li><a href=rand-unit-data>rand-unit-data</a></li><li><a href=sift-hamming-data>sift-hamming-data</a></li><li><a href=webspam-data>webspam-data</a></li></ul>
+            <a href="./sift.html">
+            <div class="row" id="sift">
+                <div class = "col-md-4 bg-success">
+                    <h4>sift</h4>
+                    <dl class="dl-horizontal">
+                    
+                </dl>
+            </div>
+            <div class = "col-md-8">
+                <img class = "img-responsive" src="sift.png" />
+            </div>
+        </div>
+        </a>
+        <hr />
             <a href="./sift-data.html">
             <div class="row" id="sift-data">
                 <div class = "col-md-4 bg-success">
@@ -163,21 +177,7 @@
         </a>
         <hr />
         <h3>... by algorithm</h3>
-        <ul class="list-inline"><b>Algorithms:</b><li><a href=annoy>annoy</a></li><li><a href=hnsw(nmslib)>hnsw(nmslib)</a></li><li><a href=ball>ball</a></li><li><a href=lshf>lshf</a></li><li><a href=rpforest>rpforest</a></li><li><a href=nearpy>nearpy</a></li><li><a href=kd>kd</a></li><li><a href=SW-graph(nmslib)>SW-graph(nmslib)</a></li><li><a href=bitsampling>bitsampling</a></li><li><a href=BallTree(nmslib)>BallTree(nmslib)</a></li><li><a href=falconn>falconn</a></li><li><a href=faiss-lsh>faiss-lsh</a></li><li><a href=bruteforce-blas>bruteforce-blas</a></li><li><a href=bruteforce0(nmslib)>bruteforce0(nmslib)</a></li><li><a href=panns>panns</a></li><li><a href=mih>mih</a></li></ul>
-            <a href="./annoy.html">
-            <div class="row" id="annoy">
-                <div class = "col-md-4 bg-success">
-                    <h4>annoy</h4>
-                    <dl class="dl-horizontal">
-                    
-                </dl>
-            </div>
-            <div class = "col-md-8">
-                <img class = "img-responsive" src="annoy.png" />
-            </div>
-        </div>
-        </a>
-        <hr />
+        <ul class="list-inline"><b>Algorithms:</b><li><a href=hnsw(nmslib)>hnsw(nmslib)</a></li><li><a href=annoy>annoy</a></li><li><a href=MP-lsh(lshkit)>MP-lsh(lshkit)</a></li><li><a href=bruteforce-blas>bruteforce-blas</a></li><li><a href=lshf>lshf</a></li><li><a href=rpforest>rpforest</a></li><li><a href=nearpy>nearpy</a></li><li><a href=kd>kd</a></li><li><a href=ball>ball</a></li><li><a href=SW-graph(nmslib)>SW-graph(nmslib)</a></li><li><a href=bitsampling>bitsampling</a></li><li><a href=BallTree(nmslib)>BallTree(nmslib)</a></li><li><a href=falconn>falconn</a></li><li><a href=faiss-lsh>faiss-lsh</a></li><li><a href=flann>flann</a></li><li><a href=kgraph>kgraph</a></li><li><a href=bruteforce0(nmslib)>bruteforce0(nmslib)</a></li><li><a href=panns>panns</a></li><li><a href=mih>mih</a></li></ul>
             <a href="./hnsw(nmslib).html">
             <div class="row" id="hnsw(nmslib)">
                 <div class = "col-md-4 bg-success">
@@ -192,16 +192,44 @@
         </div>
         </a>
         <hr />
-            <a href="./ball.html">
-            <div class="row" id="ball">
+            <a href="./annoy.html">
+            <div class="row" id="annoy">
                 <div class = "col-md-4 bg-success">
-                    <h4>ball</h4>
+                    <h4>annoy</h4>
                     <dl class="dl-horizontal">
                     
                 </dl>
             </div>
             <div class = "col-md-8">
-                <img class = "img-responsive" src="ball.png" />
+                <img class = "img-responsive" src="annoy.png" />
+            </div>
+        </div>
+        </a>
+        <hr />
+            <a href="./MP-lsh(lshkit).html">
+            <div class="row" id="MP-lsh(lshkit)">
+                <div class = "col-md-4 bg-success">
+                    <h4>MP-lsh(lshkit)</h4>
+                    <dl class="dl-horizontal">
+                    
+                </dl>
+            </div>
+            <div class = "col-md-8">
+                <img class = "img-responsive" src="MP-lsh(lshkit).png" />
+            </div>
+        </div>
+        </a>
+        <hr />
+            <a href="./bruteforce-blas.html">
+            <div class="row" id="bruteforce-blas">
+                <div class = "col-md-4 bg-success">
+                    <h4>bruteforce-blas</h4>
+                    <dl class="dl-horizontal">
+                    
+                </dl>
+            </div>
+            <div class = "col-md-8">
+                <img class = "img-responsive" src="bruteforce-blas.png" />
             </div>
         </div>
         </a>
@@ -258,6 +286,20 @@
             </div>
             <div class = "col-md-8">
                 <img class = "img-responsive" src="kd.png" />
+            </div>
+        </div>
+        </a>
+        <hr />
+            <a href="./ball.html">
+            <div class="row" id="ball">
+                <div class = "col-md-4 bg-success">
+                    <h4>ball</h4>
+                    <dl class="dl-horizontal">
+                    
+                </dl>
+            </div>
+            <div class = "col-md-8">
+                <img class = "img-responsive" src="ball.png" />
             </div>
         </div>
         </a>
@@ -332,16 +374,30 @@
         </div>
         </a>
         <hr />
-            <a href="./bruteforce-blas.html">
-            <div class="row" id="bruteforce-blas">
+            <a href="./flann.html">
+            <div class="row" id="flann">
                 <div class = "col-md-4 bg-success">
-                    <h4>bruteforce-blas</h4>
+                    <h4>flann</h4>
                     <dl class="dl-horizontal">
                     
                 </dl>
             </div>
             <div class = "col-md-8">
-                <img class = "img-responsive" src="bruteforce-blas.png" />
+                <img class = "img-responsive" src="flann.png" />
+            </div>
+        </div>
+        </a>
+        <hr />
+            <a href="./kgraph.html">
+            <div class="row" id="kgraph">
+                <div class = "col-md-4 bg-success">
+                    <h4>kgraph</h4>
+                    <dl class="dl-horizontal">
+                    
+                </dl>
+            </div>
+            <div class = "col-md-8">
+                <img class = "img-responsive" src="kgraph.png" />
             </div>
         </div>
         </a>

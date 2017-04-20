@@ -44,18 +44,18 @@
         </nav>
         <div class="container">
         <h2>Plots for bitsampling
-        <h2>bitsampling with Epsilon Recall/Queries per second (1/s)</h2>
-        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>bitsampling with 10-NN precision/Queries per second (1/s)</h2>
+        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "nytimes-hamming-data",
                     fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(98, 146, 99, 1)",
+                    pointStyle: "star",
+                    borderColor: "rgba(153, 78, 161, 1)",
                     data: [ 
                         { x: 0.01726, y: 39940.0846927, label: "k: 19, m: 0, l: 1" },
                         { x: 0.02843, y: 37345.2098045, label: "k: 25, m: 0, l: 5" },
@@ -70,8 +70,8 @@
                 {
                     label: "sift-hamming-data",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(236, 123, 171, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(244, 129, 189, 1)",
                     data: [ 
                         { x: 0.04634, y: 26163.0550046, label: "k: 31, m: 0, l: 1" },
                         { x: 0.06369, y: 21785.7515721, label: "k: 25, m: 0, l: 1" },
@@ -83,7 +83,7 @@
                 {
                     label: "webspam-data",
                     fill: false,
-                    pointStyle: "circle",
+                    pointStyle: "star",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.73538, y: 13027.2088666, label: "k: 31, m: 0, l: 20" },
@@ -94,7 +94,7 @@
                         responsive: false,
                         title:{
                             display:true,
-                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -104,7 +104,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' Epsilon Recall   '
+                                    labelString: ' 10-NN precision   '
                                 }
                             }],
                             yAxes: [{
@@ -113,6 +113,159 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Queries per second (1/s) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>bitsampling with 10-NN precision/Index size (kB)</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "nytimes-hamming-data",
+                    fill: false,
+                    pointStyle: "star",
+                    borderColor: "rgba(153, 78, 161, 1)",
+                    data: [ 
+                        { x: 0.02395, y: 23596, label: "k: 17, m: 0, l: 1" },
+                        { x: 0.05459, y: 56240, label: "k: 19, m: 0, l: 1" },
+                        { x: 0.06791, y: 78668, label: "k: 25, m: 0, l: 1" },
+                        { x: 0.08327, y: 135044, label: "k: 31, m: 0, l: 1" },
+                        { x: 0.09415, y: 356988, label: "k: 17, m: 0, l: 5" },
+                        { x: 0.11069, y: 698836, label: "k: 17, m: 0, l: 10" },
+                ]},
+                {
+                    label: "sift-hamming-data",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(244, 129, 189, 1)",
+                    data: [ 
+                        { x: 0.12588, y: 98336, label: "k: 17, m: 0, l: 1" },
+                        { x: 0.19662, y: 134824, label: "k: 19, m: 0, l: 1" },
+                        { x: 0.21713, y: 163584, label: "k: 25, m: 0, l: 1" },
+                        { x: 0.22455, y: 224996, label: "k: 17, m: 0, l: 5" },
+                        { x: 0.25928, y: 441188, label: "k: 31, m: 0, l: 1" },
+                        { x: 0.2596, y: 480680, label: "k: 19, m: 0, l: 5" },
+                        { x: 0.32472, y: 875940, label: "k: 17, m: 0, l: 10" },
+                        { x: 0.38456, y: 2096928, label: "k: 19, m: 0, l: 10" },
+                        { x: 0.39315, y: 3581648, label: "k: 17, m: 0, l: 20" },
+                ]},
+                {
+                    label: "webspam-data",
+                    fill: false,
+                    pointStyle: "star",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.80136, y: 14432, label: "k: 17, m: 0, l: 1" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>bitsampling with 10-NN precision/Index size (kB)/Queries Per Second</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "nytimes-hamming-data",
+                    fill: false,
+                    pointStyle: "star",
+                    borderColor: "rgba(153, 78, 161, 1)",
+                    data: [ 
+                        { x: 0.02395, y: 0.845895231247, label: "k: 17, m: 0, l: 1" },
+                        { x: 0.05459, y: 2.15323249054, label: "k: 19, m: 0, l: 1" },
+                        { x: 0.06791, y: 4.48877195539, label: "k: 25, m: 0, l: 1" },
+                        { x: 0.08327, y: 7.43314398241, label: "k: 31, m: 0, l: 1" },
+                        { x: 0.09415, y: 23.1753447089, label: "k: 17, m: 0, l: 5" },
+                        { x: 0.11069, y: 45.3001014966, label: "k: 25, m: 0, l: 5" },
+                ]},
+                {
+                    label: "sift-hamming-data",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(244, 129, 189, 1)",
+                    data: [ 
+                        { x: 0.06369, y: 5.85006211872, label: "k: 25, m: 0, l: 1" },
+                        { x: 0.09722, y: 6.0768346262, label: "k: 31, m: 0, l: 1" },
+                        { x: 0.12588, y: 8.0431071907, label: "k: 19, m: 0, l: 1" },
+                        { x: 0.19662, y: 11.1799086348, label: "k: 17, m: 0, l: 1" },
+                        { x: 0.21713, y: 13.1119024658, label: "k: 17, m: 0, l: 5" },
+                        { x: 0.22455, y: 16.027314042, label: "k: 19, m: 0, l: 5" },
+                        { x: 0.25928, y: 30.5399355651, label: "k: 17, m: 0, l: 10" },
+                        { x: 0.2596, y: 32.5920624285, label: "k: 19, m: 0, l: 10" },
+                        { x: 0.32472, y: 57.4631587958, label: "k: 25, m: 0, l: 5" },
+                        { x: 0.38456, y: 176.433452861, label: "k: 17, m: 0, l: 20" },
+                        { x: 0.39315, y: 290.082299009, label: "k: 31, m: 0, l: 5" },
+                ]},
+                {
+                    label: "webspam-data",
+                    fill: false,
+                    pointStyle: "star",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.72859, y: 2.34410152111, label: "k: 31, m: 0, l: 5" },
+                        { x: 0.73538, y: 3.60046426525, label: "k: 31, m: 0, l: 1" },
+                        { x: 0.75351, y: 9.05359772301, label: "k: 25, m: 0, l: 10" },
+                        { x: 0.80136, y: 32.3651114998, label: "k: 31, m: 0, l: 10" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

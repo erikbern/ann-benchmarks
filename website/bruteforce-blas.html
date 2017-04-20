@@ -44,26 +44,26 @@
         </nav>
         <div class="container">
         <h2>Plots for bruteforce-blas
-        <h2>bruteforce-blas with Epsilon Recall/Queries per second (1/s)</h2>
-        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>bruteforce-blas with 10-NN precision/Queries per second (1/s)</h2>
+        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "rand-unit-data",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(191, 135, 43, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
                     data: [ 
-                        { x: 0.999, y: 5.55491624054, label: "BruteForceBLAS()" },
+                        { x: 0.9987, y: 5.55491624054, label: "BruteForceBLAS()" },
                 ]},
             ]}, options: {
                         responsive: false,
                         title:{
                             display:true,
-                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -73,7 +73,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' Epsilon Recall   '
+                                    labelString: ' 10-NN precision   '
                                 }
                             }],
                             yAxes: [{
@@ -82,6 +82,96 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Queries per second (1/s) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>bruteforce-blas with 10-NN precision/Index size (kB)</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "rand-unit-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
+                    data: [ 
+                        { x: 0.9987, y: 391072, label: "BruteForceBLAS()" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>bruteforce-blas with 10-NN precision/Index size (kB)/Queries Per Second</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "rand-unit-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
+                    data: [ 
+                        { x: 0.9987, y: 70401.061522, label: "BruteForceBLAS()" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

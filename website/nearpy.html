@@ -44,57 +44,55 @@
         </nav>
         <div class="container">
         <h2>Plots for nearpy
-        <h2>nearpy with Epsilon Recall/Queries per second (1/s)</h2>
-        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>nearpy with 10-NN precision/Queries per second (1/s)</h2>
+        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "glove",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(57, 132, 169, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(77, 174, 74, 1)",
                     data: [ 
-                        { x: 0.03889, y: 51.6808005177, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.07398, y: 21.5229884122, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.07812, y: 18.6163329605, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 0.10445, y: 14.7925093098, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 0.14051, y: 10.3705225743, label: "NearPy(n_bits=16, hash_counts=15)" },
-                        { x: 0.14136, y: 9.01161956534, label: "NearPy(n_bits=14, hash_counts=5)" },
-                        { x: 0.15854, y: 8.95339940412, label: "NearPy(n_bits=16, hash_counts=20)" },
+                        { x: 0.03545, y: 51.6808005177, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.06691, y: 21.5229884122, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.07082, y: 18.6163329605, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.0943, y: 14.7925093098, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.12721, y: 10.3705225743, label: "NearPy(n_bits=16, hash_counts=15)" },
+                        { x: 0.12728, y: 9.01161956534, label: "NearPy(n_bits=14, hash_counts=5)" },
+                        { x: 0.14224, y: 8.95339940412, label: "NearPy(n_bits=16, hash_counts=20)" },
                 ]},
                 {
                     label: "rand-unit-data",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(191, 135, 43, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
                     data: [ 
-                        { x: 0.445, y: 37.7079347702, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.4494, y: 36.7995670846, label: "NearPy(n_bits=16, hash_counts=5)" },
-                        { x: 0.4924, y: 25.7236446293, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 0.4929, y: 25.3526599202, label: "NearPy(n_bits=16, hash_counts=10)" },
-                        { x: 0.5026, y: 20.6367692125, label: "NearPy(n_bits=14, hash_counts=5)" },
-                        { x: 0.5086, y: 17.3320179145, label: "NearPy(n_bits=16, hash_counts=15)" },
-                        { x: 0.5104, y: 16.8601249902, label: "NearPy(n_bits=16, hash_counts=20)" },
-                        { x: 0.5111, y: 14.7467750703, label: "NearPy(n_bits=16, hash_counts=20)" },
-                        { x: 0.5169, y: 13.2148427404, label: "NearPy(n_bits=16, hash_counts=25)" },
-                        { x: 0.519, y: 10.581601373, label: "NearPy(n_bits=14, hash_counts=10)" },
-                        { x: 0.5195, y: 10.5284809698, label: "NearPy(n_bits=16, hash_counts=30)" },
-                        { x: 0.5208, y: 8.46639102023, label: "NearPy(n_bits=16, hash_counts=40)" },
-                        { x: 0.5295, y: 5.42166181256, label: "NearPy(n_bits=16, hash_counts=40)" },
-                        { x: 0.5469, y: 4.61085336176, label: "NearPy(n_bits=12, hash_counts=5)" },
-                        { x: 0.5566, y: 2.92105771506, label: "NearPy(n_bits=14, hash_counts=20)" },
-                        { x: 0.5656, y: 1.71134854262, label: "NearPy(n_bits=12, hash_counts=10)" },
-                        { x: 0.6066, y: 1.51052204912, label: "NearPy(n_bits=14, hash_counts=40)" },
-                        { x: 0.6328, y: 0.839550968321, label: "NearPy(n_bits=10, hash_counts=5)" },
+                        { x: 0.423, y: 37.7079347702, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.428, y: 36.7995670846, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.479, y: 25.7236446293, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.4816, y: 25.3526599202, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.4955, y: 20.6367692125, label: "NearPy(n_bits=14, hash_counts=5)" },
+                        { x: 0.5038, y: 17.3320179145, label: "NearPy(n_bits=16, hash_counts=15)" },
+                        { x: 0.5052, y: 16.8601249902, label: "NearPy(n_bits=16, hash_counts=20)" },
+                        { x: 0.5066, y: 14.7467750703, label: "NearPy(n_bits=16, hash_counts=20)" },
+                        { x: 0.5121, y: 13.2148427404, label: "NearPy(n_bits=16, hash_counts=25)" },
+                        { x: 0.5144, y: 10.581601373, label: "NearPy(n_bits=14, hash_counts=10)" },
+                        { x: 0.5154, y: 5.42166181256, label: "NearPy(n_bits=16, hash_counts=30)" },
+                        { x: 0.5353, y: 4.61085336176, label: "NearPy(n_bits=16, hash_counts=40)" },
+                        { x: 0.5415, y: 2.92105771506, label: "NearPy(n_bits=16, hash_counts=40)" },
+                        { x: 0.5452, y: 1.71134854262, label: "NearPy(n_bits=12, hash_counts=5)" },
+                        { x: 0.5783, y: 1.51052204912, label: "NearPy(n_bits=14, hash_counts=20)" },
+                        { x: 0.5953, y: 0.839550968321, label: "NearPy(n_bits=12, hash_counts=10)" },
                 ]},
             ]}, options: {
                         responsive: false,
                         title:{
                             display:true,
-                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -104,7 +102,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' Epsilon Recall   '
+                                    labelString: ' 10-NN precision   '
                                 }
                             }],
                             yAxes: [{
@@ -113,6 +111,137 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Queries per second (1/s) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>nearpy with 10-NN precision/Index size (kB)</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "glove",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(77, 174, 74, 1)",
+                    data: [ 
+                        { x: 0.06694, y: 447928, label: "NearPy(n_bits=14, hash_counts=5)" },
+                        { x: 0.11545, y: 881000, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.12728, y: 1859100, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.14224, y: 2322804, label: "NearPy(n_bits=14, hash_counts=10)" },
+                ]},
+                {
+                    label: "rand-unit-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
+                    data: [ 
+                        { x: 0.428, y: 476864, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.5062, y: 477520, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.5452, y: 878520, label: "NearPy(n_bits=10, hash_counts=5)" },
+                        { x: 0.5953, y: 1680044, label: "NearPy(n_bits=12, hash_counts=5)" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>nearpy with 10-NN precision/Index size (kB)/Queries Per Second</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "glove",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(77, 174, 74, 1)",
+                    data: [ 
+                        { x: 0.03545, y: 9213.94396429, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.06694, y: 38234.1182051, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.07082, y: 50319.4695749, label: "NearPy(n_bits=14, hash_counts=5)" },
+                        { x: 0.0943, y: 94583.8174374, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.11545, y: 126479.321294, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.12721, y: 179323.653816, label: "NearPy(n_bits=16, hash_counts=15)" },
+                        { x: 0.12728, y: 206300.319995, label: "NearPy(n_bits=14, hash_counts=10)" },
+                        { x: 0.14224, y: 259432.635043, label: "NearPy(n_bits=16, hash_counts=20)" },
+                ]},
+                {
+                    label: "rand-unit-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
+                    data: [ 
+                        { x: 0.423, y: 12648.3723626, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.428, y: 12958.4133124, label: "NearPy(n_bits=16, hash_counts=5)" },
+                        { x: 0.4494, y: 21140.3913334, label: "NearPy(n_bits=14, hash_counts=5)" },
+                        { x: 0.479, y: 34605.2051654, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.4816, y: 35234.0150032, label: "NearPy(n_bits=16, hash_counts=10)" },
+                        { x: 0.4955, y: 63147.6752287, label: "NearPy(n_bits=12, hash_counts=5)" },
+                        { x: 0.5038, y: 98986.9736153, label: "NearPy(n_bits=16, hash_counts=15)" },
+                        { x: 0.5052, y: 101934.71288, label: "NearPy(n_bits=14, hash_counts=10)" },
+                        { x: 0.5062, y: 140559.897532, label: "NearPy(n_bits=16, hash_counts=20)" },
+                        { x: 0.5066, y: 144350.475942, label: "NearPy(n_bits=16, hash_counts=20)" },
+                        { x: 0.5154, y: 162912.411459, label: "NearPy(n_bits=10, hash_counts=5)" },
+                        { x: 0.5452, y: 513349.547519, label: "NearPy(n_bits=16, hash_counts=25)" },
+                        { x: 0.5953, y: 2001122.10383, label: "NearPy(n_bits=12, hash_counts=10)" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

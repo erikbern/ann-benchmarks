@@ -44,54 +44,78 @@
         </nav>
         <div class="container">
         <h2>Plots for SW-graph(nmslib)
-        <h2>SW-graph(nmslib) with Epsilon Recall/Queries per second (1/s)</h2>
-        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>SW-graph(nmslib) with 10-NN precision/Queries per second (1/s)</h2>
+        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "glove",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(57, 132, 169, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(77, 174, 74, 1)",
                     data: [ 
-                        { x: 0.03916, y: 4662.56441132, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
-                        { x: 0.08218, y: 4322.98722533, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
-                        { x: 0.15996, y: 3807.36838503, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
-                        { x: 0.19196, y: 3687.28174285, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
-                        { x: 0.30858, y: 3058.59906481, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
-                        { x: 0.44586, y: 2417.76393912, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=40', 'initSearchAttempts=1'])" },
-                        { x: 0.52881, y: 1920.92314872, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=60', 'initSearchAttempts=1'])" },
-                        { x: 0.58783, y: 1754.8060902, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
-                        { x: 0.66222, y: 1411.37061646, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=120', 'initSearchAttempts=1'])" },
+                        { x: 0.03533, y: 4662.56441132, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
+                        { x: 0.0746, y: 4322.98722533, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
+                        { x: 0.14508, y: 3807.36838503, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
+                        { x: 0.17415, y: 3687.28174285, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                        { x: 0.28051, y: 3058.59906481, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.40559, y: 2417.76393912, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=40', 'initSearchAttempts=1'])" },
+                        { x: 0.4821, y: 1920.92314872, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=60', 'initSearchAttempts=1'])" },
+                        { x: 0.53713, y: 1754.8060902, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
+                        { x: 0.60701, y: 1411.37061646, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=120', 'initSearchAttempts=1'])" },
                 ]},
                 {
                     label: "rand-unit-data",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(191, 135, 43, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
                     data: [ 
-                        { x: 0.0438, y: 4879.97458967, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
-                        { x: 0.0954, y: 4462.10622958, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
-                        { x: 0.173, y: 3864.58531048, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
-                        { x: 0.1996, y: 3589.90414778, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
-                        { x: 0.3035, y: 2902.68073657, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
-                        { x: 0.3791, y: 2210.10843184, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=40', 'initSearchAttempts=1'])" },
-                        { x: 0.4112, y: 1845.44120183, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=60', 'initSearchAttempts=1'])" },
-                        { x: 0.4275, y: 1672.59076058, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
-                        { x: 0.4458, y: 1381.48619882, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=120', 'initSearchAttempts=1'])" },
-                        { x: 0.5485, y: 1285.04519851, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
-                        { x: 0.5681, y: 1061.19573974, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
-                        { x: 0.5982, y: 818.886520004, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=50', 'initSearchAttempts=1'])" },
-                        { x: 0.6231, y: 732.739334559, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
+                        { x: 0.0383, y: 4879.97458967, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
+                        { x: 0.0847, y: 4462.10622958, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
+                        { x: 0.1524, y: 3864.58531048, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
+                        { x: 0.1767, y: 3589.90414778, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                        { x: 0.279, y: 2902.68073657, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.3597, y: 2210.10843184, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=40', 'initSearchAttempts=1'])" },
+                        { x: 0.3931, y: 1845.44120183, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=60', 'initSearchAttempts=1'])" },
+                        { x: 0.4089, y: 1672.59076058, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
+                        { x: 0.4268, y: 1381.48619882, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=120', 'initSearchAttempts=1'])" },
+                        { x: 0.5336, y: 1285.04519851, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.5479, y: 1061.19573974, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
+                        { x: 0.5695, y: 818.886520004, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=50', 'initSearchAttempts=1'])" },
+                        { x: 0.5874, y: 732.739334559, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
+                ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.15602, y: 7487.26284689, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=1', 'initSearchAttempts=1'])" },
+                        { x: 0.24775, y: 6884.72289932, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
+                        { x: 0.31496, y: 6522.1672303, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=3', 'initSearchAttempts=1'])" },
+                        { x: 0.37067, y: 6253.44909973, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
+                        { x: 0.41596, y: 5966.73777676, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=5', 'initSearchAttempts=1'])" },
+                        { x: 0.56061, y: 5268.96268252, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                        { x: 0.63965, y: 4726.9094699, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=15', 'initSearchAttempts=1'])" },
+                        { x: 0.69256, y: 4332.40907042, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.76265, y: 3956.56993457, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
+                        { x: 0.80368, y: 3479.22108258, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=25', 'initSearchAttempts=1'])" },
+                        { x: 0.84239, y: 3077.19509566, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                        { x: 0.88769, y: 2604.05225483, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=15', 'initSearchAttempts=1'])" },
+                        { x: 0.93245, y: 2156.44751382, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.97069, y: 1165.1082968, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
+                        { x: 0.9902, y: 665.097526613, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=50', 'initSearchAttempts=1'])" },
+                        { x: 0.99728, y: 344.693446453, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=100', 'initSearchAttempts=1'])" },
+                        { x: 0.99929, y: 182.607677377, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=200', 'initSearchAttempts=1'])" },
                 ]},
             ]}, options: {
                         responsive: false,
                         title:{
                             display:true,
-                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -101,7 +125,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' Epsilon Recall   '
+                                    labelString: ' 10-NN precision   '
                                 }
                             }],
                             yAxes: [{
@@ -110,6 +134,171 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Queries per second (1/s) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>SW-graph(nmslib) with 10-NN precision/Index size (kB)</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "glove",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(77, 174, 74, 1)",
+                    data: [ 
+                        { x: 0.03533, y: 464, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
+                        { x: 0.28051, y: 464, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.53713, y: 472, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
+                        { x: 0.60701, y: 476, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                ]},
+                {
+                    label: "rand-unit-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
+                    data: [ 
+                        { x: 0.1767, y: 23984, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                        { x: 0.4089, y: 23984, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
+                        { x: 0.4268, y: 23984, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
+                        { x: 0.5479, y: 50684, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=120', 'initSearchAttempts=1'])" },
+                        { x: 0.5874, y: 50684, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
+                ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.76265, y: 793284, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
+                        { x: 0.93245, y: 906820, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=15', 'initSearchAttempts=1'])" },
+                        { x: 0.97069, y: 921752, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
+                        { x: 0.99728, y: 921752, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
+                        { x: 0.99929, y: 921768, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=25', 'initSearchAttempts=1'])" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>SW-graph(nmslib) with 10-NN precision/Index size (kB)/Queries Per Second</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "glove",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(77, 174, 74, 1)",
+                    data: [ 
+                        { x: 0.03533, y: 0.0995160514832, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
+                        { x: 0.14508, y: 0.122919547749, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
+                        { x: 0.17415, y: 0.128007576561, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
+                        { x: 0.28051, y: 0.151703440094, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                        { x: 0.40559, y: 0.206802654266, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.53713, y: 0.268975588036, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=40', 'initSearchAttempts=1'])" },
+                        { x: 0.60701, y: 0.337260811901, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
+                ]},
+                {
+                    label: "rand-unit-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
+                    data: [ 
+                        { x: 0.0383, y: 4.91559936619, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
+                        { x: 0.0847, y: 5.37593655682, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
+                        { x: 0.1524, y: 6.20609925079, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=8', 'initSearchAttempts=1'])" },
+                        { x: 0.1767, y: 6.68095832443, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                        { x: 0.3597, y: 10.8555759773, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=40', 'initSearchAttempts=1'])" },
+                        { x: 0.3931, y: 12.9985176315, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=60', 'initSearchAttempts=1'])" },
+                        { x: 0.4089, y: 14.339431118, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=80', 'initSearchAttempts=1'])" },
+                        { x: 0.4268, y: 17.3610131035, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=120', 'initSearchAttempts=1'])" },
+                        { x: 0.5479, y: 47.7612169952, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
+                        { x: 0.5695, y: 62.1282665634, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=15'], query_param=['efSearch=50', 'initSearchAttempts=1'])" },
+                        { x: 0.5874, y: 69.1705735035, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=800', 'initIndexAttempts=1', 'NN=3'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.15602, y: 106.815536779, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=1', 'initSearchAttempts=1'])" },
+                        { x: 0.24775, y: 116.132488074, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=2', 'initSearchAttempts=1'])" },
+                        { x: 0.31496, y: 122.602192149, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=3', 'initSearchAttempts=1'])" },
+                        { x: 0.37067, y: 127.855202345, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=4', 'initSearchAttempts=1'])" },
+                        { x: 0.41596, y: 134.01560952, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=5', 'initSearchAttempts=1'])" },
+                        { x: 0.56061, y: 151.747516196, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                        { x: 0.63965, y: 169.145613025, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=15', 'initSearchAttempts=1'])" },
+                        { x: 0.69256, y: 184.550439952, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.76265, y: 200.49790933, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
+                        { x: 0.80368, y: 264.923664844, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=5'], query_param=['efSearch=25', 'initSearchAttempts=1'])" },
+                        { x: 0.84239, y: 299.548118123, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=10', 'initSearchAttempts=1'])" },
+                        { x: 0.88769, y: 353.877691313, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=15', 'initSearchAttempts=1'])" },
+                        { x: 0.93245, y: 420.515683404, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=20', 'initSearchAttempts=1'])" },
+                        { x: 0.97069, y: 791.129891128, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=30', 'initSearchAttempts=1'])" },
+                        { x: 0.9902, y: 1385.91403985, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=50', 'initSearchAttempts=1'])" },
+                        { x: 0.99728, y: 2674.12104722, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=100', 'initSearchAttempts=1'])" },
+                        { x: 0.99929, y: 5047.80529077, label: "Nmslib(method_name=sw-graph, index_param=['efConstruction=400', 'initIndexAttempts=1', 'NN=10'], query_param=['efSearch=200', 'initSearchAttempts=1'])" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

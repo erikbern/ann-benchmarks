@@ -44,86 +44,85 @@
         </nav>
         <div class="container">
         <h2>Plots for rpforest
-        <h2>rpforest with Epsilon Recall/Queries per second (1/s)</h2>
-        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>rpforest with 10-NN precision/Queries per second (1/s)</h2>
+        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "glove",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(57, 132, 169, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(77, 174, 74, 1)",
                     data: [ 
-                        { x: 0.00496, y: 15344.8649281, label: "RPForest(leaf_size=5, n_trees=3)" },
-                        { x: 0.00765, y: 14836.0914649, label: "RPForest(leaf_size=3, n_trees=3)" },
-                        { x: 0.00812, y: 13223.838387, label: "RPForest(leaf_size=10, n_trees=3)" },
-                        { x: 0.01085, y: 12970.8199351, label: "RPForest(leaf_size=3, n_trees=5)" },
-                        { x: 0.01272, y: 12060.3537562, label: "RPForest(leaf_size=5, n_trees=5)" },
-                        { x: 0.01556, y: 10780.5348598, label: "RPForest(leaf_size=20, n_trees=3)" },
-                        { x: 0.0181, y: 10625.8431467, label: "RPForest(leaf_size=10, n_trees=5)" },
-                        { x: 0.02448, y: 8861.97762439, label: "RPForest(leaf_size=40, n_trees=3)" },
-                        { x: 0.02563, y: 8261.05402149, label: "RPForest(leaf_size=20, n_trees=5)" },
-                        { x: 0.03429, y: 7173.45978048, label: "RPForest(leaf_size=3, n_trees=10)" },
-                        { x: 0.03581, y: 5782.75831642, label: "RPForest(leaf_size=5, n_trees=10)" },
-                        { x: 0.04563, y: 5641.43542471, label: "RPForest(leaf_size=10, n_trees=10)" },
-                        { x: 0.0496, y: 5295.02474178, label: "RPForest(leaf_size=40, n_trees=5)" },
-                        { x: 0.06364, y: 4400.86844225, label: "RPForest(leaf_size=100, n_trees=3)" },
-                        { x: 0.06817, y: 3419.60567157, label: "RPForest(leaf_size=20, n_trees=10)" },
-                        { x: 0.08364, y: 3262.62922875, label: "RPForest(leaf_size=3, n_trees=20)" },
-                        { x: 0.09026, y: 2954.19435964, label: "RPForest(leaf_size=5, n_trees=20)" },
-                        { x: 0.11642, y: 2427.21978884, label: "RPForest(leaf_size=100, n_trees=5)" },
-                        { x: 0.1245, y: 1792.57603354, label: "RPForest(leaf_size=10, n_trees=20)" },
-                        { x: 0.16235, y: 1592.39254483, label: "RPForest(leaf_size=200, n_trees=3)" },
-                        { x: 0.17348, y: 1401.42195594, label: "RPForest(leaf_size=40, n_trees=10)" },
-                        { x: 0.23661, y: 1021.10749365, label: "RPForest(leaf_size=20, n_trees=20)" },
-                        { x: 0.3193, y: 657.741600116, label: "RPForest(leaf_size=3, n_trees=40)" },
-                        { x: 0.41929, y: 367.860525819, label: "RPForest(leaf_size=5, n_trees=40)" },
-                        { x: 0.54099, y: 198.633659542, label: "RPForest(leaf_size=200, n_trees=5)" },
+                        { x: 0.00471, y: 15344.8649281, label: "RPForest(leaf_size=5, n_trees=3)" },
+                        { x: 0.00715, y: 14836.0914649, label: "RPForest(leaf_size=3, n_trees=3)" },
+                        { x: 0.00763, y: 13223.838387, label: "RPForest(leaf_size=10, n_trees=3)" },
+                        { x: 0.01014, y: 12970.8199351, label: "RPForest(leaf_size=3, n_trees=5)" },
+                        { x: 0.01188, y: 12060.3537562, label: "RPForest(leaf_size=5, n_trees=5)" },
+                        { x: 0.01428, y: 10780.5348598, label: "RPForest(leaf_size=20, n_trees=3)" },
+                        { x: 0.01687, y: 10625.8431467, label: "RPForest(leaf_size=10, n_trees=5)" },
+                        { x: 0.0229, y: 8861.97762439, label: "RPForest(leaf_size=40, n_trees=3)" },
+                        { x: 0.02354, y: 8261.05402149, label: "RPForest(leaf_size=20, n_trees=5)" },
+                        { x: 0.03192, y: 7173.45978048, label: "RPForest(leaf_size=3, n_trees=10)" },
+                        { x: 0.0329, y: 5782.75831642, label: "RPForest(leaf_size=5, n_trees=10)" },
+                        { x: 0.04257, y: 5641.43542471, label: "RPForest(leaf_size=10, n_trees=10)" },
+                        { x: 0.04569, y: 5295.02474178, label: "RPForest(leaf_size=40, n_trees=5)" },
+                        { x: 0.05899, y: 4400.86844225, label: "RPForest(leaf_size=100, n_trees=3)" },
+                        { x: 0.06231, y: 3419.60567157, label: "RPForest(leaf_size=20, n_trees=10)" },
+                        { x: 0.07765, y: 3262.62922875, label: "RPForest(leaf_size=3, n_trees=20)" },
+                        { x: 0.08286, y: 2954.19435964, label: "RPForest(leaf_size=5, n_trees=20)" },
+                        { x: 0.10712, y: 2427.21978884, label: "RPForest(leaf_size=100, n_trees=5)" },
+                        { x: 0.11343, y: 1792.57603354, label: "RPForest(leaf_size=10, n_trees=20)" },
+                        { x: 0.14831, y: 1592.39254483, label: "RPForest(leaf_size=200, n_trees=3)" },
+                        { x: 0.1593, y: 1401.42195594, label: "RPForest(leaf_size=40, n_trees=10)" },
+                        { x: 0.21585, y: 1021.10749365, label: "RPForest(leaf_size=20, n_trees=20)" },
+                        { x: 0.28845, y: 657.741600116, label: "RPForest(leaf_size=3, n_trees=40)" },
+                        { x: 0.37605, y: 367.860525819, label: "RPForest(leaf_size=5, n_trees=40)" },
+                        { x: 0.48148, y: 198.633659542, label: "RPForest(leaf_size=200, n_trees=5)" },
                 ]},
                 {
                     label: "rand-unit-data",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(191, 135, 43, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
                     data: [ 
-                        { x: 0.0111, y: 16979.8879425, label: "RPForest(leaf_size=3, n_trees=3)" },
-                        { x: 0.0185, y: 15736.2917719, label: "RPForest(leaf_size=5, n_trees=3)" },
-                        { x: 0.0316, y: 14638.5271791, label: "RPForest(leaf_size=10, n_trees=3)" },
-                        { x: 0.0548, y: 13966.4416792, label: "RPForest(leaf_size=3, n_trees=5)" },
-                        { x: 0.097, y: 11946.1465504, label: "RPForest(leaf_size=5, n_trees=5)" },
-                        { x: 0.0978, y: 9302.05078277, label: "RPForest(leaf_size=20, n_trees=3)" },
-                        { x: 0.1483, y: 8984.2070202, label: "RPForest(leaf_size=10, n_trees=5)" },
-                        { x: 0.1509, y: 8948.91763069, label: "RPForest(leaf_size=40, n_trees=3)" },
-                        { x: 0.1622, y: 7543.4815842, label: "RPForest(leaf_size=20, n_trees=5)" },
-                        { x: 0.2302, y: 6851.62424326, label: "RPForest(leaf_size=3, n_trees=10)" },
-                        { x: 0.2365, y: 6149.88863849, label: "RPForest(leaf_size=5, n_trees=10)" },
-                        { x: 0.2619, y: 5865.81487521, label: "RPForest(leaf_size=10, n_trees=10)" },
-                        { x: 0.285, y: 4698.63688913, label: "RPForest(leaf_size=100, n_trees=3)" },
-                        { x: 0.3433, y: 4361.23461617, label: "RPForest(leaf_size=40, n_trees=5)" },
-                        { x: 0.3732, y: 4122.40918383, label: "RPForest(leaf_size=20, n_trees=10)" },
-                        { x: 0.4031, y: 3398.2695522, label: "RPForest(leaf_size=100, n_trees=5)" },
-                        { x: 0.4247, y: 2766.43764193, label: "RPForest(leaf_size=3, n_trees=20)" },
-                        { x: 0.4435, y: 2554.02025044, label: "RPForest(leaf_size=5, n_trees=20)" },
-                        { x: 0.4693, y: 2495.32769774, label: "RPForest(leaf_size=200, n_trees=3)" },
-                        { x: 0.4918, y: 2258.53444985, label: "RPForest(leaf_size=40, n_trees=10)" },
-                        { x: 0.5011, y: 1996.19256484, label: "RPForest(leaf_size=10, n_trees=20)" },
-                        { x: 0.5198, y: 1421.91268312, label: "RPForest(leaf_size=20, n_trees=20)" },
-                        { x: 0.5313, y: 1362.50852318, label: "RPForest(leaf_size=200, n_trees=5)" },
-                        { x: 0.5442, y: 1278.50565288, label: "RPForest(leaf_size=100, n_trees=10)" },
-                        { x: 0.5597, y: 856.718934853, label: "RPForest(leaf_size=3, n_trees=40)" },
-                        { x: 0.573, y: 744.139835634, label: "RPForest(leaf_size=5, n_trees=40)" },
-                        { x: 0.6055, y: 555.765148604, label: "RPForest(leaf_size=400, n_trees=3)" },
-                        { x: 0.661, y: 288.686445233, label: "RPForest(leaf_size=40, n_trees=20)" },
-                        { x: 0.7296, y: 164.714589431, label: "RPForest(leaf_size=10, n_trees=40)" },
+                        { x: 0.0098, y: 16979.8879425, label: "RPForest(leaf_size=3, n_trees=3)" },
+                        { x: 0.0159, y: 15736.2917719, label: "RPForest(leaf_size=5, n_trees=3)" },
+                        { x: 0.0274, y: 14638.5271791, label: "RPForest(leaf_size=10, n_trees=3)" },
+                        { x: 0.0474, y: 13966.4416792, label: "RPForest(leaf_size=3, n_trees=5)" },
+                        { x: 0.0859, y: 11946.1465504, label: "RPForest(leaf_size=5, n_trees=5)" },
+                        { x: 0.1297, y: 8984.2070202, label: "RPForest(leaf_size=20, n_trees=3)" },
+                        { x: 0.1332, y: 8948.91763069, label: "RPForest(leaf_size=10, n_trees=5)" },
+                        { x: 0.1407, y: 7543.4815842, label: "RPForest(leaf_size=40, n_trees=3)" },
+                        { x: 0.2022, y: 6851.62424326, label: "RPForest(leaf_size=20, n_trees=5)" },
+                        { x: 0.205, y: 6149.88863849, label: "RPForest(leaf_size=3, n_trees=10)" },
+                        { x: 0.2311, y: 5865.81487521, label: "RPForest(leaf_size=5, n_trees=10)" },
+                        { x: 0.248, y: 4698.63688913, label: "RPForest(leaf_size=10, n_trees=10)" },
+                        { x: 0.2983, y: 4361.23461617, label: "RPForest(leaf_size=100, n_trees=3)" },
+                        { x: 0.328, y: 4122.40918383, label: "RPForest(leaf_size=40, n_trees=5)" },
+                        { x: 0.3573, y: 3398.2695522, label: "RPForest(leaf_size=20, n_trees=10)" },
+                        { x: 0.3741, y: 2766.43764193, label: "RPForest(leaf_size=100, n_trees=5)" },
+                        { x: 0.393, y: 2554.02025044, label: "RPForest(leaf_size=3, n_trees=20)" },
+                        { x: 0.4244, y: 2495.32769774, label: "RPForest(leaf_size=5, n_trees=20)" },
+                        { x: 0.4497, y: 2258.53444985, label: "RPForest(leaf_size=200, n_trees=3)" },
+                        { x: 0.4668, y: 1996.19256484, label: "RPForest(leaf_size=40, n_trees=10)" },
+                        { x: 0.4925, y: 1421.91268312, label: "RPForest(leaf_size=10, n_trees=20)" },
+                        { x: 0.5114, y: 1362.50852318, label: "RPForest(leaf_size=20, n_trees=20)" },
+                        { x: 0.5263, y: 1278.50565288, label: "RPForest(leaf_size=200, n_trees=5)" },
+                        { x: 0.5417, y: 856.718934853, label: "RPForest(leaf_size=100, n_trees=10)" },
+                        { x: 0.5538, y: 744.139835634, label: "RPForest(leaf_size=3, n_trees=40)" },
+                        { x: 0.5794, y: 555.765148604, label: "RPForest(leaf_size=5, n_trees=40)" },
+                        { x: 0.6183, y: 288.686445233, label: "RPForest(leaf_size=400, n_trees=3)" },
+                        { x: 0.6683, y: 164.714589431, label: "RPForest(leaf_size=40, n_trees=20)" },
                 ]},
             ]}, options: {
                         responsive: false,
                         title:{
                             display:true,
-                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -133,7 +132,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' Epsilon Recall   '
+                                    labelString: ' 10-NN precision   '
                                 }
                             }],
                             yAxes: [{
@@ -142,6 +141,177 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Queries per second (1/s) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>rpforest with 10-NN precision/Index size (kB)</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "glove",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(77, 174, 74, 1)",
+                    data: [ 
+                        { x: 0.12127, y: 925444, label: "RPForest(leaf_size=400, n_trees=10)" },
+                        { x: 0.26795, y: 925448, label: "RPForest(leaf_size=100, n_trees=5)" },
+                        { x: 0.28845, y: 925456, label: "RPForest(leaf_size=200, n_trees=40)" },
+                        { x: 0.48148, y: 925468, label: "RPForest(leaf_size=40, n_trees=10)" },
+                ]},
+                {
+                    label: "rand-unit-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
+                    data: [ 
+                        { x: 0.0098, y: 770148, label: "RPForest(leaf_size=3, n_trees=3)" },
+                        { x: 0.0179, y: 770148, label: "RPForest(leaf_size=3, n_trees=5)" },
+                        { x: 0.0474, y: 770148, label: "RPForest(leaf_size=20, n_trees=3)" },
+                        { x: 0.0774, y: 770152, label: "RPForest(leaf_size=20, n_trees=5)" },
+                        { x: 0.0968, y: 771212, label: "RPForest(leaf_size=5, n_trees=20)" },
+                        { x: 0.1332, y: 771216, label: "RPForest(leaf_size=40, n_trees=3)" },
+                        { x: 0.2311, y: 771216, label: "RPForest(leaf_size=5, n_trees=5)" },
+                        { x: 0.3573, y: 771216, label: "RPForest(leaf_size=5, n_trees=10)" },
+                        { x: 0.5263, y: 790204, label: "RPForest(leaf_size=5, n_trees=3)" },
+                        { x: 0.5794, y: 790208, label: "RPForest(leaf_size=40, n_trees=5)" },
+                        { x: 0.6183, y: 794904, label: "RPForest(leaf_size=40, n_trees=10)" },
+                        { x: 0.6683, y: 1098508, label: "RPForest(leaf_size=40, n_trees=20)" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>rpforest with 10-NN precision/Index size (kB)/Queries Per Second</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "glove",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(77, 174, 74, 1)",
+                    data: [ 
+                        { x: 0.00471, y: 60.3104689636, label: "RPForest(leaf_size=5, n_trees=3)" },
+                        { x: 0.00715, y: 62.3792325754, label: "RPForest(leaf_size=3, n_trees=3)" },
+                        { x: 0.00763, y: 69.9848238397, label: "RPForest(leaf_size=10, n_trees=3)" },
+                        { x: 0.01014, y: 71.3496914326, label: "RPForest(leaf_size=3, n_trees=5)" },
+                        { x: 0.01188, y: 76.7363892225, label: "RPForest(leaf_size=5, n_trees=5)" },
+                        { x: 0.01428, y: 85.8454624038, label: "RPForest(leaf_size=20, n_trees=3)" },
+                        { x: 0.01687, y: 87.0967119716, label: "RPForest(leaf_size=10, n_trees=5)" },
+                        { x: 0.0229, y: 104.43086625, label: "RPForest(leaf_size=40, n_trees=3)" },
+                        { x: 0.02354, y: 112.026382783, label: "RPForest(leaf_size=20, n_trees=5)" },
+                        { x: 0.03192, y: 129.013339214, label: "RPForest(leaf_size=3, n_trees=10)" },
+                        { x: 0.0329, y: 160.03504718, label: "RPForest(leaf_size=5, n_trees=10)" },
+                        { x: 0.04257, y: 164.047610285, label: "RPForest(leaf_size=10, n_trees=10)" },
+                        { x: 0.04569, y: 174.777653577, label: "RPForest(leaf_size=40, n_trees=5)" },
+                        { x: 0.05899, y: 210.292130325, label: "RPForest(leaf_size=100, n_trees=3)" },
+                        { x: 0.06231, y: 270.633543421, label: "RPForest(leaf_size=20, n_trees=10)" },
+                        { x: 0.07765, y: 283.653438719, label: "RPForest(leaf_size=3, n_trees=20)" },
+                        { x: 0.08286, y: 313.268487897, label: "RPForest(leaf_size=5, n_trees=20)" },
+                        { x: 0.10712, y: 381.285619149, label: "RPForest(leaf_size=100, n_trees=5)" },
+                        { x: 0.11343, y: 516.273777337, label: "RPForest(leaf_size=10, n_trees=20)" },
+                        { x: 0.14831, y: 581.175792994, label: "RPForest(leaf_size=200, n_trees=3)" },
+                        { x: 0.1593, y: 660.377837007, label: "RPForest(leaf_size=40, n_trees=10)" },
+                        { x: 0.21585, y: 906.337487247, label: "RPForest(leaf_size=20, n_trees=20)" },
+                        { x: 0.28845, y: 1407.02062913, label: "RPForest(leaf_size=3, n_trees=40)" },
+                        { x: 0.37605, y: 2515.81220339, label: "RPForest(leaf_size=5, n_trees=40)" },
+                        { x: 0.48148, y: 4659.17006278, label: "RPForest(leaf_size=200, n_trees=5)" },
+                ]},
+                {
+                    label: "rand-unit-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
+                    data: [ 
+                        { x: 0.0098, y: 45.3564830704, label: "RPForest(leaf_size=3, n_trees=3)" },
+                        { x: 0.0159, y: 49.0087506752, label: "RPForest(leaf_size=5, n_trees=3)" },
+                        { x: 0.0179, y: 54.1754523897, label: "RPForest(leaf_size=3, n_trees=5)" },
+                        { x: 0.0274, y: 54.2193890333, label: "RPForest(leaf_size=10, n_trees=3)" },
+                        { x: 0.0474, y: 55.1427498636, label: "RPForest(leaf_size=20, n_trees=3)" },
+                        { x: 0.0859, y: 64.5573864965, label: "RPForest(leaf_size=5, n_trees=5)" },
+                        { x: 0.1332, y: 86.1798076401, label: "RPForest(leaf_size=10, n_trees=5)" },
+                        { x: 0.1407, y: 105.040092052, label: "RPForest(leaf_size=40, n_trees=3)" },
+                        { x: 0.2022, y: 115.330901396, label: "RPForest(leaf_size=20, n_trees=5)" },
+                        { x: 0.205, y: 128.602003466, label: "RPForest(leaf_size=3, n_trees=10)" },
+                        { x: 0.2311, y: 131.476362007, label: "RPForest(leaf_size=5, n_trees=10)" },
+                        { x: 0.248, y: 168.637845123, label: "RPForest(leaf_size=10, n_trees=10)" },
+                        { x: 0.2983, y: 181.34681337, label: "RPForest(leaf_size=40, n_trees=5)" },
+                        { x: 0.328, y: 191.684998932, label: "RPForest(leaf_size=100, n_trees=3)" },
+                        { x: 0.3573, y: 226.943739498, label: "RPForest(leaf_size=20, n_trees=10)" },
+                        { x: 0.3741, y: 286.421782291, label: "RPForest(leaf_size=100, n_trees=5)" },
+                        { x: 0.393, y: 309.47131287, label: "RPForest(leaf_size=5, n_trees=20)" },
+                        { x: 0.4244, y: 318.556957758, label: "RPForest(leaf_size=200, n_trees=3)" },
+                        { x: 0.4497, y: 349.87644313, label: "RPForest(leaf_size=40, n_trees=10)" },
+                        { x: 0.4668, y: 396.356550934, label: "RPForest(leaf_size=10, n_trees=20)" },
+                        { x: 0.4925, y: 555.865356136, label: "RPForest(leaf_size=20, n_trees=20)" },
+                        { x: 0.5114, y: 583.412130255, label: "RPForest(leaf_size=200, n_trees=5)" },
+                        { x: 0.5263, y: 618.068444376, label: "RPForest(leaf_size=3, n_trees=20)" },
+                        { x: 0.5417, y: 928.05699472, label: "RPForest(leaf_size=100, n_trees=10)" },
+                        { x: 0.5538, y: 1068.21858196, label: "RPForest(leaf_size=400, n_trees=3)" },
+                        { x: 0.5794, y: 1421.83798676, label: "RPForest(leaf_size=40, n_trees=20)" },
+                        { x: 0.6183, y: 2753.52034404, label: "RPForest(leaf_size=10, n_trees=40)" },
+                        { x: 0.6683, y: 6669.16029598, label: "RPForest(leaf_size=20, n_trees=40)" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

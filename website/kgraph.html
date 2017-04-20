@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>kd</title>
+        <title>kgraph</title>
         <script src="js/Chart.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -43,8 +43,8 @@
           </div>
         </nav>
         <div class="container">
-        <h2>Plots for kd
-        <h2>kd with 10-NN precision/Queries per second (1/s)</h2>
+        <h2>Plots for kgraph
+        <h2>kgraph with 10-NN precision/Queries per second (1/s)</h2>
         <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
             var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
@@ -52,12 +52,24 @@
                 type: "line",
                 data: { datasets: [
                 {
-                    label: "rand-unit-data",
+                    label: "sift",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(167, 87, 43, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
-                        { x: 1.0, y: 3.36508524876, label: "KDTree(leaf_size=40)" },
+                        { x: 0.89523, y: 3323.53671576, label: "KGraph(euclidean,P=1)" },
+                        { x: 0.93342, y: 3151.70915605, label: "KGraph(euclidean,P=2)" },
+                        { x: 0.93396, y: 3111.805508, label: "KGraph(euclidean,P=4)" },
+                        { x: 0.96125, y: 2666.59664762, label: "KGraph(euclidean,P=3)" },
+                        { x: 0.97824, y: 2222.80282009, label: "KGraph(euclidean,P=5)" },
+                        { x: 0.98611, y: 1828.20319917, label: "KGraph(euclidean,P=10)" },
+                        { x: 0.99024, y: 1591.00205988, label: "KGraph(euclidean,P=20)" },
+                        { x: 0.99285, y: 1418.88607519, label: "KGraph(euclidean,P=30)" },
+                        { x: 0.9942, y: 1236.73926219, label: "KGraph(euclidean,P=40)" },
+                        { x: 0.99538, y: 1090.38923788, label: "KGraph(euclidean,P=50)" },
+                        { x: 0.99632, y: 986.682330113, label: "KGraph(euclidean,P=60)" },
+                        { x: 0.99694, y: 926.440663777, label: "KGraph(euclidean,P=70)" },
+                        { x: 0.99749, y: 818.049521995, label: "KGraph(euclidean,P=80)" },
                 ]},
             ]}, options: {
                         responsive: false,
@@ -89,7 +101,7 @@
                 }); 
         </script>
         
-        <h2>kd with 10-NN precision/Index size (kB)</h2>
+        <h2>kgraph with 10-NN precision/Index size (kB)</h2>
         <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
         <script>
             var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
@@ -97,12 +109,14 @@
                 type: "line",
                 data: { datasets: [
                 {
-                    label: "rand-unit-data",
+                    label: "sift",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(167, 87, 43, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
-                        { x: 1.0, y: 782220, label: "KDTree(leaf_size=1000)" },
+                        { x: 0.84662, y: 1208152, label: "KGraph(euclidean,P=2)" },
+                        { x: 0.99694, y: 1208184, label: "KGraph(euclidean,P=90)" },
+                        { x: 0.99749, y: 1208344, label: "KGraph(euclidean,P=3)" },
                 ]},
             ]}, options: {
                         responsive: false,
@@ -134,7 +148,7 @@
                 }); 
         </script>
         
-        <h2>kd with 10-NN precision/Index size (kB)/Queries Per Second</h2>
+        <h2>kgraph with 10-NN precision/Index size (kB)/Queries Per Second</h2>
         <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
         <script>
             var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
@@ -142,12 +156,23 @@
                 type: "line",
                 data: { datasets: [
                 {
-                    label: "rand-unit-data",
+                    label: "sift",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(167, 87, 43, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
-                        { x: 1.0, y: 245638.131164, label: "KDTree(leaf_size=100)" },
+                        { x: 0.89523, y: 363.577749651, label: "KGraph(euclidean,P=1)" },
+                        { x: 0.93342, y: 383.397052257, label: "KGraph(euclidean,P=2)" },
+                        { x: 0.93396, y: 388.299331977, label: "KGraph(euclidean,P=4)" },
+                        { x: 0.96125, y: 453.145398304, label: "KGraph(euclidean,P=3)" },
+                        { x: 0.97824, y: 543.618169401, label: "KGraph(euclidean,P=5)" },
+                        { x: 0.99024, y: 759.496188263, label: "KGraph(euclidean,P=10)" },
+                        { x: 0.99285, y: 851.622988715, label: "KGraph(euclidean,P=20)" },
+                        { x: 0.9942, y: 977.033750723, label: "KGraph(euclidean,P=40)" },
+                        { x: 0.99538, y: 1108.19142194, label: "KGraph(euclidean,P=50)" },
+                        { x: 0.99632, y: 1224.64542348, label: "KGraph(euclidean,P=60)" },
+                        { x: 0.99694, y: 1304.11374116, label: "KGraph(euclidean,P=70)" },
+                        { x: 0.99749, y: 1477.10372968, label: "KGraph(euclidean,P=80)" },
                 ]},
             ]}, options: {
                         responsive: false,

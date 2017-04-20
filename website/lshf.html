@@ -44,29 +44,38 @@
         </nav>
         <div class="container">
         <h2>Plots for lshf
-        <h2>lshf with Epsilon Recall/Queries per second (1/s)</h2>
-        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>lshf with 10-NN precision/Queries per second (1/s)</h2>
+        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "rand-unit-data",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(191, 135, 43, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
                     data: [ 
-                        { x: 0.3059, y: 3.30351884493, label: "LSHF(n_est=5, n_cand=10)" },
-                        { x: 0.3109, y: 2.9827923879, label: "LSHF(n_est=5, n_cand=20)" },
-                        { x: 0.3825, y: 1.36802414688, label: "LSHF(n_est=10, n_cand=20)" },
-                        { x: 0.4014, y: 1.21910929167, label: "LSHF(n_est=10, n_cand=50)" },
+                        { x: 0.2852, y: 3.30351884493, label: "LSHF(n_est=5, n_cand=10)" },
+                        { x: 0.2895, y: 2.9827923879, label: "LSHF(n_est=5, n_cand=20)" },
+                        { x: 0.3603, y: 1.36802414688, label: "LSHF(n_est=10, n_cand=20)" },
+                        { x: 0.3758, y: 1.21910929167, label: "LSHF(n_est=10, n_cand=50)" },
+                ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.12592, y: 5.66020494433, label: "LSHF(n_est=5, n_cand=10)" },
+                        { x: 0.13032, y: 5.08530587191, label: "LSHF(n_est=5, n_cand=20)" },
                 ]},
             ]}, options: {
                         responsive: false,
                         title:{
                             display:true,
-                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -76,7 +85,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' Epsilon Recall   '
+                                    labelString: ' 10-NN precision   '
                                 }
                             }],
                             yAxes: [{
@@ -85,6 +94,118 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Queries per second (1/s) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>lshf with 10-NN precision/Index size (kB)</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "rand-unit-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
+                    data: [ 
+                        { x: 0.2895, y: 988324, label: "LSHF(n_est=5, n_cand=20)" },
+                        { x: 0.3758, y: 1046852, label: "LSHF(n_est=5, n_cand=10)" },
+                ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.12592, y: 238356, label: "LSHF(n_est=5, n_cand=10)" },
+                        { x: 0.13032, y: 239612, label: "LSHF(n_est=5, n_cand=20)" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>lshf with 10-NN precision/Index size (kB)/Queries Per Second</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "rand-unit-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(167, 87, 43, 1)",
+                    data: [ 
+                        { x: 0.2852, y: 299176.740437, label: "LSHF(n_est=5, n_cand=10)" },
+                        { x: 0.2895, y: 331341.867443, label: "LSHF(n_est=5, n_cand=20)" },
+                        { x: 0.3603, y: 765278.889551, label: "LSHF(n_est=10, n_cand=20)" },
+                        { x: 0.3758, y: 858702.338793, label: "LSHF(n_est=10, n_cand=50)" },
+                ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.12592, y: 42110.8426893, label: "LSHF(n_est=5, n_cand=10)" },
+                        { x: 0.13032, y: 47118.5030037, label: "LSHF(n_est=5, n_cand=20)" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

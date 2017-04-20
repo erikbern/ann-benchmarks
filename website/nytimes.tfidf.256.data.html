@@ -44,103 +44,106 @@
         </nav>
         <div class="container">
         <h2>Plots for nytimes.tfidf.256.data
-        <h2>nytimes.tfidf.256.data with Epsilon Recall/Queries per second (1/s)</h2>
-        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>nytimes.tfidf.256.data with 10-NN precision/Queries per second (1/s)</h2>
+        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "annoy",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(152, 69, 96, 1)",
                     data: [ 
-                        { x: 0.135746192893, y: 5010.39512295, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.153411167513, y: 4288.90817037, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.160791878173, y: 3678.36331734, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 0.18021319797, y: 3400.73533249, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 0.189766497462, y: 2912.96084041, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.198873096447, y: 2138.31477654, label: "Annoy(n_trees=400, search_k=100)" },
-                        { x: 0.224284263959, y: 2042.56249548, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 0.23421319797, y: 1893.33930932, label: "Annoy(n_trees=400, search_k=200)" },
-                        { x: 0.246172588832, y: 1386.50029068, label: "Annoy(n_trees=400, search_k=400)" },
-                        { x: 0.264487309645, y: 1246.56391897, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 0.274436548223, y: 1138.37381587, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 0.286263959391, y: 879.959425575, label: "Annoy(n_trees=400, search_k=1000)" },
-                        { x: 0.317441624365, y: 574.708536448, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 0.324131979695, y: 542.163480856, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 0.332121827411, y: 455.171065113, label: "Annoy(n_trees=400, search_k=2000)" },
-                        { x: 0.412162436548, y: 202.481064451, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 0.515908629442, y: 103.477492321, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 0.652609137056, y: 57.2093805716, label: "Annoy(n_trees=400, search_k=4000)" },
-                        { x: 0.854507614213, y: 30.8385827495, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.958335025381, y: 19.7769586869, label: "Annoy(n_trees=200, search_k=10000)" },
-                        { x: 0.994162436548, y: 11.793294296, label: "Annoy(n_trees=400, search_k=10000)" },
+                        { x: 0.128558375635, y: 5010.39512295, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.143878172589, y: 4288.90817037, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.150670050761, y: 3678.36331734, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.16723857868, y: 3400.73533249, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.175461928934, y: 2912.96084041, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.184243654822, y: 2138.31477654, label: "Annoy(n_trees=400, search_k=100)" },
+                        { x: 0.204426395939, y: 2042.56249548, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.214020304569, y: 1893.33930932, label: "Annoy(n_trees=400, search_k=200)" },
+                        { x: 0.225177664975, y: 1386.50029068, label: "Annoy(n_trees=400, search_k=400)" },
+                        { x: 0.236710659898, y: 1246.56391897, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.24752284264, y: 1138.37381587, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.258903553299, y: 879.959425575, label: "Annoy(n_trees=400, search_k=1000)" },
+                        { x: 0.274913705584, y: 574.708536448, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.284538071066, y: 542.163480856, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.294192893401, y: 455.171065113, label: "Annoy(n_trees=400, search_k=2000)" },
+                        { x: 0.333756345178, y: 202.481064451, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.339796954315, y: 198.295281147, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.344375634518, y: 182.18637857, label: "Annoy(n_trees=400, search_k=4000)" },
+                        { x: 0.386883248731, y: 103.477492321, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.388436548223, y: 101.556675288, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.389888324873, y: 97.5986736298, label: "Annoy(n_trees=400, search_k=10000)" },
+                        { x: 0.457299492386, y: 57.2093805716, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.584944162437, y: 30.8385827495, label: "Annoy(n_trees=200, search_k=20000)" },
+                        { x: 0.712020304569, y: 19.7769586869, label: "Annoy(n_trees=400, search_k=20000)" },
+                        { x: 0.843116751269, y: 11.793294296, label: "Annoy(n_trees=100, search_k=40000)" },
                 ]},
                 {
                     label: "faiss-lsh",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(177, 108, 41, 1)",
+                    pointStyle: "star",
+                    borderColor: "rgba(186, 124, 42, 1)",
                     data: [ 
-                        { x: 0.0824873096447, y: 2853.42016232, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.121482233503, y: 2817.70725588, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.185654822335, y: 1878.69744281, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.250030456853, y: 1094.05567215, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.276467005076, y: 365.190091236, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.295705583756, y: 232.669684829, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.304659898477, y: 134.552304641, label: "FaissLSH(n_bits=2048)" },
-                        { x: 0.309492385787, y: 71.1436388988, label: "FaissLSH(n_bits=4096)" },
+                        { x: 0.0809644670051, y: 2853.42016232, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.117279187817, y: 2817.70725588, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.175725888325, y: 1878.69744281, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.233228426396, y: 1094.05567215, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.255492385787, y: 365.190091236, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.272304568528, y: 232.669684829, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.281482233503, y: 134.552304641, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.286233502538, y: 71.1436388988, label: "FaissLSH(n_bits=4096)" },
                 ]},
                 {
                     label: "hnsw(nmslib)",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(135, 79, 111, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
-                        { x: 0.276081218274, y: 11650.1019394, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
-                        { x: 0.302223350254, y: 11331.4111337, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 0.323197969543, y: 10430.7444416, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
-                        { x: 0.326091370558, y: 10193.3153353, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
-                        { x: 0.355705583756, y: 9666.60818737, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
-                        { x: 0.393005076142, y: 8448.17405974, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
-                        { x: 0.417360406091, y: 8397.02719193, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
-                        { x: 0.429258883249, y: 7544.00976995, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
-                        { x: 0.464324873096, y: 7426.75100475, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
-                        { x: 0.49938071066, y: 6731.43744435, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
-                        { x: 0.547969543147, y: 5953.99733385, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
-                        { x: 0.564182741117, y: 4989.14042231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
-                        { x: 0.604294416244, y: 4098.20260512, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
-                        { x: 0.612304568528, y: 3764.56358779, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
-                        { x: 0.632467005076, y: 3534.04198553, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
-                        { x: 0.651553299492, y: 3144.87321707, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 0.654243654822, y: 3103.17574202, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
-                        { x: 0.659472081218, y: 2944.28201781, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
-                        { x: 0.66483248731, y: 2788.1392359, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
-                        { x: 0.682558375635, y: 2526.15321231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
-                        { x: 0.688507614213, y: 2441.95174352, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
-                        { x: 0.698182741117, y: 2296.59354615, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
-                        { x: 0.710710659898, y: 2083.92909962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
-                        { x: 0.729644670051, y: 1814.40753233, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
-                        { x: 0.749563451777, y: 1617.24137, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
-                        { x: 0.766802030457, y: 1406.65407573, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                        { x: 0.784, y: 1253.4798734, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
-                        { x: 0.797583756345, y: 1116.36264482, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=15'])" },
-                        { x: 0.805096446701, y: 929.427541001, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=70'])" },
-                        { x: 0.820426395939, y: 905.193766824, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=40'])" },
-                        { x: 0.83778680203, y: 754.613193629, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
-                        { x: 0.852020304569, y: 640.327936032, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=50'])" },
-                        { x: 0.87378680203, y: 478.782688716, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=90'])" },
-                        { x: 0.906913705584, y: 294.776128966, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=30'])" },
-                        { x: 0.923055837563, y: 212.280879511, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=70'])" },
+                        { x: 0.0429949238579, y: 11650.1019394, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.049461928934, y: 11331.4111337, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.0501624365482, y: 10430.7444416, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
+                        { x: 0.0560913705584, y: 10193.3153353, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
+                        { x: 0.0612588832487, y: 9666.60818737, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.0621116751269, y: 9619.59595452, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.0673401015228, y: 9439.49715597, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.0769340101523, y: 8448.17405974, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.0879492385787, y: 8397.02719193, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.0905177664975, y: 8157.28559971, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.109888324873, y: 7734.19173334, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
+                        { x: 0.116903553299, y: 6837.33305265, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.123441624365, y: 6731.43744435, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.150243654822, y: 6484.87513672, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
+                        { x: 0.180781725888, y: 5586.77658503, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.206446700508, y: 4989.14042231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
+                        { x: 0.242538071066, y: 4098.20260512, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
+                        { x: 0.27076142132, y: 3534.04198553, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
+                        { x: 0.293370558376, y: 3103.17574202, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
+                        { x: 0.329228426396, y: 2526.15321231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
+                        { x: 0.346527918782, y: 2296.59354615, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.349248730964, y: 2083.92909962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
+                        { x: 0.374629441624, y: 1814.40753233, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
+                        { x: 0.406873096447, y: 1617.24137, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
+                        { x: 0.422040609137, y: 1406.65407573, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
+                        { x: 0.445695431472, y: 1253.4798734, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
+                        { x: 0.467086294416, y: 1116.36264482, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
+                        { x: 0.491319796954, y: 929.427541001, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=15'])" },
+                        { x: 0.502243654822, y: 905.193766824, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=70'])" },
+                        { x: 0.532751269036, y: 754.613193629, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=40'])" },
+                        { x: 0.559898477157, y: 640.327936032, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
+                        { x: 0.603228426396, y: 478.782688716, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=50'])" },
+                        { x: 0.68007106599, y: 294.776128966, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=90'])" },
+                        { x: 0.729868020305, y: 212.280879511, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=30'])" },
                 ]},
             ]}, options: {
                         responsive: false,
                         title:{
                             display:true,
-                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -150,7 +153,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' Epsilon Recall   '
+                                    labelString: ' 10-NN precision   '
                                 }
                             }],
                             yAxes: [{
@@ -159,6 +162,200 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Queries per second (1/s) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>nytimes.tfidf.256.data with 10-NN precision/Index size (kB)</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "annoy",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(152, 69, 96, 1)",
+                    data: [ 
+                        { x: 0.16723857868, y: 855664, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.274913705584, y: 855668, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.843116751269, y: 855668, label: "Annoy(n_trees=100, search_k=4000)" },
+                ]},
+                {
+                    label: "faiss-lsh",
+                    fill: false,
+                    pointStyle: "star",
+                    borderColor: "rgba(186, 124, 42, 1)",
+                    data: [ 
+                        { x: 0.117279187817, y: 226352, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.175725888325, y: 228312, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.233228426396, y: 234380, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.255492385787, y: 243408, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.272304568528, y: 264884, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.281482233503, y: 314480, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.286233502538, y: 439112, label: "FaissLSH(n_bits=2048)" },
+                ]},
+                {
+                    label: "hnsw(nmslib)",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.0621116751269, y: 610640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.0879492385787, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
+                        { x: 0.145583756345, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.206203045685, y: 619072, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.274223350254, y: 627780, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
+                        { x: 0.602172588832, y: 645640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.603228426396, y: 672744, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
+                        { x: 0.68007106599, y: 672748, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.729868020305, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        <h2>nytimes.tfidf.256.data with 10-NN precision/Index size (kB)/Queries Per Second</h2>
+        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "annoy",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(152, 69, 96, 1)",
+                    data: [ 
+                        { x: 0.128558375635, y: 170.779345541, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.143878172589, y: 199.506253342, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.16723857868, y: 251.611465269, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.175461928934, y: 378.222729505, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.204426395939, y: 418.918883458, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.214020304569, y: 581.913656244, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.236710659898, y: 686.42769695, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.24752284264, y: 967.826196142, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.274913705584, y: 1488.87296035, label: "Annoy(n_trees=400, search_k=100)" },
+                        { x: 0.284538071066, y: 2032.09555586, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.294192893401, y: 4035.74862463, label: "Annoy(n_trees=400, search_k=200)" },
+                        { x: 0.333756345178, y: 4225.95565823, label: "Annoy(n_trees=400, search_k=400)" },
+                        { x: 0.339796954315, y: 5556.05758052, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.386883248731, y: 8269.160576, label: "Annoy(n_trees=400, search_k=1000)" },
+                        { x: 0.388436548223, y: 10848.3661648, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.457299492386, y: 14956.847836, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.584944162437, y: 27746.8003945, label: "Annoy(n_trees=400, search_k=2000)" },
+                        { x: 0.712020304569, y: 43266.3087155, label: "Annoy(n_trees=400, search_k=4000)" },
+                        { x: 0.843116751269, y: 72555.4691103, label: "Annoy(n_trees=100, search_k=10000)" },
+                ]},
+                {
+                    label: "faiss-lsh",
+                    fill: false,
+                    pointStyle: "star",
+                    borderColor: "rgba(186, 124, 42, 1)",
+                    data: [ 
+                        { x: 0.0809644670051, y: 79.9629872294, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.117279187817, y: 80.3319789619, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.175725888325, y: 121.52675295, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.233228426396, y: 214.230414381, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.255492385787, y: 666.524108516, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.272304568528, y: 1138.45514595, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.281482233503, y: 2337.23235615, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.286233502538, y: 6172.18920478, label: "FaissLSH(n_bits=4096)" },
+                ]},
+                {
+                    label: "hnsw(nmslib)",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.0429949238579, y: 52.4149920042, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.049461928934, y: 53.8894929142, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.0501624365482, y: 59.3499345582, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
+                        { x: 0.0621116751269, y: 63.4787576201, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.0673401015228, y: 66.5060849776, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
+                        { x: 0.0879492385787, y: 72.7214508233, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.0905177664975, y: 76.9599142173, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.092345177665, y: 82.0613995578, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.108406091371, y: 82.2222260595, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.109888324873, y: 83.4802164545, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.123441624365, y: 90.7152454507, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
+                        { x: 0.150243654822, y: 99.5627496888, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.180781725888, y: 115.567893252, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.206446700508, y: 129.409867302, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
+                        { x: 0.20930964467, y: 154.478231528, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
+                        { x: 0.242538071066, y: 157.545163627, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.27076142132, y: 182.691660893, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
+                        { x: 0.293370558376, y: 208.061693464, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
+                        { x: 0.320304568528, y: 275.497663615, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.346527918782, y: 281.132898367, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
+                        { x: 0.349248730964, y: 322.828641398, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
+                        { x: 0.374629441624, y: 370.783293176, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
+                        { x: 0.406873096447, y: 399.225503365, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
+                        { x: 0.422040609137, y: 478.263996535, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
+                        { x: 0.445695431472, y: 536.710651905, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
+                        { x: 0.491319796954, y: 694.668461518, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
+                        { x: 0.502243654822, y: 743.21324854, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
+                        { x: 0.532751269036, y: 891.519000303, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=70'])" },
+                        { x: 0.559898477157, y: 1050.63040693, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=15'])" },
+                        { x: 0.603228426396, y: 1405.11345931, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=40'])" },
+                        { x: 0.68007106599, y: 2282.23364748, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
+                        { x: 0.729868020305, y: 3169.15966031, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=90'])" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' 10-NN precision   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }
