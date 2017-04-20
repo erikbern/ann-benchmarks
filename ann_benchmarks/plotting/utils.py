@@ -4,6 +4,9 @@ from ann_benchmarks.plotting.metrics import all_metrics as metrics
 import matplotlib.pyplot as plt
 import numpy
 
+results_cache = {}
+results_call_set = {}
+
 def create_pointset(algo, all_data, xm, ym):
     data = all_data[algo]
     rev = ym["worst"] < 0
@@ -31,6 +34,10 @@ def enumerate_query_caches(ds):
             yield "queries/" + f
 
 def load_results(datasets, xm, ym, limit = -1):
+    ds_id = "".join(datasets) + xm["description"] + ym["description"] + str(limit)
+    if ds_id in results_call_set:
+        return results_call_set[ds_id]
+
     runs = {}
     all_algos = set()
     for ds in datasets:
@@ -46,26 +53,35 @@ first (%s)""" % (ds, queries_fn[0])
 
         queries = pickle.load(open(queries_fn))
         runs[ds] = {}
-        with open(get_fn("results", ds, limit)) as f:
-            for line in f:
-                run = json.loads(line)
-                algo = run["library"]
-                algo_name = run["name"]
-                build_time = run["build_time"]
-                search_time = run["best_search_time"]
+        if not ds in results_cache:
+            with open(get_fn("results", ds, limit)) as f:
+                results_cache[ds] = []
+                for line in f:
+                    try:
+                        l = json.loads(line)
+                    except:
+                        print "Skipping line"
+                    results_cache[ds].append(l)
 
-                print "--"
-                print algo_name
-                xv = xm["function"](queries, run)
-                yv = ym["function"](queries, run)
-                print xv, yv
-                if not xv or not yv:
-                    continue
+        for run in results_cache[ds]:
+            algo = run["library"]
+            algo_name = run["name"]
+            build_time = run["build_time"]
+            search_time = run["best_search_time"]
 
-                all_algos.add(algo)
-                if not algo in runs[ds]:
-                    runs[ds][algo] = []
-                runs[ds][algo].append((algo, algo_name, xv, yv))
+            print "--"
+            print algo_name
+            xv = xm["function"](queries, run)
+            yv = ym["function"](queries, run)
+            print xv, yv
+            if not xv or not yv:
+                continue
+
+            all_algos.add(algo)
+            if not algo in runs[ds]:
+                runs[ds][algo] = []
+            runs[ds][algo].append((algo, algo_name, xv, yv))
+    results_call_set[ds_id] = (runs, all_algos)
     return (runs, all_algos)
 
 def create_linestyles(algos):

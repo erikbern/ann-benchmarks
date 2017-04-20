@@ -2,12 +2,12 @@
     :target: https://travis-ci.org/erikbern/ann-benchmarks
 
 Benchmarking nearest neighbors
-------------------------------
+==============================
 
-This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search.
+This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics.
 
 Evaluated
----------
+=========
 
 * `Annoy <https://github.com/spotify/annoy>`__
 * `FLANN <http://www.cs.ubc.ca/research/flann/>`__
@@ -18,27 +18,71 @@ Evaluated
 * `NMSLIB (Non-Metric Space Library) <https://github.com/searchivarius/nmslib>`__
 * `RPForest <https://github.com/lyst/rpforest>`__
 * `FALCONN <http://falconn-lib.org/>`__
+* `FAISS <https://github.com/facebookresearch/faiss.git>`__
+* `DolphinnPy <https://github.com/ipsarros/DolphinnPy>`__
+
+Hamming distance
+----------------
+* all of the above algorithms work in Hamming space
+* `Multi-Index Hashing (MIH) <https://github.com/norouzi/mih>`__
+
+Set similarity
+--------------
+* `Datasketch <https://github.com/ekzhu/datasketch>`__
 
 Data sets
+=========
+
+Euclidean
 ---------
 
-* `GloVe <http://nlp.stanford.edu/projects/glove/>`__
 * `SIFT <http://corpus-texmex.irisa.fr/>`__
+* `GIST <http://corpus-texmex.irisa.fr/>`__
+* `NYTimes TFIDF  <https://archive.ics.uci.edu/ml/datasets/Bag+of+Words>`__
+* `Random datasets`
+
+Angular/Cosine
+--------------
+* `GloVe <http://nlp.stanford.edu/projects/glove/>`__
+* `Random datasets`
+
+Hamming space
+-------------
+* SIFT
+* NYTimes
+* Webspam
+
+Set Similarity
+--------------
+* Flickr 
+* AOL
+* Kosarek
 
 Motivation
-----------
+==========
 
 Doing fast searching of nearest neighbors in high dimensional spaces is an increasingly important problem, but with little attempt at objectively comparing methods.
 
 Install
--------
+=======
 
-Clone the repo and run ``bash install.sh``. This will install all libraries. It could take a while. It has been tested in Ubuntu 12.04 and 14.04.
+Clone the repo and run ``bash install.sh``. This will install all libraries. It could take a while. It has been tested in Ubuntu 16.04. We advice to run it only in a VM or a docker container (see our Dockerfile)
 
-To download and preprocess the data sets, run ``bash install/glove.sh`` and ``bash install/sift.sh``.
+Downloading and preprocessing the data sets is done by running the `install/data-*.sh` scripts, e.g., run ``bash install/data-glove.sh`` or ``bash install/data-sift.sh``.
+
+Experiment Setup
+================
+
+Running a set of algorithms with specific parameters works as follows: `TBD`.
+
+Including Your Algorithm
+========================
+`TBD`
+
+`Two options: Python (just look at the examples) or Subprocess (need small tutorial).`
 
 Principles
-----------
+==========
 
 * Everyone is welcome to submit pull requests with tweaks and changes to how each library is being used.
 * In particular: if you are the author of any of these libraries, and you think the benchmark can be improved, consider making the improvement and submitting a pull request.
@@ -53,7 +97,7 @@ Principles
 * Do proper train/test set of index data and query points.
 
 Results
--------
+=======
 
 1.19M vectors from GloVe (100 dimensions, trained from tweets), cosine similarity, run on an c4.2xlarge instance on EC2.
 
@@ -75,12 +119,12 @@ content of this directory should be deleted.
 
 
 Testing
--------
+=======
 
 The project is fully tested using Travis, with unit tests run for all different libraries and algorithms.
 
 References
-----------
+==========
 
 * `sim-shootout <https://github.com/piskvorky/sim-shootout>`__ by Radim Řehůřek
 * This `blog post <http://maheshakya.github.io/gsoc/2014/08/17/performance-comparison-among-lsh-forest-annoy-and-flann.html>`__

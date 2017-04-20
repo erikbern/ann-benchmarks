@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>nytimes-hamming-data</title>
+        <script src="js/Chart.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+      </head>
+         <body>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="index.html">ANN Benchmarks</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#results">Results</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#contact">Contact</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>
+        <div class="container">
+        <h2>Plots for nytimes-hamming-data
+        <h2>nytimes-hamming-data with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "annoy",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.05022, y: 4406.33647032, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.07098, y: 3803.06967265, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.09732, y: 3146.16036109, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.10846, y: 2309.33407685, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.14292, y: 2061.73854783, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.15831, y: 1621.01505676, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.1805, y: 1349.01495114, label: "Annoy(n_trees=400, search_k=100)" },
+                        { x: 0.1964, y: 1099.27776867, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.21103, y: 816.224638008, label: "Annoy(n_trees=400, search_k=200)" },
+                        { x: 0.22303, y: 772.292762736, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.23309, y: 661.020254468, label: "Annoy(n_trees=400, search_k=400)" },
+                        { x: 0.24448, y: 533.633829424, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.27229, y: 292.102245452, label: "Annoy(n_trees=400, search_k=1000)" },
+                        { x: 0.27867, y: 255.685530518, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.29511, y: 138.176424642, label: "Annoy(n_trees=400, search_k=2000)" },
+                ]},
+                {
+                    label: "bitsampling",
+                    fill: false,
+                    pointStyle: "star",
+                    borderColor: "rgba(255, 161, 13, 1)",
+                    data: [ 
+                        { x: 0.01726, y: 39940.0846927, label: "k: 19, m: 0, l: 1" },
+                        { x: 0.02843, y: 37345.2098045, label: "k: 25, m: 0, l: 5" },
+                        { x: 0.04869, y: 28199.9401618, label: "k: 31, m: 0, l: 1" },
+                        { x: 0.05459, y: 26118.8702321, label: "k: 25, m: 0, l: 1" },
+                        { x: 0.05675, y: 25029.8169805, label: "k: 31, m: 0, l: 5" },
+                        { x: 0.06523, y: 21613.1718458, label: "k: 25, m: 0, l: 20" },
+                        { x: 0.07224, y: 21028.9711492, label: "k: 17, m: 0, l: 1" },
+                        { x: 0.08327, y: 18167.8170529, label: "k: 31, m: 0, l: 10" },
+                        { x: 0.11069, y: 15426.8087027, label: "k: 17, m: 0, l: 5" },
+                ]},
+                {
+                    label: "falconn",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(225, 198, 47, 1)",
+                    data: [ 
+                        { x: 7e-05, y: 93.0844037604, label: "FALCONN(K=16, L=1, T=1)" },
+                ]},
+                {
+                    label: "hnsw(nmslib)",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(135, 79, 111, 1)",
+                    data: [ 
+                        { x: 0.03024, y: 9728.47146035, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
+                        { x: 0.03976, y: 9345.25773685, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
+                        { x: 0.09578, y: 8584.48710998, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
+                        { x: 0.13008, y: 8539.13067201, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.19311, y: 8465.3634504, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.26083, y: 7606.44074116, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
+                        { x: 0.28492, y: 7035.86217956, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.31528, y: 6910.94328033, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.32716, y: 6906.92481829, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.35207, y: 6333.44930225, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
+                        { x: 0.37601, y: 6294.81239397, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.42231, y: 6138.47776785, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.44916, y: 5426.4788056, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
+                        { x: 0.50237, y: 5353.35723322, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.56088, y: 4710.16557267, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.64569, y: 3879.82192964, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.70721, y: 3293.54924175, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
+                        { x: 0.73369, y: 2971.48586337, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
+                        { x: 0.75213, y: 2869.63019004, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.79222, y: 2472.8639945, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
+                        { x: 0.82068, y: 2255.40848784, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
+                        { x: 0.83507, y: 2084.21900423, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
+                        { x: 0.8442, y: 2079.58233669, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.86803, y: 1805.21435862, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
+                        { x: 0.8913, y: 1592.49429901, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=15'])" },
+                        { x: 0.90749, y: 1455.44398269, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
+                        { x: 0.91085, y: 1412.48347549, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
+                        { x: 0.9257, y: 1292.23948127, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=40'])" },
+                        { x: 0.9373, y: 1127.22439016, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
+                        { x: 0.95351, y: 921.222130246, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
+                        { x: 0.95988, y: 852.059404673, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=70'])" },
+                        { x: 0.96535, y: 771.831694, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=50'])" },
+                        { x: 0.97299, y: 656.636429399, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=90'])" },
+                        { x: 0.98334, y: 486.770961721, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=30'])" },
+                        { x: 0.98925, y: 349.642705476, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=70'])" },
+                        { x: 0.99315, y: 319.554955751, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=80'])" },
+                        { x: 0.99648, y: 240.460129131, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=120'])" },
+                ]},
+                {
+                    label: "mih",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 1.0, y: 474.905766797, label: "chunks: 14, r: 0" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Epsilon Recall   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Queries per second (1/s) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        </div>
+    </div>
+    </body>
+</html>

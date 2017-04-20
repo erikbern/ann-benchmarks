@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>rand7-data</title>
+        <script src="js/Chart.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+      </head>
+         <body>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="index.html">ANN Benchmarks</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#results">Results</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#contact">Contact</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>
+        <div class="container">
+        <h2>Plots for rand7-data
+        <h2>rand7-data with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "annoy",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.2223, y: 4107.02157744, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.3171, y: 3649.71537068, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.442, y: 3118.42076893, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.5321, y: 2260.31388817, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.5367, y: 1716.3806717, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.5661, y: 1605.31852393, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.5724, y: 1269.89640225, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.6161, y: 1032.97167168, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.6263, y: 857.624947757, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.7274, y: 485.77761522, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.7421, y: 427.707916857, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.8502, y: 259.376806122, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.8665, y: 237.868696695, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.9642, y: 133.310893975, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.9666, y: 129.015576379, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.9991, y: 58.7964949455, label: "Annoy(n_trees=200, search_k=20000)" },
+                        { x: 1.0, y: 31.5237693827, label: "Annoy(n_trees=100, search_k=40000)" },
+                ]},
+                {
+                    label: "falconn",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(225, 198, 47, 1)",
+                    data: [ 
+                        { x: 0.2881, y: 21157.4943756, label: "FALCONN(K=16, L=1, T=1)" },
+                        { x: 0.3486, y: 15098.2865371, label: "FALCONN(K=16, L=2, T=2)" },
+                        { x: 0.37, y: 12497.7026632, label: "FALCONN(K=16, L=3, T=3)" },
+                        { x: 0.3809, y: 10977.267136, label: "FALCONN(K=16, L=4, T=4)" },
+                        { x: 0.3861, y: 9894.60672143, label: "FALCONN(K=16, L=5, T=5)" },
+                        { x: 0.3893, y: 9138.57423301, label: "FALCONN(K=16, L=6, T=6)" },
+                        { x: 0.3908, y: 8510.02909513, label: "FALCONN(K=16, L=7, T=7)" },
+                        { x: 0.3922, y: 8046.99688811, label: "FALCONN(K=16, L=8, T=8)" },
+                        { x: 0.3942, y: 7586.52973075, label: "FALCONN(K=16, L=9, T=9)" },
+                        { x: 0.3955, y: 7211.49078255, label: "FALCONN(K=16, L=10, T=10)" },
+                        { x: 0.3968, y: 6996.94385501, label: "FALCONN(K=16, L=11, T=11)" },
+                        { x: 0.3984, y: 6540.36597822, label: "FALCONN(K=16, L=13, T=13)" },
+                        { x: 0.4005, y: 5942.25352911, label: "FALCONN(K=16, L=15, T=15)" },
+                        { x: 0.4026, y: 5594.33724446, label: "FALCONN(K=16, L=17, T=17)" },
+                        { x: 0.4042, y: 5353.43512717, label: "FALCONN(K=16, L=19, T=19)" },
+                        { x: 0.4048, y: 4897.98244375, label: "FALCONN(K=16, L=21, T=21)" },
+                        { x: 0.4066, y: 4746.80343954, label: "FALCONN(K=16, L=24, T=24)" },
+                        { x: 0.4089, y: 4306.16967584, label: "FALCONN(K=16, L=27, T=27)" },
+                        { x: 0.4114, y: 4146.88847715, label: "FALCONN(K=16, L=30, T=30)" },
+                        { x: 0.4132, y: 3779.64994363, label: "FALCONN(K=16, L=33, T=33)" },
+                        { x: 0.4156, y: 3523.34318689, label: "FALCONN(K=16, L=37, T=37)" },
+                        { x: 0.4182, y: 3355.24725356, label: "FALCONN(K=16, L=41, T=41)" },
+                        { x: 0.4215, y: 3098.32441109, label: "FALCONN(K=16, L=46, T=46)" },
+                        { x: 0.4236, y: 2900.60310745, label: "FALCONN(K=16, L=51, T=51)" },
+                        { x: 0.4274, y: 2629.80442169, label: "FALCONN(K=16, L=57, T=57)" },
+                        { x: 0.4317, y: 2418.71955555, label: "FALCONN(K=16, L=63, T=63)" },
+                        { x: 0.4343, y: 2278.97921737, label: "FALCONN(K=16, L=70, T=70)" },
+                        { x: 0.4371, y: 2063.58977589, label: "FALCONN(K=16, L=77, T=77)" },
+                        { x: 0.4391, y: 1956.17807113, label: "FALCONN(K=16, L=85, T=85)" },
+                        { x: 0.4428, y: 1737.08041718, label: "FALCONN(K=16, L=94, T=94)" },
+                        { x: 0.4458, y: 1660.48378572, label: "FALCONN(K=16, L=104, T=104)" },
+                        { x: 0.4492, y: 1519.95677461, label: "FALCONN(K=16, L=115, T=115)" },
+                        { x: 0.4542, y: 1354.83162414, label: "FALCONN(K=16, L=127, T=127)" },
+                        { x: 0.4589, y: 1261.65768119, label: "FALCONN(K=16, L=140, T=140)" },
+                        { x: 0.4624, y: 1191.69194638, label: "FALCONN(K=16, L=154, T=154)" },
+                        { x: 0.4675, y: 1086.42205551, label: "FALCONN(K=16, L=170, T=170)" },
+                        { x: 0.4716, y: 996.641272453, label: "FALCONN(K=16, L=188, T=188)" },
+                        { x: 0.477, y: 894.897872969, label: "FALCONN(K=16, L=207, T=207)" },
+                        { x: 0.4826, y: 791.618586023, label: "FALCONN(K=16, L=228, T=228)" },
+                        { x: 0.4863, y: 762.289297445, label: "FALCONN(K=16, L=251, T=251)" },
+                        { x: 0.4904, y: 694.853519789, label: "FALCONN(K=16, L=277, T=277)" },
+                        { x: 0.4938, y: 634.481974091, label: "FALCONN(K=16, L=305, T=305)" },
+                        { x: 0.4985, y: 578.646005783, label: "FALCONN(K=16, L=336, T=336)" },
+                        { x: 0.502, y: 529.514239353, label: "FALCONN(K=16, L=370, T=370)" },
+                        { x: 0.5059, y: 481.2869373, label: "FALCONN(K=16, L=408, T=408)" },
+                        { x: 0.5108, y: 439.861989408, label: "FALCONN(K=16, L=449, T=449)" },
+                        { x: 0.5156, y: 400.563766486, label: "FALCONN(K=16, L=494, T=494)" },
+                        { x: 0.5203, y: 364.021867154, label: "FALCONN(K=16, L=544, T=544)" },
+                        { x: 0.5253, y: 330.593640561, label: "FALCONN(K=16, L=599, T=599)" },
+                        { x: 0.53, y: 300.781013015, label: "FALCONN(K=16, L=659, T=659)" },
+                        { x: 0.5325, y: 273.845503961, label: "FALCONN(K=16, L=725, T=725)" },
+                        { x: 0.5367, y: 247.339873782, label: "FALCONN(K=16, L=798, T=798)" },
+                        { x: 0.5414, y: 224.676533969, label: "FALCONN(K=16, L=878, T=878)" },
+                        { x: 0.5457, y: 203.113001723, label: "FALCONN(K=16, L=966, T=966)" },
+                        { x: 0.5473, y: 183.326248204, label: "FALCONN(K=16, L=1063, T=1063)" },
+                        { x: 0.5485, y: 164.65625767, label: "FALCONN(K=16, L=1170, T=1170)" },
+                        { x: 0.552, y: 149.369752695, label: "FALCONN(K=16, L=1287, T=1287)" },
+                        { x: 0.5542, y: 133.852065573, label: "FALCONN(K=16, L=1416, T=1416)" },
+                ]},
+                {
+                    label: "hnsw(nmslib)",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(135, 79, 111, 1)",
+                    data: [ 
+                        { x: 0.0598, y: 12279.4140035, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.1049, y: 10962.3480829, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.1304, y: 10830.6904129, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
+                        { x: 0.2006, y: 9948.7040819, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
+                        { x: 0.2051, y: 9765.16412622, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.2476, y: 9124.12169835, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
+                        { x: 0.3001, y: 9027.77442962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.326, y: 8922.83603935, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
+                        { x: 0.3683, y: 7858.18079625, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.4479, y: 7847.00753962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.5437, y: 6533.41786388, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.6043, y: 5700.53304411, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
+                        { x: 0.6461, y: 5160.30861183, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
+                        { x: 0.7078, y: 4341.97904945, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.7627, y: 3817.92876447, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.8021, y: 3357.9307551, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
+                        { x: 0.8525, y: 2768.95065433, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.8763, y: 2514.30092334, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
+                        { x: 0.9323, y: 1941.97912871, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.965, y: 1307.98263759, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
+                        { x: 0.9833, y: 683.355026735, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Epsilon Recall   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Queries per second (1/s) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        </div>
+    </div>
+    </body>
+</html>

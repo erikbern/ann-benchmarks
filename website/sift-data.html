@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>sift-data</title>
+        <script src="js/Chart.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+      </head>
+         <body>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="index.html">ANN Benchmarks</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#results">Results</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#contact">Contact</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>
+        <div class="container">
+        <h2>Plots for sift-data
+        <h2>sift-data with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+        <script>
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+            var chart = new Chart(ctx, {
+                type: "line",
+                data: { datasets: [
+                {
+                    label: "annoy",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.36823, y: 4484.03978212, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.48816, y: 3908.45194122, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.63281, y: 3189.64761359, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.65571, y: 2303.76302906, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.80903, y: 2238.74082785, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.83067, y: 1656.60570847, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.9081, y: 1656.53027086, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.92005, y: 1190.23290863, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.96347, y: 1050.71533523, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.96829, y: 812.673989774, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.99152, y: 451.474021502, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.99266, y: 404.416455275, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.99774, y: 256.639228105, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.99926, y: 142.109963292, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.99936, y: 141.973936808, label: "Annoy(n_trees=200, search_k=20000)" },
+                        { x: 0.99983, y: 70.9426423017, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.99993, y: 67.758643699, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.99995, y: 40.01532745, label: "Annoy(n_trees=200, search_k=40000)" },
+                        { x: 0.99999, y: 37.8408142387, label: "Annoy(n_trees=200, search_k=100000)" },
+                        { x: 1.0, y: 22.2422441647, label: "Annoy(n_trees=100, search_k=100000)" },
+                ]},
+                {
+                    label: "faiss-lsh",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(177, 108, 41, 1)",
+                    data: [ 
+                        { x: 0.01254, y: 902.992190286, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.05933, y: 872.021238852, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.14016, y: 553.494785148, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.2717, y: 366.491411887, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.42645, y: 152.171946161, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.57703, y: 87.4153138512, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.70789, y: 46.8766858884, label: "FaissLSH(n_bits=2048)" },
+                ]},
+                {
+                    label: "hnsw(nmslib)",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(135, 79, 111, 1)",
+                    data: [ 
+                        { x: 0.11682, y: 11882.0156602, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.24851, y: 10494.6463418, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.27381, y: 10301.8766527, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
+                        { x: 0.39009, y: 9505.00290863, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
+                        { x: 0.48043, y: 9382.49787656, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
+                        { x: 0.58759, y: 8937.68197967, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.66231, y: 8809.77330866, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
+                        { x: 0.76407, y: 8041.97013604, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.81864, y: 7653.16766904, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
+                        { x: 0.84972, y: 7448.77914763, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.89594, y: 6940.39125812, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.94514, y: 6042.45199163, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.94891, y: 5688.89660495, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.96809, y: 5437.28326659, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.97269, y: 4902.64043106, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.98025, y: 4876.40023578, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
+                        { x: 0.98368, y: 4307.95783602, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
+                        { x: 0.99157, y: 4085.70553822, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.99423, y: 3798.2460692, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
+                        { x: 0.99553, y: 2971.3380877, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.99818, y: 2906.11443316, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
+                ]},
+            ]}, options: {
+                        responsive: false,
+                        title:{
+                            display:true,
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                type: 'linear',
+                                max: '1',
+                                position: 'bottom',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Epsilon Recall   '
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                type: 'logarithmic',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ' Queries per second (1/s) '
+                                }
+                            }]
+                        }
+                    }
+                }); 
+        </script>
+        
+        </div>
+    </div>
+    </body>
+</html>
