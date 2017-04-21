@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>ball</title>
+        <title>bruteforce</title>
         <script src="js/Chart.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -43,8 +43,8 @@
           </div>
         </nav>
         <div class="container">
-        <h2>Plots for ball
-        <h2>ball with 10-NN precision/Queries per second (1/s)</h2>
+        <h2>Plots for bruteforce
+        <h2>bruteforce with 10-NN precision/Queries per second (1/s)</h2>
         <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
             var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
@@ -57,7 +57,7 @@
                     pointStyle: "star",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
-                        { x: 1.0, y: 8.75848961601, label: "BallTree(leaf_size=100)" },
+                        { x: 1.0, y: 2.40963422095, label: "BruteForce()" },
                 ]},
             ]}, options: {
                         responsive: false,
@@ -89,7 +89,7 @@
                 }); 
         </script>
         
-        <h2>ball with 10-NN precision/Index size (kB)</h2>
+        <h2>bruteforce with 10-NN precision/Index size (kB)</h2>
         <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
         <script>
             var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
@@ -102,7 +102,7 @@
                     pointStyle: "star",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
-                        { x: 1.0, y: 652, label: "BallTree(leaf_size=100)" },
+                        { x: 1.0, y: 512, label: "BruteForce()" },
                 ]},
             ]}, options: {
                         responsive: false,
@@ -134,7 +134,7 @@
                 }); 
         </script>
         
-        <h2>ball with 10-NN precision/Index size (kB)/Queries Per Second</h2>
+        <h2>bruteforce with 10-NN precision/Index size (kB)/Queries Per Second</h2>
         <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
         <script>
             var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
@@ -147,7 +147,7 @@
                     pointStyle: "star",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
-                        { x: 1.0, y: 74.4420589149, label: "BallTree(leaf_size=100)" },
+                        { x: 1.0, y: 212.480382104, label: "BruteForce()" },
                 ]},
             ]}, options: {
                         responsive: false,

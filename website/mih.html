@@ -44,33 +44,33 @@
         </nav>
         <div class="container">
         <h2>Plots for mih
-        <h2>mih with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>mih with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "nytimes-hamming-data",
                     fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 78, 161, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(98, 146, 99, 1)",
                     data: [ 
                         { x: 1.0, y: 474.905766797, label: "chunks: 14, r: 0" },
                 ]},
                 {
                     label: "sift-hamming-data",
                     fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(244, 129, 189, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(236, 123, 171, 1)",
                     data: [ 
                         { x: 1.0, y: 407.286971944, label: "chunks: 14, r: 0" },
                 ]},
                 {
                     label: "webspam-data",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "circle",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 1.0, y: 1722.58834268, label: "chunks: 14, r: 0" },
@@ -79,7 +79,7 @@
                         responsive: false,
                         title:{
                             display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -89,7 +89,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' 10-NN precision   '
+                                    labelString: ' Epsilon Recall   '
                                 }
                             }],
                             yAxes: [{
@@ -98,128 +98,6 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Queries per second (1/s) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>mih with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "nytimes-hamming-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 78, 161, 1)",
-                    data: [ 
-                        { x: 1.0, y: 18528, label: "chunks: 14, r: 0" },
-                ]},
-                {
-                    label: "sift-hamming-data",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(244, 129, 189, 1)",
-                    data: [ 
-                        { x: 1.0, y: 122080, label: "chunks: 14, r: 0" },
-                ]},
-                {
-                    label: "webspam-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 1.0, y: 19688, label: "chunks: 14, r: 0" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>mih with 10-NN precision/Index size (kB)/Queries Per Second</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "nytimes-hamming-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 78, 161, 1)",
-                    data: [ 
-                        { x: 1.0, y: 39.0140556198, label: "chunks: 14, r: 0" },
-                ]},
-                {
-                    label: "sift-hamming-data",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(244, 129, 189, 1)",
-                    data: [ 
-                        { x: 1.0, y: 299.739516384, label: "chunks: 14, r: 0" },
-                ]},
-                {
-                    label: "webspam-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 1.0, y: 11.4293122229, label: "chunks: 14, r: 0" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

@@ -44,18 +44,18 @@
         </nav>
         <div class="container">
         <h2>Plots for webspam-data
-        <h2>webspam-data with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>webspam-data with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "annoy",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(152, 69, 96, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.83859, y: 3443.0667703, label: "Annoy(n_trees=100, search_k=100)" },
                         { x: 0.87288, y: 3171.84681045, label: "Annoy(n_trees=100, search_k=200)" },
@@ -79,8 +79,8 @@
                 {
                     label: "bitsampling",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(255, 185, 23, 1)",
+                    pointStyle: "star",
+                    borderColor: "rgba(255, 161, 13, 1)",
                     data: [ 
                         { x: 0.73538, y: 13027.2088666, label: "k: 31, m: 0, l: 20" },
                         { x: 0.75351, y: 10750.2015196, label: "k: 25, m: 0, l: 50" },
@@ -89,7 +89,7 @@
                 {
                     label: "falconn",
                     fill: false,
-                    pointStyle: "circle",
+                    pointStyle: "rect",
                     borderColor: "rgba(225, 198, 47, 1)",
                     data: [ 
                         { x: 0.26911, y: 32216.5186407, label: "FALCONN(K=16, L=1, T=1)" },
@@ -153,8 +153,8 @@
                 {
                     label: "hnsw(nmslib)",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(135, 79, 111, 1)",
                     data: [ 
                         { x: 0.13542, y: 9666.9990177, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
                         { x: 0.33417, y: 8816.32680516, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
@@ -196,7 +196,7 @@
                 {
                     label: "mih",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "rect",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 1.0, y: 1722.58834268, label: "chunks: 14, r: 0" },
@@ -205,7 +205,7 @@
                         responsive: false,
                         title:{
                             display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -215,7 +215,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' 10-NN precision   '
+                                    labelString: ' Epsilon Recall   '
                                 }
                             }],
                             yAxes: [{
@@ -224,339 +224,6 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Queries per second (1/s) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>webspam-data with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(152, 69, 96, 1)",
-                    data: [ 
-                        { x: 0.83859, y: 505492, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.99716, y: 505500, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.99866, y: 505500, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 0.99914, y: 505500, label: "Annoy(n_trees=100, search_k=100000)" },
-                        { x: 0.99931, y: 505556, label: "Annoy(n_trees=100, search_k=400000)" },
-                        { x: 0.99934, y: 1406156, label: "Annoy(n_trees=100, search_k=400)" },
-                ]},
-                {
-                    label: "bitsampling",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(255, 185, 23, 1)",
-                    data: [ 
-                        { x: 0.80136, y: 14432, label: "k: 17, m: 0, l: 1" },
-                ]},
-                {
-                    label: "falconn",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 0.26911, y: 159896, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 0.442, y: 161628, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 0.5464, y: 163368, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 0.62318, y: 165108, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 0.67677, y: 166860, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 0.71534, y: 168596, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 0.7478, y: 170296, label: "FALCONN(K=16, L=7, T=7)" },
-                        { x: 0.77447, y: 172036, label: "FALCONN(K=16, L=8, T=8)" },
-                        { x: 0.79331, y: 173156, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 0.81125, y: 174276, label: "FALCONN(K=16, L=10, T=10)" },
-                        { x: 0.82652, y: 175396, label: "FALCONN(K=16, L=11, T=11)" },
-                        { x: 0.8489, y: 177636, label: "FALCONN(K=16, L=13, T=13)" },
-                        { x: 0.86629, y: 179876, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 0.87985, y: 182120, label: "FALCONN(K=16, L=17, T=17)" },
-                        { x: 0.89027, y: 184368, label: "FALCONN(K=16, L=19, T=19)" },
-                        { x: 0.90042, y: 186616, label: "FALCONN(K=16, L=21, T=21)" },
-                        { x: 0.9121, y: 189988, label: "FALCONN(K=16, L=24, T=24)" },
-                        { x: 0.92173, y: 193348, label: "FALCONN(K=16, L=27, T=27)" },
-                        { x: 0.92964, y: 196708, label: "FALCONN(K=16, L=30, T=30)" },
-                        { x: 0.93662, y: 200072, label: "FALCONN(K=16, L=33, T=33)" },
-                        { x: 0.94293, y: 204568, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 0.94897, y: 209040, label: "FALCONN(K=16, L=41, T=41)" },
-                        { x: 0.95518, y: 214660, label: "FALCONN(K=16, L=46, T=46)" },
-                        { x: 0.9606, y: 220260, label: "FALCONN(K=16, L=51, T=51)" },
-                        { x: 0.96568, y: 227228, label: "FALCONN(K=16, L=57, T=57)" },
-                        { x: 0.96958, y: 233988, label: "FALCONN(K=16, L=63, T=63)" },
-                        { x: 0.97361, y: 241832, label: "FALCONN(K=16, L=70, T=70)" },
-                        { x: 0.97659, y: 249948, label: "FALCONN(K=16, L=77, T=77)" },
-                        { x: 0.97945, y: 258928, label: "FALCONN(K=16, L=85, T=85)" },
-                        { x: 0.9822, y: 269260, label: "FALCONN(K=16, L=94, T=94)" },
-                        { x: 0.98467, y: 280504, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 0.98703, y: 293068, label: "FALCONN(K=16, L=115, T=115)" },
-                        { x: 0.98908, y: 306556, label: "FALCONN(K=16, L=127, T=127)" },
-                        { x: 0.99044, y: 321380, label: "FALCONN(K=16, L=140, T=140)" },
-                        { x: 0.99195, y: 337360, label: "FALCONN(K=16, L=154, T=154)" },
-                        { x: 0.99329, y: 355576, label: "FALCONN(K=16, L=170, T=170)" },
-                        { x: 0.99439, y: 376012, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 0.99526, y: 397604, label: "FALCONN(K=16, L=207, T=207)" },
-                        { x: 0.99585, y: 421388, label: "FALCONN(K=16, L=228, T=228)" },
-                        { x: 0.99653, y: 447480, label: "FALCONN(K=16, L=251, T=251)" },
-                        { x: 0.99713, y: 477128, label: "FALCONN(K=16, L=277, T=277)" },
-                        { x: 0.99746, y: 508820, label: "FALCONN(K=16, L=305, T=305)" },
-                        { x: 0.99782, y: 544128, label: "FALCONN(K=16, L=336, T=336)" },
-                        { x: 0.9982, y: 582776, label: "FALCONN(K=16, L=370, T=370)" },
-                        { x: 0.99843, y: 625920, label: "FALCONN(K=16, L=408, T=408)" },
-                        { x: 0.9986, y: 672436, label: "FALCONN(K=16, L=449, T=449)" },
-                        { x: 0.99877, y: 723456, label: "FALCONN(K=16, L=494, T=494)" },
-                        { x: 0.99884, y: 780344, label: "FALCONN(K=16, L=544, T=544)" },
-                        { x: 0.99893, y: 842908, label: "FALCONN(K=16, L=599, T=599)" },
-                        { x: 0.99903, y: 911120, label: "FALCONN(K=16, L=659, T=659)" },
-                        { x: 0.9991, y: 986096, label: "FALCONN(K=16, L=725, T=725)" },
-                        { x: 0.99917, y: 1068916, label: "FALCONN(K=16, L=798, T=798)" },
-                        { x: 0.9992, y: 1159864, label: "FALCONN(K=16, L=878, T=878)" },
-                        { x: 0.99926, y: 1259832, label: "FALCONN(K=16, L=966, T=966)" },
-                        { x: 0.99929, y: 1369876, label: "FALCONN(K=16, L=1063, T=1063)" },
-                        { x: 0.99932, y: 1491440, label: "FALCONN(K=16, L=1170, T=1170)" },
-                        { x: 0.99934, y: 1624504, label: "FALCONN(K=16, L=1287, T=1287)" },
-                ]},
-                {
-                    label: "hnsw(nmslib)",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.55552, y: 340240, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
-                        { x: 0.81254, y: 340484, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
-                        { x: 0.94237, y: 340484, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
-                        { x: 0.95859, y: 340484, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
-                        { x: 0.9713, y: 340484, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 0.9836, y: 344840, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 0.99873, y: 344844, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
-                        { x: 0.99908, y: 344848, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                        { x: 0.99936, y: 349404, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
-                        { x: 0.99959, y: 359084, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
-                        { x: 0.99994, y: 359084, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
-                        { x: 0.99996, y: 359088, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
-                        { x: 0.99999, y: 373660, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=120'])" },
-                ]},
-                {
-                    label: "mih",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 1.0, y: 19688, label: "chunks: 14, r: 0" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>webspam-data with 10-NN precision/Index size (kB)/Queries Per Second</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(152, 69, 96, 1)",
-                    data: [ 
-                        { x: 0.83859, y: 146.814463304, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.87288, y: 159.445279114, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.92729, y: 187.696869682, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.96883, y: 253.307042545, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 0.98486, y: 341.283792547, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 0.99304, y: 521.375469664, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 0.99375, y: 1114.88963199, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 0.99716, y: 1242.99212383, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 0.9976, y: 2126.09507778, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 0.99813, y: 2505.34343423, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 0.99868, y: 3902.44642799, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 0.9988, y: 6937.91713928, label: "Annoy(n_trees=400, search_k=100)" },
-                        { x: 0.99904, y: 7024.66871698, label: "Annoy(n_trees=400, search_k=200)" },
-                        { x: 0.99914, y: 7917.3068426, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 0.99917, y: 11203.2541181, label: "Annoy(n_trees=400, search_k=400)" },
-                        { x: 0.99925, y: 13149.4892902, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.99927, y: 21663.1533244, label: "Annoy(n_trees=400, search_k=1000)" },
-                        { x: 0.99931, y: 22527.6739881, label: "Annoy(n_trees=400, search_k=2000)" },
-                        { x: 0.99934, y: 56391.011271, label: "Annoy(n_trees=200, search_k=10000)" },
-                ]},
-                {
-                    label: "bitsampling",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(255, 185, 23, 1)",
-                    data: [ 
-                        { x: 0.72859, y: 2.34410152111, label: "k: 31, m: 0, l: 5" },
-                        { x: 0.73538, y: 3.60046426525, label: "k: 31, m: 0, l: 1" },
-                        { x: 0.75351, y: 9.05359772301, label: "k: 25, m: 0, l: 10" },
-                        { x: 0.80136, y: 32.3651114998, label: "k: 31, m: 0, l: 10" },
-                ]},
-                {
-                    label: "falconn",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 0.26911, y: 4.96316817417, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 0.442, y: 8.20892041283, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 0.5464, y: 10.5824020695, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 0.62318, y: 14.0037848519, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 0.67677, y: 17.995362216, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 0.71534, y: 20.8966589845, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 0.7478, y: 23.4182213675, label: "FALCONN(K=16, L=7, T=7)" },
-                        { x: 0.77447, y: 26.5788906406, label: "FALCONN(K=16, L=8, T=8)" },
-                        { x: 0.79331, y: 28.9903936498, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 0.81125, y: 31.5355700844, label: "FALCONN(K=16, L=10, T=10)" },
-                        { x: 0.82652, y: 35.9444200362, label: "FALCONN(K=16, L=11, T=11)" },
-                        { x: 0.8489, y: 40.5562976658, label: "FALCONN(K=16, L=13, T=13)" },
-                        { x: 0.86629, y: 46.2407306415, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 0.87985, y: 51.1855711355, label: "FALCONN(K=16, L=17, T=17)" },
-                        { x: 0.89027, y: 55.2025916588, label: "FALCONN(K=16, L=19, T=19)" },
-                        { x: 0.90042, y: 60.8834797884, label: "FALCONN(K=16, L=21, T=21)" },
-                        { x: 0.9121, y: 68.6543719945, label: "FALCONN(K=16, L=24, T=24)" },
-                        { x: 0.92173, y: 78.5011538527, label: "FALCONN(K=16, L=27, T=27)" },
-                        { x: 0.92964, y: 85.0491972051, label: "FALCONN(K=16, L=30, T=30)" },
-                        { x: 0.93662, y: 92.1378167578, label: "FALCONN(K=16, L=33, T=33)" },
-                        { x: 0.94293, y: 101.39061865, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 0.94897, y: 111.738583946, label: "FALCONN(K=16, L=41, T=41)" },
-                        { x: 0.95518, y: 122.743226345, label: "FALCONN(K=16, L=46, T=46)" },
-                        { x: 0.9606, y: 136.920497108, label: "FALCONN(K=16, L=51, T=51)" },
-                        { x: 0.96568, y: 152.254089155, label: "FALCONN(K=16, L=57, T=57)" },
-                        { x: 0.96958, y: 169.351413562, label: "FALCONN(K=16, L=63, T=63)" },
-                        { x: 0.97361, y: 187.673734024, label: "FALCONN(K=16, L=70, T=70)" },
-                        { x: 0.97659, y: 207.227200084, label: "FALCONN(K=16, L=77, T=77)" },
-                        { x: 0.97945, y: 228.698130813, label: "FALCONN(K=16, L=85, T=85)" },
-                        { x: 0.9822, y: 254.052676027, label: "FALCONN(K=16, L=94, T=94)" },
-                        { x: 0.98467, y: 285.138360644, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 0.98703, y: 316.26133035, label: "FALCONN(K=16, L=115, T=115)" },
-                        { x: 0.98908, y: 354.708714865, label: "FALCONN(K=16, L=127, T=127)" },
-                        { x: 0.99044, y: 395.738739072, label: "FALCONN(K=16, L=140, T=140)" },
-                        { x: 0.99195, y: 443.858658457, label: "FALCONN(K=16, L=154, T=154)" },
-                        { x: 0.99329, y: 503.439124376, label: "FALCONN(K=16, L=170, T=170)" },
-                        { x: 0.99439, y: 564.541734022, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 0.99526, y: 633.876323346, label: "FALCONN(K=16, L=207, T=207)" },
-                        { x: 0.99585, y: 720.87135983, label: "FALCONN(K=16, L=228, T=228)" },
-                        { x: 0.99653, y: 809.60301802, label: "FALCONN(K=16, L=251, T=251)" },
-                        { x: 0.99713, y: 933.565115967, label: "FALCONN(K=16, L=277, T=277)" },
-                        { x: 0.99746, y: 1047.24050218, label: "FALCONN(K=16, L=305, T=305)" },
-                        { x: 0.99782, y: 1194.56622176, label: "FALCONN(K=16, L=336, T=336)" },
-                        { x: 0.9982, y: 1377.75513815, label: "FALCONN(K=16, L=370, T=370)" },
-                        { x: 0.99843, y: 1560.49888028, label: "FALCONN(K=16, L=408, T=408)" },
-                        { x: 0.9986, y: 1784.06723148, label: "FALCONN(K=16, L=449, T=449)" },
-                        { x: 0.99877, y: 2067.63341331, label: "FALCONN(K=16, L=494, T=494)" },
-                        { x: 0.99884, y: 2370.57006574, label: "FALCONN(K=16, L=544, T=544)" },
-                        { x: 0.99893, y: 2722.80033227, label: "FALCONN(K=16, L=599, T=599)" },
-                        { x: 0.99903, y: 3142.59381835, label: "FALCONN(K=16, L=659, T=659)" },
-                        { x: 0.9991, y: 3647.22820471, label: "FALCONN(K=16, L=725, T=725)" },
-                        { x: 0.99917, y: 4275.1790725, label: "FALCONN(K=16, L=798, T=798)" },
-                        { x: 0.9992, y: 4962.10708181, label: "FALCONN(K=16, L=878, T=878)" },
-                        { x: 0.99926, y: 5732.62875083, label: "FALCONN(K=16, L=966, T=966)" },
-                        { x: 0.99929, y: 6661.73198887, label: "FALCONN(K=16, L=1063, T=1063)" },
-                        { x: 0.99932, y: 7791.68480144, label: "FALCONN(K=16, L=1170, T=1170)" },
-                        { x: 0.99934, y: 9161.75248029, label: "FALCONN(K=16, L=1287, T=1287)" },
-                ]},
-                {
-                    label: "hnsw(nmslib)",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.13542, y: 35.2212718111, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 0.33417, y: 39.1147024857, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
-                        { x: 0.55552, y: 39.5613007393, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
-                        { x: 0.68464, y: 40.2505801019, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 0.86877, y: 40.9092972696, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
-                        { x: 0.93061, y: 42.9365189549, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
-                        { x: 0.96454, y: 46.9287370698, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
-                        { x: 0.97135, y: 48.9447718182, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
-                        { x: 0.98019, y: 50.0629335833, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
-                        { x: 0.9836, y: 52.1465115194, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
-                        { x: 0.98965, y: 55.949295274, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
-                        { x: 0.99342, y: 57.7195370817, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
-                        { x: 0.99393, y: 61.160846447, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
-                        { x: 0.99589, y: 63.0157622719, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
-                        { x: 0.9963, y: 65.5422099875, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
-                        { x: 0.99745, y: 67.8695295095, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
-                        { x: 0.9976, y: 74.4628837124, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
-                        { x: 0.9981, y: 75.9608889228, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
-                        { x: 0.99843, y: 79.1737376656, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
-                        { x: 0.99862, y: 82.1814185867, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
-                        { x: 0.99904, y: 84.7301158058, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
-                        { x: 0.99908, y: 100.267122194, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
-                        { x: 0.99938, y: 100.819944249, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
-                        { x: 0.99959, y: 111.168278312, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=15'])" },
-                        { x: 0.99979, y: 135.448275588, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
-                        { x: 0.99994, y: 153.656505576, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=40'])" },
-                        { x: 0.99995, y: 219.887104076, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
-                        { x: 0.99996, y: 280.28536554, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
-                        { x: 0.99998, y: 408.678322644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=70'])" },
-                        { x: 0.99999, y: 534.96190954, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                ]},
-                {
-                    label: "mih",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 1.0, y: 11.4293122229, label: "chunks: 14, r: 0" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

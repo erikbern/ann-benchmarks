@@ -54,8 +54,8 @@
                 {
                     label: "glove",
                     fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(77, 174, 74, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(127, 110, 133, 1)",
                     data: [ 
                         { x: 0.01241, y: 776.006292411, label: "FaissLSH(n_bits=32)" },
                         { x: 0.06143, y: 740.37159512, label: "FaissLSH(n_bits=64)" },
@@ -65,10 +65,25 @@
                         { x: 0.56016, y: 75.2115981607, label: "FaissLSH(n_bits=1024)" },
                 ]},
                 {
+                    label: "mnist-data",
+                    fill: false,
+                    pointStyle: "star",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.06012, y: 7969.95881536, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.15367, y: 6769.12142236, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.27314, y: 4427.20275636, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.39564, y: 2733.14838675, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.51004, y: 950.43552466, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.59771, y: 497.158254284, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.65079, y: 260.535143383, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.67896, y: 149.715861746, label: "FaissLSH(n_bits=4096)" },
+                ]},
+                {
                     label: "nytimes.tfidf.256.data",
                     fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(255, 129, 0, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(225, 198, 47, 1)",
                     data: [ 
                         { x: 0.0809644670051, y: 2853.42016232, label: "FaissLSH(n_bits=32)" },
                         { x: 0.117279187817, y: 2817.70725588, label: "FaissLSH(n_bits=64)" },
@@ -80,25 +95,10 @@
                         { x: 0.286233502538, y: 71.1436388988, label: "FaissLSH(n_bits=4096)" },
                 ]},
                 {
-                    label: "rand-unit-data",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(167, 87, 43, 1)",
-                    data: [ 
-                        { x: 0.0097, y: 897.534996299, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.0208, y: 860.595659744, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.05, y: 543.980502164, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.1005, y: 363.336983188, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.1832, y: 152.439419081, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.2906, y: 87.6321090444, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.4163, y: 47.2379604668, label: "FaissLSH(n_bits=2048)" },
-                        { x: 0.5352, y: 22.5943854598, label: "FaissLSH(n_bits=4096)" },
-                ]},
-                {
                     label: "sift-data",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(55, 126, 183, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.01123, y: 902.992190286, label: "FaissLSH(n_bits=32)" },
                         { x: 0.05401, y: 872.021238852, label: "FaissLSH(n_bits=64)" },
@@ -148,8 +148,8 @@
                 {
                     label: "glove",
                     fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(77, 174, 74, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(127, 110, 133, 1)",
                     data: [ 
                         { x: 0.17088, y: 106292, label: "FaissLSH(n_bits=128)" },
                         { x: 0.29256, y: 106544, label: "FaissLSH(n_bits=256)" },
@@ -157,10 +157,22 @@
                         { x: 0.56016, y: 254900, label: "FaissLSH(n_bits=64)" },
                 ]},
                 {
+                    label: "mnist-data",
+                    fill: false,
+                    pointStyle: "star",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.27314, y: 120300, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.39564, y: 120560, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.59771, y: 120596, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.65079, y: 136164, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.67896, y: 200772, label: "FaissLSH(n_bits=1024)" },
+                ]},
+                {
                     label: "nytimes.tfidf.256.data",
                     fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(255, 129, 0, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(225, 198, 47, 1)",
                     data: [ 
                         { x: 0.117279187817, y: 226352, label: "FaissLSH(n_bits=64)" },
                         { x: 0.175725888325, y: 228312, label: "FaissLSH(n_bits=32)" },
@@ -171,25 +183,10 @@
                         { x: 0.286233502538, y: 439112, label: "FaissLSH(n_bits=2048)" },
                 ]},
                 {
-                    label: "rand-unit-data",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(167, 87, 43, 1)",
-                    data: [ 
-                        { x: 0.0097, y: 91148, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.0208, y: 91204, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.05, y: 91224, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.1005, y: 122640, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.1832, y: 153996, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.2906, y: 216744, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.4163, y: 358912, label: "FaissLSH(n_bits=2048)" },
-                        { x: 0.5352, y: 657800, label: "FaissLSH(n_bits=4096)" },
-                ]},
-                {
                     label: "sift-data",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(55, 126, 183, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.01123, y: 127000, label: "FaissLSH(n_bits=32)" },
                         { x: 0.05401, y: 127120, label: "FaissLSH(n_bits=64)" },
@@ -239,8 +236,8 @@
                 {
                     label: "glove",
                     fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(77, 174, 74, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(127, 110, 133, 1)",
                     data: [ 
                         { x: 0.01241, y: 137.648368376, label: "FaissLSH(n_bits=32)" },
                         { x: 0.06143, y: 146.05098401, label: "FaissLSH(n_bits=64)" },
@@ -250,10 +247,25 @@
                         { x: 0.56016, y: 3389.104955, label: "FaissLSH(n_bits=1024)" },
                 ]},
                 {
+                    label: "mnist-data",
+                    fill: false,
+                    pointStyle: "star",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.06012, y: 15.1072298853, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.15367, y: 17.7819236042, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.27314, y: 27.1729140544, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.39564, y: 44.1103017254, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.51004, y: 126.952325402, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.59771, y: 242.570648201, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.65079, y: 522.631988269, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.67896, y: 1341.02023432, label: "FaissLSH(n_bits=4096)" },
+                ]},
+                {
                     label: "nytimes.tfidf.256.data",
                     fill: false,
-                    pointStyle: "cross",
-                    borderColor: "rgba(255, 129, 0, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(225, 198, 47, 1)",
                     data: [ 
                         { x: 0.0809644670051, y: 79.9629872294, label: "FaissLSH(n_bits=32)" },
                         { x: 0.117279187817, y: 80.3319789619, label: "FaissLSH(n_bits=64)" },
@@ -265,25 +277,10 @@
                         { x: 0.286233502538, y: 6172.18920478, label: "FaissLSH(n_bits=4096)" },
                 ]},
                 {
-                    label: "rand-unit-data",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(167, 87, 43, 1)",
-                    data: [ 
-                        { x: 0.0097, y: 101.553700274, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.0208, y: 105.977759668, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.05, y: 167.697187008, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.1005, y: 337.537893677, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.1832, y: 1010.21114439, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.2906, y: 2473.33999334, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.4163, y: 7597.95716101, label: "FaissLSH(n_bits=2048)" },
-                        { x: 0.5352, y: 29113.4273677, label: "FaissLSH(n_bits=4096)" },
-                ]},
-                {
                     label: "sift-data",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(55, 126, 183, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.01123, y: 140.643519807, label: "FaissLSH(n_bits=32)" },
                         { x: 0.05401, y: 145.776265917, label: "FaissLSH(n_bits=64)" },

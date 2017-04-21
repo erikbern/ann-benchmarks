@@ -44,18 +44,18 @@
         </nav>
         <div class="container">
         <h2>Plots for sift-hamming-data
-        <h2>sift-hamming-data with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+        <h2>sift-hamming-data with Epsilon Recall/Queries per second (1/s)</h2>
+        <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+            var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
             var chart = new Chart(ctx, {
                 type: "line",
                 data: { datasets: [
                 {
                     label: "annoy",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(152, 69, 96, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.4415, y: 3753.99392334, label: "Annoy(n_trees=100, search_k=100)" },
                         { x: 0.50857, y: 3247.28119912, label: "Annoy(n_trees=100, search_k=200)" },
@@ -72,8 +72,8 @@
                 {
                     label: "bitsampling",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(255, 185, 23, 1)",
+                    pointStyle: "star",
+                    borderColor: "rgba(255, 161, 13, 1)",
                     data: [ 
                         { x: 0.04634, y: 26163.0550046, label: "k: 31, m: 0, l: 1" },
                         { x: 0.06369, y: 21785.7515721, label: "k: 25, m: 0, l: 1" },
@@ -85,7 +85,7 @@
                 {
                     label: "falconn",
                     fill: false,
-                    pointStyle: "circle",
+                    pointStyle: "rect",
                     borderColor: "rgba(225, 198, 47, 1)",
                     data: [ 
                         { x: 0.06176, y: 15612.6845915, label: "FALCONN(K=16, L=1, T=1)" },
@@ -133,8 +133,8 @@
                 {
                     label: "hnsw(nmslib)",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(135, 79, 111, 1)",
                     data: [ 
                         { x: 0.05885, y: 9792.8131938, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
                         { x: 0.13707, y: 9336.28582546, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
@@ -175,7 +175,7 @@
                 {
                     label: "mih",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "rect",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 1.0, y: 407.286971944, label: "chunks: 14, r: 0" },
@@ -184,7 +184,7 @@
                         responsive: false,
                         title:{
                             display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
                         },
                         scales: {
                             xAxes: [{
@@ -194,7 +194,7 @@
                                 position: 'bottom',
                                 scaleLabel: {
                                     display: true,
-                                    labelString: ' 10-NN precision   '
+                                    labelString: ' Epsilon Recall   '
                                 }
                             }],
                             yAxes: [{
@@ -203,228 +203,6 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Queries per second (1/s) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>sift-hamming-data with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(152, 69, 96, 1)",
-                    data: [ 
-                        { x: 0.4415, y: 2330116, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.7734, y: 2331984, label: "Annoy(n_trees=100, search_k=40000)" },
-                        { x: 0.77488, y: 2332028, label: "Annoy(n_trees=100, search_k=400)" },
-                ]},
-                {
-                    label: "bitsampling",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(255, 185, 23, 1)",
-                    data: [ 
-                        { x: 0.12588, y: 98336, label: "k: 17, m: 0, l: 1" },
-                        { x: 0.19662, y: 134824, label: "k: 19, m: 0, l: 1" },
-                        { x: 0.21713, y: 163584, label: "k: 25, m: 0, l: 1" },
-                        { x: 0.22455, y: 224996, label: "k: 17, m: 0, l: 5" },
-                        { x: 0.25928, y: 441188, label: "k: 31, m: 0, l: 1" },
-                        { x: 0.2596, y: 480680, label: "k: 19, m: 0, l: 5" },
-                        { x: 0.32472, y: 875940, label: "k: 17, m: 0, l: 10" },
-                        { x: 0.38456, y: 2096928, label: "k: 19, m: 0, l: 10" },
-                        { x: 0.39315, y: 3581648, label: "k: 17, m: 0, l: 20" },
-                ]},
-                {
-                    label: "falconn",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 0.06176, y: 9312, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 0.15739, y: 25584, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 0.20443, y: 33524, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 0.24521, y: 41916, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 0.27477, y: 50032, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 0.3628, y: 70492, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 0.48086, y: 96532, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 0.66853, y: 191600, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 0.76055, y: 480896, label: "FALCONN(K=16, L=104, T=104)" },
-                        { x: 0.77218, y: 843820, label: "FALCONN(K=16, L=188, T=188)" },
-                        { x: 0.77348, y: 1116384, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 0.77376, y: 1349720, label: "FALCONN(K=16, L=7, T=7)" },
-                ]},
-                {
-                    label: "hnsw(nmslib)",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.91662, y: 1025356, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                        { x: 0.98975, y: 1056056, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 0.9901, y: 1086228, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
-                        { x: 0.99996, y: 1147176, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
-                        { x: 0.99999, y: 1238876, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=120'])" },
-                ]},
-                {
-                    label: "mih",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 1.0, y: 122080, label: "chunks: 14, r: 0" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>sift-hamming-data with 10-NN precision/Index size (kB)/Queries Per Second</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "annoy",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(152, 69, 96, 1)",
-                    data: [ 
-                        { x: 0.4415, y: 620.703189079, label: "Annoy(n_trees=100, search_k=100)" },
-                        { x: 0.50857, y: 718.14784646, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.6088, y: 887.017247531, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.7109, y: 1364.85090909, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 0.75005, y: 2080.69819345, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 0.76771, y: 3467.20703191, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 0.7694, y: 6771.61593128, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 0.77488, y: 8168.65789627, label: "Annoy(n_trees=100, search_k=2000)" },
-                ]},
-                {
-                    label: "bitsampling",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(255, 185, 23, 1)",
-                    data: [ 
-                        { x: 0.06369, y: 5.85006211872, label: "k: 25, m: 0, l: 1" },
-                        { x: 0.09722, y: 6.0768346262, label: "k: 31, m: 0, l: 1" },
-                        { x: 0.12588, y: 8.0431071907, label: "k: 19, m: 0, l: 1" },
-                        { x: 0.19662, y: 11.1799086348, label: "k: 17, m: 0, l: 1" },
-                        { x: 0.21713, y: 13.1119024658, label: "k: 17, m: 0, l: 5" },
-                        { x: 0.22455, y: 16.027314042, label: "k: 19, m: 0, l: 5" },
-                        { x: 0.25928, y: 30.5399355651, label: "k: 17, m: 0, l: 10" },
-                        { x: 0.2596, y: 32.5920624285, label: "k: 19, m: 0, l: 10" },
-                        { x: 0.32472, y: 57.4631587958, label: "k: 25, m: 0, l: 5" },
-                        { x: 0.38456, y: 176.433452861, label: "k: 17, m: 0, l: 20" },
-                        { x: 0.39315, y: 290.082299009, label: "k: 31, m: 0, l: 5" },
-                ]},
-                {
-                    label: "falconn",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 0.06176, y: 0.596438104248, label: "FALCONN(K=16, L=1, T=1)" },
-                        { x: 0.15739, y: 3.53796622124, label: "FALCONN(K=16, L=3, T=3)" },
-                        { x: 0.20443, y: 6.29200032616, label: "FALCONN(K=16, L=4, T=4)" },
-                        { x: 0.24521, y: 9.76835143919, label: "FALCONN(K=16, L=5, T=5)" },
-                        { x: 0.27477, y: 13.0236906631, label: "FALCONN(K=16, L=6, T=6)" },
-                        { x: 0.3628, y: 26.1068771333, label: "FALCONN(K=16, L=9, T=9)" },
-                        { x: 0.48086, y: 57.2175525233, label: "FALCONN(K=16, L=15, T=15)" },
-                        { x: 0.66853, y: 273.952897806, label: "FALCONN(K=16, L=2, T=2)" },
-                        { x: 0.68378, y: 1711.92509126, label: "FALCONN(K=16, L=37, T=37)" },
-                        { x: 0.76055, y: 1717.91684484, label: "FALCONN(K=16, L=7, T=7)" },
-                        { x: 0.77218, y: 4766.44499183, label: "FALCONN(K=16, L=8, T=8)" },
-                        { x: 0.77348, y: 7960.49488303, label: "FALCONN(K=16, L=10, T=10)" },
-                        { x: 0.77376, y: 11339.2781338, label: "FALCONN(K=16, L=11, T=11)" },
-                ]},
-                {
-                    label: "hnsw(nmslib)",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.05885, y: 104.706173773, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 0.17143, y: 115.602850335, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
-                        { x: 0.3475, y: 150.882059201, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
-                        { x: 0.6468, y: 162.180647659, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
-                        { x: 0.8528, y: 163.909917012, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
-                        { x: 0.91762, y: 190.836297428, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
-                        { x: 0.95497, y: 220.643895359, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
-                        { x: 0.9778, y: 272.676005416, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
-                        { x: 0.9901, y: 340.53858882, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
-                        { x: 0.99801, y: 574.705431315, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
-                        { x: 0.99961, y: 882.362228782, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                        { x: 0.99985, y: 1230.39317927, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 0.99988, y: 1496.71250917, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
-                        { x: 0.99996, y: 1545.36346495, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
-                        { x: 0.99999, y: 4339.201157, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
-                ]},
-                {
-                    label: "mih",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 1.0, y: 299.739516384, label: "chunks: 14, r: 0" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }
