@@ -74,6 +74,16 @@
                         { x: 0.00512, y: 4.9488203576, label: "PANNS(n_trees=20, n_cand=100)" },
                         { x: 0.01028, y: 2.47217369828, label: "PANNS(n_trees=40, n_cand=100)" },
                 ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.00011, y: 23.9456758467, label: "PANNS(n_trees=5, n_cand=20)" },
+                        { x: 0.00015, y: 12.1883944599, label: "PANNS(n_trees=10, n_cand=10)" },
+                        { x: 0.00022, y: 12.1033045617, label: "PANNS(n_trees=10, n_cand=100)" },
+                ]},
             ]}, options: {
                         responsive: false,
                         title:{
@@ -132,6 +142,15 @@
                         { x: 0.00512, y: -5560, label: "PANNS(n_trees=10, n_cand=50)" },
                         { x: 0.01028, y: 63516, label: "PANNS(n_trees=10, n_cand=10)" },
                 ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.00011, y: 482292, label: "PANNS(n_trees=5, n_cand=20)" },
+                        { x: 0.00022, y: 948048, label: "PANNS(n_trees=10, n_cand=100)" },
+                ]},
             ]}, options: {
                         responsive: false,
                         title:{
@@ -155,63 +174,6 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>panns with 10-NN precision/Index size (kB)/Queries Per Second</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "glove",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(127, 110, 133, 1)",
-                    data: [ 
-                        { x: 6e-05, y: 11536.7045529, label: "PANNS(n_trees=5, n_cand=20)" },
-                        { x: 0.00012, y: 43053.949721, label: "PANNS(n_trees=10, n_cand=100)" },
-                        { x: 0.00017, y: 43694.2263676, label: "PANNS(n_trees=10, n_cand=50)" },
-                ]},
-                {
-                    label: "mnist-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 0.00274, y: -1962.79137705, label: "PANNS(n_trees=10, n_cand=100)" },
-                        { x: 0.00512, y: -1123.50006633, label: "PANNS(n_trees=10, n_cand=50)" },
-                        { x: 0.01028, y: 25692.3694497, label: "PANNS(n_trees=10, n_cand=10)" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

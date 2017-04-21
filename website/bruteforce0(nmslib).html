@@ -67,6 +67,14 @@
                     data: [ 
                         { x: 1.0, y: 39.0683577331, label: "Nmslib(method_name=seq_search, method_param=['copyMem=0'])" },
                 ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 1.0, y: 11.8064997498, label: "Nmslib(method_name=seq_search, method_param=['copyMem=0'])" },
+                ]},
             ]}, options: {
                         responsive: false,
                         title:{
@@ -120,6 +128,14 @@
                     data: [ 
                         { x: 1.0, y: 548, label: "Nmslib(method_name=seq_search, method_param=['copyMem=0'])" },
                 ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 1.0, y: 555772, label: "Nmslib(method_name=seq_search, method_param=['copyMem=0'])" },
+                ]},
             ]}, options: {
                         responsive: false,
                         title:{
@@ -143,59 +159,6 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>bruteforce0(nmslib) with 10-NN precision/Index size (kB)/Queries Per Second</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "glove",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(127, 110, 133, 1)",
-                    data: [ 
-                        { x: 1.0, y: 35.7441434097, label: "Nmslib(method_name=seq_search, method_param=['copyMem=0'])" },
-                ]},
-                {
-                    label: "mnist-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 1.0, y: 14.0266965851, label: "Nmslib(method_name=seq_search, method_param=['copyMem=0'])" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

@@ -94,20 +94,6 @@
                         { x: 0.281482233503, y: 134.552304641, label: "FaissLSH(n_bits=2048)" },
                         { x: 0.286233502538, y: 71.1436388988, label: "FaissLSH(n_bits=4096)" },
                 ]},
-                {
-                    label: "sift-data",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.01123, y: 902.992190286, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.05401, y: 872.021238852, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.12621, y: 553.494785148, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.24509, y: 366.491411887, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.38429, y: 152.171946161, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.51929, y: 87.4153138512, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.63889, y: 46.8766858884, label: "FaissLSH(n_bits=2048)" },
-                ]},
             ]}, options: {
                         responsive: false,
                         title:{
@@ -182,20 +168,6 @@
                         { x: 0.281482233503, y: 314480, label: "FaissLSH(n_bits=1024)" },
                         { x: 0.286233502538, y: 439112, label: "FaissLSH(n_bits=2048)" },
                 ]},
-                {
-                    label: "sift-data",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.01123, y: 127000, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.05401, y: 127120, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.12621, y: 131372, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.24509, y: 157108, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.38429, y: 189920, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.51929, y: 252784, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.63889, y: 373252, label: "FaissLSH(n_bits=2048)" },
-                ]},
             ]}, options: {
                         responsive: false,
                         title:{
@@ -219,100 +191,6 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>faiss-lsh with 10-NN precision/Index size (kB)/Queries Per Second</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "glove",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(127, 110, 133, 1)",
-                    data: [ 
-                        { x: 0.01241, y: 137.648368376, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.06143, y: 146.05098401, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.17088, y: 238.862178919, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.29256, y: 361.247142906, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.43043, y: 1367.41912899, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.56016, y: 3389.104955, label: "FaissLSH(n_bits=1024)" },
-                ]},
-                {
-                    label: "mnist-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 0.06012, y: 15.1072298853, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.15367, y: 17.7819236042, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.27314, y: 27.1729140544, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.39564, y: 44.1103017254, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.51004, y: 126.952325402, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.59771, y: 242.570648201, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.65079, y: 522.631988269, label: "FaissLSH(n_bits=2048)" },
-                        { x: 0.67896, y: 1341.02023432, label: "FaissLSH(n_bits=4096)" },
-                ]},
-                {
-                    label: "nytimes.tfidf.256.data",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 0.0809644670051, y: 79.9629872294, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.117279187817, y: 80.3319789619, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.175725888325, y: 121.52675295, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.233228426396, y: 214.230414381, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.255492385787, y: 666.524108516, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.272304568528, y: 1138.45514595, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.281482233503, y: 2337.23235615, label: "FaissLSH(n_bits=2048)" },
-                        { x: 0.286233502538, y: 6172.18920478, label: "FaissLSH(n_bits=4096)" },
-                ]},
-                {
-                    label: "sift-data",
-                    fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
-                    data: [ 
-                        { x: 0.01123, y: 140.643519807, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.05401, y: 145.776265917, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.12621, y: 237.350023027, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.24509, y: 428.681259381, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.38429, y: 1248.06184577, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.51929, y: 2891.75876472, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.63889, y: 7962.42295987, label: "FaissLSH(n_bits=2048)" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

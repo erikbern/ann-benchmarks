@@ -91,6 +91,26 @@
                         { x: 0.98241, y: 93.6625792755, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.97'])" },
                         { x: 0.99057, y: 72.3951878364, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.99'])" },
                 ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.18764, y: 7272.86977495, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.1'])" },
+                        { x: 0.32202, y: 4428.15111802, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.2'])" },
+                        { x: 0.42552, y: 2853.57803838, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.3'])" },
+                        { x: 0.52231, y: 1439.83228028, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.4'])" },
+                        { x: 0.61326, y: 770.855085576, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.5'])" },
+                        { x: 0.6933, y: 355.860036393, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.6'])" },
+                        { x: 0.78403, y: 214.672857109, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.7'])" },
+                        { x: 0.86579, y: 124.984570262, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.8'])" },
+                        { x: 0.90348, y: 96.4241438193, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.85'])" },
+                        { x: 0.93315, y: 71.4548058878, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.9'])" },
+                        { x: 0.96918, y: 51.1124503374, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.95'])" },
+                        { x: 0.98525, y: 38.9991762965, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.97'])" },
+                        { x: 0.99638, y: 27.1397483269, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.99'])" },
+                ]},
             ]}, options: {
                         responsive: false,
                         title:{
@@ -150,6 +170,17 @@
                         { x: 0.98241, y: 121408, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.85'])" },
                         { x: 0.99057, y: 121420, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.7'])" },
                 ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.18764, y: 1418884, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.1'])" },
+                        { x: 0.93315, y: 1419024, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.9'])" },
+                        { x: 0.98525, y: 1419040, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.97'])" },
+                        { x: 0.99638, y: 1419156, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.7'])" },
+                ]},
             ]}, options: {
                         responsive: false,
                         title:{
@@ -173,83 +204,6 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>BallTree(nmslib) with 10-NN precision/Index size (kB)/Queries Per Second</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "glove",
-                    fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(127, 110, 133, 1)",
-                    data: [ 
-                        { x: 0.13197, y: 72.7180501795, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.1'])" },
-                        { x: 0.2149, y: 205.869747554, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.2'])" },
-                        { x: 0.30427, y: 619.841003804, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.3'])" },
-                        { x: 0.40074, y: 1201.68158319, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.4'])" },
-                        { x: 0.47551, y: 1988.55253207, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.5'])" },
-                        { x: 0.56551, y: 2821.60578165, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.6'])" },
-                        { x: 0.64724, y: 4241.91463951, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.7'])" },
-                        { x: 0.76917, y: 6236.1317735, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.8'])" },
-                        { x: 0.80249, y: 8636.57765393, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.85'])" },
-                        { x: 0.85664, y: 9195.1262714, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.9'])" },
-                        { x: 0.91657, y: 11610.7824477, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.95'])" },
-                        { x: 0.93751, y: 13147.3650136, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.97'])" },
-                        { x: 0.97568, y: 16277.1254911, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.99'])" },
-                ]},
-                {
-                    label: "mnist-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 0.14568, y: 14.6059924936, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.1'])" },
-                        { x: 0.23012, y: 16.3913732914, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.2'])" },
-                        { x: 0.32901, y: 20.2738240814, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.3'])" },
-                        { x: 0.42912, y: 25.3661353337, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.4'])" },
-                        { x: 0.52024, y: 33.4057925975, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.5'])" },
-                        { x: 0.64541, y: 52.8563590081, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.6'])" },
-                        { x: 0.72043, y: 82.073494836, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.7'])" },
-                        { x: 0.82461, y: 182.747736003, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.8'])" },
-                        { x: 0.88134, y: 338.596593783, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.85'])" },
-                        { x: 0.92457, y: 530.585081428, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.9'])" },
-                        { x: 0.95975, y: 867.842926681, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.95'])" },
-                        { x: 0.98241, y: 1296.22738279, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.97'])" },
-                        { x: 0.99057, y: 1677.18329945, label: "Nmslib(method_name=vptree, method_param=['tuneK=10', 'desiredRecall=0.99'])" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }
