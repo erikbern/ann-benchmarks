@@ -68,6 +68,21 @@
                         { x: 0.96939, y: 942.216229377, label: "FLANN(target_precision=0.990000)" },
                         { x: 0.97891, y: 685.464475159, label: "FLANN(target_precision=0.995000)" },
                 ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.08154, y: 4612.17539247, label: "FLANN(target_precision=0.200000)" },
+                        { x: 0.22066, y: 4131.03960704, label: "FLANN(target_precision=0.500000)" },
+                        { x: 0.40611, y: 3016.35907404, label: "FLANN(target_precision=0.700000)" },
+                        { x: 0.58037, y: 2025.13760064, label: "FLANN(target_precision=0.800000)" },
+                        { x: 0.76803, y: 856.269687519, label: "FLANN(target_precision=0.900000)" },
+                        { x: 0.84895, y: 371.249117772, label: "FLANN(target_precision=0.950000)" },
+                        { x: 0.93316, y: 204.590065419, label: "FLANN(target_precision=0.970000)" },
+                        { x: 0.93573, y: 191.445738064, label: "FLANN(target_precision=0.980000)" },
+                ]},
             ]}, options: {
                         responsive: false,
                         title:{
@@ -116,6 +131,18 @@
                         { x: 0.96939, y: 964, label: "FLANN(target_precision=0.900000)" },
                         { x: 0.97891, y: 1024, label: "FLANN(target_precision=0.990000)" },
                 ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.08154, y: 109316, label: "FLANN(target_precision=0.200000)" },
+                        { x: 0.22066, y: 387368, label: "FLANN(target_precision=0.500000)" },
+                        { x: 0.40611, y: 387380, label: "FLANN(target_precision=0.700000)" },
+                        { x: 0.93316, y: 499536, label: "FLANN(target_precision=0.970000)" },
+                        { x: 0.93573, y: 544216, label: "FLANN(target_precision=0.950000)" },
+                ]},
             ]}, options: {
                         responsive: false,
                         title:{
@@ -139,60 +166,6 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: ' Index size (kB) '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
-        <h2>flann with 10-NN precision/Index size (kB)/Queries Per Second</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "mnist-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 0.14796, y: 0.219468374252, label: "FLANN(target_precision=0.200000)" },
-                        { x: 0.36949, y: 0.228870371056, label: "FLANN(target_precision=0.500000)" },
-                        { x: 0.55286, y: 0.261030045319, label: "FLANN(target_precision=0.700000)" },
-                        { x: 0.65985, y: 0.289694482517, label: "FLANN(target_precision=0.800000)" },
-                        { x: 0.79362, y: 0.370940689087, label: "FLANN(target_precision=0.900000)" },
-                        { x: 0.83609, y: 0.45393342886, label: "FLANN(target_precision=0.950000)" },
-                        { x: 0.89141, y: 0.534734238148, label: "FLANN(target_precision=0.970000)" },
-                        { x: 0.94637, y: 0.797928523731, label: "FLANN(target_precision=0.980000)" },
-                        { x: 0.96939, y: 1.02311971493, label: "FLANN(target_precision=0.990000)" },
-                        { x: 0.97891, y: 1.49387756348, label: "FLANN(target_precision=0.995000)" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB)/Queries Per Second '
                                 }
                             }]
                         }

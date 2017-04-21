@@ -134,51 +134,6 @@
                 }); 
         </script>
         
-        <h2>bruteforce-blas with 10-NN precision/Index size (kB)/Queries Per Second</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)/Queries Per Second" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)/Queries Per Second");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
-                {
-                    label: "mnist-data",
-                    fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
-                    data: [ 
-                        { x: 1.0, y: 13166.9933917, label: "BruteForceBLAS()" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB)/Queries Per Second tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: ' Index size (kB)/Queries Per Second '
-                                }
-                            }]
-                        }
-                    }
-                }); 
-        </script>
-        
     </div>
     </body>
 </html>
