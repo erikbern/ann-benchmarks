@@ -9,7 +9,8 @@ from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, load_results, create_linestyles, create_pointset
 
 
-def create_plot(all_data, golden, raw, x_log, y_log, xm, ym, fn_out, linestyles):
+def create_plot(all_data, golden, raw, x_log, y_log, xn, yn, fn_out, linestyles):
+    xm, ym = (metrics[xn], metrics[yn])
 # Now generate each plot
     handles = []
     labels = []
@@ -18,7 +19,7 @@ def create_plot(all_data, golden, raw, x_log, y_log, xm, ym, fn_out, linestyles)
     else:
         plt.figure(figsize=(7, 7))
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-        xs, ys, axs, ays, ls = create_pointset(algo, all_data, xm, ym)
+        xs, ys, axs, ays, ls = create_pointset(algo, all_data, xn, yn)
         color, faded, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         handles.append(handle)
@@ -77,11 +78,9 @@ if __name__ == "__main__":
         help='Also show raw results in faded colours',
         action='store_true')
     args = parser.parse_args()
-    xm = metrics[args.x_axis]
-    ym = metrics[args.y_axis]
-    runs, all_algos = load_results([ds for ds, _ in args.dataset], xm, ym)
+    runs, all_algos = load_results([ds for ds, _ in args.dataset])
     linestyles = create_linestyles(all_algos)
     for ds, fn_out in args.dataset:
         all_data = runs[ds]
         create_plot(all_data, args.golden, args.raw, args.x_log,
-                args.y_log, xm, ym, fn_out, linestyles)
+                args.y_log, args.x_axis, args.y_axis, fn_out, linestyles)

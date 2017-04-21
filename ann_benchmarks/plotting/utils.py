@@ -4,10 +4,11 @@ from ann_benchmarks.plotting.metrics import all_metrics as metrics
 import matplotlib.pyplot as plt
 import numpy
 
-def create_pointset(algo, all_data, xm, ym):
+def create_pointset(algo, all_data, xn, yn):
+    xm, ym = (metrics[xn], metrics[yn])
     data = all_data[algo]
     rev = ym["worst"] < 0
-    data.sort(key=lambda (a, n, xv, yv): yv, reverse=rev) # sort by y coordinate
+    data.sort(key=lambda (a, n, rs): rs[yn], reverse=rev) # sort by y coordinate
     ls = [t[1] for t in data]
 
     axs, ays = [], []
@@ -16,7 +17,10 @@ def create_pointset(algo, all_data, xm, ym):
     last_x = xm["worst"]
     comparator = \
       (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
-    for algo, algo_name, xv, yv in data:
+    for algo, algo_name, results in data:
+        xv, yv = (results[xn], results[yn])
+        if not xv or not yv:
+            continue
         axs.append(xv)
         ays.append(yv)
         if comparator(xv, last_x):
@@ -30,7 +34,7 @@ def enumerate_query_caches(ds):
         if f.startswith(ds + "_") and f.endswith(".p"):
             yield "queries/" + f
 
-def load_results(datasets, xm, ym, limit = -1):
+def load_results(datasets, limit = -1):
     runs = {}
     all_algos = set()
     for ds in datasets:
@@ -56,16 +60,17 @@ first (%s)""" % (ds, queries_fn[0])
 
                 print "--"
                 print algo_name
-                xv = xm["function"](queries, run)
-                yv = ym["function"](queries, run)
-                print xv, yv
-                if not xv or not yv:
-                    continue
+                results = {}
+                for name, metric in metrics.items():
+                    v = metric["function"](queries, run)
+                    results[name] = v
+                    if v:
+                        print "%s: %g" % (name, v)
 
                 all_algos.add(algo)
                 if not algo in runs[ds]:
                     runs[ds][algo] = []
-                runs[ds][algo].append((algo, algo_name, xv, yv))
+                runs[ds][algo].append((algo, algo_name, results))
     return (runs, all_algos)
 
 def create_linestyles(algos):

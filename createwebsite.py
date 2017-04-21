@@ -44,17 +44,6 @@ def convert_linestyle(ls):
                 algostyle[2], point_styles[algostyle[3]])
     return new_ls
 
-def load_results_wrapper(ds, xm, ym, limit, convert = False):
-    runs, all_algos = load_results(ds, xm, ym, limit)
-    if convert:
-        all_data = {}
-        for ds in runs:
-            if algo in runs[ds]:
-                all_data[ds] = runs[ds][algo]
-        return (runs, all_data)
-    return (runs, all_algos)
-
-
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '--dataset',
@@ -135,7 +124,8 @@ def get_html_header(title):
           </div>
         </nav>""" % {"title" : title}
 
-def create_plot(ds, all_data, xm, ym, linestyle):
+def create_plot(ds, all_data, xn, yn, linestyle):
+    xm, ym = (metrics[xn], metrics[yn])
     output_str = """
         <h2>%(id)s with %(xmetric)s/%(ymetric)s</h2>
         <canvas id="chart%(xmetric)s%(ymetric)s" width="800" height="600"></canvas>
@@ -146,7 +136,7 @@ def create_plot(ds, all_data, xm, ym, linestyle):
                 data: { datasets: [""" % { "id" : ds, "xmetric" :  xm["description"], "ymetric" : ym["description"] }
     color_index = 0
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-            xs, ys, axs, ays, ls = create_pointset(algo, all_data, xm, ym)
+            xs, ys, axs, ays, ls = create_pointset(algo, all_data, xn, yn)
 # TODO Put this somewhere else
 # pretty print subprocess parameter settings.
             for i in range(len(ls)):
@@ -252,24 +242,29 @@ def create_plot(ds, all_data, xm, ym, linestyle):
         """ % { "caption" : get_plot_label(xm, ym) }
     return output_str
 
+all_runs_by_dataset, _ = load_results(args.dataset, args.limit)
+all_runs_by_algorithm = {}
+for (ds, algos) in all_runs_by_dataset.items():
+    for (algo, runs) in algos.items():
+        if not algo in all_runs_by_algorithm:
+            all_runs_by_algorithm[algo] = {}
+        all_runs_by_algorithm[algo][ds] = runs
 
 # Build a website for each dataset
-for ds in args.dataset:
+for (ds, runs) in all_runs_by_dataset.items():
+    all_algos = runs.keys()
     output_str = get_html_header(ds)
     output_str += """
         <div class="container">
         <h2>Plots for %(id)s""" % { "id" : ds }
     for plottype in args.plottype:
-        xm, ym = plot_variants[plottype]
-        runs, all_algos = load_results_wrapper(args.dataset, xm, ym, args.limit)
+        xn, yn = plot_variants[plottype]
         linestyles = convert_linestyle(create_linestyles(all_algos))
         print "Processing '%s' with %s" % (ds, plottype)
-        output_str += create_plot(ds, runs[ds], xm, ym, linestyles)
+        output_str += create_plot(ds, runs, xn, yn, linestyles)
     # create png plot for summary page
-    xm, ym = metrics['k-nn'], metrics['qps']
-    runs, all_algos = load_results_wrapper(args.dataset, xm, ym, args.limit)
-    plot.create_plot(runs[ds], True, False,
-            False, True, xm, ym,  outputdir + ds + ".png",
+    plot.create_plot(runs, True, False,
+            False, True, 'k-nn', 'qps',  outputdir + ds + ".png",
             create_linestyles(all_algos))
     output_str += """
         </div>
@@ -280,25 +275,22 @@ for ds in args.dataset:
     with open(outputdir + ds + ".html", "w") as text_file:
         text_file.write(output_str)
 
-_, algorithms = load_results_wrapper(args.dataset, xm, ym, args.limit)
 # Build a website for each algorithm
 # Get all algorithms
 # Build website. TODO Refactor with dataset code.
-for algo in algorithms:
+for (algo, runs) in all_runs_by_algorithm.items():
+    all_data = runs.keys()
     output_str = get_html_header(algo)
     output_str += """
         <div class="container">
         <h2>Plots for %(id)s""" % { "id" : algo }
     for plottype in args.plottype:
-        xm, ym = plot_variants[plottype]
-        runs, all_algos = load_results_wrapper(args.dataset, xm, ym, args.limit, convert = True)
+        xn, yn = plot_variants[plottype]
         linestyles = convert_linestyle(create_linestyles(args.dataset))
         print "Processing '%s' with %s" % (algo, plottype)
-        output_str += create_plot(algo, all_algos, xm, ym, linestyles)
-    xm, ym = metrics['k-nn'], metrics['qps']
-    runs, all_algos = load_results_wrapper(args.dataset, xm, ym, args.limit, convert = True)
-    plot.create_plot(all_algos, True, False,
-            False, True, xm, ym,  outputdir + algo + ".png",
+        output_str += create_plot(algo, runs, xn, yn, linestyles)
+    plot.create_plot(runs, True, False,
+            False, True, 'k-nn', 'qps',  outputdir + algo + ".png",
             create_linestyles(args.dataset))
     output_str += """
     </div>
@@ -355,6 +347,7 @@ with open(outputdir + "index.html", "w") as text_file:
     output_str += """
         <h3>... by algorithm</h3>
         <ul class="list-inline"><b>Algorithms:</b>"""
+    algorithms = all_runs_by_algorithm.keys()
     for algo in algorithms:
         output_str += "<li><a href=%(name)s>%(name)s</a></li>" % {"name" : algo}
     output_str += "</ul>"
