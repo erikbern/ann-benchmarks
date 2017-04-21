@@ -20,7 +20,10 @@ class FALCONN(BaseANN):
     def fit(self, X):
         if X.dtype != numpy.float32:
             X = X.astype(numpy.float32)
-        if self._metric == 'angular':
+        if self._metric == 'hamming':
+            # replace all zeroes by -1
+            X[X < 0.5] = -1
+        if self._metric == 'angular' or self._metric == 'hamming':
             X /= numpy.linalg.norm(X, axis=1).reshape(-1,  1)
         self._center = numpy.mean(X, axis=0)
         X -= self._center
@@ -41,7 +44,10 @@ class FALCONN(BaseANN):
 
     def query(self, v, n):
         numpy.copyto(self._buf, v)
-        if self._metric == 'angular':
+        if self._metric == 'hamming':
+            # replace all zeroes by -1
+            self._buf[self._buf < 0.5] = -1
+        if self._metric == 'angular' or self._metric == 'hamming':
             self._buf /= numpy.linalg.norm(self._buf)
         self._buf -= self._center
         return self._index.find_k_nearest_neighbors(self._buf, n)

@@ -1,0 +1,7 @@
+prefix=@prefix@
+includedir=@includedir@
+
+Name: tclap
+Description: Templatized C++ Command Line Parser
+Version: @VERSION@
+Cflags: -I${includedir}

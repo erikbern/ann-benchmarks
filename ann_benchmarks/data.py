@@ -11,7 +11,7 @@ def int_unparse_entry(entry):
     return " ".join(map(str, map(int, entry)))
 
 def bit_parse_entry(line):
-    return [bool(int(x)) for x in list(line.replace(" ", "").replace("\t", ""))]
+    return [bool(int(x)) for x in list(line.strip().replace(" ", "").replace("\t", ""))]
 def bit_unparse_entry(entry):
     return " ".join(map(lambda el: "1" if el else "0", entry))
 

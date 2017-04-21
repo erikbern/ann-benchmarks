@@ -1,0 +1,1760 @@
+2011-04-10 17:08  mes5k
+
+	* include/tclap/Arg.h: patch that allows arg start strings to be
+	  pound defined to easily conform to different platforms
+
+2011-04-09 11:58  mes5k
+
+	* docs/Makefile.am: being slightly more precise about what we clean
+
+2011-04-09 11:30  mes5k
+
+	* include/tclap/: DocBookOutput.h, StdOutput.h,
+	  ZshCompletionOutput.h: fixed shadow variable name problem
+
+2011-04-09 11:05  mes5k
+
+	* include/tclap/CmdLine.h: fixed minor memory leak
+
+2011-03-15 04:26  macbishop
+
+	* configure.in, config/ac_cxx_warn_effective_cxx.m4: Check if
+	  compiler supports Weffec++ and if so use it (fixes compilation
+	  issue with e.g. SunStudio compiler)
+
+2011-01-15 09:45  macbishop
+
+	* include/tclap/ArgTraits.h: Updated documentation for ArgTraits to
+	  reference StringLike and ValueLike classes.
+
+2011-01-15 09:32  macbishop
+
+	* examples/test10.cpp: Added explicit cast to supress warning about
+	  deprecated conversion from string constant to char*
+
+2011-01-02 17:18  mes5k
+
+	* docs/Makefile.am: now using a slightly different variable for doc
+	  install to support out-of-tree builds
+
+2011-01-02 16:37  mes5k
+
+	* configure.in: bumped version number to 1.2.1
+
+2011-01-02 16:30  mes5k
+
+	* docs/style.css: tweaked style so it doesn't blink
+
+2011-01-02 16:21  mes5k
+
+	* tests/: test57.out, test57.sh, test76.out: tweaked tests to
+	  reflect fix for mutually exclusive switches
+
+2011-01-02 16:20  mes5k
+
+	* include/tclap/: SwitchArg.h, XorHandler.h: finally fixed bug
+	  relating to mutually exclusive combined switched
+
+2011-01-02 15:12  mes5k
+
+	* include/tclap/Arg.h: minor reformat
+
+2011-01-02 15:10  mes5k
+
+	* include/tclap/CmdLine.h: minor reformatting
+
+2011-01-02 12:13  mes5k
+
+	* examples/Makefile.am, examples/test20.cpp, tests/Makefile.am,
+	  tests/test74.out, tests/test74.sh, tests/test75.out,
+	  tests/test75.sh, tests/test76.out, tests/test76.sh,
+	  tests/test77.out, tests/test77.sh: added failing tests for XOR
+	  error message bug
+
+2011-01-02 11:52  mes5k
+
+	* include/tclap/StandardTraits.h: applied Tom Fogal's win64 patch
+	  for size_t
+
+2011-01-02 11:38  mes5k
+
+	* docs/Makefile.am: hopefully fixed out-of-tree doc installation
+
+2011-01-02 10:50  mes5k
+
+	* include/tclap/: Arg.h, ArgTraits.h, CmdLine.h, HelpVisitor.h,
+	  MultiArg.h, ValueArg.h, ValuesConstraint.h, VersionVisitor.h,
+	  XorHandler.h, ZshCompletionOutput.h: fixed all effective c++
+	  warnings based on patch from Andrew Marlow
+
+2010-12-06 22:41  mes5k
+
+	* configure.in: added more compiler warnings
+
+2009-10-24 20:49  mes5k
+
+	* include/tclap/SwitchArg.h, include/tclap/ValueArg.h,
+	  tests/test22.out, tests/test24.out: make error message a bit more
+	  meaningful
+
+2009-10-23 14:42  mes5k
+
+	* include/tclap/StandardTraits.h: added a check for wchar_t to deal
+	  with a potential problem with MS compilers
+
+2009-09-28 11:28  mes5k
+
+	* docs/index.html: updated for 1.2.0
+
+2009-09-26 14:41  mes5k
+
+	* docs/Makefile.am: another update to support older automake
+
+2009-09-26 14:23  mes5k
+
+	* docs/Makefile.am: removed an errant space
+
+2009-09-26 14:15  mes5k
+
+	* docs/Makefile.am: added a definition for docdir, which doesnt
+	  exist for old versions of automake
+
+2009-09-26 14:02  mes5k
+
+	* docs/Makefile.am: corrected the doc install directory structure
+
+2009-09-26 13:55  mes5k
+
+	* NEWS: updated for 1.2.0
+
+2009-09-26 13:53  mes5k
+
+	* docs/: manual.html, manual.xml: updated for 1.2.0 including text
+	  on ArgTraits
+
+2009-08-22 12:26  mes5k
+
+	* Makefile.am, configure.in, tclap.pc.in, docs/Makefile.am,
+	  examples/Makefile.am: applying patches to make gnu compiler args
+	  conditional, to install docs, and to add pkgconfig support to the
+	  installation
+
+2009-07-28 12:49  mes5k
+
+	* configure.in, tests/Makefile.am, tests/test73.out,
+	  tests/test73.sh: added test 73 based on bug reported by user
+
+2009-07-15 08:09  mes5k
+
+	* include/tclap/UnlabeledValueArg.h: updated incorrect api docs
+	  again
+
+2009-07-15 08:04  mes5k
+
+	* include/tclap/UnlabeledValueArg.h: updated incorrect api doc
+
+2009-01-09 16:10  mes5k
+
+	* AUTHORS: added author
+
+2009-01-09 16:05  mes5k
+
+	* include/tclap/: Arg.h, CmdLine.h, CmdLineInterface.h, MultiArg.h,
+	  MultiSwitchArg.h, SwitchArg.h, ValueArg.h: added support for
+	  resetting a command line
+
+2008-11-07 12:04  mes5k
+
+	* docs/manual.html, docs/manual.xml, examples/Makefile.am,
+	  examples/test19.cpp, include/tclap/Arg.h, tests/Makefile.am,
+	  tests/test29.out, tests/test29.sh, tests/test71.out,
+	  tests/test71.sh, tests/test72.out, tests/test72.sh: added support
+	  for parsing hex and octal ints as well as small fix to support
+	  gcc 4.4
+
+2008-09-10 11:29  mes5k
+
+	* docs/manual.xml: updated note on xor
+
+2008-09-10 11:21  mes5k
+
+	* docs/manual.xml: added note on xor
+
+2008-08-19 15:18  zeekec
+
+	* examples/test18.cpp, include/tclap/CmdLine.h, tests/Makefile.am,
+	  tests/test70.out, tests/test70.sh: Rethrow ExitExceptions if
+	  we're not handling exceptions.
+
+2008-08-19 14:52  zeekec
+
+	* include/tclap/Arg.h: Silence some compiler warnings.	The const
+	  on return-by-value is ignored.
+
+2008-07-21 10:20  zeekec
+
+	* include/tclap/CmdLine.h, examples/Makefile.am,
+	  examples/test18.cpp, tests/Makefile.am, tests/test69.out,
+	  tests/test69.sh: Allow internal handling of parse errors to be
+	  turned off.  This allows exceptions for parse errors to be
+	  propagated to the caller.  Exiting the program in parse is a bad
+	  idea generally, as we have no way of knowing what cleanup needs
+	  to be done in the main program.
+
+2008-06-17 09:48  mes5k
+
+	* include/tclap/StdOutput.h: bug in while loop
+
+2008-05-23 15:15  mes5k
+
+	* include/tclap/: CmdLine.h, SwitchArg.h: added length checks to
+	  strings that can otherwise break with Metroworks compilers
+
+2008-05-21 14:21  macbishop
+
+	* examples/: Makefile.am, test17-a.cpp, test17.cpp: Added test that
+	  tclap does not define any hard symbols (bug 1907017)
+
+2008-05-13 12:04  mes5k
+
+	* include/tclap/CmdLine.h: added a new include to support exit in
+	  environments where it isnt defined
+
+2008-05-05 23:02  mes5k
+
+	* examples/test7.cpp, include/tclap/Arg.h, tests/test46.out:
+	  tweaked tests to support dashes in arg names
+
+2008-05-05 22:28  mes5k
+
+	* include/tclap/Arg.h: allowed dash char in arg names
+
+2008-01-18 15:05  zeekec
+
+	* include/tclap/Makefile.am: Added Traits files to the list of
+	  files to be installed.
+
+2007-10-09 11:18  macbishop
+
+	* examples/test14.cpp, examples/test15.cpp, examples/test16.cpp,
+	  include/tclap/Arg.h, include/tclap/ArgTraits.h,
+	  include/tclap/StandardTraits.h, configure.in,
+	  config/ac_cxx_have_long_long.m4, examples/Makefile.am:
+	  Refactoring of the arg-traits functionality. The purpose is to
+	  make it easier to make you own classes, and types defined in the
+	  standard library work well with tclap. I'll try to write up some
+	  documenation of how to achieve this as-well.
+
+2007-10-01 23:33  mes5k
+
+	* examples/test13.cpp: added attribution
+
+2007-10-01 23:30  mes5k
+
+	* examples/test13.cpp: fixed a warning message
+
+2007-10-01 23:27  mes5k
+
+	* examples/Makefile.am, examples/test13.cpp,
+	  include/tclap/SwitchArg.h, tests/Makefile.am, tests/test68.out,
+	  tests/test68.sh: a bug fix for parsing vectors of strings and
+	  making sure that combined switches dont get confused
+
+2007-09-27 13:49  mes5k
+
+	* include/tclap/OptionalUnlabeledTracker.h: added inline
+
+2007-09-12 19:09  mes5k
+
+	* include/tclap/Arg.h, tests/test42.out, tests/test54.out: fixed
+	  the delimiter in Arg::longID and Arg::shortID
+
+2007-09-01 01:17  macbishop
+
+	* examples/Makefile.am, include/tclap/Arg.h,
+	  include/tclap/DocBookOutput.h,
+	  include/tclap/ZshCompletionOutput.h: Suppress some warnings,
+	  compile with -Wextra by default
+
+2007-06-14 14:02  macbishop
+
+	* include/tclap/Arg.h, include/tclap/MultiArg.h,
+	  include/tclap/ValueArg.h, tests/runtests.sh, tests/test63.out,
+	  tests/test63.sh, tests/test64.out, tests/test64.sh,
+	  tests/test65.out, tests/test65.sh, tests/test66.out,
+	  tests/test66.sh, tests/test67.out, tests/test67.sh,
+	  tests/testCheck.sh, examples/Makefile.am, examples/test11.cpp,
+	  examples/test12.cpp: Use ArgTraits instead of ValueExtractor
+	  specialization Bug 1711487
+
+2007-05-02 13:11  macbishop
+
+	* examples/Makefile.am, examples/test10.cpp,
+	  include/tclap/CmdLine.h, include/tclap/CmdLineInterface.h: Run
+	  CmdLine::parse with argv as pointer to const pointer to const
+	  char
+
+2007-04-20 22:28  mes5k
+
+	* include/tclap/Arg.h, tests/test18.out: changed the blankChar to
+	  the bell character instead of *
+
+2007-03-04 11:28  mes5k
+
+	* examples/test4.cpp, include/tclap/DocBookOutput.h,
+	  include/tclap/Makefile.am, include/tclap/ZshCompletionOutput.h:
+	  added patches for ZSH and DocBook output
+
+2007-03-04 11:08  mes5k
+
+	* include/tclap/: CmdLine.h, CmdLineInterface.h: added a new parse
+	  method that accepts a vector
+
+2007-02-17 06:59  macbishop
+
+	* include/tclap/: MultiArg.h, MultiSwitchArg.h,
+	  UnlabeledMultiArg.h, UnlabeledValueArg.h, ValueArg.h: Supressed
+	  some warnings
+
+2007-02-17 06:59  macbishop
+
+	* include/tclap/CmdLine.h: Catch ExitException and exit. This
+	  allows all resources used during parsing to be released, bug
+	  1662188.
+
+2007-02-17 06:57  macbishop
+
+	* include/tclap/: DocBookOutput.h, HelpVisitor.h, StdOutput.h,
+	  VersionVisitor.h: raise ExitException instead of calling exit
+
+2007-02-17 06:54  macbishop
+
+	* include/tclap/ArgException.h: Added exit-exception class
+
+2007-02-17 06:52  macbishop
+
+	* tests/testCheck.sh: Exit with exit status 1 if a test fails
+	  (required by runtests.sh)
+
+2007-02-17 06:52  macbishop
+
+	* tests/runtests.sh: Run the correct tests (not 0)
+
+2007-02-17 06:51  macbishop
+
+	* examples/: test4.cpp, test7.cpp: Supressed warnings
+
+2007-02-07 18:12  mes5k
+
+	* include/tclap/StdOutput.h: minor change to support a bug in
+	  VisualC++ 2005
+
+2006-11-26 10:42  mes5k
+
+	* docs/: README, manual.html, manual.xml: updated docs to reflect
+	  that Output must handle the exit rather than the CmdLine object
+
+2006-11-26 10:32  mes5k
+
+	* include/tclap/: CmdLine.h, DocBookOutput.h, StdOutput.h: moved
+	  exit from CmdLine to StdOutput to provide users more control over
+	  when/how the exit happens
+
+2006-11-26 10:29  mes5k
+
+	* examples/test4.cpp: added exit() to failure method
+
+2006-11-26 10:13  mes5k
+
+	* docs/: manual.html, manual.xml: fixed typo in SwitchArg
+	  constructors
+
+2006-11-04 14:05  mes5k
+
+	* include/tclap/CmdLine.h, tests/Makefile.am, tests/test10.out,
+	  tests/test17.out, tests/test4.out, tests/test51.out,
+	  tests/test62.out, tests/test62.sh: printing more useful message
+	  when missing required args and catching ArgException reference
+
+2006-10-06 09:49  mes5k
+
+	* include/tclap/SwitchArg.h, tests/Makefile.am, tests/test61.out,
+	  tests/test61.sh: made a fix for a bug where - chars were within
+	  unlabeled value args
+
+2006-08-21 23:13  mes5k
+
+	* include/tclap/StdOutput.h: minor tweak to a min function
+	  signature
+
+2006-08-18 20:05  mes5k
+
+	* docs/index.html: updated for 1.1.0
+
+2006-08-18 20:04  mes5k
+
+	* AUTHORS: new author
+
+2006-05-14 17:55  mes5k
+
+	* config/Makefile.am: so that m4 macros will be included in release
+	  files to ease incorporation of tclap in other projects
+
+2006-05-14 17:36  mes5k
+
+	* include/tclap/CmdLine.h: removed a deprecated constructor
+
+2006-05-14 17:35  mes5k
+
+	* docs/: manual.xml, manual.html: manual update
+
+2006-05-14 13:11  mes5k
+
+	* Makefile.am, configure.in: added m4 macros to help others
+	  distributing the software and updated the version number
+
+2006-05-14 12:52  mes5k
+
+	* config/bb_enable_doxygen.m4: for some reason, the AS_HELP_STRING
+	  function was messing up autoconf 2.57 -- maybe that's just an old
+	  version?  We can change it back as necessary
+
+2006-05-14 12:51  mes5k
+
+	* examples/test8.cpp, include/tclap/SwitchArg.h: SwitchArg
+	  interface change
+
+2006-04-18 03:59  macbishop
+
+	* docs/: manual.html, manual.xml: Updated the example
+
+2006-04-05 23:44  mes5k
+
+	* include/tclap/ArgException.h: patch for a mem leak in
+	  ArgException
+
+2006-03-18 11:16  mes5k
+
+	* include/tclap/: CmdLineOutput.h, Visitor.h: added virtual
+	  destructors
+
+2006-02-21 18:15  zeekec
+
+	* examples/: test1.cpp, test2.cpp, test3.cpp, test4.cpp, test5.cpp,
+	  test6.cpp, test7.cpp, test8.cpp, test9.cpp: Use local header
+	  files first instead of installed headers.
+
+2006-02-21 18:12  zeekec
+
+	* Makefile.am: Added ACLOCAL_AMFLAGS for autoreconf.
+
+2006-02-21 18:10  zeekec
+
+	* config/: ac_cxx_have_sstream.m4, ac_cxx_have_strstream.m4: Moved
+	  the requires, header check, and language save and restore outside
+	  of the cache check.
+
+2006-02-21 04:00  zeekec
+
+	* config/: stamp-h.in, stamp-h1: Removed timestamp files (generated
+	  by configure).
+
+2006-02-21 03:05  zeekec
+
+	* include/tclap/Constraint.h: Added virtual destructor to silence
+	  warnings.
+
+2006-02-21 03:01  zeekec
+
+	* ChangeLog: Generated with cvs2cl.
+
+2005-09-10 16:25  mes5k
+
+	* config/stamp-h1, examples/test2.cpp, examples/test3.cpp,
+	  examples/test5.cpp, examples/test8.cpp, include/tclap/Arg.h,
+	  include/tclap/CmdLine.h, include/tclap/MultiArg.h,
+	  include/tclap/StdOutput.h, include/tclap/UnlabeledMultiArg.h,
+	  include/tclap/UnlabeledValueArg.h, include/tclap/ValueArg.h,
+	  include/tclap/XorHandler.h: added gcc warning patch
+
+2005-07-12 20:36  zeekec
+
+	* examples/Makefile.am: Set INCLUDES to top_srcdir for out of
+	  source builds.
+
+2005-07-12 20:33  zeekec
+
+	* include/tclap/: UnlabeledMultiArg.h, UnlabeledValueArg.h: Add
+	  using toString statements (for gcc >= 3.4).
+
+2005-07-12 20:31  zeekec
+
+	* config/bb_enable_doxygen.m4: Properly quote BB_ENABLE_DOXYGEN.
+
+2005-06-29 15:04  mes5k
+
+	* include/tclap/Arg.h: merged some new changes
+
+2005-06-08 08:28  mes5k
+
+	* docs/index.html: fixed spelling mistake
+
+2005-06-02 19:35  mes5k
+
+	* include/tclap/: Makefile.am, OptionalUnlabeledTracker.h,
+	  UnlabeledMultiArg.h, UnlabeledValueArg.h: fix to handle optional
+	  unlabeled args
+
+2005-06-02 19:33  mes5k
+
+	* examples/: test2.cpp, test3.cpp, test7.cpp, test8.cpp, test9.cpp:
+	  Unlabeled changes
+
+2005-02-03 15:04  mes5k
+
+	* include/tclap/: Arg.h, DocBookOutput.h, MultiArg.h: updated
+	  docbook output
+
+2005-02-03 08:08  mes5k
+
+	* include/tclap/: ValuesConstraint.h, XorHandler.h: add std::
+	  prefix to some finds
+
+2005-02-01 13:35  zeekec
+
+	* include/tclap/CmdLine.h: Made deleteOnExit's protected to
+	  facilitate derivation.
+
+2005-02-01 13:30  zeekec
+
+	* config/config.h.in: Removed autotools generated file.
+
+2005-01-28 13:26  zeekec
+
+	* configure.in, docs/Doxyfile.in, tests/Makefile.am,
+	  tests/test1.sh, tests/test10.sh, tests/test11.sh,
+	  tests/test12.sh, tests/test13.sh, tests/test14.sh,
+	  tests/test15.sh, tests/test16.sh, tests/test17.sh,
+	  tests/test18.sh, tests/test19.sh, tests/test2.sh,
+	  tests/test20.sh, tests/test21.sh, tests/test22.sh,
+	  tests/test23.sh, tests/test24.sh, tests/test25.sh,
+	  tests/test26.sh, tests/test27.sh, tests/test28.sh,
+	  tests/test29.sh, tests/test3.sh, tests/test30.sh,
+	  tests/test31.sh, tests/test32.sh, tests/test33.sh,
+	  tests/test34.sh, tests/test35.sh, tests/test36.sh,
+	  tests/test37.sh, tests/test38.sh, tests/test39.sh,
+	  tests/test4.sh, tests/test40.sh, tests/test41.sh,
+	  tests/test42.sh, tests/test43.sh, tests/test44.sh,
+	  tests/test45.sh, tests/test46.sh, tests/test47.sh,
+	  tests/test48.sh, tests/test49.sh, tests/test5.sh,
+	  tests/test50.sh, tests/test51.sh, tests/test52.sh,
+	  tests/test53.sh, tests/test54.sh, tests/test55.sh,
+	  tests/test56.sh, tests/test57.sh, tests/test58.sh,
+	  tests/test59.sh, tests/test6.sh, tests/test60.sh, tests/test7.sh,
+	  tests/test8.sh, tests/test9.sh: Made changes to directory
+	  references to allow out of source builds.
+
+2005-01-26 10:25  mes5k
+
+	* aclocal.m4: doh
+
+2005-01-23 19:18  mes5k
+
+	* include/tclap/CmdLine.h: removed -v from version switch
+
+2005-01-23 19:14  mes5k
+
+	* include/tclap/Arg.h: removed value required
+
+2005-01-23 19:03  mes5k
+
+	* examples/: test2.cpp, test3.cpp, test6.cpp, test8.cpp, test9.cpp:
+	  UnlabeledValueArg change
+
+2005-01-23 19:02  mes5k
+
+	* tests/: test10.out, test11.out, test12.out, test15.out,
+	  test16.out, test17.out, test22.out, test23.out, test24.out,
+	  test26.out, test27.out, test28.out, test29.out, test30.out,
+	  test31.out, test32.out, test35.out, test36.out, test38.out,
+	  test39.out, test4.out, test40.out, test41.out, test42.out,
+	  test43.out, test44.out, test45.out, test46.out, test49.out,
+	  test50.out, test51.out, test52.out, test53.out, test54.out,
+	  test57.out, test59.out, test60.out, test7.out: new output for
+	  default version and value required
+
+2005-01-23 19:01  mes5k
+
+	* tests/: test59.sh, test8.sh: new style version and required
+	  UnlabeledValueArgs
+
+2005-01-23 18:59  mes5k
+
+	* tests/testCheck.sh: a script to compare test output
+
+2005-01-23 17:54  mes5k
+
+	* include/tclap/UnlabeledValueArg.h: now optionally required
+
+2005-01-23 16:33  mes5k
+
+	* tests/: test58.out, test59.out, test58.sh, test59.sh, test60.out,
+	  test60.sh, Makefile.am: tests for MultiSwitchArg
+
+2005-01-23 16:27  mes5k
+
+	* include/tclap/Makefile.am, examples/Makefile.am,
+	  examples/test9.cpp: MultiSwitchArg
+
+2005-01-23 16:26  mes5k
+
+	* include/tclap/: CmdLine.h, CmdLineInterface.h, StdOutput.h: added
+	  a bool to the constructor that allows automatic -h and -v to be
+	  turned off
+
+2005-01-23 14:57  mes5k
+
+	* docs/: manual.html, manual.xml: added MultiSwitchArg docs
+
+2005-01-23 14:33  mes5k
+
+	* include/tclap/MultiSwitchArg.h: fixed typo
+
+2005-01-23 14:29  mes5k
+
+	* include/tclap/SwitchArg.h: Fixed minor bug involving combined
+	  switch error messages: now they're consistent.
+
+2005-01-23 14:28  mes5k
+
+	* include/tclap/MultiSwitchArg.h: initial checkin
+
+2005-01-22 20:41  mes5k
+
+	* include/tclap/UnlabeledMultiArg.h: added alreadySet
+
+2005-01-20 20:13  mes5k
+
+	* tests/Makefile.am: xor test
+
+2005-01-20 20:04  mes5k
+
+	* examples/test5.cpp: change for xor bug
+
+2005-01-20 20:04  mes5k
+
+	* tests/: test20.out, runtests.sh, test20.sh, test21.out,
+	  test21.sh, test22.out, test23.out, test24.out, test25.out,
+	  test25.sh, test33.out, test33.sh, test44.out, test57.out,
+	  test57.sh: changes for xor bug
+
+2005-01-20 20:03  mes5k
+
+	* include/tclap/: Arg.h, MultiArg.h, UnlabeledMultiArg.h,
+	  XorHandler.h: fixed xor bug
+
+2005-01-17 12:48  macbishop
+
+	* include/tclap/Arg.h: Removed check on description in
+	  Arg::operator== since multiple args should be able to have the
+	  same description.
+
+2005-01-06 20:41  mes5k
+
+	* NEWS: updated for constraints
+
+2005-01-06 20:37  mes5k
+
+	* docs/: manual.html, manual.xml: updated for constraints
+
+2005-01-06 20:05  mes5k
+
+	* examples/test7.cpp: changed for constraint
+
+2005-01-06 20:00  mes5k
+
+	* include/tclap/: MultiArg.h, ValueArg.h: fixed exceptions and
+	  typeDesc for constraints
+
+2005-01-06 19:59  mes5k
+
+	* tests/: test35.out, test36.out, test38.out, test39.out: changed
+	  for constraints
+
+2005-01-06 19:07  mes5k
+
+	* examples/test6.cpp: changed to constraint
+
+2005-01-06 19:06  mes5k
+
+	* include/tclap/Makefile.am: added constraints
+
+2005-01-06 19:05  mes5k
+
+	* include/tclap/: Constraint.h, ValuesConstraint.h: initial checkin
+
+2005-01-06 19:05  mes5k
+
+	* include/tclap/StdOutput.h: comment change
+
+2005-01-06 19:01  mes5k
+
+	* include/tclap/CmdLine.h: added Constraint includes
+
+2005-01-06 18:55  mes5k
+
+	* include/tclap/: MultiArg.h, UnlabeledMultiArg.h,
+	  UnlabeledValueArg.h, ValueArg.h: Changed allowedList to
+	  Constraint
+
+2005-01-05 16:08  mes5k
+
+	* configure.in: next vers
+
+2005-01-05 12:13  mes5k
+
+	* NEWS: update
+
+2005-01-05 10:51  mes5k
+
+	* docs/: manual.html, manual.xml: fixed output override bug
+
+2005-01-05 10:45  mes5k
+
+	* tests/: test18.out, test43.out: change for output override bug
+
+2005-01-05 10:28  mes5k
+
+	* examples/test4.cpp: fixed output override bug
+
+2005-01-05 10:22  mes5k
+
+	* include/tclap/: CmdLine.h, HelpVisitor.h, VersionVisitor.h: fixed
+	  output bug
+
+2005-01-04 14:01  mes5k
+
+	* configure.in: 1.0.4
+
+2005-01-04 13:16  mes5k
+
+	* examples/test7.cpp: changed for long prog names bug
+
+2005-01-04 13:15  mes5k
+
+	* tests/: test38.out, test39.out, test46.out: changed test7 for
+	  long prog names
+
+2005-01-04 12:31  mes5k
+
+	* NEWS: updates for 1.0.3a
+
+2005-01-04 12:21  mes5k
+
+	* docs/manual.html, docs/manual.xml, include/tclap/CmdLine.h: fixed
+	  output memory leak
+
+2004-12-08 21:10  mes5k
+
+	* include/tclap/StdOutput.h: hacky fix to long prog name bug
+
+2004-12-07 19:57  mes5k
+
+	* configure.in: 1.0.3a
+
+2004-12-07 19:53  mes5k
+
+	* tests/: Makefile.am, test15.out, test16.out, test17.out,
+	  test31.out, test32.out, test13.sh, test14.sh, test15.sh,
+	  test16.sh, test17.sh, test42.out, test55.out, test55.sh,
+	  test56.out, test56.sh: updated for - arg bug
+
+2004-12-07 19:51  mes5k
+
+	* examples/test3.cpp: tweaked to support tests for '-' arg bug
+
+2004-12-07 18:16  mes5k
+
+	* include/tclap/Arg.h: fixed a bug involving blank _flags and - as
+	  an UnlabeledValueArg
+
+2004-12-03 12:19  mes5k
+
+	* docs/style.css: minor tweak for h1
+
+2004-12-03 12:10  mes5k
+
+	* NEWS: update
+
+2004-12-03 11:39  mes5k
+
+	* include/tclap/CmdLine.h: removed ostream include
+
+2004-11-30 19:11  mes5k
+
+	* include/tclap/: Arg.h, CmdLine.h, CmdLineOutput.h, StdOutput.h:
+	  cleaned up iterator names
+
+2004-11-30 19:10  mes5k
+
+	* include/tclap/DocBookOutput.h: removed ostream
+
+2004-11-30 18:35  mes5k
+
+	* configure.in, docs/Doxyfile.in: added dot check
+
+2004-11-24 19:58  mes5k
+
+	* configure.in: 1.0.3
+
+2004-11-24 19:57  mes5k
+
+	* include/tclap/: UnlabeledMultiArg.h, UnlabeledValueArg.h: removed
+	  two stage lookup ifdefs
+
+2004-11-24 19:56  mes5k
+
+	* docs/index.html: updated
+
+2004-11-24 19:45  mes5k
+
+	* docs/: manual.html, manual.xml: updates for using stuff and new
+	  output
+
+2004-11-05 21:05  mes5k
+
+	* include/tclap/: DocBookOutput.h, Makefile.am: adding docbook
+	  stuff
+
+2004-11-04 21:07  mes5k
+
+	* examples/test4.cpp: reflects new output handling
+
+2004-11-04 21:07  mes5k
+
+	* include/tclap/: Arg.h, CmdLine.h, CmdLineInterface.h,
+	  CmdLineOutput.h, HelpVisitor.h, Makefile.am, StdOutput.h,
+	  VersionVisitor.h, XorHandler.h: changed output around
+
+2004-11-04 21:06  mes5k
+
+	* include/tclap/PrintSensibly.h: subsumed by StdOutput
+
+2004-10-31 14:13  mes5k
+
+	* docs/manual.html: tweak
+
+2004-10-30 15:58  mes5k
+
+	* NEWS, README: updates
+
+2004-10-30 15:51  mes5k
+
+	* docs/Makefile.am: added manual.xml
+
+2004-10-30 15:47  mes5k
+
+	* docs/: manual.html, manual.xml, style.css: minor tweaks
+
+2004-10-30 15:34  mes5k
+
+	* configure.in: 1.0.2
+
+2004-10-30 15:30  mes5k
+
+	* docs/README: init
+
+2004-10-30 15:30  mes5k
+
+	* docs/style.css: new style
+
+2004-10-30 15:30  mes5k
+
+	* docs/: manual.html, manual.xml: manual.html is now generated from
+	  manual.xml
+
+2004-10-30 15:26  mes5k
+
+	* include/tclap/: MultiArg.h, ValueArg.h: yet another fix for
+	  HAVE_SSTREAM stuff
+
+2004-10-30 08:42  mes5k
+
+	* NEWS: 1.0.1
+
+2004-10-30 08:03  mes5k
+
+	* configure.in: new release
+
+2004-10-28 09:41  mes5k
+
+	* include/tclap/: ValueArg.h, MultiArg.h: fixed config.h problems
+
+2004-10-27 19:44  mes5k
+
+	* docs/manual.xml: manual as docbook
+
+2004-10-22 08:56  mes5k
+
+	* docs/style.css: added visited color to links
+
+2004-10-22 07:38  mes5k
+
+	* docs/index.html: fixed mailto
+
+2004-10-21 18:58  mes5k
+
+	* docs/: manual.html: minor tweaks
+
+2004-10-21 18:13  mes5k
+
+	* docs/manual.html: updated for new test1
+
+2004-10-21 18:02  mes5k
+
+	* include/tclap/CmdLine.h: catch by ref
+
+2004-10-21 18:01  mes5k
+
+	* examples/: test1.cpp, test2.cpp, test3.cpp, test4.cpp, test5.cpp,
+	  test6.cpp, test7.cpp, test8.cpp: changed test1 and now catching
+	  exceptions by ref
+
+2004-10-21 17:38  mes5k
+
+	* tests/: test1.out, test1.sh, test2.out, test3.out, test3.sh,
+	  test4.out, test40.out: changes for new test1
+
+2004-10-21 15:50  mes5k
+
+	* examples/test1.cpp: fixed includes
+
+2004-10-21 10:03  mes5k
+
+	* docs/index.html: changed link
+
+2004-10-21 09:02  mes5k
+
+	* include/tclap/: ValueArg.h, MultiArg.h: changed enum names
+	  because of alpha conflicts
+
+2004-10-20 20:04  mes5k
+
+	* include/tclap/: CmdLine.h, CmdLineInterface.h, MultiArg.h,
+	  PrintSensibly.h, SwitchArg.h, UnlabeledMultiArg.h,
+	  UnlabeledValueArg.h, ValueArg.h, XorHandler.h: cleaned up some
+	  includes and added ifdefs for sstream
+
+2004-10-20 19:00  mes5k
+
+	* examples/test5.cpp: fixed a bizarre bug
+
+2004-10-20 18:59  mes5k
+
+	* tests/: test20.out, test21.out, test25.out, test33.out: fixed a
+	  test5 bug
+
+2004-10-20 16:17  mes5k
+
+	* Makefile.am: added msc
+
+2004-10-20 16:06  mes5k
+
+	* configure.in: added msc stuff
+
+2004-10-20 16:05  mes5k
+
+	* msc/: examples/Makefile.am, Makefile.am: init
+
+2004-10-20 16:00  mes5k
+
+	* NEWS: update
+
+2004-10-20 15:58  mes5k
+
+	* msc/README: init
+
+2004-10-20 15:47  mes5k
+
+	* msc/: tclap-beta.ncb, tclap-beta.sln, tclap-beta.suo,
+	  tclap-beta.vcproj, examples/test1.vcproj, examples/test2.vcproj,
+	  examples/test3.vcproj, examples/test4.vcproj,
+	  examples/test5.vcproj, examples/test6.vcproj,
+	  examples/test7.vcproj, examples/test8.vcproj: init
+
+2004-10-19 11:18  mes5k
+
+	* docs/Makefile.am: added stylesheet
+
+2004-10-19 10:51  mes5k
+
+	* AUTHORS: more
+
+2004-10-19 10:39  mes5k
+
+	* NEWS, AUTHORS: added 1.0 notes
+
+2004-10-14 13:04  mes5k
+
+	* examples/test4.cpp: shows how to alter output
+
+2004-10-14 13:03  mes5k
+
+	* tests/test18.out: updated output
+
+2004-10-14 12:03  mes5k
+
+	* include/tclap/CmdLineInterface.h: added failure to the interface
+
+2004-10-14 11:07  mes5k
+
+	* include/tclap/ArgException.h: doh. now what() is proper
+
+2004-10-14 10:44  mes5k
+
+	* include/tclap/CmdLine.h: made destructor virtual
+
+2004-10-14 10:20  mes5k
+
+	* include/tclap/CmdLine.h: moved all output handling into separate
+	  methods
+
+2004-10-14 10:19  mes5k
+
+	* include/tclap/Arg.h: made processArg pure virtual
+
+2004-10-14 10:19  mes5k
+
+	* include/tclap/ArgException.h: fixed documentation omission
+
+2004-10-12 14:09  mes5k
+
+	* docs/style.css: tweak
+
+2004-10-07 11:22  mes5k
+
+	* docs/style.css: color change
+
+2004-10-01 10:54  mes5k
+
+	* include/tclap/ArgException.h: added type description
+
+2004-09-30 18:16  mes5k
+
+	* docs/: index.html, manual.html, style.css: added CSS style
+
+2004-09-30 09:17  mes5k
+
+	* docs/manual.html: more updates
+
+2004-09-29 08:24  mes5k
+
+	* docs/: index.html, manual.html: proofing updates
+
+2004-09-27 14:37  mes5k
+
+	* docs/: index.html, manual.html: xhtml and tidied
+
+2004-09-27 14:36  mes5k
+
+	* docs/Doxyfile.in: added dot  handling
+
+2004-09-27 14:30  mes5k
+
+	* include/tclap/: Arg.h, ArgException.h, CmdLine.h, MultiArg.h,
+	  SwitchArg.h, ValueArg.h: added new Exception classes
+
+2004-09-27 12:53  mes5k
+
+	* include/tclap/ArgException.h: minor tweaks
+
+2004-09-26 19:32  mes5k
+
+	* docs/manual.html: updates yet again
+
+2004-09-26 19:00  mes5k
+
+	* docs/manual.html: updates
+
+2004-09-26 18:50  mes5k
+
+	* docs/manual.html: substantial updates
+
+2004-09-26 16:54  mes5k
+
+	* include/tclap/: Arg.h, CmdLine.h, CmdLineInterface.h, MultiArg.h,
+	  PrintSensibly.h, ValueArg.h: minor formatting
+
+2004-09-26 15:50  mes5k
+
+	* docs/manual.html: updates
+
+2004-09-26 15:17  mes5k
+
+	* tests/runtests.sh: minor fix so that we run all tests
+
+2004-09-26 11:51  macbishop
+
+	* docs/Doxyfile.in: Removed src subdir
+
+2004-09-26 11:49  macbishop
+
+	* examples/Makefile.am: Removed libtclap.a deps
+
+2004-09-26 11:46  macbishop
+
+	* configure.in: Removed creation of src/Makefile
+
+2004-09-26 11:34  macbishop
+
+	* Makefile.am: Removed src subdir
+
+2004-09-26 11:31  macbishop
+
+	* src/: Arg.cpp, CmdLine.cpp, Makefile.am, PrintSensibly.cpp,
+	  SwitchArg.cpp, XorHandler.cpp: Implementation now in header files
+
+2004-09-26 11:27  macbishop
+
+	* include/tclap/: Arg.h, ArgException.h, CmdLine.h, HelpVisitor.h,
+	  Makefile.am, MultiArg.h, PrintSensibly.h, SwitchArg.h,
+	  UnlabeledMultiArg.h, UnlabeledValueArg.h, ValueArg.h,
+	  VersionVisitor.h, XorHandler.h, CmdLineInterface.h,
+	  CommandLine.h: Moving the implementation of tclap to the header
+	  files presented me with two major problems. 1) There where static
+	  functions and variables that could cause link errors if tclap
+	  where used in different files (e.g. file1.cc and file2.cc
+	  included tclap then compiling both files would give hard symbols
+	  for some variables which would produce multiple definition when
+	  linking) 2) The dependencies of tclap was a bit strange (CmdLine
+	  depends on Args and Args depends on CmdLine for instance)
+
+	  The first problem I solved by removing all static variables
+	  putting them in static member functions (which are weak-symbols).
+	  So for instance every where there previously was something like x
+	  = _delimiter there now is x = delimiter() or in case of write
+	  acces delimiterRef() = x instead of _delimiter = x (I had to
+	  append the Ref because there where already functions with the
+	  same name as the variables). To solve the problem with static
+	  functions I simply inlined them. This causes the compiler to
+	  produce a weak symbol or inline if appropriate. We can put the
+	  functions inside the class declaration later to make the code
+	  look better. This worked fine in all but two cases. In the
+	  ValueArg and MultiArg classes I had to do a "hack" to work around
+	  the specialization template for extractValue<std::string>. The
+	  code for this is very simple but it might look strange an stupid
+	  at first but it is only to resolve the specialisation to a weak
+	  symbol. What I did was I put the implementations of extractValue
+	  in a helper class and I could then create a specialized class
+	  instead of function and everything worked out. I think now in
+	  retrospect there might be better solutions to this but I'll think
+	  a bit more on it (maybe some type of inlining on the specialized
+	  version would suffice but I'm not sure).
+
+	  To handle the dependencies I had to do some rewriting. The first
+	  step was to introduce a new class CmdLineInterface that is a
+	  purely abstract base of CmdLine that specifies the functions
+	  needed by Arg and friends. Thus Arg classes now takes an
+	  CmdLineInterface object as input instead (however only CmdLine
+	  can ever be instantiated of-course). With this extra class
+	  cleaning up the dependencies was quite simple, I've attached a
+	  dependency graph to the mail (depgraph.png). I also cleaned up
+	  the #includes so now only what actually needs inclusion is
+	  included. A nice side effect of this is that the impl. of CmdLine
+	  is now put back into CmdLine.h (where I guess you wanted it)
+	  which (recursivly) includes everything else needed.
+
+	  Just to make things clear for myself regarding the class
+	  dependencies I made a class TCLAP::Exception that inherits from
+	  std::exception and is a base of ArgException (Exception does
+	  nothing currently). If we don't want the Exception class it can
+	  be removed, however I think it could be a nice logic to have a
+	  base Exception class that every exception inherits from, but we
+	  can discuss that when we decide how to handle exceptions.
+
+2004-09-26 08:07  macbishop
+
+	* tests/runtests.sh: Now return 0 if all tests fail and 1 if any
+	  test fail
+
+2004-09-26 07:58  macbishop
+
+	* tests/runtests.sh: Runs all tests and sumarizes the result
+
+2004-09-20 17:09  mes5k
+
+	* include/tclap/CommandLine.h: added some comments
+
+2004-09-20 17:08  mes5k
+
+	* src/CmdLine.cpp: formatting only
+
+2004-09-20 10:05  macbishop
+
+	* include/tclap/CommandLine.h: Recommit because something is
+	  strange. The changes are that memory allocated in _construct is
+	  deallocated when the CmdLine obj is destroyed
+
+2004-09-19 11:32  macbishop
+
+	* src/CmdLine.cpp: Memory allocated in _constructor is now deleted
+	  when the object is destroyed
+
+2004-09-18 09:54  mes5k
+
+	* include/tclap/: Arg.h, ArgException.h, CmdLine.h, CommandLine.h,
+	  HelpVisitor.h, IgnoreRestVisitor.h, MultiArg.h, PrintSensibly.h,
+	  SwitchArg.h, UnlabeledMultiArg.h, UnlabeledValueArg.h,
+	  ValueArg.h, VersionVisitor.h, Visitor.h, XorHandler.h: changed
+	  ifndef labels
+
+2004-09-18 07:53  macbishop
+
+	* include/tclap/Arg.h: Had to make ~Arg() public because it won't
+	  be possible to delete Arg*s if it is not, and we want that (I
+	  think).
+
+2004-09-15 21:24  mes5k
+
+	* configure.in: version 1.0.0
+
+2004-09-15 20:54  mes5k
+
+	* include/tclap/Arg.h, include/tclap/ArgException.h,
+	  include/tclap/HelpVisitor.h, include/tclap/IgnoreRestVisitor.h,
+	  include/tclap/MultiArg.h, include/tclap/SwitchArg.h,
+	  include/tclap/UnlabeledMultiArg.h, include/tclap/ValueArg.h,
+	  include/tclap/VersionVisitor.h, include/tclap/Visitor.h,
+	  src/Arg.cpp, src/SwitchArg.cpp: cleaned up a bunch of things
+
+2004-09-11 19:35  mes5k
+
+	* tests/: Makefile.am, test47.out, test47.sh, test48.out,
+	  test48.sh, test49.out, test49.sh, test50.out, test50.sh,
+	  test51.out, test51.sh, test52.out, test52.sh, test53.out,
+	  test53.sh, test54.out, test54.sh: added tests for CmdLine arg
+
+2004-09-11 19:33  mes5k
+
+	* examples/: Makefile.am, test8.cpp: added new test for CmdLine arg
+
+2004-09-11 19:32  mes5k
+
+	* src/Arg.cpp, src/SwitchArg.cpp, include/tclap/Arg.h,
+	  include/tclap/MultiArg.h, include/tclap/SwitchArg.h,
+	  include/tclap/UnlabeledMultiArg.h,
+	  include/tclap/UnlabeledValueArg.h, include/tclap/ValueArg.h: got
+	  CmdLine arg working
+
+2004-09-09 19:08  mes5k
+
+	* configure: shouldn't be in cvs
+
+2004-09-09 12:56  macbishop
+
+	* src/: Arg.cpp, SwitchArg.cpp: Added support for automatic
+	  addition to a CmdLine parser
+
+2004-09-09 12:55  macbishop
+
+	* include/tclap/: Arg.h, MultiArg.h, SwitchArg.h,
+	  UnlabeledMultiArg.h, UnlabeledValueArg.h, ValueArg.h: Support for
+	  automatic addition to a CmdLine parser
+
+2004-09-08 20:09  mes5k
+
+	* src/CmdLine.cpp: fixed a warning in MSVC++
+
+2004-09-07 16:11  mes5k
+
+	* include/tclap/Makefile.in, docs/Makefile.in,
+	  examples/Makefile.in, tests/Makefile.in: not needed
+
+2004-09-07 16:08  mes5k
+
+	* Makefile.in, src/Makefile.in, include/Makefile.in: not needed
+
+2004-09-07 15:14  mes5k
+
+	* src/CmdLine.cpp: now throws exception on matching
+	  names/flags/desc
+
+2004-09-07 15:12  mes5k
+
+	* examples/test4.cpp, examples/test7.cpp, tests/test38.out,
+	  tests/test39.out, tests/test43.out, tests/test46.out: fixed to
+	  handle new exception on matching names/flags/desc
+
+2004-09-07 13:25  mes5k
+
+	* docs/Doxyfile.in: updated Doxyfile for newer doxygen
+
+2004-09-07 11:27  mes5k
+
+	* examples/: test1.cpp, test2.cpp, test3.cpp, test4.cpp, test5.cpp,
+	  test6.cpp: changed namespace std handling
+
+2004-09-07 11:25  mes5k
+
+	* examples/test7.cpp: added more args to better test output
+	  printing
+
+2004-09-07 11:24  mes5k
+
+	* src/Arg.cpp, src/CmdLine.cpp, src/PrintSensibly.cpp,
+	  src/SwitchArg.cpp, src/XorHandler.cpp, include/tclap/Arg.h,
+	  include/tclap/ArgException.h, include/tclap/CommandLine.h,
+	  include/tclap/MultiArg.h, include/tclap/PrintSensibly.h,
+	  include/tclap/SwitchArg.h, include/tclap/UnlabeledMultiArg.h,
+	  include/tclap/UnlabeledValueArg.h, include/tclap/ValueArg.h,
+	  include/tclap/XorHandler.h: changed namespace std handling
+
+2004-09-07 11:24  mes5k
+
+	* tests/: test15.out, test16.out, test17.out, test22.out,
+	  test23.out, test24.out, test31.out, test32.out, test38.out,
+	  test39.out, test42.out, test44.out, test46.out: fixed test output
+	  for new formatting
+
+2004-09-04 14:09  macbishop
+
+	* include/tclap/: UnlabeledMultiArg.h, UnlabeledValueArg.h:
+	  Compilation was broken due to undef. symbols in compilers with 2
+	  stage name-lookup (such as gcc >= 3.4). The fix for this is to
+	  tell the compiler what symbols to use withlines like: using
+	  MultiArg<T>::_name;
+
+	  This is now done and everything compiles fine. Since I'm not sure
+	  about the support for things like using MultiArg<T>::_name; on
+	  all compilers it is ifdef:ed away by default. To get 2 stage
+	  name-lookup to work you have to add -DTWO_STAGE_NAME_LOOKUP to
+	  your CXXFLAGS before running configure.
+
+2004-08-18 12:34  mes5k
+
+	* src/PrintSensibly.cpp: smartened printing even further
+
+2004-08-10 20:35  mes5k
+
+	* src/PrintSensibly.cpp: fixed int messiness
+
+2004-08-10 20:32  mes5k
+
+	* autotools.sh: made path explicit
+
+2004-08-10 20:05  mes5k
+
+	* include/tclap/: MultiArg.h, ValueArg.h: changed allowed separator
+
+2004-08-10 19:53  mes5k
+
+	* tests/: Makefile.am, test10.out, test11.out, test12.out,
+	  test15.out, test16.out, test17.out, test18.out, test22.out,
+	  test23.out, test24.out, test26.out, test27.out, test28.out,
+	  test29.out, test30.out, test31.out, test32.out, test35.out,
+	  test36.out, test38.out, test39.out, test4.out, test40.out,
+	  test40.sh, test41.out, test41.sh, test42.out, test42.sh,
+	  test43.out, test43.sh, test44.out, test44.sh, test45.out,
+	  test45.sh, test46.out, test46.sh, test7.out, test7.sh: changed
+	  error output and added usage stuff
+
+2004-08-10 19:52  mes5k
+
+	* NEWS, README: updated
+
+2004-08-10 19:47  mes5k
+
+	* configure.in: changed to 0.9.9
+
+2004-08-10 19:46  mes5k
+
+	* examples/test7.cpp: tweaked for usage
+
+2004-08-10 19:45  mes5k
+
+	* include/tclap/: CmdLine.h, CommandLine.h, Makefile.am,
+	  PrintSensibly.h, XorHandler.h: added usage stuff
+
+2004-08-10 19:43  mes5k
+
+	* src/: CmdLine.cpp, Makefile.am, PrintSensibly.cpp,
+	  XorHandler.cpp: tweaked usage
+
+2004-07-05 19:02  mes5k
+
+	* docs/manual.html: updated for allowed
+
+2004-07-03 20:01  mes5k
+
+	* tests/: test34.out, test34.sh, test35.out, test35.sh, test36.out,
+	  test36.sh, test37.out, test37.sh, test38.out, test38.sh,
+	  test39.out, test39.sh, Makefile.am: allow tests
+
+2004-07-03 19:56  mes5k
+
+	* include/tclap/ValueArg.h: doh
+
+2004-07-03 19:34  mes5k
+
+	* NEWS: allow
+
+2004-07-03 19:31  mes5k
+
+	* include/tclap/Arg.h: made isReq virtual
+
+2004-07-03 19:30  mes5k
+
+	* include/tclap/: MultiArg.h, UnlabeledMultiArg.h,
+	  UnlabeledValueArg.h, ValueArg.h: added allow
+
+2004-07-03 19:29  mes5k
+
+	* examples/: Makefile.am, test6.cpp, test7.cpp: added tests for
+	  allowed
+
+2004-07-03 19:28  mes5k
+
+	* docs/: index.html, manual.html: minor typos
+
+2004-04-26 08:18  mes5k
+
+	* Makefile.am, autotools.sh, examples/Makefile.am, src/Makefile.am:
+	  fixed for autotools for mandrake
+
+2004-02-13 20:09  mes5k
+
+	* configure.in: 0.9.8a
+
+2004-02-13 15:23  mes5k
+
+	* tests/: test22.out, test23.out, test24.out: output updates
+
+2004-02-13 15:21  mes5k
+
+	* include/tclap/: Arg.h, UnlabeledMultiArg.h, UnlabeledValueArg.h:
+	  now the Arg adds itself to the CmdLine arglist
+
+2004-02-13 15:20  mes5k
+
+	* src/: Arg.cpp, CmdLine.cpp: reworked how we add args to list
+
+2004-02-10 08:52  mes5k
+
+	* NEWS: update
+
+2004-02-09 21:04  mes5k
+
+	* examples/test5.cpp: change
+
+2004-02-09 21:03  mes5k
+
+	* src/SwitchArg.cpp: allowing blank flags
+
+2004-02-09 20:54  mes5k
+
+	* configure.in: 0.9.8
+
+2004-02-09 20:52  mes5k
+
+	* tests/: Makefile.am, test20.out, test21.out, test22.out,
+	  test23.out, test24.out, test25.out, test33.out, test33.sh:
+	  updates
+
+2004-02-09 20:39  mes5k
+
+	* docs/manual.html: blank args
+
+2004-02-09 20:16  mes5k
+
+	* tests/: test15.out, test16.out, test17.out, test20.out,
+	  test20.sh, test21.out, test21.sh, test22.out, test23.out,
+	  test24.out, test25.out, test25.sh, test31.out, test32.out:
+	  updates
+
+2004-02-09 20:05  mes5k
+
+	* examples/: test5.cpp, test3.cpp: minor fixes and new args
+
+2004-02-09 19:56  mes5k
+
+	* include/tclap/Arg.h: added new var
+
+2004-02-09 19:54  mes5k
+
+	* src/: Arg.cpp, CmdLine.cpp, SwitchArg.cpp: allowing blank flags
+
+2004-02-07 15:37  mes5k
+
+	* src/XorHandler.cpp: fix for the output
+
+2004-02-06 17:41  mes5k
+
+	* NEWS: added info
+
+2004-02-06 17:24  mes5k
+
+	* tests/: test12.out, test15.out, test16.out, test17.out: fixed
+	  test3 stuff
+
+2004-02-06 17:20  mes5k
+
+	* tests/: test26.out, test26.sh, test27.out, test27.sh, test28.out,
+	  test28.sh, test29.out, test29.sh, test30.out, test30.sh,
+	  test31.out, test31.sh, test32.out, test32.sh, Makefile.am: added
+	  tests for reading extra incorrect values from arg
+
+2004-02-06 17:18  mes5k
+
+	* examples/test3.cpp: add multi float
+
+2004-02-06 17:18  mes5k
+
+	* include/tclap/: MultiArg.h, ValueArg.h: fixed error reading
+	  incorrect extra values in an arg
+
+2004-02-04 18:56  mes5k
+
+	* include/tclap/XorHandler.h: added include
+
+2004-02-03 20:21  mes5k
+
+	* include/tclap/XorHandler.h: added doxyen
+
+2004-02-03 20:00  mes5k
+
+	* docs/manual.html: xor stuff
+
+2004-02-03 19:56  mes5k
+
+	* examples/test5.cpp: prettified
+
+2004-02-03 19:27  mes5k
+
+	* examples/: Makefile.am, test5.cpp: xor stuff
+
+2004-02-03 19:24  mes5k
+
+	* configure.in: 0.9.7
+
+2004-02-03 19:22  mes5k
+
+	* src/: Arg.cpp, CmdLine.cpp, Makefile.am, XorHandler.cpp: added
+	  xor
+
+2004-02-03 19:20  mes5k
+
+	* include/tclap/: Arg.h, CmdLine.h, CommandLine.h,
+	  UnlabeledValueArg.h, XorHandler.h, Makefile.am: xor stuff
+
+2004-02-03 19:14  mes5k
+
+	* tests/: test1.sh, test10.sh, test11.sh, test12.sh, test13.sh,
+	  test14.sh, test15.sh, test16.sh, test17.sh, test18.sh, test19.sh,
+	  test2.sh, test20.sh, test21.sh, test22.sh, test23.sh, test24.sh,
+	  test25.sh, test3.sh, test4.sh, test5.sh, test6.sh, test7.sh,
+	  test8.sh, test9.sh, Makefile.am, test20.out, test21.out,
+	  test22.out, test23.out, test24.out, test25.out: added new tests
+	  and comments
+
+2004-01-29 20:36  mes5k
+
+	* include/tclap/: CmdLine.h, CommandLine.h, MultiArg.h, ValueArg.h:
+	  fix for strings with spaces
+
+2004-01-10 09:39  mes5k
+
+	* docs/index.html: spelling
+
+2004-01-07 22:18  mes5k
+
+	* docs/: index.html, manual.html: updates
+
+2004-01-07 21:51  mes5k
+
+	* NEWS: update
+
+2004-01-07 21:30  mes5k
+
+	* include/tclap/CmdLine.h, src/CmdLine.cpp: added backward
+	  compatibility
+
+2004-01-07 21:11  mes5k
+
+	* src/Arg.cpp: fixed warning
+
+2004-01-07 21:04  mes5k
+
+	* examples/: Makefile.am, test4.cpp: added new test
+
+2004-01-07 21:00  mes5k
+
+	* tests/Makefile.am: added two new tests
+
+2004-01-07 20:59  mes5k
+
+	* include/tclap/: Arg.h, ArgException.h, CmdLine.h, HelpVisitor.h,
+	  IgnoreRestVisitor.h, MultiArg.h, SwitchArg.h,
+	  UnlabeledMultiArg.h, UnlabeledValueArg.h, ValueArg.h,
+	  VersionVisitor.h, Visitor.h: fixed combined switch stuff and
+	  added doxygen comments
+
+2004-01-07 20:58  mes5k
+
+	* src/: Arg.cpp, CmdLine.cpp, SwitchArg.cpp: fixed some combined
+	  switch stuff
+
+2004-01-07 20:50  mes5k
+
+	* tests/: test18.out, test18.sh, test19.out, test19.sh: new tests
+
+2003-12-21 18:32  mes5k
+
+	* autotools.sh: init
+
+2003-12-21 18:31  mes5k
+
+	* include/tclap/UnlabeledMultiArg.h: delim stuff
+
+2003-12-21 18:14  mes5k
+
+	* examples/test1.cpp: new fangled
+
+2003-12-21 18:11  mes5k
+
+	* configure.in: 0.9.6
+
+2003-12-21 18:10  mes5k
+
+	* tests/: test13.sh, test14.sh: updated
+
+2003-12-21 18:09  mes5k
+
+	* tests/: test10.out, test11.out, test12.out, test13.out,
+	  test14.out, test15.out, test16.out, test4.out: updates
+
+2003-12-21 18:07  mes5k
+
+	* tests/Makefile.am: added test
+
+2003-12-21 18:06  mes5k
+
+	* tests/: test17.out, test17.sh: first checkin
+
+2003-12-21 18:01  mes5k
+
+	* src/Arg.cpp: removed message
+
+2003-12-21 17:59  mes5k
+
+	* examples/Makefile.am: added warnings
+
+2003-12-21 17:58  mes5k
+
+	* examples/: test2.cpp, test3.cpp: fixed warnings
+
+2003-12-21 17:53  mes5k
+
+	* Makefile.am: added warnings
+
+2003-12-21 17:52  mes5k
+
+	* src/Arg.cpp, src/CmdLine.cpp, src/SwitchArg.cpp,
+	  examples/test3.cpp: added delimiter
+
+2003-12-21 17:50  mes5k
+
+	* src/Makefile.am: added warnings
+
+2003-12-21 17:48  mes5k
+
+	* include/tclap/: Arg.h, ArgException.h, CmdLine.h, MultiArg.h,
+	  UnlabeledValueArg.h, ValueArg.h: delimiter changes
+
+2003-04-03 10:26  mes5k
+
+	* include/tclap/Makefile.am: added new visitor
+
+2003-04-03 10:20  mes5k
+
+	* include/tclap/Makefile.am: updates
+
+2003-04-03 10:13  mes5k
+
+	* config/: mkinstalldirs, install-sh, missing, depcomp: init
+	  checkin
+
+2003-04-03 10:11  mes5k
+
+	* NEWS: update
+
+2003-04-03 10:06  mes5k
+
+	* examples/Makefile.am, examples/test1.cpp, examples/test2.cpp,
+	  examples/test3.cpp, INSTALL, Makefile.in: updates
+
+2003-04-03 10:01  mes5k
+
+	* Makefile.am, configure.in: added tests
+
+2003-04-03 10:00  mes5k
+
+	* docs/: index.html, manual.html: updated docs
+
+2003-04-03 09:59  mes5k
+
+	* include/tclap/: Arg.h, CmdLine.h, IgnoreRestVisitor.h,
+	  MultiArg.h, SwitchArg.h, UnlabeledMultiArg.h,
+	  UnlabeledValueArg.h, ValueArg.h: big update
+
+2003-04-03 09:57  mes5k
+
+	* src/: CmdLine.cpp, SwitchArg.cpp, Arg.cpp: new update
+
+2003-04-03 09:56  mes5k
+
+	* tests/: test10.sh, test11.sh, test12.sh, test1.sh, test13.sh,
+	  test14.sh, test15.sh, test16.sh, test2.sh, test3.sh, test4.sh,
+	  test5.sh, test6.sh, test7.sh, test8.sh, test9.sh, test10.out,
+	  test11.out, test12.out, test13.out, test14.out, test15.out,
+	  test16.out, test1.out, test2.out, test3.out, test4.out,
+	  test5.out, test6.out, test7.out, Makefile.am, test8.out,
+	  test9.out, Makefile.in, genOut.pl: initial checkin
+
+2003-03-18 18:39  mes5k
+
+	* NEWS, configure.in, AUTHORS, COPYING, ChangeLog, Makefile.am,
+	  Makefile.in, README, aclocal.m4, configure,
+	  config/ac_cxx_have_sstream.m4, config/ac_cxx_have_strstream.m4,
+	  config/ac_cxx_namespaces.m4, config/bb_enable_doxygen.m4,
+	  config/config.h.in, config/stamp-h.in, config/stamp-h1,
+	  examples/Makefile.am, examples/Makefile.in, examples/test1.cpp,
+	  examples/test2.cpp, include/Makefile.am, include/Makefile.in,
+	  include/tclap/Arg.h, include/tclap/ArgException.h,
+	  include/tclap/CmdLine.h, include/tclap/HelpVisitor.h,
+	  include/tclap/MultiArg.h, docs/Doxyfile.in, docs/Makefile.am,
+	  docs/Makefile.in, docs/index.html, docs/manual.html,
+	  include/tclap/Makefile.am, include/tclap/Makefile.in,
+	  include/tclap/SwitchArg.h, include/tclap/ValueArg.h,
+	  include/tclap/VersionVisitor.h, include/tclap/Visitor.h,
+	  src/Arg.cpp, src/CmdLine.cpp, src/Makefile.am, src/Makefile.in,
+	  src/SwitchArg.cpp: Initial revision
+
+2003-03-18 18:39  mes5k
+
+	* NEWS, configure.in, AUTHORS, COPYING, ChangeLog, Makefile.am,
+	  Makefile.in, README, aclocal.m4, configure,
+	  config/ac_cxx_have_sstream.m4, config/ac_cxx_have_strstream.m4,
+	  config/ac_cxx_namespaces.m4, config/bb_enable_doxygen.m4,
+	  config/config.h.in, config/stamp-h.in, config/stamp-h1,
+	  examples/Makefile.am, examples/Makefile.in, examples/test1.cpp,
+	  examples/test2.cpp, include/Makefile.am, include/Makefile.in,
+	  include/tclap/Arg.h, include/tclap/ArgException.h,
+	  include/tclap/CmdLine.h, include/tclap/HelpVisitor.h,
+	  include/tclap/MultiArg.h, docs/Doxyfile.in, docs/Makefile.am,
+	  docs/Makefile.in, docs/index.html, docs/manual.html,
+	  include/tclap/Makefile.am, include/tclap/Makefile.in,
+	  include/tclap/SwitchArg.h, include/tclap/ValueArg.h,
+	  include/tclap/VersionVisitor.h, include/tclap/Visitor.h,
+	  src/Arg.cpp, src/CmdLine.cpp, src/Makefile.am, src/Makefile.in,
+	  src/SwitchArg.cpp: initial release
+
