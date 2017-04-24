@@ -9,11 +9,10 @@ def create_pointset(algo, all_data, xn, yn):
     data = all_data[algo]
     rev = ym["worst"] < 0
     data.sort(key=lambda (a, n, rs): rs[yn], reverse=rev) # sort by y coordinate
-    ls = [t[1] for t in data]
 
-    axs, ays = [], []
+    axs, ays, als = [], [], []
     # Generate Pareto frontier
-    xs, ys = [], []
+    xs, ys, ls = [], [], []
     last_x = xm["worst"]
     comparator = \
       (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
@@ -23,11 +22,13 @@ def create_pointset(algo, all_data, xn, yn):
             continue
         axs.append(xv)
         ays.append(yv)
+        als.append(algo_name)
         if comparator(xv, last_x):
             last_x = xv
             xs.append(xv)
             ys.append(yv)
-    return xs, ys, axs, ays, ls
+            ls.append(algo_name)
+    return xs, ys, ls, axs, ays, als
 
 def enumerate_query_caches(ds):
     for f in os.listdir("queries/"):
