@@ -16,7 +16,7 @@ from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
 from ann_benchmarks.algorithms.definitions import get_algorithms, get_definitions
 
-def run_algo(X_train, queries, library, algo, distance, result_pipe,
+def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
         runner_finished, run_count=3, force_single=False):
     try:
         prepared_queries = False
@@ -37,18 +37,20 @@ def run_algo(X_train, queries, library, algo, distance, result_pipe,
             def single_query(t):
                 v, _, _ = t
                 if prepared_queries:
-                    algo.prepare_query(v, 10)
+                    algo.prepare_query(v, count)
                     start = time.time()
                     algo.run_prepared_query()
                     total = (time.time() - start)
                     candidates = algo.get_prepared_query_results()
                 else:
                     start = time.time()
-                    candidates = algo.query(v, 10)
+                    candidates = algo.query(v, count)
                     total = (time.time() - start)
                 candidates = map(
                     lambda idx: (int(idx), float(pd[distance]['distance'](v, X_train[idx]))),
                     list(candidates))
+                if len(candidates) > count:
+                    print "(warning: algorithm %s returned %d results, but count is only %d)" % (algo.name, len(candidates), count)
                 return (total, candidates)
             if algo.use_threads() and not force_single:
                 pool = multiprocessing.pool.ThreadPool()
@@ -79,7 +81,7 @@ def run_algo(X_train, queries, library, algo, distance, result_pipe,
     finally:
         algo.done()
 
-def compute_distances(distance, X_train, X_test):
+def compute_distances(distance, count, X_train, X_test):
     print('computing max distances for queries...')
 
     bf = BruteForceBLAS(distance, precision=X_train.dtype)
@@ -87,8 +89,8 @@ def compute_distances(distance, X_train, X_test):
     bf.fit(X_train)
     queries = []
     for x in X_test:
-        correct = bf.query_with_distances(x, 10)
-	# disregard queries that don't have near neighbors.
+        correct = bf.query_with_distances(x, count)
+        # disregard queries that don't have near neighbors.
         if len(correct) > 0:
             max_distance = max(correct, key=lambda (_, distance): distance)[1]
             queries.append((x, max_distance, correct))
@@ -136,6 +138,11 @@ def main():
             metavar='NAME',
             help='load query points from another dataset instead of choosing them randomly from the training dataset',
             default=None)
+    parser.add_argument(
+            "-k", "--count",
+            default=10,
+            type=positive_int,
+            help="the number of near neighbours to search for")
     parser.add_argument(
             '--distance',
             help='the metric used to calculate the distance between points',
@@ -287,12 +294,12 @@ error: the training dataset and query dataset have incompatible manifests"""
 
     results_fn = get_fn('results', args.dataset, args.limit)
     queries_fn = get_query_cache_path(
-        args.dataset, args.limit, args.distance, args.query_dataset)
+        args.dataset, args.count, args.limit, args.distance, args.query_dataset)
 
     print('storing queries in', queries_fn, 'and results in', results_fn)
 
     if not os.path.exists(queries_fn):
-        queries = compute_distances(args.distance, X_train, X_test)
+        queries = compute_distances(args.distance, args.count, X_train, X_test)
         with open(queries_fn, 'w') as f:
             pickle.dump(queries, f)
     else:
@@ -308,8 +315,8 @@ error: the training dataset and query dataset have incompatible manifests"""
             algos_already_ran.add((run["library"], run["name"]))
 
     point_type = manifest['point_type']
-    algos = get_algorithms(
-        definitions, constructors, len(X_train[0]), point_type, args.distance)
+    algos = get_algorithms(definitions, constructors,
+        len(X_train[0]), point_type, args.distance, args.count)
 
     if args.algorithm:
         print('running only', args.algorithm)
@@ -338,8 +345,9 @@ error: the training dataset and query dataset have incompatible manifests"""
             # Spawn a subprocess to force the memory to be reclaimed at the end
             p = multiprocessing.Process(
                 target=run_algo,
-                args=(X_train, queries, library, algo, args.distance,
-                      send_pipe, subprocess_finished, args.runs, args.single))
+                args=(args.count, X_train, queries, library, algo,
+                      args.distance, send_pipe, subprocess_finished, args.runs,
+                      args.single))
 
             subprocess_finished.acquire()
             p.start()

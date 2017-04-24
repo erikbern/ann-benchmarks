@@ -72,9 +72,9 @@ def split_dataset(X, random_state=3, test_size=10000):
 
     return X_train, X_test
 
-def get_query_cache_path(dataset, limit, distance, query_dataset = None):
+def get_query_cache_path(dataset, count, limit, distance, query_dataset = None):
     if not query_dataset:
-        return "queries/%s_%s_%s.p" % (dataset, limit, distance)
+        return "queries/%s_%s_%s_%s.p" % (dataset, count, limit, distance)
     else:
         return \
-          "queries/%s_%s_%s_%s.p" % (dataset, limit, query_dataset, distance)
+          "queries/%s_%s_%s_%s_%s.p" % (dataset, count, limit, query_dataset, distance)
