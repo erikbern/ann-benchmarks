@@ -286,12 +286,12 @@ for (algo, runs) in all_runs_by_algorithm.items():
         <h2>Plots for %(id)s""" % { "id" : algo }
     for plottype in args.plottype:
         xn, yn = plot_variants[plottype]
-        linestyles = convert_linestyle(create_linestyles(args.dataset))
+        linestyles = convert_linestyle(create_linestyles(all_data))
         print "Processing '%s' with %s" % (algo, plottype)
         output_str += create_plot(algo, runs, xn, yn, linestyles)
     plot.create_plot(runs, True, False,
             False, True, 'k-nn', 'qps',  outputdir + algo + ".png",
-            create_linestyles(args.dataset))
+            create_linestyles(all_data))
     output_str += """
     </div>
     </body>
