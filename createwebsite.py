@@ -71,6 +71,10 @@ parser.add_argument(
     '--latex',
     help='generates latex code for each plot',
     action = 'store_true')
+parser.add_argument(
+    '--scatter',
+    help='create scatterplot for data',
+    action = 'store_true')
 args = parser.parse_args()
 
 outputdir = ""
@@ -124,25 +128,59 @@ def get_html_header(title):
           </div>
         </nav>""" % {"title" : title}
 
-def create_plot(ds, all_data, xn, yn, linestyle):
-    xm, ym = (metrics[xn], metrics[yn])
-    output_str = """
-        <h2>%(id)s with %(xmetric)s/%(ymetric)s</h2>
-        <canvas id="chart%(xmetric)s%(ymetric)s" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart%(xmetric)s%(ymetric)s");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [""" % { "id" : ds, "xmetric" :  xm["description"], "ymetric" : ym["description"] }
+def get_latex_plot(all_data, xm, ym, plottype):
+    latex_str = """
+\\begin{figure}
+    \\centering
+    \\begin{tikzpicture}
+        \\begin{axis}[
+            xlabel={%(xlabel)s},
+            ylabel={%(ylabel)s},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    """ % {"xlabel" : xm["description"], "ylabel" : ym["description"] }
     color_index = 0
+    only_marks = ""
+    if plottype == "bubble":
+        only_marks = "[only marks]"
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
             xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
+            for i in range(len(ls)):
+                if "Subprocess" in ls[i]:
+                    ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
+            latex_str += """
+        \\addplot coordinates %s {""" % only_marks
+            for i in range(len(xs)):
+                latex_str += "(%s, %s)" % (str(xs[i]), str(ys[i]))
+            latex_str += " };"
+            latex_str += """
+        \\addlegendentry{%s};
+            """ % (algo)
+    latex_str += """
+        \\end{axis}
+    \\end{tikzpicture}
+    \\caption{%(caption)s}
+    \\label{}
+\\end{figure}
+    """ % {"caption" : get_plot_label(xm, ym)}
+    return latex_str
+
+def create_data_points(all_data, xn, yn, linestyle, render_all_points):
+    color_index = 0
+    html_str = ""
+    for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
+            xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
+            if render_all_points:
+                xs, ys, ls = axs, ays, als
 # TODO Put this somewhere else
 # pretty print subprocess parameter settings.
             for i in range(len(ls)):
                 if "Subprocess" in ls[i]:
                     ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
-            output_str += """
+            html_str += """
                 {
                     label: "%(algo)s",
                     fill: false,
@@ -151,46 +189,57 @@ def create_plot(ds, all_data, xn, yn, linestyle):
                     data: [ """ % {"algo" : algo, "color" : linestyle[algo][0], "ps" : linestyle[algo][3] }
 
             for i in range(len(xs)):
-                output_str += """
+                html_str += """
                         { x: %(x)s, y: %(y)s, label: "%(label)s" },""" % {"x" : str(xs[i]), "y" : str(ys[i]), "label" : ls[i] }
-            output_str += """
+            html_str += """
                 ]},"""
             color_index += 1
+    return html_str
 
-    output_str += """
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '%(plotlabel)s'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype = "line"):
+    xm, ym = (metrics[xn], metrics[yn])
+    output_str = """
+        <h3>%(label)s %(id)s with %(xlabel)s/%(ylabel)s</h3>
+        <div id="%(xlabel)s%(ylabel)s%(label)s">
+            <canvas id="chart%(xlabel)s%(ylabel)s%(label)s" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart%(xlabel)s%(ylabel)s%(label)s");
+                var chart = new Chart(ctx, {
+                    type: "%(plottype)s",
+                    data: { datasets: [%(datapoints)s
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '%(plotlabel)s'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' %(xlabel)s   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' %(xlabel)s   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' %(ylabel)s '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' %(ylabel)s '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); """ % { "xlabel" :  xm["description"], "ylabel" : ym["description"],
-                        "plotlabel" : get_plot_label(xm, ym)}
-
-    output_str += """
-        </script>
-        """
+                    });
+                </script>
+            </div>""" % { "id" : ds, "xlabel" :  xm["description"], "ylabel" : ym["description"], "plottype" : plottype,
+                        "plotlabel" : get_plot_label(xm, ym),  "label": additional_label,
+                        "datapoints" : create_data_points(all_data, xn, yn, linestyle, plottype == "bubble") }
     if args.latex:
         output_str += """
         <div class="row">
@@ -204,42 +253,11 @@ def create_plot(ds, all_data, xn, yn, linestyle):
         });
         </script>
         <div id="plot_%(buttonlabel)s" style="display:none">
-        <pre>
-\\begin{figure}
-    \\centering
-    \\begin{tikzpicture}
-        \\begin{axis}[
-            xlabel={%(xlabel)s},
-            ylabel={%(ylabel)s},
-            yticklabel style={/pgf/number format/fixed,
-                              /pgf/number format/precision=3},
-            legend style = { anchor=west},
-            cycle list name = black white
-            ]
-        """ % {"xlabel" : xm["description"], "ylabel" : ym["description"], "buttonlabel" : hashlib.sha224(get_plot_label(xm, ym)).hexdigest()}
-        color_index = 0
-        for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-                xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
-                for i in range(len(ls)):
-                    if "Subprocess" in ls[i]:
-                        ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
-                output_str += """
-            \\addplot coordinates {"""
-                for i in range(len(xs)):
-                    output_str += "(%s, %s)" % (str(xs[i]), str(ys[i]))
-                output_str += " };"
-                output_str += """
-            \\addlegendentry{%s};
-                """ % (algo)
-        output_str += """
-        \\end{axis}
-    \\end{tikzpicture}
-    \\caption{%(caption)s}
-    \\label{}
-\\end{figure}
-</pre>
-</div>
-        """ % { "caption" : get_plot_label(xm, ym) }
+            <pre>
+            %(latexcode)s
+            </pre>
+        </div>
+        """ % {  "latexcode": get_latex_plot(all_data, xm, ym, plottype), "buttonlabel" : hashlib.sha224(get_plot_label(xm, ym) + additional_label).hexdigest() }
     return output_str
 
 all_runs_by_dataset, _ = load_results(args.dataset, args.limit)
@@ -253,15 +271,23 @@ for (ds, algos) in all_runs_by_dataset.items():
 # Build a website for each dataset
 for (ds, runs) in all_runs_by_dataset.items():
     all_algos = runs.keys()
+    linestyles = convert_linestyle(create_linestyles(all_algos))
     output_str = get_html_header(ds)
     output_str += """
         <div class="container">
         <h2>Plots for %(id)s""" % { "id" : ds }
     for plottype in args.plottype:
         xn, yn = plot_variants[plottype]
-        linestyles = convert_linestyle(create_linestyles(all_algos))
         print "Processing '%s' with %s" % (ds, plottype)
         output_str += create_plot(ds, runs, xn, yn, linestyles)
+    if args.scatter:
+        output_str += """
+        <hr />
+        <h2>Scatterplots for %(id)s""" % { "id" : ds }
+        for plottype in args.plottype:
+            xn, yn = plot_variants[plottype]
+            print "Processing scatterplot '%s' with %s" % (ds, plottype)
+            output_str += create_plot(ds, runs, xn, yn, linestyles, "Scatterplot ", "bubble")
     # create png plot for summary page
     plot.create_plot(runs, True, False,
             False, True, 'k-nn', 'qps',  outputdir + ds + ".png",
@@ -276,7 +302,6 @@ for (ds, runs) in all_runs_by_dataset.items():
         text_file.write(output_str)
 
 # Build a website for each algorithm
-# Get all algorithms
 # Build website. TODO Refactor with dataset code.
 for (algo, runs) in all_runs_by_algorithm.items():
     all_data = runs.keys()
