@@ -19,7 +19,7 @@ def create_plot(all_data, golden, raw, x_log, y_log, xn, yn, fn_out, linestyles)
     else:
         plt.figure(figsize=(7, 7))
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-        xs, ys, axs, ays, ls = create_pointset(algo, all_data, xn, yn)
+        xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
         color, faded, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         handles.append(handle)

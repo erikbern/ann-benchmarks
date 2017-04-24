@@ -136,7 +136,7 @@ def create_plot(ds, all_data, xn, yn, linestyle):
                 data: { datasets: [""" % { "id" : ds, "xmetric" :  xm["description"], "ymetric" : ym["description"] }
     color_index = 0
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-            xs, ys, axs, ays, ls = create_pointset(algo, all_data, xn, yn)
+            xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
 # TODO Put this somewhere else
 # pretty print subprocess parameter settings.
             for i in range(len(ls)):
@@ -219,7 +219,7 @@ def create_plot(ds, all_data, xn, yn, linestyle):
         """ % {"xlabel" : xm["description"], "ylabel" : ym["description"], "buttonlabel" : hashlib.sha224(get_plot_label(xm, ym)).hexdigest()}
         color_index = 0
         for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-                xs, ys, axs, ays, ls = create_pointset(algo, all_data, xm, ym)
+                xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xm, ym)
                 for i in range(len(ls)):
                     if "Subprocess" in ls[i]:
                         ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
