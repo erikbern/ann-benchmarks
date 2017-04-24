@@ -319,7 +319,7 @@ with open(outputdir + "index.html", "w") as text_file:
             <h3>... by dataset</h3>
             <ul class="list-inline"><b>Datasets</b>: """
     for ds in args.dataset:
-        output_str += "<li><a href=%(name)s>%(name)s</a></li>" % {"name" : ds}
+        output_str += '<li><a href="#%(name)s">%(name)s</a></li>' % {"name" : ds}
     output_str += "</ul>"
     for ds in args.dataset:
         output_str += """
@@ -349,7 +349,7 @@ with open(outputdir + "index.html", "w") as text_file:
         <ul class="list-inline"><b>Algorithms:</b>"""
     algorithms = all_runs_by_algorithm.keys()
     for algo in algorithms:
-        output_str += "<li><a href=%(name)s>%(name)s</a></li>" % {"name" : algo}
+        output_str += '<li><a href="#%(name)s">%(name)s</a></li>' % {"name" : algo}
     output_str += "</ul>"
     for algo in algorithms:
         output_str += """
