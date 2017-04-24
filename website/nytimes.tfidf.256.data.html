@@ -54,8 +54,8 @@
                 {
                     label: "annoy",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(146, 73, 101, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.128558375635, y: 5010.39512295, label: "Annoy(n_trees=100, search_k=100)" },
                         { x: 0.143878172589, y: 4288.90817037, label: "Annoy(n_trees=100, search_k=200)" },
@@ -86,8 +86,8 @@
                 {
                     label: "faiss-lsh",
                     fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(175, 91, 57, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.0809644670051, y: 2853.42016232, label: "FaissLSH(n_bits=32)" },
                         { x: 0.117279187817, y: 2817.70725588, label: "FaissLSH(n_bits=64)" },
@@ -101,8 +101,8 @@
                 {
                     label: "hnsw(nmslib)",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(255, 129, 0, 1)",
                     data: [ 
                         { x: 0.0429949238579, y: 11650.1019394, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
                         { x: 0.049461928934, y: 11331.4111337, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
@@ -179,18 +179,20 @@
                 {
                     label: "annoy",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(146, 73, 101, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
+                        { x: 0.143878172589, y: 855664, label: "Annoy(n_trees=100, search_k=200)" },
                         { x: 0.16723857868, y: 855664, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.274913705584, y: 855668, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.843116751269, y: 855668, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.204426395939, y: 855668, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.274913705584, y: 855668, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.843116751269, y: 855668, label: "Annoy(n_trees=100, search_k=400000)" },
                 ]},
                 {
                     label: "faiss-lsh",
                     fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(175, 91, 57, 1)",
+                    pointStyle: "circle",
+                    borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.117279187817, y: 226352, label: "FaissLSH(n_bits=64)" },
                         { x: 0.175725888325, y: 228312, label: "FaissLSH(n_bits=32)" },
@@ -203,18 +205,22 @@
                 {
                     label: "hnsw(nmslib)",
                     fill: false,
-                    pointStyle: "rect",
-                    borderColor: "rgba(228, 26, 28, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(255, 129, 0, 1)",
                     data: [ 
+                        { x: 0.0429949238579, y: 610640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
                         { x: 0.0621116751269, y: 610640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
                         { x: 0.0879492385787, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 0.145583756345, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
-                        { x: 0.206203045685, y: 619072, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.108406091371, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.123441624365, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.145583756345, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.206203045685, y: 619072, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.225675126904, y: 627780, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
                         { x: 0.274223350254, y: 627780, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                        { x: 0.602172588832, y: 645640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 0.603228426396, y: 672744, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
-                        { x: 0.68007106599, y: 672748, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
-                        { x: 0.729868020305, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.602172588832, y: 645640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.603228426396, y: 672744, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
+                        { x: 0.68007106599, y: 672748, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.729868020305, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
                 ]},
             ]}, options: {
                         responsive: false,

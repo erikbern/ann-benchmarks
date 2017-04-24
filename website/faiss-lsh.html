@@ -44,18 +44,19 @@
         </nav>
         <div class="container">
         <h2>Plots for faiss-lsh
-        <h2>faiss-lsh with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        <h3> faiss-lsh with 10-NN precision/Queries per second (1/s)</h3>
+        <div id="10-NN precisionQueries per second (1/s)">
+            <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "glove",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(127, 110, 133, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.01241, y: 776.006292411, label: "FaissLSH(n_bits=32)" },
                         { x: 0.06143, y: 740.37159512, label: "FaissLSH(n_bits=64)" },
@@ -67,7 +68,7 @@
                 {
                     label: "mnist-data",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "triangle",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.06012, y: 7969.95881536, label: "FaissLSH(n_bits=32)" },
@@ -79,124 +80,285 @@
                         { x: 0.65079, y: 260.535143383, label: "FaissLSH(n_bits=2048)" },
                         { x: 0.67896, y: 149.715861746, label: "FaissLSH(n_bits=4096)" },
                 ]},
-                {
-                    label: "nytimes.tfidf.256.data",
-                    fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(225, 198, 47, 1)",
-                    data: [ 
-                        { x: 0.0809644670051, y: 2853.42016232, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.117279187817, y: 2817.70725588, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.175725888325, y: 1878.69744281, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.233228426396, y: 1094.05567215, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.255492385787, y: 365.190091236, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.272304568528, y: 232.669684829, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.281482233503, y: 134.552304641, label: "FaissLSH(n_bits=2048)" },
-                        { x: 0.286233502538, y: 71.1436388988, label: "FaissLSH(n_bits=4096)" },
-                ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
-        </script>
-        
-        <h2>faiss-lsh with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
+            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
+        });
+        </script>
+        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.01241, 776.006292411)(0.06143, 740.37159512)(0.17088, 444.993010116)(0.29256, 294.933820494)(0.43043, 132.117502359)(0.56016, 75.2115981607) };
+        \addlegendentry{glove};
+            
+        \addplot coordinates  {(0.06012, 7969.95881536)(0.15367, 6769.12142236)(0.27314, 4427.20275636)(0.39564, 2733.14838675)(0.51004, 950.43552466)(0.59771, 497.158254284)(0.65079, 260.535143383)(0.67896, 149.715861746) };
+        \addlegendentry{mnist-data};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> faiss-lsh with 10-NN precision/Index size (kB)</h3>
+        <div id="10-NN precisionIndex size (kB)">
+            <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "glove",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(127, 110, 133, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.17088, y: 106292, label: "FaissLSH(n_bits=128)" },
                         { x: 0.29256, y: 106544, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.43043, y: 180660, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.56016, y: 254900, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.43043, y: 180660, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.56016, y: 254900, label: "FaissLSH(n_bits=1024)" },
                 ]},
                 {
                     label: "mnist-data",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "triangle",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.27314, y: 120300, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.39564, y: 120560, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.59771, y: 120596, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.65079, y: 136164, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.67896, y: 200772, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.39564, y: 120560, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.59771, y: 120596, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.65079, y: 136164, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.67896, y: 200772, label: "FaissLSH(n_bits=4096)" },
+                ]},
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Index size (kB) '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
+            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
+        });
+        </script>
+        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Index size (kB)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.17088, 106292)(0.29256, 106544)(0.43043, 180660)(0.56016, 254900) };
+        \addlegendentry{glove};
+            
+        \addplot coordinates  {(0.27314, 120300)(0.39564, 120560)(0.59771, 120596)(0.65079, 136164)(0.67896, 200772) };
+        \addlegendentry{mnist-data};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> faiss-lsh with Epsilon Recall/Queries per second (1/s)</h3>
+        <div id="Epsilon RecallQueries per second (1/s)">
+            <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
+                {
+                    label: "glove",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.01298, y: 776.006292411, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.06477, y: 740.37159512, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.18178, y: 444.993010116, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.31372, y: 294.933820494, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.46325, y: 132.117502359, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.60476, y: 75.2115981607, label: "FaissLSH(n_bits=1024)" },
                 ]},
                 {
-                    label: "nytimes.tfidf.256.data",
+                    label: "mnist-data",
                     fill: false,
-                    pointStyle: "circle",
-                    borderColor: "rgba(225, 198, 47, 1)",
+                    pointStyle: "triangle",
+                    borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
-                        { x: 0.117279187817, y: 226352, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.175725888325, y: 228312, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.233228426396, y: 234380, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.255492385787, y: 243408, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.272304568528, y: 264884, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.281482233503, y: 314480, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.286233502538, y: 439112, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.0649, y: 7969.95881536, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.16567, y: 6769.12142236, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.29472, y: 4427.20275636, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.42377, y: 2733.14838675, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.54509, y: 950.43552466, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.63729, y: 497.158254284, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.69146, y: 260.535143383, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.72006, y: 149.715861746, label: "FaissLSH(n_bits=4096)" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Epsilon Recall   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").click(function() {
+            $("#plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").toggle();
+        });
         </script>
+        <div id="plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Epsilon Recall},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.01298, 776.006292411)(0.06477, 740.37159512)(0.18178, 444.993010116)(0.31372, 294.933820494)(0.46325, 132.117502359)(0.60476, 75.2115981607) };
+        \addlegendentry{glove};
+            
+        \addplot coordinates  {(0.0649, 7969.95881536)(0.16567, 6769.12142236)(0.29472, 4427.20275636)(0.42377, 2733.14838675)(0.54509, 950.43552466)(0.63729, 497.158254284)(0.69146, 260.535143383)(0.72006, 149.715861746) };
+        \addlegendentry{mnist-data};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
         
     </div>
     </body>

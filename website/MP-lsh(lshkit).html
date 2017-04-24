@@ -44,30 +44,31 @@
         </nav>
         <div class="container">
         <h2>Plots for MP-lsh(lshkit)
-        <h2>MP-lsh(lshkit) with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        <h3> MP-lsh(lshkit) with 10-NN precision/Queries per second (1/s)</h3>
+        <div id="10-NN precisionQueries per second (1/s)">
+            <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "mnist-data",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "triangle",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.28107, y: 2002.60176123, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.3', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.39659, y: 1569.46029185, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.2', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.51412, y: 1396.10220804, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.1', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.61787, y: 1211.51267249, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.4', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.74533, y: 671.11823363, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.5', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.86294, y: 288.167798074, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.6', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.90257, y: 221.779361889, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.7', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.94491, y: 126.241606749, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.8', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.98263, y: 61.9774810018, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.85', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.99172, y: 46.8545839441, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.9', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.99806, y: 30.148954136, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.95', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.39659, y: 1569.46029185, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.4', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.51412, y: 1396.10220804, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.5', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.61787, y: 1211.51267249, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.6', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.74533, y: 671.11823363, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.7', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.86294, y: 288.167798074, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.8', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.90257, y: 221.779361889, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.85', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.94491, y: 126.241606749, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.9', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.98263, y: 61.9774810018, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.95', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.99172, y: 46.8545839441, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.97', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.99806, y: 30.148954136, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.99', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
                 ]},
                 {
                     label: "sift",
@@ -76,59 +77,101 @@
                     borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.20256, y: 2588.52544295, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.2', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.30254, y: 2224.81653357, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.1', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.39783, y: 2086.24282763, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.3', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.52139, y: 1508.75959597, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.4', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.62982, y: 1072.95959697, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.5', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.74261, y: 578.685508353, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.6', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.83565, y: 289.666515518, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.7', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.90013, y: 165.012487204, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.8', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.93178, y: 117.590607945, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.85', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.97987, y: 52.4542391258, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.9', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.98998, y: 37.2686942286, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.95', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
-                        { x: 0.99866, y: 19.5603613131, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.97', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.30254, y: 2224.81653357, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.3', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.39783, y: 2086.24282763, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.4', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.52139, y: 1508.75959597, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.5', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.62982, y: 1072.95959697, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.6', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.74261, y: 578.685508353, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.7', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.83565, y: 289.666515518, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.8', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.90013, y: 165.012487204, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.85', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.93178, y: 117.590607945, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.9', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.97987, y: 52.4542391258, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.95', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.98998, y: 37.2686942286, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.97', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.99866, y: 19.5603613131, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.99', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
-        </script>
-        
-        <h2>MP-lsh(lshkit) with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
+            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
+        });
+        </script>
+        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.28107, 2002.60176123)(0.39659, 1569.46029185)(0.51412, 1396.10220804)(0.61787, 1211.51267249)(0.74533, 671.11823363)(0.86294, 288.167798074)(0.90257, 221.779361889)(0.94491, 126.241606749)(0.98263, 61.9774810018)(0.99172, 46.8545839441)(0.99806, 30.148954136) };
+        \addlegendentry{mnist-data};
+            
+        \addplot coordinates  {(0.20256, 2588.52544295)(0.30254, 2224.81653357)(0.39783, 2086.24282763)(0.52139, 1508.75959597)(0.62982, 1072.95959697)(0.74261, 578.685508353)(0.83565, 289.666515518)(0.90013, 165.012487204)(0.93178, 117.590607945)(0.97987, 52.4542391258)(0.98998, 37.2686942286)(0.99866, 19.5603613131) };
+        \addlegendentry{sift};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> MP-lsh(lshkit) with 10-NN precision/Index size (kB)</h3>
+        <div id="10-NN precisionIndex size (kB)">
+            <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "mnist-data",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "triangle",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.99806, y: 1591468, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.99', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
@@ -141,35 +184,192 @@
                     data: [ 
                         { x: 0.99866, y: 2816532, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.99', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Index size (kB) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
+            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
+        });
         </script>
+        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Index size (kB)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.99806, 1591468) };
+        \addlegendentry{mnist-data};
+            
+        \addplot coordinates  {(0.99866, 2816532) };
+        \addlegendentry{sift};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> MP-lsh(lshkit) with Epsilon Recall/Queries per second (1/s)</h3>
+        <div id="Epsilon RecallQueries per second (1/s)">
+            <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
+                {
+                    label: "mnist-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.29471, y: 2002.60176123, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.3', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.41992, y: 1569.46029185, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.4', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.54871, y: 1396.10220804, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.5', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.65746, y: 1211.51267249, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.6', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.78977, y: 671.11823363, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.7', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.90225, y: 288.167798074, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.8', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.93575, y: 221.779361889, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.85', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.96944, y: 126.241606749, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.9', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.99333, y: 61.9774810018, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.95', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.9975, y: 46.8545839441, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.97', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.99959, y: 30.148954136, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.99', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.21559, y: 2588.52544295, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.2', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.32737, y: 2224.81653357, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.3', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.43371, y: 2086.24282763, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.4', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.57245, y: 1508.75959597, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.5', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.69022, y: 1072.95959697, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.6', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.80667, y: 578.685508353, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.7', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.89635, y: 289.666515518, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.8', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.94788, y: 165.012487204, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.85', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.97089, y: 117.590607945, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.9', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.99506, y: 52.4542391258, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.95', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.99786, y: 37.2686942286, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.97', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                        { x: 0.99985, y: 19.5603613131, label: "Nmslib(method_name=lsh_multiprobe, method_param=['desiredRecall=0.99', 'H=1200001', 'T=10', 'tuneK=10', 'L=50'])" },
+                ]},
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Epsilon Recall   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").click(function() {
+            $("#plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").toggle();
+        });
+        </script>
+        <div id="plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Epsilon Recall},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.29471, 2002.60176123)(0.41992, 1569.46029185)(0.54871, 1396.10220804)(0.65746, 1211.51267249)(0.78977, 671.11823363)(0.90225, 288.167798074)(0.93575, 221.779361889)(0.96944, 126.241606749)(0.99333, 61.9774810018)(0.9975, 46.8545839441)(0.99959, 30.148954136) };
+        \addlegendentry{mnist-data};
+            
+        \addplot coordinates  {(0.21559, 2588.52544295)(0.32737, 2224.81653357)(0.43371, 2086.24282763)(0.57245, 1508.75959597)(0.69022, 1072.95959697)(0.80667, 578.685508353)(0.89635, 289.666515518)(0.94788, 165.012487204)(0.97089, 117.590607945)(0.99506, 52.4542391258)(0.99786, 37.2686942286)(0.99985, 19.5603613131) };
+        \addlegendentry{sift};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
         
     </div>
     </body>
