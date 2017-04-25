@@ -18,7 +18,7 @@ from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
 from ann_benchmarks.algorithms.definitions import get_algorithms, get_definitions
 
 def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
-        runner_finished, run_count=3, force_single=False):
+        run_count=3, force_single=False):
     try:
         prepared_queries = False
         if hasattr(algo, "supports_prepared_queries"):
@@ -65,7 +65,6 @@ def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
             avg_candidates = total_candidates / len(queries)
             best_search_time = min(best_search_time, search_time)
 
-        runner_finished.acquire()
         result_pipe.send({
             "library": library,
             "name": algo.name,
@@ -77,8 +76,6 @@ def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
             "run_count": run_count,
             "run_alone": force_single
         })
-        runner_finished.notify()
-        runner_finished.release()
     finally:
         algo.done()
 
@@ -335,44 +332,43 @@ error: the training dataset and query dataset have incompatible manifests"""
 
     print('order:', [a.name for l, a in algos_flat])
 
-    recv_pipe, send_pipe = multiprocessing.Pipe(False)
     for library, algo in algos_flat:
-        subprocess_finished = multiprocessing.Condition()
-
+        recv_pipe, send_pipe = multiprocessing.Pipe(duplex=False)
         print(algo.name, '...')
         # Spawn a subprocess to force the memory to be reclaimed at the end
         p = multiprocessing.Process(
             target=run_algo,
             args=(args.count, X_train, queries, library, algo,
-                  args.distance, send_pipe, subprocess_finished, args.runs,
-                  args.single))
+                  args.distance, send_pipe, args.runs, args.single))
 
-        subprocess_finished.acquire()
         p.start()
+        send_pipe.close()
 
-        seconds = 0
-        while True:
-            subprocess_finished.wait(1)
-            # If it hasn't already finished, the subprocess can't do so until
-            # we release the condition variable by waiting again
-            seconds += 1
-            if not p.is_alive() or recv_pipe.poll():
-                # If there's something ready for us in the pipe, then we treat
-                # the subprocess as having finished
-                break
-            elif args.timeout and seconds >= args.timeout:
-                # If we've exceeded the timeout, then terminate the process
-                # (XXX: what should we do about algo.done() here?)
+        timed_out = False
+        try:
+            results = recv_pipe.poll(args.timeout)
+            if results:
+                # If there's something waiting in the pipe at this point, then
+                # the worker has begun sending us results and we should receive
+                # them
+                results = recv_pipe.recv()
+            else:
+                # If we've exceeded the timeout and there are no results, then
+                # terminate the worker process (XXX: what should we do about
+                # algo.done() here?)
                 p.terminate()
-                seconds = None
-                break
+                timed_out = True
+                results = None
+        except EOFError:
+            # The worker has crashed or otherwise failed to send us results
+            results = None
         p.join()
-        subprocess_finished.release()
+        recv_pipe.close()
 
-        if recv_pipe.poll():
-            store_results(recv_pipe.recv(), args.dataset, args.limit,
+        if results:
+            store_results(results, args.dataset, args.limit,
                     args.count, args.distance, args.query_dataset)
-        elif not seconds:
+        elif timed_out:
             print "(algorithm worker process took too long)"
         else:
             print "(algorithm worker process stopped unexpectedly)"
