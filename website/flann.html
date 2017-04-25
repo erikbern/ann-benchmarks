@@ -44,17 +44,18 @@
         </nav>
         <div class="container">
         <h2>Plots for flann
-        <h2>flann with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        <h3> flann with 10-NN precision/Queries per second (1/s)</h3>
+        <div id="10-NN precisionQueries per second (1/s)">
+            <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "mnist-data",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "triangle",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.14796, y: 4720.49790103, label: "FLANN(target_precision=0.200000)" },
@@ -83,53 +84,96 @@
                         { x: 0.93316, y: 204.590065419, label: "FLANN(target_precision=0.970000)" },
                         { x: 0.93573, y: 191.445738064, label: "FLANN(target_precision=0.980000)" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
-        </script>
-        
-        <h2>flann with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
+            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
+        });
+        </script>
+        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.14796, 4720.49790103)(0.36949, 4177.0369646)(0.55286, 3708.38536544)(0.65985, 3300.02833224)(0.79362, 2588.01481812)(0.83609, 2282.27298131)(0.89141, 1937.41100923)(0.94637, 1298.36190735)(0.96939, 942.216229377)(0.97891, 685.464475159) };
+        \addlegendentry{mnist-data};
+            
+        \addplot coordinates  {(0.08154, 4612.17539247)(0.22066, 4131.03960704)(0.40611, 3016.35907404)(0.58037, 2025.13760064)(0.76803, 856.269687519)(0.84895, 371.249117772)(0.93316, 204.590065419)(0.93573, 191.445738064) };
+        \addlegendentry{sift};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> flann with 10-NN precision/Index size (kB)</h3>
+        <div id="10-NN precisionIndex size (kB)">
+            <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "mnist-data",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "triangle",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
+                        { x: 0.36949, y: 956, label: "FLANN(target_precision=0.500000)" },
                         { x: 0.65985, y: 956, label: "FLANN(target_precision=0.800000)" },
-                        { x: 0.79362, y: 960, label: "FLANN(target_precision=0.500000)" },
-                        { x: 0.96939, y: 964, label: "FLANN(target_precision=0.900000)" },
-                        { x: 0.97891, y: 1024, label: "FLANN(target_precision=0.990000)" },
+                        { x: 0.79362, y: 960, label: "FLANN(target_precision=0.900000)" },
+                        { x: 0.96939, y: 964, label: "FLANN(target_precision=0.990000)" },
+                        { x: 0.97891, y: 1024, label: "FLANN(target_precision=0.995000)" },
                 ]},
                 {
                     label: "sift",
@@ -141,37 +185,189 @@
                         { x: 0.22066, y: 387368, label: "FLANN(target_precision=0.500000)" },
                         { x: 0.40611, y: 387380, label: "FLANN(target_precision=0.700000)" },
                         { x: 0.93316, y: 499536, label: "FLANN(target_precision=0.970000)" },
-                        { x: 0.93573, y: 544216, label: "FLANN(target_precision=0.950000)" },
+                        { x: 0.93573, y: 544216, label: "FLANN(target_precision=0.980000)" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Index size (kB) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
+            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
+        });
         </script>
+        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Index size (kB)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.36949, 956)(0.65985, 956)(0.79362, 960)(0.96939, 964)(0.97891, 1024) };
+        \addlegendentry{mnist-data};
+            
+        \addplot coordinates  {(0.08154, 109316)(0.22066, 387368)(0.40611, 387380)(0.93316, 499536)(0.93573, 544216) };
+        \addlegendentry{sift};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> flann with Epsilon Recall/Queries per second (1/s)</h3>
+        <div id="Epsilon RecallQueries per second (1/s)">
+            <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
+                {
+                    label: "mnist-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.16013, y: 4720.49790103, label: "FLANN(target_precision=0.200000)" },
+                        { x: 0.40246, y: 4177.0369646, label: "FLANN(target_precision=0.500000)" },
+                        { x: 0.60743, y: 3708.38536544, label: "FLANN(target_precision=0.700000)" },
+                        { x: 0.72271, y: 3300.02833224, label: "FLANN(target_precision=0.800000)" },
+                        { x: 0.85938, y: 2588.01481812, label: "FLANN(target_precision=0.900000)" },
+                        { x: 0.89689, y: 2282.27298131, label: "FLANN(target_precision=0.950000)" },
+                        { x: 0.94116, y: 1937.41100923, label: "FLANN(target_precision=0.970000)" },
+                        { x: 0.97787, y: 1298.36190735, label: "FLANN(target_precision=0.980000)" },
+                        { x: 0.99028, y: 942.216229377, label: "FLANN(target_precision=0.990000)" },
+                        { x: 0.99392, y: 685.464475159, label: "FLANN(target_precision=0.995000)" },
+                ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.08748, y: 4612.17539247, label: "FLANN(target_precision=0.200000)" },
+                        { x: 0.24217, y: 4131.03960704, label: "FLANN(target_precision=0.500000)" },
+                        { x: 0.45876, y: 3016.35907404, label: "FLANN(target_precision=0.700000)" },
+                        { x: 0.65908, y: 2025.13760064, label: "FLANN(target_precision=0.800000)" },
+                        { x: 0.85641, y: 856.269687519, label: "FLANN(target_precision=0.900000)" },
+                        { x: 0.92231, y: 371.249117772, label: "FLANN(target_precision=0.950000)" },
+                        { x: 0.97653, y: 204.590065419, label: "FLANN(target_precision=0.970000)" },
+                        { x: 0.98003, y: 191.445738064, label: "FLANN(target_precision=0.980000)" },
+                ]},
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Epsilon Recall   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").click(function() {
+            $("#plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").toggle();
+        });
+        </script>
+        <div id="plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Epsilon Recall},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.16013, 4720.49790103)(0.40246, 4177.0369646)(0.60743, 3708.38536544)(0.72271, 3300.02833224)(0.85938, 2588.01481812)(0.89689, 2282.27298131)(0.94116, 1937.41100923)(0.97787, 1298.36190735)(0.99028, 942.216229377)(0.99392, 685.464475159) };
+        \addlegendentry{mnist-data};
+            
+        \addplot coordinates  {(0.08748, 4612.17539247)(0.24217, 4131.03960704)(0.45876, 3016.35907404)(0.65908, 2025.13760064)(0.85641, 856.269687519)(0.92231, 371.249117772)(0.97653, 204.590065419)(0.98003, 191.445738064) };
+        \addlegendentry{sift};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
         
     </div>
     </body>

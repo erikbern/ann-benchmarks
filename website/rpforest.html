@@ -44,122 +44,310 @@
         </nav>
         <div class="container">
         <h2>Plots for rpforest
-        <h2>rpforest with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        <h3> rpforest with 10-NN precision/Queries per second (1/s)</h3>
+        <div id="10-NN precisionQueries per second (1/s)">
+            <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "glove",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(127, 110, 133, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 0.00471, y: 15344.8649281, label: "RPForest(leaf_size=5, n_trees=3)" },
-                        { x: 0.00715, y: 14836.0914649, label: "RPForest(leaf_size=3, n_trees=3)" },
-                        { x: 0.00763, y: 13223.838387, label: "RPForest(leaf_size=10, n_trees=3)" },
-                        { x: 0.01014, y: 12970.8199351, label: "RPForest(leaf_size=3, n_trees=5)" },
-                        { x: 0.01188, y: 12060.3537562, label: "RPForest(leaf_size=5, n_trees=5)" },
-                        { x: 0.01428, y: 10780.5348598, label: "RPForest(leaf_size=20, n_trees=3)" },
-                        { x: 0.01687, y: 10625.8431467, label: "RPForest(leaf_size=10, n_trees=5)" },
-                        { x: 0.0229, y: 8861.97762439, label: "RPForest(leaf_size=40, n_trees=3)" },
-                        { x: 0.02354, y: 8261.05402149, label: "RPForest(leaf_size=20, n_trees=5)" },
-                        { x: 0.03192, y: 7173.45978048, label: "RPForest(leaf_size=3, n_trees=10)" },
-                        { x: 0.0329, y: 5782.75831642, label: "RPForest(leaf_size=5, n_trees=10)" },
-                        { x: 0.04257, y: 5641.43542471, label: "RPForest(leaf_size=10, n_trees=10)" },
-                        { x: 0.04569, y: 5295.02474178, label: "RPForest(leaf_size=40, n_trees=5)" },
-                        { x: 0.05899, y: 4400.86844225, label: "RPForest(leaf_size=100, n_trees=3)" },
-                        { x: 0.06231, y: 3419.60567157, label: "RPForest(leaf_size=20, n_trees=10)" },
-                        { x: 0.07765, y: 3262.62922875, label: "RPForest(leaf_size=3, n_trees=20)" },
-                        { x: 0.08286, y: 2954.19435964, label: "RPForest(leaf_size=5, n_trees=20)" },
-                        { x: 0.10712, y: 2427.21978884, label: "RPForest(leaf_size=100, n_trees=5)" },
-                        { x: 0.11343, y: 1792.57603354, label: "RPForest(leaf_size=10, n_trees=20)" },
-                        { x: 0.14831, y: 1592.39254483, label: "RPForest(leaf_size=200, n_trees=3)" },
-                        { x: 0.1593, y: 1401.42195594, label: "RPForest(leaf_size=40, n_trees=10)" },
-                        { x: 0.21585, y: 1021.10749365, label: "RPForest(leaf_size=20, n_trees=20)" },
-                        { x: 0.28845, y: 657.741600116, label: "RPForest(leaf_size=3, n_trees=40)" },
-                        { x: 0.37605, y: 367.860525819, label: "RPForest(leaf_size=5, n_trees=40)" },
-                        { x: 0.48148, y: 198.633659542, label: "RPForest(leaf_size=200, n_trees=5)" },
+                        { x: 0.00715, y: 14836.0914649, label: "RPForest(leaf_size=10, n_trees=3)" },
+                        { x: 0.00763, y: 13223.838387, label: "RPForest(leaf_size=5, n_trees=5)" },
+                        { x: 0.01014, y: 12970.8199351, label: "RPForest(leaf_size=20, n_trees=3)" },
+                        { x: 0.01188, y: 12060.3537562, label: "RPForest(leaf_size=10, n_trees=5)" },
+                        { x: 0.01428, y: 10780.5348598, label: "RPForest(leaf_size=40, n_trees=3)" },
+                        { x: 0.01687, y: 10625.8431467, label: "RPForest(leaf_size=20, n_trees=5)" },
+                        { x: 0.0229, y: 8861.97762439, label: "RPForest(leaf_size=10, n_trees=10)" },
+                        { x: 0.02354, y: 8261.05402149, label: "RPForest(leaf_size=40, n_trees=5)" },
+                        { x: 0.03192, y: 7173.45978048, label: "RPForest(leaf_size=20, n_trees=10)" },
+                        { x: 0.0329, y: 5782.75831642, label: "RPForest(leaf_size=100, n_trees=5)" },
+                        { x: 0.04257, y: 5641.43542471, label: "RPForest(leaf_size=10, n_trees=20)" },
+                        { x: 0.04569, y: 5295.02474178, label: "RPForest(leaf_size=40, n_trees=10)" },
+                        { x: 0.05899, y: 4400.86844225, label: "RPForest(leaf_size=20, n_trees=20)" },
+                        { x: 0.06231, y: 3419.60567157, label: "RPForest(leaf_size=100, n_trees=10)" },
+                        { x: 0.07765, y: 3262.62922875, label: "RPForest(leaf_size=10, n_trees=40)" },
+                        { x: 0.08286, y: 2954.19435964, label: "RPForest(leaf_size=40, n_trees=20)" },
+                        { x: 0.10712, y: 2427.21978884, label: "RPForest(leaf_size=20, n_trees=40)" },
+                        { x: 0.11343, y: 1792.57603354, label: "RPForest(leaf_size=100, n_trees=20)" },
+                        { x: 0.14831, y: 1592.39254483, label: "RPForest(leaf_size=40, n_trees=40)" },
+                        { x: 0.1593, y: 1401.42195594, label: "RPForest(leaf_size=10, n_trees=100)" },
+                        { x: 0.21585, y: 1021.10749365, label: "RPForest(leaf_size=20, n_trees=100)" },
+                        { x: 0.28845, y: 657.741600116, label: "RPForest(leaf_size=40, n_trees=100)" },
+                        { x: 0.37605, y: 367.860525819, label: "RPForest(leaf_size=100, n_trees=100)" },
+                        { x: 0.48148, y: 198.633659542, label: "RPForest(leaf_size=200, n_trees=100)" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
-        </script>
-        
-        <h2>rpforest with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
+            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
+        });
+        </script>
+        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.00471, 15344.8649281)(0.00715, 14836.0914649)(0.00763, 13223.838387)(0.01014, 12970.8199351)(0.01188, 12060.3537562)(0.01428, 10780.5348598)(0.01687, 10625.8431467)(0.0229, 8861.97762439)(0.02354, 8261.05402149)(0.03192, 7173.45978048)(0.0329, 5782.75831642)(0.04257, 5641.43542471)(0.04569, 5295.02474178)(0.05899, 4400.86844225)(0.06231, 3419.60567157)(0.07765, 3262.62922875)(0.08286, 2954.19435964)(0.10712, 2427.21978884)(0.11343, 1792.57603354)(0.14831, 1592.39254483)(0.1593, 1401.42195594)(0.21585, 1021.10749365)(0.28845, 657.741600116)(0.37605, 367.860525819)(0.48148, 198.633659542) };
+        \addlegendentry{glove};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> rpforest with 10-NN precision/Index size (kB)</h3>
+        <div id="10-NN precisionIndex size (kB)">
+            <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "glove",
                     fill: false,
-                    pointStyle: "triangle",
-                    borderColor: "rgba(127, 110, 133, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
+                        { x: 0.0329, y: 925444, label: "RPForest(leaf_size=100, n_trees=5)" },
                         { x: 0.12127, y: 925444, label: "RPForest(leaf_size=400, n_trees=10)" },
-                        { x: 0.26795, y: 925448, label: "RPForest(leaf_size=100, n_trees=5)" },
-                        { x: 0.28845, y: 925456, label: "RPForest(leaf_size=200, n_trees=40)" },
-                        { x: 0.48148, y: 925468, label: "RPForest(leaf_size=40, n_trees=10)" },
+                        { x: 0.26795, y: 925448, label: "RPForest(leaf_size=200, n_trees=40)" },
+                        { x: 0.28845, y: 925456, label: "RPForest(leaf_size=40, n_trees=100)" },
+                        { x: 0.37605, y: 925468, label: "RPForest(leaf_size=100, n_trees=100)" },
+                        { x: 0.48148, y: 925468, label: "RPForest(leaf_size=200, n_trees=100)" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Index size (kB) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
+            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
+        });
         </script>
+        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Index size (kB)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.0329, 925444)(0.12127, 925444)(0.26795, 925448)(0.28845, 925456)(0.37605, 925468)(0.48148, 925468) };
+        \addlegendentry{glove};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> rpforest with Epsilon Recall/Queries per second (1/s)</h3>
+        <div id="Epsilon RecallQueries per second (1/s)">
+            <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
+                {
+                    label: "glove",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.00496, y: 15344.8649281, label: "RPForest(leaf_size=5, n_trees=3)" },
+                        { x: 0.00765, y: 14836.0914649, label: "RPForest(leaf_size=10, n_trees=3)" },
+                        { x: 0.00812, y: 13223.838387, label: "RPForest(leaf_size=5, n_trees=5)" },
+                        { x: 0.01085, y: 12970.8199351, label: "RPForest(leaf_size=20, n_trees=3)" },
+                        { x: 0.01272, y: 12060.3537562, label: "RPForest(leaf_size=10, n_trees=5)" },
+                        { x: 0.01556, y: 10780.5348598, label: "RPForest(leaf_size=40, n_trees=3)" },
+                        { x: 0.0181, y: 10625.8431467, label: "RPForest(leaf_size=20, n_trees=5)" },
+                        { x: 0.02448, y: 8861.97762439, label: "RPForest(leaf_size=10, n_trees=10)" },
+                        { x: 0.02563, y: 8261.05402149, label: "RPForest(leaf_size=40, n_trees=5)" },
+                        { x: 0.03429, y: 7173.45978048, label: "RPForest(leaf_size=20, n_trees=10)" },
+                        { x: 0.03581, y: 5782.75831642, label: "RPForest(leaf_size=100, n_trees=5)" },
+                        { x: 0.04563, y: 5641.43542471, label: "RPForest(leaf_size=10, n_trees=20)" },
+                        { x: 0.0496, y: 5295.02474178, label: "RPForest(leaf_size=40, n_trees=10)" },
+                        { x: 0.06364, y: 4400.86844225, label: "RPForest(leaf_size=20, n_trees=20)" },
+                        { x: 0.06817, y: 3419.60567157, label: "RPForest(leaf_size=100, n_trees=10)" },
+                        { x: 0.08364, y: 3262.62922875, label: "RPForest(leaf_size=10, n_trees=40)" },
+                        { x: 0.09026, y: 2954.19435964, label: "RPForest(leaf_size=40, n_trees=20)" },
+                        { x: 0.11642, y: 2427.21978884, label: "RPForest(leaf_size=20, n_trees=40)" },
+                        { x: 0.1245, y: 1792.57603354, label: "RPForest(leaf_size=100, n_trees=20)" },
+                        { x: 0.16235, y: 1592.39254483, label: "RPForest(leaf_size=40, n_trees=40)" },
+                        { x: 0.17348, y: 1401.42195594, label: "RPForest(leaf_size=10, n_trees=100)" },
+                        { x: 0.23661, y: 1021.10749365, label: "RPForest(leaf_size=20, n_trees=100)" },
+                        { x: 0.3193, y: 657.741600116, label: "RPForest(leaf_size=40, n_trees=100)" },
+                        { x: 0.41929, y: 367.860525819, label: "RPForest(leaf_size=100, n_trees=100)" },
+                        { x: 0.54099, y: 198.633659542, label: "RPForest(leaf_size=200, n_trees=100)" },
+                ]},
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Epsilon Recall   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").click(function() {
+            $("#plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").toggle();
+        });
+        </script>
+        <div id="plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Epsilon Recall},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.00496, 15344.8649281)(0.00765, 14836.0914649)(0.00812, 13223.838387)(0.01085, 12970.8199351)(0.01272, 12060.3537562)(0.01556, 10780.5348598)(0.0181, 10625.8431467)(0.02448, 8861.97762439)(0.02563, 8261.05402149)(0.03429, 7173.45978048)(0.03581, 5782.75831642)(0.04563, 5641.43542471)(0.0496, 5295.02474178)(0.06364, 4400.86844225)(0.06817, 3419.60567157)(0.08364, 3262.62922875)(0.09026, 2954.19435964)(0.11642, 2427.21978884)(0.1245, 1792.57603354)(0.16235, 1592.39254483)(0.17348, 1401.42195594)(0.23661, 1021.10749365)(0.3193, 657.741600116)(0.41929, 367.860525819)(0.54099, 198.633659542) };
+        \addlegendentry{glove};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
         
     </div>
     </body>

@@ -44,95 +44,257 @@
         </nav>
         <div class="container">
         <h2>Plots for kd
-        <h2>kd with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        <h3> kd with 10-NN precision/Queries per second (1/s)</h3>
+        <div id="10-NN precisionQueries per second (1/s)">
+            <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "mnist-data",
                     fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
                         { x: 1.0, y: 7.98004591261, label: "KDTree(leaf_size=1000)" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
-        </script>
-        
-        <h2>kd with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
+            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
+        });
+        </script>
+        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(1.0, 7.98004591261) };
+        \addlegendentry{mnist-data};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> kd with 10-NN precision/Index size (kB)</h3>
+        <div id="10-NN precisionIndex size (kB)">
+            <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "mnist-data",
                     fill: false,
-                    pointStyle: "star",
-                    borderColor: "rgba(153, 153, 153, 1)",
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
                     data: [ 
-                        { x: 1.0, y: 676, label: "KDTree(leaf_size=200)" },
+                        { x: 1.0, y: 676, label: "KDTree(leaf_size=1000)" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Index size (kB) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
+            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
+        });
         </script>
+        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Index size (kB)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(1.0, 676) };
+        \addlegendentry{mnist-data};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> kd with Epsilon Recall/Queries per second (1/s)</h3>
+        <div id="Epsilon RecallQueries per second (1/s)">
+            <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
+                {
+                    label: "mnist-data",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 1.0, y: 7.98004591261, label: "KDTree(leaf_size=1000)" },
+                ]},
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Epsilon Recall   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").click(function() {
+            $("#plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").toggle();
+        });
+        </script>
+        <div id="plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Epsilon Recall},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(1.0, 7.98004591261) };
+        \addlegendentry{mnist-data};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
         
     </div>
     </body>

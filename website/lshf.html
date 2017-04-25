@@ -44,17 +44,18 @@
         </nav>
         <div class="container">
         <h2>Plots for lshf
-        <h2>lshf with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        <h3> lshf with 10-NN precision/Queries per second (1/s)</h3>
+        <div id="10-NN precisionQueries per second (1/s)">
+            <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "mnist-data",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "triangle",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.093, y: 29.2713787194, label: "LSHF(n_est=5, n_cand=10)" },
@@ -72,47 +73,89 @@
                         { x: 0.12592, y: 5.66020494433, label: "LSHF(n_est=5, n_cand=10)" },
                         { x: 0.13032, y: 5.08530587191, label: "LSHF(n_est=5, n_cand=20)" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
-        </script>
-        
-        <h2>lshf with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
+            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
+        });
+        </script>
+        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.093, 29.2713787194)(0.11939, 26.5833685491)(0.20146, 14.1498351772)(0.2797, 12.1515004287)(0.52139, 5.66942030503) };
+        \addlegendentry{mnist-data};
+            
+        \addplot coordinates  {(0.12592, 5.66020494433)(0.13032, 5.08530587191) };
+        \addlegendentry{sift};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> lshf with 10-NN precision/Index size (kB)</h3>
+        <div id="10-NN precisionIndex size (kB)">
+            <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "mnist-data",
                     fill: false,
-                    pointStyle: "star",
+                    pointStyle: "triangle",
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.20146, y: 136788, label: "LSHF(n_est=10, n_cand=20)" },
@@ -127,35 +170,176 @@
                         { x: 0.12592, y: 238356, label: "LSHF(n_est=5, n_cand=10)" },
                         { x: 0.13032, y: 239612, label: "LSHF(n_est=5, n_cand=20)" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Index size (kB) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
+            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
+        });
         </script>
+        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Index size (kB)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.20146, 136788)(0.52139, 146796) };
+        \addlegendentry{mnist-data};
+            
+        \addplot coordinates  {(0.12592, 238356)(0.13032, 239612) };
+        \addlegendentry{sift};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> lshf with Epsilon Recall/Queries per second (1/s)</h3>
+        <div id="Epsilon RecallQueries per second (1/s)">
+            <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
+                {
+                    label: "mnist-data",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.10097, y: 29.2713787194, label: "LSHF(n_est=5, n_cand=10)" },
+                        { x: 0.13018, y: 26.5833685491, label: "LSHF(n_est=5, n_cand=20)" },
+                        { x: 0.22009, y: 14.1498351772, label: "LSHF(n_est=10, n_cand=20)" },
+                        { x: 0.30636, y: 12.1515004287, label: "LSHF(n_est=10, n_cand=50)" },
+                        { x: 0.56492, y: 5.66942030503, label: "LSHF(n_est=20, n_cand=100)" },
+                ]},
+                {
+                    label: "sift",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.13875, y: 5.66020494433, label: "LSHF(n_est=5, n_cand=10)" },
+                        { x: 0.14373, y: 5.08530587191, label: "LSHF(n_est=5, n_cand=20)" },
+                ]},
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Epsilon Recall   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").click(function() {
+            $("#plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").toggle();
+        });
+        </script>
+        <div id="plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Epsilon Recall},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.10097, 29.2713787194)(0.13018, 26.5833685491)(0.22009, 14.1498351772)(0.30636, 12.1515004287)(0.56492, 5.66942030503) };
+        \addlegendentry{mnist-data};
+            
+        \addplot coordinates  {(0.13875, 5.66020494433)(0.14373, 5.08530587191) };
+        \addlegendentry{sift};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
         
     </div>
     </body>
