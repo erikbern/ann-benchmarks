@@ -24,18 +24,7 @@ def get_dataset(which='glove', limit=-1):
     else:
         f = open(local_fn + '.txt')
 
-    manifest = {
-      'point_type': 'float',
-      'test_size' : 10000
-    }
-    if os.path.exists(local_fn + '.yaml'):
-        with open(local_fn + '.yaml') as mf:
-            y = yaml.load(mf)
-            if 'dataset' in y:
-                manifest.update(y['dataset'])
-            if 'test_size' in y:
-                manifest['test_size'] = int(y['test_size'])
-
+    manifest = get_manifest(which)
     point_type = manifest['point_type']
 
     assert point_type in type_info, """\
@@ -58,6 +47,21 @@ dataset %s: no parser for points of type '%s'""" % (which, point_type)
 
     numpy.savez(cache, manifest=[manifest], data=X)
     return manifest, X
+
+def get_manifest(which):
+    local_fn = os.path.join('install', which)
+    manifest = {
+      'point_type': 'float',
+      'test_size' : 10000
+    }
+    if os.path.exists(local_fn + '.yaml'):
+        with open(local_fn + '.yaml') as mf:
+            y = yaml.load(mf)
+            if 'dataset' in y:
+                manifest.update(y['dataset'])
+            if 'test_size' in y:
+                manifest['test_size'] = int(y['test_size'])
+    return manifest
 
 def split_dataset(X, random_state=3, test_size=10000):
     import sklearn.cross_validation

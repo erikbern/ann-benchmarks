@@ -1,5 +1,8 @@
+from __future__ import absolute_import
+
 import os, json, pickle
 from ann_benchmarks.main import get_fn
+from ann_benchmarks.results import get_results
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 import matplotlib.pyplot as plt
 import numpy
@@ -39,7 +42,6 @@ def load_results(datasets, limit = -1):
     runs = {}
     all_algos = set()
     for ds in datasets:
-        results_fn = get_fn("results", ds)
         queries_fn = list(enumerate_query_caches(ds))
         assert len(queries_fn) > 0, '''\
 no query cache files exist for dataset "%s"''' % ds
@@ -51,27 +53,26 @@ first (%s)""" % (ds, queries_fn[0])
 
         queries = pickle.load(open(queries_fn))
         runs[ds] = {}
-        with open(get_fn("results", ds, limit)) as f:
-            for line in f:
-                run = json.loads(line)
-                algo = run["library"]
-                algo_name = run["name"]
-                build_time = run["build_time"]
-                search_time = run["best_search_time"]
+        # XXX: these parameters won't be allowed to be None for long
+        for run in get_results(ds, limit, None, None):
+            algo = run["library"]
+            algo_name = run["name"]
+            build_time = run["build_time"]
+            search_time = run["best_search_time"]
 
-                print "--"
-                print algo_name
-                results = {}
-                for name, metric in metrics.items():
-                    v = metric["function"](queries, run)
-                    results[name] = v
-                    if v:
-                        print "%s: %g" % (name, v)
+            print "--"
+            print algo_name
+            results = {}
+            for name, metric in metrics.items():
+                v = metric["function"](queries, run)
+                results[name] = v
+                if v:
+                    print "%s: %g" % (name, v)
 
-                all_algos.add(algo)
-                if not algo in runs[ds]:
-                    runs[ds][algo] = []
-                runs[ds][algo].append((algo, algo_name, results))
+            all_algos.add(algo)
+            if not algo in runs[ds]:
+                runs[ds][algo] = []
+            runs[ds][algo].append((algo, algo_name, results))
     return (runs, all_algos)
 
 def create_linestyles(algos):

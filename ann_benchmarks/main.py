@@ -10,6 +10,7 @@ import shutil
 import importlib
 import traceback
 
+from ann_benchmarks.results import get_results, store_results
 from ann_benchmarks.datasets import get_dataset, split_dataset, get_query_cache_path
 from ann_benchmarks.distance import metrics as pd
 from ann_benchmarks.constants import INDEX_DIR
@@ -292,11 +293,9 @@ be available""" % name
         assert manifest == query_manifest, """\
 error: the training dataset and query dataset have incompatible manifests"""
 
-    results_fn = get_fn('results', args.dataset, args.limit)
     queries_fn = get_query_cache_path(
         args.dataset, args.count, args.limit, args.distance, args.query_dataset)
-
-    print('storing queries in', queries_fn, 'and results in', results_fn)
+    print('storing queries in', queries_fn)
 
     if not os.path.exists(queries_fn):
         queries = compute_distances(args.distance, args.count, X_train, X_test)
@@ -308,11 +307,11 @@ error: the training dataset and query dataset have incompatible manifests"""
 
     print('got', len(queries), 'queries')
 
-    algos_already_ran = set()
-    if os.path.exists(results_fn) and not args.force:
-        for line in open(results_fn):
-            run = json.loads(line)
-            algos_already_ran.add((run["library"], run["name"]))
+    algos_already_run = set()
+    if not args.force:
+        for run in get_results(args.dataset, args.limit, args.count,
+                args.distance, args.query_dataset):
+            algos_already_run.add((run["library"], run["name"]))
 
     point_type = manifest['point_type']
     algos = get_algorithms(definitions, constructors,
@@ -329,56 +328,54 @@ error: the training dataset and query dataset have incompatible manifests"""
 
     for library in algos.keys():
         for algo in algos[library]:
-            if (library, algo.name) not in algos_already_ran:
+            if (library, algo.name) not in algos_already_run:
                 algos_flat.append((library, algo))
 
     random.shuffle(algos_flat)
 
     print('order:', [a.name for l, a in algos_flat])
 
-    with open("results/%s.txt" % args.dataset, "a") as fp:
-        recv_pipe, send_pipe = multiprocessing.Pipe(False)
-        for library, algo in algos_flat:
-            subprocess_finished = multiprocessing.Condition()
+    recv_pipe, send_pipe = multiprocessing.Pipe(False)
+    for library, algo in algos_flat:
+        subprocess_finished = multiprocessing.Condition()
 
-            print(algo.name, '...')
-            # Spawn a subprocess to force the memory to be reclaimed at the end
-            p = multiprocessing.Process(
-                target=run_algo,
-                args=(args.count, X_train, queries, library, algo,
-                      args.distance, send_pipe, subprocess_finished, args.runs,
-                      args.single))
+        print(algo.name, '...')
+        # Spawn a subprocess to force the memory to be reclaimed at the end
+        p = multiprocessing.Process(
+            target=run_algo,
+            args=(args.count, X_train, queries, library, algo,
+                  args.distance, send_pipe, subprocess_finished, args.runs,
+                  args.single))
 
-            subprocess_finished.acquire()
-            p.start()
+        subprocess_finished.acquire()
+        p.start()
 
-            seconds = 0
-            while True:
-                subprocess_finished.wait(1)
-                # If it hasn't already finished, the subprocess can't do so
-                # until we release the condition variable by waiting again
-                seconds += 1
-                if not p.is_alive() or recv_pipe.poll():
-                    # If there's something ready for us in the pipe, then we
-                    # treat the subprocess as having finished
-                    break
-                elif args.timeout and seconds >= args.timeout:
-                    # If we've exceeded the timeout, then terminate the process
-                    # (XXX: what should we do about algo.done() here?)
-                    p.terminate()
-                    seconds = None
-                    break
-            p.join()
-            subprocess_finished.release()
+        seconds = 0
+        while True:
+            subprocess_finished.wait(1)
+            # If it hasn't already finished, the subprocess can't do so until
+            # we release the condition variable by waiting again
+            seconds += 1
+            if not p.is_alive() or recv_pipe.poll():
+                # If there's something ready for us in the pipe, then we treat
+                # the subprocess as having finished
+                break
+            elif args.timeout and seconds >= args.timeout:
+                # If we've exceeded the timeout, then terminate the process
+                # (XXX: what should we do about algo.done() here?)
+                p.terminate()
+                seconds = None
+                break
+        p.join()
+        subprocess_finished.release()
 
-            if recv_pipe.poll():
-                result = recv_pipe.recv()
-                fp.write(json.dumps(result) + "\n")
-                fp.flush()
-            elif not seconds:
-                print "(algorithm worker process took too long)"
-            else:
-                print "(algorithm worker process stopped unexpectedly)"
+        if recv_pipe.poll():
+            store_results(recv_pipe.recv(), args.dataset, args.limit,
+                    args.count, args.distance, args.query_dataset)
+        elif not seconds:
+            print "(algorithm worker process took too long)"
+        else:
+            print "(algorithm worker process stopped unexpectedly)"
 
 if __name__ == '__main__':
     main()

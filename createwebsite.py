@@ -44,6 +44,11 @@ def convert_linestyle(ls):
                 algostyle[2], point_styles[algostyle[3]])
     return new_ls
 
+def directory_path(s):
+    if not os.path.isdir(s):
+        raise argparse.ArgumentTypeError("'%s' is not a directory" % s)
+    return s + "/"
+
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '--dataset',
@@ -57,6 +62,8 @@ parser.add_argument(
 parser.add_argument(
     '--outputdir',
     help = 'Select output directory',
+    default = '.',
+    type=directory_path,
     action = 'store')
 parser.add_argument(
     '--definitions',
@@ -76,11 +83,6 @@ parser.add_argument(
     help='create scatterplot for data',
     action = 'store_true')
 args = parser.parse_args()
-
-outputdir = ""
-
-if args.outputdir != None:
-    outputdir = args.outputdir
 
 def get_html_header(title):
     return """
@@ -290,7 +292,7 @@ for (ds, runs) in all_runs_by_dataset.items():
             output_str += create_plot(ds, runs, xn, yn, linestyles, "Scatterplot ", "bubble")
     # create png plot for summary page
     plot.create_plot(runs, True, False,
-            False, True, 'k-nn', 'qps',  outputdir + ds + ".png",
+            False, True, 'k-nn', 'qps',  args.outputdir + ds + ".png",
             create_linestyles(all_algos))
     output_str += """
         </div>
@@ -298,7 +300,7 @@ for (ds, runs) in all_runs_by_dataset.items():
     </body>
 </html>
 """
-    with open(outputdir + ds + ".html", "w") as text_file:
+    with open(args.outputdir + ds + ".html", "w") as text_file:
         text_file.write(output_str)
 
 # Build a website for each algorithm
@@ -315,18 +317,18 @@ for (algo, runs) in all_runs_by_algorithm.items():
         print "Processing '%s' with %s" % (algo, plottype)
         output_str += create_plot(algo, runs, xn, yn, linestyles)
     plot.create_plot(runs, True, False,
-            False, True, 'k-nn', 'qps',  outputdir + algo + ".png",
+            False, True, 'k-nn', 'qps',  args.outputdir + algo + ".png",
             create_linestyles(all_data))
     output_str += """
     </div>
     </body>
 </html>
 """
-    with open(outputdir + algo + ".html", "w") as text_file:
+    with open(args.outputdir + algo + ".html", "w") as text_file:
         text_file.write(output_str)
 
 # Build an index page
-with open(outputdir + "index.html", "w") as text_file:
+with open(args.outputdir + "index.html", "w") as text_file:
     try:
         with open(args.definitions) as f:
             definitions = yaml.load(f)
