@@ -138,6 +138,7 @@ def get_latex_plot(all_data, xm, ym, plottype):
         \\begin{axis}[
             xlabel={%(xlabel)s},
             ylabel={%(ylabel)s},
+            ymode = log,
             yticklabel style={/pgf/number format/fixed,
                               /pgf/number format/precision=3},
             legend style = { anchor=west},
@@ -154,7 +155,7 @@ def get_latex_plot(all_data, xm, ym, plottype):
                 if "Subprocess" in ls[i]:
                     ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
             latex_str += """
-        \\addplot coordinates %s {""" % only_marks
+        \\addplot %s coordinates {""" % only_marks
             for i in range(len(xs)):
                 latex_str += "(%s, %s)" % (str(xs[i]), str(ys[i]))
             latex_str += " };"
