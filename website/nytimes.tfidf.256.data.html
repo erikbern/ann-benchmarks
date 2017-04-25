@@ -44,13 +44,14 @@
         </nav>
         <div class="container">
         <h2>Plots for nytimes.tfidf.256.data
-        <h2>nytimes.tfidf.256.data with 10-NN precision/Queries per second (1/s)</h2>
-        <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
-        <script>
-            var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        <h3> nytimes.tfidf.256.data with 10-NN precision/Queries per second (1/s)</h3>
+        <div id="10-NN precisionQueries per second (1/s)">
+            <canvas id="chart10-NN precisionQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "annoy",
                     fill: false,
@@ -59,29 +60,29 @@
                     data: [ 
                         { x: 0.128558375635, y: 5010.39512295, label: "Annoy(n_trees=100, search_k=100)" },
                         { x: 0.143878172589, y: 4288.90817037, label: "Annoy(n_trees=100, search_k=200)" },
-                        { x: 0.150670050761, y: 3678.36331734, label: "Annoy(n_trees=200, search_k=100)" },
-                        { x: 0.16723857868, y: 3400.73533249, label: "Annoy(n_trees=200, search_k=200)" },
-                        { x: 0.175461928934, y: 2912.96084041, label: "Annoy(n_trees=100, search_k=400)" },
-                        { x: 0.184243654822, y: 2138.31477654, label: "Annoy(n_trees=400, search_k=100)" },
-                        { x: 0.204426395939, y: 2042.56249548, label: "Annoy(n_trees=200, search_k=400)" },
-                        { x: 0.214020304569, y: 1893.33930932, label: "Annoy(n_trees=400, search_k=200)" },
-                        { x: 0.225177664975, y: 1386.50029068, label: "Annoy(n_trees=400, search_k=400)" },
-                        { x: 0.236710659898, y: 1246.56391897, label: "Annoy(n_trees=100, search_k=1000)" },
-                        { x: 0.24752284264, y: 1138.37381587, label: "Annoy(n_trees=200, search_k=1000)" },
-                        { x: 0.258903553299, y: 879.959425575, label: "Annoy(n_trees=400, search_k=1000)" },
-                        { x: 0.274913705584, y: 574.708536448, label: "Annoy(n_trees=100, search_k=2000)" },
-                        { x: 0.284538071066, y: 542.163480856, label: "Annoy(n_trees=200, search_k=2000)" },
-                        { x: 0.294192893401, y: 455.171065113, label: "Annoy(n_trees=400, search_k=2000)" },
-                        { x: 0.333756345178, y: 202.481064451, label: "Annoy(n_trees=100, search_k=4000)" },
-                        { x: 0.339796954315, y: 198.295281147, label: "Annoy(n_trees=200, search_k=4000)" },
-                        { x: 0.344375634518, y: 182.18637857, label: "Annoy(n_trees=400, search_k=4000)" },
-                        { x: 0.386883248731, y: 103.477492321, label: "Annoy(n_trees=100, search_k=10000)" },
-                        { x: 0.388436548223, y: 101.556675288, label: "Annoy(n_trees=200, search_k=10000)" },
-                        { x: 0.389888324873, y: 97.5986736298, label: "Annoy(n_trees=400, search_k=10000)" },
-                        { x: 0.457299492386, y: 57.2093805716, label: "Annoy(n_trees=100, search_k=20000)" },
-                        { x: 0.584944162437, y: 30.8385827495, label: "Annoy(n_trees=200, search_k=20000)" },
-                        { x: 0.712020304569, y: 19.7769586869, label: "Annoy(n_trees=400, search_k=20000)" },
-                        { x: 0.843116751269, y: 11.793294296, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.150670050761, y: 3678.36331734, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.16723857868, y: 3400.73533249, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.175461928934, y: 2912.96084041, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.184243654822, y: 2138.31477654, label: "Annoy(n_trees=400, search_k=400)" },
+                        { x: 0.204426395939, y: 2042.56249548, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.214020304569, y: 1893.33930932, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.225177664975, y: 1386.50029068, label: "Annoy(n_trees=400, search_k=1000)" },
+                        { x: 0.236710659898, y: 1246.56391897, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.24752284264, y: 1138.37381587, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.258903553299, y: 879.959425575, label: "Annoy(n_trees=400, search_k=2000)" },
+                        { x: 0.274913705584, y: 574.708536448, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.284538071066, y: 542.163480856, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.294192893401, y: 455.171065113, label: "Annoy(n_trees=400, search_k=4000)" },
+                        { x: 0.333756345178, y: 202.481064451, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.339796954315, y: 198.295281147, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.344375634518, y: 182.18637857, label: "Annoy(n_trees=400, search_k=10000)" },
+                        { x: 0.386883248731, y: 103.477492321, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.388436548223, y: 101.556675288, label: "Annoy(n_trees=200, search_k=20000)" },
+                        { x: 0.389888324873, y: 97.5986736298, label: "Annoy(n_trees=400, search_k=20000)" },
+                        { x: 0.457299492386, y: 57.2093805716, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.584944162437, y: 30.8385827495, label: "Annoy(n_trees=100, search_k=100000)" },
+                        { x: 0.712020304569, y: 19.7769586869, label: "Annoy(n_trees=100, search_k=200000)" },
+                        { x: 0.843116751269, y: 11.793294296, label: "Annoy(n_trees=100, search_k=400000)" },
                 ]},
                 {
                     label: "faiss-lsh",
@@ -106,76 +107,121 @@
                     data: [ 
                         { x: 0.0429949238579, y: 11650.1019394, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
                         { x: 0.049461928934, y: 11331.4111337, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 0.0501624365482, y: 10430.7444416, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
-                        { x: 0.0560913705584, y: 10193.3153353, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
-                        { x: 0.0612588832487, y: 9666.60818737, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
-                        { x: 0.0621116751269, y: 9619.59595452, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
-                        { x: 0.0673401015228, y: 9439.49715597, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
-                        { x: 0.0769340101523, y: 8448.17405974, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
-                        { x: 0.0879492385787, y: 8397.02719193, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
-                        { x: 0.0905177664975, y: 8157.28559971, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
-                        { x: 0.109888324873, y: 7734.19173334, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
-                        { x: 0.116903553299, y: 6837.33305265, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
-                        { x: 0.123441624365, y: 6731.43744435, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
-                        { x: 0.150243654822, y: 6484.87513672, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
-                        { x: 0.180781725888, y: 5586.77658503, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
-                        { x: 0.206446700508, y: 4989.14042231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 0.242538071066, y: 4098.20260512, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
-                        { x: 0.27076142132, y: 3534.04198553, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
-                        { x: 0.293370558376, y: 3103.17574202, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
-                        { x: 0.329228426396, y: 2526.15321231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
-                        { x: 0.346527918782, y: 2296.59354615, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
-                        { x: 0.349248730964, y: 2083.92909962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
-                        { x: 0.374629441624, y: 1814.40753233, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
-                        { x: 0.406873096447, y: 1617.24137, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
-                        { x: 0.422040609137, y: 1406.65407573, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
-                        { x: 0.445695431472, y: 1253.4798734, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                        { x: 0.467086294416, y: 1116.36264482, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
-                        { x: 0.491319796954, y: 929.427541001, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=15'])" },
-                        { x: 0.502243654822, y: 905.193766824, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=70'])" },
-                        { x: 0.532751269036, y: 754.613193629, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=40'])" },
-                        { x: 0.559898477157, y: 640.327936032, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
-                        { x: 0.603228426396, y: 478.782688716, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=50'])" },
-                        { x: 0.68007106599, y: 294.776128966, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=90'])" },
-                        { x: 0.729868020305, y: 212.280879511, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=30'])" },
+                        { x: 0.0501624365482, y: 10430.7444416, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.0560913705584, y: 10193.3153353, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.0612588832487, y: 9666.60818737, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.0621116751269, y: 9619.59595452, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.0673401015228, y: 9439.49715597, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.0769340101523, y: 8448.17405974, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.0879492385787, y: 8397.02719193, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.0905177664975, y: 8157.28559971, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.109888324873, y: 7734.19173334, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
+                        { x: 0.116903553299, y: 6837.33305265, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
+                        { x: 0.123441624365, y: 6731.43744435, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
+                        { x: 0.150243654822, y: 6484.87513672, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
+                        { x: 0.180781725888, y: 5586.77658503, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=15'])" },
+                        { x: 0.206446700508, y: 4989.14042231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
+                        { x: 0.242538071066, y: 4098.20260512, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=30'])" },
+                        { x: 0.27076142132, y: 3534.04198553, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=40'])" },
+                        { x: 0.293370558376, y: 3103.17574202, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=50'])" },
+                        { x: 0.329228426396, y: 2526.15321231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=70'])" },
+                        { x: 0.346527918782, y: 2296.59354615, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=80'])" },
+                        { x: 0.349248730964, y: 2083.92909962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=50'])" },
+                        { x: 0.374629441624, y: 1814.40753233, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=60'])" },
+                        { x: 0.406873096447, y: 1617.24137, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=120'])" },
+                        { x: 0.422040609137, y: 1406.65407573, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=80'])" },
+                        { x: 0.445695431472, y: 1253.4798734, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=90'])" },
+                        { x: 0.467086294416, y: 1116.36264482, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=100'])" },
+                        { x: 0.491319796954, y: 929.427541001, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=200'])" },
+                        { x: 0.502243654822, y: 905.193766824, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=120'])" },
+                        { x: 0.532751269036, y: 754.613193629, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=140'])" },
+                        { x: 0.559898477157, y: 640.327936032, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=160'])" },
+                        { x: 0.603228426396, y: 478.782688716, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=200'])" },
+                        { x: 0.68007106599, y: 294.776128966, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=300'])" },
+                        { x: 0.729868020305, y: 212.280879511, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=400'])" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Queries per second (1/s) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
-        </script>
-        
-        <h2>nytimes.tfidf.256.data with 10-NN precision/Index size (kB)</h2>
-        <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
         <script>
-            var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
-            var chart = new Chart(ctx, {
-                type: "line",
-                data: { datasets: [
+        $("#button_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").click(function() {
+            $("#plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232").toggle();
+        });
+        </script>
+        <div id="plot_89c7e17ffdc1267dab1261c00583333d8a3130e0f8c6c45aec822232" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.128558375635, 5010.39512295)(0.143878172589, 4288.90817037)(0.150670050761, 3678.36331734)(0.16723857868, 3400.73533249)(0.175461928934, 2912.96084041)(0.184243654822, 2138.31477654)(0.204426395939, 2042.56249548)(0.214020304569, 1893.33930932)(0.225177664975, 1386.50029068)(0.236710659898, 1246.56391897)(0.24752284264, 1138.37381587)(0.258903553299, 879.959425575)(0.274913705584, 574.708536448)(0.284538071066, 542.163480856)(0.294192893401, 455.171065113)(0.333756345178, 202.481064451)(0.339796954315, 198.295281147)(0.344375634518, 182.18637857)(0.386883248731, 103.477492321)(0.388436548223, 101.556675288)(0.389888324873, 97.5986736298)(0.457299492386, 57.2093805716)(0.584944162437, 30.8385827495)(0.712020304569, 19.7769586869)(0.843116751269, 11.793294296) };
+        \addlegendentry{annoy};
+            
+        \addplot coordinates  {(0.0809644670051, 2853.42016232)(0.117279187817, 2817.70725588)(0.175725888325, 1878.69744281)(0.233228426396, 1094.05567215)(0.255492385787, 365.190091236)(0.272304568528, 232.669684829)(0.281482233503, 134.552304641)(0.286233502538, 71.1436388988) };
+        \addlegendentry{faiss-lsh};
+            
+        \addplot coordinates  {(0.0429949238579, 11650.1019394)(0.049461928934, 11331.4111337)(0.0501624365482, 10430.7444416)(0.0560913705584, 10193.3153353)(0.0612588832487, 9666.60818737)(0.0621116751269, 9619.59595452)(0.0673401015228, 9439.49715597)(0.0769340101523, 8448.17405974)(0.0879492385787, 8397.02719193)(0.0905177664975, 8157.28559971)(0.109888324873, 7734.19173334)(0.116903553299, 6837.33305265)(0.123441624365, 6731.43744435)(0.150243654822, 6484.87513672)(0.180781725888, 5586.77658503)(0.206446700508, 4989.14042231)(0.242538071066, 4098.20260512)(0.27076142132, 3534.04198553)(0.293370558376, 3103.17574202)(0.329228426396, 2526.15321231)(0.346527918782, 2296.59354615)(0.349248730964, 2083.92909962)(0.374629441624, 1814.40753233)(0.406873096447, 1617.24137)(0.422040609137, 1406.65407573)(0.445695431472, 1253.4798734)(0.467086294416, 1116.36264482)(0.491319796954, 929.427541001)(0.502243654822, 905.193766824)(0.532751269036, 754.613193629)(0.559898477157, 640.327936032)(0.603228426396, 478.782688716)(0.68007106599, 294.776128966)(0.729868020305, 212.280879511) };
+        \addlegendentry{hnsw(nmslib)};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> nytimes.tfidf.256.data with 10-NN precision/Index size (kB)</h3>
+        <div id="10-NN precisionIndex size (kB)">
+            <canvas id="chart10-NN precisionIndex size (kB)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionIndex size (kB)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
                 {
                     label: "annoy",
                     fill: false,
@@ -195,12 +241,12 @@
                     borderColor: "rgba(153, 153, 153, 1)",
                     data: [ 
                         { x: 0.117279187817, y: 226352, label: "FaissLSH(n_bits=64)" },
-                        { x: 0.175725888325, y: 228312, label: "FaissLSH(n_bits=32)" },
-                        { x: 0.233228426396, y: 234380, label: "FaissLSH(n_bits=128)" },
-                        { x: 0.255492385787, y: 243408, label: "FaissLSH(n_bits=256)" },
-                        { x: 0.272304568528, y: 264884, label: "FaissLSH(n_bits=512)" },
-                        { x: 0.281482233503, y: 314480, label: "FaissLSH(n_bits=1024)" },
-                        { x: 0.286233502538, y: 439112, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.175725888325, y: 228312, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.233228426396, y: 234380, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.255492385787, y: 243408, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.272304568528, y: 264884, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.281482233503, y: 314480, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.286233502538, y: 439112, label: "FaissLSH(n_bits=4096)" },
                 ]},
                 {
                     label: "hnsw(nmslib)",
@@ -210,47 +256,884 @@
                     data: [ 
                         { x: 0.0429949238579, y: 610640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
                         { x: 0.0621116751269, y: 610640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
-                        { x: 0.0879492385787, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
-                        { x: 0.108406091371, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
-                        { x: 0.123441624365, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
-                        { x: 0.145583756345, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
-                        { x: 0.206203045685, y: 619072, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
-                        { x: 0.225675126904, y: 627780, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
-                        { x: 0.274223350254, y: 627780, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
-                        { x: 0.602172588832, y: 645640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
-                        { x: 0.603228426396, y: 672744, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
-                        { x: 0.68007106599, y: 672748, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
-                        { x: 0.729868020305, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
+                        { x: 0.0879492385787, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.108406091371, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.123441624365, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
+                        { x: 0.145583756345, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
+                        { x: 0.206203045685, y: 619072, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=120'])" },
+                        { x: 0.225675126904, y: 627780, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=80'])" },
+                        { x: 0.274223350254, y: 627780, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=120'])" },
+                        { x: 0.602172588832, y: 645640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=400'])" },
+                        { x: 0.603228426396, y: 672744, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=200'])" },
+                        { x: 0.68007106599, y: 672748, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=300'])" },
+                        { x: 0.729868020305, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=400'])" },
                 ]},
-            ]}, options: {
-                        responsive: false,
-                        title:{
-                            display:true,
-                            text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
-                        },
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                type: 'linear',
-                                max: '1',
-                                position: 'bottom',
-                                scaleLabel: {
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
                                     display: true,
-                                    labelString: ' 10-NN precision   '
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                type: 'logarithmic',
-                                scaleLabel: {
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
                                     display: true,
-                                    labelString: ' Index size (kB) '
-                                }
-                            }]
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Index size (kB) '
+                                    }
+                                }]
+                            }
                         }
-                    }
-                }); 
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").click(function() {
+            $("#plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3").toggle();
+        });
         </script>
+        <div id="plot_f6332e6eae09526fbdb64d750327d09f5c2d1c3ed09d302f4c56c1c3" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Index size (kB)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.143878172589, 855664)(0.16723857868, 855664)(0.204426395939, 855668)(0.274913705584, 855668)(0.843116751269, 855668) };
+        \addlegendentry{annoy};
+            
+        \addplot coordinates  {(0.117279187817, 226352)(0.175725888325, 228312)(0.233228426396, 234380)(0.255492385787, 243408)(0.272304568528, 264884)(0.281482233503, 314480)(0.286233502538, 439112) };
+        \addlegendentry{faiss-lsh};
+            
+        \addplot coordinates  {(0.0429949238579, 610640)(0.0621116751269, 610640)(0.0879492385787, 610644)(0.108406091371, 610644)(0.123441624365, 610644)(0.145583756345, 610644)(0.206203045685, 619072)(0.225675126904, 627780)(0.274223350254, 627780)(0.602172588832, 645640)(0.603228426396, 672744)(0.68007106599, 672748)(0.729868020305, 672752) };
+        \addlegendentry{hnsw(nmslib)};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3> nytimes.tfidf.256.data with Epsilon Recall/Queries per second (1/s)</h3>
+        <div id="Epsilon RecallQueries per second (1/s)">
+            <canvas id="chartEpsilon RecallQueries per second (1/s)" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)");
+                var chart = new Chart(ctx, {
+                    type: "line",
+                    data: { datasets: [
+                {
+                    label: "annoy",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.135746192893, y: 5010.39512295, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.153411167513, y: 4288.90817037, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.160791878173, y: 3678.36331734, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.18021319797, y: 3400.73533249, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.189766497462, y: 2912.96084041, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.198873096447, y: 2138.31477654, label: "Annoy(n_trees=400, search_k=400)" },
+                        { x: 0.224284263959, y: 2042.56249548, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.23421319797, y: 1893.33930932, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.246172588832, y: 1386.50029068, label: "Annoy(n_trees=400, search_k=1000)" },
+                        { x: 0.264487309645, y: 1246.56391897, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.274436548223, y: 1138.37381587, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.286263959391, y: 879.959425575, label: "Annoy(n_trees=400, search_k=2000)" },
+                        { x: 0.317441624365, y: 574.708536448, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.324131979695, y: 542.163480856, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.332121827411, y: 455.171065113, label: "Annoy(n_trees=400, search_k=4000)" },
+                        { x: 0.412162436548, y: 202.481064451, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.515908629442, y: 103.477492321, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.652609137056, y: 57.2093805716, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.854507614213, y: 30.8385827495, label: "Annoy(n_trees=100, search_k=100000)" },
+                        { x: 0.958335025381, y: 19.7769586869, label: "Annoy(n_trees=100, search_k=200000)" },
+                        { x: 0.994162436548, y: 11.793294296, label: "Annoy(n_trees=100, search_k=400000)" },
+                ]},
+                {
+                    label: "faiss-lsh",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.0824873096447, y: 2853.42016232, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.121482233503, y: 2817.70725588, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.185654822335, y: 1878.69744281, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.250030456853, y: 1094.05567215, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.276467005076, y: 365.190091236, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.295705583756, y: 232.669684829, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.304659898477, y: 134.552304641, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.309492385787, y: 71.1436388988, label: "FaissLSH(n_bits=4096)" },
+                ]},
+                {
+                    label: "hnsw(nmslib)",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(255, 129, 0, 1)",
+                    data: [ 
+                        { x: 0.276081218274, y: 11650.1019394, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.302223350254, y: 11331.4111337, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.323197969543, y: 10430.7444416, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.326091370558, y: 10193.3153353, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.355705583756, y: 9666.60818737, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.393005076142, y: 8448.17405974, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.417360406091, y: 8397.02719193, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.429258883249, y: 7544.00976995, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
+                        { x: 0.464324873096, y: 7426.75100475, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.49938071066, y: 6731.43744435, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
+                        { x: 0.547969543147, y: 5953.99733385, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
+                        { x: 0.564182741117, y: 4989.14042231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
+                        { x: 0.604294416244, y: 4098.20260512, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=30'])" },
+                        { x: 0.612304568528, y: 3764.56358779, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=20'])" },
+                        { x: 0.632467005076, y: 3534.04198553, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=40'])" },
+                        { x: 0.651553299492, y: 3144.87321707, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=160'])" },
+                        { x: 0.654243654822, y: 3103.17574202, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=50'])" },
+                        { x: 0.659472081218, y: 2944.28201781, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=30'])" },
+                        { x: 0.66483248731, y: 2788.1392359, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=120'])" },
+                        { x: 0.682558375635, y: 2526.15321231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=70'])" },
+                        { x: 0.688507614213, y: 2441.95174352, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=40'])" },
+                        { x: 0.698182741117, y: 2296.59354615, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=80'])" },
+                        { x: 0.710710659898, y: 2083.92909962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=50'])" },
+                        { x: 0.729644670051, y: 1814.40753233, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=60'])" },
+                        { x: 0.749563451777, y: 1617.24137, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=120'])" },
+                        { x: 0.766802030457, y: 1406.65407573, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=80'])" },
+                        { x: 0.784, y: 1253.4798734, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=90'])" },
+                        { x: 0.797583756345, y: 1116.36264482, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=100'])" },
+                        { x: 0.805096446701, y: 929.427541001, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=200'])" },
+                        { x: 0.820426395939, y: 905.193766824, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=120'])" },
+                        { x: 0.83778680203, y: 754.613193629, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=140'])" },
+                        { x: 0.852020304569, y: 640.327936032, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=160'])" },
+                        { x: 0.87378680203, y: 478.782688716, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=200'])" },
+                        { x: 0.906913705584, y: 294.776128966, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=300'])" },
+                        { x: 0.923055837563, y: 212.280879511, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=400'])" },
+                ]},
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Epsilon Recall   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").click(function() {
+            $("#plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474").toggle();
+        });
+        </script>
+        <div id="plot_be26976abd8b8e3ba0fe8145d448fe2bb8977d94f2805975b27b6474" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Epsilon Recall},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates  {(0.135746192893, 5010.39512295)(0.153411167513, 4288.90817037)(0.160791878173, 3678.36331734)(0.18021319797, 3400.73533249)(0.189766497462, 2912.96084041)(0.198873096447, 2138.31477654)(0.224284263959, 2042.56249548)(0.23421319797, 1893.33930932)(0.246172588832, 1386.50029068)(0.264487309645, 1246.56391897)(0.274436548223, 1138.37381587)(0.286263959391, 879.959425575)(0.317441624365, 574.708536448)(0.324131979695, 542.163480856)(0.332121827411, 455.171065113)(0.412162436548, 202.481064451)(0.515908629442, 103.477492321)(0.652609137056, 57.2093805716)(0.854507614213, 30.8385827495)(0.958335025381, 19.7769586869)(0.994162436548, 11.793294296) };
+        \addlegendentry{annoy};
+            
+        \addplot coordinates  {(0.0824873096447, 2853.42016232)(0.121482233503, 2817.70725588)(0.185654822335, 1878.69744281)(0.250030456853, 1094.05567215)(0.276467005076, 365.190091236)(0.295705583756, 232.669684829)(0.304659898477, 134.552304641)(0.309492385787, 71.1436388988) };
+        \addlegendentry{faiss-lsh};
+            
+        \addplot coordinates  {(0.276081218274, 11650.1019394)(0.302223350254, 11331.4111337)(0.323197969543, 10430.7444416)(0.326091370558, 10193.3153353)(0.355705583756, 9666.60818737)(0.393005076142, 8448.17405974)(0.417360406091, 8397.02719193)(0.429258883249, 7544.00976995)(0.464324873096, 7426.75100475)(0.49938071066, 6731.43744435)(0.547969543147, 5953.99733385)(0.564182741117, 4989.14042231)(0.604294416244, 4098.20260512)(0.612304568528, 3764.56358779)(0.632467005076, 3534.04198553)(0.651553299492, 3144.87321707)(0.654243654822, 3103.17574202)(0.659472081218, 2944.28201781)(0.66483248731, 2788.1392359)(0.682558375635, 2526.15321231)(0.688507614213, 2441.95174352)(0.698182741117, 2296.59354615)(0.710710659898, 2083.92909962)(0.729644670051, 1814.40753233)(0.749563451777, 1617.24137)(0.766802030457, 1406.65407573)(0.784, 1253.4798734)(0.797583756345, 1116.36264482)(0.805096446701, 929.427541001)(0.820426395939, 905.193766824)(0.83778680203, 754.613193629)(0.852020304569, 640.327936032)(0.87378680203, 478.782688716)(0.906913705584, 294.776128966)(0.923055837563, 212.280879511) };
+        \addlegendentry{hnsw(nmslib)};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <hr />
+        <h2>Scatterplots for nytimes.tfidf.256.data
+        <h3>Scatterplot  nytimes.tfidf.256.data with 10-NN precision/Queries per second (1/s)</h3>
+        <div id="10-NN precisionQueries per second (1/s)Scatterplot ">
+            <canvas id="chart10-NN precisionQueries per second (1/s)Scatterplot " width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionQueries per second (1/s)Scatterplot ");
+                var chart = new Chart(ctx, {
+                    type: "bubble",
+                    data: { datasets: [
+                {
+                    label: "annoy",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.128558375635, y: 5010.39512295, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.143878172589, y: 4288.90817037, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.134934010152, y: 4199.82687894, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.150670050761, y: 3678.36331734, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.16723857868, y: 3400.73533249, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.14138071066, y: 2936.54716215, label: "Annoy(n_trees=400, search_k=100)" },
+                        { x: 0.175461928934, y: 2912.96084041, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.158720812183, y: 2593.77775523, label: "Annoy(n_trees=400, search_k=200)" },
+                        { x: 0.184243654822, y: 2138.31477654, label: "Annoy(n_trees=400, search_k=400)" },
+                        { x: 0.204426395939, y: 2042.56249548, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.214020304569, y: 1893.33930932, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.225177664975, y: 1386.50029068, label: "Annoy(n_trees=400, search_k=1000)" },
+                        { x: 0.236710659898, y: 1246.56391897, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.24752284264, y: 1138.37381587, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.258903553299, y: 879.959425575, label: "Annoy(n_trees=400, search_k=2000)" },
+                        { x: 0.274913705584, y: 574.708536448, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.284538071066, y: 542.163480856, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.294192893401, y: 455.171065113, label: "Annoy(n_trees=400, search_k=4000)" },
+                        { x: 0.333756345178, y: 202.481064451, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.339796954315, y: 198.295281147, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.344375634518, y: 182.18637857, label: "Annoy(n_trees=400, search_k=10000)" },
+                        { x: 0.386883248731, y: 103.477492321, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.388436548223, y: 101.556675288, label: "Annoy(n_trees=200, search_k=20000)" },
+                        { x: 0.389888324873, y: 97.5986736298, label: "Annoy(n_trees=400, search_k=20000)" },
+                        { x: 0.457299492386, y: 57.2093805716, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.44916751269, y: 54.6683259924, label: "Annoy(n_trees=200, search_k=40000)" },
+                        { x: 0.442436548223, y: 53.2117794617, label: "Annoy(n_trees=400, search_k=40000)" },
+                        { x: 0.584944162437, y: 30.8385827495, label: "Annoy(n_trees=100, search_k=100000)" },
+                        { x: 0.562862944162, y: 28.8006768005, label: "Annoy(n_trees=200, search_k=100000)" },
+                        { x: 0.539654822335, y: 27.908509083, label: "Annoy(n_trees=400, search_k=100000)" },
+                        { x: 0.712020304569, y: 19.7769586869, label: "Annoy(n_trees=100, search_k=200000)" },
+                        { x: 0.676162436548, y: 19.5651027869, label: "Annoy(n_trees=200, search_k=200000)" },
+                        { x: 0.641807106599, y: 18.7076504418, label: "Annoy(n_trees=400, search_k=200000)" },
+                        { x: 0.843116751269, y: 11.793294296, label: "Annoy(n_trees=100, search_k=400000)" },
+                        { x: 0.802680203046, y: 11.7678528257, label: "Annoy(n_trees=200, search_k=400000)" },
+                        { x: 0.762121827411, y: 11.3884840324, label: "Annoy(n_trees=400, search_k=400000)" },
+                ]},
+                {
+                    label: "faiss-lsh",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.0809644670051, y: 2853.42016232, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.117279187817, y: 2817.70725588, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.175725888325, y: 1878.69744281, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.233228426396, y: 1094.05567215, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.255492385787, y: 365.190091236, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.272304568528, y: 232.669684829, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.281482233503, y: 134.552304641, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.286233502538, y: 71.1436388988, label: "FaissLSH(n_bits=4096)" },
+                ]},
+                {
+                    label: "hnsw(nmslib)",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(255, 129, 0, 1)",
+                    data: [ 
+                        { x: 0.0429949238579, y: 11650.1019394, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.049461928934, y: 11331.4111337, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.037654822335, y: 10814.1591141, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
+                        { x: 0.0490253807107, y: 10711.3480585, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
+                        { x: 0.0350050761421, y: 10567.8999411, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.0501624365482, y: 10430.7444416, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.0560913705584, y: 10193.3153353, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.0612588832487, y: 9666.60818737, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.0621116751269, y: 9619.59595452, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.0673401015228, y: 9439.49715597, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.0640304568528, y: 9268.79539453, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
+                        { x: 0.0769340101523, y: 8448.17405974, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.0879492385787, y: 8397.02719193, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.0195025380711, y: 8316.52860437, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
+                        { x: 0.0905177664975, y: 8157.28559971, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.0131675126904, y: 7935.65377304, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
+                        { x: 0.109888324873, y: 7734.19173334, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
+                        { x: 0.0132588832487, y: 7623.78522254, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
+                        { x: 0.092345177665, y: 7544.00976995, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
+                        { x: 0.104426395939, y: 7436.15104673, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
+                        { x: 0.108406091371, y: 7426.75100475, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.116903553299, y: 6837.33305265, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
+                        { x: 0.123441624365, y: 6731.43744435, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
+                        { x: 0.150243654822, y: 6484.87513672, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
+                        { x: 0.116, y: 6370.51440717, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
+                        { x: 0.145583756345, y: 5953.99733385, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
+                        { x: 0.141685279188, y: 5914.9953691, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
+                        { x: 0.180781725888, y: 5586.77658503, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=15'])" },
+                        { x: 0.134984771574, y: 5548.63738124, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=70'])" },
+                        { x: 0.161116751269, y: 5300.34298236, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=40'])" },
+                        { x: 0.206446700508, y: 4989.14042231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
+                        { x: 0.179908629442, y: 4823.97078474, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=50'])" },
+                        { x: 0.175258883249, y: 4758.74201365, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=90'])" },
+                        { x: 0.242538071066, y: 4098.20260512, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=30'])" },
+                        { x: 0.20930964467, y: 4063.89944907, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=70'])" },
+                        { x: 0.206203045685, y: 3957.38367553, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=120'])" },
+                        { x: 0.240527918782, y: 3764.56358779, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=20'])" },
+                        { x: 0.225675126904, y: 3711.6403985, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=80'])" },
+                        { x: 0.27076142132, y: 3534.04198553, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=40'])" },
+                        { x: 0.248700507614, y: 3144.87321707, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=160'])" },
+                        { x: 0.293370558376, y: 3103.17574202, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=50'])" },
+                        { x: 0.288233502538, y: 2944.28201781, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=30'])" },
+                        { x: 0.274223350254, y: 2788.1392359, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=120'])" },
+                        { x: 0.329228426396, y: 2526.15321231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=70'])" },
+                        { x: 0.320304568528, y: 2441.95174352, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=40'])" },
+                        { x: 0.346527918782, y: 2296.59354615, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=80'])" },
+                        { x: 0.349248730964, y: 2083.92909962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=50'])" },
+                        { x: 0.374629441624, y: 1814.40753233, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=60'])" },
+                        { x: 0.406873096447, y: 1617.24137, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=120'])" },
+                        { x: 0.394934010152, y: 1616.32229128, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=70'])" },
+                        { x: 0.422040609137, y: 1406.65407573, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=80'])" },
+                        { x: 0.445695431472, y: 1253.4798734, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=90'])" },
+                        { x: 0.467086294416, y: 1116.36264482, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=100'])" },
+                        { x: 0.491319796954, y: 929.427541001, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=200'])" },
+                        { x: 0.502243654822, y: 905.193766824, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=120'])" },
+                        { x: 0.532751269036, y: 754.613193629, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=140'])" },
+                        { x: 0.559898477157, y: 640.327936032, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=160'])" },
+                        { x: 0.603228426396, y: 478.782688716, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=200'])" },
+                        { x: 0.602172588832, y: 378.559169002, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=400'])" },
+                        { x: 0.68007106599, y: 294.776128966, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=300'])" },
+                        { x: 0.729868020305, y: 212.280879511, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=400'])" },
+                ]},
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_7528dc690c5527b663194d448e4d93040285354146ebbc9821728095" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_7528dc690c5527b663194d448e4d93040285354146ebbc9821728095").click(function() {
+            $("#plot_7528dc690c5527b663194d448e4d93040285354146ebbc9821728095").toggle();
+        });
+        </script>
+        <div id="plot_7528dc690c5527b663194d448e4d93040285354146ebbc9821728095" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates [only marks] {(0.128558375635, 5010.39512295)(0.143878172589, 4288.90817037)(0.150670050761, 3678.36331734)(0.16723857868, 3400.73533249)(0.175461928934, 2912.96084041)(0.184243654822, 2138.31477654)(0.204426395939, 2042.56249548)(0.214020304569, 1893.33930932)(0.225177664975, 1386.50029068)(0.236710659898, 1246.56391897)(0.24752284264, 1138.37381587)(0.258903553299, 879.959425575)(0.274913705584, 574.708536448)(0.284538071066, 542.163480856)(0.294192893401, 455.171065113)(0.333756345178, 202.481064451)(0.339796954315, 198.295281147)(0.344375634518, 182.18637857)(0.386883248731, 103.477492321)(0.388436548223, 101.556675288)(0.389888324873, 97.5986736298)(0.457299492386, 57.2093805716)(0.584944162437, 30.8385827495)(0.712020304569, 19.7769586869)(0.843116751269, 11.793294296) };
+        \addlegendentry{annoy};
+            
+        \addplot coordinates [only marks] {(0.0809644670051, 2853.42016232)(0.117279187817, 2817.70725588)(0.175725888325, 1878.69744281)(0.233228426396, 1094.05567215)(0.255492385787, 365.190091236)(0.272304568528, 232.669684829)(0.281482233503, 134.552304641)(0.286233502538, 71.1436388988) };
+        \addlegendentry{faiss-lsh};
+            
+        \addplot coordinates [only marks] {(0.0429949238579, 11650.1019394)(0.049461928934, 11331.4111337)(0.0501624365482, 10430.7444416)(0.0560913705584, 10193.3153353)(0.0612588832487, 9666.60818737)(0.0621116751269, 9619.59595452)(0.0673401015228, 9439.49715597)(0.0769340101523, 8448.17405974)(0.0879492385787, 8397.02719193)(0.0905177664975, 8157.28559971)(0.109888324873, 7734.19173334)(0.116903553299, 6837.33305265)(0.123441624365, 6731.43744435)(0.150243654822, 6484.87513672)(0.180781725888, 5586.77658503)(0.206446700508, 4989.14042231)(0.242538071066, 4098.20260512)(0.27076142132, 3534.04198553)(0.293370558376, 3103.17574202)(0.329228426396, 2526.15321231)(0.346527918782, 2296.59354615)(0.349248730964, 2083.92909962)(0.374629441624, 1814.40753233)(0.406873096447, 1617.24137)(0.422040609137, 1406.65407573)(0.445695431472, 1253.4798734)(0.467086294416, 1116.36264482)(0.491319796954, 929.427541001)(0.502243654822, 905.193766824)(0.532751269036, 754.613193629)(0.559898477157, 640.327936032)(0.603228426396, 478.782688716)(0.68007106599, 294.776128966)(0.729868020305, 212.280879511) };
+        \addlegendentry{hnsw(nmslib)};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3>Scatterplot  nytimes.tfidf.256.data with 10-NN precision/Index size (kB)</h3>
+        <div id="10-NN precisionIndex size (kB)Scatterplot ">
+            <canvas id="chart10-NN precisionIndex size (kB)Scatterplot " width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart10-NN precisionIndex size (kB)Scatterplot ");
+                var chart = new Chart(ctx, {
+                    type: "bubble",
+                    data: { datasets: [
+                {
+                    label: "annoy",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.143878172589, y: 855664, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.16723857868, y: 855664, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.204426395939, y: 855668, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.274913705584, y: 855668, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.843116751269, y: 855668, label: "Annoy(n_trees=100, search_k=400000)" },
+                        { x: 0.128558375635, y: 855672, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.386883248731, y: 855672, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.457299492386, y: 855672, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.584944162437, y: 855672, label: "Annoy(n_trees=100, search_k=100000)" },
+                        { x: 0.236710659898, y: 855676, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.333756345178, y: 855676, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.712020304569, y: 855676, label: "Annoy(n_trees=100, search_k=200000)" },
+                        { x: 0.134934010152, y: 1101704, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.150670050761, y: 1101720, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.388436548223, y: 1101724, label: "Annoy(n_trees=200, search_k=20000)" },
+                        { x: 0.284538071066, y: 1101728, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.562862944162, y: 1101732, label: "Annoy(n_trees=200, search_k=100000)" },
+                        { x: 0.339796954315, y: 1101740, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.175461928934, y: 1101748, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.24752284264, y: 1101748, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.214020304569, y: 1101760, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.676162436548, y: 1101768, label: "Annoy(n_trees=200, search_k=200000)" },
+                        { x: 0.802680203046, y: 1101772, label: "Annoy(n_trees=200, search_k=400000)" },
+                        { x: 0.44916751269, y: 1101780, label: "Annoy(n_trees=200, search_k=40000)" },
+                        { x: 0.158720812183, y: 1836948, label: "Annoy(n_trees=400, search_k=200)" },
+                        { x: 0.225177664975, y: 1836948, label: "Annoy(n_trees=400, search_k=1000)" },
+                        { x: 0.539654822335, y: 1836948, label: "Annoy(n_trees=400, search_k=100000)" },
+                        { x: 0.762121827411, y: 1836948, label: "Annoy(n_trees=400, search_k=400000)" },
+                        { x: 0.258903553299, y: 1836952, label: "Annoy(n_trees=400, search_k=2000)" },
+                        { x: 0.14138071066, y: 1836956, label: "Annoy(n_trees=400, search_k=100)" },
+                        { x: 0.294192893401, y: 1836956, label: "Annoy(n_trees=400, search_k=4000)" },
+                        { x: 0.184243654822, y: 1836960, label: "Annoy(n_trees=400, search_k=400)" },
+                        { x: 0.344375634518, y: 1836960, label: "Annoy(n_trees=400, search_k=10000)" },
+                        { x: 0.389888324873, y: 1836960, label: "Annoy(n_trees=400, search_k=20000)" },
+                        { x: 0.442436548223, y: 1836960, label: "Annoy(n_trees=400, search_k=40000)" },
+                        { x: 0.641807106599, y: 1836960, label: "Annoy(n_trees=400, search_k=200000)" },
+                ]},
+                {
+                    label: "faiss-lsh",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.117279187817, y: 226352, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.0809644670051, y: 228168, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.175725888325, y: 228312, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.233228426396, y: 234380, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.255492385787, y: 243408, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.272304568528, y: 264884, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.281482233503, y: 314480, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.286233502538, y: 439112, label: "FaissLSH(n_bits=4096)" },
+                ]},
+                {
+                    label: "hnsw(nmslib)",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(255, 129, 0, 1)",
+                    data: [ 
+                        { x: 0.0429949238579, y: 610640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.0621116751269, y: 610640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.0131675126904, y: 610640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
+                        { x: 0.049461928934, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.0350050761421, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.0879492385787, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.108406091371, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.123441624365, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
+                        { x: 0.145583756345, y: 610644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
+                        { x: 0.0501624365482, y: 619064, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.116, y: 619064, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
+                        { x: 0.0612588832487, y: 619068, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.0132588832487, y: 619068, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
+                        { x: 0.092345177665, y: 619072, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
+                        { x: 0.206203045685, y: 619072, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=120'])" },
+                        { x: 0.037654822335, y: 619076, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
+                        { x: 0.0769340101523, y: 619076, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.134984771574, y: 619076, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=70'])" },
+                        { x: 0.175258883249, y: 619076, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=90'])" },
+                        { x: 0.0195025380711, y: 627776, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
+                        { x: 0.161116751269, y: 627776, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=40'])" },
+                        { x: 0.104426395939, y: 627780, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
+                        { x: 0.225675126904, y: 627780, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=80'])" },
+                        { x: 0.274223350254, y: 627780, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=120'])" },
+                        { x: 0.0490253807107, y: 627784, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
+                        { x: 0.0673401015228, y: 627784, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.0905177664975, y: 627784, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.141685279188, y: 627784, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
+                        { x: 0.20930964467, y: 627784, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=70'])" },
+                        { x: 0.179908629442, y: 627792, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=50'])" },
+                        { x: 0.0640304568528, y: 645640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
+                        { x: 0.27076142132, y: 645640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=40'])" },
+                        { x: 0.602172588832, y: 645640, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=400'])" },
+                        { x: 0.206446700508, y: 645644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
+                        { x: 0.406873096447, y: 645644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=120'])" },
+                        { x: 0.491319796954, y: 645644, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=200'])" },
+                        { x: 0.346527918782, y: 645648, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=80'])" },
+                        { x: 0.109888324873, y: 645652, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
+                        { x: 0.150243654822, y: 645652, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
+                        { x: 0.180781725888, y: 645652, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=15'])" },
+                        { x: 0.242538071066, y: 645652, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=30'])" },
+                        { x: 0.293370558376, y: 645652, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=50'])" },
+                        { x: 0.603228426396, y: 672744, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=200'])" },
+                        { x: 0.559898477157, y: 672748, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=160'])" },
+                        { x: 0.68007106599, y: 672748, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=300'])" },
+                        { x: 0.240527918782, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=20'])" },
+                        { x: 0.288233502538, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=30'])" },
+                        { x: 0.320304568528, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=40'])" },
+                        { x: 0.349248730964, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=50'])" },
+                        { x: 0.374629441624, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=60'])" },
+                        { x: 0.394934010152, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=70'])" },
+                        { x: 0.422040609137, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=80'])" },
+                        { x: 0.502243654822, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=120'])" },
+                        { x: 0.532751269036, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=140'])" },
+                        { x: 0.729868020305, y: 672752, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=400'])" },
+                        { x: 0.445695431472, y: 672756, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=90'])" },
+                        { x: 0.0560913705584, y: 685500, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.248700507614, y: 710252, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=160'])" },
+                        { x: 0.116903553299, y: 735932, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
+                        { x: 0.329228426396, y: 936028, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=70'])" },
+                        { x: 0.467086294416, y: 1054828, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=100'])" },
+                ]},
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '10-NN precision-Index size (kB) tradeoff - down and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' 10-NN precision   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Index size (kB) '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_c146a93862b2804577c08577616dcd248db17f4f75bb931042afa204" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_c146a93862b2804577c08577616dcd248db17f4f75bb931042afa204").click(function() {
+            $("#plot_c146a93862b2804577c08577616dcd248db17f4f75bb931042afa204").toggle();
+        });
+        </script>
+        <div id="plot_c146a93862b2804577c08577616dcd248db17f4f75bb931042afa204" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={10-NN precision},
+            ylabel={Index size (kB)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates [only marks] {(0.143878172589, 855664)(0.16723857868, 855664)(0.204426395939, 855668)(0.274913705584, 855668)(0.843116751269, 855668) };
+        \addlegendentry{annoy};
+            
+        \addplot coordinates [only marks] {(0.117279187817, 226352)(0.175725888325, 228312)(0.233228426396, 234380)(0.255492385787, 243408)(0.272304568528, 264884)(0.281482233503, 314480)(0.286233502538, 439112) };
+        \addlegendentry{faiss-lsh};
+            
+        \addplot coordinates [only marks] {(0.0429949238579, 610640)(0.0621116751269, 610640)(0.0879492385787, 610644)(0.108406091371, 610644)(0.123441624365, 610644)(0.145583756345, 610644)(0.206203045685, 619072)(0.225675126904, 627780)(0.274223350254, 627780)(0.602172588832, 645640)(0.603228426396, 672744)(0.68007106599, 672748)(0.729868020305, 672752) };
+        \addlegendentry{hnsw(nmslib)};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{10-NN precision-Index size (kB) tradeoff - down and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
+        
+        <h3>Scatterplot  nytimes.tfidf.256.data with Epsilon Recall/Queries per second (1/s)</h3>
+        <div id="Epsilon RecallQueries per second (1/s)Scatterplot ">
+            <canvas id="chartEpsilon RecallQueries per second (1/s)Scatterplot " width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chartEpsilon RecallQueries per second (1/s)Scatterplot ");
+                var chart = new Chart(ctx, {
+                    type: "bubble",
+                    data: { datasets: [
+                {
+                    label: "annoy",
+                    fill: false,
+                    pointStyle: "rect",
+                    borderColor: "rgba(228, 26, 28, 1)",
+                    data: [ 
+                        { x: 0.135746192893, y: 5010.39512295, label: "Annoy(n_trees=100, search_k=100)" },
+                        { x: 0.153411167513, y: 4288.90817037, label: "Annoy(n_trees=100, search_k=200)" },
+                        { x: 0.143076142132, y: 4199.82687894, label: "Annoy(n_trees=200, search_k=100)" },
+                        { x: 0.160791878173, y: 3678.36331734, label: "Annoy(n_trees=200, search_k=200)" },
+                        { x: 0.18021319797, y: 3400.73533249, label: "Annoy(n_trees=100, search_k=400)" },
+                        { x: 0.150284263959, y: 2936.54716215, label: "Annoy(n_trees=400, search_k=100)" },
+                        { x: 0.189766497462, y: 2912.96084041, label: "Annoy(n_trees=200, search_k=400)" },
+                        { x: 0.169908629442, y: 2593.77775523, label: "Annoy(n_trees=400, search_k=200)" },
+                        { x: 0.198873096447, y: 2138.31477654, label: "Annoy(n_trees=400, search_k=400)" },
+                        { x: 0.224284263959, y: 2042.56249548, label: "Annoy(n_trees=100, search_k=1000)" },
+                        { x: 0.23421319797, y: 1893.33930932, label: "Annoy(n_trees=200, search_k=1000)" },
+                        { x: 0.246172588832, y: 1386.50029068, label: "Annoy(n_trees=400, search_k=1000)" },
+                        { x: 0.264487309645, y: 1246.56391897, label: "Annoy(n_trees=100, search_k=2000)" },
+                        { x: 0.274436548223, y: 1138.37381587, label: "Annoy(n_trees=200, search_k=2000)" },
+                        { x: 0.286263959391, y: 879.959425575, label: "Annoy(n_trees=400, search_k=2000)" },
+                        { x: 0.317441624365, y: 574.708536448, label: "Annoy(n_trees=100, search_k=4000)" },
+                        { x: 0.324131979695, y: 542.163480856, label: "Annoy(n_trees=200, search_k=4000)" },
+                        { x: 0.332121827411, y: 455.171065113, label: "Annoy(n_trees=400, search_k=4000)" },
+                        { x: 0.412162436548, y: 202.481064451, label: "Annoy(n_trees=100, search_k=10000)" },
+                        { x: 0.412010152284, y: 198.295281147, label: "Annoy(n_trees=200, search_k=10000)" },
+                        { x: 0.408629441624, y: 182.18637857, label: "Annoy(n_trees=400, search_k=10000)" },
+                        { x: 0.515908629442, y: 103.477492321, label: "Annoy(n_trees=100, search_k=20000)" },
+                        { x: 0.503035532995, y: 101.556675288, label: "Annoy(n_trees=200, search_k=20000)" },
+                        { x: 0.491746192893, y: 97.5986736298, label: "Annoy(n_trees=400, search_k=20000)" },
+                        { x: 0.652609137056, y: 57.2093805716, label: "Annoy(n_trees=100, search_k=40000)" },
+                        { x: 0.627989847716, y: 54.6683259924, label: "Annoy(n_trees=200, search_k=40000)" },
+                        { x: 0.601329949239, y: 53.2117794617, label: "Annoy(n_trees=400, search_k=40000)" },
+                        { x: 0.854507614213, y: 30.8385827495, label: "Annoy(n_trees=100, search_k=100000)" },
+                        { x: 0.823553299492, y: 28.8006768005, label: "Annoy(n_trees=200, search_k=100000)" },
+                        { x: 0.784852791878, y: 27.908509083, label: "Annoy(n_trees=400, search_k=100000)" },
+                        { x: 0.958335025381, y: 19.7769586869, label: "Annoy(n_trees=100, search_k=200000)" },
+                        { x: 0.936822335025, y: 19.5651027869, label: "Annoy(n_trees=200, search_k=200000)" },
+                        { x: 0.909583756345, y: 18.7076504418, label: "Annoy(n_trees=400, search_k=200000)" },
+                        { x: 0.994162436548, y: 11.793294296, label: "Annoy(n_trees=100, search_k=400000)" },
+                        { x: 0.987573604061, y: 11.7678528257, label: "Annoy(n_trees=200, search_k=400000)" },
+                        { x: 0.977350253807, y: 11.3884840324, label: "Annoy(n_trees=400, search_k=400000)" },
+                ]},
+                {
+                    label: "faiss-lsh",
+                    fill: false,
+                    pointStyle: "circle",
+                    borderColor: "rgba(153, 153, 153, 1)",
+                    data: [ 
+                        { x: 0.0824873096447, y: 2853.42016232, label: "FaissLSH(n_bits=32)" },
+                        { x: 0.121482233503, y: 2817.70725588, label: "FaissLSH(n_bits=64)" },
+                        { x: 0.185654822335, y: 1878.69744281, label: "FaissLSH(n_bits=128)" },
+                        { x: 0.250030456853, y: 1094.05567215, label: "FaissLSH(n_bits=256)" },
+                        { x: 0.276467005076, y: 365.190091236, label: "FaissLSH(n_bits=512)" },
+                        { x: 0.295705583756, y: 232.669684829, label: "FaissLSH(n_bits=1024)" },
+                        { x: 0.304659898477, y: 134.552304641, label: "FaissLSH(n_bits=2048)" },
+                        { x: 0.309492385787, y: 71.1436388988, label: "FaissLSH(n_bits=4096)" },
+                ]},
+                {
+                    label: "hnsw(nmslib)",
+                    fill: false,
+                    pointStyle: "triangle",
+                    borderColor: "rgba(255, 129, 0, 1)",
+                    data: [ 
+                        { x: 0.276081218274, y: 11650.1019394, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=5'])" },
+                        { x: 0.302223350254, y: 11331.4111337, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=10'])" },
+                        { x: 0.251258883249, y: 10814.1591141, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=2'])" },
+                        { x: 0.242964467005, y: 10711.3480585, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=2'])" },
+                        { x: 0.216964467005, y: 10567.8999411, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=2'])" },
+                        { x: 0.323197969543, y: 10430.7444416, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=5'])" },
+                        { x: 0.326091370558, y: 10193.3153353, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=20'])" },
+                        { x: 0.355705583756, y: 9666.60818737, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=10'])" },
+                        { x: 0.347563451777, y: 9619.59595452, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=30'])" },
+                        { x: 0.323827411168, y: 9439.49715597, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=5'])" },
+                        { x: 0.260263959391, y: 9268.79539453, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=2'])" },
+                        { x: 0.393005076142, y: 8448.17405974, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=20'])" },
+                        { x: 0.417360406091, y: 8397.02719193, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=50'])" },
+                        { x: 0.077116751269, y: 8316.52860437, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=1'])" },
+                        { x: 0.39345177665, y: 8157.28559971, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=10'])" },
+                        { x: 0.059614213198, y: 7935.65377304, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=1'])" },
+                        { x: 0.415025380711, y: 7734.19173334, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=5'])" },
+                        { x: 0.0597055837563, y: 7623.78522254, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=1'])" },
+                        { x: 0.429258883249, y: 7544.00976995, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=30'])" },
+                        { x: 0.427675126904, y: 7436.15104673, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=15'])" },
+                        { x: 0.464324873096, y: 7426.75100475, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=70'])" },
+                        { x: 0.454781725888, y: 6837.33305265, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=20'])" },
+                        { x: 0.49938071066, y: 6731.43744435, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=90'])" },
+                        { x: 0.489218274112, y: 6484.87513672, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=10'])" },
+                        { x: 0.46876142132, y: 6370.51440717, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=50'])" },
+                        { x: 0.547969543147, y: 5953.99733385, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=4'], query_param=['ef=120'])" },
+                        { x: 0.503583756345, y: 5914.9953691, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=30'])" },
+                        { x: 0.531766497462, y: 5586.77658503, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=15'])" },
+                        { x: 0.495482233503, y: 5548.63738124, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=70'])" },
+                        { x: 0.533116751269, y: 5300.34298236, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=40'])" },
+                        { x: 0.564182741117, y: 4989.14042231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=20'])" },
+                        { x: 0.555807106599, y: 4823.97078474, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=50'])" },
+                        { x: 0.555157360406, y: 4758.74201365, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=90'])" },
+                        { x: 0.604294416244, y: 4098.20260512, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=30'])" },
+                        { x: 0.591005076142, y: 4063.89944907, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=70'])" },
+                        { x: 0.597482233503, y: 3957.38367553, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=120'])" },
+                        { x: 0.612304568528, y: 3764.56358779, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=20'])" },
+                        { x: 0.610994923858, y: 3711.6403985, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=80'])" },
+                        { x: 0.632467005076, y: 3534.04198553, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=40'])" },
+                        { x: 0.651553299492, y: 3144.87321707, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=8'], query_param=['ef=160'])" },
+                        { x: 0.654243654822, y: 3103.17574202, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=50'])" },
+                        { x: 0.659472081218, y: 2944.28201781, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=30'])" },
+                        { x: 0.66483248731, y: 2788.1392359, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=0', 'M=12'], query_param=['ef=120'])" },
+                        { x: 0.682558375635, y: 2526.15321231, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=70'])" },
+                        { x: 0.688507614213, y: 2441.95174352, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=40'])" },
+                        { x: 0.698182741117, y: 2296.59354615, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=80'])" },
+                        { x: 0.710710659898, y: 2083.92909962, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=50'])" },
+                        { x: 0.729644670051, y: 1814.40753233, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=60'])" },
+                        { x: 0.749563451777, y: 1617.24137, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=120'])" },
+                        { x: 0.746010152284, y: 1616.32229128, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=70'])" },
+                        { x: 0.766802030457, y: 1406.65407573, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=80'])" },
+                        { x: 0.784, y: 1253.4798734, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=90'])" },
+                        { x: 0.797583756345, y: 1116.36264482, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=100'])" },
+                        { x: 0.805096446701, y: 929.427541001, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=200'])" },
+                        { x: 0.820426395939, y: 905.193766824, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=120'])" },
+                        { x: 0.83778680203, y: 754.613193629, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=140'])" },
+                        { x: 0.852020304569, y: 640.327936032, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=160'])" },
+                        { x: 0.87378680203, y: 478.782688716, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=200'])" },
+                        { x: 0.861299492386, y: 378.559169002, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=20'], query_param=['ef=400'])" },
+                        { x: 0.906913705584, y: 294.776128966, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=300'])" },
+                        { x: 0.923055837563, y: 212.280879511, label: "Nmslib(method_name=hnsw, index_param=['efConstruction=400', 'post=2', 'M=32'], query_param=['ef=400'])" },
+                ]},
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: 'Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Epsilon Recall   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' Queries per second (1/s) '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_ef844ba7d88ed677babc90e897b426c6436474826336d07dc374dc41" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_ef844ba7d88ed677babc90e897b426c6436474826336d07dc374dc41").click(function() {
+            $("#plot_ef844ba7d88ed677babc90e897b426c6436474826336d07dc374dc41").toggle();
+        });
+        </script>
+        <div id="plot_ef844ba7d88ed677babc90e897b426c6436474826336d07dc374dc41" style="display:none">
+            <pre>
+            
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Epsilon Recall},
+            ylabel={Queries per second (1/s)},
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+    
+        \addplot coordinates [only marks] {(0.135746192893, 5010.39512295)(0.153411167513, 4288.90817037)(0.160791878173, 3678.36331734)(0.18021319797, 3400.73533249)(0.189766497462, 2912.96084041)(0.198873096447, 2138.31477654)(0.224284263959, 2042.56249548)(0.23421319797, 1893.33930932)(0.246172588832, 1386.50029068)(0.264487309645, 1246.56391897)(0.274436548223, 1138.37381587)(0.286263959391, 879.959425575)(0.317441624365, 574.708536448)(0.324131979695, 542.163480856)(0.332121827411, 455.171065113)(0.412162436548, 202.481064451)(0.515908629442, 103.477492321)(0.652609137056, 57.2093805716)(0.854507614213, 30.8385827495)(0.958335025381, 19.7769586869)(0.994162436548, 11.793294296) };
+        \addlegendentry{annoy};
+            
+        \addplot coordinates [only marks] {(0.0824873096447, 2853.42016232)(0.121482233503, 2817.70725588)(0.185654822335, 1878.69744281)(0.250030456853, 1094.05567215)(0.276467005076, 365.190091236)(0.295705583756, 232.669684829)(0.304659898477, 134.552304641)(0.309492385787, 71.1436388988) };
+        \addlegendentry{faiss-lsh};
+            
+        \addplot coordinates [only marks] {(0.276081218274, 11650.1019394)(0.302223350254, 11331.4111337)(0.323197969543, 10430.7444416)(0.326091370558, 10193.3153353)(0.355705583756, 9666.60818737)(0.393005076142, 8448.17405974)(0.417360406091, 8397.02719193)(0.429258883249, 7544.00976995)(0.464324873096, 7426.75100475)(0.49938071066, 6731.43744435)(0.547969543147, 5953.99733385)(0.564182741117, 4989.14042231)(0.604294416244, 4098.20260512)(0.612304568528, 3764.56358779)(0.632467005076, 3534.04198553)(0.651553299492, 3144.87321707)(0.654243654822, 3103.17574202)(0.659472081218, 2944.28201781)(0.66483248731, 2788.1392359)(0.682558375635, 2526.15321231)(0.688507614213, 2441.95174352)(0.698182741117, 2296.59354615)(0.710710659898, 2083.92909962)(0.729644670051, 1814.40753233)(0.749563451777, 1617.24137)(0.766802030457, 1406.65407573)(0.784, 1253.4798734)(0.797583756345, 1116.36264482)(0.805096446701, 929.427541001)(0.820426395939, 905.193766824)(0.83778680203, 754.613193629)(0.852020304569, 640.327936032)(0.87378680203, 478.782688716)(0.906913705584, 294.776128966)(0.923055837563, 212.280879511) };
+        \addlegendentry{hnsw(nmslib)};
+            
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Epsilon Recall-Queries per second (1/s) tradeoff - up and to the right is better}
+    \label{}
+\end{figure}
+    
+            </pre>
+        </div>
         
         </div>
     </div>
