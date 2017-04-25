@@ -7,8 +7,6 @@ except ImportError:
 import sys
 import json
 import shutil
-import importlib
-import traceback
 
 from ann_benchmarks.results import get_results, store_results
 from ann_benchmarks.datasets import get_dataset, split_dataset, get_query_cache_path
@@ -16,6 +14,7 @@ from ann_benchmarks.distance import metrics as pd
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
 from ann_benchmarks.algorithms.definitions import get_algorithms, get_definitions
+from ann_benchmarks.algorithms.constructors import available_constructors as constructors
 
 def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
         run_count=3, force_single=False):
@@ -222,64 +221,6 @@ will produce results files with duplicate entries)''',
     # Remove old indices stored on disk
     if os.path.exists(INDEX_DIR):
         shutil.rmtree(INDEX_DIR)
-
-    # Note that algos.yaml references this; it should be somewhere more
-    # permanent
-    constructors_ = [
-      ("ann_benchmarks.algorithms.itu",
-          ["ITUHashing", "ITUFilteringDouble"]),
-      ("ann_benchmarks.algorithms.lshf",
-          ["LSHF"]),
-      ("ann_benchmarks.algorithms.annoy",
-          ["Annoy"]),
-      ("ann_benchmarks.algorithms.flann",
-          ["FLANN"]),
-      ("ann_benchmarks.algorithms.panns",
-          ["PANNS"]),
-      ("ann_benchmarks.algorithms.kdtree",
-          ["KDTree"]),
-      ("ann_benchmarks.algorithms.kgraph",
-          ["KGraph"]),
-      ("ann_benchmarks.algorithms.nearpy",
-          ["NearPy"]),
-      ("ann_benchmarks.algorithms.nmslib",
-          ["NmslibNewIndex", "NmslibReuseIndex"]),
-      ("ann_benchmarks.algorithms.falconn",
-          ["FALCONN"]),
-      ("ann_benchmarks.algorithms.balltree",
-          ["BallTree"]),
-      ("ann_benchmarks.algorithms.rpforest",
-          ["RPForest"]),
-      ("ann_benchmarks.algorithms.bruteforce",
-          ["BruteForce", "BruteForceBLAS"]),
-      ("ann_benchmarks.algorithms.subprocess",
-          ["BitSubprocess", "BitSubprocessPrepared", "IntSubprocess", "FloatSubprocess"]),
-      ("ann_benchmarks.algorithms.faiss",
-          ["FaissLSH"]),
-      ("ann_benchmarks.algorithms.dolphinnpy",
-          ["DolphinnPy"]),
-      ("ann_benchmarks.algorithms.datasketch",
-          ["DataSketch"])
-    ]
-    constructors = {}
-    for name, symbols in constructors_:
-        try:
-            module = importlib.import_module(name)
-            for symbol in symbols:
-                assert hasattr(module, symbol), """\
-import error: module %s does not define symbol %s""" % (name, symbol)
-                constructors[symbol] = getattr(module, symbol)
-        except ImportError:
-            try:
-                t, v, tb = sys.exc_info()
-                traceback.print_exception(t, v, tb)
-            finally:
-                del tb
-            print """\
-warning: module %s could not be loaded, some algorithm constructors will not \
-be available""" % name
-            for symbol in symbols:
-                constructors[symbol] = None
 
     manifest, X = get_dataset(args.dataset, args.limit)
     if not args.query_dataset:
