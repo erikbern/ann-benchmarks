@@ -12,4 +12,4 @@ do
   sh $fn
 done
 
-sh data-sift.sh
+#sh data-sift.sh
