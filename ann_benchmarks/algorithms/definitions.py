@@ -24,7 +24,7 @@ def get_definitions(definition_file):
         return yaml.load(f)
 
 def get_algorithms(definitions, constructor_map, dimension,
-        point_type="float", distance_metric="euclidean"):
+        point_type="float", distance_metric="euclidean", count=10):
     algorithm_definitions = {}
     if "any" in definitions[point_type]:
         algorithm_definitions.update(definitions[point_type]["any"])
@@ -78,6 +78,7 @@ warning: group %s specifies the known, but missing, constructor \
                         aargs.append(arg_group)
 
                     vs = {
+                        "@count": count,
                         "@metric": distance_metric,
                         "@dimension": dimension
                     }
