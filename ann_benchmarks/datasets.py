@@ -25,7 +25,7 @@ def get_dataset(which='glove', limit=-1):
         f = open(local_fn + '.txt')
 
     manifest = get_manifest(which)
-    point_type = manifest['point_type']
+    point_type = manifest['dataset']['point_type']
 
     assert point_type in type_info, """\
 dataset %s: unknown point type '%s'""" % (which, point_type)
@@ -51,16 +51,19 @@ dataset %s: no parser for points of type '%s'""" % (which, point_type)
 def get_manifest(which):
     local_fn = os.path.join('install', which)
     manifest = {
-      'point_type': 'float',
-      'test_size' : 10000
+        'dataset': {
+            'point_type': 'float',
+            'test_size' : 10000
+        }
     }
     if os.path.exists(local_fn + '.yaml'):
         with open(local_fn + '.yaml') as mf:
-            y = yaml.load(mf)
-            if 'dataset' in y:
-                manifest.update(y['dataset'])
-            if 'test_size' in y:
-                manifest['test_size'] = int(y['test_size'])
+            r = yaml.load(mf)
+            for name, value in r.items():
+                if name in manifest:
+                    manifest[name].update(value)
+                else:
+                    manifest[name] = value
     return manifest
 
 def split_dataset(X, random_state=3, test_size=10000):

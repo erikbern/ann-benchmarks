@@ -224,11 +224,12 @@ will produce results files with duplicate entries)''',
 
     manifest, X = get_dataset(args.dataset, args.limit)
     if not args.query_dataset:
-        X_train, X_test = split_dataset(X, test_size = manifest['test_size'] )
+        X_train, X_test = split_dataset(
+                X, test_size = manifest['dataset']['test_size'])
     else:
         X_train = X
         query_manifest, X_test = get_dataset(args.query_dataset)
-        assert manifest == query_manifest, """\
+        assert manifest["dataset"] == query_manifest["dataset"], """\
 error: the training dataset and query dataset have incompatible manifests"""
 
     queries_fn = get_query_cache_path(
@@ -251,7 +252,7 @@ error: the training dataset and query dataset have incompatible manifests"""
                 args.distance, args.query_dataset):
             algos_already_run.add((run["library"], run["name"]))
 
-    point_type = manifest['point_type']
+    point_type = manifest['dataset']['point_type']
     algos = get_algorithms(definitions, constructors,
         len(X_train[0]), point_type, args.distance, args.count)
 
