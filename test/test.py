@@ -1,7 +1,11 @@
 import random
 import inspect
-import ann_benchmarks
+from ann_benchmarks.algorithms.definitions \
+    import get_algorithms, get_definitions
+from ann_benchmarks.algorithms.constructors \
+    import available_constructors as constructors
 from sklearn.datasets.samples_generator import make_blobs
+import unittest
 import warnings
 import multiprocessing
 
@@ -33,8 +37,13 @@ def check_algo(algo_name, algo):
 
 
 def test_all_algos():
+    definitions = get_definitions("algos.yaml")
     for metric in ['angular', 'euclidean']:
-        algos = ann_benchmarks.get_algos(metric,False) # false means: don't save any indices
+        algos = get_algorithms(definitions, constructors,
+                len(X[0]), "float", metric, 10)
         for algo_key in algos.keys():
             algo = random.choice(algos[algo_key]) # Just pick one of each
             yield check_algo, algo.name, algo # pass name just so unittest can capture it
+
+if __name__ == "__main__":
+    print list(test_all_algos())
