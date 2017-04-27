@@ -112,7 +112,11 @@ size_t query(const char* entry, size_t k) {
       /* max_candidate_count */ max_number_of_points, 
       results_distances,
       1);
-  return results_distances[0].size();
+  int i = 1;
+  while (i <= k && std::get<0>(results_distances[0][i]) != -1) {
+    i++;
+  }
+  return i - 1;
 }
 
 
