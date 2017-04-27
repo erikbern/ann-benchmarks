@@ -1,5 +1,16 @@
 float:
   any:
+    dolphinn:
+      constructor: FloatSubprocess
+      base-args: [["install/lib-dolphinn/fr-dolphinn"]]
+      run-groups:
+        base:
+          args: { "r" : [3, 4], "numpoints" : [10, 50, 100, 200, 1000, 2000, 10000, 20000, 40000, 100000]}
+    DolphinnPy:
+      constructor: DolphinnPy
+      run-groups:
+        base:
+          args: [[10, 50, 100, 200, 1000, 2000, 10000, 20000, 40000, 100000]]
     faiss-lsh:
       # @constructor specifies the name of the Python constructor for this
       # algorithm's wrapper. Only the constructors explicitly specified in
@@ -13,43 +24,43 @@ float:
           args: [[32, 64, 128, 256, 512, 1024, 2048, 4096]]
           # This run group will produce eight algorithm instances:
           # FaissLSH(32), FaissLSH(64), and so on up to FaissLSH(4096).
-    lshf:
-      constructor: LSHF
-      # The @base-args list specifies arguments that should always be prepended
-      # to the constructor's argument list. (The special value "@metric", when
-      # it occurs somewhere in that argument list, will be replaced with the
-      # name of the distance metric; "@dimension" will be replaced with an
-      # integer specifying the length of a data point.)
-      base-args: ["@metric"]
-      run-groups:
-        five-estimators:
-          args: [5, [10, 20]]
-          # This run group will produce two algorithm instances:
-          # LSHF("angular", 5, 10) and LSHF("angular", 5, 20).
-        ten-estimators:
-          args: [10, [20, 50]]
-          # This run group will produce two more algorithm instances:
-          # LSHF("angular", 10, 20) and LSHF("angular", 10, 50).
-        twenty-estimators:
-          args: [20, 100]
-          # Finally, this run group will only produce one:
-          # LSHF("angular", 20, 100).
+#    lshf:
+#      constructor: LSHF
+#      # The @base-args list specifies arguments that should always be prepended
+#      # to the constructor's argument list. (The special value "@metric", when
+#      # it occurs somewhere in that argument list, will be replaced with the
+#      # name of the distance metric; "@dimension" will be replaced with an
+#      # integer specifying the length of a data point.)
+#      base-args: ["@metric"]
+#      run-groups:
+#        five-estimators:
+#          args: [5, [10, 20]]
+#          # This run group will produce two algorithm instances:
+#          # LSHF("angular", 5, 10) and LSHF("angular", 5, 20).
+#        ten-estimators:
+#          args: [10, [20, 50]]
+#          # This run group will produce two more algorithm instances:
+#          # LSHF("angular", 10, 20) and LSHF("angular", 10, 50).
+#        twenty-estimators:
+#          args: [20, 100]
+#          # Finally, this run group will only produce one:
+#          # LSHF("angular", 20, 100).
     flann:
       constructor: FLANN
       base-args: ["@metric"]
       run-groups:
         flann:
           args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97, 0.98, 0.99, 0.995]]
-    panns:
-      constructor: PANNS
-      base-args: ["@metric"]
-      run-groups:
-        five-trees:
-          args: [5, 20]
-        ten-trees:
-          args: [10, [10, 50]]
-        hundred-candidates:
-          args: [[10, 20, 40], 100]
+#    panns:
+#      constructor: PANNS
+#      base-args: ["@metric"]
+#      run-groups:
+#        five-trees:
+#          args: [5, 20]
+#        ten-trees:
+#          args: [10, [10, 50]]
+#        hundred-candidates:
+#          args: [[10, 20, 40], 100]
     annoy:
       constructor: Annoy
       base-args: ["@metric"]
@@ -183,12 +194,6 @@ float:
             - True
             - {"efSearch": [30, 25, 20, 15, 10, 5, 4, 3, 2, 1],
               "initSearchAttempts": 1}
-    dolphinn:
-      constructor: IntSubprocess
-      base-args: [["install/lib-dolphinn/fr-dolphinn"]]
-      run-groups:
-        base:
-          args: {"entry_length": 784}
   angular:
     kgraph:
       constructor: KGraph
@@ -260,22 +265,8 @@ float:
              140, 154, 170, 188, 207, 228, 251, 277, 305, 336, 370, 408, 449,
              494, 544, 599, 659, 725, 798, 878, 966, 1063, 1170, 1287, 1416]
           args: [*l]
-    itu-fd:
-      constructor: ITUFilteringDouble
-      base-args: ["angular", 0.7, 0.3]
-      run-groups:
-        base:
-          args: [[2.5, 2.4, 2.3, 2.2, 2.1, 2.0], 3, 10, 0, 1500, 0]
 bit:
   hamming:
-    itu-hashing:
-      constructor: ITUHashing
-      seed: &seed 0x12345678
-      c: &hashingc [1.5, 2.0, 2.5, 3.0, 3.5]
-      base-args: [*seed]
-      run-groups:
-        base:
-          args: [*hashingc, *hashingc]
     mih:
       constructor: BitSubprocessPrepared
       base-args: [["install/lib-mih/build/mihwrapper"]]
@@ -285,48 +276,57 @@ bit:
             # The r parameter denotes a reordering with n / r steps. If r is 0, no  reordering 
             # takes places. Note that MIH requires either r = 0 or r >= 2.
             args: { "r" : [0, 2], "chunks" : [14] }
-    trie-multiprobe:
-      constructor: BitSubprocessPrepared
-      base-args: [["install/lib-lshtrie/build/wrapper/ann-benchmarks/wrapper-hamming-multiprobe"]]
-      run-groups:
-        base:
-            args: {"d" : [256], "M" : [0], "k" : [17, 19, 31], "l" : [1, 5] }
     annoy-hamming:
       constructor: BitSubprocessPrepared
       base-args: [["install/lib-annoy-hamming/fr-annoy-hamming"]]
       run-groups:
         base:
             args: {"num_trees" : [1, 2, 5, 10, 20, 50, 100], "search_k" : [50, 100, 200, 400, 2000, 4000, 10000] }
-    trie-block:
-      constructor: BitSubprocessPrepared
-      base-args: [["install/lib-lshtrie/build/wrapper/ann-benchmarks/wrapper-hamming-block"]]
-      run-groups:
-        base:
-            args: {"d" : [256], "m" : [0], "b" : [5, 10, 20, 40], "k" : [17, 19, 31], "l" : [1, 5] }
-    itu-linear:
-      constructor: BitSubprocess
-      base-args: [["install/lib-annitu/build/wrappers/frontend/fr-linear"]]
-      run-groups:
-        base:
-          args: {}
-    itu-dummy:
-      constructor: BitSubprocess
-      base-args: [["install/lib-annitu/build/wrappers/frontend/fr-dummy"]]
-      run-groups:
-        base:
-          args: {}
-    itu-hashing-e:
-      constructor: BitSubprocess
-      base-args: [["install/lib-annitu/build/wrappers/frontend/fr-hashing"]]
-      run-groups:
-        base:
-          args: {"c": *hashingc, "r": *hashingc, "seed": *seed}
     bitsampling:
       constructor: BitSubprocessPrepared
       base-args: [["install/lib-bitsampling/build/wrapper/bitsampling-wrapper"]]
       run-groups:
         base:
           args: {"d" : 256, "l" : [1,5,10,20,50], "k" : [17, 19, 25, 31], "m" : [0]}
+    falconn:
+      constructor: FALCONN
+      base-args: ["@metric", 16]
+      run-groups:
+        base:
+          args: [*l]
+    kgraph:
+      constructor: KGraph
+      base-args: ["@metric"]
+      run-groups:
+        kgraph:
+          args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                 {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
+    hnsw(nmslib):
+      constructor: NmslibReuseIndex
+      base-args: ["@metric", "hnsw"]
+      run-groups:
+        M-48:
+          arg-groups:
+            - {"M": 48, "post": 2, "efConstruction": 800}
+            - True # XXX: hard-codes save_index as True
+            - {"ef": [50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000,
+              1400, 1600, 2000]}
+        M-32:
+          arg-groups:
+            - {"M": 32, "post": 2, "efConstruction": 800}
+            - True
+            - {"ef": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160,
+              200, 300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]}
+        M-20:
+          arg-groups:
+            - {"M": 20, "post": 0, "efConstruction": 800}
+            - True
+            - {"ef": [2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+        M-12:
+          arg-groups:
+            - {"M": 12, "post": 0, "efConstruction": 800}
+            - True
+            - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
 int:
   jaccard:
     bf:
