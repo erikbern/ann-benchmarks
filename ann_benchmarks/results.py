@@ -89,7 +89,9 @@ def enumerate_result_files(dataset = None, limit = None, count = None,
                                 continue
                             else:
                                 for r in runs:
-                                    if not r.endswith(".json.gz"):
+                                    rpath = os.path.join(adir, r)
+                                    if not (os.path.isfile(rpath) \
+                                            and rpath.endswith(".json.gz")):
                                         continue
                                     descriptor = {
                                         "count": c,
@@ -99,7 +101,7 @@ def enumerate_result_files(dataset = None, limit = None, count = None,
                                         "query_dataset": q,
                                         "algorithm": a
                                     }
-                                    yield (descriptor, os.path.join(adir, r))
+                                    yield (descriptor, rpath)
 
 def get_results(dataset, limit, count, distance, query_dataset = None):
     for m, fn in enumerate_result_files(dataset, limit, count, distance,
