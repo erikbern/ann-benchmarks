@@ -82,9 +82,16 @@ warning: group %s specifies the known, but missing, constructor \
                         "@metric": distance_metric,
                         "@dimension": dimension
                     }
-                    aargs = [arg \
-                        if not isinstance(arg, str) \
-                        or not arg in vs else vs[arg] for arg in aargs]
+                    def _handle(arg):
+                        if isinstance(arg, dict):
+                            return dict([(k, _handle(v)) for k, v in arg.items()])
+                        elif isinstance(arg, list):
+                            return map(_handle, arg)
+                        elif isinstance(arg, str) and arg in vs:
+                            return vs[arg]
+                        else:
+                            return arg
+                    aargs = map(_handle, aargs)
                     obj = constructor(*aargs)
                     algos[name].append(obj)
                 except Exception:
