@@ -108,4 +108,9 @@ def get_results(dataset, limit, count, distance, query_dataset = None):
             query_dataset):
         if m["query_dataset"] == query_dataset:
             with gzip.open(fn, "r") as fp:
-                yield json.load(fp)
+                try:
+                    yield json.load(fp)
+                except ValueError:
+                    print """\
+warning: loading results file %s failed, skipping""" % fn
+                    continue
