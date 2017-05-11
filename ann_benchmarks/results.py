@@ -105,12 +105,18 @@ def enumerate_result_files(dataset = None, limit = None, count = None,
                                     yield (descriptor, rpath)
 
 def get_results(dataset, limit, count, distance, query_dataset = None):
-    for m, fn in enumerate_result_files(dataset, limit, count, distance,
+    for d, results in get_results_with_descriptors(
+            dataset, limit, count, distance, query_dataset):
+        yield results
+
+def get_results_with_descriptors(
+        dataset, limit, count, distance, query_dataset = None):
+    for d, fn in enumerate_result_files(dataset, limit, count, distance,
             query_dataset):
-        if m["query_dataset"] == query_dataset:
+        if d["query_dataset"] == query_dataset:
             with gzip.open(fn, "r") as fp:
                 try:
-                    yield json.load(fp)
+                    yield (d, json.load(fp))
                 except ValueError:
                     print """\
 warning: loading results file %s failed, skipping""" % fn
