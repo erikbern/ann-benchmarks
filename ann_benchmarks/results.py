@@ -99,7 +99,8 @@ def enumerate_result_files(dataset = None, limit = None, count = None,
                                         "limit": l,
                                         "distance": dst,
                                         "query_dataset": q,
-                                        "algorithm": a
+                                        "algorithm": a,
+                                        "run": r
                                     }
                                     yield (descriptor, rpath)
 
