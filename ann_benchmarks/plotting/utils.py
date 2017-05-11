@@ -38,6 +38,28 @@ def enumerate_query_caches(ds):
         if f.startswith(ds + "_") and f.endswith(".p"):
             yield "queries/" + f
 
+def compute_metrics(qs, ds):
+    all_results = {}
+    all_algos = set()
+    for run in ds:
+        algo = run["library"]
+        algo_name = run["name"]
+
+        print "--"
+        print algo_name
+        results = {}
+        for name, metric in metrics.items():
+            v = metric["function"](qs, run)
+            results[name] = v
+            if v:
+                print "%s: %g" % (name, v)
+
+        all_algos.add(algo)
+        if not algo in all_results:
+            all_results[algo] = []
+        all_results[algo].append((algo, algo_name, results))
+    return (all_results, all_algos)
+
 def load_results(datasets, limit = -1):
     runs = {}
     all_algos = set()
@@ -52,27 +74,11 @@ first (%s)""" % (ds, queries_fn[0])
         queries_fn = queries_fn[0]
 
         queries = pickle.load(open(queries_fn))
-        runs[ds] = {}
+
         # XXX: these parameters won't be allowed to be None for long
-        for run in get_results(ds, limit, None, None):
-            algo = run["library"]
-            algo_name = run["name"]
-            build_time = run["build_time"]
-            search_time = run["best_search_time"]
-
-            print "--"
-            print algo_name
-            results = {}
-            for name, metric in metrics.items():
-                v = metric["function"](queries, run)
-                results[name] = v
-                if v:
-                    print "%s: %g" % (name, v)
-
-            all_algos.add(algo)
-            if not algo in runs[ds]:
-                runs[ds][algo] = []
-            runs[ds][algo].append((algo, algo_name, results))
+        runs[ds], algos = \
+            compute_metrics(queries, get_results(ds, limit, None, None))
+        all_algos.update(algos)
     return (runs, all_algos)
 
 def create_linestyles(algos):
