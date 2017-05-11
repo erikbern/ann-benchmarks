@@ -5,8 +5,10 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import argparse
 
+from ann_benchmarks.results import get_results
+from ann_benchmarks.datasets import get_query_cache_path
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
-from ann_benchmarks.plotting.utils  import get_plot_label, load_results, create_linestyles, create_pointset
+from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_linestyles, create_pointset
 
 
 def create_plot(all_data, golden, raw, x_log, y_log, xn, yn, fn_out, linestyles):
@@ -48,9 +50,23 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--dataset',
-        nargs = 2,
-        metavar = ("DATASET", "OUTPUT"),
-        action='append')
+        metavar="DATASET",
+        required=True)
+    parser.add_argument(
+        '--count',
+        default=10)
+    parser.add_argument(
+        '--limit',
+        default=-1)
+    parser.add_argument(
+        '--query-dataset',
+        default=None)
+    parser.add_argument(
+        '--distance',
+        default='angular')
+    parser.add_argument(
+        '-o', '--output',
+        required=True)
     parser.add_argument(
         '-x', '--x-axis',
         help = 'Which metric to use on the X-axis',
@@ -78,9 +94,18 @@ if __name__ == "__main__":
         help='Also show raw results in faded colours',
         action='store_true')
     args = parser.parse_args()
-    runs, all_algos = load_results([ds for ds, _ in args.dataset])
+
+    query_cache_path = get_query_cache_path(
+            args.dataset, args.count, args.limit, args.distance,
+            args.query_dataset)
+    assert os.path.exists(query_cache_path), """\
+error: the query cache file \"%s\" does not exist""" % query_cache_path
+
+    qs = pickle.load(open(query_cache_path))
+    runs, all_algos = compute_metrics(qs, get_results(
+            args.dataset, args.limit, args.count, args.distance,
+            args.query_dataset))
     linestyles = create_linestyles(all_algos)
-    for ds, fn_out in args.dataset:
-        all_data = runs[ds]
-        create_plot(all_data, args.golden, args.raw, args.x_log,
-                args.y_log, args.x_axis, args.y_axis, fn_out, linestyles)
+
+    create_plot(runs, args.golden, args.raw, args.x_log,
+            args.y_log, args.x_axis, args.y_axis, args.output, linestyles)
