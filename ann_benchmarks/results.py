@@ -14,11 +14,21 @@ def store_results(results, dataset, limit, count, distance, query_dataset = None
         "inst": results["name"],
         "algo": results["library"]
     }
+    for k, v in fragments.items():
+        if v and (isinstance(v, str) or isinstance(v, unicode)):
+            assert not os.sep in v, """\
+error: path fragment "%s" contains a path separator and so would break the \
+directory hierarchy""" % k
+    def _make_path(*args):
+        return os.path.join(*map(lambda s: s % fragments, args))
     fn = None
     if query_dataset:
-        fn = "results/k=%(k)d/dataset=%(ds)s/limit=%(l)d/distance=%(dst)s/query_dataset=%(qds)s/algo=%(algo)s/%(inst)s.json.gz" % fragments
+        fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s", \
+                "limit=%(l)d", "query_dataset=%(qds)s", "algo=%(algo)s",
+                "%(inst)s.json.gz")
     else:
-        fn = "results/k=%(k)d/dataset=%(ds)s/limit=%(l)d/distance=%(dst)s/algo=%(algo)s/%(inst)s.json.gz" % fragments
+        fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s", \
+                "limit=%(l)d", "algo=%(algo)s", "%(inst)s.json.gz")
     head, tail = os.path.split(fn)
     if not os.path.isdir(head):
         os.makedirs(head)

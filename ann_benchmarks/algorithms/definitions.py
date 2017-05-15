@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+from os import sep as pathsep
 import sys
 import yaml
 import traceback
@@ -93,6 +94,13 @@ warning: group %s specifies the known, but missing, constructor \
                             return arg
                     aargs = map(_handle, aargs)
                     obj = constructor(*aargs)
+                    if not obj.name:
+                        raise Exception("""\
+algorithm instance "%s" does not have a name""" % obj)
+                    elif pathsep in obj.name:
+                        raise Exception("""\
+algorithm instance "%s" has an invalid name (it contains a path \
+separator)""" % obj.name)
                     algos[name].append(obj)
                 except Exception:
                     try:
