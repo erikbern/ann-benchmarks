@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+from os.path import basename
 import shlex
 import subprocess
 from ann_benchmarks.data import \
@@ -56,7 +57,8 @@ transitioning to training mode failed"""
         return self._program
 
     def __init__(self, args, encoder, params, prepared = False):
-        self.name = "Subprocess(program = %s, %s)" % (args[0], str(params))
+        self.name = "Subprocess(program = %s, %s)" % \
+            (basename(args[0]), str(params))
         self._program = None
         self._args = args
         self._encoder = encoder
