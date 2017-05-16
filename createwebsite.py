@@ -6,9 +6,11 @@ import numpy
 import hashlib
 
 from ann_benchmarks.main import get_fn
+from ann_benchmarks import results
+from ann_benchmarks import datasets
 from ann_benchmarks.plotting.plot_variants import all_plot_variants as plot_variants
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
-from ann_benchmarks.plotting.utils  import get_plot_label, create_pointset, load_results, create_linestyles
+from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_pointset, create_linestyles
 import plot
 
 colors = [
@@ -263,13 +265,46 @@ def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype
         """ % {  "latexcode": get_latex_plot(all_data, xm, ym, plottype), "buttonlabel" : hashlib.sha224(get_plot_label(xm, ym) + additional_label).hexdigest() }
     return output_str
 
-all_runs_by_dataset, _ = load_results(args.dataset, args.limit)
+query_cache = {}
+
+all_runs_by_dataset = {}
 all_runs_by_algorithm = {}
-for (ds, algos) in all_runs_by_dataset.items():
-    for (algo, runs) in algos.items():
+for d, r in results.get_results_with_descriptors(
+        args.dataset, None, None, None, None):
+    sdn = None
+    if not d["query_dataset"]:
+        sdn = "%(dataset)s_%(count)d_%(limit)d_%(distance)s" % d
+    else:
+        sdn = \
+          "%(dataset)s_%(count)d_%(limit)d_%(query_dataset)s_%(distance)s" % d
+    cqf = datasets.get_query_cache_path(
+            d["dataset"], d["count"], d["limit"], d["distance"],
+            d["query_dataset"])
+    if not os.path.isfile(cqf):
+        print """\
+warning: query file "%s" is missing, skipping""" % cqf
+        continue
+    else:
+        algo = d["algorithm"]
+        if not cqf in query_cache:
+            with open(cqf, "r") as fp:
+                query_cache[cqf] = pickle.load(fp)
+        ms, _ = compute_metrics(query_cache[cqf], [r])
+        ms = ms[algo]
+
         if not algo in all_runs_by_algorithm:
             all_runs_by_algorithm[algo] = {}
-        all_runs_by_algorithm[algo][ds] = runs
+        if not sdn in all_runs_by_algorithm[algo]:
+            all_runs_by_algorithm[algo][sdn] = []
+        all_runs_by_algorithm[algo][sdn].extend(ms)
+
+        if not sdn in all_runs_by_dataset:
+            all_runs_by_dataset[sdn] = {}
+        if not algo in all_runs_by_dataset[sdn]:
+            all_runs_by_dataset[sdn][algo] = []
+        all_runs_by_dataset[sdn][algo].extend(ms)
+
+del query_cache
 
 # Build a website for each dataset
 for (ds, runs) in all_runs_by_dataset.items():
@@ -346,10 +381,10 @@ with open(args.outputdir + "index.html", "w") as text_file:
             Results are split by dataset and by algorithm. Click on the plot to get detailled interactive plots.
             <h3>... by dataset</h3>
             <ul class="list-inline"><b>Datasets</b>: """
-    for ds in args.dataset:
+    for ds in all_runs_by_dataset.keys():
         output_str += '<li><a href="#%(name)s">%(name)s</a></li>' % {"name" : ds}
     output_str += "</ul>"
-    for ds in args.dataset:
+    for ds in all_runs_by_dataset.keys():
         output_str += """
             <a href="./%(name)s.html">
             <div class="row" id="%(name)s">
