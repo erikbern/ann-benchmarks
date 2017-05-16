@@ -23,12 +23,13 @@ directory hierarchy""" % k
         return os.path.join(*map(lambda s: s % fragments, args))
     fn = None
     if query_dataset:
-        fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s", \
-                "limit=%(l)d", "query_dataset=%(qds)s", "algo=%(algo)s",
-                "%(inst)s.json.gz")
+        fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s",
+                "limit=%(l)d", "distance=%(dst)s", "query_dataset=%(qds)s",
+                "algo=%(algo)s", "%(inst)s.json.gz")
     else:
-        fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s", \
-                "limit=%(l)d", "algo=%(algo)s", "%(inst)s.json.gz")
+        fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s",
+                "limit=%(l)d", "distance=%(dst)s", "algo=%(algo)s",
+                "%(inst)s.json.gz")
     head, tail = os.path.split(fn)
     if not os.path.isdir(head):
         os.makedirs(head)
