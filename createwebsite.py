@@ -53,9 +53,6 @@ def directory_path(s):
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    '--dataset',
-    nargs = '*')
-parser.add_argument(
     '--plottype',
     help = 'Which plots to generate',
     nargs = '*',
@@ -270,7 +267,7 @@ query_cache = {}
 all_runs_by_dataset = {}
 all_runs_by_algorithm = {}
 for d, r in results.get_results_with_descriptors(
-        args.dataset, None, None, None, None):
+        None, None, None, None, None):
     sdn = None
     if not d["query_dataset"]:
         sdn = "%(dataset)s_%(count)d_%(limit)d_%(distance)s" % d
