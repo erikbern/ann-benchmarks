@@ -45,6 +45,7 @@ def create_plot(all_data, golden, raw, x_log, y_log, xn, yn, fn_out, linestyles)
     if 'lim' in ym:
         plt.ylim(ym['lim'])
     plt.savefig(fn_out, bbox_inches='tight')
+    plt.close()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
