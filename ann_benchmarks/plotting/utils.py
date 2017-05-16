@@ -60,27 +60,6 @@ def compute_metrics(qs, ds):
         all_results[algo].append((algo, algo_name, results))
     return (all_results, all_algos)
 
-def load_results(datasets, limit = -1):
-    runs = {}
-    all_algos = set()
-    for ds in datasets:
-        queries_fn = list(enumerate_query_caches(ds))
-        assert len(queries_fn) > 0, '''\
-no query cache files exist for dataset "%s"''' % ds
-        if len(queries_fn) > 1:
-            print """\
-warning: more than one query cache file exists for dataset "%s", using only the
-first (%s)""" % (ds, queries_fn[0])
-        queries_fn = queries_fn[0]
-
-        queries = pickle.load(open(queries_fn))
-
-        # XXX: these parameters won't be allowed to be None for long
-        runs[ds], algos = \
-            compute_metrics(queries, get_results(ds, limit, None, None))
-        all_algos.update(algos)
-    return (runs, all_algos)
-
 def create_linestyles(algos):
     colors = plt.cm.Set1(numpy.linspace(0, 1, len(algos)))
     faded = [[r, g, b, 0.3] for [r, g, b, a] in colors]
