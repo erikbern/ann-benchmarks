@@ -46,7 +46,7 @@ def candidates(queries, run):
 
 all_metrics = {
     "k-nn": {
-        "description": "10-NN precision",
+        "description": "Recall",
         "function": knn,
         "worst": float("-inf"),
         "lim": [0.0, 1.03]
@@ -57,7 +57,7 @@ all_metrics = {
         "worst": float("-inf")
     },
     "rel": {
-        "description": "Relative Distance",
+        "description": "Relative Error",
         "function": rel,
         "worst": float("inf")
     },
