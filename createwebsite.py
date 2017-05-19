@@ -201,7 +201,7 @@ def create_data_points(all_data, xn, yn, linestyle, render_all_points):
 def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype = "line"):
     xm, ym = (metrics[xn], metrics[yn])
     output_str = """
-        <h3>%(label)s %(id)s with %(xlabel)s/%(ylabel)s</h3>
+        <h3>%(xlabel)s/%(ylabel)s</h3>
         <div id="%(xlabel)s%(ylabel)s%(label)s">
             <canvas id="chart%(xlabel)s%(ylabel)s%(label)s" width="800" height="600"></canvas>
             <script>
@@ -265,7 +265,9 @@ def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype
 query_cache = {}
 
 all_runs_by_dataset = {}
+dataset_information = {}
 all_runs_by_algorithm = {}
+
 for d, r in results.get_results_with_descriptors(
         None, None, None, None, None):
     sdn = None
@@ -291,16 +293,17 @@ warning: query file "%s" is missing, skipping""" % cqf
 
         if not algo in all_runs_by_algorithm:
             all_runs_by_algorithm[algo] = {}
-        if not sdn in all_runs_by_algorithm[algo]:
-            all_runs_by_algorithm[algo][sdn] = []
-        all_runs_by_algorithm[algo][sdn].extend(ms)
+        algo_ds = d["dataset"] + " (k = " + str(d["count"]) + ")"
+        if not algo_ds in all_runs_by_algorithm[algo]:
+            all_runs_by_algorithm[algo][algo_ds] = []
+        all_runs_by_algorithm[algo][algo_ds].extend(ms)
 
         if not sdn in all_runs_by_dataset:
             all_runs_by_dataset[sdn] = {}
+            dataset_information[sdn] = d
         if not algo in all_runs_by_dataset[sdn]:
             all_runs_by_dataset[sdn][algo] = []
         all_runs_by_dataset[sdn][algo].extend(ms)
-
 del query_cache
 
 # Build a website for each dataset
@@ -308,17 +311,18 @@ for (ds, runs) in all_runs_by_dataset.items():
     all_algos = runs.keys()
     linestyles = convert_linestyle(create_linestyles(all_algos))
     output_str = get_html_header(ds)
+    ds_name = dataset_information[ds]["dataset"] + " (k = " + str(dataset_information[ds]["count"]) + ")"
     output_str += """
         <div class="container">
-        <h2>Plots for %(id)s""" % { "id" : ds }
+        <h2>Plots for %(id)s</h2>""" % { "id" : ds_name }
     for plottype in args.plottype:
         xn, yn = plot_variants[plottype]
         print "Processing '%s' with %s" % (ds, plottype)
-        output_str += create_plot(ds, runs, xn, yn, linestyles)
+        output_str += create_plot(ds_name, runs, xn, yn, linestyles)
     if args.scatter:
         output_str += """
         <hr />
-        <h2>Scatterplots for %(id)s""" % { "id" : ds }
+        <h2>Scatterplots for %(id)s""" % { "id" : ds_name }
         for plottype in args.plottype:
             xn, yn = plot_variants[plottype]
             print "Processing scatterplot '%s' with %s" % (ds, plottype)
@@ -375,35 +379,45 @@ with open(args.outputdir + "index.html", "w") as text_file:
             <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms.</p>
             <div id="results">
             <h2>Benchmarking Results</h2>
-            Results are split by dataset and by algorithm. Click on the plot to get detailled interactive plots.
-            <h3>... by dataset</h3>
-            <ul class="list-inline"><b>Datasets</b>: """
-    for ds in all_runs_by_dataset.keys():
-        output_str += '<li><a href="#%(name)s">%(name)s</a></li>' % {"name" : ds}
-    output_str += "</ul>"
-    for ds in all_runs_by_dataset.keys():
+            Results are split by distance measure and dataset, and by algorithm. Click on the plot to get detailled interactive plots.
+            """
+
+    distance_measures = sorted(set([e.split("_")[-1] for e in all_runs_by_dataset.keys()]))
+    datasets = sorted(set([e.split("_")[0] for e in all_runs_by_dataset.keys()]))
+    for dm in distance_measures:
         output_str += """
-            <a href="./%(name)s.html">
-            <div class="row" id="%(name)s">
+            <h3>Distance: %s</h3>
+            """ % dm.capitalize()
+        for ds in datasets:
+            for idd in sorted([e for e in all_runs_by_dataset.keys() \
+                    if e.split("_")[0] == ds and e.split("_")[-1] == dm], \
+                    key = lambda elem: int(elem.split("_")[1])):
+                ds_name = dataset_information[idd]["dataset"] + " (k = " + \
+                    str(dataset_information[idd]["count"]) + ")"
+                output_str += """
+            <a href="./%(id)s.html">
+            <div class="row" id="%(id)s">
                 <div class = "col-md-4 bg-success">
                     <h4>%(name)s</h4>
                     <dl class="dl-horizontal">
-                    """ % { "name" : ds }
-        if "datasets" in definitions and ds in definitions["datasets"]:
-            for k in definitions["datasets"][ds]:
+                    """ % { "name" : ds_name, "id" : idd }
+#        if "datasets" in definitions and ds in definitions["datasets"]:
+#            for k in definitions["datasets"][ds]:
+#                output_str += """
+#                        <dt>%s</dt>
+#                        <dd>%s</dd>
+#                        """ % (k, str(definitions["datasets"][ds][k]))
                 output_str += """
-                        <dt>%s</dt>
-                        <dd>%s</dd>
-                        """ % (k, str(definitions["datasets"][ds][k]))
+                        </dl>
+                    </div>
+                    <div class = "col-md-8">
+                        <img class = "img-responsive" src="%(name)s.png" />
+                    </div>
+                </div>
+                </a>""" % { "name" : idd }
         output_str += """
-                </dl>
-            </div>
-            <div class = "col-md-8">
-                <img class = "img-responsive" src="%(name)s.png" />
-            </div>
-        </div>
-        </a>
-        <hr />""" % { "name" : ds }
+            <hr />
+        """
     output_str += """
         <h3>... by algorithm</h3>
         <ul class="list-inline"><b>Algorithms:</b>"""
