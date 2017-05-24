@@ -30,6 +30,8 @@ def rel(queries, run):
         for (ridx, rdist), (cidx, cdist) in zip(closest, candidates):
             total_closest_distance += rdist
             total_candidate_distance += cdist
+    if total_closest_distance < 0.01:
+        return float("inf")
     return total_candidate_distance / total_closest_distance
 
 def queries_per_second(queries, run):
@@ -52,8 +54,13 @@ all_metrics = {
         "lim": [0.0, 1.03]
     },
     "epsilon": {
-        "description": "Epsilon Recall",
+        "description": "Epsilon 0.01 Recall",
         "function": epsilon,
+        "worst": float("-inf")
+    },
+    "largeepsilon": {
+        "description": "Epsilon 0.1 Recall",
+        "function": lambda a,b: epsilon(a, b, 0.1),
         "worst": float("-inf")
     },
     "rel": {
@@ -79,6 +86,11 @@ all_metrics = {
     "indexsize" : {
         "description": "Index size (kB)",
         "function": index_size,
+        "worst": float("inf")
+    },
+    "queriessize" : {
+        "description": "Index size (kB)/Queries per second (s)",
+        "function": lambda a, b: index_size(a,b) / queries_per_second(a,b),
         "worst": float("inf")
     }
 }
