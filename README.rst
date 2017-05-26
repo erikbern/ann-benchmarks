@@ -88,9 +88,9 @@ Running a set of algorithms with specific parameters works:
 
 Including Your Algorithm
 ========================
-You have two choices to include your own algorithm. First, your algorithm has a Python wrapper (or is entirely written in Python). Then all you need to do is to add your algorithm into ``ann_benchmarks/algorithms`` by providing a small wrapper. 
+You have two choices to include your own algorithm. If your algorithm has a Python wrapper (or is entirely written in Python), then all you need to do is to add your algorithm into ``ann_benchmarks/algorithms`` by providing a small wrapper. 
 
-If your algorithm does not provide a Python wrapper, you can include it using the SubProcess system. Find a detailed documentation on how to do it here [TBD], or checkout the wrappers written for Annoy-Hamming, Dolphinn, and MIH in the 
+If your algorithm does not provide a Python wrapper, you can include it using the SubProcess system. Find a detailed documentation on how to do it here *[TBD]*, or checkout the wrappers written for Annoy-Hamming, Dolphinn, and MIH in the 
 ``install`` directory.
 
 Principles
@@ -100,12 +100,12 @@ Principles
 * In particular: if you are the author of any of these libraries, and you think the benchmark can be improved, consider making the improvement and submitting a pull request.
 * This is meant to be an ongoing project and represent the current state.
 * Make everything easy to replicate, including installing and preparing the datasets.
-* To make it simpler, look only at the precision-performance tradeoff.
 * Try many different values of parameters for each library and ignore the points that are not on the precision-performance frontier.
 * High-dimensional datasets with approximately 100-1000 dimensions. This is challenging but also realistic. Not more than 1000 dimensions because those problems should probably be solved by doing dimensionality reduction separately.
-* No batching of queries, use single queries by default. ann-benchmarks saturates CPU cores by using a thread pool.
+* No batching of queries, use single queries by default. ANN-Benchmarks saturates CPU cores by using a thread pool.
 * Avoid extremely costly index building (more than several hours).
 * Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
+* We currently support CPU-based ANN algorithms. GPU support is planned as future work.
 * Do proper train/test set of index data and query points.
 
 Results
@@ -115,7 +115,6 @@ See http://sss.projects.itu.dk/ann-benchmarks.
 Note that NMSLIB saves indices in the directory indices. 
 If the tests are re-run using a different seed and/or a different number of queries, the
 content of this directory should be deleted.
-
 
 Testing
 =======
