@@ -16,7 +16,7 @@ Euclidean space
 * `PANNS <https://github.com/ryanrhymes/panns>`__
 * `NearPy <http://nearpy.io>`__
 * `KGraph <https://github.com/aaalgo/kgraph>`__
-* `NMSLIB (Non-Metric Space Library) <https://github.com/searchivarius/nmslib>`__
+* `NMSLIB (Non-Metric Space Library) <https://github.com/searchivarius/nmslib>`__: SWGraph, HNSW, BallTree, MPLSH
 * `RPForest <https://github.com/lyst/rpforest>`__
 * `FALCONN <http://falconn-lib.org/>`__
 * `FAISS <https://github.com/facebookresearch/faiss.git>`__
