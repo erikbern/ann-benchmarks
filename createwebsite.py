@@ -120,7 +120,13 @@ def get_html_header(title):
                 <li class="active"><a href="index.html">Home</a></li>
               </ul>
               <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html#results">Results</a></li>
+                <li class="active"><a href="index.html#datasets">Datasets</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#algorithms">Algorithms</a></li>
+              </ul>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html#raw">Raw Data & Configuration</a></li>
               </ul>
               <ul class="nav navbar-nav">
                 <li class="active"><a href="index.html#contact">Contact</a></li>
@@ -375,11 +381,17 @@ with open(args.outputdir + "index.html", "w") as text_file:
     output_str = get_html_header("ANN-Benchmarks")
     output_str += """
         <div class="container">
-            <h2>Info</h2>
-            <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms.</p>
+            <h1>Info</h1>
+            <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms search. This website contains the current benchmarking results. Please visit <a href="http://github.com/maumueller/ann-benchmarks/">http://github.com/maumueller/ann-benchmarks/</a> to get an overview over evaluated data sets and algorithms. Make a pull request on <a href="http://github.com/maumueller/ann-benchmarks/">Github</a> to add your own code or improvements to the
+            benchmarking system.
+            </p>
             <div id="results">
-            <h2>Benchmarking Results</h2>
-            Results are split by distance measure and dataset, and by algorithm. Click on the plot to get detailled interactive plots.
+            <h1>Benchmarking Results</h1>
+            <p>Results are split by distance measure and dataset. In the bottom, you can find an overview of an algorithm's performance on all datasets. Each dataset is annoted
+            by <em>(k = ...)</em>, the number of nearest neighbors an algorithm was supposed to return. The plot shown depicts <em>Recall</em> (the fraction
+            of true nearest neighbors found, on average over all queries) against <em>Queries per second</em>.  Clicking on a plot reveils detailled interactive plots, including
+            approximate recall, index size, and build time.</p>
+            <h2 id ="datasets">Results by Dataset</h2>
             """
 
     distance_measures = sorted(set([e.split("_")[-1] for e in all_runs_by_dataset.keys()]))
@@ -419,7 +431,7 @@ with open(args.outputdir + "index.html", "w") as text_file:
             <hr />
         """
     output_str += """
-        <h3>... by algorithm</h3>
+        <h2 id="algorithms">Results by Algorithm</h2>
         <ul class="list-inline"><b>Algorithms:</b>"""
     algorithms = all_runs_by_algorithm.keys()
     for algo in algorithms:
@@ -449,8 +461,12 @@ with open(args.outputdir + "index.html", "w") as text_file:
         </a>
         <hr />""" % { "name" : algo}
     output_str += """
+            <h2 id ="raw">Raw Data & Configuration</h2>
+            <p>Please find the raw experimental data <a href="./results-sisap.tar">here</a> (13 GB). The query set is available <a href="./queries-sisap.tar">queries-sisap.tar</a> (8 GB) as well. The algorithms used the following parameter choices in the experiments: <a href="./algos.yaml">k = 10</a> and <a href="./algos100.yaml">k=100</a>.</p>
             <div id="contact">
             <h2>Contact</h2>
+            <p>ANN-Benchmarks has been developed by Martin Aumueller (maau@itu.dk), Erik Bernhardsson (mail@erikbern.com), and Alec Faitfull (alef@itu.dk). Please use
+            <a href="https://github.com/maau/ann-benchmarks/">Github</a> to submit your implementation or improvements.</p>
             </div>
         </div>
     </body>
