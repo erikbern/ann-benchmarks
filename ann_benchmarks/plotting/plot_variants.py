@@ -6,5 +6,7 @@ all_plot_variants = {
     "recall/indexsize" : ("k-nn", "indexsize"),
     "rel/time" : ("rel", "qps"),
     "recall/candidates" : ("k-nn", "candidates"),
-    "eps/time" : ("epsilon", "qps")
+    "recall/qpssize" : ("k-nn", "queriessize"),
+    "eps/time" : ("epsilon", "qps"),
+    "largeeps/time" : ("largeepsilon", "qps")
      }
