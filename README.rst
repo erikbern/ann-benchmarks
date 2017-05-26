@@ -1,14 +1,14 @@
-.. image:: https://img.shields.io/travis/erikbern/ann-benchmarks/master.svg?style=flat
-    :target: https://travis-ci.org/erikbern/ann-benchmarks
-
 Benchmarking nearest neighbors
 ==============================
 
 This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics. Visit
-https://maumueller.github.io/ann-benchmarks/index.html to see the results of this benchmark.
+http://sss.projects.itu.dk/ann-benchmarks to see the results of this benchmark.
 
 Evaluated
 =========
+
+Euclidean space
+---------------
 
 * `Annoy <https://github.com/spotify/annoy>`__
 * `FLANN <http://www.cs.ubc.ca/research/flann/>`__
@@ -21,10 +21,12 @@ Evaluated
 * `FALCONN <http://falconn-lib.org/>`__
 * `FAISS <https://github.com/facebookresearch/faiss.git>`__
 * `DolphinnPy <https://github.com/ipsarros/DolphinnPy>`__
+* `Dolphinn <https://github.com/ipsarros/Dolphinn>`__
 
 Hamming distance
 ----------------
 * all of the above algorithms work in Hamming space
+* `Annoy-Hamming <http://github.com/maumueller/annoy>`__
 * `Multi-Index Hashing (MIH) <https://github.com/norouzi/mih>`__
 
 Set similarity
@@ -39,6 +41,7 @@ Euclidean
 
 * `SIFT <http://corpus-texmex.irisa.fr/>`__
 * `GIST <http://corpus-texmex.irisa.fr/>`__
+* `MNIST <http://yann.lecun.com/exdb/mnist/>`__
 * `NYTimes TFIDF  <https://archive.ics.uci.edu/ml/datasets/Bag+of+Words>`__
 * `Random datasets`
 
@@ -49,13 +52,14 @@ Angular/Cosine
 
 Hamming space
 -------------
+We used `Spherical hashing <http://sglab.kaist.ac.kr/projects/Spherical_Hashing/>`__ to generate Hamming space versions of
 * SIFT
 * NYTimes
-* Webspam
 
 Set Similarity
 --------------
-* Flickr 
+We use the following three datasets from http://ssjoin.dbresearch.uni-salzburg.at/
+* Flickr
 * AOL
 * Kosarek
 
@@ -67,20 +71,23 @@ Doing fast searching of nearest neighbors in high dimensional spaces is an incre
 Install
 =======
 
-Clone the repo and run ``bash install.sh``. This will install all libraries. It could take a while. It has been tested in Ubuntu 16.04. We advice to run it only in a VM or a docker container (see our Dockerfile)
+Clone the repo and run ``bash install.sh``. This will install all libraries. It could take a while. It has been tested in Ubuntu 16.04. We advice to run it only in a VM or in a docker container (see our Dockerfile).
 
 Downloading and preprocessing the data sets is done by running the `install/data-*.sh` scripts, e.g., run ``bash install/data-glove.sh`` or ``bash install/data-sift.sh``.
 
 Experiment Setup
 ================
 
-Running a set of algorithms with specific parameters works as follows: `TBD`.
+Running a set of algorithms with specific parameters works:
+* Check that ``algos.yaml`` contains the parameter settings that you want to test
+* To run experiments on SIFT, invoke ``python ann_benchmarks/main --dataset sift-data --query-dataset sift-query --distance euclidean``. 
 
 Including Your Algorithm
 ========================
-`TBD`
+You have two choices to include your own algorithm. First, your algorithm has a Python wrapper (or is entirely written in Python). Then all you need to do is to add your algorithm into ``ann_benchmarks/algorithms`` by providing a small wrapper. 
 
-`Two options: Python (just look at the examples) or Subprocess (need small tutorial).`
+If your algorithm does not provide a Python wrapper, you can include it using the SubProcess system. Find a detailed documentation on how to do it here [TBD], or checkout the wrappers written for Annoy-Hamming, Dolphinn, and MIH in the 
+``install`` directory.
 
 Principles
 ==========
@@ -99,22 +106,9 @@ Principles
 
 Results
 =======
+See http://sss.projects.itu.dk/ann-benchmarks.
 
-1.19M vectors from GloVe (100 dimensions, trained from tweets), cosine similarity, run on an c4.2xlarge instance on EC2.
-
-.. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/glove.png
-   :align: center
-
-1M SIFT features (128 dimensions), Euclidean distance, run on an c4.2xlarge:
-
-.. figure:: https://raw.github.com/erikbern/ann-benchmarks/master/results/sift.png
-   :align: center
-
-Starting 2016-07-20 these results now reflect multi-threaded benchmarks so the results are not consistent with earlier results.
-
-Note that FALCONN doesn't support multiple threads so the benchmark is affected by that.
-
-Also note that NMSLIB saves indices in the directory indices. 
+Note that NMSLIB saves indices in the directory indices. 
 If the tests are re-run using a different seed and/or a different number of queries, the
 content of this directory should be deleted.
 
