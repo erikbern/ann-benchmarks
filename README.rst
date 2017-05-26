@@ -53,12 +53,14 @@ Angular/Cosine
 Hamming space
 -------------
 We used `Spherical hashing <http://sglab.kaist.ac.kr/projects/Spherical_Hashing/>`__ to generate Hamming space versions of
+
 * SIFT
 * NYTimes
 
 Set Similarity
 --------------
 We use the following three datasets from http://ssjoin.dbresearch.uni-salzburg.at/
+
 * Flickr
 * AOL
 * Kosarek
