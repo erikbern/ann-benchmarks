@@ -24,6 +24,11 @@ float:
           args: [[32, 64, 128, 256, 512, 1024, 2048, 4096]]
           # This run group will produce eight algorithm instances:
           # FaissLSH(32), FaissLSH(64), and so on up to FaissLSH(4096).
+    faiss-gpu:
+      constructor: FaissGPU
+      run-groups:
+        base:
+          args: [[32, 64, 128, 256, 512, 1024, 2048, 4096], [100, 200]]
 #    lshf:
 #      constructor: LSHF
 #      # The @base-args list specifies arguments that should always be prepended

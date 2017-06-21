@@ -34,6 +34,8 @@ __constructors = [
       ["BitSubprocess", "BitSubprocessPrepared", "IntSubprocess", "FloatSubprocess"]),
   ("ann_benchmarks.algorithms.faiss",
       ["FaissLSH"]),
+  ("ann_benchmarks.algorithms.faiss_gpu",
+      ["FaissGPU"]),
   ("ann_benchmarks.algorithms.dolphinnpy",
       ["DolphinnPy"]),
   ("ann_benchmarks.algorithms.datasketch",
