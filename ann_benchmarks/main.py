@@ -17,7 +17,7 @@ from ann_benchmarks.algorithms.definitions import get_algorithms, get_definition
 from ann_benchmarks.algorithms.constructors import available_constructors as constructors
 
 def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
-        run_count=3, force_single=False):
+        run_count=3, force_single=False, use_batch_query=False):
     try:
         prepared_queries = False
         if hasattr(algo, "supports_prepared_queries"):
@@ -52,6 +52,19 @@ def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
                 if len(candidates) > count:
                     print "(warning: algorithm %s returned %d results, but count is only %d)" % (algo.name, len(candidates), count)
                 return (total, candidates)
+
+            def batch_query(X):
+                start = time.time()
+		result = algo.batch_query(X, count)
+                total = (time.time() - start)
+		candidates = [map(
+                    lambda idx: (int(idx), float(pd[distance]['distance'](X[i], X_train[idx]))),
+                    result[i]) for i in range(len(X))]
+                return [(total / float(len(X)), v) for v in candidates]
+
+            if use_batch_query:
+		X = [v for v, _, _ in queries]
+		results = batch_query(X)
             if algo.use_threads() and not force_single:
                 pool = multiprocessing.pool.ThreadPool()
                 results = pool.map(single_query, queries)
@@ -73,7 +86,8 @@ def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
             "results": results,
             "candidates": avg_candidates,
             "run_count": run_count,
-            "run_alone": force_single
+            "run_alone": force_single,
+            "batch_mode": use_batch_query
         })
     finally:
         algo.done()
@@ -191,6 +205,10 @@ will produce results files with duplicate entries)''',
             help='run only a single algorithm instance at a time',
             action='store_true')
     parser.add_argument(
+            '--batch',
+            help='Provide Queryset as Batch',
+            action='store_true')
+    parser.add_argument(
             '--no_save_index',
             help='do not save indices',
             action='store_true')
@@ -281,7 +299,7 @@ error: the training dataset and query dataset have incompatible manifests"""
         p = multiprocessing.Process(
             target=run_algo,
             args=(args.count, X_train, queries, library, algo,
-                  args.distance, send_pipe, args.runs, args.single))
+                  args.distance, send_pipe, args.runs, args.single, args.batch))
 
         p.start()
         send_pipe.close()
