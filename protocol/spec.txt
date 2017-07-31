@@ -1,0 +1,217 @@
+The frontend.c program in this directory provides an alternative way of
+interacting with the libraries in this package: a front-end program that speaks
+a simple protocol for configuring, training and querying a search strategy.
+This protocol is line-oriented; all input and output streams should be
+configured to be line-buffered.
+
+The front-end begins in configuration mode. When configuration is complete, it
+transitions into training mode; when training data has been supplied, into
+query mode; and, when no more queries remain, it terminates. It is not possible
+to return from one mode to an earlier mode without restarting the front-end.
+
+The front-end reads lines from standard input, tokenises them, and interprets
+them according to its current mode; responses are written as lines to standard
+output. To enable protocol responses to be distinguished from other messages
+that may appear on standard output, the first token of a line containing a
+response will always be "epbprtv0"; the second will be "ok" when a command
+succeeds, potentially followed by other tokens, and "fail" when it does not.
+
+The front-end may choose to include extra tokens in its responses after the
+tokens required by this specification.
+
+--
+
+When a string is to be "tokenised", it should be done in accordance with these
+rules:
+
+* A token is a sequence of characters separated by one or more whitespace
+  characters.
+  abc -> one token (abc)
+  a bc -> two tokens (a; bc)
+  a    bc -> two tokens (a; bc)
+  a b c -> three tokens (a; b; c)
+
+* A sequence surrounded by single quote marks will be treated as part of a
+  token, even if it contains whitespace or does not contain any other
+  characters.
+  'a b c' -> one token (a b c)
+  'a b c'd -> one token (a b cd)
+  a '' b -> three tokens (a; the empty string; b)
+
+* A sequence surrounded by double quote marks will be treated as part of a
+  token, even if it contains whitespace or does not contain any other
+  characters.
+  "a b c" -> one token (a b c)
+  "a b c"d -> one token (a b cd)
+  a "" b -> three tokens (a; the empty string; b)
+
+* Outside of a quoted sequence, preceding a character with a backslash causes
+  any special significance it may have to be ignored; the character is then
+  said to have been "escaped".
+  \a \b \c -> three tokens (a; b; c)
+
+  An escaped whitespace character does not separate tokens:
+  a b\ c -> two tokens (a; b c)
+  "a b c"\ d -> one token (a b c d)
+
+  An escaped quote mark does not begin a sequence:
+  \'a b c\' -> three tokens ('a; b; c')
+  \"a b c\" -> three tokens ("a; b; c")
+
+  An escaped backslash does not escape the subsequent character:
+  a\\"b c" d -> two tokens (a\b c; d)
+
+* In sequences begun by a double quote mark, only double quote marks and
+  backslashes (and, for compatibility reasons, dollar signs) may be escaped;
+  the backslash otherwise has no special significance.
+  "\a \b" \c -> two tokens (\a \b; c)
+  "\\ \" \$ a" "\b" c -> three tokens (\ " $ a; \b; c)
+
+* In sequences begun by a single quote mark, a backslash has no special
+  significance.
+  'a b' c -> two tokens (a b; c)
+  'a b\' c -> two tokens (a b\; c)
+
+Apart from the fact that newline characters cannot be escaped, it is the
+intention that these rules should match the tokenisation rules of the POSIX
+shell.
+
+--
+
+In configuration mode, the front-end understands two different kinds of
+command:
+    VAR VAL
+        Sets the value of configuration option VAR to VAL.
+        The line will be tokenised, and should expand to precisely two tokens:
+        one for VAR and one for VAL.
+
+        Responses:
+            epbprtv0 ok
+                The value specified for configuration option VAR was
+                acceptable, and the option has been set.
+            epbprtv0 fail
+                The value specified for configuration option VAR was not
+                acceptable. No change has been made to the value of this
+                option.
+    frontend VAR VAL
+        Sets the value of the front-end configuration option VAR to VAL.
+        Front-end configuration options may cause the front-end to behave in a
+        manner other than that described in this specification.
+        The line will be tokenised, and should expand to precisely three
+        tokens.
+
+        Responses:
+            epbprtv0 ok
+                The value specified for front-end configuration option VAR was
+                acceptable, and the option has been set.
+            epbprtv0 fail
+                The value specified for front-end configuration option VAR was
+                not acceptable. No change has been made to the value of this
+                option.
+    <empty line>
+        Finishes configuration mode and enters training mode.
+
+        Responses:
+            epbprtv0 ok
+                Training mode has been entered.
+            epbprtv0 fail
+                Mandatory configuration options were omitted, and the query
+                process has terminated.
+
+In training mode, the front-end understands two different kinds of command:
+    ENTRY
+        Interpret ENTRY as an item of training data.
+        The line will be tokenised, and should expand to precisely one token.
+
+        Responses:
+            epbprtv0 ok
+                ENTRY was added as the next item of training data.
+                The index values returned in query mode refer to the first item
+                added as "0", the second as "1", and so on.
+            epbprtv0 fail
+                ENTRY could not be interpreted as an item of training data.
+                or
+                ENTRY could not be added to the data structure.
+                or
+                The line did not expand to precisely one token.
+    <empty line>
+        Finishes training mode and enters query mode.
+
+        Responses:
+            epbprtv0 ok COUNT1 [fail COUNT2]
+                COUNT1 (potentially zero) entries were successfully interpreted
+                and added to the data structure. (COUNT2 entries could not be
+                interpreted or could not be added for other reasons.)
+
+In query mode, the front-end understands two different kinds of command:
+    ENTRY N
+        Return the indices of at most N (greater than or equal to 1) close
+        matches for ENTRY.
+        The line will be tokenised, and should expand to precisely two tokens.
+
+        Responses:
+            epbprtv0 ok R
+                R (greater than zero and less than or equal to N) close matches
+                were found.
+                The next R lines, when tokenised, will consist of the token
+                "epbprtv0" followed by an index of a close match.
+            epbprtv0 fail
+                Zero close matches were found.
+                or
+                The line did not expand to precisely two tokens.
+    <empty line>
+        Finishes query mode and shuts down the process.
+
+        Responses:
+            epbprtv0 ok
+                The query process has terminated.
+
+--
+
+Prepared query mode
+-------------------
+
+(This section describes an extension that front-ends are not required to
+implement. Front-ends that do not implement this extension should reject
+attempts to set the "prepared-queries" front-end configuration option.)
+
+When the front-end configuration option "prepared-queries" is set to "1", after
+finishing training mode, the front-end will transition to prepared query mode
+instead of query mode.
+
+In prepared query mode, the front-end understands three different kinds of
+command:
+    ENTRY N
+        Prepare to run a query to find at most N (greater than or equal to 1)
+        close matches for ENTRY.
+        The line will be tokenised, and should expand to precisely two tokens.
+
+        Responses:
+            epbprtv0 ok prepared true
+                Preparation is complete, the "query" command can now be used,
+                and the underlying library wrapper has special support for
+                prepared queries.
+            epbprtv0 ok prepared false
+                Preparation is complete, and the "query" command can now be
+                used, but the underlying library wrapper does not have special
+                support for prepared queries.
+    query
+        Run the last prepared query.
+        The line will be tokenised, and should expand to precisely one token.
+
+        Responses:
+            epbprtv0 ok R
+                R (greater than zero and less than or equal to N) close matches
+                were found.
+                The next R lines, when tokenised, will consist of the token
+                "epbprtv0" followed by an index of a close match.
+            epbprtv0 fail
+                Zero close matches were found.
+                or
+                No query has been prepared.
+    <empty line>
+        Finishes prepared query mode and shuts down the process.
+
+        Responses:
+            epbprtv0 ok
+                The query process has terminated.
