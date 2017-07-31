@@ -4,3 +4,5 @@
 install/*.txt
 install/*.yaml
 install/lib-*/
+
+*.class
