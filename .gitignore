@@ -1,7 +1,5 @@
 *.pyc
 *.o
-protocol/fr-*
-protocol/*/
 
 install/*.txt
 install/*.yaml
