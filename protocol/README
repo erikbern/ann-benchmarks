@@ -1,0 +1,14 @@
+This directory contains example implementations of the text-based protocol
+used to generate wrappers for some of the libraries. (See the "spec.txt" file,
+also in this directory, for more information about the protocol.)
+
+The authors of these implementations give unlimited permission to copy and/or
+distribute them, with or without modifications.
+--
+Path:	c/
+Lang.:	C
+Author:	Alec Faithfull <alef@itu.dk>
+--
+Path:	java/
+Lang.:	Java
+Author:	Alec Faithfull <alef@itu.dk>
