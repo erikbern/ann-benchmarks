@@ -23,7 +23,44 @@ class BaseANN(object):
     def use_threads(self):
         return True
 
-        
+
+class Faiss(BaseANN):
+    def __init__(self, metric, n_list, n_probe):
+        self._n_list = n_list
+        self._n_probe = n_probe
+        self._metric = metric
+        self.name = 'Faiss(n_list=%d, n_probe=%d)' % (n_list, n_probe)
+
+    def fit(self, X):
+        # faiss doesn't support installing, hack around by just importing
+        # from the build directory by setting up PYTHONPATH
+        import sys
+        import os
+        sys.path.append(
+            os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                         "..", "install", "faiss"))
+        import faiss
+
+        if self._metric == 'angular':
+            X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
+
+        if X.dtype != numpy.float32:
+            X = X.astype(numpy.float32)
+
+        self.quantizer = faiss.IndexFlatL2(X.shape[1])
+        index = faiss.IndexIVFFlat(self.quantizer, X.shape[1], self._n_list, faiss.METRIC_L2)
+        index.train(X)
+        index.add(X)
+        index.nprobe = self._n_probe
+        self._index = index
+
+    def query(self, v, n):
+        if self._metric == 'angular':
+            v /= numpy.linalg.norm(v)
+        (dist,), (ids,) = self._index.search(v.reshape(1, -1).astype('float32'), n)
+        return ids
+
+
 class FALCONN(BaseANN):
     def __init__(self, metric, num_bits, num_tables, num_probes):
         self.name = 'FALCONN(K={}, L={}, T={})'.format(num_bits, num_tables, num_probes)
@@ -511,6 +548,7 @@ def get_algos(m, save_index):
 
         'SW-graph(nmslib)' :[],
 
+        'faiss' : [Faiss(m, l, p) for l in [5, 10, 20, 50, 100, 200, 400, 800, 1600] for p in [1, 2, 3, 4, 5, 8, 10, 20, 50, 100, 200] if l >= p]
     }
 
     for r in [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
