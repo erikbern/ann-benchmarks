@@ -6,7 +6,7 @@ class BaseANN(object):
     def done(self):
         pass
     def get_index_size(self, process):
-	"""Returns the size of the index in kB or -1 if not implemented."""
+        """Returns the size of the index in kB or -1 if not implemented."""
         try:
             statusfile = open("/proc/%(pid)s/status" % {"pid" : str(process)}, "r")
             for line in statusfile.readlines():
@@ -24,4 +24,12 @@ class BaseANN(object):
                     return val
         except:
             print("Couldn't open status file, no index size available.")
-	return -1
+        return -1
+
+    def fit(self, X):
+        pass
+    def query(self, q, k):
+        return [] # array of candidate indices
+
+    # def query_verbose(self, q, k):
+    #     return (self.query(q, k), {}) # results with a dict of extra data

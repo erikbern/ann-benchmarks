@@ -64,6 +64,7 @@ def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
             avg_candidates = total_candidates / len(queries)
             best_search_time = min(best_search_time, search_time)
 
+        verbose = hasattr(algo, "query_verbose")
         result_pipe.send({
             "library": library,
             "name": algo.name,
@@ -73,8 +74,13 @@ def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
             "results": results,
             "candidates": avg_candidates,
             "run_count": run_count,
-            "run_alone": force_single
+            "run_alone": force_single,
+            "expect_extra": verbose
         })
+        if verbose:
+            metadata = \
+                [m for _, m in [algo.query_verbose(q, count) for q, _, _ in queries]]
+            result_pipe.send(metadata)
     finally:
         algo.done()
 
@@ -294,6 +300,10 @@ error: the training dataset and query dataset have incompatible manifests"""
                 # the worker has begun sending us results and we should receive
                 # them
                 results = recv_pipe.recv()
+                if "expect_extra" in results:
+                    if results["expect_extra"]:
+                        results["extra"] = recv_pipe.recv()
+                    del results["expect_extra"]
             else:
                 # If we've exceeded the timeout and there are no results, then
                 # terminate the worker process (XXX: what should we do about
