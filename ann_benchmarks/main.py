@@ -177,9 +177,7 @@ def main():
             default=argparse.SUPPRESS)
     parser.add_argument(
             '--force',
-            help='''\
-run algorithms even if results for them already exist (note that this option \
-will produce results files with duplicate entries)''',
+            help='''re-run algorithms even if their results already exist''',
             action='store_true')
     parser.add_argument(
             '--runs',
