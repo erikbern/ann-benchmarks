@@ -54,10 +54,10 @@ def directory_path(s):
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '--plottype',
-    help = 'Which plots to generate',
+    help = 'Generate only the plots specified',
     nargs = '*',
     choices = plot_variants.keys(),
-    default = [plot_variants.keys()[0]])
+    default = plot_variants.keys())
 parser.add_argument(
     '--outputdir',
     help = 'Select output directory',
