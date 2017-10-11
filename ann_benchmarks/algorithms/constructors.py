@@ -33,7 +33,7 @@ __constructors = [
   ("ann_benchmarks.algorithms.subprocess",
       ["BitSubprocess", "BitSubprocessPrepared", "IntSubprocess", "FloatSubprocess"]),
   ("ann_benchmarks.algorithms.faiss",
-      ["FaissLSH"]),
+      ["FaissLSH", "FaissIVF"]),
   ("ann_benchmarks.algorithms.dolphinnpy",
       ["DolphinnPy"]),
   ("ann_benchmarks.algorithms.datasketch",
