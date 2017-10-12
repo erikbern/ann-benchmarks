@@ -26,18 +26,18 @@ ins_pip_get() {
 }
 
 # $1: URL of file containing gzipped dataset
-# $2: expected SHA-512 checksum of that file
+# $2: expected MD5 checksum of that file
 ins_data_get() {
   url="$1"
-  sha512sum="$2"
+  md5sum="$2"
   filename="${url##*/}"
   unzipped="${filename%.gz}"
   if [ ! -f "$unzipped" ]; then
     if [ ! -f "$filename" ]; then
       wget "$url"
     fi
-    sha512sum --check - <<END && gunzip "$filename"
-$sha512sum $filename
+    md5sum --check - <<END && gunzip "$filename"
+$md5sum $filename
 END
   fi
 }
