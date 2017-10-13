@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 
 if [ ! -f "nytimes-hamming-data.txt" ]; then
     if [ ! -f "hamming-space.tar.bz2" ]; then
-        wget http://www.itu.dk/people/maau/ann-benchmark-datasets/hamming-space.tar.bz2
+        wget http://sss.projects.itu.dk/ann-benchmarks/datasets/hamming-space.tar.bz2
     fi
 
     tar xf hamming-space.tar.bz2
