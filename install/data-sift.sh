@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 if [ ! -f "sift.txt" ]; then
   ins_data_get \
       "ftp://ftp.irisa.fr/local/texmex/corpus/sift.tar.gz" \
-      "1c0c5dcb9d8cad4754ddec94985c0a4c4230f755bce4cd2b93efa9a84d5b29477b496e707ba5ca37804f7c7616d5ce7e5be9a6241ffe654c4fd7be295f0e6224" &&
+      "b23d1b3b2ee8469d819b61ca900ef0ed" &&
     tar -xf sift.tar &&
     rm -f sift.tar &&
     python convert_texmex_fvec.py sift/sift_base.fvecs > sift-data.txt &&
