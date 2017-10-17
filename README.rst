@@ -95,6 +95,13 @@ You have two choices to include your own algorithm. If your algorithm has a Pyth
 If your algorithm does not provide a Python wrapper, you can include it using the SubProcess system. Find a detailed documentation on how to do it here *[TBD]*, or checkout the wrappers written for Annoy-Hamming, Dolphinn, and MIH in the 
 ``install`` directory.
 
+Run
+---
+
+Run ``python ann_benchmarks/main.py`` (this will take a few hours).
+
+Then ``python plot.py`` to plot the results.
+
 Principles
 ==========
 
