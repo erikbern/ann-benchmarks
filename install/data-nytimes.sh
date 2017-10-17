@@ -9,5 +9,3 @@ if [ ! -f "nytimes.tfidf.256.data.txt" ]; then
 
     tar xf nytimes.tfidf.256.tar.bz2 && rm nytimes.tfidf.256.tar.bz2
 fi
-
-

@@ -5,6 +5,8 @@ class BaseANN(object):
         return True
     def done(self):
         pass
+    def batch_query(self, X, n):
+	pass
     def get_index_size(self, process):
         """Returns the size of the index in kB or -1 if not implemented."""
         try:

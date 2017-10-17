@@ -13,15 +13,15 @@ class FaissGPU(BaseANN):
         self.name = 'FaissGPU(n_bits={}, n_probes={})'.format(n_bits, n_probes)
         self._n_bits = n_bits
         self._n_probes = n_probes
+        self._res = faiss.StandardGpuResources()
         self._index = None
 
     def fit(self, X):
         X = X.astype(numpy.float32)
         self._index = faiss.index_factory(len(X[0]), "IVF%d,PQ64" % self._n_bits)
-        res = faiss.StandardGpuResources()
         co = faiss.GpuClonerOptions()
         co.useFloat16 = True
-        self._index = faiss.index_cpu_to_gpu(res, 0, self._index, co)
+        self._index = faiss.index_cpu_to_gpu(self._res, 0, self._index, co)
         self._index.train(X)
         self._index.add(X)
         self._index.setNumProbes(self._n_probes)
@@ -37,6 +37,17 @@ class FaissGPU(BaseANN):
             if l != -1:
                 r.append((l, d))
         return r
+
+    def batch_query(self, X, n):
+	D, L = self._index.search(X, n)
+	res = []
+	for i in range(len(X)):
+		r = []
+		for l, d in zip(L[i], D[i]):
+		    if l != -1:
+			r.append(l)
+		res.append(r)
+	return res
 
     def use_threads(self):
         return False
