@@ -65,7 +65,7 @@ def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
             if use_batch_query:
 		X = [v for v, _, _ in queries]
 		results = batch_query(X)
-            if algo.use_threads() and not force_single:
+            elif algo.use_threads() and not force_single:
                 pool = multiprocessing.pool.ThreadPool()
                 results = pool.map(single_query, queries)
             else:
