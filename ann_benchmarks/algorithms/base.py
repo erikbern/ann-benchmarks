@@ -8,7 +8,7 @@ class BaseANN(object):
     def batch_query(self, X, n):
         res = []
 	for q in X:
-            res.append(query(self, q, k))
+            res.append(self.query(q, n))
         return res
     def get_index_size(self, process):
         """Returns the size of the index in kB or -1 if not implemented."""
@@ -30,11 +30,10 @@ class BaseANN(object):
         except:
             print("Couldn't open status file, no index size available.")
         return -1
-
     def fit(self, X):
         pass
-    def query(self, q, k):
+    def query(self, q, n):
         return [] # array of candidate indices
 
-    # def query_verbose(self, q, k):
-    #     return (self.query(q, k), {}) # results with a dict of extra data
+    # def query_verbose(self, q, n):
+    #     return (self.query(q, n), {}) # results with a dict of extra data
