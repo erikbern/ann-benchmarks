@@ -294,12 +294,6 @@ bit:
       run-groups:
         base:
             args: {"num_trees" : [1, 2, 5, 10, 20, 50, 100], "search_k" : [50, 100, 200, 400, 2000, 4000, 10000] }
-    bitsampling:
-      constructor: BitSubprocessPrepared
-      base-args: [["install/lib-bitsampling/build/wrapper/bitsampling-wrapper"]]
-      run-groups:
-        base:
-          args: {"d" : 256, "l" : [1,5,10,20,50], "k" : [17, 19, 25, 31], "m" : [0]}
     falconn:
       constructor: FALCONN
       base-args: ["@metric", 16]
