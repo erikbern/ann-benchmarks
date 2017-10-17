@@ -88,7 +88,7 @@ def run_algo(count, X_train, queries, library, algo, distance, result_pipe,
             "candidates": avg_candidates,
             "run_count": run_count,
             "run_alone": force_single,
-            "expect_extra": verbose
+            "expect_extra": verbose,
             "batch_mode": use_batch_query
         })
         if verbose:
