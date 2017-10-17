@@ -44,7 +44,7 @@ class FaissGPU(BaseANN):
 	for i in range(len(X)):
 		r = []
 		for l, d in zip(L[i], D[i]):
-		    if l != -1:
+                    if l != -1:
 			r.append(l)
 		res.append(r)
 	return res
