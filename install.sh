@@ -12,4 +12,6 @@ do
   sh $fn
 done
 
+sh setup-website.sh
+
 #sh data-sift.sh

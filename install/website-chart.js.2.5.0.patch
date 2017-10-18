@@ -1,0 +1,51 @@
+--- Chart.js	2017-05-25 09:56:43.000000000 +0200
++++ website/js/Chart.js	2017-10-18 09:22:45.000000000 +0200
+@@ -8868,6 +8868,7 @@
+ 			beforeLabel: helpers.noop,
+ 			label: function(tooltipItem, data) {
+ 				var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
++				var customLabel = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].label || ''; 
+ 				return datasetLabel + ': ' + tooltipItem.yLabel;
+ 			},
+ 			labelColor: function(tooltipItem, chartInstance) {
+@@ -8886,7 +8887,11 @@
+ 
+ 			// Args are: (tooltipItems, data)
+ 			beforeFooter: helpers.noop,
+-			footer: helpers.noop,
++			footer: function(tooltipItem, data) {
++                tooltipItem = tooltipItem[0];
++				var customLabel = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].label || '';
++				return  "Parameters: " + customLabel;
++			},
+ 			afterFooter: helpers.noop
+ 		}
+ 	};
+@@ -9224,17 +9229,17 @@
+ 
+ 		// Get the footer and beforeFooter and afterFooter lines
+ 		// Args are: (tooltipItem, data)
+-		getFooter: function() {
++		getFooter: function(tooltipItem, data) {
+ 			var me = this;
+ 			var callbacks = me._options.callbacks;
+ 
+ 			var beforeFooter = callbacks.beforeFooter.apply(me, arguments);
+-			var footer = callbacks.footer.apply(me, arguments);
++			//var footer = callbacks.footer.apply(me, arguments);
+ 			var afterFooter = callbacks.afterFooter.apply(me, arguments);
+ 
+ 			var lines = [];
+ 			lines = pushOrConcat(lines, beforeFooter);
+-			lines = pushOrConcat(lines, footer);
++			lines = pushOrConcat(lines, callbacks.footer.call(me, tooltipItem, data));
+ 			lines = pushOrConcat(lines, afterFooter);
+ 
+ 			return lines;
+@@ -12266,4 +12271,4 @@
+ };
+ 
+ },{"1":1}]},{},[7])(7)
+-});
+\ No newline at end of file
++});
