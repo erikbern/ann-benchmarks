@@ -23,13 +23,6 @@ Euclidean space
 * `FALCONN <http://falconn-lib.org/>`__
 * `FAISS <https://github.com/facebookresearch/faiss.git>`__
 * `DolphinnPy <https://github.com/ipsarros/DolphinnPy>`__
-* `Dolphinn <https://github.com/ipsarros/Dolphinn>`__
-
-Hamming distance
-----------------
-* all of the above algorithms work in Hamming space
-* `Annoy-Hamming <http://github.com/maumueller/annoy>`__
-* `Multi-Index Hashing (MIH) <https://github.com/norouzi/mih>`__
 
 Set similarity
 --------------
@@ -91,9 +84,6 @@ Running a set of algorithms with specific parameters works:
 Including Your Algorithm
 ========================
 You have two choices to include your own algorithm. If your algorithm has a Python wrapper (or is entirely written in Python), then all you need to do is to add your algorithm into ``ann_benchmarks/algorithms`` by providing a small wrapper. 
-
-If your algorithm does not provide a Python wrapper, you can include it using the SubProcess system. Find a detailed documentation on how to do it in the ``protocol`` directory, or checkout the wrappers written for Annoy-Hamming, Dolphinn, and MIH in the 
-``install`` directory.
 
 Run
 ---

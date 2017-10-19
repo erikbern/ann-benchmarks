@@ -30,8 +30,6 @@ __constructors = [
       ["RPForest"]),
   ("ann_benchmarks.algorithms.bruteforce",
       ["BruteForce", "BruteForceBLAS"]),
-  ("ann_benchmarks.algorithms.subprocess",
-      ["BitSubprocess", "BitSubprocessPrepared", "IntSubprocess", "FloatSubprocess"]),
   ("ann_benchmarks.algorithms.faiss",
       ["FaissLSH", "FaissIVF"]),
   ("ann_benchmarks.algorithms.faiss_gpu",

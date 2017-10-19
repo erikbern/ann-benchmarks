@@ -1,11 +1,5 @@
 float:
   any:
-    dolphinn:
-      constructor: FloatSubprocess
-      base-args: [["install/lib-dolphinn/fr-dolphinn"]]
-      run-groups:
-        base:
-          args: { "r" : [3, 4], "numpoints" : [10, 50, 100, 200, 1000, 2000, 10000, 20000, 40000, 100000]}
     DolphinnPy:
       constructor: DolphinnPy
       run-groups:
@@ -279,21 +273,6 @@ float:
           args: [*l]
 bit:
   hamming:
-    mih:
-      constructor: BitSubprocessPrepared
-      base-args: [["install/lib-mih/build/mihwrapper"]]
-      run-groups:
-        base:
-            # Not that MIH assumes that 5 <= bitlength/chunks <= 37 and segfaults otherwise.
-            # The r parameter denotes a reordering with n / r steps. If r is 0, no  reordering 
-            # takes places. Note that MIH requires either r = 0 or r >= 2.
-            args: { "r" : [0, 2], "chunks" : [14] }
-    annoy-hamming:
-      constructor: BitSubprocessPrepared
-      base-args: [["install/lib-annoy-hamming/fr-annoy-hamming"]]
-      run-groups:
-        base:
-            args: {"num_trees" : [1, 2, 5, 10, 20, 50, 100], "search_k" : [50, 100, 200, 400, 2000, 4000, 10000] }
     falconn:
       constructor: FALCONN
       base-args: ["@metric", 16]
