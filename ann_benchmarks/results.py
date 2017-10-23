@@ -36,84 +36,59 @@ directory hierarchy""" % k
     with gzip.open(fn, "w") as fp:
         fp.write(json.dumps(results) + "\n")
 
-def _listdir_filter(path, prefix):
-    for f in os.listdir(path):
-        if f.startswith(prefix):
-            yield f[len(prefix):]
+def _get_leaf_paths(path):
+    if os.path.isdir(path):
+        for fragment in os.listdir(path):
+            for i in _get_leaf_paths(os.path.join(path, fragment)):
+                yield i
+    elif os.path.isfile(path) and path.endswith(".json.gz"):
+        yield path
+
+def _leaf_path_to_descriptor(path):
+    directory, _ = os.path.split(path)
+    parts = directory.split(os.sep)[1:]
+    descriptor = {
+        "file": os.path.basename(path),
+        # This is the only thing that might not appear in the hierarchy of a
+        # valid result file
+        "query_dataset": None
+    }
+    for part in parts:
+        try:
+            name, value = part.split("=", 1)
+            if name == "k" or name == "limit":
+                value = int(value)
+            # Some of the names in the hierarchy aren't the names used in the
+            # descriptor; fix those up
+            if name == "k":
+                name = "count"
+            elif name == "algo":
+                name = "algorithm"
+            descriptor[name] = value
+        except ValueError:
+            pass
+    return descriptor
 
 def enumerate_result_files(dataset = None, limit = None, count = None,
         distance = None, query_dataset = None, algo = None):
-    def _next_part(path, element, prefix, mapping = None):
-        if not os.path.isdir(path):
-            return None
-        elif not element:
-            return map(mapping, _listdir_filter(path, prefix))
-        elif not isinstance(element, list):
-            return [element]
+    def _matches(argv, descv):
+        if argv == None:
+            return True
+        elif not isinstance(argv, list):
+            return descv == argv
         else:
-            return element
-
-    rdir = "results/"
-    counts = _next_part(rdir, count, "k=", int)
-    if not counts:
-        raise StopIteration
-
-    for c in counts:
-        cdir = os.path.join("results", "k=%d" % c)
-        datasets = _next_part(cdir, dataset, "dataset=")
-        if not datasets:
-            continue
-
-        for d in datasets:
-            ddir = os.path.join(cdir, "dataset=%s" % d)
-            limits = _next_part(ddir, limit, "limit=", int)
-            if not limits:
-                continue
-
-            for l in limits:
-                ldir = os.path.join(ddir, "limit=%d" % l)
-                distances = _next_part(ldir, distance, "distance=")
-                if not distances:
-                    continue
-
-                for dst in distances:
-                    dstdir = os.path.join(ldir, "distance=%s" % dst)
-                    query_datasets = _next_part(
-                            dstdir, query_dataset, "query_dataset=")
-                    if not query_dataset:
-                        query_datasets.insert(0, None)
-
-                    for q in query_datasets:
-                        if q != None:
-                            qdir = os.path.join(dstdir, "query_dataset=%s" % q)
-                        else:
-                            qdir = dstdir
-                        algos = _next_part(qdir, algo, "algo=")
-                        if not algos:
-                            continue
-
-                        for a in algos:
-                            adir = os.path.join(qdir, "algo=%s" % a)
-                            runs = _next_part(adir, None, "")
-
-                            if not runs:
-                                continue
-                            else:
-                                for r in runs:
-                                    rpath = os.path.join(adir, r)
-                                    if not (os.path.isfile(rpath) \
-                                            and rpath.endswith(".json.gz")):
-                                        continue
-                                    descriptor = {
-                                        "count": c,
-                                        "dataset": d,
-                                        "limit": l,
-                                        "distance": dst,
-                                        "query_dataset": q,
-                                        "algorithm": a,
-                                        "file": r
-                                    }
-                                    yield (descriptor, rpath)
+            return descv in argv
+    def _matches_all(desc):
+        return _matches(count, desc["count"]) and \
+               _matches(dataset, desc["dataset"]) and \
+               _matches(limit, desc["limit"]) and \
+               _matches(distance, desc["distance"]) and \
+               _matches(query_dataset, desc["query_dataset"]) and \
+               _matches(algo, desc["algorithm"])
+    for path in _get_leaf_paths("results/"):
+        desc = _leaf_path_to_descriptor(path)
+        if _matches_all(desc):
+            yield desc, path
 
 def get_results(dataset, limit, count, distance, query_dataset = None):
     for d, results in get_results_with_descriptors(
