@@ -1,18 +1,15 @@
 apt-get update
 apt-get install -y python-numpy python-scipy python-pip python-nose build-essential software-properties-common unzip
 
-# Install GCC 4.8
-add-apt-repository ppa:ubuntu-toolchain-r/test -y
-apt-get update -qq
-apt-get install -y g++-4.8
-apt-get install -y libboost1.55-all-dev || apt-get install -y libboost1.48-all-dev || apt-cache search libboost
+apt-get install -y libboost1.58-all-dev
 apt-get autoremove -y
-export CXX="g++-4.8" CC="gcc-4.8"
 
-pip install scikit-learn
+pip install scikit-learn pyyaml
 
 cd install
-for fn in annoy.sh panns.sh nearpy.sh sklearn.sh flann.sh kgraph.sh nmslib.sh rpforest.sh falconn.sh faiss.sh
+for fn in lib-*.sh
 do
-    source $fn
+  sh $fn
 done
+
+#sh data-sift.sh

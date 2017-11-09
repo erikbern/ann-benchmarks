@@ -1,66 +1,112 @@
+import os, json, pickle
 import numpy
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--input', action='append')
-parser.add_argument('--output', action='append')
+from ann_benchmarks.results import get_results
+from ann_benchmarks.datasets import get_query_cache_path
+from ann_benchmarks.plotting.metrics import all_metrics as metrics
+from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_linestyles, create_pointset
 
-args = parser.parse_args()
 
-# Construct palette by reading all inputs
-all_algos = set()
-for fn in args.input:
-    for line in open(fn):
-        all_algos.add(line.strip().split('\t')[0])
-
-colors = plt.cm.Set1(numpy.linspace(0, 1, len(all_algos)))
-linestyles = {}
-for i, algo in enumerate(all_algos):
-    linestyles[algo] = (colors[i], ['--', '-.', '-', ':'][i%4], ['+', '<', 'o', 'D', '*', 'x', 's'][i%7])
-
+def create_plot(all_data, golden, raw, x_log, y_log, xn, yn, fn_out, linestyles):
+    xm, ym = (metrics[xn], metrics[yn])
 # Now generate each plot
-for fn_in, fn_out in zip(args.input, args.output):
-    all_data = {}
-
-    for line in open(fn_in):
-        algo, algo_name, build_time, search_time, precision = line.strip().split('\t')
-        all_data.setdefault(algo, []).append((algo_name, float(build_time), float(search_time), float(precision)))
-
     handles = []
     labels = []
-
-    plt.figure(figsize=(7, 7))
+    if golden:
+        plt.figure(figsize=(7, 4.35))
+    else:
+        plt.figure(figsize=(7, 7))
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-        data = all_data[algo]
-        data.sort(key=lambda t: t[-2]) # sort by time
-        ys = [1.0 / t[-2] for t in data] # queries per second
-        xs = [t[-1] for t in data]
-        ls = [t[0] for t in data]
-
-        # Plot Pareto frontier
-        xs, ys = [], []
-        last_y = float('-inf')
-        for t in data:
-            y = t[-1]
-            if y > last_y:
-                last_y = y
-                xs.append(t[-1])
-                ys.append(1.0 / t[-2])
-        color, linestyle, marker = linestyles[algo]
+        xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
+        color, faded, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         handles.append(handle)
+        if raw:
+            handle2, = plt.plot(axs, ays, '-', label=algo, color=faded, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         labels.append(algo)
 
-    plt.gca().set_yscale('log')
-    plt.gca().set_title('Precision-Performance tradeoff - up and to the right is better')
-    plt.gca().set_ylabel('Queries per second ($s^{-1}$) - larger is better')
-    plt.gca().set_xlabel('10-NN precision - larger is better')
+    if x_log:
+        plt.gca().set_xscale('log')
+    if y_log:
+        plt.gca().set_yscale('log')
+    plt.gca().set_title(get_plot_label(xm, ym))
+    plt.gca().set_ylabel(ym['description'])
+    plt.gca().set_xlabel(xm['description'])
     box = plt.gca().get_position()
     # plt.gca().set_position([box.x0, box.y0, box.width * 0.8, box.height])
     plt.gca().legend(handles, labels, loc='center left', bbox_to_anchor=(1, 0.5), prop={'size': 9})
     plt.grid(b=True, which='major', color='0.65',linestyle='-')
-    plt.xlim([0.0, 1.03])
+    if 'lim' in xm:
+        plt.xlim(xm['lim'])
+    if 'lim' in ym:
+        plt.ylim(ym['lim'])
     plt.savefig(fn_out, bbox_inches='tight')
+    plt.close()
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--dataset',
+        metavar="DATASET",
+        required=True)
+    parser.add_argument(
+        '--count',
+        default=10)
+    parser.add_argument(
+        '--limit',
+        default=-1)
+    parser.add_argument(
+        '--query-dataset',
+        default=None)
+    parser.add_argument(
+        '--distance',
+        default='angular')
+    parser.add_argument(
+        '-o', '--output',
+        required=True)
+    parser.add_argument(
+        '-x', '--x-axis',
+        help = 'Which metric to use on the X-axis',
+        choices = metrics.keys(),
+        default = "k-nn")
+    parser.add_argument(
+        '-y', '--y-axis',
+        help = 'Which metric to use on the Y-axis',
+        choices = metrics.keys(),
+        default = "qps")
+    parser.add_argument(
+        '-X', '--x-log',
+        help='Draw the X-axis using a logarithmic scale',
+        action='store_true')
+    parser.add_argument(
+        '-Y', '--y-log',
+        help='Draw the Y-axis using a logarithmic scale',
+        action='store_true')
+    parser.add_argument(
+        '-G', '--golden',
+        help='Use golden ratio as plotsize',
+        action='store_true')
+    parser.add_argument(
+        '--raw',
+        help='Also show raw results in faded colours',
+        action='store_true')
+    args = parser.parse_args()
+
+    query_cache_path = get_query_cache_path(
+            args.dataset, args.count, args.limit, args.distance,
+            args.query_dataset)
+    assert os.path.exists(query_cache_path), """\
+error: the query cache file \"%s\" does not exist""" % query_cache_path
+
+    qs = pickle.load(open(query_cache_path))
+    runs, all_algos = compute_metrics(qs, get_results(
+            args.dataset, args.limit, args.count, args.distance,
+            args.query_dataset))
+    linestyles = create_linestyles(all_algos)
+
+    create_plot(runs, args.golden, args.raw, args.x_log,
+            args.y_log, args.x_axis, args.y_axis, args.output, linestyles)

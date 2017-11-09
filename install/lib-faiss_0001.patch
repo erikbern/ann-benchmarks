@@ -1,0 +1,25 @@
+From f2af0b887d7b14c7a8f791ccb5b363245892ae8f Mon Sep 17 00:00:00 2001
+From: Alec Faithfull <alef@itu.dk>
+Date: Tue, 14 Mar 2017 11:54:27 +0000
+Subject: [PATCH] Removed a strange definition from the Linux Makefile
+
+---
+ example_makefiles/makefile.inc.Linux | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/example_makefiles/makefile.inc.Linux b/example_makefiles/makefile.inc.Linux
+index 5634f58..01cbc6e 100644
+--- a/example_makefiles/makefile.inc.Linux
++++ b/example_makefiles/makefile.inc.Linux
+@@ -11,7 +11,7 @@
+ 
+ CC=g++
+ 
+-CFLAGS=-fPIC -m64 -Wall -g -O3  -msse4 -mpopcnt -fopenmp -Wno-sign-compare -Dnullptr=NULL -Doverride= -fopenmp
++CFLAGS=-fPIC -m64 -Wall -g -O3  -msse4 -mpopcnt -fopenmp -Wno-sign-compare -Doverride= -fopenmp
+ LDFLAGS=-g -fPIC  -fopenmp
+ 
+ # common linux flags
+-- 
+2.11.0
+

@@ -1,0 +1,39 @@
+From 3a92b10d3da6ef5d1ad26315b20db302c0f89756 Mon Sep 17 00:00:00 2001
+From: Martin Aumueller <maau@itu.dk>
+Date: Tue, 11 Apr 2017 11:46:37 +0000
+Subject: [PATCH] Make Ubuntu16 and c++14 default.
+
+---
+ example_makefiles/makefile.inc.Linux | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/example_makefiles/makefile.inc.Linux b/example_makefiles/makefile.inc.Linux
+index 01cbc6e..216b592 100644
+--- a/example_makefiles/makefile.inc.Linux
++++ b/example_makefiles/makefile.inc.Linux
+@@ -11,7 +11,7 @@
+ 
+ CC=g++
+ 
+-CFLAGS=-fPIC -m64 -Wall -g -O3  -msse4 -mpopcnt -fopenmp -Wno-sign-compare -Doverride= -fopenmp
++CFLAGS=-fPIC -m64 -Wall -g -O3  -msse4 -mpopcnt -fopenmp -Wno-sign-compare -Doverride= -fopenmp -std=c++14
+ LDFLAGS=-g -fPIC  -fopenmp
+ 
+ # common linux flags
+@@ -60,11 +60,11 @@ FAISSSHAREDFLAGS=-shared
+ BLASCFLAGS=-DFINTEGER=int
+ 
+ # This is for Centos:
+-BLASLDFLAGS=/usr/lib64/libopenblas.so.0
++#BLASLDFLAGS=/usr/lib64/libopenblas.so.0
+ 
+ # for Ubuntu 16: 
+ # sudo apt-get install libopenblas-dev python-numpy python-dev
+-# BLASLDFLAGS=/usr/lib/libopenblas.so.0
++BLASLDFLAGS=/usr/lib/libopenblas.so.0
+ 
+ # for Ubuntu 14: 
+ # sudo apt-get install libopenblas-dev liblapack3 python-numpy python-dev
+-- 
+2.7.4
+
