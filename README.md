@@ -1,0 +1,119 @@
+Benchmarking nearest neighbors
+==============================
+
+This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics.
+
+See [the results of this benchmark](http://sss.projects.itu.dk/ann-benchmarks).
+
+Evaluated
+=========
+
+Euclidean space
+---------------
+
+* [Annoy](https://github.com/spotify/annoy)
+* [FLANN](http://www.cs.ubc.ca/research/flann/)
+* [scikit-learn](http://scikit-learn.org/stable/modules/neighbors.html): LSHForest, KDTree, BallTree
+* [PANNS](https://github.com/ryanrhymes/panns)
+* [NearPy](http://nearpy.io)
+* [KGraph](https://github.com/aaalgo/kgraph)
+* [NMSLIB (Non-Metric Space Library)](https://github.com/searchivarius/nmslib): SWGraph, HNSW, BallTree, MPLSH
+* [RPForest](https://github.com/lyst/rpforest)
+* [FALCONN](http://falconn-lib.org/)
+* [FAISS](https://github.com/facebookresearch/faiss.git)
+* [DolphinnPy](https://github.com/ipsarros/DolphinnPy)
+
+Set similarity
+--------------
+* [Datasketch](https://github.com/ekzhu/datasketch)
+
+Data sets
+=========
+
+Euclidean
+---------
+
+* [SIFT](http://corpus-texmex.irisa.fr/)
+* [GIST](http://corpus-texmex.irisa.fr/)
+* [MNIST](http://yann.lecun.com/exdb/mnist/)
+* [NYTimes TFIDF](https://archive.ics.uci.edu/ml/datasets/Bag+of+Words)
+* `Random datasets`
+
+Angular/Cosine
+--------------
+* [GloVe](http://nlp.stanford.edu/projects/glove/)
+* `Random datasets`
+
+Hamming space
+-------------
+We used [Spherical hashing](http://sglab.kaist.ac.kr/projects/Spherical_Hashing/) to generate Hamming space versions of
+
+* SIFT
+* NYTimes
+
+Set Similarity
+--------------
+We use the following three datasets from http://ssjoin.dbresearch.uni-salzburg.at/
+
+* Flickr
+* AOL
+* Kosarek
+
+Motivation
+==========
+
+Doing fast searching of nearest neighbors in high dimensional spaces is an increasingly important problem, but with little attempt at objectively comparing methods.
+
+Install
+=======
+
+Clone the repo and run `bash install.sh`. This will install all libraries. It could take a while. It has been tested in Ubuntu 16.04. We advice to run it only in a VM or in a docker container (see our Dockerfile).
+
+Downloading and preprocessing the data sets is done by running the `install/data-*.sh` scripts, e.g., run `bash install/data-glove.sh` or `bash install/data-sift.sh`.
+
+Experiment Setup
+================
+
+Running a set of algorithms with specific parameters works:
+
+* Check that `algos.yaml` contains the parameter settings that you want to test
+* To run experiments on SIFT, invoke `python -m ann_benchmarks/main --dataset sift-data --query-dataset sift-query --distance euclidean`. See `python -m ann_benchmarks/main --help` for more information on possible settings. Note that experiments can take a long time. 
+* To process the results, either use `python plot.py` or `python createwebsite.py`. An example call: `python createwebsite.py --plottype recall/time --latex --scatter --outputdir website/`. 
+
+Including Your Algorithm
+========================
+You have two choices to include your own algorithm. If your algorithm has a Python wrapper (or is entirely written in Python), then all you need to do is to add your algorithm into `ann_benchmarks/algorithms` by providing a small wrapper. 
+
+Principles
+==========
+
+* Everyone is welcome to submit pull requests with tweaks and changes to how each library is being used.
+* In particular: if you are the author of any of these libraries, and you think the benchmark can be improved, consider making the improvement and submitting a pull request.
+* This is meant to be an ongoing project and represent the current state.
+* Make everything easy to replicate, including installing and preparing the datasets.
+* Try many different values of parameters for each library and ignore the points that are not on the precision-performance frontier.
+* High-dimensional datasets with approximately 100-1000 dimensions. This is challenging but also realistic. Not more than 1000 dimensions because those problems should probably be solved by doing dimensionality reduction separately.
+* No batching of queries, use single queries by default. ANN-Benchmarks saturates CPU cores by using a thread pool.
+* Avoid extremely costly index building (more than several hours).
+* Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
+* We currently support CPU-based ANN algorithms. GPU support is planned as future work.
+* Do proper train/test set of index data and query points.
+
+Results
+=======
+See http://sss.projects.itu.dk/ann-benchmarks.
+
+Note that NMSLIB saves indices in the directory indices. 
+If the tests are re-run using a different seed and/or a different number of queries, the
+content of this directory should be deleted.
+
+Testing
+=======
+
+The project is fully tested using Travis, with unit tests run for all different libraries and algorithms.
+
+References
+==========
+
+* [sim-shootout](https://github.com/piskvorky/sim-shootout) by Radim Řehůřek
+* This [blog post](http://maheshakya.github.io/gsoc/2014/08/17/performance-comparison-among-lsh-forest-annoy-and-flann.html)
