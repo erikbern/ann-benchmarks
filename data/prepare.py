@@ -5,6 +5,8 @@ import os
 import random
 import struct
 import sys
+import sklearn.datasets
+import sklearn.model_selection
 import tarfile
 import urllib.request
 import zipfile
@@ -136,14 +138,21 @@ def fashion_mnist(out_fn):
     write_output(train, test, out_fn, 'euclidean')
 
 
+def random(out_fn, n_dims, n_samples, centers):
+    X, _ = sklearn.datasets.make_blobs(n_samples=n_samples, n_features=n_dims, centers=centers, random_state=1)
+    X_train, X_test = sklearn.model_selection.train_test_split(X, test_size=0.1, random_state=1)
+    write_output(X_train, X_test, out_fn, 'euclidean')
+    
+    
 datasets = {
     'fashion-mnist-784-euclidean': fashion_mnist,
     'gist-960-euclidean': gist,
-    'glove-25-angular': lambda tag: glove(tag, 25),
-    'glove-50-angular': lambda tag: glove(tag, 50),
-    'glove-100-angular': lambda tag: glove(tag, 100),
-    'glove-200-angular': lambda tag: glove(tag, 200),
+    'glove-25-angular': lambda out_fn: glove(out_fn, 25),
+    'glove-50-angular': lambda out_fn: glove(out_fn, 50),
+    'glove-100-angular': lambda out_fn: glove(out_fn, 100),
+    'glove-200-angular': lambda out_fn: glove(out_fn, 200),
     'mnist-784-euclidean': mnist,
+    'random-xs-10-euclidean': lambda out_fn: random(out_fn, 10, 1000, 5),
     'sift-128-euclidean': sift,
 }
 
