@@ -54,8 +54,6 @@ import error: module %s does not define symbol %s""" % (name, symbol)
             traceback.print_exception(t, v, tb)
         finally:
             del tb
-        print """\
-warning: module %s could not be loaded, some algorithm constructors will not \
-be available""" % name
+        print('warning: module %s could not be loaded, some algorithm constructors will not be available' % name)
         for symbol in symbols:
             available_constructors[symbol] = None

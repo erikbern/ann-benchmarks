@@ -29,14 +29,17 @@ def write_output(train, test, fn, distance, count=100):
     print('test size: %d * %d' % test.shape)
     f.create_dataset('train', (len(train), len(train[0])), dtype='f')[:] = train
     f.create_dataset('test', (len(test), len(test[0])), dtype='f')[:] = test
-    correct = f.create_dataset('correct', (len(test), count), dtype='i')
+    neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
+    distances = f.create_dataset('distances', (len(test), count), dtype='f')
     bf = BruteForceBLAS(distance, precision=numpy.float32)
     bf.fit(train)
     queries = []
     for i, x in enumerate(test):
         if i % 1000 == 0:
             print('%d/%d...' % (i, test.shape[0]))
-        correct[i] = [j for j, _ in bf.query_with_distances(x, count)]
+        res = list(bf.query_with_distances(x, count))
+        neighbors[i] = [j for j, _ in res]
+        distances[i] = [d for _, d in res]
     f.close()
 
 
@@ -45,22 +48,16 @@ def glove(out_fn, d):
     fn = os.path.join('data', 'glove.twitter.27B.zip')
     download(url, fn)
     with zipfile.ZipFile(fn) as z:
-        random.seed(1)
         print('preparing %s' % out_fn)
         z_fn = 'glove.twitter.27B.%dd.txt' % d
-        train = []
-        test = []
+        X = []
         for line in z.open(z_fn):
             v = [float(x) for x in line.strip().split()[1:]]
-            if random.randint(0, 19):
-                train.append(v)
-            else:
-                test.append(v)
-
+            X.append(numpy.array(v))
+        print('splitting output...')
+        X_train, X_test = sklearn.model_selection.train_test_split(X, test_size=10000, random_state=1)
         print('writing output...')
-        train = numpy.array(train)
-        test = numpy.array(test)
-        write_output(train, test, out_fn, 'angular')
+        write_output(numpy.array(X_train), numpy.array(X_test), out_fn, 'angular')
 
 
 def _load_texmex_vectors(f):
@@ -153,6 +150,7 @@ datasets = {
     'glove-200-angular': lambda out_fn: glove(out_fn, 200),
     'mnist-784-euclidean': mnist,
     'random-xs-10-euclidean': lambda out_fn: random(out_fn, 10, 1000, 5),
+    'random-s-40-euclidean': lambda out_fn: random(out_fn, 40, 10000, 25),
     'sift-128-euclidean': sift,
 }
 

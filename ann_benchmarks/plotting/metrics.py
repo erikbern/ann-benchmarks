@@ -1,33 +1,31 @@
 from __future__ import absolute_import
 
-def knn(queries, run, epsilon=1e-10):
-    results = zip(queries, run["results"])
+def knn(dataset, run, epsilon=1e-10):
     total = 0
     actual = 0
-    for (query, max_distance, closest), [time, candidates] in results:
-        within = filter(lambda (index, distance): \
-                        distance <= (max_distance + epsilon), candidates)
-        total += len(closest)
+    count = int(run.attrs['candidates'])
+    for true_distances, found_distances in zip(dataset['distances'], run['distances']):
+        within = [d for d in found_distances if d <= true_distances[count] + epsilon]
+        total += len(found_distances)
         actual += len(within)
     return float(actual) / float(total)
 
-def epsilon(queries, run, epsilon=0.01):
-    results = zip(queries, run["results"])
+def epsilon(dataset, run, epsilon=0.01):
     total = 0
     actual = 0
-    for (query, max_distance, closest), [time, candidates] in results:
-        within = filter(lambda (index, distance): \
-                        distance <= ((1 + epsilon) * max_distance), candidates)
-        total += len(closest)
+    count = int(run.attrs['candidates'])
+    for true_distances, found_distances in zip(dataset['distances'], run['distances']):
+        within = [d for d in found_distances if d <= true_distances[count] * (1 + epsilon)]
+        total += len(found_distances)
         actual += len(within)
     return float(actual) / float(total)
 
-def rel(queries, run):
-    results = zip(queries, run["results"])
+def rel(dataset, run):
     total_closest_distance = 0.0
     total_candidate_distance = 0.0
-    for (query, max_distance, closest), [time, candidates] in results:
-        for (ridx, rdist), (cidx, cdist) in zip(closest, candidates):
+    count = int(run.attrs['candidates'])
+    for true_distances, found_distances in zip(dataset['distances'], run['distances']):
+        for rdist, cdist in zip(true_distances, found_distances):
             total_closest_distance += rdist
             total_candidate_distance += cdist
     if total_closest_distance < 0.01:
@@ -35,16 +33,16 @@ def rel(queries, run):
     return total_candidate_distance / total_closest_distance
 
 def queries_per_second(queries, run):
-    return 1.0 / run["best_search_time"]
+    return 1.0 / run.attrs["best_search_time"]
 
 def index_size(queries, run):
-    return run["index_size"]
+    return run.attrs["index_size"]
 
 def build_time(queries, run):
-    return run["build_time"]
+    return run.attrs["build_time"]
 
 def candidates(queries, run):
-    return run["candidates"]
+    return run.attrs["candidates"]
 
 all_metrics = {
     "k-nn": {

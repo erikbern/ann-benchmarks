@@ -43,6 +43,8 @@ We have a number of precomputed data sets for this. See `data/prepare.py` for th
 | MNIST           |        784 |     60,000 |    10,000 |       100 | Euclidean | http://vectors.erikbern.com/mnist-784-euclidean.hdf5         |
 | SIFT            |        128 |  1,000,000 |    10,000 |       100 | Euclidean | http://vectors.erikbern.com/sift-128-euclidean.hdf5          |
 
+Note that a few other datasets were used previously, in particular for Hamming and set similarity. We are going to add them back shortly in the more convenient HDF5 format.
+
 Sources for these datasets:
 
 * [SIFT/GIST](http://corpus-texmex.irisa.fr/)
@@ -58,9 +60,7 @@ Doing fast searching of nearest neighbors in high dimensional spaces is an incre
 Install
 =======
 
-Clone the repo and run `bash install.sh`. This will install all libraries. It could take a while. It has been tested in Ubuntu 16.04. We advice to run it only in a VM or in a docker container (see our Dockerfile).
-
-Downloading and preprocessing the data sets is done by running the `install/data-*.sh` scripts, e.g., run `bash install/data-glove.sh` or `bash install/data-sift.sh`.
+Clone the repo and run `bash install.sh`. This will install all libraries. It could take a while. It has been tested in Ubuntu 16.04. We advice to run it only in a VM.
 
 Experiment Setup
 ================

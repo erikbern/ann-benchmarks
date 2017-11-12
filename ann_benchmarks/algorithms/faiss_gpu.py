@@ -39,15 +39,15 @@ class FaissGPU(BaseANN):
         return r
 
     def batch_query(self, X, n):
-	D, L = self._index.search(X, n)
-	res = []
-	for i in range(len(X)):
-		r = []
-		for l, d in zip(L[i], D[i]):
-                    if l != -1:
-			r.append(l)
-		res.append(r)
-	return res
+        D, L = self._index.search(X, n)
+        res = []
+        for i in range(len(X)):
+            r = []
+            for l, d in zip(L[i], D[i]):
+                if l != -1:
+                    r.append(l)
+            res.append(r)
+        return res
 
     def use_threads(self):
         return False
