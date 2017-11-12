@@ -30,34 +30,25 @@ Set similarity
 Data sets
 =========
 
-Euclidean
----------
+We have a number of precomputed data sets for this. See `data/prepare.py` for the script that generates these data set. All data sets are pre-split into train/test and come with ground truth data in the form of the top 100 neighbors. We store them in a HDF5 format:
 
-* [SIFT](http://corpus-texmex.irisa.fr/)
-* [GIST](http://corpus-texmex.irisa.fr/)
+| Dataset         | Dimensions | Train size | Test size | Neighbors | Distance  | URL                                                          |
+| --------------- | ---------: | ---------: | --------: | --------: | --------- | ------------------------------------------------------------ |
+| Fashion-MNIST   |        784 |     60,000 |    10,000 |       100 | Euclidean | http://vectors.erikbern.com/fashion-mnist-784-euclidean.hdf5 |
+| GIST            |        960 |  1,000,000 |     1,000 |       100 | Euclidean | http://vectors.erikbern.com/gist-960-euclidean.hdf5          |
+| Glove           |         25 |  1,133,628 |    59,886 |       100 | Angular   | http://vectors.erikbern.com/glove-25-angular.hdf5            |
+| Glove           |         50 |  1,133,628 |    59,886 |       100 | Angular   | http://vectors.erikbern.com/glove-50-angular.hdf5            |
+| Glove           |        100 |  1,133,628 |    59,886 |       100 | Angular   | http://vectors.erikbern.com/glove-100-angular.hdf5           |
+| Glove           |        200 |  1,133,628 |    59,886 |       100 | Angular   | http://vectors.erikbern.com/glove-200-angular.hdf5           |
+| MNIST           |        784 |     60,000 |    10,000 |       100 | Euclidean | http://vectors.erikbern.com/mnist-784-euclidean.hdf5         |
+| SIFT            |        128 |  1,000,000 |    10,000 |       100 | Euclidean | http://vectors.erikbern.com/sift-128-euclidean.hdf5          |
+
+Sources for these datasets:
+
+* [SIFT/GIST](http://corpus-texmex.irisa.fr/)
 * [MNIST](http://yann.lecun.com/exdb/mnist/)
-* [NYTimes TFIDF](https://archive.ics.uci.edu/ml/datasets/Bag+of+Words)
-* `Random datasets`
-
-Angular/Cosine
---------------
 * [GloVe](http://nlp.stanford.edu/projects/glove/)
-* `Random datasets`
-
-Hamming space
--------------
-We used [Spherical hashing](http://sglab.kaist.ac.kr/projects/Spherical_Hashing/) to generate Hamming space versions of
-
-* SIFT
-* NYTimes
-
-Set Similarity
---------------
-We use the following three datasets from http://ssjoin.dbresearch.uni-salzburg.at/
-
-* Flickr
-* AOL
-* Kosarek
+* [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist)
 
 Motivation
 ==========
