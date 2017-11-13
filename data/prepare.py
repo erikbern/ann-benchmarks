@@ -25,6 +25,7 @@ def download(src, dst):
 def write_output(train, test, fn, distance, count=100):
     n = 0
     f = h5py.File(fn, 'w')
+    f.attrs['distance'] = distance
     print('train size: %d * %d' % train.shape)
     print('test size: %d * %d' % test.shape)
     f.create_dataset('train', (len(train), len(train[0])), dtype='f')[:] = train
@@ -38,6 +39,7 @@ def write_output(train, test, fn, distance, count=100):
         if i % 1000 == 0:
             print('%d/%d...' % (i, test.shape[0]))
         res = list(bf.query_with_distances(x, count))
+        res.sort(key=lambda t: t[-1])
         neighbors[i] = [j for j, _ in res]
         distances[i] = [d for _, d in res]
     f.close()
@@ -135,10 +137,10 @@ def fashion_mnist(out_fn):
     write_output(train, test, out_fn, 'euclidean')
 
 
-def random(out_fn, n_dims, n_samples, centers):
+def random(out_fn, n_dims, n_samples, centers, distance):
     X, _ = sklearn.datasets.make_blobs(n_samples=n_samples, n_features=n_dims, centers=centers, random_state=1)
     X_train, X_test = sklearn.model_selection.train_test_split(X, test_size=0.1, random_state=1)
-    write_output(X_train, X_test, out_fn, 'euclidean')
+    write_output(X_train, X_test, out_fn, distance)
     
     
 datasets = {
@@ -149,8 +151,10 @@ datasets = {
     'glove-100-angular': lambda out_fn: glove(out_fn, 100),
     'glove-200-angular': lambda out_fn: glove(out_fn, 200),
     'mnist-784-euclidean': mnist,
-    'random-xs-10-euclidean': lambda out_fn: random(out_fn, 10, 1000, 5),
-    'random-s-40-euclidean': lambda out_fn: random(out_fn, 40, 10000, 25),
+    'random-xs-10-euclidean': lambda out_fn: random(out_fn, 10, 10000, 100, 'euclidean'),
+    'random-s-40-euclidean': lambda out_fn: random(out_fn, 40, 100000, 1000, 'euclidean'),
+    'random-xs-10-angular': lambda out_fn: random(out_fn, 10, 10000, 100, 'angular'),
+    'random-s-40-angular': lambda out_fn: random(out_fn, 40, 100000, 1000, 'angular'),
     'sift-128-euclidean': sift,
 }
 
