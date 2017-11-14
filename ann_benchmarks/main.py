@@ -1,10 +1,9 @@
 from __future__ import absolute_import
-import time, os, multiprocessing, argparse, pickle, resource, random, math
-import h5py
+import time, os, multiprocessing, argparse, resource, random
 import sys
-import json
 import shutil
 
+from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.results import get_results, store_results
 from ann_benchmarks.distance import metrics as pd
 from ann_benchmarks.constants import INDEX_DIR
@@ -198,10 +197,9 @@ def main():
     if os.path.exists(INDEX_DIR):
         shutil.rmtree(INDEX_DIR)
 
-    hdf5_fn = os.path.join('data', '%s.hdf5' % args.dataset)
-    hdf5_f = h5py.File(hdf5_fn)
-    X_train = hdf5_f['train']
-    X_test = hdf5_f['test']
+    dataset = get_dataset(args.dataset)
+    X_train = dataset['train']
+    X_test = dataset['test']
     print('got a train set of size (%d * %d)' % X_train.shape)
     print('got %d queries' % len(X_test))
 

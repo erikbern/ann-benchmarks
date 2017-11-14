@@ -1,10 +1,10 @@
-import h5py
 import os
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import argparse
 
+from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.results import get_results
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_linestyles, create_pointset
@@ -92,11 +92,7 @@ if __name__ == "__main__":
         action='store_true')
     args = parser.parse_args()
 
-    # TODO: should probably centralize this hdf5 code somewhere
-    hdf5_fn = os.path.join('data', '%s.hdf5' % args.dataset)
-    hdf5_f = h5py.File(hdf5_fn)
-
-    runs, all_algos = compute_metrics(hdf5_f, get_results(
+    runs, all_algos = compute_metrics(get_dataset(args.dataset), get_results(
         args.dataset, args.limit, args.count, args.distance))
     linestyles = create_linestyles(all_algos)
 
