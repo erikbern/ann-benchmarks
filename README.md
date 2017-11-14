@@ -68,7 +68,7 @@ Experiment Setup
 Running a set of algorithms with specific parameters works:
 
 * Check that `algos.yaml` contains the parameter settings that you want to test
-* To run experiments on SIFT, invoke `python -m ann_benchmarks/main --dataset sift-data --query-dataset sift-query --distance euclidean`. See `python -m ann_benchmarks/main --help` for more information on possible settings. Note that experiments can take a long time. 
+* To run experiments on SIFT, invoke `python run.py --dataset sift-data --distance euclidean`. See `python run.py --help` for more information on possible settings. Note that experiments can take a long time. 
 * To process the results, either use `python plot.py` or `python createwebsite.py`. An example call: `python createwebsite.py --plottype recall/time --latex --scatter --outputdir website/`. 
 
 Including Your Algorithm
