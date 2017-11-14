@@ -48,7 +48,7 @@ for name, symbols in __constructors:
             assert hasattr(module, symbol), """\
 import error: module %s does not define symbol %s""" % (name, symbol)
             available_constructors[symbol] = getattr(module, symbol)
-    except ImportError:
+    except (ImportError, SyntaxError):
         try:
             t, v, tb = sys.exc_info()
             traceback.print_exception(t, v, tb)
