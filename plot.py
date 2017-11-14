@@ -59,9 +59,6 @@ if __name__ == "__main__":
         '--limit',
         default=-1)
     parser.add_argument(
-        '--distance',
-        default='angular')
-    parser.add_argument(
         '-o', '--output',
         required=True)
     parser.add_argument(
@@ -92,8 +89,10 @@ if __name__ == "__main__":
         action='store_true')
     args = parser.parse_args()
 
-    runs, all_algos = compute_metrics(get_dataset(args.dataset), get_results(
-        args.dataset, args.limit, args.count, args.distance))
+    dataset = get_dataset(args.dataset)
+    distance = dataset.attrs['dataset']
+    runs, all_algos = compute_metrics(dataset, get_results(
+        args.dataset, args.count, distance))
     linestyles = create_linestyles(all_algos)
 
     create_plot(runs, args.golden, args.raw, args.x_log,

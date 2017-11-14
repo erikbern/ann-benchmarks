@@ -114,15 +114,6 @@ def main():
             type=positive_int,
             help="the number of near neighbours to search for")
     parser.add_argument(
-            '--distance',
-            help='the metric used to calculate the distance between points',
-            default='angular')
-    parser.add_argument(
-            '--limit',
-            help='the maximum number of points to load from the dataset, or -1 to load all of them',
-            type=int,
-            default=-1)
-    parser.add_argument(
             '--definitions',
             metavar='FILE',
             help='load algorithm definitions from FILE',
@@ -200,18 +191,18 @@ def main():
     dataset = get_dataset(args.dataset)
     X_train = dataset['train']
     X_test = dataset['test']
+    distance = dataset.attrs['distance']
     print('got a train set of size (%d * %d)' % X_train.shape)
     print('got %d queries' % len(X_test))
 
     algos_already_run = set()
     if not args.force:
-        for run in get_results(args.dataset, args.limit, args.count,
-                args.distance):
+        for run in get_results(args.dataset, args.count, distance):
             algos_already_run.add((run.attrs["library"], run.attrs["name"]))
 
     point_type = 'float' # TODO(erikbern): should look at the type of X_train
     algos = get_algorithms(definitions, constructors,
-        len(X_train[0]), point_type, args.distance, args.count)
+        len(X_train[0]), point_type, distance, args.count)
 
     if args.algorithm:
         print('running only', args.algorithm)
@@ -238,7 +229,7 @@ def main():
         p = multiprocessing.Process(
             target=run_algo,
             args=(args.count, X_train, X_test, library, algo,
-                  args.distance, send_pipe, args.runs, args.single, args.batch))
+                  distance, send_pipe, args.runs, args.single, args.batch))
 
         p.start()
         send_pipe.close()
@@ -269,8 +260,7 @@ def main():
         recv_pipe.close()
 
         if results:
-            store_results(attrs, results, args.dataset, args.limit,
-                          args.count, args.distance)
+            store_results(attrs, results, args.dataset, args.count, distance)
         elif timed_out:
             print('algorithm worker process took too long')
         else:

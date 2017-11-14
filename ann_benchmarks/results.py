@@ -3,10 +3,9 @@ from __future__ import absolute_import
 import h5py
 import os
 
-def store_results(attrs, results, dataset, limit, count, distance):
+def store_results(attrs, results, dataset, count, distance):
     fragments = {
         "ds": dataset,
-        "l": limit,
         "k": count,
         "dst": distance,
         "inst": attrs["name"],
@@ -20,7 +19,7 @@ directory hierarchy""" % k
     def _make_path(*args):
         return os.path.join(*map(lambda s: s % fragments, args))
     fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s",
-                    "limit=%(l)d", "distance=%(dst)s", "algo=%(algo)s",
+                    "distance=%(dst)s", "algo=%(algo)s",
                     "%(inst)s.hdf5")
     head, tail = os.path.split(fn)
     if not os.path.isdir(head):
@@ -54,7 +53,7 @@ def _leaf_path_to_descriptor(path):
     for part in parts:
         try:
             name, value = part.split("=", 1)
-            if name == "k" or name == "limit":
+            if name == "k":
                 value = int(value)
             # Some of the names in the hierarchy aren't the names used in the
             # descriptor; fix those up
@@ -67,8 +66,7 @@ def _leaf_path_to_descriptor(path):
             pass
     return descriptor
 
-def enumerate_result_files(dataset = None, limit = None, count = None,
-        distance = None, algo = None):
+def enumerate_result_files(dataset=None, count=None, distance=None, algo=None):
     def _matches(argv, descv):
         if argv == None:
             return True
@@ -79,7 +77,6 @@ def enumerate_result_files(dataset = None, limit = None, count = None,
     def _matches_all(desc):
         return _matches(count, desc["count"]) and \
                _matches(dataset, desc["dataset"]) and \
-               _matches(limit, desc["limit"]) and \
                _matches(distance, desc["distance"]) and \
                _matches(algo, desc["algorithm"])
     for path in _get_leaf_paths("results/"):
@@ -87,13 +84,11 @@ def enumerate_result_files(dataset = None, limit = None, count = None,
         if _matches_all(desc):
             yield desc, path
 
-def get_results(dataset, limit, count, distance):
-    for d, results in get_results_with_descriptors(
-            dataset, limit, count, distance):
+def get_results(dataset, count, distance):
+    for d, results in get_results_with_descriptors(dataset, count, distance):
         yield results
 
-def get_results_with_descriptors(
-        dataset, limit, count, distance):
-    for d, fn in enumerate_result_files(dataset, limit, count, distance):
+def get_results_with_descriptors(dataset, count, distance):
+    for d, fn in enumerate_result_files(dataset, count, distance):
         f = h5py.File(fn)
         yield d, f
