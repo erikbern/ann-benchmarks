@@ -5,8 +5,8 @@ def knn(dataset, run, epsilon=1e-10):
     actual = 0
     count = int(run.attrs['candidates'])
     for true_distances, found_distances in zip(dataset['distances'], run['distances']):
-        within = [d for d in found_distances if d <= true_distances[count] + epsilon]
-        total += len(found_distances)
+        within = [d for d in found_distances[:count] if d <= true_distances[count] + epsilon]
+        total += count
         actual += len(within)
     return float(actual) / float(total)
 
@@ -15,8 +15,8 @@ def epsilon(dataset, run, epsilon=0.01):
     actual = 0
     count = int(run.attrs['candidates'])
     for true_distances, found_distances in zip(dataset['distances'], run['distances']):
-        within = [d for d in found_distances if d <= true_distances[count] * (1 + epsilon)]
-        total += len(found_distances)
+        within = [d for d in found_distances[:count] if d <= true_distances[count] * (1 + epsilon)]
+        total += count
         actual += len(within)
     return float(actual) / float(total)
 
