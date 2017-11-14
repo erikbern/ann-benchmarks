@@ -15,7 +15,7 @@ class NearPy(BaseANN):
     def fit(self, X):
         hashes = []
 
-        for k in xrange(self._hash_counts):
+        for k in range(self._hash_counts):
             nearpy_rbp = nearpy.hashes.RandomBinaryProjections('rbp_%d' % k, self._n_bits)
             hashes.append(nearpy_rbp)
 
