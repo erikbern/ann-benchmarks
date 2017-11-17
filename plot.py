@@ -90,7 +90,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     dataset = get_dataset(args.dataset)
-    distance = dataset.attrs['dataset']
+    distance = dataset.attrs['distance']
     runs, all_algos = compute_metrics(dataset, get_results(
         args.dataset, args.count, distance))
     linestyles = create_linestyles(all_algos)
