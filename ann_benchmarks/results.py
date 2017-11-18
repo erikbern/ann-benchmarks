@@ -32,8 +32,8 @@ directory hierarchy""" % k
     distances = f.create_dataset('distances', (len(results), count), 'f')
     for i, (time, ds) in enumerate(results):
         times[i] = time
-        neighbors[i] = [n for n, d in ds]
-        distances[i] = [d for n, d in ds]
+        neighbors[i] = [n for n, d in ds] + [-1] * (count - len(ds))
+        distances[i] = [d for n, d in ds] + [float('inf')] * (count - len(ds))
     f.close()
 
 def _get_leaf_paths(path):
