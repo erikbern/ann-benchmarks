@@ -16,7 +16,7 @@ class DolphinnPy(BaseANN):
 
     def fit(self, X):
         X = X.astype(numpy.float32)
-        d = len(X[0])
+        d = x.shape[1]
         self.m = findmean(X, d, 10)
         X = isotropize(X, d, self.m)
         hypercube_dim = int(numpy.log2(len(X))) - 2
