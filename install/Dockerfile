@@ -6,4 +6,7 @@ RUN apt-get install -y python3-numpy python3-scipy python3-pip build-essential g
 WORKDIR /home/app
 COPY ann_benchmarks ann_benchmarks/
 COPY requirements.txt requirements.txt
+COPY run_single.py run_single.py
 RUN pip3 install -rrequirements.txt
+
+ENTRYPOINT python3 run_single.py
