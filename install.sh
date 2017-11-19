@@ -3,4 +3,5 @@ then
     ALGORITHM=$1
 fi
 
-cd install && docker build -t ann-benchmarks-$ALGORITHM -f Dockerfile.$ALGORITHM .
+docker build -t ann-benchmarks -f install/Dockerfile .
+docker build -t ann-benchmarks-$ALGORITHM -f install/Dockerfile.$ALGORITHM . 

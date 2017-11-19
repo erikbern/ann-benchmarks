@@ -1,6 +1,4 @@
-FROM alpine:latest
+FROM ann-benchmarks
 
-RUN apk add --update python3 git gcc python3-dev g++
-RUN pip3 install numpy
 RUN git clone https://github.com/lyst/rpforest
 RUN cd rpforest && python3 setup.py install
