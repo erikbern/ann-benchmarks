@@ -1,9 +1,16 @@
+sudo: required
+
 language: python
-python:
-  - "2.7_with_system_site_packages"
-#   - "3.4"
 
-install:
-  - sudo bash install.sh
+services:
+  - docker
 
-script: nosetests
+env:
+  - ALGORITHM=annoy
+  - ALGORITHM=rpforest
+
+before_install:
+  - bash install.sh
+
+script:
+  - echo TODO
