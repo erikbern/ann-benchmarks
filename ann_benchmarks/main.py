@@ -7,8 +7,7 @@ from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.results import get_results, store_results
 from ann_benchmarks.distance import metrics as pd
 from ann_benchmarks.constants import INDEX_DIR
-from ann_benchmarks.algorithms.definitions import get_algorithms, get_definitions
-from ann_benchmarks.algorithms.constructors import available_constructors as constructors
+from ann_benchmarks.algorithms.definitions import get_algorithms, list_algorithms
 
 def run_algo(count, X_train, X_test, library, algo, distance, result_pipe,
         run_count=3, force_single=False, use_batch_query=False):
@@ -165,15 +164,8 @@ def main():
     if args.timeout == -1:
         args.timeout = None
 
-    definitions = get_definitions(args.definitions)
     if hasattr(args, "list_algorithms"):
-        print('The following algorithms are supported...')
-        for point in definitions:
-            print('\t... for the point type "%s"...' % point)
-            for metric in definitions[point]:
-                print('\t\t... and the distance metric "%s":' % metric)
-                for algorithm in definitions[point][metric]:
-                    print('\t\t\t%s' % algorithm)
+        list_algorithms(args.definitions)
         sys.exit(0)
 
     # Set resource limits to prevent memory bombs
@@ -201,8 +193,7 @@ def main():
             algos_already_run.add((run.attrs["library"], run.attrs["name"]))
 
     point_type = 'float' # TODO(erikbern): should look at the type of X_train
-    algos = get_algorithms(definitions, constructors,
-        len(X_train[0]), point_type, distance, args.count)
+    algos = get_algorithms(args.definitions, len(X_train[0]), point_type, distance, args.count)
 
     if args.algorithm:
         print('running only', args.algorithm)

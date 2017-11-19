@@ -4,6 +4,8 @@ import sys
 import yaml
 import traceback
 from itertools import product
+from ann_benchmarks.algorithms.constructors import available_constructors
+
 
 def _handle_args(args):
     if isinstance(args, list):
@@ -20,12 +22,27 @@ def _handle_args(args):
     else:
         raise TypeError("No args handling exists for %s" % type(args).__name__)
 
-def get_definitions(definition_file):
+
+def _get_definitions(definition_file):
     with open(definition_file, "r") as f:
         return yaml.load(f)
 
-def get_algorithms(definitions, constructor_map, dimension,
-        point_type="float", distance_metric="euclidean", count=10):
+
+def list_algorithms(definition_file):
+    definitions = _get_definitions(definition_file)
+
+    print('The following algorithms are supported...')
+    for point in definitions:
+        print('\t... for the point type "%s"...' % point)
+        for metric in definitions[point]:
+            print('\t\t... and the distance metric "%s":' % metric)
+            for algorithm in definitions[point][metric]:
+                print('\t\t\t%s' % algorithm)
+
+
+def get_algorithms(definition_file, dimension, point_type="float", distance_metric="euclidean", count=10):
+    definitions = _get_definitions(definition_file)
+
     algorithm_definitions = {}
     if "any" in definitions[point_type]:
         algorithm_definitions.update(definitions[point_type]["any"])
@@ -36,9 +53,9 @@ def get_algorithms(definitions, constructor_map, dimension,
         assert "constructor" in algo, """\
 group %s does not specify a constructor""" % name
         cn = algo["constructor"]
-        assert cn in constructor_map, """\
+        assert cn in available_constructors, """\
 group %s specifies the unknown constructor %s""" % (name, cn)
-        constructor = constructor_map[cn]
+        constructor = available_constructors[cn]
         if not constructor:
             print('warning: group %s specifies the known, but missing, constructor %s; skipping' % (name, cn))
             continue
