@@ -8,6 +8,7 @@ services:
 env:
   - ALGORITHM=annoy
   - ALGORITHM=faiss
+  - ALGORITHM=kgraph
   - ALGORITHM=rpforest
 
 before_install:
