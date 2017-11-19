@@ -37,16 +37,16 @@ Data sets
 
 We have a number of precomputed data sets for this. All data sets are pre-split into train/test and come with ground truth data in the form of the top 100 neighbors. We store them in a HDF5 format:
 
-| Dataset                                                           | Dimensions | Train size | Test size | Neighbors | Distance  | Download                                                             |
-| ----------------------------------------------------------------- | ---------: | ---------: | --------: | --------: | --------- | -------------------------------------------------------------------- |
-| [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) |        784 |     60,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/fashion-mnist-784-euclidean.hdf5) |
-| [GIST](http://corpus-texmex.irisa.fr/)                            |        960 |  1,000,000 |     1,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/gist-960-euclidean.hdf5)          |
-| [GloVe](http://nlp.stanford.edu/projects/glove/)                  |         25 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-25-angular.hdf5)            |
-| Glove                                                             |         50 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-50-angular.hdf5)            |
-| Glove                                                             |        100 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-100-angular.hdf5)           |
-| Glove                                                             |        200 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-200-angular.hdf5)           |
-| [MNIST](http://yann.lecun.com/exdb/mnist/)                        |        784 |     60,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/mnist-784-euclidean.hdf5)         |
-| [SIFT](https://corpus-texmex.irisa.fr/)                           |        128 |  1,000,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/sift-128-euclidean.hdf5)          |
+| Dataset                                                           | Dimensions | Train size | Test size | Neighbors | Distance  | Download                                                                     |
+| ----------------------------------------------------------------- | ---------: | ---------: | --------: | --------: | --------- | ---------------------------------------------------------------------------- |
+| [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) |        784 |     60,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/fashion-mnist-784-euclidean.hdf5) (217MB) |
+| [GIST](http://corpus-texmex.irisa.fr/)                            |        960 |  1,000,000 |     1,000 |       100 | Euclidean | N/A (coming shortly)                                                         |
+| [GloVe](http://nlp.stanford.edu/projects/glove/)                  |         25 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-25-angular.hdf5) (121MB)            |
+| Glove                                                             |         50 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-50-angular.hdf5) (235MB)            |
+| Glove                                                             |        100 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-100-angular.hdf5) (463MB)           |
+| Glove                                                             |        200 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-200-angular.hdf5) (918MB)           |
+| [MNIST](http://yann.lecun.com/exdb/mnist/)                        |        784 |     60,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/mnist-784-euclidean.hdf5) (217MB)         |
+| [SIFT](https://corpus-texmex.irisa.fr/)                           |        128 |  1,000,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/sift-128-euclidean.hdf5) (501MB)          |
 
 Note that a few other datasets were used previously, in particular for Hamming and set similarity. We are going to add them back shortly in the more convenient HDF5 format.
 
