@@ -18,9 +18,7 @@ error: path fragment "%s" contains a path separator and so would break the \
 directory hierarchy""" % k
     def _make_path(*args):
         return os.path.join(*map(lambda s: s % fragments, args))
-    fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s",
-                    "distance=%(dst)s", "algo=%(algo)s",
-                    "%(inst)s.hdf5")
+    fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s", "algo=%(algo)s", "%(inst)s.hdf5")
     head, tail = os.path.split(fn)
     if not os.path.isdir(head):
         os.makedirs(head)
@@ -66,7 +64,7 @@ def _leaf_path_to_descriptor(path):
             pass
     return descriptor
 
-def enumerate_result_files(dataset=None, count=None, distance=None, algo=None):
+def enumerate_result_files(dataset=None, count=None, algo=None):
     def _matches(argv, descv):
         if argv == None:
             return True
@@ -77,18 +75,17 @@ def enumerate_result_files(dataset=None, count=None, distance=None, algo=None):
     def _matches_all(desc):
         return _matches(count, desc["count"]) and \
                _matches(dataset, desc["dataset"]) and \
-               _matches(distance, desc["distance"]) and \
                _matches(algo, desc["algorithm"])
     for path in _get_leaf_paths("results/"):
         desc = _leaf_path_to_descriptor(path)
         if _matches_all(desc):
             yield desc, path
 
-def get_results(dataset, count, distance):
-    for d, results in get_results_with_descriptors(dataset, count, distance):
+def get_results(dataset, count):
+    for d, results in get_results_with_descriptors(dataset, count):
         yield results
 
-def get_results_with_descriptors(dataset, count, distance):
-    for d, fn in enumerate_result_files(dataset, count, distance):
+def get_results_with_descriptors(dataset, count):
+    for d, fn in enumerate_result_files(dataset, count):
         f = h5py.File(fn)
         yield d, f

@@ -9,4 +9,4 @@ all_plot_variants = {
     "recall/qpssize" : ("k-nn", "queriessize"),
     "eps/time" : ("epsilon", "qps"),
     "largeeps/time" : ("largeepsilon", "qps")
-     }
+}

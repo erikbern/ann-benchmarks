@@ -197,7 +197,7 @@ def main():
 
     algos_already_run = set()
     if not args.force:
-        for run in get_results(args.dataset, args.count, distance):
+        for run in get_results(args.dataset, args.count):
             algos_already_run.add((run.attrs["library"], run.attrs["name"]))
 
     point_type = 'float' # TODO(erikbern): should look at the type of X_train
