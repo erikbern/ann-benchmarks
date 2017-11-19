@@ -36,7 +36,7 @@ class NmslibReuseIndex(BaseANN):
 
 
         if os.path.exists(self._index_name):
-            print "Loading index from file"
+            print('Loading index from file')
             nmslib.loadIndex(self._index, self._index_name)
         else:
             nmslib.createIndex(self._index, self._index_param)

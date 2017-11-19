@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 
 import os, json, pickle
-from ann_benchmarks.main import get_fn
 from ann_benchmarks.results import get_results
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 import matplotlib.pyplot as plt
@@ -11,7 +10,7 @@ def create_pointset(algo, all_data, xn, yn):
     xm, ym = (metrics[xn], metrics[yn])
     data = all_data[algo]
     rev = ym["worst"] < 0
-    data.sort(key=lambda (a, n, rs): rs[yn], reverse=rev) # sort by y coordinate
+    data.sort(key=lambda t: t[-1][yn], reverse=rev) # sort by y coordinate
 
     axs, ays, als = [], [], []
     # Generate Pareto frontier
@@ -33,26 +32,21 @@ def create_pointset(algo, all_data, xn, yn):
             ls.append(algo_name)
     return xs, ys, ls, axs, ays, als
 
-def enumerate_query_caches(ds):
-    for f in os.listdir("queries/"):
-        if f.startswith(ds + "_") and f.endswith(".p"):
-            yield "queries/" + f
-
-def compute_metrics(qs, ds):
+def compute_metrics(dataset, res):
     all_results = {}
     all_algos = set()
-    for run in ds:
-        algo = run["library"]
-        algo_name = run["name"]
+    for run in res:
+        algo = run.attrs["library"]
+        algo_name = run.attrs["name"]
 
-        print "--"
-        print algo_name
+        print('--')
+        print(algo_name)
         results = {}
         for name, metric in metrics.items():
-            v = metric["function"](qs, run)
+            v = metric["function"](dataset, run)
             results[name] = v
             if v:
-                print "%s: %g" % (name, v)
+                print('%s: %g' % (name, v))
 
         all_algos.add(algo)
         if not algo in all_results:

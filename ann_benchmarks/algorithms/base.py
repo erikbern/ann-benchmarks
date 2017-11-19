@@ -7,7 +7,7 @@ class BaseANN(object):
         pass
     def batch_query(self, X, n):
         res = []
-	for q in X:
+        for q in X:
             res.append(self.query(q, n))
         return res
     def get_index_size(self, process):

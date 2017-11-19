@@ -1,62 +1,59 @@
 from __future__ import absolute_import
 
+import h5py
 import os
-import gzip
-import json
 
-def store_results(results, dataset, limit, count, distance, query_dataset = None):
+def store_results(attrs, results, dataset, count, distance):
     fragments = {
         "ds": dataset,
-        "l": limit,
         "k": count,
         "dst": distance,
-        "qds": query_dataset,
-        "inst": results["name"],
-        "algo": results["library"]
+        "inst": attrs["name"],
+        "algo": attrs["library"]
     }
     for k, v in fragments.items():
-        if v and (isinstance(v, str) or isinstance(v, unicode)):
+        if v and isinstance(v, str):
             assert not os.sep in v, """\
 error: path fragment "%s" contains a path separator and so would break the \
 directory hierarchy""" % k
     def _make_path(*args):
         return os.path.join(*map(lambda s: s % fragments, args))
-    fn = None
-    if query_dataset:
-        fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s",
-                "limit=%(l)d", "distance=%(dst)s", "query_dataset=%(qds)s",
-                "algo=%(algo)s", "%(inst)s.json.gz")
-    else:
-        fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s",
-                "limit=%(l)d", "distance=%(dst)s", "algo=%(algo)s",
-                "%(inst)s.json.gz")
+    fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s",
+                    "distance=%(dst)s", "algo=%(algo)s",
+                    "%(inst)s.hdf5")
     head, tail = os.path.split(fn)
     if not os.path.isdir(head):
         os.makedirs(head)
-    with gzip.open(fn, "w") as fp:
-        fp.write(json.dumps(results) + "\n")
+    f = h5py.File(fn, 'w')
+    for k, v in attrs.items():
+        f.attrs[k] = v
+    times = f.create_dataset('times', (len(results),), 'f')
+    neighbors = f.create_dataset('neighbors', (len(results), count), 'i')
+    distances = f.create_dataset('distances', (len(results), count), 'f')
+    for i, (time, ds) in enumerate(results):
+        times[i] = time
+        neighbors[i] = [n for n, d in ds] + [-1] * (count - len(ds))
+        distances[i] = [d for n, d in ds] + [float('inf')] * (count - len(ds))
+    f.close()
 
 def _get_leaf_paths(path):
     if os.path.isdir(path):
         for fragment in os.listdir(path):
             for i in _get_leaf_paths(os.path.join(path, fragment)):
                 yield i
-    elif os.path.isfile(path) and path.endswith(".json.gz"):
+    elif os.path.isfile(path) and path.endswith(".hdf5"):
         yield path
 
 def _leaf_path_to_descriptor(path):
     directory, _ = os.path.split(path)
     parts = directory.split(os.sep)[1:]
     descriptor = {
-        "file": os.path.basename(path),
-        # This is the only thing that might not appear in the hierarchy of a
-        # valid result file
-        "query_dataset": None
+        "file": os.path.basename(path)
     }
     for part in parts:
         try:
             name, value = part.split("=", 1)
-            if name == "k" or name == "limit":
+            if name == "k":
                 value = int(value)
             # Some of the names in the hierarchy aren't the names used in the
             # descriptor; fix those up
@@ -69,8 +66,7 @@ def _leaf_path_to_descriptor(path):
             pass
     return descriptor
 
-def enumerate_result_files(dataset = None, limit = None, count = None,
-        distance = None, query_dataset = None, algo = None):
+def enumerate_result_files(dataset=None, count=None, distance=None, algo=None):
     def _matches(argv, descv):
         if argv == None:
             return True
@@ -81,29 +77,18 @@ def enumerate_result_files(dataset = None, limit = None, count = None,
     def _matches_all(desc):
         return _matches(count, desc["count"]) and \
                _matches(dataset, desc["dataset"]) and \
-               _matches(limit, desc["limit"]) and \
                _matches(distance, desc["distance"]) and \
-               _matches(query_dataset, desc["query_dataset"]) and \
                _matches(algo, desc["algorithm"])
     for path in _get_leaf_paths("results/"):
         desc = _leaf_path_to_descriptor(path)
         if _matches_all(desc):
             yield desc, path
 
-def get_results(dataset, limit, count, distance, query_dataset = None):
-    for d, results in get_results_with_descriptors(
-            dataset, limit, count, distance, query_dataset):
-        if d["query_dataset"] == query_dataset:
-            yield results
+def get_results(dataset, count, distance):
+    for d, results in get_results_with_descriptors(dataset, count, distance):
+        yield results
 
-def get_results_with_descriptors(
-        dataset, limit, count, distance, query_dataset):
-    for d, fn in enumerate_result_files(dataset, limit, count, distance,
-            query_dataset):
-        with gzip.open(fn, "r") as fp:
-            try:
-                yield (d, json.load(fp))
-            except ValueError:
-                print """\
-warning: loading results file %s failed, skipping""" % fn
-                continue
+def get_results_with_descriptors(dataset, count, distance):
+    for d, fn in enumerate_result_files(dataset, count, distance):
+        f = h5py.File(fn)
+        yield d, f

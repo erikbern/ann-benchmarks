@@ -48,14 +48,12 @@ for name, symbols in __constructors:
             assert hasattr(module, symbol), """\
 import error: module %s does not define symbol %s""" % (name, symbol)
             available_constructors[symbol] = getattr(module, symbol)
-    except ImportError:
+    except (ImportError, SyntaxError):
         try:
             t, v, tb = sys.exc_info()
             traceback.print_exception(t, v, tb)
         finally:
             del tb
-        print """\
-warning: module %s could not be loaded, some algorithm constructors will not \
-be available""" % name
+        print('warning: module %s could not be loaded, some algorithm constructors will not be available' % name)
         for symbol in symbols:
             available_constructors[symbol] = None

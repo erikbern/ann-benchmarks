@@ -11,7 +11,7 @@ def _handle_args(args):
         return map(list, product(*args))
     elif isinstance(args, dict):
         flat = []
-        for k, v in args.iteritems():
+        for k, v in args.items():
             if isinstance(v, list):
                 flat.append(map(lambda el: (k, el), v))
             else:
@@ -32,7 +32,7 @@ def get_algorithms(definitions, constructor_map, dimension,
     algorithm_definitions.update(definitions[point_type][distance_metric])
 
     algos = {}
-    for (name, algo) in algorithm_definitions.iteritems():
+    for (name, algo) in algorithm_definitions.items():
         assert "constructor" in algo, """\
 group %s does not specify a constructor""" % name
         cn = algo["constructor"]
@@ -40,9 +40,7 @@ group %s does not specify a constructor""" % name
 group %s specifies the unknown constructor %s""" % (name, cn)
         constructor = constructor_map[cn]
         if not constructor:
-            print """\
-warning: group %s specifies the known, but missing, constructor \
-%s; skipping""" % (name, cn)
+            print('warning: group %s specifies the known, but missing, constructor %s; skipping' % (name, cn))
             continue
 
         algos[name] = []
@@ -108,7 +106,5 @@ separator)""" % obj.name)
                         traceback.print_exception(t, v, tb)
                     finally:
                         del tb
-                    print """\
-warning: constructor %s (with parameters %s) failed, \
-skipping""" % (cn, str(aargs))
+                    print('warning: constructor %s (with parameters %s) failed, skipping' % (cn, str(aargs)))
     return algos

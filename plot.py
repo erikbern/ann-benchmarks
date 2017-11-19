@@ -1,12 +1,11 @@
-import os, json, pickle
-import numpy
+import os
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 import argparse
 
+from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.results import get_results
-from ann_benchmarks.datasets import get_query_cache_path
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_linestyles, create_pointset
 
@@ -60,12 +59,6 @@ if __name__ == "__main__":
         '--limit',
         default=-1)
     parser.add_argument(
-        '--query-dataset',
-        default=None)
-    parser.add_argument(
-        '--distance',
-        default='angular')
-    parser.add_argument(
         '-o', '--output',
         required=True)
     parser.add_argument(
@@ -96,16 +89,10 @@ if __name__ == "__main__":
         action='store_true')
     args = parser.parse_args()
 
-    query_cache_path = get_query_cache_path(
-            args.dataset, args.count, args.limit, args.distance,
-            args.query_dataset)
-    assert os.path.exists(query_cache_path), """\
-error: the query cache file \"%s\" does not exist""" % query_cache_path
-
-    qs = pickle.load(open(query_cache_path))
-    runs, all_algos = compute_metrics(qs, get_results(
-            args.dataset, args.limit, args.count, args.distance,
-            args.query_dataset))
+    dataset = get_dataset(args.dataset)
+    distance = dataset.attrs['distance']
+    runs, all_algos = compute_metrics(dataset, get_results(
+        args.dataset, args.count, distance))
     linestyles = create_linestyles(all_algos)
 
     create_plot(runs, args.golden, args.raw, args.x_log,
