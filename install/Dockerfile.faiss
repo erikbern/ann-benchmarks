@@ -1,0 +1,7 @@
+FROM ann-benchmarks
+
+# FAISS doesn't seem to work well with Python 3, thus need to install Python2.7 libs
+
+RUN apt-get install -y libopenblas-dev libpython-dev python-numpy
+RUN git clone https://github.com/facebookresearch/faiss
+RUN cd faiss && cp example_makefiles/makefile.inc.Linux makefile.inc && make -j4 py BLASLDFLAGS=/usr/lib/libopenblas.so.0
