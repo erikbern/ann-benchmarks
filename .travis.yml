@@ -7,14 +7,17 @@ services:
 
 env:
   - LIBRARY=annoy
+  - LIBRARY=datasketch
   - LIBRARY=dolphinn
   - LIBRARY=faiss
   - LIBRARY=falconn
   - LIBRARY=flann
   - LIBRARY=kgraph
+  - LIBRARY=nearpy
   - LIBRARY=nmslib
   - LIBRARY=panns
   - LIBRARY=rpforest
+  - LIBRARY=sklearn
 
 before_install:
   - bash install.sh
