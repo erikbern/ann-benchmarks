@@ -11,6 +11,7 @@ env:
   - LIBRARY=faiss
   - LIBRARY=falconn
   - LIBRARY=kgraph
+  - LIBRARY=nmslib
   - LIBRARY=panns
   - LIBRARY=rpforest
 
