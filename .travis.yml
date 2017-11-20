@@ -6,10 +6,11 @@ services:
   - docker
 
 env:
-  - ALGORITHM=annoy
-  - ALGORITHM=faiss
-  - ALGORITHM=kgraph
-  - ALGORITHM=rpforest
+  - LIBRARY=annoy
+  - LIBRARY=faiss
+  - LIBRARY=falconn
+  - LIBRARY=kgraph
+  - LIBRARY=rpforest
 
 before_install:
   - bash install.sh

@@ -1,7 +1,7 @@
-if [ -z $ALGORITHM ]
+if [ -z $LIBRARY ]
 then
-    ALGORITHM=$1
+    LIBRARY=$1
 fi
 
 docker build -t ann-benchmarks -f install/Dockerfile .
-docker build -t ann-benchmarks-$ALGORITHM -f install/Dockerfile.$ALGORITHM . 
+docker build -t ann-benchmarks-$LIBRARY -f install/Dockerfile.$LIBRARY . 
