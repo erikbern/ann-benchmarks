@@ -6,3 +6,4 @@ RUN mkdir flann/build
 RUN cd flann/build && cmake ..
 RUN cd flann/build && make -j4
 RUN cd flann/build && make install
+RUN python3 -c 'import pyflann'
