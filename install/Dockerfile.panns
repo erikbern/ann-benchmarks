@@ -1,4 +1,5 @@
 FROM ann-benchmarks
 
-RUN pip3 install panns
-RUN python3 -c 'import panns'
+RUN apt-get install -y python-pip python-numpy python-scipy
+RUN pip install panns
+RUN python -c 'import panns'
