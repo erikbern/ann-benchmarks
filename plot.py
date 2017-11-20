@@ -92,7 +92,7 @@ if __name__ == "__main__":
     dataset = get_dataset(args.dataset)
     distance = dataset.attrs['distance']
     runs, all_algos = compute_metrics(dataset, get_results(
-        args.dataset, args.count, distance))
+        args.dataset, args.count))
     linestyles = create_linestyles(all_algos)
 
     create_plot(runs, args.golden, args.raw, args.x_log,

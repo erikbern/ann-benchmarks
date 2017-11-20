@@ -4,8 +4,7 @@ import sys
 import shutil
 
 from ann_benchmarks.datasets import get_dataset
-from ann_benchmarks.results import get_results, store_results
-from ann_benchmarks.distance import metrics as pd
+from ann_benchmarks.results import get_results
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.definitions import get_algorithms, list_algorithms
 from ann_benchmarks.runner import run
@@ -102,20 +101,16 @@ def main():
     if os.path.exists(INDEX_DIR):
         shutil.rmtree(INDEX_DIR)
 
-    dataset = get_dataset(args.dataset)
-    X_train = dataset['train']
-    X_test = dataset['test']
-    distance = dataset.attrs['distance']
-    print('got a train set of size (%d * %d)' % X_train.shape)
-    print('got %d queries' % len(X_test))
-
     algos_already_run = set()
     if not args.force:
         for res in get_results(args.dataset, args.count):
             algos_already_run.add((res.attrs["library"], res.attrs["name"]))
 
+    dataset = get_dataset(args.dataset)
+    dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
     point_type = 'float' # TODO(erikbern): should look at the type of X_train
-    algos = get_algorithms(args.definitions, len(X_train[0]), point_type, distance, args.count)
+    distance = dataset.attrs['distance']
+    algos = get_algorithms(args.definitions, dimension, point_type, distance, args.count)
 
     if args.algorithm:
         print('running only', args.algorithm)
@@ -136,45 +131,13 @@ def main():
     print('order:', [a.name for l, a in algos_flat])
 
     for library, algo in algos_flat:
-        recv_pipe, send_pipe = multiprocessing.Pipe(duplex=False)
         print(algo.name, '...')
         # Spawn a subprocess to force the memory to be reclaimed at the end
         p = multiprocessing.Process(
             target=run,
-            args=(args.count, X_train, X_test, library, algo,
-                  distance, send_pipe, args.runs, args.single, args.batch))
+            args=(args.dataset, args.count, library, algo,
+                  args.runs, args.single, args.batch))
 
+        # TODO(erikbern): this no longer handles timeouts etc but going to replace this with Docker shortly anyway
         p.start()
-        send_pipe.close()
-
-        timed_out = False
-        try:
-            r = recv_pipe.poll(args.timeout)
-            if r:
-                # If there's something waiting in the pipe at this point, then
-                # the worker has begun sending us results and we should receive
-                # them
-                attrs, results = recv_pipe.recv()
-                if "expect_extra" in attrs:
-                    if attrs["expect_extra"]:
-                        attrs["extra"] = recv_pipe.recv()
-                    del attrs["expect_extra"]
-            else:
-                # If we've exceeded the timeout and there are no results, then
-                # terminate the worker process (XXX: what should we do about
-                # algo.done() here?)
-                p.terminate()
-                timed_out = True
-                results = None
-        except EOFError:
-            # The worker has crashed or otherwise failed to send us results
-            results = None
         p.join()
-        recv_pipe.close()
-
-        if results:
-            store_results(attrs, results, args.dataset, args.count, distance)
-        elif timed_out:
-            print('algorithm worker process took too long')
-        else:
-            print('algorithm worker process stopped unexpectedly')

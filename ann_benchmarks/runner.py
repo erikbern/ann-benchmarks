@@ -1,9 +1,19 @@
 import multiprocessing
 import time
 
+from ann_benchmarks.datasets import get_dataset
+from ann_benchmarks.distance import metrics
+from ann_benchmarks.results import get_results, store_results
 
-def run(count, X_train, X_test, library, algo, distance, result_pipe,
-        run_count=3, force_single=False, use_batch_query=False):
+
+def run(dataset, count, library, algo, run_count=3, force_single=False, use_batch_query=False):
+    D = get_dataset(dataset)
+    X_train = D['train']
+    X_test = D['test']
+    distance = D.attrs['distance']
+    print('got a train set of size (%d * %d)' % X_train.shape)
+    print('got %d queries' % len(X_test))
+
     try:
         prepared_queries = False
         if hasattr(algo, "supports_prepared_queries"):
@@ -12,6 +22,7 @@ def run(count, X_train, X_test, library, algo, distance, result_pipe,
         t0 = time.time()
         if algo != 'bf':
             index_size_before = algo.get_index_size("self")
+            print('X_train:', X_train)
             algo.fit(X_train)
             build_time = time.time() - t0
             index_size = algo.get_index_size("self") - index_size_before
@@ -31,7 +42,7 @@ def run(count, X_train, X_test, library, algo, distance, result_pipe,
                     start = time.time()
                     candidates = algo.query(v, count)
                     total = (time.time() - start)
-                candidates = [(int(idx), float(pd[distance]['distance'](v, X_train[idx])))
+                candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
                               for idx in candidates]
                 if len(candidates) > count:
                     print('warning: algorithm %s returned %d results, but count is only %d)' % (algo.name, len(candidates), count))
@@ -41,9 +52,9 @@ def run(count, X_train, X_test, library, algo, distance, result_pipe,
                 start = time.time()
                 result = algo.batch_query(X, count)
                 total = (time.time() - start)
-                candidates = [map(
-                    lambda idx: (int(idx), float(pd[distance]['distance'](X[i], X_train[idx]))),
-                    result[i]) for i in range(len(X))]
+                candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
+                               for idx in single_results]
+                              for v, single_results in zip(X, results)]
                 return [(total / float(len(X)), v) for v in candidates]
 
             if use_batch_query:
@@ -52,7 +63,7 @@ def run(count, X_train, X_test, library, algo, distance, result_pipe,
                 pool = multiprocessing.pool.ThreadPool()
                 results = pool.map(single_query, X_test)
             else:
-                results = map(single_query, X_test)
+                results = [single_query(x) for x in X_test]
 
             total_time = sum(time for time, _ in results)
             total_candidates = sum(len(candidates) for _, candidates in results)
@@ -73,10 +84,6 @@ def run(count, X_train, X_test, library, algo, distance, result_pipe,
             "expect_extra": verbose,
             "batch_mode": use_batch_query
         }
-        result_pipe.send((attrs, results))
-        if verbose:
-            metadata = \
-                [m for _, m in [algo.query_verbose(q, count) for q, _, _ in queries]]
-            result_pipe.send(metadata)
+        store_results(attrs, results, dataset, count, distance)
     finally:
         algo.done()
