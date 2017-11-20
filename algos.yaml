@@ -30,27 +30,6 @@ float:
       run-groups:
         base:
           args: [[32, 64, 128, 256, 512, 1024, 2048, 4096], [100, 200]]
-#    lshf:
-#      constructor: LSHF
-#      # The @base-args list specifies arguments that should always be prepended
-#      # to the constructor's argument list. (The special value "@metric", when
-#      # it occurs somewhere in that argument list, will be replaced with the
-#      # name of the distance metric; "@dimension" will be replaced with an
-#      # integer specifying the length of a data point.)
-#      base-args: ["@metric"]
-#      run-groups:
-#        five-estimators:
-#          args: [5, [10, 20]]
-#          # This run group will produce two algorithm instances:
-#          # LSHF("angular", 5, 10) and LSHF("angular", 5, 20).
-#        ten-estimators:
-#          args: [10, [20, 50]]
-#          # This run group will produce two more algorithm instances:
-#          # LSHF("angular", 10, 20) and LSHF("angular", 10, 50).
-#        twenty-estimators:
-#          args: [20, 100]
-#          # Finally, this run group will only produce one:
-#          # LSHF("angular", 20, 100).
     flann:
       constructor: FLANN
       base-args: ["@metric"]
