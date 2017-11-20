@@ -10,6 +10,7 @@ env:
   - LIBRARY=dolphinn
   - LIBRARY=faiss
   - LIBRARY=falconn
+  - LIBRARY=flann
   - LIBRARY=kgraph
   - LIBRARY=nmslib
   - LIBRARY=panns
