@@ -7,6 +7,7 @@ services:
 
 env:
   - LIBRARY=annoy
+  - LIBRARY=dolphinn
   - LIBRARY=faiss
   - LIBRARY=falconn
   - LIBRARY=kgraph
