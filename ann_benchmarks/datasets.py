@@ -148,13 +148,13 @@ def mnist(out_fn):
     write_output(train, test, out_fn, 'euclidean')
 
 
-
 def fashion_mnist(out_fn):
     download('http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz', 'fashion-mnist-train.gz')
     download('http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz', 'fashion-mnist-test.gz')
     train = _load_mnist_vectors('fashion-mnist-train.gz')
     test = _load_mnist_vectors('fashion-mnist-test.gz')
     write_output(train, test, out_fn, 'euclidean')
+
 
 def transform_bag_of_words(filename, n_dimensions, out_fn):
     import gzip
@@ -179,6 +179,7 @@ def transform_bag_of_words(filename, n_dimensions, out_fn):
         X_train, X_test = sklearn.model_selection.train_test_split(C, test_size=10000, random_state=1)
         print('writing output...')
         write_output(numpy.array(X_train), numpy.array(X_test), out_fn, 'angular')
+
 
 def nytimes(out_fn, n_dimensions):
     download('https://archive.ics.uci.edu/ml/machine-learning-databases/bag-of-words/docword.nytimes.txt.gz', 'nytimes.txt.gz')
