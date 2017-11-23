@@ -156,6 +156,36 @@ def fashion_mnist(out_fn):
     write_output(train, test, out_fn, 'euclidean')
 
 
+def transform_bag_of_words(filename, n_dimensions, out_fn):
+    import gzip
+    import sklearn.model_selection
+    from scipy.sparse import lil_matrix
+    from sklearn.feature_extraction.text import TfidfTransformer
+    from sklearn import random_projection
+    with gzip.open(filename, 'rb') as f:
+        file_content = f.readlines()
+        entries = int(file_content[0])
+        words = int(file_content[1])
+        file_content = file_content[3:] # strip first three entries
+        print("building matrix...")
+        A = lil_matrix((entries, words))
+        for e in file_content:
+            doc, word, cnt = [int(v) for v in e.strip().split()]
+            A[doc - 1, word - 1] = cnt
+        print("normalizing matrix entries with tfidf...")
+        B = TfidfTransformer().fit_transform(A)
+        print("reducing dimensionality...")
+        C = random_projection.GaussianRandomProjection(n_components = n_dimensions).fit_transform(B)
+        X_train, X_test = sklearn.model_selection.train_test_split(C, test_size=10000, random_state=1)
+        print('writing output...')
+        write_output(numpy.array(X_train), numpy.array(X_test), out_fn, 'angular')
+
+
+def nytimes(out_fn, n_dimensions):
+    download('https://archive.ics.uci.edu/ml/machine-learning-databases/bag-of-words/docword.nytimes.txt.gz', 'nytimes.txt.gz')
+    transform_bag_of_words('nytimes.txt.gz', n_dimensions, out_fn)
+
+
 def random(out_fn, n_dims, n_samples, centers, distance):
     import sklearn.model_selection
     import sklearn.datasets
@@ -163,8 +193,7 @@ def random(out_fn, n_dims, n_samples, centers, distance):
     X, _ = sklearn.datasets.make_blobs(n_samples=n_samples, n_features=n_dims, centers=centers, random_state=1)
     X_train, X_test = sklearn.model_selection.train_test_split(X, test_size=0.1, random_state=1)
     write_output(X_train, X_test, out_fn, distance)
-    
-    
+
 DATASETS = {
     'fashion-mnist-784-euclidean': fashion_mnist,
     'gist-960-euclidean': gist,
@@ -178,4 +207,5 @@ DATASETS = {
     'random-xs-10-angular': lambda out_fn: random(out_fn, 10, 10000, 100, 'angular'),
     'random-s-40-angular': lambda out_fn: random(out_fn, 40, 100000, 1000, 'angular'),
     'sift-128-euclidean': sift,
+    'nytimes-256-angular': lambda out_fn: nytimes(out_fn, 256),
 }
