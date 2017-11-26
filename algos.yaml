@@ -1,14 +1,14 @@
 float:
   any:
     DolphinnPy:
-      library: dolphinn # Docker tag
+      docker-tag: ann-benchmarks-dolphinn # Docker tag
       module: ann_benchmarks.algorithms.dolphinnpy # Python class
       constructor: DolphinnPy # Python class name
       run-groups:
         base:
           args: [[10, 50, 100, 200, 1000, 2000, 10000, 20000, 40000, 100000]]
     faiss-lsh:
-      library: faiss
+      docker-tag: ann-benchmarks-faiss
       module: ann_benchmarks.algorithms.faiss
       constructor: FaissLSH
       run-groups:
@@ -20,7 +20,7 @@ float:
           # This run group will produce eight algorithm instances:
           # FaissLSH(32), FaissLSH(64), and so on up to FaissLSH(4096).
     faiss-ivf:
-      library: faiss
+      docker-tag: ann-benchmarks-faiss
       module: ann_benchmarks.algorithms.faiss
       constructor: FaissIVF
       base-args: ["@metric"]
@@ -29,14 +29,14 @@ float:
           args: [[5, 10, 20, 50, 100, 200, 400, 800, 1000],
                  [1, 2, 3, 4, 5, 8, 10, 20, 50, 100, 200]]
     faiss-gpu:
-      library: faiss
+      docker-tag: ann-benchmarks-faiss
       module: ann_benchmarks.algorithms.faiss
       constructor: FaissGPU
       run-groups:
         base:
           args: [[32, 64, 128, 256, 512, 1024, 2048, 4096], [100, 200]]
     flann:
-      library: flann
+      docker-tag: ann-benchmarks-flann
       module: ann_benchmarks.algorithms.flann
       constructor: FLANN
       base-args: ["@metric"]
@@ -44,7 +44,7 @@ float:
         flann:
           args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97, 0.98, 0.99, 0.995]]
     panns:
-      library: panns
+      docker-tag: ann-benchmarks-panns
       module: ann_benchmarks.algorithms.panns
       constructor: PANNS
       base-args: ["@metric"]
@@ -56,7 +56,7 @@ float:
         hundred-candidates:
           args: [[10, 20, 40], 100]
     annoy:
-      library: annoy
+      docker-tag: ann-benchmarks-annoy
       module: ann_benchmarks.algorithms.annoy
       constructor: Annoy
       base-args: ["@metric"]
@@ -68,7 +68,7 @@ float:
           # Annoy("angular", 100, 100), Annoy("angular", 100, 200), and so on
           # up to Annoy("angular", 400, 400000).
     nearpy:
-      library: nearpy
+      docker-tag: ann-benchmarks-nearpy
       module: ann_benchmarks.algorithms.nearpy
       constructor: NearPy
       base-args: ["@metric"]
@@ -78,7 +78,7 @@ float:
         extra:
           args: [16, [5, 10, 15, 20, 25, 30, 40]]
     bruteforce:
-      library: sklearn
+      docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.bruteforce
       constructor: BruteForce
       base-args: ["@metric"]
@@ -86,7 +86,7 @@ float:
         empty:
           args: []
     bruteforce-blas:
-      library: sklearn
+      docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.bruteforce
       constructor: BruteForceBLAS
       base-args: ["@metric"]
@@ -94,7 +94,7 @@ float:
         empty:
           args: []
     ball:
-      library: sklearn
+      docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.balltree
       constructor: BallTree
       base-args: ["@metric"]
@@ -102,7 +102,7 @@ float:
         ball:
           args: &treeargs [[10, 20, 40, 100, 200, 400, 1000]]
     kd:
-      library: sklearn
+      docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.kdtree
       constructor: KDTree
       base-args: ["@metric"]
@@ -110,7 +110,7 @@ float:
         ball:
           args: *treeargs
     BallTree(nmslib):
-      library: nmslib
+      docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibNewIndex
       base-args: ["@metric", "vptree"]
@@ -135,7 +135,7 @@ float:
           args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
                  {'reverse': -1}, True] # XXX: hard-codes save_index as True
     hnsw(nmslib):
-      library: nmslib
+      docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
       base-args: ["@metric", "hnsw"]
@@ -176,7 +176,7 @@ float:
             - True
             - {"ef": [1, 2, 5, 10, 20, 30, 50, 70, 90, 120, 160]}
     MP-lsh(lshkit):
-      library: nmslib
+      docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibNewIndex
       base-args: ["@metric", "lsh_multiprobe"]
@@ -185,7 +185,7 @@ float:
           args: {"desiredRecall": [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5,
                 0.4, 0.3, 0.2, 0.1], "H": 1200001, "T": 10, "L": 50, "tuneK": 10}
     SW-graph(nmslib):
-      library: nmslib
+      docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
       base-args: ["@metric", "sw-graph"]
@@ -204,7 +204,7 @@ float:
               "initSearchAttempts": 1}
   angular:
     kgraph:
-      library: kgraph
+      docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
       base-args: ["@metric"]
@@ -213,7 +213,7 @@ float:
           args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
                  {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
     hnsw(nmslib):
-      library: nmslib
+      docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
       base-args: ["@metric", "hnsw"]
@@ -241,7 +241,7 @@ float:
             - True
             - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
     SW-graph(nmslib):
-      library: nmslib
+      docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
       base-args: ["@metric", "sw-graph"]
@@ -264,7 +264,7 @@ float:
             - {"efSearch": [120, 80, 60, 40, 20, 10, 8, 4, 2],
               "initSearchAttempts": 1}
     rpforest:
-      library: rpforest
+      docker-tag: ann-benchmarks-rpforest
       module: ann_benchmarks.algorithms.rpforest
       constructor: RPForest
       run-groups:
@@ -272,7 +272,7 @@ float:
           args: [[3, 5, 10, 20, 40, 100, 200, 400],
                 [3, 5, 10, 20, 40, 100, 200, 400]]
     falconn:
-      library: falconn
+      docker-tag: ann-benchmarks-falconn
       module: ann_benchmarks.algorithms.falconn
       constructor: FALCONN
       base-args: ["@metric", 16]
@@ -286,7 +286,7 @@ float:
 bit:
   hamming:
     falconn:
-      library: falconn
+      docker-tag: ann-benchmarks-falconn
       module: ann_benchmarks.algorithms.falconn
       constructor: FALCONN
       base-args: ["@metric", 16]
@@ -294,7 +294,7 @@ bit:
         base:
           args: [*l]
     kgraph:
-      library: kgraph
+      docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
       base-args: ["@metric"]
@@ -303,7 +303,7 @@ bit:
           args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
                  {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
     hnsw(nmslib):
-      library: nmslib
+      docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
       base-args: ["@metric", "hnsw"]
@@ -333,7 +333,7 @@ bit:
 int:
   jaccard:
     bf:
-      library: sklearn
+      docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.bruteforce
       constructor: BruteForceBLAS
       base-args: ["@metric"]
@@ -341,7 +341,7 @@ int:
         base:
           args: {}
     datasketch:
-      library: datasketch
+      docker-tag: ann-benchmarks-datasketch
       module: ann_benchmarks.algorithms.datasketch
       constructor: DataSketch
       base-args: ["@metric"]

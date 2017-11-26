@@ -8,7 +8,7 @@ import yaml
 from itertools import product
 
 
-Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'library', 'arguments'])
+Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'docker_tag', 'arguments'])
 
 
 def instantiate_algorithm(definition):
@@ -75,9 +75,9 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
 
     definitions = []
     for (name, algo) in algorithm_definitions.items():
-        for k in ['library', 'module', 'constructor']:
+        for k in ['docker-tag', 'module', 'constructor']:
             if k not in algo:
-                raise Exception('algorithm %s does not define a "library" property' % name)
+                raise Exception('algorithm %s does not define a "%s" property' % (name, k))
 
         base_args = []
         if "base-args" in algo:
@@ -117,7 +117,7 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
                 aargs = [_handle(arg, vs) for arg in aargs]
                 definitions.append(Definition(
                     algorithm=name,
-                    library=algo['library'],
+                    docker_tag=algo['docker-tag'],
                     module=algo['module'],
                     constructor=algo['constructor'],
                     arguments=aargs

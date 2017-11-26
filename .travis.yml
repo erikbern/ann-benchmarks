@@ -20,7 +20,8 @@ env:
   - LIBRARY=sklearn
 
 before_install:
+  - python create_dataset.py --dataset random-xs-10-angular
   - bash install.sh
 
 script:
-  - echo TODO
+  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 1 --dataset random-xs-10-angular

@@ -10,8 +10,6 @@ if __name__ == "__main__":
         choices=DATASETS.keys(),
         required=True)
     parser.add_argument(
-        '--library')
-    parser.add_argument(
         '--module',
         required=True)
     parser.add_argument(
@@ -27,7 +25,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     definition = Definition(
         algorithm=None, # not needed
-        library=args.library,
+        docker_tag=None, # also not needed
         module=args.module,
         constructor=args.constructor,
         arguments=args.args

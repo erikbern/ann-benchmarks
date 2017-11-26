@@ -1,5 +1,6 @@
-import multiprocessing
+import docker
 import multiprocessing.pool
+import os
 import time
 
 from ann_benchmarks.datasets import get_dataset
@@ -87,9 +88,20 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
         algo.done()
 
 
-def run_subprocess(definition, dataset, count, runs):
-    p = multiprocessing.Process(
-        target=run,
-        args=(definition, dataset, count, runs))
-    p.start()
-    p.join()
+def run_docker(definition, dataset, count, runs):
+    cmd = 'run_algorithm.py --dataset %s --module %s --constructor %s --count %d %s' % (
+        dataset, definition.module, definition.constructor, count, # TODO: include runs
+        ' '.join('--arg %s' % arg for arg in definition.arguments)
+    )
+    client = docker.from_env()
+    container = client.containers.run(
+        definition.docker_tag,
+        cmd,
+        volumes={
+            os.path.abspath('data'): {'bind': '/home/app/data', 'mode': 'ro'},
+            os.path.abspath('results'): {'bind': '/home/app/results', 'mode': 'rw'},
+        },
+        detach=True)
+    for line in container.logs(follow=True, stream=True):
+        print(line)
+
