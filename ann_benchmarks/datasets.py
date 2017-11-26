@@ -3,14 +3,17 @@ import numpy
 import os
 import random
 import sys
-import urllib.request
+try:
+    from urllib import urlretrieve
+except ImportError:
+    from urllib.request import urlretrieve # Python 3
 
 
 def download(src, dst):
     if not os.path.exists(dst):
         # TODO: should be atomic
         print('downloading %s -> %s...' % (src, dst))
-        urllib.request.urlretrieve(src, dst)
+        urlretrieve(src, dst)
 
 
 def get_dataset_fn(dataset):

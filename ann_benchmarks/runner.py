@@ -89,7 +89,7 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
 
 
 def run_docker(definition, dataset, count, runs):
-    cmd = 'run_algorithm.py --dataset %s --module %s --constructor %s --count %d %s' % (
+    cmd = '--dataset %s --module %s --constructor %s --count %d %s' % (
         dataset, definition.module, definition.constructor, count, # TODO: include runs
         ' '.join('--arg %s' % arg for arg in definition.arguments)
     )
@@ -103,5 +103,7 @@ def run_docker(definition, dataset, count, runs):
         },
         detach=True)
     for line in container.logs(follow=True, stream=True):
+        # TODO: this doesn't seem to print line by line as they are written
         print(line)
+    # TODO: should catch the exit status and see what happened
 

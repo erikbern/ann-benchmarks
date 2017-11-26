@@ -1,6 +1,8 @@
 sudo: required
 
 language: python
+python:
+  - "3.6"
 
 services:
   - docker
@@ -20,7 +22,7 @@ env:
   - LIBRARY=sklearn
 
 before_install:
-  - python create_dataset.py --dataset random-xs-10-angular
+  - pip install -r requirements.txt
   - bash install.sh
 
 script:
