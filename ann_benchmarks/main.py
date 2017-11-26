@@ -1,13 +1,15 @@
 from __future__ import absolute_import
-import time, os, multiprocessing, argparse, resource, random
+import argparse
+import os
+import random
 import sys
 import shutil
 
 from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.results import get_results
 from ann_benchmarks.constants import INDEX_DIR
-from ann_benchmarks.algorithms.definitions import get_algorithms, list_algorithms
-from ann_benchmarks.runner import run
+from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms
+from ann_benchmarks.runner import run_subprocess
 
 
 def positive_int(s):
@@ -44,11 +46,6 @@ def main():
             help='run only the named algorithm',
             default=None)
     parser.add_argument(
-            '--sub-algorithm',
-            metavar='NAME',
-            help='run only the named instance of an algorithm (requires --algo)',
-            default=None)
-    parser.add_argument(
             '--list-algorithms',
             help='print the names of all known algorithms and exit',
             action='store_true',
@@ -68,18 +65,6 @@ def main():
             type=int,
             help='Timeout (in seconds) for each individual algorithm run, or -1 if no timeout should be set',
             default=-1)
-    parser.add_argument(
-            '--single',
-            help='run only a single algorithm instance at a time',
-            action='store_true')
-    parser.add_argument(
-            '--batch',
-            help='Provide Queryset as Batch',
-            action='store_true')
-    parser.add_argument(
-            '--no_save_index',
-            help='do not save indices',
-            action='store_true')
 
     args = parser.parse_args()
     if args.timeout == -1:
@@ -89,55 +74,32 @@ def main():
         list_algorithms(args.definitions)
         sys.exit(0)
 
-    # Set resource limits to prevent memory bombs
-    memory_limit = 12 * 2**30
-    soft, hard = resource.getrlimit(resource.RLIMIT_DATA)
-    if soft == resource.RLIM_INFINITY or soft >= memory_limit:
-        print('resetting memory limit from', soft, 'to', memory_limit)
-        resource.setrlimit(resource.RLIMIT_DATA, (memory_limit, hard))
-
     # Nmslib specific code
     # Remove old indices stored on disk
     if os.path.exists(INDEX_DIR):
         shutil.rmtree(INDEX_DIR)
 
-    algos_already_run = set()
-    if not args.force:
-        for res in get_results(args.dataset, args.count):
-            algos_already_run.add((res.attrs["library"], res.attrs["name"]))
+    # TODO(erikbern): deal with this later
+    #algos_already_run = set()
+    #if not args.force:
+    #    for res in get_results(args.dataset, args.count):
+    #        print(res)
+    #        algos_already_run.add((res.attrs["library"], res.attrs["name"]))
 
     dataset = get_dataset(args.dataset)
     dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
     point_type = 'float' # TODO(erikbern): should look at the type of X_train
     distance = dataset.attrs['distance']
-    algos = get_algorithms(args.definitions, dimension, point_type, distance, args.count)
+    definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
 
     if args.algorithm:
         print('running only', args.algorithm)
-        algos = {args.algorithm: algos[args.algorithm]}
-        if args.sub_algorithm:
-            algos[args.algorithm] = \
-              [algo for algo in algos[args.algorithm] if algo.name == args.sub_algorithm]
+        definitions = [d for d in definitions if d.algorithm == args.algorithm]
 
-    algos_flat = []
+    random.shuffle(definitions)
+    print('order:', definitions)
 
-    for library in algos.keys():
-        for algo in algos[library]:
-            if (library, algo.name) not in algos_already_run:
-                algos_flat.append((library, algo))
+    for definition in definitions:
+        print(definition, '...')
 
-    random.shuffle(algos_flat)
-
-    print('order:', [a.name for l, a in algos_flat])
-
-    for library, algo in algos_flat:
-        print(algo.name, '...')
-        # Spawn a subprocess to force the memory to be reclaimed at the end
-        p = multiprocessing.Process(
-            target=run,
-            args=(args.dataset, args.count, library, algo,
-                  args.runs, args.single, args.batch))
-
-        # TODO(erikbern): this no longer handles timeouts etc but going to replace this with Docker shortly anyway
-        p.start()
-        p.join()
+        run_subprocess(definition, args.dataset, args.count, args.runs)

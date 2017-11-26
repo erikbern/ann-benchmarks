@@ -1,14 +1,15 @@
 float:
   any:
     DolphinnPy:
-      constructor: DolphinnPy
+      library: dolphinn # Docker tag
+      module: ann_benchmarks.algorithms.dolphinnpy # Python class
+      constructor: DolphinnPy # Python class name
       run-groups:
         base:
           args: [[10, 50, 100, 200, 1000, 2000, 10000, 20000, 40000, 100000]]
     faiss-lsh:
-      # @constructor specifies the name of the Python constructor for this
-      # algorithm's wrapper. Only the constructors explicitly specified in
-      # ann_benchmarks/algorithms/constructors.py are available.
+      library: faiss
+      module: ann_benchmarks.algorithms.faiss
       constructor: FaissLSH
       run-groups:
         base:
@@ -19,6 +20,8 @@ float:
           # This run group will produce eight algorithm instances:
           # FaissLSH(32), FaissLSH(64), and so on up to FaissLSH(4096).
     faiss-ivf:
+      library: faiss
+      module: ann_benchmarks.algorithms.faiss
       constructor: FaissIVF
       base-args: ["@metric"]
       run-groups:
@@ -26,27 +29,35 @@ float:
           args: [[5, 10, 20, 50, 100, 200, 400, 800, 1000],
                  [1, 2, 3, 4, 5, 8, 10, 20, 50, 100, 200]]
     faiss-gpu:
+      library: faiss
+      module: ann_benchmarks.algorithms.faiss
       constructor: FaissGPU
       run-groups:
         base:
           args: [[32, 64, 128, 256, 512, 1024, 2048, 4096], [100, 200]]
     flann:
+      library: flann
+      module: ann_benchmarks.algorithms.flann
       constructor: FLANN
       base-args: ["@metric"]
       run-groups:
         flann:
           args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97, 0.98, 0.99, 0.995]]
-#    panns:
-#      constructor: PANNS
-#      base-args: ["@metric"]
-#      run-groups:
-#        five-trees:
-#          args: [5, 20]
-#        ten-trees:
-#          args: [10, [10, 50]]
-#        hundred-candidates:
-#          args: [[10, 20, 40], 100]
+    panns:
+      library: panns
+      module: ann_benchmarks.algorithms.panns
+      constructor: PANNS
+      base-args: ["@metric"]
+      run-groups:
+        five-trees:
+          args: [5, 20]
+        ten-trees:
+          args: [10, [10, 50]]
+        hundred-candidates:
+          args: [[10, 20, 40], 100]
     annoy:
+      library: annoy
+      module: ann_benchmarks.algorithms.annoy
       constructor: Annoy
       base-args: ["@metric"]
       run-groups:
@@ -57,6 +68,8 @@ float:
           # Annoy("angular", 100, 100), Annoy("angular", 100, 200), and so on
           # up to Annoy("angular", 400, 400000).
     nearpy:
+      library: nearpy
+      module: ann_benchmarks.algorithms.nearpy
       constructor: NearPy
       base-args: ["@metric"]
       run-groups:
@@ -65,36 +78,40 @@ float:
         extra:
           args: [16, [5, 10, 15, 20, 25, 30, 40]]
     bruteforce:
+      library: sklearn
+      module: ann_benchmarks.algorithms.bruteforce
       constructor: BruteForce
       base-args: ["@metric"]
       run-groups:
         empty:
           args: []
     bruteforce-blas:
+      library: sklearn
+      module: ann_benchmarks.algorithms.bruteforce
       constructor: BruteForceBLAS
       base-args: ["@metric"]
       run-groups:
         empty:
           args: []
     ball:
+      library: sklearn
+      module: ann_benchmarks.algorithms.balltree
       constructor: BallTree
       base-args: ["@metric"]
       run-groups:
         ball:
           args: &treeargs [[10, 20, 40, 100, 200, 400, 1000]]
     kd:
+      library: sklearn
+      module: ann_benchmarks.algorithms.kdtree
       constructor: KDTree
       base-args: ["@metric"]
       run-groups:
         ball:
           args: *treeargs
-    bruteforce0(nmslib):
-      constructor: NmslibNewIndex
-      base-args: ["@metric"]
-      run-groups:
-        base:
-          args: ["seq_search", {"copyMem": 0}]
     BallTree(nmslib):
+      library: nmslib
+      module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibNewIndex
       base-args: ["@metric", "vptree"]
       run-groups:
@@ -118,6 +135,8 @@ float:
           args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
                  {'reverse': -1}, True] # XXX: hard-codes save_index as True
     hnsw(nmslib):
+      library: nmslib
+      module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
       base-args: ["@metric", "hnsw"]
       run-groups:
@@ -157,6 +176,8 @@ float:
             - True
             - {"ef": [1, 2, 5, 10, 20, 30, 50, 70, 90, 120, 160]}
     MP-lsh(lshkit):
+      library: nmslib
+      module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibNewIndex
       base-args: ["@metric", "lsh_multiprobe"]
       run-groups:
@@ -164,6 +185,8 @@ float:
           args: {"desiredRecall": [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5,
                 0.4, 0.3, 0.2, 0.1], "H": 1200001, "T": 10, "L": 50, "tuneK": 10}
     SW-graph(nmslib):
+      library: nmslib
+      module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
       base-args: ["@metric", "sw-graph"]
       run-groups:
@@ -181,6 +204,8 @@ float:
               "initSearchAttempts": 1}
   angular:
     kgraph:
+      library: kgraph
+      module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
       base-args: ["@metric"]
       run-groups:
@@ -188,6 +213,8 @@ float:
           args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
                  {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
     hnsw(nmslib):
+      library: nmslib
+      module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
       base-args: ["@metric", "hnsw"]
       run-groups:
@@ -214,6 +241,8 @@ float:
             - True
             - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
     SW-graph(nmslib):
+      library: nmslib
+      module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
       base-args: ["@metric", "sw-graph"]
       run-groups:
@@ -235,12 +264,16 @@ float:
             - {"efSearch": [120, 80, 60, 40, 20, 10, 8, 4, 2],
               "initSearchAttempts": 1}
     rpforest:
+      library: rpforest
+      module: ann_benchmarks.algorithms.rpforest
       constructor: RPForest
       run-groups:
         base:
           args: [[3, 5, 10, 20, 40, 100, 200, 400],
                 [3, 5, 10, 20, 40, 100, 200, 400]]
     falconn:
+      library: falconn
+      module: ann_benchmarks.algorithms.falconn
       constructor: FALCONN
       base-args: ["@metric", 16]
       run-groups:
@@ -253,12 +286,16 @@ float:
 bit:
   hamming:
     falconn:
+      library: falconn
+      module: ann_benchmarks.algorithms.falconn
       constructor: FALCONN
       base-args: ["@metric", 16]
       run-groups:
         base:
           args: [*l]
     kgraph:
+      library: kgraph
+      module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
       base-args: ["@metric"]
       run-groups:
@@ -266,6 +303,8 @@ bit:
           args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
                  {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
     hnsw(nmslib):
+      library: nmslib
+      module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
       base-args: ["@metric", "hnsw"]
       run-groups:
@@ -294,12 +333,16 @@ bit:
 int:
   jaccard:
     bf:
+      library: sklearn
+      module: ann_benchmarks.algorithms.bruteforce
       constructor: BruteForceBLAS
       base-args: ["@metric"]
       run-groups:
         base:
           args: {}
     datasketch:
+      library: datasketch
+      module: ann_benchmarks.algorithms.datasketch
       constructor: DataSketch
       base-args: ["@metric"]
       run-groups:

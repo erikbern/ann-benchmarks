@@ -1,26 +1,49 @@
 from __future__ import absolute_import
 from os import sep as pathsep
+import collections
+import importlib
 import sys
-import yaml
 import traceback
+import yaml
 from itertools import product
-from ann_benchmarks.algorithms.constructors import available_constructors
+
+
+Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'library', 'arguments'])
+
+
+def instantiate_algorithm(definition):
+    print('Trying to instantiate %s.%s(%s)' % (definition.module, definition.constructor, definition.arguments))
+    module = importlib.import_module(definition.module)
+    constructor = getattr(module, definition.constructor)
+    return constructor(*definition.arguments)
 
 
 def _handle_args(args):
     if isinstance(args, list):
-        args = map(lambda el: el if isinstance(el, list) else [el], args)
-        return map(list, product(*args))
+        args = [el if isinstance(el, list) else [el] for el in args]
+        return [list(x) for x in product(*args)]
     elif isinstance(args, dict):
         flat = []
         for k, v in args.items():
             if isinstance(v, list):
-                flat.append(map(lambda el: (k, el), v))
+                flat.append([(k, el) for el in v])
             else:
                 flat.append([(k, v)])
-        return map(dict, product(*flat))
+        return [dict(x) for x in product(*flat)]
     else:
         raise TypeError("No args handling exists for %s" % type(args).__name__)
+
+
+def _handle(arg, vs):
+    # TODO(erikbern): what's the difference between _handle_args and _handle
+    if isinstance(arg, dict):
+        return dict([(k, _handle(v, vs)) for k, v in arg.items()])
+    elif isinstance(arg, list):
+        return [_handle(a, vs) for a in arg]
+    elif isinstance(arg, str) and arg in vs:
+        return vs[arg]
+    else:
+        return arg
 
 
 def _get_definitions(definition_file):
@@ -40,7 +63,9 @@ def list_algorithms(definition_file):
                 print('\t\t\t%s' % algorithm)
 
 
-def get_algorithms(definition_file, dimension, point_type="float", distance_metric="euclidean", count=10):
+def get_definitions(definition_file, dimension, point_type="float", distance_metric="euclidean", count=10):
+    # TODO(erikbern): we should look up what Docker images are available and only use those
+
     definitions = _get_definitions(definition_file)
 
     algorithm_definitions = {}
@@ -48,19 +73,11 @@ def get_algorithms(definition_file, dimension, point_type="float", distance_metr
         algorithm_definitions.update(definitions[point_type]["any"])
     algorithm_definitions.update(definitions[point_type][distance_metric])
 
-    algos = {}
+    definitions = []
     for (name, algo) in algorithm_definitions.items():
-        assert "constructor" in algo, """\
-group %s does not specify a constructor""" % name
-        cn = algo["constructor"]
-        assert cn in available_constructors, """\
-group %s specifies the unknown constructor %s""" % (name, cn)
-        constructor = available_constructors[cn]
-        if not constructor:
-            print('warning: group %s specifies the known, but missing, constructor %s; skipping' % (name, cn))
-            continue
-
-        algos[name] = []
+        for k in ['library', 'module', 'constructor']:
+            if k not in algo:
+                raise Exception('algorithm %s does not define a "library" property' % name)
 
         base_args = []
         if "base-args" in algo:
@@ -85,43 +102,25 @@ group %s specifies the unknown constructor %s""" % (name, cn)
 
             for arg_group in args:
                 obj = None
-                try:
-                    aargs = []
-                    aargs.extend(base_args)
-                    if isinstance(arg_group, list):
-                        aargs.extend(arg_group)
-                    else:
-                        aargs.append(arg_group)
+                aargs = []
+                aargs.extend(base_args)
+                if isinstance(arg_group, list):
+                    aargs.extend(arg_group)
+                else:
+                    aargs.append(arg_group)
 
-                    vs = {
-                        "@count": count,
-                        "@metric": distance_metric,
-                        "@dimension": dimension
-                    }
-                    def _handle(arg):
-                        if isinstance(arg, dict):
-                            return dict([(k, _handle(v)) for k, v in arg.items()])
-                        elif isinstance(arg, list):
-                            return map(_handle, arg)
-                        elif isinstance(arg, str) and arg in vs:
-                            return vs[arg]
-                        else:
-                            return arg
-                    aargs = map(_handle, aargs)
-                    obj = constructor(*aargs)
-                    if not obj.name:
-                        raise Exception("""\
-algorithm instance "%s" does not have a name""" % obj)
-                    elif pathsep in obj.name:
-                        raise Exception("""\
-algorithm instance "%s" has an invalid name (it contains a path \
-separator)""" % obj.name)
-                    algos[name].append(obj)
-                except Exception:
-                    try:
-                        t, v, tb = sys.exc_info()
-                        traceback.print_exception(t, v, tb)
-                    finally:
-                        del tb
-                    print('warning: constructor %s (with parameters %s) failed, skipping' % (cn, str(aargs)))
-    return algos
+                vs = {
+                    "@count": count,
+                    "@metric": distance_metric,
+                    "@dimension": dimension
+                }
+                aargs = [_handle(arg, vs) for arg in aargs]
+                definitions.append(Definition(
+                    algorithm=name,
+                    library=algo['library'],
+                    module=algo['module'],
+                    constructor=algo['constructor'],
+                    arguments=aargs
+                ))
+
+    return definitions

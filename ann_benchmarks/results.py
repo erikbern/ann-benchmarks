@@ -9,7 +9,6 @@ def store_results(attrs, results, dataset, count, distance):
         "k": count,
         "dst": distance,
         "inst": attrs["name"],
-        "algo": attrs["library"]
     }
     for k, v in fragments.items():
         if v and isinstance(v, str):
@@ -18,7 +17,7 @@ error: path fragment "%s" contains a path separator and so would break the \
 directory hierarchy""" % k
     def _make_path(*args):
         return os.path.join(*map(lambda s: s % fragments, args))
-    fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s", "algo=%(algo)s", "%(inst)s.hdf5")
+    fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s", "%(inst)s.hdf5")
     head, tail = os.path.split(fn)
     if not os.path.isdir(head):
         os.makedirs(head)
