@@ -1,8 +1,12 @@
 FROM ann-benchmarks
 
-# FAISS doesn't seem to work well with Python 3, thus need to install Python2.7 libs
-
-RUN apt-get install -y libopenblas-dev libpython-dev python-numpy
+RUN apt-get install -y libopenblas-dev libpython-dev python-numpy python-pip
 RUN git clone https://github.com/facebookresearch/faiss lib-faiss
 RUN cd lib-faiss && cp example_makefiles/makefile.inc.Linux makefile.inc && make -j4 py BLASLDFLAGS=/usr/lib/libopenblas.so.0
-RUN PYTHONPATH=lib-faiss python -c 'import faiss'
+ENV PYTHONPATH lib-faiss
+
+# faiss doesn't work with python3 afaik
+RUN python -c 'import faiss'
+RUN pip install -rrequirements.txt
+RUN pip install sklearn
+ENTRYPOINT ["python", "run_algorithm.py"]

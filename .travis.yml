@@ -26,4 +26,4 @@ before_install:
   - bash install.sh
 
 script:
-  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 1 --dataset random-xs-10-angular
+  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-10-angular

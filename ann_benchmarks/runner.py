@@ -108,6 +108,7 @@ def run_docker(definition, dataset, count, runs):
     if exit_code != 0:
         exc = 'Child process raised exception %d' % exit_code
         print(exc)
+        print('Command: %s' % cmd)
         sys.stdout.buffer.write(b'####### Container logs\n')
         sys.stdout.buffer.write(container.logs())
         sys.stdout.buffer.write(b'#######\n')

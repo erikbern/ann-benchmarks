@@ -6,11 +6,11 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class NearPy(BaseANN):
     def __init__(self, metric, n_bits, hash_counts):
-        self._n_bits = n_bits
-        self._hash_counts = hash_counts
+        self._n_bits = int(n_bits)
+        self._hash_counts = int(hash_counts)
         self._metric = metric
         self._filter = NearestFilter(10)
-        self.name = 'NearPy(n_bits=%d, hash_counts=%d)' % (n_bits, hash_counts)
+        self.name = 'NearPy(n_bits=%d, hash_counts=%d)' % (self._n_bits, self._hash_counts)
 
     def fit(self, X):
         hashes = []
