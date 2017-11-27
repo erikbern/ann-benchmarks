@@ -4,9 +4,7 @@ RUN apt-get update
 RUN apt-get install -y python3-numpy python3-scipy python3-pip build-essential git
 
 WORKDIR /home/app
-COPY ann_benchmarks ann_benchmarks/
 COPY requirements.txt run_algorithm.py requirements.txt algos.yaml run.py ./
 RUN pip3 install -rrequirements.txt
-RUN python3 run.py --list-algorithms # just make sure stuff works
 
 ENTRYPOINT ["python3", "run_algorithm.py"]

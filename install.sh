@@ -1,3 +1,5 @@
+set -e
+
 if [ -z $LIBRARY ]
 then
     LIBRARY=$1

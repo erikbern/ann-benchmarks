@@ -1,6 +1,7 @@
 import docker
 import multiprocessing.pool
 import os
+import sys
 import time
 
 from ann_benchmarks.datasets import get_dataset
@@ -98,12 +99,17 @@ def run_docker(definition, dataset, count, runs):
         definition.docker_tag,
         cmd,
         volumes={
+            os.path.abspath('ann_benchmarks'): {'bind': '/home/app/ann_benchmarks', 'mode': 'ro'},
             os.path.abspath('data'): {'bind': '/home/app/data', 'mode': 'ro'},
             os.path.abspath('results'): {'bind': '/home/app/results', 'mode': 'rw'},
         },
         detach=True)
-    for line in container.logs(follow=True, stream=True):
-        # TODO: this doesn't seem to print line by line as they are written
-        print(line)
-    # TODO: should catch the exit status and see what happened
-
+    exit_code = container.wait(timeout=7200)
+    if exit_code != 0:
+        exc = 'Child process raised exception %d' % exit_code
+        print(exc)
+        sys.stdout.buffer.write(b'####### Container logs\n')
+        sys.stdout.buffer.write(container.logs())
+        sys.stdout.buffer.write(b'#######\n')
+        raise Exception(exc)
+    # TODO: would be nice to stream logs to stdout
