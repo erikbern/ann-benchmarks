@@ -11,6 +11,7 @@ class Annoy(BaseANN):
 
     def fit(self, X):
         self._annoy = annoy.AnnoyIndex(X.shape[1], metric=self._metric)
+        self._annoy.verbose(True)
         for i, x in enumerate(X):
             self._annoy.add_item(i, x.tolist())
         self._annoy.build(self._n_trees)

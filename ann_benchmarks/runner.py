@@ -1,6 +1,8 @@
+import datetime
 import docker
 import multiprocessing.pool
 import os
+import requests
 import sys
 import time
 
@@ -89,7 +91,7 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
         algo.done()
 
 
-def run_docker(definition, dataset, count, runs):
+def run_docker(definition, dataset, count, runs, timeout=7200):
     cmd = '--dataset %s --module %s --constructor %s --count %d %s' % (
         dataset, definition.module, definition.constructor, count, # TODO: include runs
         ' '.join('--arg %s' % arg for arg in definition.arguments)
@@ -104,13 +106,26 @@ def run_docker(definition, dataset, count, runs):
             os.path.abspath('results'): {'bind': '/home/app/results', 'mode': 'rw'},
         },
         detach=True)
-    exit_code = container.wait(timeout=7200)
-    if exit_code != 0:
-        exc = 'Child process raised exception %d' % exit_code
-        print(exc)
-        print('Command: %s' % cmd)
-        sys.stdout.buffer.write(b'####### Container logs\n')
-        sys.stdout.buffer.write(container.logs())
-        sys.stdout.buffer.write(b'#######\n')
-        raise Exception(exc)
-    # TODO: would be nice to stream logs to stdout
+    t = t0 = datetime.datetime.now()
+    while True:
+        exit_code = None
+        try:
+            exit_code = container.wait(timeout=10)
+        except requests.exceptions.ConnectionError:
+            pass
+
+        # Print any logs since last timestamp
+        logs = container.logs(since=t)
+        sys.stdout.buffer.write(logs)
+        sys.stdout.buffer.flush()
+        t = datetime.datetime.now()
+
+        # Exit if exit code
+        if exit_code == 0:
+            return
+        elif exit_code is not None:
+            raise Exception('Child process raised exception %d' % exit_code)
+
+        # Break if we've spent too much time
+        if (t - t0).total_seconds() > timeout:
+            raise Exception('Child process time limit %fs exceeded' % timeout)
