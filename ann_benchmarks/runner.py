@@ -1,5 +1,6 @@
 import datetime
 import docker
+import json
 import multiprocessing.pool
 import os
 import requests
@@ -91,11 +92,11 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
         algo.done()
 
 
-def run_docker(definition, dataset, count, runs, timeout=7200):
-    cmd = '--dataset %s --module %s --constructor %s --count %d %s' % (
-        dataset, definition.module, definition.constructor, count, # TODO: include runs
-        ' '.join('--arg %s' % arg for arg in definition.arguments)
-    )
+def run_docker(definition, dataset, count, runs, timeout=7200, mem_limit='8g'):
+    cmd = ['--dataset', dataset, '--module', definition.module, '--constructor', definition.constructor, '--count', str(count), '--json-args']
+    for arg in definition.arguments:
+        cmd += ['--arg', json.dumps(arg)]
+    print('Running command', cmd)
     client = docker.from_env()
     container = client.containers.run(
         definition.docker_tag,
@@ -105,14 +106,18 @@ def run_docker(definition, dataset, count, runs, timeout=7200):
             os.path.abspath('data'): {'bind': '/home/app/data', 'mode': 'ro'},
             os.path.abspath('results'): {'bind': '/home/app/results', 'mode': 'rw'},
         },
+        mem_limit=mem_limit,
         detach=True)
     t = t0 = datetime.datetime.now()
     while True:
         exit_code = None
         try:
             exit_code = container.wait(timeout=10)
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError) as e:
             pass
+        except:
+            # If something unexpected happened, just kill the container
+            container.kill()
 
         # Print any logs since last timestamp
         logs = container.logs(since=t)
