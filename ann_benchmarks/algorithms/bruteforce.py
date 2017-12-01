@@ -25,6 +25,7 @@ class BruteForce(BaseANN):
             return_distance = True, n_neighbors = n)
         return zip(list(positions[0]), list(distances[0]))
 
+
 class BruteForceBLAS(BaseANN):
     """kNN search that uses a linear scan = brute force."""
     def __init__(self, metric, precision=numpy.float32):
@@ -38,6 +39,7 @@ class BruteForceBLAS(BaseANN):
 
     def fit(self, X):
         """Initialize the search index."""
+        X = numpy.array(X)
         if self._metric == 'angular':
             lens = (X ** 2).sum(-1)  # precompute (squared) length of each vector
             X /= numpy.sqrt(lens)[..., numpy.newaxis]  # normalize index vectors to unit length
@@ -55,7 +57,7 @@ class BruteForceBLAS(BaseANN):
             assert False, "invalid metric"  # shouldn't get past the constructor!
 
     def query(self, v, n):
-        return map(lambda index, _: index, self.query_with_distances(v, n))
+        return [index for index, _ in self.query_with_distances(v, n)]
 
     popcount = []
     for i in range(256):

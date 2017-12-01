@@ -10,10 +10,12 @@ class NmslibReuseIndex(BaseANN):
         return ["%s=%s" % (a, b) for (a, b) in d.iteritems()]
     def __init__(self, metric, method_name, index_param, save_index, query_param):
         self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
-        self._method_name = method_name
-        self._save_index = save_index
-        self._index_param = NmslibReuseIndex.encode(index_param)
-        self._query_param = NmslibReuseIndex.encode(query_param)
+        self._method_name = str(method_name)
+        self._save_index = str(save_index)
+        def str_dict(d):
+            return dict((str(k), v) for k, v in d.items())  # Fix some stupid stuff with JSON in Python 2.7
+        self._index_param = NmslibReuseIndex.encode(str_dict(index_param))
+        self._query_param = NmslibReuseIndex.encode(str_dict(query_param))
         self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (self._method_name, self._index_param, self._query_param)
         self._index_name = os.path.join(INDEX_DIR, "nmslib_%s_%s_%s" % (self._method_name, metric, '_'.join(self._index_param)))
 
