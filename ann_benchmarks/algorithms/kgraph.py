@@ -8,16 +8,15 @@ from ann_benchmarks.algorithms.base import BaseANN
 class KGraph(BaseANN):
     def __init__(self, metric, P, index_params, save_index):
         self.name = 'KGraph(%s,P=%d)' % (metric, P)
-        self._P = P
+        self._P = int(P)
         self._metric = str(metric)
         self._index_params = dict((str(k), v) for k, v in index_params.items())
         self._save_index = save_index
 
     def fit(self, X):
+        X = numpy.array(X)
         if X.dtype != numpy.float32:
             X = X.astype(numpy.float32)
-        #if self._metric == 'angular':
-        #    X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._kgraph = pykgraph.KGraph(X, self._metric)
         path = os.path.join(INDEX_DIR, 'kgraph-index-%s' % self._metric)
         if os.path.exists(path):

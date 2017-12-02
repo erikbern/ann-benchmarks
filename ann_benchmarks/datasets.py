@@ -176,9 +176,9 @@ DATASETS = {
     'glove-100-angular': lambda out_fn: glove(out_fn, 100),
     'glove-200-angular': lambda out_fn: glove(out_fn, 200),
     'mnist-784-euclidean': mnist,
-    'random-xs-10-euclidean': lambda out_fn: random(out_fn, 10, 10000, 100, 'euclidean'),
-    'random-s-40-euclidean': lambda out_fn: random(out_fn, 40, 100000, 1000, 'euclidean'),
-    'random-xs-10-angular': lambda out_fn: random(out_fn, 10, 10000, 100, 'angular'),
-    'random-s-40-angular': lambda out_fn: random(out_fn, 40, 100000, 1000, 'angular'),
+    'random-xs-20-euclidean': lambda out_fn: random(out_fn, 20, 10000, 100, 'euclidean'),
+    'random-s-100-euclidean': lambda out_fn: random(out_fn, 100, 100000, 1000, 'euclidean'),
+    'random-xs-20-angular': lambda out_fn: random(out_fn, 20, 10000, 100, 'angular'),
+    'random-s-100-angular': lambda out_fn: random(out_fn, 100, 100000, 1000, 'angular'),
     'sift-128-euclidean': sift,
 }
