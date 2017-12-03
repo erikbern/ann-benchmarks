@@ -12,10 +12,8 @@ class NmslibReuseIndex(BaseANN):
         self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
         self._method_name = str(method_name)
         self._save_index = str(save_index)
-        def str_dict(d):
-            return dict((str(k), v) for k, v in d.items())  # Fix some stupid stuff with JSON in Python 2.7
-        self._index_param = NmslibReuseIndex.encode(str_dict(index_param))
-        self._query_param = NmslibReuseIndex.encode(str_dict(query_param))
+        self._index_param = NmslibReuseIndex.encode(index_param)
+        self._query_param = NmslibReuseIndex.encode(query_param)
         self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (self._method_name, self._index_param, self._query_param)
         self._index_name = os.path.join(INDEX_DIR, "nmslib_%s_%s_%s" % (self._method_name, metric, '_'.join(self._index_param)))
 
@@ -31,11 +29,11 @@ class NmslibReuseIndex(BaseANN):
             # Aborted (core dumped)
             self._index_param.append('bucketSize=%d' % min(int(X.shape[0] * 0.0005), 1000))
                                         
-        self._index = nmslib.init(self._nmslib_metric, [], self._method_name, nmslib.DataType.DENSE_VECTOR, nmslib.DistType.FLOAT)
-    
+        self._index = nmslib.init(space=self._nmslib_metric,
+                                  method=self._method_name)
+
         for i, x in enumerate(X):
             nmslib.addDataPoint(self._index, i, x.tolist())
-
 
         if os.path.exists(self._index_name):
             print('Loading index from file')

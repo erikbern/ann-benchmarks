@@ -185,16 +185,14 @@ float:
       run-groups:
         NN-10:
           arg-groups:
-            - {"NN": 10, "efConstruction": 400, "initIndexAttempts": 1}
+            - {"NN": 10}
             - True
-            - {"efSearch": [800, 400, 200, 100, 50, 30, 20, 15, 10],
-              "initSearchAttempts": 1}
+            - {"efSearch": [800, 400, 200, 100, 50, 30, 20, 15, 10]}
         NN-5:
           arg-groups:
-            - {"NN": 5, "efConstruction": 400, "initIndexAttempts": 1}
+            - {"NN": 5}
             - True
-            - {"efSearch": [30, 25, 20, 15, 10, 5, 4, 3, 2, 1],
-              "initSearchAttempts": 1}
+            - {"efSearch": [30, 25, 20, 15, 10, 5, 4, 3, 2, 1]}
   angular:
     kgraph:
       docker-tag: ann-benchmarks-kgraph
@@ -241,21 +239,20 @@ float:
       run-groups:
         NN-30:
           arg-groups:
-            - {"NN": 30, "efConstruction": 800, "initIndexAttempts": 1}
+            - {"NN": 30}
             - True
             - {"efSearch": [700, 650, 550, 450, 350, 275, 200, 150, 120, 80,
-              50, 30], "initSearchAttempts": 1}
+              50, 30]}
         NN-15:
           arg-groups:
-            - {"NN": 15, "efConstruction": 800, "initIndexAttempts": 1}
+            - {"NN": 15}
             - True
-            - {"efSearch": [80, 50, 30, 20], "initSearchAttempts": 1}
+            - {"efSearch": [80, 50, 30, 20]}
         NN-3:
           arg-groups:
-            - {"NN": 3, "efConstruction": 800, "initIndexAttempts": 1}
+            - {"NN": 3}
             - True
-            - {"efSearch": [120, 80, 60, 40, 20, 10, 8, 4, 2],
-              "initSearchAttempts": 1}
+            - {"efSearch": [120, 80, 60, 40, 20, 10, 8, 4, 2]}
     rpforest:
       docker-tag: ann-benchmarks-rpforest
       module: ann_benchmarks.algorithms.rpforest
