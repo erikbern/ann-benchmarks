@@ -1,3 +1,4 @@
+import argparse
 import datetime
 import docker
 import json
@@ -7,8 +8,8 @@ import requests
 import sys
 import time
 
-from ann_benchmarks.datasets import get_dataset
-from ann_benchmarks.algorithms.definitions import instantiate_algorithm
+from ann_benchmarks.datasets import get_dataset, DATASETS
+from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm
 from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import get_results, store_results
 
@@ -78,7 +79,6 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
 
         verbose = hasattr(algo, "query_verbose")
         attrs = {
-            "name": algo.name,
             "build_time": build_time,
             "best_search_time": best_search_time,
             "candidates": avg_candidates,
@@ -87,13 +87,59 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
             "expect_extra": verbose,
             "batch_mode": use_batch_query
         }
-        store_results(attrs, results, dataset, count, distance)
+        store_results(dataset, count, definition, attrs, results)
     finally:
         algo.done()
 
 
+def run_from_cmdline():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--dataset',
+        choices=DATASETS.keys(),
+        required=True)
+    parser.add_argument(
+        '--algorithm',
+        required=True)
+    parser.add_argument(
+        '--module',
+        required=True)
+    parser.add_argument(
+        '--constructor',
+        required=True)
+    parser.add_argument(
+        '--count',
+        required=True,
+        type=int)
+    parser.add_argument(
+        '--json-args',
+        action='store_true')
+    parser.add_argument(
+        '-a', '--arg',
+        dest='args', action='append')
+    args = parser.parse_args()
+    if args.json_args:
+        algo_args = [json.loads(arg) for arg in args.args]
+    else:
+        algo_args = args.args
+
+    definition = Definition(
+        algorithm=args.algorithm,
+        docker_tag=None, # not needed
+        module=args.module,
+        constructor=args.constructor,
+        arguments=algo_args
+    )
+    run(definition, args.dataset, args.count)
+
+
 def run_docker(definition, dataset, count, runs, timeout=7200, mem_limit='8g'):
-    cmd = ['--dataset', dataset, '--module', definition.module, '--constructor', definition.constructor, '--count', str(count), '--json-args']
+    cmd = ['--dataset', dataset,
+           '--algorithm', definition.algorithm,
+           '--module', definition.module,
+           '--constructor', definition.constructor,
+           '--count', str(count),
+           '--json-args']
     for arg in definition.arguments:
         cmd += ['--arg', json.dumps(arg)]
     print('Running command', cmd)

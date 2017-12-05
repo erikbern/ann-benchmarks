@@ -2,22 +2,11 @@ from __future__ import absolute_import
 
 import h5py
 import os
+from ann_benchmarks.algorithms.definitions import get_result_filename
 
-def store_results(attrs, results, dataset, count, distance):
-    fragments = {
-        "ds": dataset,
-        "k": count,
-        "dst": distance,
-        "inst": attrs["name"],
-    }
-    for k, v in fragments.items():
-        if v and isinstance(v, str):
-            assert not os.sep in v, """\
-error: path fragment "%s" contains a path separator and so would break the \
-directory hierarchy""" % k
-    def _make_path(*args):
-        return os.path.join(*map(lambda s: s % fragments, args))
-    fn = _make_path("results", "k=%(k)d", "dataset=%(ds)s", "%(inst)s.hdf5")
+
+def store_results(dataset, count, definition, attrs, results):
+    fn = get_result_filename(dataset, count, definition)
     head, tail = os.path.split(fn)
     if not os.path.isdir(head):
         os.makedirs(head)
@@ -33,6 +22,7 @@ directory hierarchy""" % k
         distances[i] = [d for n, d in ds] + [float('inf')] * (count - len(ds))
     f.close()
 
+
 def _get_leaf_paths(path):
     if os.path.isdir(path):
         for fragment in os.listdir(path):
@@ -40,6 +30,7 @@ def _get_leaf_paths(path):
                 yield i
     elif os.path.isfile(path) and path.endswith(".hdf5"):
         yield path
+
 
 def _leaf_path_to_descriptor(path):
     directory, _ = os.path.split(path)

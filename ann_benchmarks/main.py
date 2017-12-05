@@ -8,7 +8,7 @@ import shutil
 from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.results import get_results
 from ann_benchmarks.constants import INDEX_DIR
-from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms
+from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms, get_result_filename
 from ann_benchmarks.runner import run, run_docker
 
 
@@ -93,18 +93,13 @@ def main():
     if os.path.exists(INDEX_DIR):
         shutil.rmtree(INDEX_DIR)
 
-    # TODO(erikbern): deal with this later
-    #algos_already_run = set()
-    #if not args.force:
-    #    for res in get_results(args.dataset, args.count):
-    #        print(res)
-    #        algos_already_run.add((res.attrs["library"], res.attrs["name"]))
-
     dataset = get_dataset(args.dataset)
     dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
     point_type = 'float' # TODO(erikbern): should look at the type of X_train
     distance = dataset.attrs['distance']
     definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
+
+    definitions = [definition for definition in definitions if not os.path.exists(get_result_filename(args.dataset, args.count, definition))]
 
     random.shuffle(definitions)
     

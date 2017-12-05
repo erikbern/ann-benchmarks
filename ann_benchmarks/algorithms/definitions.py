@@ -2,6 +2,9 @@ from __future__ import absolute_import
 from os import sep as pathsep
 import collections
 import importlib
+import json
+import os
+import re
 import sys
 import traceback
 import yaml
@@ -16,6 +19,15 @@ def instantiate_algorithm(definition):
     module = importlib.import_module(definition.module)
     constructor = getattr(module, definition.constructor)
     return constructor(*definition.arguments)
+
+
+def get_result_filename(dataset, count, definition):
+    d = ['results',
+         dataset,
+         str(count),
+         definition.algorithm,
+         re.sub(r'\W+', '_', json.dumps(definition.arguments, sort_keys=True)).strip('_')]
+    return os.path.join(*d)
 
 
 def _handle_args(args):
