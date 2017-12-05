@@ -9,7 +9,6 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class DolphinnPy(BaseANN):
     def __init__(self, num_probes):
-        self.name = 'Dolphinn(num_probes={} )'.format(num_probes)
         self.num_probes = int(num_probes)
         self.m = 1
         self._index = None

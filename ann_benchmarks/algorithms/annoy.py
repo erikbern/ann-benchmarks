@@ -7,7 +7,6 @@ class Annoy(BaseANN):
         self._n_trees = int(n_trees)
         self._search_k = int(search_k)
         self._metric = metric
-        self.name = 'Annoy(n_trees=%d, search_k=%d)' % (self._n_trees, self._search_k)
 
     def fit(self, X):
         self._annoy = annoy.AnnoyIndex(X.shape[1], metric=self._metric)

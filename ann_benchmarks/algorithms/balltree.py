@@ -7,7 +7,6 @@ class BallTree(BaseANN):
     def __init__(self, metric, leaf_size=20):
         self._leaf_size = int(leaf_size)
         self._metric = metric
-        self.name = 'BallTree(leaf_size=%d)' % self._leaf_size
 
     def fit(self, X):
         if self._metric == 'angular':

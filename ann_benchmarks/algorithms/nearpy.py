@@ -10,7 +10,6 @@ class NearPy(BaseANN):
         self._hash_counts = int(hash_counts)
         self._metric = metric
         self._filter = NearestFilter(10)
-        self.name = 'NearPy(n_bits=%d, hash_counts=%d)' % (self._n_bits, self._hash_counts)
 
     def fit(self, X):
         hashes = []

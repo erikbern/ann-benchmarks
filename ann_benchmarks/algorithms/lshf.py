@@ -5,7 +5,6 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class LSHF(BaseANN):
     def __init__(self, metric, n_estimators=10, n_candidates=50):
-        self.name = 'LSHF(n_est=%d, n_cand=%d)' % (n_estimators, n_candidates)
         self._metric = metric
         self._n_estimators = n_estimators
         self._n_candidates = n_candidates

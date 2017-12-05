@@ -19,7 +19,6 @@ class ITUFilteringDouble(BaseANN):
         self._kappa2 = kappa2
         self._m1 = m1
         self._m2 = m2
-        self.name = ("ITUFilteringDouble(..., threshold = %f, ...)" % threshold)
 
     def fit(self, X):
         if self._metric == 'angular':

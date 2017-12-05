@@ -7,7 +7,6 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class KGraph(BaseANN):
     def __init__(self, metric, P, index_params, save_index):
-        self.name = 'KGraph(%s,P=%d)' % (metric, P)
         self._P = int(P)
         self._metric = str(metric)
         self._index_params = dict((str(k), v) for k, v in index_params.items())
