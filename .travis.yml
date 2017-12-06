@@ -27,3 +27,4 @@ before_install:
 
 script:
   - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-20-angular
+  - python plot.py --dataset random-xs-20-angular --output plot.png

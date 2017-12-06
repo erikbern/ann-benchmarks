@@ -5,9 +5,10 @@ import matplotlib.pyplot as plt
 import argparse
 
 from ann_benchmarks.datasets import get_dataset
-from ann_benchmarks.results import get_results
+from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_linestyles, create_pointset
+from ann_benchmarks.results import store_results, load_results
 
 
 def create_plot(all_data, golden, raw, x_log, y_log, xn, yn, fn_out, linestyles):
@@ -56,6 +57,11 @@ if __name__ == "__main__":
         '--count',
         default=10)
     parser.add_argument(
+        '--definitions',
+        metavar='FILE',
+        help='load algorithm definitions from FILE',
+        default='algos.yaml')
+    parser.add_argument(
         '--limit',
         default=-1)
     parser.add_argument(
@@ -90,9 +96,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     dataset = get_dataset(args.dataset)
+    dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
+    point_type = 'float' # TODO(erikbern): should look at the type of X_train
     distance = dataset.attrs['distance']
-    runs, all_algos = compute_metrics(dataset, get_results(
-        args.dataset, args.count))
+    definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
+    results = load_results(args.dataset, args.count, definitions)
+
+    runs, all_algos = compute_metrics(dataset, results)
     linestyles = create_linestyles(all_algos)
 
     create_plot(runs, args.golden, args.raw, args.x_log,

@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 
 import os, json, pickle
-from ann_benchmarks.results import get_results
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 import matplotlib.pyplot as plt
 import numpy
@@ -35,9 +34,9 @@ def create_pointset(algo, all_data, xn, yn):
 def compute_metrics(dataset, res):
     all_results = {}
     all_algos = set()
-    for run in res:
-        algo = run.attrs["library"]
-        algo_name = run.attrs["name"]
+    for definition, run in res:
+        algo = definition.algorithm
+        algo_name = definition.arguments # TODO(erikbern): stupid backwards compatibility thing
 
         print('--')
         print(algo_name)
