@@ -6,7 +6,6 @@ import sys
 import shutil
 
 from ann_benchmarks.datasets import get_dataset
-from ann_benchmarks.results import get_results
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms, get_result_filename
 from ann_benchmarks.runner import run, run_docker
@@ -99,6 +98,7 @@ def main():
     distance = dataset.attrs['distance']
     definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
 
+    # TODO(erikbern): should make this a helper function somewhere
     definitions = [definition for definition in definitions if not os.path.exists(get_result_filename(args.dataset, args.count, definition))]
 
     random.shuffle(definitions)

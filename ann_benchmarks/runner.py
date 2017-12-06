@@ -11,7 +11,7 @@ import time
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm
 from ann_benchmarks.distance import metrics
-from ann_benchmarks.results import get_results, store_results
+from ann_benchmarks.results import store_results
 
 
 def run(definition, dataset, count, run_count=3, force_single=False, use_batch_query=False):
