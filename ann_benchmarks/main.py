@@ -4,6 +4,7 @@ import os
 import random
 import sys
 import shutil
+import traceback
 
 from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.constants import INDEX_DIR
@@ -119,7 +120,12 @@ def main():
     for definition in definitions:
         print(definition, '...')
 
-        if args.local:
-            run(definition, args.dataset, args.count, args.runs)
-        else:
-            run_docker(definition, args.dataset, args.count, args.runs)
+        try:
+            if args.local:
+                run(definition, args.dataset, args.count, args.runs)
+            else:
+                run_docker(definition, args.dataset, args.count, args.runs)
+        except KeyboardInterrupt:
+            break
+        except:
+            traceback.print_exc()
