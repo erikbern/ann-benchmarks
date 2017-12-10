@@ -6,6 +6,7 @@ import multiprocessing.pool
 import os
 import requests
 import sys
+import threading
 import time
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
@@ -154,29 +155,22 @@ def run_docker(definition, dataset, count, runs, timeout=7200, mem_limit='8g'):
         },
         mem_limit=mem_limit,
         detach=True)
-    t = t0 = datetime.datetime.now()
-    while True:
-        exit_code = None
-        try:
-            exit_code = container.wait(timeout=10)
-        except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError) as e:
-            pass
-        except:
-            # If something unexpected happened, just kill the container
-            container.kill()
 
-        # Print any logs since last timestamp
-        logs = container.logs(since=t)
-        sys.stdout.buffer.write(logs)
-        sys.stdout.buffer.flush()
-        t = datetime.datetime.now()
+    def stream_logs():
+        import colors
+        for line in container.logs(stream=True):
+            print(colors.color(line.decode().rstrip(), fg='yellow'))
 
-        # Exit if exit code
-        if exit_code == 0:
-            return
-        elif exit_code is not None:
-            raise Exception('Child process raised exception %d' % exit_code)
+    t = threading.Thread(target=stream_logs, daemon=True)
+    t.start()
+    try:
+        exit_code = container.wait(timeout=timeout)
+    except:
+        container.kill()
+        raise
 
-        # Break if we've spent too much time
-        if (t - t0).total_seconds() > timeout:
-            raise Exception('Child process time limit %fs exceeded' % timeout)
+    # Exit if exit code
+    if exit_code == 0:
+        return
+    elif exit_code is not None:
+        raise Exception('Child process raised exception %d' % exit_code)
