@@ -23,7 +23,7 @@ env:
 
 before_install:
   - pip install -r requirements.txt
-  - bash install.sh
+  - python install.py
 
 script:
   - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-20-angular
