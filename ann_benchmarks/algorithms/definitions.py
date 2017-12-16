@@ -76,8 +76,6 @@ def list_algorithms(definition_file):
 
 
 def get_definitions(definition_file, dimension, point_type="float", distance_metric="euclidean", count=10):
-    # TODO(erikbern): we should look up what Docker images are available and only use those
-
     definitions = _get_definitions(definition_file)
 
     algorithm_definitions = {}
