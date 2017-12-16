@@ -53,7 +53,11 @@ Note that a few other datasets were used previously, in particular for Hamming a
 Install
 =======
 
-Clone the repo and run `bash install.sh`. This will install all libraries. It could take a while. It has been tested in Ubuntu 16.04. We advice to run it only in a VM.
+The only prerequisite is Python (tested with 3.6) and Docker.
+
+1. Clone the repo.
+2. Run `pip install -r requirements.txt`.
+3. Run `python install.py` to build all the libraries inside Docker containers (this can take a long time).
 
 Experiment Setup
 ================
@@ -66,6 +70,7 @@ Running a set of algorithms with specific parameters works:
 
 Including Your Algorithm
 ========================
+
 You have two choices to include your own algorithm. If your algorithm has a Python wrapper (or is entirely written in Python), then all you need to do is to add your algorithm into `ann_benchmarks/algorithms` by providing a small wrapper. 
 
 Principles
