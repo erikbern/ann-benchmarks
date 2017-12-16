@@ -7,7 +7,7 @@ import sys
 import shutil
 import traceback
 
-from ann_benchmarks.datasets import get_dataset
+from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms, get_result_filename
 from ann_benchmarks.runner import run, run_docker
@@ -30,7 +30,8 @@ def main():
         '--dataset',
         metavar='NAME',
         help='the dataset to load training points from',
-        default='glove-100-angular')
+        default='glove-100-angular',
+        choices=DATASETS.keys())
     parser.add_argument(
         "-k", "--count",
         default=10,
