@@ -38,6 +38,9 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
 
         best_search_time = float('inf')
         for i in range(run_count):
+            print('Run %d/%d...' % (i+1, run_count))
+            n_items_processed = [0]  # a bit dumb but can't be a scalar since of Python's scoping rules
+
             def single_query(v):
                 if prepared_queries:
                     algo.prepare_query(v, count)
@@ -51,6 +54,9 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
                     total = (time.time() - start)
                 candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
                               for idx in candidates]
+                n_items_processed[0] += 1
+                if n_items_processed[0] % 1000 == 0:
+                    print('Processed %d/%d queries...' % (n_items_processed[0], X_test.shape[0]))
                 if len(candidates) > count:
                     print('warning: algorithm %s returned %d results, but count is only %d)' % (algo.name, len(candidates), count))
                 return (total, candidates)
@@ -165,12 +171,12 @@ def run_docker(definition, dataset, count, runs, timeout=7200, mem_limit='8g'):
     t.start()
     try:
         exit_code = container.wait(timeout=timeout)
-    except:
-        container.kill()
-        raise
 
-    # Exit if exit code
-    if exit_code == 0:
-        return
-    elif exit_code is not None:
-        raise Exception('Child process raised exception %d' % exit_code)
+        # Exit if exit code
+        if exit_code == 0:
+            return
+        elif exit_code is not None:
+            raise Exception('Child process raised exception %d' % exit_code)
+
+    finally:
+        container.remove(force=True)
