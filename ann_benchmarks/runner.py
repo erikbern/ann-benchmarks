@@ -4,6 +4,7 @@ import docker
 import json
 import multiprocessing.pool
 import os
+import psutil
 import requests
 import sys
 import threading
@@ -144,7 +145,7 @@ def run_from_cmdline():
     run(definition, args.dataset, args.count)
 
 
-def run_docker(definition, dataset, count, runs, timeout=7200, mem_limit='8g'):
+def run_docker(definition, dataset, count, runs, timeout=7200, mem_limit=None):
     cmd = ['--dataset', dataset,
            '--algorithm', definition.algorithm,
            '--module', definition.module,
@@ -155,6 +156,9 @@ def run_docker(definition, dataset, count, runs, timeout=7200, mem_limit='8g'):
         cmd += ['--arg', json.dumps(arg)]
     print('Running command', cmd)
     client = docker.from_env()
+    if mem_limit is None:
+        mem_limit = psutil.virtual_memory().available
+    print('Memory limit:', mem_limit)
     container = client.containers.run(
         definition.docker_tag,
         cmd,
