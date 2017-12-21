@@ -145,7 +145,7 @@ def run_from_cmdline():
     run(definition, args.dataset, args.count)
 
 
-def run_docker(definition, dataset, count, runs, timeout=7200, mem_limit=None):
+def run_docker(definition, dataset, count, runs, timeout=3*3600, mem_limit=None):
     cmd = ['--dataset', dataset,
            '--algorithm', definition.algorithm,
            '--module', definition.module,
