@@ -14,6 +14,7 @@ class NmslibReuseIndex(BaseANN):
         self._save_index = str(save_index)
         self._index_param = NmslibReuseIndex.encode(index_param)
         self._query_param = NmslibReuseIndex.encode(query_param)
+        self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (self._method_name, self._index_param, self._query_param)
         self._index_name = os.path.join(INDEX_DIR, "nmslib_%s_%s_%s" % (self._method_name, metric, '_'.join(self._index_param)))
 
         d = os.path.dirname(self._index_name)

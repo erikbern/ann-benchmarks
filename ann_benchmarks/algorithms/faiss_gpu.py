@@ -10,6 +10,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 # https://github.com/facebookresearch/faiss/blob/master/benchs/bench_gpu_sift1m.py
 class FaissGPU(BaseANN):
     def __init__(self, n_bits, n_probes):
+        self.name = 'FaissGPU(n_bits={}, n_probes={})'.format(n_bits, n_probes)
         self._n_bits = n_bits
         self._n_probes = n_probes
         self._res = faiss.StandardGpuResources()

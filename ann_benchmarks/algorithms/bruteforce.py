@@ -9,6 +9,7 @@ class BruteForce(BaseANN):
         if metric not in ('angular', 'euclidean', 'hamming'):
             raise NotImplementedError("BruteForce doesn't support metric %s" % metric)
         self._metric = metric
+        self.name = 'BruteForce()'
 
     def fit(self, X):
         metric = {'angular': 'cosine', 'euclidean': 'l2', 'hamming': 'hamming'}[self._metric]
@@ -34,6 +35,7 @@ class BruteForceBLAS(BaseANN):
             raise NotImplementedError("BruteForceBLAS doesn't support precision %s with Hamming distances" % precision)
         self._metric = metric
         self._precision = precision
+        self.name = 'BruteForceBLAS()'
 
     def fit(self, X):
         """Initialize the search index."""

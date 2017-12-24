@@ -16,6 +16,7 @@ class FALCONN(BaseANN):
         self._params = None
         self._index = None
         self._buf = None
+        self.name = 'FALCONN(K={}, L={}, T={})'.format(self._num_bits, self._num_tables, self._num_probes)
 
     def fit(self, X):
         if X.dtype != numpy.float32:

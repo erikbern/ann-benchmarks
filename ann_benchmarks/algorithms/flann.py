@@ -7,6 +7,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 class FLANN(BaseANN):
     def __init__(self, metric, target_precision):
         self._target_precision = float(target_precision)
+        self.name = 'FLANN(target_precision=%f)' % self._target_precision
         self._metric = metric
 
     def fit(self, X):

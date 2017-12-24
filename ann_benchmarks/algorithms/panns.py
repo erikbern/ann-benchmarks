@@ -7,6 +7,7 @@ class PANNS(BaseANN):
         self._n_trees = int(n_trees)
         self._n_candidates = int(n_candidates)
         self._metric = metric
+        self.name = 'PANNS(n_trees=%d, n_cand=%d)' % (self._n_trees, self._n_candidates)
 
     def fit(self, X):
         self._panns = panns.PannsIndex(X.shape[1], metric=self._metric)

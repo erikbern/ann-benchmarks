@@ -10,6 +10,7 @@ class FaissLSH(BaseANN):
     def __init__(self, n_bits):
         self._n_bits = int(n_bits)
         self._index = None
+        self.name = 'FaissLSH(n_bits={})'.format(self._n_bits)
 
     def fit(self, X):
         X = numpy.array(X)

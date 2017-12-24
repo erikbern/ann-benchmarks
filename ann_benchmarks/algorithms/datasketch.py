@@ -9,6 +9,7 @@ class DataSketch(BaseANN):
         self._n_perm = n_perm
         self._n_rep = n_rep
         self._metric = metric
+        self.name = 'Datasketch(n_perm=%d, n_rep=%d)' % (n_perm, n_rep)
 
     def fit(self, X):
         self._index = MinHashLSHForest(num_perm = self._n_perm, l = self._n_rep)
