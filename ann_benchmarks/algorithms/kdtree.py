@@ -5,7 +5,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class KDTree(BaseANN):
     def __init__(self, metric, leaf_size=20):
-        self._leaf_size = int(leaf_size)
+        self._leaf_size = leaf_size
         self._metric = metric
         self.name = 'KDTree(leaf_size=%d)' % self._leaf_size
 

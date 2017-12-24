@@ -8,10 +8,10 @@ class FALCONN(BaseANN):
     def __init__(self, metric, num_bits, num_tables, num_probes = None):
         if not num_probes:
             num_probes = num_tables
-        self._metric = str(metric)
-        self._num_bits = int(num_bits)
-        self._num_tables = int(num_tables)
-        self._num_probes = int(num_probes)
+        self._metric = metric
+        self._num_bits = num_bits
+        self._num_tables = num_tables
+        self._num_probes = num_probes
         self._center = None
         self._params = None
         self._index = None

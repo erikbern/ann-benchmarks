@@ -4,8 +4,8 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class Annoy(BaseANN):
     def __init__(self, metric, n_trees, search_k):
-        self._n_trees = int(n_trees)
-        self._search_k = int(search_k)
+        self._n_trees = n_trees
+        self._search_k = search_k
         self._metric = metric
         self.name = 'Annoy(n_trees=%d, search_k=%d)' % (self._n_trees, self._search_k)
 

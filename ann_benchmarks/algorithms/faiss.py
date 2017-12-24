@@ -8,7 +8,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class FaissLSH(BaseANN):
     def __init__(self, n_bits):
-        self._n_bits = int(n_bits)
+        self._n_bits = n_bits
         self._index = None
         self.name = 'FaissLSH(n_bits={})'.format(self._n_bits)
 
@@ -40,8 +40,8 @@ import sklearn.preprocessing
 
 class FaissIVF(BaseANN):
     def __init__(self, metric, n_list, n_probe):
-        self._n_list = int(n_list)
-        self._n_probe = int(n_probe)
+        self._n_list = n_list
+        self._n_probe = n_probe
         self._metric = metric
         self.name = 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list, self._n_probe)
 
