@@ -39,7 +39,6 @@ class BruteForceBLAS(BaseANN):
 
     def fit(self, X):
         """Initialize the search index."""
-        X = numpy.array(X)
         if self._metric == 'angular':
             lens = (X ** 2).sum(-1)  # precompute (squared) length of each vector
             X /= numpy.sqrt(lens)[..., numpy.newaxis]  # normalize index vectors to unit length

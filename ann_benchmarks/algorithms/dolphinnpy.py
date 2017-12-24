@@ -15,7 +15,8 @@ class DolphinnPy(BaseANN):
         self._index = None
 
     def fit(self, X):
-        X = numpy.array(X, dtype=numpy.float32)
+        if X.dtype != numpy.float32:
+            X = numpy.array(X, dtype=numpy.float32)
         d = X.shape[1]
         self.m = findmean(X, d, 10)
         X = isotropize(X, d, self.m)

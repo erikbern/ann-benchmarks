@@ -13,7 +13,6 @@ class FaissLSH(BaseANN):
         self.name = 'FaissLSH(n_bits={})'.format(self._n_bits)
 
     def fit(self, X):
-        X = numpy.array(X)
         if X.dtype != numpy.float32:
             X = X.astype(numpy.float32)
         f = X.shape[1]
@@ -46,7 +45,6 @@ class FaissIVF(BaseANN):
         self.name = 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list, self._n_probe)
 
     def fit(self, X):
-        X = numpy.array(X)
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
 

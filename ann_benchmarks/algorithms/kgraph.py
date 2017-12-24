@@ -14,7 +14,6 @@ class KGraph(BaseANN):
         self._save_index = save_index
 
     def fit(self, X):
-        X = numpy.array(X)
         if X.dtype != numpy.float32:
             X = X.astype(numpy.float32)
         self._kgraph = pykgraph.KGraph(X, self._metric)

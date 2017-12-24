@@ -20,8 +20,8 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
     algo = instantiate_algorithm(definition)
 
     D = get_dataset(dataset)
-    X_train = D['train']
-    X_test = D['test']
+    X_train = numpy.array(D['train'])
+    X_test = numpy.array(D['test'])
     distance = D.attrs['distance']
     print('got a train set of size (%d * %d)' % X_train.shape)
     print('got %d queries' % len(X_test))
