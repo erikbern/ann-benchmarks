@@ -90,14 +90,15 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
 
         verbose = hasattr(algo, "query_verbose")
         attrs = {
+            "batch_mode": use_batch_query,
             "build_time": build_time,
             "best_search_time": best_search_time,
-            "index_size": index_size,
             "candidates": avg_candidates,
+            "expect_extra": verbose,
+            "index_size": index_size,
+            "name": algo.name,
             "run_count": run_count,
             "run_alone": force_single,
-            "expect_extra": verbose,
-            "batch_mode": use_batch_query
         }
         store_results(dataset, count, definition, attrs, results)
     finally:
