@@ -1,12 +1,13 @@
 from __future__ import absolute_import
 import pyflann
+import numpy
 import sklearn.preprocessing
 from ann_benchmarks.algorithms.base import BaseANN
 
 class FLANN(BaseANN):
     def __init__(self, metric, target_precision):
         self._target_precision = target_precision
-        self.name = 'FLANN(target_precision=%f)' % target_precision
+        self.name = 'FLANN(target_precision=%f)' % self._target_precision
         self._metric = metric
 
     def fit(self, X):
@@ -18,4 +19,6 @@ class FLANN(BaseANN):
     def query(self, v, n):
         if self._metric == 'angular':
             v = sklearn.preprocessing.normalize([v], axis=1, norm='l2')[0]
+        if v.dtype != numpy.float32:
+            v = v.astype(numpy.float32)
         return self._flann.nn_index(v, n)[0][0]

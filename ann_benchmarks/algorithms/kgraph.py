@@ -16,8 +16,6 @@ class KGraph(BaseANN):
     def fit(self, X):
         if X.dtype != numpy.float32:
             X = X.astype(numpy.float32)
-        #if self._metric == 'angular':
-        #    X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._kgraph = pykgraph.KGraph(X, self._metric)
         path = os.path.join(INDEX_DIR, 'kgraph-index-%s' % self._metric)
         if os.path.exists(path):

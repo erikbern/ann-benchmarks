@@ -36,7 +36,8 @@ def queries_per_second(queries, run):
     return 1.0 / run.attrs["best_search_time"]
 
 def index_size(queries, run):
-    return run.attrs["index_size"]
+    # TODO(erikbern): should replace this with peak memory usage or something
+    return run.attrs.get("index_size", 0)
 
 def build_time(queries, run):
     return run.attrs["build_time"]

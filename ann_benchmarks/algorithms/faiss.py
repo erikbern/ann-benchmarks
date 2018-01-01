@@ -8,13 +8,15 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class FaissLSH(BaseANN):
     def __init__(self, n_bits):
-        self.name = 'FaissLSH(n_bits={})'.format(n_bits)
         self._n_bits = n_bits
         self._index = None
+        self.name = 'FaissLSH(n_bits={})'.format(self._n_bits)
 
     def fit(self, X):
-        X = X.astype(numpy.float32)
-        self._index = faiss.IndexLSH(len(X[0]), self._n_bits)
+        if X.dtype != numpy.float32:
+            X = X.astype(numpy.float32)
+        f = X.shape[1]
+        self._index = faiss.IndexLSH(f, self._n_bits)
         self._index.train(X)
         self._index.add(X)
 
@@ -33,14 +35,14 @@ class FaissLSH(BaseANN):
     def use_threads(self):
         return False
 
-import sklearn
+import sklearn.preprocessing
 
 class FaissIVF(BaseANN):
     def __init__(self, metric, n_list, n_probe):
-        self.name = 'FaissIVF(n_list=%d, n_probe=%d)' % (n_list, n_probe)
         self._n_list = n_list
         self._n_probe = n_probe
         self._metric = metric
+        self.name = 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list, self._n_probe)
 
     def fit(self, X):
         if self._metric == 'angular':

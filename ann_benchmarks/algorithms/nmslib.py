@@ -29,11 +29,11 @@ class NmslibReuseIndex(BaseANN):
             # Aborted (core dumped)
             self._index_param.append('bucketSize=%d' % min(int(X.shape[0] * 0.0005), 1000))
                                         
-        self._index = nmslib.init(self._nmslib_metric, [], self._method_name, nmslib.DataType.DENSE_VECTOR, nmslib.DistType.FLOAT)
-    
+        self._index = nmslib.init(space=self._nmslib_metric,
+                                  method=self._method_name)
+
         for i, x in enumerate(X):
             nmslib.addDataPoint(self._index, i, x.tolist())
-
 
         if os.path.exists(self._index_name):
             print('Loading index from file')
