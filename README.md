@@ -87,9 +87,3 @@ Principles
 * Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
 * We currently support CPU-based ANN algorithms. GPU support is planned as future work.
 * Do proper train/test set of index data and query points.
-
-
-Testing
-=======
-
-The project is fully tested using Travis, with unit tests run for all different libraries and algorithms.
