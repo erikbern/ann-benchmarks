@@ -1,6 +1,8 @@
 Benchmarking nearest neighbors
 ==============================
 
+[![Travis status](https://img.shields.io/travis/erikbern/ann-benchmarks/master.svg?style=flat)](https://travis-ci.org/erikbern/ann-benchmarks)
+
 This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics.
 
 See [the results of this benchmark](http://sss.projects.itu.dk/ann-benchmarks).
