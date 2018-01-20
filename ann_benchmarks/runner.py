@@ -3,6 +3,7 @@ import datetime
 import docker
 import json
 import multiprocessing.pool
+import numpy
 import os
 import psutil
 import requests
