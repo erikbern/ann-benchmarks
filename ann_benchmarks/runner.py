@@ -33,7 +33,6 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
             prepared_queries = algo.supports_prepared_queries()
 
         t0 = time.time()
-        print('X_train:', X_train)
         index_size_before = algo.get_index_size("self")
         algo.fit(X_train)
         build_time = time.time() - t0
