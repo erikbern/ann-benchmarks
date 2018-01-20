@@ -1,9 +1,11 @@
 Benchmarking nearest neighbors
 ==============================
 
-[![Travis status](https://img.shields.io/travis/erikbern/ann-benchmarks/master.svg?style=flat)](https://travis-ci.org/erikbern/ann-benchmarks)
+[![travis badge](https://img.shields.io/travis/erikbern/ann-benchmarks/master.svg?style=flat)](https://travis-ci.org/erikbern/ann-benchmarks)
 
-This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics.
+Doing fast searching of nearest neighbors in high dimensional spaces is an increasingly important problem, but so far there has not been a lot of empirical attempts at comparing approaches in an objective way.
+
+This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics. We have pregenerated datasets (in HDF5) formats and we also have Docker containers for each algorithm. There's a [test suite](https://travis-ci.org/erikbern/ann-benchmarks) that makes sure every algorithm works.
 
 See [the results of this benchmark](http://sss.projects.itu.dk/ann-benchmarks).
 
@@ -28,11 +30,6 @@ Euclidean space
 Set similarity
 --------------
 * [Datasketch](https://github.com/ekzhu/datasketch)
-
-Motivation
-==========
-
-Doing fast searching of nearest neighbors in high dimensional spaces is an increasingly important problem, but with little attempt at objectively comparing methods.
 
 Data sets
 =========
@@ -90,9 +87,3 @@ Principles
 * Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
 * We currently support CPU-based ANN algorithms. GPU support is planned as future work.
 * Do proper train/test set of index data and query points.
-
-
-Testing
-=======
-
-The project is fully tested using Travis, with unit tests run for all different libraries and algorithms.
