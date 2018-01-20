@@ -52,7 +52,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--dataset',
         metavar="DATASET",
-        required=True)
+        default='glove-100-angular')
     parser.add_argument(
         '--count',
         default=10)
@@ -65,8 +65,7 @@ if __name__ == "__main__":
         '--limit',
         default=-1)
     parser.add_argument(
-        '-o', '--output',
-        required=True)
+        '-o', '--output')
     parser.add_argument(
         '-x', '--x-axis',
         help = 'Which metric to use on the X-axis',
@@ -94,6 +93,10 @@ if __name__ == "__main__":
         help='Also show raw results in faded colours',
         action='store_true')
     args = parser.parse_args()
+
+    if not args.output:
+        args.output = args.dataset + '.png'
+        print('writing output to %s' % args.output)
 
     dataset = get_dataset(args.dataset)
     dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
