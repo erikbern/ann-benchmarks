@@ -28,10 +28,6 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
     print('got %d queries' % len(X_test))
 
     try:
-        prepared_queries = False
-        if hasattr(algo, "supports_prepared_queries"):
-            prepared_queries = algo.supports_prepared_queries()
-
         t0 = time.time()
         index_size_before = algo.get_index_size("self")
         algo.fit(X_train)
@@ -46,16 +42,9 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
             n_items_processed = [0]  # a bit dumb but can't be a scalar since of Python's scoping rules
 
             def single_query(v):
-                if prepared_queries:
-                    algo.prepare_query(v, count)
-                    start = time.time()
-                    algo.run_prepared_query()
-                    total = (time.time() - start)
-                    candidates = algo.get_prepared_query_results()
-                else:
-                    start = time.time()
-                    candidates = algo.query(v, count)
-                    total = (time.time() - start)
+                start = time.time()
+                candidates = algo.query(v, count)
+                total = (time.time() - start)
                 candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
                               for idx in candidates]
                 n_items_processed[0] += 1
