@@ -12,9 +12,6 @@ See [the results of this benchmark](http://sss.projects.itu.dk/ann-benchmarks).
 Evaluated
 =========
 
-Euclidean space
----------------
-
 * [Annoy](https://github.com/spotify/annoy)
 * [FLANN](http://www.cs.ubc.ca/research/flann/)
 * [scikit-learn](http://scikit-learn.org/stable/modules/neighbors.html): LSHForest, KDTree, BallTree
@@ -26,9 +23,6 @@ Euclidean space
 * [FALCONN](http://falconn-lib.org/)
 * [FAISS](https://github.com/facebookresearch/faiss.git)
 * [DolphinnPy](https://github.com/ipsarros/DolphinnPy)
-
-Set similarity
---------------
 * [Datasketch](https://github.com/ekzhu/datasketch)
 
 Data sets
@@ -48,8 +42,6 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 | [NYTimes](https://archive.ics.uci.edu/ml/datasets/bag+of+words)   |        256 |    290,000 |    10,000 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/nytimes-256-angular.hdf5) (301MB)         |
 | [SIFT](https://corpus-texmex.irisa.fr/)                           |        128 |  1,000,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/sift-128-euclidean.hdf5) (501MB)          |
 
-Note that a few other datasets were used previously, in particular for Hamming and set similarity. We are going to add them back shortly in the more convenient HDF5 format.
-
 Install
 =======
 
@@ -57,21 +49,26 @@ The only prerequisite is Python (tested with 3.6) and Docker.
 
 1. Clone the repo.
 2. Run `pip install -r requirements.txt`.
-3. Run `python install.py` to build all the libraries inside Docker containers (this can take a long time).
+3. Run `python install.py` to build all the libraries inside Docker containers (this can take a while, like 10-30 minutes).
 
-Experiment Setup
-================
+Running
+=======
 
-Running a set of algorithms with specific parameters works:
+1. Run `python run.py` (this can take an extremely long time, potentially days)
+2. Run `python plot.py` to plot results.
+
+You can customize the algorithms and datasets if you want to:
 
 * Check that `algos.yaml` contains the parameter settings that you want to test
 * To run experiments on SIFT, invoke `python run.py --dataset glove-100-angular`. See `python run.py --help` for more information on possible settings. Note that experiments can take a long time. 
 * To process the results, either use `python plot.py --dataset glove-100-angular` or `python createwebsite.py`. An example call: `python createwebsite.py --plottype recall/time --latex --scatter --outputdir website/`. 
 
-Including Your Algorithm
+Including your algorithm
 ========================
 
-You have two choices to include your own algorithm. If your algorithm has a Python wrapper (or is entirely written in Python), then all you need to do is to add your algorithm into `ann_benchmarks/algorithms` by providing a small wrapper. 
+1. Add your algorithm into `ann_benchmarks/algorithms` by providing a small Python wrapper.
+2. Add a Dockerfile in `install/` for it
+3. Add it to `algos.yaml`
 
 Principles
 ==========
@@ -87,3 +84,4 @@ Principles
 * Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
 * We currently support CPU-based ANN algorithms. GPU support is planned as future work.
 * Do proper train/test set of index data and query points.
+* Note that Hamming distance and set similarity was supported in the past. This might hopefully be added back soon.
