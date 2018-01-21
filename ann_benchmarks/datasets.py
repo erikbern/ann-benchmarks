@@ -38,8 +38,8 @@ def write_output(train, test, fn, distance, count=100):
     n = 0
     f = h5py.File(fn, 'w')
     f.attrs['distance'] = distance
-    print('train size: %d * %d' % train.shape)
-    print('test size: %d * %d' % test.shape)
+    print('train size: %9d * %4d' % train.shape)
+    print('test size:  %9d * %4d' % test.shape)
     f.create_dataset('train', (len(train), len(train[0])), dtype='f')[:] = train
     f.create_dataset('test', (len(test), len(test[0])), dtype='f')[:] = test
     neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
@@ -77,18 +77,25 @@ def glove(out_fn, d):
         write_output(numpy.array(X_train), numpy.array(X_test), out_fn, 'angular')
 
 
-def _load_texmex_vectors(f):
+def _load_texmex_vectors(f, n, k):
     import struct
 
-    vs = []
-    while True:
-        b = f.read(4)
-        if not b:
-            break
-        dim = struct.unpack('i', b)[0]
-        vec = struct.unpack('f' * dim, f.read(dim*4))
-        vs.append(vec)
-    return numpy.array(vs)
+    v = numpy.zeros((n, k))
+    for i in range(n):
+        f.read(4)  # ignore vec length
+        v[i] = struct.unpack('f' * k, f.read(k*4))
+
+    return v
+
+
+def _get_irisa_matrix(t, fn):
+    import struct
+    m = t.getmember(fn)
+    f = t.extractfile(m)
+    k, = struct.unpack('i', f.read(4))
+    n = m.size // (4 + 4*k)
+    f.seek(0)
+    return _load_texmex_vectors(f, n, k)
 
 
 def sift(out_fn):
@@ -98,8 +105,8 @@ def sift(out_fn):
     fn = os.path.join('data', 'sift.tar.tz')
     download(url, fn)
     with tarfile.open(fn, 'r:gz') as t:
-        train = _load_texmex_vectors(t.extractfile(t.getmember('sift/sift_base.fvecs')))
-        test = _load_texmex_vectors(t.extractfile(t.getmember('sift/sift_query.fvecs')))
+        train = _get_irisa_matrix(t, 'sift/sift_base.fvecs')
+        test = _get_irisa_matrix(t, 'sift/sift_query.fvecs')
         write_output(train, test, out_fn, 'euclidean')
 
 
@@ -110,8 +117,8 @@ def gist(out_fn):
     fn = os.path.join('data', 'gist.tar.tz')
     download(url, fn)
     with tarfile.open(fn, 'r:gz') as t:
-        train = _load_texmex_vectors(t.extractfile(t.getmember('gist/gist_base.fvecs')))
-        test = _load_texmex_vectors(t.extractfile(t.getmember('gist/gist_query.fvecs')))
+        train = _get_irisa_matrix(t, 'gist/gist_base.fvecs')
+        test = _get_irisa_matrix(t, 'gist/gist_query.fvecs')
         write_output(train, test, out_fn, 'euclidean')
 
 
