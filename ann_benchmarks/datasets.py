@@ -42,18 +42,34 @@ def write_output(train, test, fn, distance, count=100):
     print('test size: %d * %d' % test.shape)
     f.create_dataset('train', (len(train), len(train[0])), dtype='f')[:] = train
     f.create_dataset('test', (len(test), len(test[0])), dtype='f')[:] = test
-    neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
-    distances = f.create_dataset('distances', (len(test), count), dtype='f')
-    bf = BruteForceBLAS(distance, precision=numpy.float32)
-    bf.fit(train)
-    queries = []
+    test_neighbors = f.create_dataset('test_neighbors', (len(test), count), dtype='i')
+    test_distances = f.create_dataset('test_distances', (len(test), count), dtype='f')
+    train_neighbors = f.create_dataset('train_neighbors', (len(train), count), dtype='i')
+    train_distances = f.create_dataset('train_distances', (len(train), count), dtype='f')
+    
+    bf_test = BruteForceBLAS(distance, precision=numpy.float32)
+    bf_test.fit(train) #distance of test data with train data
+
+    queries = [] #what does this list do?
     for i, x in enumerate(test):
         if i % 1000 == 0:
             print('%d/%d...' % (i, test.shape[0]))
-        res = list(bf.query_with_distances(x, count))
+        res = list(bf_test.query_with_distances(x, count))
         res.sort(key=lambda t: t[-1])
-        neighbors[i] = [j for j, _ in res]
-        distances[i] = [d for _, d in res]
+        test_neighbors[i] = [j for j, _ in res]
+        test_distances[i] = [d for _, d in res]
+
+    bf_train = BruteForceBLAS(distance, precision=numpy.float32)
+    bf_train.fit(train)
+    for i, x in enumerate(train):
+        if i % 1000 == 0:
+            print('%d/%d...' % (i, train.shape[0]))
+        res = list(bf.query_with_distances(x, count+1))
+        res.sort(key=lambda t: t[-1])
+        res.remove(x) #remove self index
+        train_neighbors[i] = [j for j, _ in res]
+        train_distances[i] = [d for _, d in res]
+
     f.close()
 
 
