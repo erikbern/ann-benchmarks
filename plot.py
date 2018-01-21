@@ -23,10 +23,10 @@ def create_plot(all_data, golden, raw, x_log, y_log, xn, yn, fn_out, linestyles)
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
         xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
         color, faded, linestyle, marker = linestyles[algo]
-        handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
+        handle, = plt.semilogy(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         handles.append(handle)
         if raw:
-            handle2, = plt.plot(axs, ays, '-', label=algo, color=faded, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
+            handle2, = plt.semilogy(axs, ays, '-', label=algo, color=faded, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
         labels.append(algo)
 
     if x_log:
