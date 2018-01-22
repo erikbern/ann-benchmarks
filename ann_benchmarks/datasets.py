@@ -33,6 +33,35 @@ def get_dataset(which):
 # Everything below this line is related to creating datasets
 # You probably never need to do this at home, just rely on the prepared datasets at http://vectors.erikbern.com
 
+def write_helper(bf,data,count,nn_dataset,d_dataset,remove_self=False):
+    """
+    bf: instance of BruteForceBLAS object
+    data: data to write NNs for
+    count: number of nearest neighbors to query
+    nn_dataset: dataset to store indices of NNs
+    d_dataset:dataset to store distances
+    remove_self: bool (if True will remove self index from results)
+    For train data, the NNs will include the datapoint itself as well
+    """
+    for i,x in enumerate(data):
+        res = list(bf.query_with_distances(x, count))
+        res.sort(key=lambda t: t[-1])
+
+        if i % 1000 == 0:
+            print('%d/%d...' % (i, neighbors_dataset.shape[0]))
+
+        neighbors,distances=zip(*res)
+        
+        if remove_self:
+            self_index=neighbors.index(i)
+            neighbors.pop(self_index)
+            distances.pop(self_index)
+
+        neighbors_dataset[i] = neighbors
+
+        if distances_dataset is not None:
+            distances_dataset[i] = distances
+
 def write_output(train, test, fn, distance, count=100):
     from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
     n = 0
@@ -42,33 +71,17 @@ def write_output(train, test, fn, distance, count=100):
     print('test size: %d * %d' % test.shape)
     f.create_dataset('train', (len(train), len(train[0])), dtype='f')[:] = train
     f.create_dataset('test', (len(test), len(test[0])), dtype='f')[:] = test
-    test_neighbors = f.create_dataset('test_neighbors', (len(test), count), dtype='i')
-    test_distances = f.create_dataset('test_distances', (len(test), count), dtype='f')
+    test_neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
+    test_distances = f.create_dataset('distances', (len(test), count), dtype='f')
     train_neighbors = f.create_dataset('train_neighbors', (len(train), count), dtype='i')
-    train_distances = f.create_dataset('train_distances', (len(train), count), dtype='f')
-    
-    bf_test = BruteForceBLAS(distance, precision=numpy.float32)
-    bf_test.fit(train) #distance of test data with train data
+    train_distances = None #f.create_dataset('train_distances', (len(train), count), dtype='f')
+    #uncomment above to store train distances
 
-    queries = [] #what does this list do?
-    for i, x in enumerate(test):
-        if i % 1000 == 0:
-            print('%d/%d...' % (i, test.shape[0]))
-        res = list(bf_test.query_with_distances(x, count))
-        res.sort(key=lambda t: t[-1])
-        test_neighbors[i] = [j for j, _ in res]
-        test_distances[i] = [d for _, d in res]
+    bf = BruteForceBLAS(distance, precision=numpy.float32)
+    bf.fit(train)
 
-    bf_train = BruteForceBLAS(distance, precision=numpy.float32)
-    bf_train.fit(train)
-    for i, x in enumerate(train):
-        if i % 1000 == 0:
-            print('%d/%d...' % (i, train.shape[0]))
-        res = list(bf.query_with_distances(x, count+1))
-        res.sort(key=lambda t: t[-1])
-        res.remove(x) #remove self index
-        train_neighbors[i] = [j for j, _ in res]
-        train_distances[i] = [d for _, d in res]
+    write_helper(bf,test,count,test_neighbors,test_distances,False)
+    write_helper(bf,train,count+1,train_neighbors,train_distances,True)
 
     f.close()
 
