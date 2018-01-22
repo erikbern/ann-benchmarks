@@ -41,14 +41,15 @@ def write_helper(bf,data,count,nn_dataset,d_dataset,remove_self=False):
     nn_dataset: dataset to store indices of NNs
     d_dataset:dataset to store distances
     remove_self: bool (if True will remove self index from results)
-    For train data, the NNs will include the datapoint itself as well
+    For train data, the NNs will include the datapoint itself as well,
+    so it should be filtered out
     """
     for i,x in enumerate(data):
         res = list(bf.query_with_distances(x, count))
         res.sort(key=lambda t: t[-1])
 
         if i % 1000 == 0:
-            print('%d/%d...' % (i, neighbors_dataset.shape[0]))
+            print('%d/%d...' % (i, nn_dataset.shape[0]))
 
         neighbors,distances=zip(*res)
         
@@ -57,10 +58,10 @@ def write_helper(bf,data,count,nn_dataset,d_dataset,remove_self=False):
             neighbors.pop(self_index)
             distances.pop(self_index)
 
-        neighbors_dataset[i] = neighbors
+        nn_dataset[i] = neighbors
 
-        if distances_dataset is not None:
-            distances_dataset[i] = distances
+        if d_dataset is not None:
+            d_dataset[i] = distances
 
 def write_output(train, test, fn, distance, count=100):
     from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
