@@ -24,10 +24,9 @@ def store_results(dataset, count, definition, attrs, results):
 
 
 def load_results(dataset, count, definitions):
-    fs = []
     for definition in definitions:
         fn = get_result_filename(dataset, count, definition)
         if os.path.exists(fn):
             f = h5py.File(fn)
-            fs.append((definition, f))
-    return fs
+            yield definition, f
+            f.close()
