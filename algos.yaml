@@ -121,6 +121,8 @@ float:
           # 0.1}).
   euclidean:
     kgraph:
+      docker-tag: ann-benchmarks-kgraph
+      module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
       base-args: ["@metric"]
       run-groups:
