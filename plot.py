@@ -5,28 +5,25 @@ import matplotlib.pyplot as plt
 import argparse
 
 from ann_benchmarks.datasets import get_dataset
-from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms
+from ann_benchmarks.algorithms.definitions import get_definitions, get_unique_algorithms
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_linestyles, create_pointset
 from ann_benchmarks.results import store_results, load_results
 
 
-def create_plot(all_data, golden, raw, x_log, y_log, xn, yn, fn_out, linestyles):
+def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles):
     xm, ym = (metrics[xn], metrics[yn])
 # Now generate each plot
     handles = []
     labels = []
-    if golden:
-        plt.figure(figsize=(7, 4.35))
-    else:
-        plt.figure(figsize=(7, 7))
+    plt.figure(figsize=(12, 9))
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
         xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
         color, faded, linestyle, marker = linestyles[algo]
-        handle, = plt.semilogy(xs, ys, '-', label=algo, color=color, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
+        handle, = plt.semilogy(xs, ys, '-', label=algo, color=color, ms=7, mew=3, lw=3, linestyle=linestyle, marker=marker)
         handles.append(handle)
         if raw:
-            handle2, = plt.semilogy(axs, ays, '-', label=algo, color=faded, ms=5, mew=1, lw=2, linestyle=linestyle, marker=marker)
+            handle2, = plt.semilogy(axs, ays, '-', label=algo, color=faded, ms=5, mew=2, lw=2, linestyle=linestyle, marker=marker)
         labels.append(algo)
 
     if x_log:
@@ -85,12 +82,8 @@ if __name__ == "__main__":
         help='Draw the Y-axis using a logarithmic scale',
         action='store_true')
     parser.add_argument(
-        '-G', '--golden',
-        help='Use golden ratio as plotsize',
-        action='store_true')
-    parser.add_argument(
         '--raw',
-        help='Also show raw results in faded colours',
+        help='Show raw results (not just Pareto frontier) in faded colours',
         action='store_true')
     args = parser.parse_args()
 
@@ -103,10 +96,10 @@ if __name__ == "__main__":
     point_type = 'float' # TODO(erikbern): should look at the type of X_train
     distance = dataset.attrs['distance']
     definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
+    unique_algorithms = get_unique_algorithms(args.definitions)
     results = load_results(args.dataset, args.count, definitions)
-
     runs, all_algos = compute_metrics(dataset, results)
-    linestyles = create_linestyles(all_algos)
+    linestyles = create_linestyles(unique_algorithms, all_algos)
 
-    create_plot(runs, args.golden, args.raw, args.x_log,
+    create_plot(runs, args.raw, args.x_log,
             args.y_log, args.x_axis, args.y_axis, args.output, linestyles)
