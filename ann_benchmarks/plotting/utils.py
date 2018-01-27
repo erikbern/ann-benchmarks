@@ -36,7 +36,7 @@ def compute_metrics(dataset, res):
     all_algos = set()
     for definition, run in res:
         algo = definition.algorithm
-        algo_name = definition.arguments # TODO(erikbern): stupid backwards compatibility thing
+        algo_name = run.attrs['name']
 
         print('--')
         print(algo_name)
