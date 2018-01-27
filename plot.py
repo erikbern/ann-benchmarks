@@ -97,9 +97,9 @@ if __name__ == "__main__":
     distance = dataset.attrs['distance']
     definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
     unique_algorithms = get_unique_algorithms(args.definitions)
+    linestyles = create_linestyles(unique_algorithms)
     results = load_results(args.dataset, args.count, definitions)
     runs, all_algos = compute_metrics(dataset, results)
-    linestyles = create_linestyles(unique_algorithms, all_algos)
 
     create_plot(runs, args.raw, args.x_log,
             args.y_log, args.x_axis, args.y_axis, args.output, linestyles)

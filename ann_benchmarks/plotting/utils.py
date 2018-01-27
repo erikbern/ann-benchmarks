@@ -54,22 +54,20 @@ def compute_metrics(dataset, res):
 
 def generate_n_colors(n):
     vs = numpy.linspace(0.4, 1.0, 7)
-    colors = [(.9, .4, .4)]
+    colors = [(.9, .4, .4, 1.)]
     def euclidean(a, b):
         return sum((x-y)**2 for x, y in zip(a, b))
     while len(colors) < n:
         new_color = max(itertools.product(vs, vs, vs), key=lambda a: min(euclidean(a, b) for b in colors))
-        colors.append(new_color + (1,))
+        colors.append(new_color + (1.,))
     return colors
 
-def create_linestyles(unique_algorithms, algos):
-    colors = dict((algo, color) for algo, color in zip(unique_algorithms, generate_n_colors(len(unique_algorithms))))
-    colors = [colors[algo] for algo in algos]
-    faded = [[r, g, b, 0.3] for [r, g, b, a] in colors]
-    linestyles = {}
-    for i, algo in enumerate(algos):
-        linestyles[algo] = (colors[i], faded[i], ['--', '-.', '-', ':'][i%4], ['+', '<', 'o', '*', 'x'][i%5])
-    return linestyles
+def create_linestyles(unique_algorithms):
+    colors = dict(zip(unique_algorithms, generate_n_colors(len(unique_algorithms))))
+    linestyles = dict((algo, ['--', '-.', '-', ':'][i%4]) for i, algo in enumerate(unique_algorithms))
+    markerstyles = dict((algo, ['+', '<', 'o', '*', 'x'][i%5]) for i, algo in enumerate(unique_algorithms))
+    faded = dict((algo, (r, g, b, 0.3)) for algo, (r, g, b, a) in colors.items())
+    return dict((algo, (colors[algo], faded[algo], linestyles[algo], markerstyles[algo])) for algo in unique_algorithms)
 
 def get_up_down(metric):
     if metric["worst"] == float("inf"):
