@@ -1,0 +1,342 @@
+float:
+  any:
+    DolphinnPy:
+      docker-tag: ann-benchmarks-dolphinn # Docker tag
+      module: ann_benchmarks.algorithms.dolphinnpy # Python class
+      constructor: DolphinnPy # Python class name
+      run-groups:
+        base:
+          args: [[10, 50, 100, 200, 1000, 2000]]
+    faiss-lsh:
+      docker-tag: ann-benchmarks-faiss
+      module: ann_benchmarks.algorithms.faiss
+      constructor: FaissLSH
+      run-groups:
+        base:
+          # When @args is a list, the result is the Cartesian product of all of
+          # the things it contains; entries that aren't a list will be treated
+          # as lists of length one.
+          args: [[32, 64, 128, 256, 512, 1024, 2048, 4096]]
+          # This run group will produce eight algorithm instances:
+          # FaissLSH(32), FaissLSH(64), and so on up to FaissLSH(4096).
+    faiss-ivf:
+      docker-tag: ann-benchmarks-faiss
+      module: ann_benchmarks.algorithms.faiss
+      constructor: FaissIVF
+      base-args: ["@metric"]
+      run-groups:
+        base:
+          args: [[5, 10, 20, 50, 100, 200, 400, 800, 1000],
+                 [1, 2, 3, 4, 5, 8, 10, 20, 50, 100, 200]]
+    flann:
+      docker-tag: ann-benchmarks-flann
+      module: ann_benchmarks.algorithms.flann
+      constructor: FLANN
+      base-args: ["@metric"]
+      run-groups:
+        flann:
+          args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97]]
+    panns:
+      docker-tag: ann-benchmarks-panns
+      module: ann_benchmarks.algorithms.panns
+      constructor: PANNS
+      base-args: ["@metric"]
+      run-groups:
+        five-trees:
+          args: [5, 20]
+        ten-trees:
+          args: [10, [10, 50]]
+        hundred-candidates:
+          args: [[10, 20, 40], 100]
+    annoy:
+      docker-tag: ann-benchmarks-annoy
+      module: ann_benchmarks.algorithms.annoy
+      constructor: Annoy
+      base-args: ["@metric"]
+      run-groups:
+        annoy:
+          args: [[100, 200, 400], [100, 200, 400, 1000, 2000, 4000, 10000,
+                20000, 40000, 100000, 200000, 400000]]
+          # This run group produces (3 * 12 =) 36 algorithm instances:
+          # Annoy("angular", 100, 100), Annoy("angular", 100, 200), and so on
+          # up to Annoy("angular", 400, 400000).
+    nearpy:
+      docker-tag: ann-benchmarks-nearpy
+      module: ann_benchmarks.algorithms.nearpy
+      constructor: NearPy
+      base-args: ["@metric"]
+      run-groups:
+        nearpy:
+          args: [[10, 12, 14, 16], [5, 10, 20, 40]]
+        extra:
+          args: [16, [5, 10, 15, 20, 25, 30, 40]]
+    bruteforce:
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.bruteforce
+      constructor: BruteForce
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
+    bruteforce-blas:
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.bruteforce
+      constructor: BruteForceBLAS
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
+    ball:
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.balltree
+      constructor: BallTree
+      base-args: ["@metric"]
+      run-groups:
+        ball:
+          args: &treeargs [[10, 20, 40, 100, 200, 400, 1000]]
+    kd:
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.kdtree
+      constructor: KDTree
+      base-args: ["@metric"]
+      run-groups:
+        ball:
+          args: *treeargs
+    BallTree(nmslib):
+      docker-tag: ann-benchmarks-nmslib
+      module: ann_benchmarks.algorithms.nmslib
+      constructor: NmslibNewIndex
+      base-args: ["@metric", "vptree"]
+      run-groups:
+        base:
+          # When @args is a dictionary, algorithm instances will be generated
+          # by taking the Cartesian product of all of its values.
+          args: {"tuneK": 10, "desiredRecall": [0.99, 0.97, 0.95, 0.9, 0.85, 0.8,
+                0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]}
+          # This run group produces thirteen algorithm instances:
+          # NmslibNewIndex("angular", "vptree", {"tuneK": 10,
+          # "desiredRecall": 0.99}), NmslibNewIndex("angular", "vptree",
+          # {"tuneK": 10, "desiredRecall": 0.97}), and so on up to
+          # NmslibNewIndex("angular", "vptree", {"tuneK": 10, "desiredRecall":
+          # 0.1}).
+  euclidean:
+    kgraph:
+      docker-tag: ann-benchmarks-kgraph
+      module: ann_benchmarks.algorithms.kgraph
+      constructor: KGraph
+      base-args: ["@metric"]
+      run-groups:
+        kgraph:
+          args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                 {'reverse': -1}, True] # XXX: hard-codes save_index as True
+    hnsw(nmslib):
+      docker-tag: ann-benchmarks-nmslib
+      module: ann_benchmarks.algorithms.nmslib
+      constructor: NmslibReuseIndex
+      base-args: ["@metric", "hnsw"]
+      run-groups:
+        M-32:
+          # If a run group has an array called @arg-groups instead of one
+          # called @args, then every element in that array will be separately
+          # expanded before then taking the Cartesian product of all of those
+          # expansions.
+          #
+          # Yes, this is a bit of a hack, but some constructors are weird.
+          # (This one used to require that dictionaries be encoded as lists
+          # of environment variable-style strings -- ["M=32", "post=2",
+          # "efConstruction=400"] -- which didn't work with this at all...)
+          arg-groups:
+            - {"M": 32, "post": 2, "efConstruction": 400}
+            - True # XXX: hard-codes save_index as True
+            - {"ef": [20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200,
+              300, 400]}
+        M-20:
+          arg-groups:
+            - {"M": 20, "post": 2, "efConstruction": 400}
+            - True
+            - {"ef": [2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120, 200, 400]}
+        M-12:
+          arg-groups:
+            - {"M": 12, "post": 0, "efConstruction": 400}
+            - True
+            - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120]}
+        M-4:
+          arg-groups:
+            - {"M": 4, "post": 0, "efConstruction": 400}
+            - True
+            - {"ef": [1, 2, 5, 10, 20, 30, 50, 70, 90, 120]}
+        M-8:
+          arg-groups:
+            - {"M": 8, "post": 0, "efConstruction": 400}
+            - True
+            - {"ef": [1, 2, 5, 10, 20, 30, 50, 70, 90, 120, 160]}
+    MP-lsh(lshkit):
+      docker-tag: ann-benchmarks-nmslib
+      module: ann_benchmarks.algorithms.nmslib
+      constructor: NmslibNewIndex
+      base-args: ["@metric", "lsh_multiprobe"]
+      run-groups:
+        base:
+          args: {"desiredRecall": [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5,
+                0.4, 0.3, 0.2, 0.1], "H": 1200001, "T": 10, "L": 50, "tuneK": 10}
+    SW-graph(nmslib):
+      docker-tag: ann-benchmarks-nmslib
+      module: ann_benchmarks.algorithms.nmslib
+      constructor: NmslibReuseIndex
+      base-args: ["@metric", "sw-graph"]
+      run-groups:
+        NN-10:
+          arg-groups:
+            - {"NN": 10}
+            - True
+            - {"efSearch": [800, 400, 200, 100, 50, 30, 20, 15, 10]}
+        NN-5:
+          arg-groups:
+            - {"NN": 5}
+            - True
+            - {"efSearch": [30, 25, 20, 15, 10, 5, 4, 3, 2, 1]}
+  angular:
+    kgraph:
+      docker-tag: ann-benchmarks-kgraph
+      module: ann_benchmarks.algorithms.kgraph
+      constructor: KGraph
+      base-args: ["@metric"]
+      run-groups:
+        kgraph:
+          args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                 {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
+    hnsw(nmslib):
+      docker-tag: ann-benchmarks-nmslib
+      module: ann_benchmarks.algorithms.nmslib
+      constructor: NmslibReuseIndex
+      base-args: ["@metric", "hnsw"]
+      run-groups:
+        M-48:
+          arg-groups:
+            - {"M": 48, "post": 2, "efConstruction": 800}
+            - True # XXX: hard-codes save_index as True
+            - {"ef": [50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000,
+              1400, 1600, 2000]}
+        M-32:
+          arg-groups:
+            - {"M": 32, "post": 2, "efConstruction": 800}
+            - True
+            - {"ef": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160,
+              200, 300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]}
+        M-20:
+          arg-groups:
+            - {"M": 20, "post": 0, "efConstruction": 800}
+            - True
+            - {"ef": [2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+        M-12:
+          arg-groups:
+            - {"M": 12, "post": 0, "efConstruction": 800}
+            - True
+            - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+    SW-graph(nmslib):
+      docker-tag: ann-benchmarks-nmslib
+      module: ann_benchmarks.algorithms.nmslib
+      constructor: NmslibReuseIndex
+      base-args: ["@metric", "sw-graph"]
+      run-groups:
+        NN-30:
+          arg-groups:
+            - {"NN": 30}
+            - True
+            - {"efSearch": [700, 650, 550, 450, 350, 275, 200, 150, 120, 80,
+              50, 30]}
+        NN-15:
+          arg-groups:
+            - {"NN": 15}
+            - True
+            - {"efSearch": [80, 50, 30, 20]}
+        NN-3:
+          arg-groups:
+            - {"NN": 3}
+            - True
+            - {"efSearch": [120, 80, 60, 40, 20, 10, 8, 4, 2]}
+    rpforest:
+      docker-tag: ann-benchmarks-rpforest
+      module: ann_benchmarks.algorithms.rpforest
+      constructor: RPForest
+      run-groups:
+        base:
+          args: [[3, 5, 10, 20, 40, 100, 200, 400],
+                [3, 5, 10, 20, 40, 100, 200, 400]]
+    falconn:
+      docker-tag: ann-benchmarks-falconn
+      module: ann_benchmarks.algorithms.falconn
+      constructor: FALCONN
+      base-args: ["@metric", 16]
+      run-groups:
+        base:
+          L: &l [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 21, 24, 27,
+             30, 33, 37, 41, 46, 51, 57, 63, 70, 77, 85, 94, 104, 115, 127,
+             140, 154, 170, 188, 207, 228, 251, 277, 305, 336, 370, 408, 449,
+             494, 544, 599, 659, 725, 798, 878, 966, 1063, 1170, 1287, 1416]
+          args: [*l]
+bit:
+  hamming:
+    falconn:
+      docker-tag: ann-benchmarks-falconn
+      module: ann_benchmarks.algorithms.falconn
+      constructor: FALCONN
+      base-args: ["@metric", 16]
+      run-groups:
+        base:
+          args: [*l]
+    kgraph:
+      docker-tag: ann-benchmarks-kgraph
+      module: ann_benchmarks.algorithms.kgraph
+      constructor: KGraph
+      base-args: ["@metric"]
+      run-groups:
+        kgraph:
+          args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                 {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
+    hnsw(nmslib):
+      docker-tag: ann-benchmarks-nmslib
+      module: ann_benchmarks.algorithms.nmslib
+      constructor: NmslibReuseIndex
+      base-args: ["@metric", "hnsw"]
+      run-groups:
+        M-48:
+          arg-groups:
+            - {"M": 48, "post": 2, "efConstruction": 800}
+            - True # XXX: hard-codes save_index as True
+            - {"ef": [50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000,
+              1400, 1600, 2000]}
+        M-32:
+          arg-groups:
+            - {"M": 32, "post": 2, "efConstruction": 800}
+            - True
+            - {"ef": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160,
+              200, 300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]}
+        M-20:
+          arg-groups:
+            - {"M": 20, "post": 0, "efConstruction": 800}
+            - True
+            - {"ef": [2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+        M-12:
+          arg-groups:
+            - {"M": 12, "post": 0, "efConstruction": 800}
+            - True
+            - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+int:
+  jaccard:
+    bf:
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.bruteforce
+      constructor: BruteForceBLAS
+      base-args: ["@metric"]
+      run-groups:
+        base:
+          args: {}
+    datasketch:
+      docker-tag: ann-benchmarks-datasketch
+      module: ann_benchmarks.algorithms.datasketch
+      constructor: DataSketch
+      base-args: ["@metric"]
+      run-groups:
+        base:
+          args:  [[16, 32, 64, 128],[5, 10, 20, 40]]

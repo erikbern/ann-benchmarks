@@ -1,2 +1,2 @@
 from __future__ import absolute_import
-# from ann_benchmarks.main import *
+from ann_benchmarks.plotting import *

@@ -1,0 +1,9 @@
+*.pyc
+*.o
+protocol/c/fr-*
+
+install/*.txt
+install/*.yaml
+install/lib-*/
+
+*.class

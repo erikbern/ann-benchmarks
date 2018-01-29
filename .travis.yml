@@ -1,9 +1,30 @@
+sudo: required
+
 language: python
 python:
-  - "2.7_with_system_site_packages"
-#   - "3.4"
+  - "3.6"
 
-install:
-  - sudo bash install.sh
+services:
+  - docker
 
-script: nosetests
+env:
+  - LIBRARY=annoy
+  - LIBRARY=datasketch
+  - LIBRARY=dolphinn
+  - LIBRARY=faiss
+  - LIBRARY=falconn
+  - LIBRARY=flann
+  - LIBRARY=kgraph
+  - LIBRARY=nearpy
+  - LIBRARY=nmslib
+  - LIBRARY=panns
+  - LIBRARY=rpforest
+  - LIBRARY=sklearn
+
+before_install:
+  - pip install -r requirements.txt
+  - python install.py
+
+script:
+  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-20-angular
+  - python plot.py --dataset random-xs-20-angular --output plot.png
