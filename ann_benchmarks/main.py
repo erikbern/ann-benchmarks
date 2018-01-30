@@ -123,8 +123,9 @@ def main():
         definitions = [d for d in definitions if d.docker_tag == args.docker_tag]
 
     if set(d.docker_tag for d in definitions).difference(docker_tags):
+        print('not all docker images available, only:', set(docker_tags))
+        print('missing docker images:', set(d.docker_tag for d in definitions).difference(docker_tags))
         definitions = [d for d in definitions if d.docker_tag in docker_tags]
-        print('not all docker images available, only:', set(d.docker_tag for d in definitions))
 
     if args.max_n_algorithms >= 0:
         definitions = definitions[:args.max_n_algorithms]

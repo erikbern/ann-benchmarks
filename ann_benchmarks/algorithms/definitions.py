@@ -75,6 +75,15 @@ def list_algorithms(definition_file):
                 print('\t\t\t%s' % algorithm)
 
 
+def get_unique_algorithms(definition_file):
+    definitions = _get_definitions(definition_file)
+    algos = set()
+    for point in definitions:
+        for metric in definitions[point]:
+            for algorithm in definitions[point][metric]:
+                algos.add(algorithm)
+    return list(sorted(algos))
+
 def get_definitions(definition_file, dimension, point_type="float", distance_metric="euclidean", count=10):
     definitions = _get_definitions(definition_file)
 
