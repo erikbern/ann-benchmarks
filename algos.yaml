@@ -178,7 +178,7 @@ float:
             - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120]}
         M-4:
           arg-groups:
-            - {"M": 4, "post": 0, "efConstruction": 100}
+            - {"M": 4, "post": 0, "efConstruction": 400}
             - True
             - {"ef": [1, 2, 5, 10, 20, 30, 50, 70, 90, 120]}
         M-8:
