@@ -7,8 +7,6 @@ Doing fast searching of nearest neighbors in high dimensional spaces is an incre
 
 This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics. We have pregenerated datasets (in HDF5) formats and we also have Docker containers for each algorithm. There's a [test suite](https://travis-ci.org/erikbern/ann-benchmarks) that makes sure every algorithm works.
 
-See [the results of this benchmark](http://sss.projects.itu.dk/ann-benchmarks).
-
 Evaluated
 =========
 
@@ -41,6 +39,17 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 | [MNIST](http://yann.lecun.com/exdb/mnist/)                        |        784 |     60,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/mnist-784-euclidean.hdf5) (217MB)         |
 | [NYTimes](https://archive.ics.uci.edu/ml/datasets/bag+of+words)   |        256 |    290,000 |    10,000 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/nytimes-256-angular.hdf5) (301MB)         |
 | [SIFT](https://corpus-texmex.irisa.fr/)                           |        128 |  1,000,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/sift-128-euclidean.hdf5) (501MB)          |
+
+Results
+=======
+
+Results as of 2018-01-29 for glove-100-angular:
+
+![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/pics/glove-100-angular.png)
+
+As of 2018-01-29 for sift-128-euclidean:
+
+![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/pics/sift-128-euclidean.png)
 
 Install
 =======
@@ -85,3 +94,8 @@ Principles
 * We currently support CPU-based ANN algorithms. GPU support is planned as future work.
 * Do proper train/test set of index data and query points.
 * Note that Hamming distance and set similarity was supported in the past. This might hopefully be added back soon.
+
+Authors
+=======
+
+Built by [Erik Bernhardsson](https://erikbern.com) with significant contributinons from [Martin Aumüller](http://itu.dk/people/maau/) and [Alexander Faithfull](https://github.com/ale-f).
