@@ -54,4 +54,4 @@ class FALCONN(BaseANN):
 
     def use_threads(self):
         # See https://github.com/FALCONN-LIB/FALCONN/issues/6
-        return False
+        return True

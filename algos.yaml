@@ -86,6 +86,22 @@ float:
       run-groups:
         empty:
           args: []
+    dummy-algo-st:
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.dummy_algo
+      constructor: DummyAlgoSt
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
+    dummy-algo-mt:
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.dummy_algo
+      constructor: DummyAlgoMt
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
     ball:
       docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.balltree
@@ -162,7 +178,7 @@ float:
             - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120]}
         M-4:
           arg-groups:
-            - {"M": 4, "post": 0, "efConstruction": 400}
+            - {"M": 4, "post": 0, "efConstruction": 100}
             - True
             - {"ef": [1, 2, 5, 10, 20, 30, 50, 70, 90, 120]}
         M-8:
