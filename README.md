@@ -31,7 +31,7 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 | Dataset                                                           | Dimensions | Train size | Test size | Neighbors | Distance  | Download                                                                     |
 | ----------------------------------------------------------------- | ---------: | ---------: | --------: | --------: | --------- | ---------------------------------------------------------------------------- |
 | [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) |        784 |     60,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/fashion-mnist-784-euclidean.hdf5) (217MB) |
-| [GIST](http://corpus-texmex.irisa.fr/)                            |        960 |  1,000,000 |     1,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/gist-960-euclidean.hdf5) (121MB)          |
+| [GIST](http://corpus-texmex.irisa.fr/)                            |        960 |  1,000,000 |     1,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/gist-960-euclidean.hdf5) (3.6GB)          |
 | [GloVe](http://nlp.stanford.edu/projects/glove/)                  |         25 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-25-angular.hdf5) (121MB)            |
 | GloVe                                                             |         50 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-50-angular.hdf5) (235MB)            |
 | GloVe                                                             |        100 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-100-angular.hdf5) (463MB)           |
@@ -98,4 +98,4 @@ Principles
 Authors
 =======
 
-Built by [Erik Bernhardsson](https://erikbern.com) with significant contributinons from [Martin Aumüller](http://itu.dk/people/maau/) and [Alexander Faithfull](https://github.com/ale-f).
+Built by [Erik Bernhardsson](https://erikbern.com) with significant contributions from [Martin Aumüller](http://itu.dk/people/maau/) and [Alexander Faithfull](https://github.com/ale-f).
