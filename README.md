@@ -45,11 +45,11 @@ Results
 
 Results as of 2018-01-29 for glove-100-angular:
 
-![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/pics/glove-100-angular.png)
+![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-100-angular.png)
 
 As of 2018-01-29 for sift-128-euclidean:
 
-![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/pics/sift-128-euclidean.png)
+![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/sift-128-euclidean.png)
 
 Install
 =======
