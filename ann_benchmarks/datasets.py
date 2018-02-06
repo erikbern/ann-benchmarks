@@ -220,4 +220,5 @@ DATASETS = {
     'random-s-100-angular': lambda out_fn: random(out_fn, 100, 100000, 1000, 'angular'),
     'sift-128-euclidean': sift,
     'nytimes-256-angular': lambda out_fn: nytimes(out_fn, 256),
+    'nytimes-16-angular': lambda out_fn: nytimes(out_fn, 16),
 }
