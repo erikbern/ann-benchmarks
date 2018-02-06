@@ -324,7 +324,7 @@ warning: query file "%s" is missing, skipping""" % cqf
         if not cqf in query_cache:
             with open(cqf, "r") as fp:
                 query_cache[cqf] = pickle.load(fp)
-        ms, _ = compute_metrics(query_cache[cqf], [r])
+        ms = compute_metrics(query_cache[cqf], [r])
         ms = ms[algo]
 
         if not algo in all_runs_by_algorithm:
