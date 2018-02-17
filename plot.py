@@ -95,11 +95,12 @@ if __name__ == "__main__":
     dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
     point_type = 'float' # TODO(erikbern): should look at the type of X_train
     distance = dataset.attrs['distance']
-    definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
+    count = int(args.count)
+    definitions = get_definitions(args.definitions, dimension, point_type, distance, count)
     unique_algorithms = get_unique_algorithms(args.definitions)
     linestyles = create_linestyles(unique_algorithms)
-    results = load_results(args.dataset, args.count, definitions)
-    runs = compute_metrics(dataset, results, args.count, args.x_axis, args.y_axis)
+    results = load_results(args.dataset, count, definitions)
+    runs = compute_metrics(dataset, results, count, args.x_axis, args.y_axis)
 
     create_plot(runs, args.raw, args.x_log,
             args.y_log, args.x_axis, args.y_axis, args.output, linestyles)
