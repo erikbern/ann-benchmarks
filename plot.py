@@ -99,7 +99,7 @@ if __name__ == "__main__":
     unique_algorithms = get_unique_algorithms(args.definitions)
     linestyles = create_linestyles(unique_algorithms)
     results = load_results(args.dataset, args.count, definitions)
-    runs = compute_metrics(dataset, results, args.x_axis, args.y_axis)
+    runs = compute_metrics(dataset, results, args.count, args.x_axis, args.y_axis)
 
     create_plot(runs, args.raw, args.x_log,
             args.y_log, args.x_axis, args.y_axis, args.output, linestyles)

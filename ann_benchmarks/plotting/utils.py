@@ -28,14 +28,14 @@ def create_pointset(data, xn, yn):
             ls.append(algo_name)
     return xs, ys, ls, axs, ays, als
 
-def compute_metrics(dataset, res, metric_1, metric_2):
+def compute_metrics(dataset, res, count, metric_1, metric_2):
     all_results = {}
     for i, (definition, run) in enumerate(res):
         algo = definition.algorithm
         algo_name = run.attrs['name']
 
-        metric_1_value = metrics[metric_1]['function'](dataset, run)
-        metric_2_value = metrics[metric_2]['function'](dataset, run)
+        metric_1_value = metrics[metric_1]['function'](dataset, run, count)
+        metric_2_value = metrics[metric_2]['function'](dataset, run, count)
 
         print('%3d: %80s %12.3f %12.3f' % (i, algo_name, metric_1_value, metric_2_value))
 
