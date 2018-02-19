@@ -363,7 +363,7 @@ for (ds, runs) in all_runs_by_dataset.items():
             print("Processing scatterplot '%s' with %s" % (ds, plottype))
             output_str += create_plot(ds, runs, xn, yn, linestyles, "Scatterplot ", "bubble")
     # create png plot for summary page
-    plot.create_plot(runs, True, False,
+    plot.create_plot(runs, False,
             False, True, 'k-nn', 'qps',  args.outputdir + ds + ".png",
             create_linestyles(all_algos))
     output_str += """
