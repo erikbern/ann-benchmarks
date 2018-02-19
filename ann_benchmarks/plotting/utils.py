@@ -43,6 +43,18 @@ def compute_metrics(dataset, res, count, metric_1, metric_2):
 
     return all_results
 
+def compute_all_metrics(dataset, run, count, algo):
+    algo_name = run.attrs["name"]
+    print('--')
+    print(algo_name)
+    results = {}
+    for name, metric in metrics.items():
+        v = metric["function"](dataset, run, count)
+        results[name] = v
+        if v:
+            print('%s: %g' % (name, v))
+    return (algo, algo_name, results)
+
 def generate_n_colors(n):
     vs = numpy.linspace(0.4, 1.0, 7)
     colors = [(.9, .4, .4, 1.)]
