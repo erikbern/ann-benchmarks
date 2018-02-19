@@ -5,9 +5,8 @@ import os, json, pickle, yaml
 import numpy
 import hashlib
 
-from ann_benchmarks.main import get_fn
 from ann_benchmarks import results
-from ann_benchmarks import datasets
+from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.plotting.plot_variants import all_plot_variants as plot_variants
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_pointset, create_linestyles
@@ -353,7 +352,7 @@ for (ds, runs) in all_runs_by_dataset.items():
         <h2>Plots for %(id)s</h2>""" % { "id" : ds_name }
     for plottype in args.plottype:
         xn, yn = plot_variants[plottype]
-        print "Processing '%s' with %s" % (ds, plottype)
+        print("Processing '%s' with %s" % (ds, plottype))
         output_str += create_plot(ds_name, runs, xn, yn, linestyles)
     if args.scatter:
         output_str += """
@@ -361,7 +360,7 @@ for (ds, runs) in all_runs_by_dataset.items():
         <h2>Scatterplots for %(id)s""" % { "id" : ds_name }
         for plottype in args.plottype:
             xn, yn = plot_variants[plottype]
-            print "Processing scatterplot '%s' with %s" % (ds, plottype)
+            print("Processing scatterplot '%s' with %s" % (ds, plottype))
             output_str += create_plot(ds, runs, xn, yn, linestyles, "Scatterplot ", "bubble")
     # create png plot for summary page
     plot.create_plot(runs, True, False,
@@ -387,9 +386,9 @@ for (algo, runs) in all_runs_by_algorithm.items():
     for plottype in args.plottype:
         xn, yn = plot_variants[plottype]
         linestyles = convert_linestyle(create_linestyles(all_data))
-        print "Processing '%s' with %s" % (algo, plottype)
+        print("Processing '%s' with %s" % (algo, plottype))
         output_str += create_plot(algo, runs, xn, yn, linestyles)
-    plot.create_plot(runs, True, False,
+    plot.create_plot(runs, False,
             False, True, 'k-nn', 'qps',  args.outputdir + algo + ".png",
             create_linestyles(all_data))
     output_str += """
@@ -406,7 +405,7 @@ with open(args.outputdir + "index.html", "w") as text_file:
         with open(args.definitions) as f:
             definitions = yaml.load(f)
     except:
-        print "Could not load definitions file, annotations not available."
+        print("Could not load definitions file, annotations not available.")
         definitions = {}
     output_str = get_html_header("ANN-Benchmarks")
     output_str += """
@@ -496,7 +495,7 @@ with open(args.outputdir + "index.html", "w") as text_file:
             <div id="contact">
             <h2>Contact</h2>
             <p>ANN-Benchmarks has been developed by Martin Aumueller (maau@itu.dk), Erik Bernhardsson (mail@erikbern.com), and Alec Faitfull (alef@itu.dk). Please use
-            <a href="https://github.com/maau/ann-benchmarks/">Github</a> to submit your implementation or improvements.</p>
+            <a href="https://github.com/erikbern/ann-benchmarks/">Github</a> to submit your implementation or improvements.</p>
             </div>
         </div>
     </body>
