@@ -9,7 +9,7 @@ from ann_benchmarks import results
 from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.plotting.plot_variants import all_plot_variants as plot_variants
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
-from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_pointset, create_linestyles
+from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, compute_all_metrics, create_pointset, create_linestyles
 import plot
 
 colors = [
@@ -67,11 +67,6 @@ parser.add_argument(
     '--definitions',
     help = 'YAML file with dataset and algorithm annotations',
     action = 'store')
-parser.add_argument(
-    '--limit',
-    help='the maximum number of points to load from the dataset, or -1 to load all of them',
-    type=int,
-    default=-1)
 parser.add_argument(
     '--latex',
     help='generates latex code for each plot',
@@ -155,10 +150,10 @@ def get_latex_plot(all_data, xm, ym, plottype):
     if plottype == "bubble":
         only_marks = "[only marks]"
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-            xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
-            for i in range(len(ls)):
-                if "Subprocess" in ls[i]:
-                    ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
+            xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
+#            for i in range(len(ls)):
+#                if "Subprocess" in ls[i]:
+#                    ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
             latex_str += """
         \\addplot %s coordinates {""" % only_marks
             for i in range(len(xs)):
@@ -180,14 +175,14 @@ def create_data_points(all_data, xn, yn, linestyle, render_all_points):
     color_index = 0
     html_str = ""
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-            xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
+            xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
             if render_all_points:
                 xs, ys, ls = axs, ays, als
 # TODO Put this somewhere else
 # pretty print subprocess parameter settings.
-            for i in range(len(ls)):
-                if "Subprocess" in ls[i]:
-                    ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
+#            for i in range(len(ls)):
+#                if "Subprocess" in ls[i]:
+#                    ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
             html_str += """
                 {
                     label: "%(algo)s",
