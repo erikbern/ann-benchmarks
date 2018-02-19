@@ -121,9 +121,6 @@ def get_html_header(title):
                 <li class="active"><a href="index.html#algorithms">Algorithms</a></li>
               </ul>
               <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html#raw">Raw Data & Configuration</a></li>
-              </ul>
-              <ul class="nav navbar-nav">
                 <li class="active"><a href="index.html#contact">Contact</a></li>
               </ul>
             </div><!--/.nav-collapse -->
@@ -151,9 +148,6 @@ def get_latex_plot(all_data, xm, ym, plottype):
         only_marks = "[only marks]"
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
             xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
-#            for i in range(len(ls)):
-#                if "Subprocess" in ls[i]:
-#                    ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
             latex_str += """
         \\addplot %s coordinates {""" % only_marks
             for i in range(len(xs)):
@@ -386,7 +380,7 @@ with open(args.outputdir + "index.html", "w") as text_file:
     output_str += """
         <div class="container">
             <h1>Info</h1>
-            <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms search. This website contains the current benchmarking results. Please visit <a href="http://github.com/maumueller/ann-benchmarks/">http://github.com/maumueller/ann-benchmarks/</a> to get an overview over evaluated data sets and algorithms. Make a pull request on <a href="http://github.com/maumueller/ann-benchmarks/">Github</a> to add your own code or improvements to the
+            <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms search. This website contains the current benchmarking results. Please visit <a href="http://github.com/erikbern/ann-benchmarks/">http://github.com/erikbern/ann-benchmarks/</a> to get an overview over evaluated data sets and algorithms. Make a pull request on <a href="http://github.com/erikbern/ann-benchmarks/">Github</a> to add your own code or improvements to the
             benchmarking system.
             </p>
             <div id="results">
@@ -465,8 +459,6 @@ with open(args.outputdir + "index.html", "w") as text_file:
         </a>
         <hr />""" % { "name" : algo}
     output_str += """
-            <h2 id ="raw">Raw Data & Configuration</h2>
-            <p>Please find the raw experimental data <a href="./results-sisap.tar">here</a> (13 GB). The query set is available <a href="./queries-sisap.tar">queries-sisap.tar</a> (8 GB) as well. The algorithms used the following parameter choices in the experiments: <a href="./algos.yaml">k = 10</a> and <a href="./algos100.yaml">k=100</a>.</p>
             <div id="contact">
             <h2>Contact</h2>
             <p>ANN-Benchmarks has been developed by Martin Aumueller (maau@itu.dk), Erik Bernhardsson (mail@erikbern.com), and Alec Faitfull (alef@itu.dk). Please use
