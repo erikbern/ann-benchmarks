@@ -127,6 +127,13 @@ def get_html_header(title):
           </div>
         </nav>""" % {"title" : title}
 
+def prepare_data(data, xn, yn):
+    """Change format from (algo, instance, dict) to (algo, instance, x, y)."""
+    res = []
+    for algo, algo_name, result in data:
+        res.append((algo, algo_name, result[xn], result[yn]))
+    return res
+
 def get_latex_plot(all_data, xm, ym, plottype):
     latex_str = """
 \\begin{figure}
@@ -147,7 +154,7 @@ def get_latex_plot(all_data, xm, ym, plottype):
     if plottype == "bubble":
         only_marks = "[only marks]"
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-            xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
+            xs, ys, ls, axs, ays, als = create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
             latex_str += """
         \\addplot %s coordinates {""" % only_marks
             for i in range(len(xs)):
@@ -169,7 +176,7 @@ def create_data_points(all_data, xn, yn, linestyle, render_all_points):
     color_index = 0
     html_str = ""
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-            xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
+            xs, ys, ls, axs, ays, als = create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
             if render_all_points:
                 xs, ys, ls = axs, ays, als
 # TODO Put this somewhere else
@@ -332,7 +339,10 @@ for (ds, runs) in all_runs_by_dataset.items():
             print("Processing scatterplot '%s' with %s" % (ds, plottype))
             output_str += create_plot(ds, runs, xn, yn, linestyles, "Scatterplot ", "bubble")
     # create png plot for summary page
-    plot.create_plot(runs, False,
+    data_for_plot = {}
+    for k in runs.keys():
+        data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
+    plot.create_plot(data_for_plot, False,
             False, True, 'k-nn', 'qps',  args.outputdir + ds + ".png",
             create_linestyles(all_algos))
     output_str += """
@@ -357,7 +367,10 @@ for (algo, runs) in all_runs_by_algorithm.items():
         linestyles = convert_linestyle(create_linestyles(all_data))
         print("Processing '%s' with %s" % (algo, plottype))
         output_str += create_plot(algo, runs, xn, yn, linestyles)
-    plot.create_plot(runs, False,
+    data_for_plot = {}
+    for k in runs.keys():
+        data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
+    plot.create_plot(data_for_plot, False,
             False, True, 'k-nn', 'qps',  args.outputdir + algo + ".png",
             create_linestyles(all_data))
     output_str += """
