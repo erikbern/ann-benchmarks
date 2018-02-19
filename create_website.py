@@ -292,49 +292,29 @@ def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype
         """ % {  "latexcode": get_latex_plot(all_data, xm, ym, plottype), "buttonlabel" : hashlib.sha224(get_plot_label(xm, ym) + additional_label).hexdigest() }
     return output_str
 
-query_cache = {}
-
 all_runs_by_dataset = {}
 dataset_information = {}
 all_runs_by_algorithm = {}
 
-for d, r in results.get_results_with_descriptors(
-        None, None, None, None, None):
-    sdn = None
-    if not d["query_dataset"]:
-        sdn = "%(dataset)s_%(count)d_%(limit)d_%(distance)s" % d
-    else:
-        sdn = \
-          "%(dataset)s_%(count)d_%(limit)d_%(query_dataset)s_%(distance)s" % d
-    cqf = datasets.get_query_cache_path(
-            d["dataset"], d["count"], d["limit"], d["distance"],
-            d["query_dataset"])
-    if not os.path.isfile(cqf):
-        print """\
-warning: query file "%s" is missing, skipping""" % cqf
-        continue
-    else:
-        algo = d["algorithm"]
-        if not cqf in query_cache:
-            with open(cqf, "r") as fp:
-                query_cache[cqf] = pickle.load(fp)
-        ms = compute_metrics(query_cache[cqf], [r])
-        ms = ms[algo]
+for d, r in results.load_all_results():
+    sdn = "%(dataset)s_%(count)d__%(distance)s" % d
+    dataset = get_dataset(d["dataset"])
+    ms = compute_all_metrics(dataset, r, d["count"], d["algorithm"])
+    algo, _, _ = ms
 
-        if not algo in all_runs_by_algorithm:
-            all_runs_by_algorithm[algo] = {}
-        algo_ds = d["dataset"] + " (k = " + str(d["count"]) + ")"
-        if not algo_ds in all_runs_by_algorithm[algo]:
-            all_runs_by_algorithm[algo][algo_ds] = []
-        all_runs_by_algorithm[algo][algo_ds].extend(ms)
+    if not algo in all_runs_by_algorithm:
+        all_runs_by_algorithm[algo] = {}
+    algo_ds = d["dataset"] + " (k = " + str(d["count"]) + ")"
+    if not algo_ds in all_runs_by_algorithm[algo]:
+        all_runs_by_algorithm[algo][algo_ds] = []
+    all_runs_by_algorithm[algo][algo_ds].append(ms)
 
-        if not sdn in all_runs_by_dataset:
-            all_runs_by_dataset[sdn] = {}
-            dataset_information[sdn] = d
-        if not algo in all_runs_by_dataset[sdn]:
-            all_runs_by_dataset[sdn][algo] = []
-        all_runs_by_dataset[sdn][algo].extend(ms)
-del query_cache
+    if not sdn in all_runs_by_dataset:
+        all_runs_by_dataset[sdn] = {}
+        dataset_information[sdn] = d
+    if not algo in all_runs_by_dataset[sdn]:
+        all_runs_by_dataset[sdn][algo] = []
+    all_runs_by_dataset[sdn][algo].append(ms)
 
 # Build a website for each dataset
 for (ds, runs) in all_runs_by_dataset.items():
