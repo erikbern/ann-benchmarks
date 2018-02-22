@@ -28,7 +28,7 @@ Both the front-end and `ann-benchmarks` perform *tokenisation* on the lines of t
   a b c | a | b | c
 
 * A sequence surrounded by single quote marks will be treated as part of a token, even if it contains whitespace or doesn't contain any other characters.
-  
+
   Input | Token 1 | Token 2 | Token 3
   ----- | ------- | ------- | -------
   'a b c' | a b c | |
@@ -57,20 +57,20 @@ Both the front-end and `ann-benchmarks` perform *tokenisation* on the lines of t
   "a b c"\ d | a b c d |
 
   An escaped quote mark doesn't begin a sequence:
-  
+
   Input | Token 1 | Token 2 | Token 3
   ----- | ------- | ------- | -------
   \'a b c\' | a | b | c |
   \"a b c\" | a | b | c |
 
   An escaped backslash doesn't escape the subsequent character:
-  
+
   Input | Token 1 | Token 2
   ----- | ------- | -------
   a\\\\"b c" d | a\b c | d
 
 * In sequences begun by a double quote mark, only double quote marks and backslashes (and, for compatibility reasons, dollar signs) may be escaped; the backslash otherwise has no special significance.
-  
+
   Input | Token 1 | Token 2 | Token 3
   ----- | ------- | ------- | -------
   "\a \b" \c | \a \b | c |
@@ -104,8 +104,11 @@ Set the value of the algorithm configuration option `VAR` to `VAL`.
 Responses:
 
 * `epbprtv0 ok`
+
   The value specified for the algorithm configuration option `VAR` was acceptable, and the option has been set.
+
 * `epbprtv0 fail`
+
   The value specified for the algorithm configuration option `VAR` wasn't acceptable. No change has been made to the value of this option.
 
 #### `frontend VAR VAL` (three tokens)
@@ -115,8 +118,11 @@ Set the value of the front-end configuration option `VAR` to `VAL`. Front-end co
 Responses:
 
 * `epbprtv0 ok`
+
   The value specified for the front-end configuration option `VAR` was acceptable, and the option has been set.
+
 * `epbprtv0 fail`
+
   The value specified for the front-end configuration option `VAR` wasn't acceptable. No change has been made to the value of this option.
 
 #### *empty line* (zero tokens)
@@ -126,8 +132,11 @@ Finish configuration mode and enter training mode.
 Responses:
 
 * `epbprtv0 ok`
+
   Training mode has been entered.
+
 * `epbprtv0 fail`
+
   One or more configuration options required by the algorithm were not specified, and so the query process has terminated.
 
 ### Training mode
@@ -141,8 +150,11 @@ Interpret `ENTRY` as an item of training data.
 Responses:
 
 * `epbprtv0 ok`
+
   `ENTRY` was added as the next item of training data. The index values returned in query mode refer to the first item added as `0`, the second as `1`, and so on.
+
 * `epbprtv0 fail`
+
   Either `ENTRY` couldn't be interpreted as an item of training data, or the training data wasn't accepted.
 
 #### *empty line* (zero tokens)
@@ -152,6 +164,7 @@ Finish training mode and enter query mode.
 Responses:
 
 * `epbprtv0 ok COUNT1 [fail COUNT2]`
+
   `COUNT1` (potentially zero) entries were successfully interpreted and added to the data structure. (`COUNT2` entries couldn't be interpreted or couldn't be added for other reasons.)
 
 ### Query mode
@@ -160,13 +173,16 @@ In query mode, front-ends should respond to two different kinds of command:
 
 #### `ENTRY N` (two tokens)
 
-Return the indices of at most N (greater than or equal to 1) close matches for ENTRY.
+Return the indices of at most `N` (greater than or equal to 1) close matches for `ENTRY`.
 
 Responses:
 
 * `epbprtv0 ok R`
+
   `R` (greater than zero and less than or equal to `N`) close matches were found. Each of the next `R` lines, when tokenised, will consist of the token `epbprtv0` followed by a token specifying the index of a close match. (The first line should identify the *closest* close match, and the `R`-th should identify the furthest away.)
+
 * `epbprtv0 fail`
+
   No close matches were found.
 
 #### *empty line* (zero tokens)
@@ -174,5 +190,7 @@ Responses:
 Finish query mode and terminate the front-end.
 
 Responses:
+
 * `epbprtv0 ok`
+
   The front-end has terminated.
