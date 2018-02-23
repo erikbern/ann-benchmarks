@@ -45,7 +45,7 @@ def get_result_filename(dataset, count, definition):
     return os.path.join(*d)
 
 
-def _handle_args(args):
+def _generate_combinations(args):
     if isinstance(args, list):
         args = [el if isinstance(el, list) else [el] for el in args]
         return [list(x) for x in product(*args)]
@@ -61,12 +61,11 @@ def _handle_args(args):
         raise TypeError("No args handling exists for %s" % type(args).__name__)
 
 
-def _handle(arg, vs):
-    # TODO(erikbern): what's the difference between _handle_args and _handle
+def _substitute_variables(arg, vs):
     if isinstance(arg, dict):
-        return dict([(k, _handle(v, vs)) for k, v in arg.items()])
+        return dict([(k, _substitute_variables(v, vs)) for k, v in arg.items()])
     elif isinstance(arg, list):
-        return [_handle(a, vs) for a in arg]
+        return [_substitute_variables(a, vs) for a in arg]
     elif isinstance(arg, str) and arg in vs:
         return vs[arg]
     else:
@@ -123,14 +122,14 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
                 for arg_group in run_group["arg-groups"]:
                     if isinstance(arg_group, dict):
                         # Dictionaries need to be expanded into lists in order
-                        # for the subsequent call to _handle_args to do the
-                        # right thing
-                        groups.append(_handle_args(arg_group))
+                        # for the subsequent call to _generate_combinations to
+                        # do the right thing
+                        groups.append(_generate_combinations(arg_group))
                     else:
                         groups.append(arg_group)
-                args = _handle_args(groups)
+                args = _generate_combinations(groups)
             elif "args" in run_group:
-                args = _handle_args(run_group["args"])
+                args = _generate_combinations(run_group["args"])
             else:
                 assert False, "? what? %s" % run_group
 
@@ -148,7 +147,7 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
                     "@metric": distance_metric,
                     "@dimension": dimension
                 }
-                aargs = [_handle(arg, vs) for arg in aargs]
+                aargs = [_substitute_variables(arg, vs) for arg in aargs]
                 definitions.append(Definition(
                     algorithm=name,
                     docker_tag=algo['docker-tag'],
