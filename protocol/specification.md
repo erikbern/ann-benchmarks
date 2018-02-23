@@ -83,15 +83,15 @@ Both the front-end and `ann-benchmarks` perform *tokenisation* on the lines of t
   'a b' c | a b | c
   'a b\\' c | a b\ | c
 
-Apart from the fact that newline characters cannot be escaped, these rules should match the tokenisation rules of the POSIX shell. Various tokenisation implementations that follow these rules are included in this directory. (Python's standard library already has such an implementation in the `shlex` module.)
+Apart from the fact that newline characters can't be escaped, these rules should match the tokenisation rules of the POSIX shell.
 
 ## Commands
 
-Commands are sent to the front-end by `ann-benchmarks`. Each command consists of a single line of text; the front-end replies with one or more lines of text. Front-ends cannot initiate communication; they can only reply to commands.
+Commands are sent to the front-end by `ann-benchmarks`. Each command consists of a single line of text; the front-end replies with one or more lines of text. Front-ends can't initiate communication; they can only reply to commands.
 
 This section specifies these commands, along with the possible responses a front-end might send.
 
-If a front-end receives a command that it does not understand in the current mode (or at all), it should respond with `epbprtv0 fail` and continue processing commands.
+If a front-end receives a command that it doesn't understand in the current mode (or at all), it should respond with `epbprtv0 fail` and continue processing commands.
 
 ### Configuration mode
 
@@ -137,7 +137,7 @@ Responses:
 
 * `epbprtv0 fail`
 
-  One or more configuration options required by the algorithm were not specified, and so the query process has terminated.
+  One or more configuration options required by the algorithm weren't specified, and so the query process has terminated.
 
 ### Training mode
 
