@@ -41,16 +41,11 @@ def _get_leaf_paths(path):
 
 def load_all_results():
     import re
-    #TODO(Martin) Must be adaptive to get_result_filename
-    regex = r"results\/(?P<dataset>[^\/]+)\/(?P<count>\d+)\/(?P<algorithm>[^\/]+)\/(?P<distance>[^_]+)_(?P<params>.*)"
     for fn in _get_leaf_paths("results/"):
-        match = re.match(regex, fn)
-        if match:
-            d = {}
-            for k in ["count", "dataset", "distance", "algorithm"]:
-                d[k] = match.group(k)
-            d["count"] = int(d["count"])
+        try:
             f = h5py.File(fn)
-            yield d, f
+            yield f
             f.close()
+        except:
+            pass
 
