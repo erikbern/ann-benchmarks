@@ -186,7 +186,7 @@ def prepare_data(data, xn, yn):
         res.append((algo, algo_name, result[xn], result[yn]))
     return res
 
-def get_latex_plot(all_data, xm, ym, plottype):
+def get_latex_plot(all_data, xn, yn, xm, ym, plottype):
     latex_str = """
 \\begin{figure}
     \\centering
@@ -224,32 +224,27 @@ def get_latex_plot(all_data, xm, ym, plottype):
     """ % {"caption" : get_plot_label(xm, ym)}
     return latex_str
 
-def create_data_points(all_data, xn, yn, linestyle, render_all_points):
-    color_index = 0
-    html_str = ""
-    for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-            xs, ys, ls, axs, ays, als = create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
-            if render_all_points:
-                xs, ys, ls = axs, ays, als
-            html_str += """
-                {
-                    label: "%(algo)s",
-                    fill: false,
-                    pointStyle: "%(ps)s",
-                    borderColor: "%(color)s",
-                    data: [ """ % {"algo" : algo, "color" : linestyle[algo][0], "ps" : linestyle[algo][3] }
+def get_latex_html(all_data, xn, yn, xm, ym, plottype, additional_label):
+    return """
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <button type="button" id="button_%(buttonlabel)s" class="btn btn-default" >Toggle latex code</button>
+            </div>
+        </div>
+        <script>
+        $("#button_%(buttonlabel)s").click(function() {
+            $("#plot_%(buttonlabel)s").toggle();
+        });
+        </script>
+        <div id="plot_%(buttonlabel)s" style="display:none">
+            <pre>
+            %(latexcode)s
+            </pre>
+        </div>
+        """ % {  "latexcode": get_latex_plot(all_data, xn, yn, xm, ym, plottype), "buttonlabel" : hashlib.sha224((get_plot_label(xm, ym) + additional_label).encode("utf-8")).hexdigest() }
 
-            for i in range(len(xs)):
-                html_str += """
-                        { x: %(x)s, y: %(y)s, label: "%(label)s" },""" % {"x" : str(xs[i]), "y" : str(ys[i]), "label" : ls[i] }
-            html_str += """
-                ]},"""
-            color_index += 1
-    return html_str
-
-def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype = "line"):
-    xm, ym = (metrics[xn], metrics[yn])
-    output_str = """
+def get_plot_html(data):
+        return """
         <h3>%(xlabel)s/%(ylabel)s</h3>
         <div id="%(xlabel)s%(ylabel)s%(label)s">
             <canvas id="chart%(xlabel)s%(ylabel)s%(label)s" width="800" height="600"></canvas>
@@ -317,28 +312,41 @@ def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype
                 }
 
                 </script>
-            </div>""" % { "id" : ds, "xlabel" :  xm["description"], "ylabel" : ym["description"], "plottype" : plottype,
+            </div>
+                """ % data
+
+def create_data_points(all_data, xn, yn, linestyle, render_all_points):
+    color_index = 0
+    output_str = ""
+    for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
+            xs, ys, ls, axs, ays, als = create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
+            if render_all_points:
+                xs, ys, ls = axs, ays, als
+            output_str += """
+                {
+                    label: "%(algo)s",
+                    fill: false,
+                    pointStyle: "%(ps)s",
+                    borderColor: "%(color)s",
+                    data: [ """ % {"algo" : algo, "color" : linestyle[algo][0], "ps" : linestyle[algo][3] }
+
+            for i in range(len(xs)):
+                output_str += """
+                        { x: %(x)s, y: %(y)s, label: "%(label)s" },""" % {"x" : str(xs[i]), "y" : str(ys[i]), "label" : ls[i] }
+            output_str += """
+                ]},"""
+            color_index += 1
+    return output_str
+
+def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype = "line"):
+    xm, ym = (metrics[xn], metrics[yn])
+    plot_data  =   { "id" : ds, "xlabel" :  xm["description"], "ylabel" : ym["description"], "plottype" : plottype,
                         "plotlabel" : get_plot_label(xm, ym),  "label": additional_label,
                         "datapoints" : create_data_points(all_data,
                             xn, yn, linestyle, plottype == "bubble") }
+    output_str = get_plot_html(plot_data)
     if args.latex:
-        output_str += """
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <button type="button" id="button_%(buttonlabel)s" class="btn btn-default" >Toggle latex code</button>
-            </div>
-        </div>
-        <script>
-        $("#button_%(buttonlabel)s").click(function() {
-            $("#plot_%(buttonlabel)s").toggle();
-        });
-        </script>
-        <div id="plot_%(buttonlabel)s" style="display:none">
-            <pre>
-            %(latexcode)s
-            </pre>
-        </div>
-        """ % {  "latexcode": get_latex_plot(all_data, xm, ym, plottype), "buttonlabel" : hashlib.sha224(get_plot_label(xm, ym) + additional_label).hexdigest() }
+        output_str += get_latex_html(all_data, xn, yn, xm, ym, plottype, additional_label)
     return output_str
 
 def build_detail_site(data, label_func):
