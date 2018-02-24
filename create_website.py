@@ -429,7 +429,7 @@ def load_all_results():
         dataset = get_dataset(properties["dataset"])
         algo = properties["algo"]
         ms = compute_all_metrics(dataset, f, properties["count"], properties["algo"])
-        algo_ds = properties["dataset"] + " (k = " + str(properties["count"]) + ")"
+        algo_ds = get_dataset_label(sdn)
 
         all_runs_by_algorithm.setdefault(algo, {}).setdefault(algo_ds, []).append(ms)
         all_runs_by_dataset.setdefault(sdn, {}).setdefault(algo, []).append(ms)
