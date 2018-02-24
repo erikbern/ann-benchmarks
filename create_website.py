@@ -416,7 +416,6 @@ def load_all_results():
     """Read all result files and compute all metrics"""
     all_runs_by_dataset = {}
     all_runs_by_algorithm = {}
-    query_info = {}
     for f in results.load_all_results():
         properties = dict(f.attrs)
         # TODO Fix this properly. Sometimes the hdf5 file returns bytes
@@ -434,10 +433,9 @@ def load_all_results():
 
         all_runs_by_algorithm.setdefault(algo, {}).setdefault(algo_ds, []).append(ms)
         all_runs_by_dataset.setdefault(sdn, {}).setdefault(algo, []).append(ms)
-        query_info[sdn] = properties
-    return (all_runs_by_dataset, all_runs_by_algorithm, query_info)
+    return (all_runs_by_dataset, all_runs_by_algorithm)
 
-runs_by_ds, runs_by_algo, query_info = load_all_results()
+runs_by_ds, runs_by_algo = load_all_results()
 build_detail_site(runs_by_ds, lambda label: get_dataset_label(label))
 build_detail_site(runs_by_algo, lambda x: x)
 build_index(runs_by_ds, runs_by_algo)
