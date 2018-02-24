@@ -45,6 +45,18 @@ def convert_linestyle(ls):
                 algostyle[2], point_styles[algostyle[3]])
     return new_ls
 
+def get_run_desc(properties):
+    return "%(dataset)s_%(count)d_%(distance)s" % properties
+
+def get_dataset_from_desc(desc):
+    return desc.split("_")[0]
+
+def get_count_from_desc(desc):
+    return desc.split("_")[1]
+
+def get_distance_from_desc(desc):
+    return desc.split("_")[2]
+
 def directory_path(s):
     if not os.path.isdir(s):
         raise argparse.ArgumentTypeError("'%s' is not a directory" % s)
@@ -149,6 +161,20 @@ def get_index_footer():
         </div>
     </body>
 </html>"""
+
+def get_row_desc(idd, desc):
+    return """
+        <a href="./%(idd)s.html">
+            <div class="row" id="%(idd)s">
+                <div class = "col-md-4 bg-success">
+                    <h4>%(desc)s</h4>
+            </div>
+            <div class = "col-md-8">
+                <img class = "img-responsive" src="%(idd)s.png" />
+            </div>
+        </div>
+        </a>
+        <hr />""" % { "idd" : idd, "desc" : desc}
 
 def prepare_data(data, xn, yn):
     """Change format from (algo, instance, dict) to (algo, instance, x, y)."""
@@ -379,8 +405,8 @@ def build_website_for_algorithms(algorithms):
             text_file.write(output_str)
 
 def build_index(datasets, algorithms):
-    distance_measures = sorted(set([e.split("_")[-1] for e in datasets.keys()]))
-    sorted_datasets = sorted(set([e.split("_")[0] for e in datasets.keys()]))
+    distance_measures = sorted(set([get_distance_from_desc(e) for e in datasets.keys()]))
+    sorted_datasets = sorted(set([get_dataset_from_desc(e) for e in datasets.keys()]))
 
     output_str = get_html_header("ANN-Benchmarks")
     output_str += get_index_description()
@@ -390,24 +416,15 @@ def build_index(datasets, algorithms):
             <h3>Distance: %s</h3>
             """ % dm.capitalize()
         for ds in sorted_datasets:
-            for idd in sorted([e for e in datasets.keys() \
-                    if e.split("_")[0] == ds and e.split("_")[-1] == dm], \
-                    key = lambda elem: int(elem.split("_")[1])):
-                ds_name = query_info[idd]["dataset"] + " (k = " + \
-                    str(query_info[idd]["count"]) + ")"
-                output_str += """
-            <a href="./%(name)s.html">
-            <div class="row" id="%(name)s">
-                <div class = "col-md-4 bg-success">
-                    <h4>%(desc)s</h4>
-                </div>
-                <div class = "col-md-8">
-                    <img class = "img-responsive" src="%(name)s.png" />
-                </div>
-            </div>
-            </a>
-            <hr />
-        """% { "desc" : ds_name, "name" : idd }
+            matching_datasets = [e for e in datasets.keys() \
+                    if get_dataset_from_desc(e) == ds and \
+                       get_distance_from_desc(e) == dm]
+            sorted_matches = sorted(matching_datasets, \
+                    key = lambda e: int(get_count_from_desc(e)))
+            for idd in sorted_matches:
+                ds_name = get_dataset_from_desc(idd) + " (k = " + \
+                    get_count_from_desc(idd) + ")"
+                output_str += get_row_desc(idd, ds_name)
     output_str += """
         <h2 id="algorithms">Results by Algorithm</h2>
         <ul class="list-inline"><b>Algorithms:</b>"""
@@ -416,20 +433,7 @@ def build_index(datasets, algorithms):
         output_str += '<li><a href="#%(name)s">%(name)s</a></li>' % {"name" : algo}
     output_str += "</ul>"
     for algo in algorithm_names:
-        output_str += """
-            <a href="./%(name)s.html">
-            <div class="row" id="%(name)s">
-                <div class = "col-md-4 bg-success">
-                    <h4>%(name)s</h4>
-                    <dl class="dl-horizontal">
-                </dl>
-            </div>
-            <div class = "col-md-8">
-                <img class = "img-responsive" src="%(name)s.png" />
-            </div>
-        </div>
-        </a>
-        <hr />""" % { "name" : algo}
+        output_str += get_row_desc(algo, algo)
     output_str += get_index_footer()
 
     with open(args.outputdir + "index.html", "w") as text_file:
@@ -443,12 +447,13 @@ def load_all_results():
     for f in results.load_all_results():
         properties = dict(f.attrs)
         # TODO Fix this properly. Sometimes the hdf5 file returns bytes
+        # This converts these bytes to strings before we work with them
         for k in properties.keys():
             try:
                 properties[k]= properties[k].decode()
             except:
                 pass
-        sdn = "%(dataset)s_%(count)d_%(distance)s" % properties
+        sdn = get_run_desc(properties)
         dataset = get_dataset(properties["dataset"])
         algo = properties["algo"]
         ms = compute_all_metrics(dataset, f, f.attrs["count"], f.attrs["algo"])
