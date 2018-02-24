@@ -344,7 +344,7 @@ def build_website_for_datasets(datasets):
         all_algos = runs.keys()
         linestyles = convert_linestyle(create_linestyles(all_algos))
         output_str = get_html_header(ds)
-        ds_name = query_info[ds]["dataset"] + " (k = " + str(query_info[ds]["count"]) + ")"
+        ds_name = get_dataset_from_desc(ds) + " (k = " + get_count_from_desc(ds) + ")"
         output_str += """
             <div class="container">
             <h2>Plots for %(id)s</h2>""" % { "id" : ds_name }
@@ -456,8 +456,8 @@ def load_all_results():
         sdn = get_run_desc(properties)
         dataset = get_dataset(properties["dataset"])
         algo = properties["algo"]
-        ms = compute_all_metrics(dataset, f, f.attrs["count"], f.attrs["algo"])
-        algo_ds = properties["dataset"] + " (k = " + str(f.attrs["count"]) + ")"
+        ms = compute_all_metrics(dataset, f, properties["count"], properties["algo"])
+        algo_ds = properties["dataset"] + " (k = " + str(properties["count"]) + ")"
 
         all_runs_by_algorithm.setdefault(algo, {}).setdefault(algo_ds, []).append(ms)
         all_runs_by_dataset.setdefault(sdn, {}).setdefault(algo, []).append(ms)
