@@ -293,193 +293,193 @@ def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype
         """ % {  "latexcode": get_latex_plot(all_data, xm, ym, plottype), "buttonlabel" : hashlib.sha224(get_plot_label(xm, ym) + additional_label).hexdigest() }
     return output_str
 
-all_runs_by_dataset = {}
-dataset_information = {}
-all_runs_by_algorithm = {}
-
-for f in results.load_all_results():
-    sdn = "%(dataset)s_%(count)d_%(distance)s" % f.attrs
-    dataset = get_dataset(f.attrs["dataset"])
-    ms = compute_all_metrics(dataset, f, f.attrs["count"], f.attrs["algo"])
-    algo, _, _ = ms
-
-    if not algo in all_runs_by_algorithm:
-        all_runs_by_algorithm[algo] = {}
-    algo_ds = f.attrs["dataset"] + " (k = " + str(f.attrs["count"]) + ")"
-    if not algo_ds in all_runs_by_algorithm[algo]:
-        all_runs_by_algorithm[algo][algo_ds] = []
-    all_runs_by_algorithm[algo][algo_ds].append(ms)
-
-    if not sdn in all_runs_by_dataset:
-        all_runs_by_dataset[sdn] = {}
-        dataset_information[sdn] = dict(f.attrs)
-    if not algo in all_runs_by_dataset[sdn]:
-        all_runs_by_dataset[sdn][algo] = []
-    all_runs_by_dataset[sdn][algo].append(ms)
 
 # Build a website for each dataset
-for (ds, runs) in all_runs_by_dataset.items():
-    all_algos = runs.keys()
-    linestyles = convert_linestyle(create_linestyles(all_algos))
-    output_str = get_html_header(ds)
-    ds_name = dataset_information[ds]["dataset"] + " (k = " + str(dataset_information[ds]["count"]) + ")"
-    output_str += """
-        <div class="container">
-        <h2>Plots for %(id)s</h2>""" % { "id" : ds_name }
-    for plottype in args.plottype:
-        xn, yn = plot_variants[plottype]
-        print("Processing '%s' with %s" % (ds, plottype))
-        output_str += create_plot(ds_name, runs, xn, yn, linestyles)
-    if args.scatter:
+def build_website_for_datasets(datasets):
+    for (ds, runs) in datasets.items():
+        all_algos = runs.keys()
+        linestyles = convert_linestyle(create_linestyles(all_algos))
+        output_str = get_html_header(ds)
+        ds_name = query_info[ds]["dataset"] + " (k = " + str(query_info[ds]["count"]) + ")"
         output_str += """
-        <hr />
-        <h2>Scatterplots for %(id)s""" % { "id" : ds_name }
+            <div class="container">
+            <h2>Plots for %(id)s</h2>""" % { "id" : ds_name }
         for plottype in args.plottype:
             xn, yn = plot_variants[plottype]
-            print("Processing scatterplot '%s' with %s" % (ds, plottype))
-            output_str += create_plot(ds, runs, xn, yn, linestyles, "Scatterplot ", "bubble")
-    # create png plot for summary page
-    data_for_plot = {}
-    for k in runs.keys():
-        data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
-    plot.create_plot(data_for_plot, False,
-            False, True, 'k-nn', 'qps',  args.outputdir + ds + ".png",
-            create_linestyles(all_algos))
-    output_str += """
+            print("Processing '%s' with %s" % (ds, plottype))
+            output_str += create_plot(ds_name, runs, xn, yn, linestyles)
+        if args.scatter:
+            output_str += """
+            <hr />
+            <h2>Scatterplots for %(id)s""" % { "id" : ds_name }
+            for plottype in args.plottype:
+                xn, yn = plot_variants[plottype]
+                print("Processing scatterplot '%s' with %s" % (ds, plottype))
+                output_str += create_plot(ds, runs, xn, yn, linestyles, "Scatterplot ", "bubble")
+        # create png plot for summary page
+        data_for_plot = {}
+        for k in runs.keys():
+            data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
+        plot.create_plot(data_for_plot, False,
+                False, True, 'k-nn', 'qps',  args.outputdir + ds + ".png",
+                create_linestyles(all_algos))
+        output_str += """
+            </div>
         </div>
-    </div>
-    </body>
-</html>
-"""
-    with open(args.outputdir + ds + ".html", "w") as text_file:
-        text_file.write(output_str)
+        </body>
+    </html>
+    """
+        with open(args.outputdir + ds + ".html", "w") as text_file:
+            text_file.write(output_str)
 
 # Build a website for each algorithm
 # Build website. TODO Refactor with dataset code.
-for (algo, runs) in all_runs_by_algorithm.items():
-    all_data = runs.keys()
-    output_str = get_html_header(algo)
-    output_str += """
-        <div class="container">
-        <h2>Plots for %(id)s""" % { "id" : algo }
-    for plottype in args.plottype:
-        xn, yn = plot_variants[plottype]
-        linestyles = convert_linestyle(create_linestyles(all_data))
-        print("Processing '%s' with %s" % (algo, plottype))
-        output_str += create_plot(algo, runs, xn, yn, linestyles)
-    data_for_plot = {}
-    for k in runs.keys():
-        data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
-    plot.create_plot(data_for_plot, False,
-            False, True, 'k-nn', 'qps',  args.outputdir + algo + ".png",
-            create_linestyles(all_data))
-    output_str += """
-    </div>
-    </body>
-</html>
-"""
-    with open(args.outputdir + algo + ".html", "w") as text_file:
+def build_website_for_algorithms(algorithms):
+    for (algo, runs) in algorithms.items():
+        all_data = runs.keys()
+        output_str = get_html_header(algo)
+        output_str += """
+            <div class="container">
+            <h2>Plots for %(id)s""" % { "id" : algo }
+        for plottype in args.plottype:
+            xn, yn = plot_variants[plottype]
+            linestyles = convert_linestyle(create_linestyles(all_data))
+            print("Processing '%s' with %s" % (algo, plottype))
+            output_str += create_plot(algo, runs, xn, yn, linestyles)
+        data_for_plot = {}
+        for k in runs.keys():
+            data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
+        plot.create_plot(data_for_plot, False,
+                False, True, 'k-nn', 'qps',  args.outputdir + algo + ".png",
+                create_linestyles(all_data))
+        output_str += """
+        </div>
+        </body>
+    </html>
+    """
+        with open(args.outputdir + algo + ".html", "w") as text_file:
+            text_file.write(output_str)
+
+def build_index(datasets, algorithms):
+    with open(args.outputdir + "index.html", "w") as text_file:
+        try:
+            with open(args.definitions) as f:
+                definitions = yaml.load(f)
+        except:
+            print("Could not load definitions file, annotations not available.")
+            definitions = {}
+        output_str = get_html_header("ANN-Benchmarks")
+        output_str += """
+            <div class="container">
+                <h1>Info</h1>
+                <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms search. This website contains the current benchmarking results. Please visit <a href="http://github.com/erikbern/ann-benchmarks/">http://github.com/erikbern/ann-benchmarks/</a> to get an overview over evaluated data sets and algorithms. Make a pull request on <a href="http://github.com/erikbern/ann-benchmarks/">Github</a> to add your own code or improvements to the
+                benchmarking system.
+                </p>
+                <div id="results">
+                <h1>Benchmarking Results</h1>
+                <p>Results are split by distance measure and dataset. In the bottom, you can find an overview of an algorithm's performance on all datasets. Each dataset is annoted
+                by <em>(k = ...)</em>, the number of nearest neighbors an algorithm was supposed to return. The plot shown depicts <em>Recall</em> (the fraction
+                of true nearest neighbors found, on average over all queries) against <em>Queries per second</em>.  Clicking on a plot reveils detailled interactive plots, including
+                approximate recall, index size, and build time.</p>
+                <h2 id ="datasets">Results by Dataset</h2>
+                """
+
+        distance_measures = sorted(set([e.split("_")[-1] for e in datasets.keys()]))
+        sorted_datasets = sorted(set([e.split("_")[0] for e in datasets.keys()]))
+        for dm in distance_measures:
+            output_str += """
+                <h3>Distance: %s</h3>
+                """ % dm.capitalize()
+            for ds in sorted_datasets:
+                for idd in sorted([e for e in datasets.keys() \
+                        if e.split("_")[0] == ds and e.split("_")[-1] == dm], \
+                        key = lambda elem: int(elem.split("_")[1])):
+                    ds_name = query_info[idd]["dataset"] + " (k = " + \
+                        str(query_info[idd]["count"]) + ")"
+                    output_str += """
+                <a href="./%(id)s.html">
+                <div class="row" id="%(id)s">
+                    <div class = "col-md-4 bg-success">
+                        <h4>%(name)s</h4>
+                        <dl class="dl-horizontal">
+                        """ % { "name" : ds_name, "id" : idd }
+                    output_str += """
+                            </dl>
+                        </div>
+                        <div class = "col-md-8">
+                            <img class = "img-responsive" src="%(name)s.png" />
+                        </div>
+                    </div>
+                    </a>""" % { "name" : idd }
+            output_str += """
+                <hr />
+            """
+        output_str += """
+            <h2 id="algorithms">Results by Algorithm</h2>
+            <ul class="list-inline"><b>Algorithms:</b>"""
+        algorithm_names = algorithms.keys()
+        for algo in algorithm_names:
+            output_str += '<li><a href="#%(name)s">%(name)s</a></li>' % {"name" : algo}
+        output_str += "</ul>"
+        for algo in algorithm_names:
+            output_str += """
+                <a href="./%(name)s.html">
+                <div class="row" id="%(name)s">
+                    <div class = "col-md-4 bg-success">
+                        <h4>%(name)s</h4>
+                        <dl class="dl-horizontal">
+                        """ % { "name" : algo }
+            if "alogs" in definitions and algo in definitions["algos"]:
+                for k in definitions["algos"][algo]:
+                    output_str += """
+                            <dt>%s</dt>
+                            <dd>%s</dd>
+                            """ % (k, str(definitions["algos"][algo][k]))
+            output_str += """
+                    </dl>
+                </div>
+                <div class = "col-md-8">
+                    <img class = "img-responsive" src="%(name)s.png" />
+                </div>
+            </div>
+            </a>
+            <hr />""" % { "name" : algo}
+        output_str += """
+                <div id="contact">
+                <h2>Contact</h2>
+                <p>ANN-Benchmarks has been developed by Martin Aumueller (maau@itu.dk), Erik Bernhardsson (mail@erikbern.com), and Alec Faitfull (alef@itu.dk). Please use
+                <a href="https://github.com/erikbern/ann-benchmarks/">Github</a> to submit your implementation or improvements.</p>
+                </div>
+            </div>
+        </body>
+    </html>"""
         text_file.write(output_str)
 
-# Build an index page
-with open(args.outputdir + "index.html", "w") as text_file:
-    try:
-        with open(args.definitions) as f:
-            definitions = yaml.load(f)
-    except:
-        print("Could not load definitions file, annotations not available.")
-        definitions = {}
-    output_str = get_html_header("ANN-Benchmarks")
-    output_str += """
-        <div class="container">
-            <h1>Info</h1>
-            <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms search. This website contains the current benchmarking results. Please visit <a href="http://github.com/erikbern/ann-benchmarks/">http://github.com/erikbern/ann-benchmarks/</a> to get an overview over evaluated data sets and algorithms. Make a pull request on <a href="http://github.com/erikbern/ann-benchmarks/">Github</a> to add your own code or improvements to the
-            benchmarking system.
-            </p>
-            <div id="results">
-            <h1>Benchmarking Results</h1>
-            <p>Results are split by distance measure and dataset. In the bottom, you can find an overview of an algorithm's performance on all datasets. Each dataset is annoted
-            by <em>(k = ...)</em>, the number of nearest neighbors an algorithm was supposed to return. The plot shown depicts <em>Recall</em> (the fraction
-            of true nearest neighbors found, on average over all queries) against <em>Queries per second</em>.  Clicking on a plot reveils detailled interactive plots, including
-            approximate recall, index size, and build time.</p>
-            <h2 id ="datasets">Results by Dataset</h2>
-            """
+def load_all_results():
+    """Read all result files and compute all metrics"""
+    all_runs_by_dataset = {}
+    all_runs_by_algorithm = {}
+    query_info = {}
+    for f in results.load_all_results():
+        properties = dict(f.attrs)
+        # TODO Fix this properly. Sometimes the hdf5 file returns bytes
+        for k in properties.keys():
+            try:
+                properties[k]= properties[k].decode()
+            except:
+                pass
+        sdn = "%(dataset)s_%(count)d_%(distance)s" % properties
+        dataset = get_dataset(properties["dataset"])
+        algo = properties["algo"]
+        ms = compute_all_metrics(dataset, f, f.attrs["count"], f.attrs["algo"])
+        algo_ds = properties["dataset"] + " (k = " + str(f.attrs["count"]) + ")"
 
-    distance_measures = sorted(set([e.split("_")[-1] for e in all_runs_by_dataset.keys()]))
-    datasets = sorted(set([e.split("_")[0] for e in all_runs_by_dataset.keys()]))
-    for dm in distance_measures:
-        output_str += """
-            <h3>Distance: %s</h3>
-            """ % dm.capitalize()
-        for ds in datasets:
-            for idd in sorted([e for e in all_runs_by_dataset.keys() \
-                    if e.split("_")[0] == ds and e.split("_")[-1] == dm], \
-                    key = lambda elem: int(elem.split("_")[1])):
-                ds_name = dataset_information[idd]["dataset"] + " (k = " + \
-                    str(dataset_information[idd]["count"]) + ")"
-                output_str += """
-            <a href="./%(id)s.html">
-            <div class="row" id="%(id)s">
-                <div class = "col-md-4 bg-success">
-                    <h4>%(name)s</h4>
-                    <dl class="dl-horizontal">
-                    """ % { "name" : ds_name, "id" : idd }
-#        if "datasets" in definitions and ds in definitions["datasets"]:
-#            for k in definitions["datasets"][ds]:
-#                output_str += """
-#                        <dt>%s</dt>
-#                        <dd>%s</dd>
-#                        """ % (k, str(definitions["datasets"][ds][k]))
-                output_str += """
-                        </dl>
-                    </div>
-                    <div class = "col-md-8">
-                        <img class = "img-responsive" src="%(name)s.png" />
-                    </div>
-                </div>
-                </a>""" % { "name" : idd }
-        output_str += """
-            <hr />
-        """
-    output_str += """
-        <h2 id="algorithms">Results by Algorithm</h2>
-        <ul class="list-inline"><b>Algorithms:</b>"""
-    algorithms = all_runs_by_algorithm.keys()
-    for algo in algorithms:
-        output_str += '<li><a href="#%(name)s">%(name)s</a></li>' % {"name" : algo}
-    output_str += "</ul>"
-    for algo in algorithms:
-        output_str += """
-            <a href="./%(name)s.html">
-            <div class="row" id="%(name)s">
-                <div class = "col-md-4 bg-success">
-                    <h4>%(name)s</h4>
-                    <dl class="dl-horizontal">
-                    """ % { "name" : algo }
-        if "alogs" in definitions and algo in definitions["algos"]:
-            for k in definitions["algos"][algo]:
-                output_str += """
-                        <dt>%s</dt>
-                        <dd>%s</dd>
-                        """ % (k, str(definitions["algos"][algo][k]))
-        output_str += """
-                </dl>
-            </div>
-            <div class = "col-md-8">
-                <img class = "img-responsive" src="%(name)s.png" />
-            </div>
-        </div>
-        </a>
-        <hr />""" % { "name" : algo}
-    output_str += """
-            <div id="contact">
-            <h2>Contact</h2>
-            <p>ANN-Benchmarks has been developed by Martin Aumueller (maau@itu.dk), Erik Bernhardsson (mail@erikbern.com), and Alec Faitfull (alef@itu.dk). Please use
-            <a href="https://github.com/erikbern/ann-benchmarks/">Github</a> to submit your implementation or improvements.</p>
-            </div>
-        </div>
-    </body>
-</html>"""
-    text_file.write(output_str)
+        all_runs_by_algorithm.setdefault(algo, {}).setdefault(algo_ds, []).append(ms)
+        all_runs_by_dataset.setdefault(sdn, {}).setdefault(algo, []).append(ms)
+        query_info[sdn] = properties
+    return (all_runs_by_dataset, all_runs_by_algorithm, query_info)
 
-
+runs_by_ds, runs_by_algo, query_info = load_all_results()
+build_website_for_datasets(runs_by_ds)
+build_website_for_algorithms(runs_by_algo)
+build_index(runs_by_ds, runs_by_algo)
