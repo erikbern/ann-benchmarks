@@ -64,10 +64,6 @@ parser.add_argument(
     type=directory_path,
     action = 'store')
 parser.add_argument(
-    '--definitions',
-    help = 'YAML file with dataset and algorithm annotations',
-    action = 'store')
-parser.add_argument(
     '--latex',
     help='generates latex code for each plot',
     action = 'store_true')
@@ -362,12 +358,6 @@ def build_website_for_algorithms(algorithms):
 
 def build_index(datasets, algorithms):
     with open(args.outputdir + "index.html", "w") as text_file:
-        try:
-            with open(args.definitions) as f:
-                definitions = yaml.load(f)
-        except:
-            print("Could not load definitions file, annotations not available.")
-            definitions = {}
         output_str = get_html_header("ANN-Benchmarks")
         output_str += """
             <div class="container">
@@ -428,14 +418,6 @@ def build_index(datasets, algorithms):
                     <div class = "col-md-4 bg-success">
                         <h4>%(name)s</h4>
                         <dl class="dl-horizontal">
-                        """ % { "name" : algo }
-            if "alogs" in definitions and algo in definitions["algos"]:
-                for k in definitions["algos"][algo]:
-                    output_str += """
-                            <dt>%s</dt>
-                            <dd>%s</dd>
-                            """ % (k, str(definitions["algos"][algo][k]))
-            output_str += """
                     </dl>
                 </div>
                 <div class = "col-md-8">
