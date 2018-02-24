@@ -57,6 +57,9 @@ def get_count_from_desc(desc):
 def get_distance_from_desc(desc):
     return desc.split("_")[2]
 
+def get_dataset_label(desc):
+    return get_dataset_from_desc(desc) + " (k = " + get_count_from_desc(desc) + ")"
+
 def directory_path(s):
     if not os.path.isdir(s):
         raise argparse.ArgumentTypeError("'%s' is not a directory" % s)
@@ -316,7 +319,8 @@ def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype
                 </script>
             </div>""" % { "id" : ds, "xlabel" :  xm["description"], "ylabel" : ym["description"], "plottype" : plottype,
                         "plotlabel" : get_plot_label(xm, ym),  "label": additional_label,
-                        "datapoints" : create_data_points(all_data, xn, yn, linestyle, plottype == "bubble") }
+                        "datapoints" : create_data_points(all_data,
+                            xn, yn, linestyle, plottype == "bubble") }
     if args.latex:
         output_str += """
         <div class="row">
@@ -337,72 +341,43 @@ def create_plot(ds, all_data, xn, yn, linestyle, additional_label = "", plottype
         """ % {  "latexcode": get_latex_plot(all_data, xm, ym, plottype), "buttonlabel" : hashlib.sha224(get_plot_label(xm, ym) + additional_label).hexdigest() }
     return output_str
 
-
-# Build a website for each dataset
-def build_website_for_datasets(datasets):
-    for (ds, runs) in datasets.items():
-        all_algos = runs.keys()
-        linestyles = convert_linestyle(create_linestyles(all_algos))
-        output_str = get_html_header(ds)
-        ds_name = get_dataset_from_desc(ds) + " (k = " + get_count_from_desc(ds) + ")"
+def build_detail_site(data, label_func):
+    for (name, runs) in data.items():
+        all_runs = runs.keys()
+        linestyles = convert_linestyle(create_linestyles(all_runs))
+        output_str = get_html_header(name)
+        label = label_func(name)
         output_str += """
             <div class="container">
-            <h2>Plots for %(id)s</h2>""" % { "id" : ds_name }
+            <h2>Plots for %s</h2>""" % (label)
         for plottype in args.plottype:
             xn, yn = plot_variants[plottype]
-            print("Processing '%s' with %s" % (ds, plottype))
-            output_str += create_plot(ds_name, runs, xn, yn, linestyles)
+            print("Processing '%s' with %s" % (name, plottype))
+            output_str += create_plot(label, runs, xn, yn, linestyles)
         if args.scatter:
             output_str += """
             <hr />
-            <h2>Scatterplots for %(id)s""" % { "id" : ds_name }
+            <h2>Scatterplots for %s""" % (label)
             for plottype in args.plottype:
                 xn, yn = plot_variants[plottype]
-                print("Processing scatterplot '%s' with %s" % (ds, plottype))
-                output_str += create_plot(ds, runs, xn, yn, linestyles, "Scatterplot ", "bubble")
+                print("Processing scatterplot '%s' with %s" % (name, plottype))
+                output_str += create_plot(name, runs, xn, yn, linestyles, "Scatterplot ", "bubble")
         # create png plot for summary page
         data_for_plot = {}
         for k in runs.keys():
             data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
         plot.create_plot(data_for_plot, False,
-                False, True, 'k-nn', 'qps',  args.outputdir + ds + ".png",
-                create_linestyles(all_algos))
+                False, True, 'k-nn', 'qps',  args.outputdir + name + ".png",
+                create_linestyles(all_runs))
         output_str += """
             </div>
         </div>
         </body>
     </html>
     """
-        with open(args.outputdir + ds + ".html", "w") as text_file:
+        with open(args.outputdir + name + ".html", "w") as text_file:
             text_file.write(output_str)
 
-# Build a website for each algorithm
-# Build website. TODO Refactor with dataset code.
-def build_website_for_algorithms(algorithms):
-    for (algo, runs) in algorithms.items():
-        all_data = runs.keys()
-        output_str = get_html_header(algo)
-        output_str += """
-            <div class="container">
-            <h2>Plots for %(id)s""" % { "id" : algo }
-        for plottype in args.plottype:
-            xn, yn = plot_variants[plottype]
-            linestyles = convert_linestyle(create_linestyles(all_data))
-            print("Processing '%s' with %s" % (algo, plottype))
-            output_str += create_plot(algo, runs, xn, yn, linestyles)
-        data_for_plot = {}
-        for k in runs.keys():
-            data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
-        plot.create_plot(data_for_plot, False,
-                False, True, 'k-nn', 'qps',  args.outputdir + algo + ".png",
-                create_linestyles(all_data))
-        output_str += """
-        </div>
-        </body>
-    </html>
-    """
-        with open(args.outputdir + algo + ".html", "w") as text_file:
-            text_file.write(output_str)
 
 def build_index(datasets, algorithms):
     distance_measures = sorted(set([get_distance_from_desc(e) for e in datasets.keys()]))
@@ -422,9 +397,7 @@ def build_index(datasets, algorithms):
             sorted_matches = sorted(matching_datasets, \
                     key = lambda e: int(get_count_from_desc(e)))
             for idd in sorted_matches:
-                ds_name = get_dataset_from_desc(idd) + " (k = " + \
-                    get_count_from_desc(idd) + ")"
-                output_str += get_row_desc(idd, ds_name)
+                output_str += get_row_desc(idd, get_dataset_label(idd))
     output_str += """
         <h2 id="algorithms">Results by Algorithm</h2>
         <ul class="list-inline"><b>Algorithms:</b>"""
@@ -465,6 +438,6 @@ def load_all_results():
     return (all_runs_by_dataset, all_runs_by_algorithm, query_info)
 
 runs_by_ds, runs_by_algo, query_info = load_all_results()
-build_website_for_datasets(runs_by_ds)
-build_website_for_algorithms(runs_by_algo)
+build_detail_site(runs_by_ds, lambda label: get_dataset_label(label))
+build_detail_site(runs_by_algo, lambda x: x)
 build_index(runs_by_ds, runs_by_algo)
