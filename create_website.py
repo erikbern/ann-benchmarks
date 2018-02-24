@@ -123,6 +123,33 @@ def get_html_header(title):
           </div>
         </nav>""" % {"title" : title}
 
+def get_index_description():
+    return """
+        <div class="container">
+            <h1>Info</h1>
+            <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms search. This website contains the current benchmarking results. Please visit <a href="http://github.com/erikbern/ann-benchmarks/">http://github.com/erikbern/ann-benchmarks/</a> to get an overview over evaluated data sets and algorithms. Make a pull request on <a href="http://github.com/erikbern/ann-benchmarks/">Github</a> to add your own code or improvements to the
+            benchmarking system.
+            </p>
+            <div id="results">
+            <h1>Benchmarking Results</h1>
+            <p>Results are split by distance measure and dataset. In the bottom, you can find an overview of an algorithm's performance on all datasets. Each dataset is annoted
+            by <em>(k = ...)</em>, the number of nearest neighbors an algorithm was supposed to return. The plot shown depicts <em>Recall</em> (the fraction
+            of true nearest neighbors found, on average over all queries) against <em>Queries per second</em>.  Clicking on a plot reveils detailled interactive plots, including
+            approximate recall, index size, and build time.</p>
+            <h2 id ="datasets">Results by Dataset</h2>
+            """
+
+def get_index_footer():
+    return """
+            <div id="contact">
+            <h2>Contact</h2>
+            <p>ANN-Benchmarks has been developed by Martin Aumueller (maau@itu.dk), Erik Bernhardsson (mail@erikbern.com), and Alec Faitfull (alef@itu.dk). Please use
+            <a href="https://github.com/erikbern/ann-benchmarks/">Github</a> to submit your implementation or improvements.</p>
+            </div>
+        </div>
+    </body>
+</html>"""
+
 def prepare_data(data, xn, yn):
     """Change format from (algo, instance, dict) to (algo, instance, x, y)."""
     res = []
@@ -175,11 +202,6 @@ def create_data_points(all_data, xn, yn, linestyle, render_all_points):
             xs, ys, ls, axs, ays, als = create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
             if render_all_points:
                 xs, ys, ls = axs, ays, als
-# TODO Put this somewhere else
-# pretty print subprocess parameter settings.
-#            for i in range(len(ls)):
-#                if "Subprocess" in ls[i]:
-#                    ls[i] = ls[i].split("(")[1].split("{")[1].split("}")[0].replace("'", "")
             html_str += """
                 {
                     label: "%(algo)s",
@@ -357,84 +379,60 @@ def build_website_for_algorithms(algorithms):
             text_file.write(output_str)
 
 def build_index(datasets, algorithms):
-    with open(args.outputdir + "index.html", "w") as text_file:
-        output_str = get_html_header("ANN-Benchmarks")
-        output_str += """
-            <div class="container">
-                <h1>Info</h1>
-                <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms search. This website contains the current benchmarking results. Please visit <a href="http://github.com/erikbern/ann-benchmarks/">http://github.com/erikbern/ann-benchmarks/</a> to get an overview over evaluated data sets and algorithms. Make a pull request on <a href="http://github.com/erikbern/ann-benchmarks/">Github</a> to add your own code or improvements to the
-                benchmarking system.
-                </p>
-                <div id="results">
-                <h1>Benchmarking Results</h1>
-                <p>Results are split by distance measure and dataset. In the bottom, you can find an overview of an algorithm's performance on all datasets. Each dataset is annoted
-                by <em>(k = ...)</em>, the number of nearest neighbors an algorithm was supposed to return. The plot shown depicts <em>Recall</em> (the fraction
-                of true nearest neighbors found, on average over all queries) against <em>Queries per second</em>.  Clicking on a plot reveils detailled interactive plots, including
-                approximate recall, index size, and build time.</p>
-                <h2 id ="datasets">Results by Dataset</h2>
-                """
+    distance_measures = sorted(set([e.split("_")[-1] for e in datasets.keys()]))
+    sorted_datasets = sorted(set([e.split("_")[0] for e in datasets.keys()]))
 
-        distance_measures = sorted(set([e.split("_")[-1] for e in datasets.keys()]))
-        sorted_datasets = sorted(set([e.split("_")[0] for e in datasets.keys()]))
-        for dm in distance_measures:
-            output_str += """
-                <h3>Distance: %s</h3>
-                """ % dm.capitalize()
-            for ds in sorted_datasets:
-                for idd in sorted([e for e in datasets.keys() \
-                        if e.split("_")[0] == ds and e.split("_")[-1] == dm], \
-                        key = lambda elem: int(elem.split("_")[1])):
-                    ds_name = query_info[idd]["dataset"] + " (k = " + \
-                        str(query_info[idd]["count"]) + ")"
-                    output_str += """
-                <a href="./%(id)s.html">
-                <div class="row" id="%(id)s">
-                    <div class = "col-md-4 bg-success">
-                        <h4>%(name)s</h4>
-                        <dl class="dl-horizontal">
-                        """ % { "name" : ds_name, "id" : idd }
-                    output_str += """
-                            </dl>
-                        </div>
-                        <div class = "col-md-8">
-                            <img class = "img-responsive" src="%(name)s.png" />
-                        </div>
-                    </div>
-                    </a>""" % { "name" : idd }
-            output_str += """
-                <hr />
-            """
+    output_str = get_html_header("ANN-Benchmarks")
+    output_str += get_index_description()
+
+    for dm in distance_measures:
         output_str += """
-            <h2 id="algorithms">Results by Algorithm</h2>
-            <ul class="list-inline"><b>Algorithms:</b>"""
-        algorithm_names = algorithms.keys()
-        for algo in algorithm_names:
-            output_str += '<li><a href="#%(name)s">%(name)s</a></li>' % {"name" : algo}
-        output_str += "</ul>"
-        for algo in algorithm_names:
-            output_str += """
-                <a href="./%(name)s.html">
-                <div class="row" id="%(name)s">
-                    <div class = "col-md-4 bg-success">
-                        <h4>%(name)s</h4>
-                        <dl class="dl-horizontal">
-                    </dl>
+            <h3>Distance: %s</h3>
+            """ % dm.capitalize()
+        for ds in sorted_datasets:
+            for idd in sorted([e for e in datasets.keys() \
+                    if e.split("_")[0] == ds and e.split("_")[-1] == dm], \
+                    key = lambda elem: int(elem.split("_")[1])):
+                ds_name = query_info[idd]["dataset"] + " (k = " + \
+                    str(query_info[idd]["count"]) + ")"
+                output_str += """
+            <a href="./%(name)s.html">
+            <div class="row" id="%(name)s">
+                <div class = "col-md-4 bg-success">
+                    <h4>%(desc)s</h4>
                 </div>
                 <div class = "col-md-8">
                     <img class = "img-responsive" src="%(name)s.png" />
                 </div>
             </div>
             </a>
-            <hr />""" % { "name" : algo}
+            <hr />
+        """% { "desc" : ds_name, "name" : idd }
+    output_str += """
+        <h2 id="algorithms">Results by Algorithm</h2>
+        <ul class="list-inline"><b>Algorithms:</b>"""
+    algorithm_names = algorithms.keys()
+    for algo in algorithm_names:
+        output_str += '<li><a href="#%(name)s">%(name)s</a></li>' % {"name" : algo}
+    output_str += "</ul>"
+    for algo in algorithm_names:
         output_str += """
-                <div id="contact">
-                <h2>Contact</h2>
-                <p>ANN-Benchmarks has been developed by Martin Aumueller (maau@itu.dk), Erik Bernhardsson (mail@erikbern.com), and Alec Faitfull (alef@itu.dk). Please use
-                <a href="https://github.com/erikbern/ann-benchmarks/">Github</a> to submit your implementation or improvements.</p>
-                </div>
+            <a href="./%(name)s.html">
+            <div class="row" id="%(name)s">
+                <div class = "col-md-4 bg-success">
+                    <h4>%(name)s</h4>
+                    <dl class="dl-horizontal">
+                </dl>
             </div>
-        </body>
-    </html>"""
+            <div class = "col-md-8">
+                <img class = "img-responsive" src="%(name)s.png" />
+            </div>
+        </div>
+        </a>
+        <hr />""" % { "name" : algo}
+    output_str += get_index_footer()
+
+    with open(args.outputdir + "index.html", "w") as text_file:
         text_file.write(output_str)
 
 def load_all_results():
