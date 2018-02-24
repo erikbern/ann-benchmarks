@@ -297,22 +297,22 @@ all_runs_by_dataset = {}
 dataset_information = {}
 all_runs_by_algorithm = {}
 
-for d, r in results.load_all_results():
-    sdn = "%(dataset)s_%(count)d__%(distance)s" % d
-    dataset = get_dataset(d["dataset"])
-    ms = compute_all_metrics(dataset, r, d["count"], d["algorithm"])
+for f in results.load_all_results():
+    sdn = "%(dataset)s_%(count)d_%(distance)s" % f.attrs
+    dataset = get_dataset(f.attrs["dataset"])
+    ms = compute_all_metrics(dataset, f, f.attrs["count"], f.attrs["algo"])
     algo, _, _ = ms
 
     if not algo in all_runs_by_algorithm:
         all_runs_by_algorithm[algo] = {}
-    algo_ds = d["dataset"] + " (k = " + str(d["count"]) + ")"
+    algo_ds = f.attrs["dataset"] + " (k = " + str(f.attrs["count"]) + ")"
     if not algo_ds in all_runs_by_algorithm[algo]:
         all_runs_by_algorithm[algo][algo_ds] = []
     all_runs_by_algorithm[algo][algo_ds].append(ms)
 
     if not sdn in all_runs_by_dataset:
         all_runs_by_dataset[sdn] = {}
-        dataset_information[sdn] = d
+        dataset_information[sdn] = dict(f.attrs)
     if not algo in all_runs_by_dataset[sdn]:
         all_runs_by_dataset[sdn][algo] = []
     all_runs_by_dataset[sdn][algo].append(ms)
