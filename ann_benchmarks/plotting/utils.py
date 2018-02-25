@@ -28,14 +28,15 @@ def create_pointset(data, xn, yn):
             ls.append(algo_name)
     return xs, ys, ls, axs, ays, als
 
-def compute_metrics(dataset, res, count, metric_1, metric_2):
+def compute_metrics(true_nn_distances, res, metric_1, metric_2):
     all_results = {}
     for i, (definition, run) in enumerate(res):
         algo = definition.algorithm
         algo_name = run.attrs['name']
+        run_distances = list(run['distances'])
 
-        metric_1_value = metrics[metric_1]['function'](dataset, run, count)
-        metric_2_value = metrics[metric_2]['function'](dataset, run, count)
+        metric_1_value = metrics[metric_1]['function'](true_nn_distances, run_distances, run.attrs)
+        metric_2_value = metrics[metric_2]['function'](true_nn_distances, run_distances, run.attrs)
 
         print('%3d: %80s %12.3f %12.3f' % (i, algo_name, metric_1_value, metric_2_value))
 
@@ -43,13 +44,15 @@ def compute_metrics(dataset, res, count, metric_1, metric_2):
 
     return all_results
 
-def compute_all_metrics(dataset, run, count, algo):
+def compute_all_metrics(true_nn_distances, run, algo):
     algo_name = run.attrs["name"]
     print('--')
     print(algo_name)
     results = {}
+    run_distances = list(run["distances"])
+    run_attrs = dict(run.attrs)
     for name, metric in metrics.items():
-        v = metric["function"](dataset, run, count)
+        v = metric["function"](true_nn_distances, run_distances, run_attrs)
         results[name] = v
         if v:
             print('%s: %g' % (name, v))

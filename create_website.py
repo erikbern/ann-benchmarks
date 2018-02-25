@@ -424,6 +424,8 @@ def load_all_results():
     """Read all result files and compute all metrics"""
     all_runs_by_dataset = {}
     all_runs_by_algorithm = {}
+    cached_true_dist = []
+    old_sdn = None
     for f in results.load_all_results():
         properties = dict(f.attrs)
         # TODO Fix this properly. Sometimes the hdf5 file returns bytes
@@ -434,9 +436,12 @@ def load_all_results():
             except:
                 pass
         sdn = get_run_desc(properties)
-        dataset = get_dataset(properties["dataset"])
+        if sdn != old_sdn:
+            dataset = get_dataset(properties["dataset"])
+            cached_true_dist = list(dataset["distances"])
+            old_sdn = sdn
         algo = properties["algo"]
-        ms = compute_all_metrics(dataset, f, properties["count"], properties["algo"])
+        ms = compute_all_metrics(cached_true_dist, f, properties["algo"])
         algo_ds = get_dataset_label(sdn)
 
         all_runs_by_algorithm.setdefault(algo, {}).setdefault(algo_ds, []).append(ms)
