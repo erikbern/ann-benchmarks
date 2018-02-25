@@ -33,6 +33,7 @@ def compute_metrics(true_nn_distances, res, metric_1, metric_2):
     for i, (definition, run) in enumerate(res):
         algo = definition.algorithm
         algo_name = run.attrs['name']
+        # cache distances to avoid access to hdf5 file
         run_distances = list(run['distances'])
 
         metric_1_value = metrics[metric_1]['function'](true_nn_distances, run_distances, run.attrs)
@@ -49,6 +50,7 @@ def compute_all_metrics(true_nn_distances, run, algo):
     print('--')
     print(algo_name)
     results = {}
+    # cache distances to avoid access to hdf5 file
     run_distances = list(run["distances"])
     run_attrs = dict(run.attrs)
     for name, metric in metrics.items():
