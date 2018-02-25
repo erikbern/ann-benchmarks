@@ -1,20 +1,18 @@
 from __future__ import absolute_import
 
 def knn(dataset_distances, run_distances, count, epsilon=1e-10):
-    total = 0
+    total = len(run_distances) * count
     actual = 0
     for true_distances, found_distances in zip(dataset_distances, run_distances):
         within = [d for d in found_distances[:count] if d <= true_distances[count - 1] + epsilon]
-        total += count
         actual += len(within)
     return float(actual) / float(total)
 
 def epsilon(dataset_distances, run_distances, count, epsilon=0.01):
-    total = 0
+    total = len(run_distances) * count
     actual = 0
     for true_distances, found_distances in zip(dataset_distances, run_distances):
         within = [d for d in found_distances[:count] if d <= true_distances[count - 1] * (1 + epsilon)]
-        total += count
         actual += len(within)
     return float(actual) / float(total)
 
@@ -45,51 +43,48 @@ def candidates(queries, attrs):
 all_metrics = {
     "k-nn": {
         "description": "Recall",
-        "function": lambda dataset, run, count: knn(dataset['distances'], run['distances'],
-            count),
+        "function": lambda true_distances, run_distances, run_attrs: knn(true_distances, run_distances, run_attrs["count"]),
         "worst": float("-inf"),
         "lim": [0.0, 1.03]
     },
     "epsilon": {
         "description": "Epsilon 0.01 Recall",
-        "function": lambda dataset, run, count: epsilon(dataset['distances'], run['distances'],
-            count),
+        "function": lambda true_distances, run_distances, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"]),
         "worst": float("-inf")
     },
     "largeepsilon": {
         "description": "Epsilon 0.1 Recall",
-        "function": lambda dataset, run, count: epsilon(dataset['distances'], run['distances'],
-            count, 0.1),
+        "function": lambda true_distances, run_distances, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], 0.1),
         "worst": float("-inf")
     },
     "rel": {
         "description": "Relative Error",
-        "function": lambda dataset, run, count: rel(dataset['distances'], run['distances']),
+        "function": lambda true_distances, run_distances, run_attrs: rel(true_distances, run_distances),
         "worst": float("inf")
     },
     "qps": {
         "description": "Queries per second (1/s)",
-        "function": lambda dataset, run, count: queries_per_second(dataset, run.attrs),
+        "function": lambda true_distances, run_distances, run_attrs: queries_per_second(true_distances, run_attrs),
         "worst": float("-inf")
     },
     "build": {
         "description": "Build time (s)",
-        "function": lambda dataset, run, count: build_time(dataset, run.attrs),
+        "function": lambda true_distances, run_distances, run_attrs: build_time(true_distances, run_attrs),
         "worst": float("inf")
     },
     "candidates" : {
         "description": "Candidates generated",
-        "function": lambda dataset, run, count: candidates(dataset, run.attrs),
+        "function": lambda true_distances, run_distances, run_attrs: candidates(true_distances, run_attrs),
         "worst": float("inf")
     },
     "indexsize" : {
         "description": "Index size (kB)",
-        "function": lambda dataset, run, count: index_size(dataset, run.attrs),
+        "function": lambda true_distances, run_distances, run_attrs: index_size(true_distances, run_attrs),
         "worst": float("inf")
     },
     "queriessize" : {
         "description": "Index size (kB)/Queries per second (s)",
-        "function": lambda dataset, run, count: index_size(dataset, run.attrs) / queries_per_second(dataset, run.attrs),
+        "function": lambda true_distances, run_distances, run_attrs: index_size(true_distances, run_attrs) / queries_per_second(true_distances, run_attrs),
         "worst": float("inf")
     }
 }
