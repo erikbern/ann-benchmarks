@@ -31,21 +31,13 @@ def load_results(dataset, count, definitions):
             yield definition, f
             f.close()
 
-def _get_leaf_paths(path):
-    if os.path.isdir(path):
-        for fragment in os.listdir(path):
-            for i in _get_leaf_paths(os.path.join(path, fragment)):
-                yield i
-    elif os.path.isfile(path):
-        yield path
-
 def load_all_results():
-    import re
-    for fn in _get_leaf_paths("results/"):
-        try:
-            f = h5py.File(fn)
-            yield f
-            f.close()
-        except:
-            pass
+    for root, _, files in os.walk("results/"):
+        for fn in files:
+            try:
+                f = h5py.File(os.path.join(root, fn))
+                yield f
+                f.close()
+            except:
+                pass
 
