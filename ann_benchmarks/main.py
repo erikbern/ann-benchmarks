@@ -90,14 +90,6 @@ def main():
         list_algorithms(args.definitions)
         sys.exit(0)
 
-    # See which Docker images we have available
-    docker_client = docker.from_env()
-    docker_tags = set()
-    for image in docker_client.images.list():
-        for tag in image.tags:
-            tag, _ = tag.split(':')
-            docker_tags.add(tag)
-
     # Nmslib specific code
     # Remove old indices stored on disk
     if os.path.exists(INDEX_DIR):
@@ -119,6 +111,14 @@ def main():
         definitions = [d for d in definitions if d.algorithm == args.algorithm]
 
     if not args.local:
+        # See which Docker images we have available
+        docker_client = docker.from_env()
+        docker_tags = set()
+        for image in docker_client.images.list():
+            for tag in image.tags:
+                tag, _ = tag.split(':')
+                docker_tags.add(tag)
+
         if args.docker_tag:
             print('running only', args.docker_tag)
             definitions = [d for d in definitions if d.docker_tag == args.docker_tag]
