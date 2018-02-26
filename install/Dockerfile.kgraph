@@ -7,4 +7,5 @@ RUN cd kgraph && python setup.py build && python setup.py install
 # kgraph doesn't work with python3 afaik
 RUN python -c 'import pykgraph'
 RUN pip install -rrequirements.txt
+RUN pip install enum34
 ENTRYPOINT ["python", "run_algorithm.py"]
