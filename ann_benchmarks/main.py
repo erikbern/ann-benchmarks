@@ -138,8 +138,8 @@ def main():
                 # If the module couldn't be loaded (presumably because of a missing
                 # dependency), print a warning and remove this definition from the
                 # list of things to be run
-                print """\
-%s.%s(%s): warning: the module '%s' could not be loaded; skipping""" % (df.module, df.constructor, df.arguments, df.module)
+                print("""\
+%s.%s(%s): warning: the module '%s' could not be loaded; skipping""" % (df.module, df.constructor, df.arguments, df.module))
                 return False
             else:
                 return True
