@@ -8,6 +8,7 @@ import re
 import sys
 import traceback
 import yaml
+from enum import Enum
 from itertools import product
 
 
@@ -20,6 +21,20 @@ def instantiate_algorithm(definition):
     constructor = getattr(module, definition.constructor)
     return constructor(*definition.arguments)
 
+class InstantiationStatus(Enum):
+    AVAILABLE = 0
+    NO_CONSTRUCTOR = 1
+    NO_MODULE = 2
+
+def algorithm_status(definition):
+    try:
+        module = importlib.import_module(definition.module)
+        if hasattr(module, definition.constructor):
+            return InstantiationStatus.AVAILABLE
+        else:
+            return InstantiationStatus.NO_CONSTRUCTOR
+    except ImportError:
+        return InstantiationStatus.NO_MODULE
 
 def get_result_filename(dataset, count, definition):
     d = ['results',
