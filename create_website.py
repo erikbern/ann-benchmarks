@@ -96,13 +96,15 @@ parser.add_argument(
     action = 'store_true')
 args = parser.parse_args()
 
-def get_latex_plot(all_data, xn, yn, xm, ym, plottype, j2_env):
+def get_latex_plot(all_data, xn, yn, xm, ym, render_all_points, j2_env):
     plot_data = []
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
             xs, ys, ls, axs, ays, als = \
-                    create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
+                create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
+            if render_all_points:
+                xs, ys, ls = axs, ays, als
             plot_data.append({ "name": algo, "coords" : zip(xs, ys),
-                "scatter" : plottype == "bubble" })
+                "scatter" : render_all_points})
     return j2_env.get_template("latex.template").\
             render(plot_data = plot_data, caption = get_plot_label(xm, ym),
                     xlabel = xm["description"], ylabel = ym["description"])
@@ -133,16 +135,17 @@ def create_data_points(all_data, xn, yn, linestyle, render_all_points):
 
 def create_plot(all_data, xn, yn, linestyle, j2_env, additional_label = "", plottype = "line"):
     xm, ym = (metrics[xn], metrics[yn])
+    render_all_points = plottype == "bubble"
     return {"xlabel" :  xm["description"],
             "ylabel" : ym["description"],
             "plottype" : plottype,
             "plotlabel" : get_plot_label(xm, ym),
             "label": additional_label,
             "datapoints" : create_data_points(all_data, xn, yn,
-                linestyle, plottype == "bubble"),
+                linestyle, render_all_points),
             "buttonlabel" : hashlib.sha224((get_plot_label(xm, ym) +
                 additional_label).encode("utf-8")).hexdigest(),
-            "latexcode" :  get_latex_plot(all_data, xn, yn, xm, ym, plottype, j2_env)}
+            "latexcode" :  get_latex_plot(all_data, xn, yn, xm, ym, render_all_points, j2_env)}
 
 def build_detail_site(data, label_func, j2_env):
     for (name, runs) in data.items():
