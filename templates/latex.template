@@ -12,15 +12,15 @@
             cycle list name = black white
             ]
         {% for algo in plot_data %}
-            {% if algo.scatter %} 
+            {% if algo.scatter %}
             \addplot [only marks] coordinates {
             {% else %}
             \addplot coordinates {
             {% endif %}
-                {% for coord in algo.coords %} 
+                {% for coord in algo.coords %}
                     ({{ coord[0]}}, {{ coord[1] }})
                 {% endfor %}
-            }
+            };
             \addlegendentry{ {{algo.name}} };
         {% endfor %}
     \end{axis}
