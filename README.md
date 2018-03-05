@@ -18,7 +18,6 @@ Evaluated
 * [KGraph](https://github.com/aaalgo/kgraph)
 * [NMSLIB (Non-Metric Space Library)](https://github.com/searchivarius/nmslib): SWGraph, HNSW, BallTree, MPLSH
 * [RPForest](https://github.com/lyst/rpforest)
-* [FALCONN](http://falconn-lib.org/)
 * [FAISS](https://github.com/facebookresearch/faiss.git)
 * [DolphinnPy](https://github.com/ipsarros/DolphinnPy)
 * [Datasketch](https://github.com/ekzhu/datasketch)

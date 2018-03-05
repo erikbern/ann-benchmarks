@@ -12,7 +12,6 @@ env:
   - LIBRARY=datasketch
   - LIBRARY=dolphinn
   - LIBRARY=faiss
-  - LIBRARY=falconn
   - LIBRARY=flann
   - LIBRARY=kgraph
   - LIBRARY=nearpy
