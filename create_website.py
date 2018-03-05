@@ -96,56 +96,35 @@ parser.add_argument(
     action = 'store_true')
 args = parser.parse_args()
 
-def get_latex_plot(all_data, xn, yn, xm, ym, render_all_points, j2_env):
+def get_lines(all_data, xn, yn, render_all_points):
+    """ For each algorithm run on a dataset, obtain its performance curve coords."""
     plot_data = []
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
             xs, ys, ls, axs, ays, als = \
                 create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
             if render_all_points:
                 xs, ys, ls = axs, ays, als
-            plot_data.append({ "name": algo, "coords" : zip(xs, ys),
+            plot_data.append({ "name": algo, "coords" : zip(xs, ys), "labels" : ls,
                 "scatter" : render_all_points})
-    return j2_env.get_template("latex.template").\
-            render(plot_data = plot_data, caption = get_plot_label(xm, ym),
-                    xlabel = xm["description"], ylabel = ym["description"])
-
-def create_data_points(all_data, xn, yn, linestyle, render_all_points):
-    color_index = 0
-    output_str = ""
-    for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-            xs, ys, ls, axs, ays, als = \
-                    create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
-            if render_all_points:
-                xs, ys, ls = axs, ays, als
-            output_str += """
-                {
-                    label: "%(algo)s",
-                    fill: false,
-                    pointStyle: "%(ps)s",
-                    borderColor: "%(color)s",
-                    data: [ """ % {"algo" : algo, "color" : linestyle[algo][0], "ps" : linestyle[algo][3] }
-
-            for i in range(len(xs)):
-                output_str += """
-                        { x: %(x)s, y: %(y)s, label: "%(label)s" },""" % {"x" : str(xs[i]), "y" : str(ys[i]), "label" : ls[i] }
-            output_str += """
-                ]},"""
-            color_index += 1
-    return output_str
+    return plot_data
 
 def create_plot(all_data, xn, yn, linestyle, j2_env, additional_label = "", plottype = "line"):
     xm, ym = (metrics[xn], metrics[yn])
     render_all_points = plottype == "bubble"
-    return {"xlabel" :  xm["description"],
-            "ylabel" : ym["description"],
-            "plottype" : plottype,
-            "plotlabel" : get_plot_label(xm, ym),
-            "label": additional_label,
-            "datapoints" : create_data_points(all_data, xn, yn,
-                linestyle, render_all_points),
-            "buttonlabel" : hashlib.sha224((get_plot_label(xm, ym) +
-                additional_label).encode("utf-8")).hexdigest(),
-            "latexcode" :  get_latex_plot(all_data, xn, yn, xm, ym, render_all_points, j2_env)}
+    plot_data = get_lines(all_data, xn, yn, render_all_points)
+    latex_code = j2_env.get_template("latex.template").\
+                    render(plot_data = plot_data, caption = get_plot_label(xm, ym),
+                    xlabel = xm["description"], ylabel = ym["description"])
+    plot_data = get_lines(all_data, xn, yn, render_all_points)
+    button_label = hashlib.sha224((get_plot_label(xm, ym) +
+                additional_label).encode("utf-8")).hexdigest()
+    return j2_env.get_template("chartjs.template").\
+            render(args = args, latex_code = latex_code, button_label = button_label,
+                    data_points = plot_data,
+                    xlabel = xm["description"], ylabel = ym["description"],
+                    plottype = plottype, plot_label = get_plot_label(xm, ym),
+                    label = additional_label, linestyle = linestyle,
+                    render_all_points = render_all_points)
 
 def build_detail_site(data, label_func, j2_env):
     for (name, runs) in data.items():
@@ -227,6 +206,7 @@ def load_all_results():
 
 runs_by_ds, runs_by_algo = load_all_results()
 j2_env = Environment(loader=FileSystemLoader("./templates/"), trim_blocks = True)
+j2_env.globals.update(zip=zip)
 build_detail_site(runs_by_ds, lambda label: get_dataset_label(label), j2_env)
 build_detail_site(runs_by_algo, lambda x: x, j2_env)
 build_index_site(runs_by_ds, runs_by_algo, j2_env, "index.html")
