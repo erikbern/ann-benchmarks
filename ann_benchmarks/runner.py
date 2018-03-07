@@ -18,6 +18,67 @@ from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
+def run_individual_query(algo, X_train, X_test, distance, count, run_count=3, force_single=True, use_batch_query=False):
+    best_search_time = float('inf')
+    for i in range(run_count):
+        print('Run %d/%d...' % (i+1, run_count))
+        n_items_processed = [0]  # a bit dumb but can't be a scalar since of Python's scoping rules
+
+        def single_query(v):
+            start = time.time()
+            candidates = algo.query(v, count)
+            total = (time.time() - start)
+            candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
+                          for idx in candidates]
+            n_items_processed[0] += 1
+            if n_items_processed[0] % 1000 == 0:
+                print('Processed %d/%d queries...' % (n_items_processed[0], X_test.shape[0]))
+            if len(candidates) > count:
+                print('warning: algorithm %s returned %d results, but count is only %d)' % (algo.name, len(candidates), count))
+            return (total, candidates)
+
+        def batch_query(X):
+            start = time.time()
+            result = algo.batch_query(X, count)
+            total = (time.time() - start)
+            candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
+                           for idx in single_results]
+                          for v, single_results in zip(X, results)]
+            return [(total / float(len(X)), v) for v in candidates]
+
+        if use_batch_query:
+            results = batch_query(X_test)
+        elif algo.use_threads() and not force_single:
+            pool = multiprocessing.pool.ThreadPool()
+            results = pool.map(single_query, X_test)
+        else:
+            p = psutil.Process()
+            initial_affinity = p.cpu_affinity()
+            p.cpu_affinity([initial_affinity[len(initial_affinity) // 2]]) # one of the available virtual CPU cores
+
+            results = [single_query(x) for x in X_test]
+
+            p.cpu_affinity(initial_affinity)
+
+        total_time = sum(time for time, _ in results)
+        total_candidates = sum(len(candidates) for _, candidates in results)
+        search_time = total_time / len(X_test)
+        avg_candidates = total_candidates / len(X_test)
+        best_search_time = min(best_search_time, search_time)
+
+    verbose = hasattr(algo, "query_verbose")
+    attrs = {
+        "batch_mode": use_batch_query,
+        "best_search_time": best_search_time,
+        "candidates": avg_candidates,
+        "expect_extra": verbose,
+        "name": algo.name,
+        "run_count": run_count,
+        "run_alone": force_single,
+    }
+    return (attrs, results)
+
+
 def run(definition, dataset, count, run_count=3, force_single=True, use_batch_query=False):
     algo = instantiate_algorithm(definition)
 
@@ -36,71 +97,11 @@ def run(definition, dataset, count, run_count=3, force_single=True, use_batch_qu
         index_size = algo.get_index_size("self") - index_size_before
         print('Built index in', build_time)
         print('Index size: ', index_size)
-
-        best_search_time = float('inf')
-        for i in range(run_count):
-            print('Run %d/%d...' % (i+1, run_count))
-            n_items_processed = [0]  # a bit dumb but can't be a scalar since of Python's scoping rules
-
-            def single_query(v):
-                start = time.time()
-                candidates = algo.query(v, count)
-                total = (time.time() - start)
-                candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
-                              for idx in candidates]
-                n_items_processed[0] += 1
-                if n_items_processed[0] % 1000 == 0:
-                    print('Processed %d/%d queries...' % (n_items_processed[0], X_test.shape[0]))
-                if len(candidates) > count:
-                    print('warning: algorithm %s returned %d results, but count is only %d)' % (algo.name, len(candidates), count))
-                return (total, candidates)
-
-            def batch_query(X):
-                start = time.time()
-                result = algo.batch_query(X, count)
-                total = (time.time() - start)
-                candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
-                               for idx in single_results]
-                              for v, single_results in zip(X, results)]
-                return [(total / float(len(X)), v) for v in candidates]
-
-            if use_batch_query:
-                results = batch_query(X_test)
-            elif algo.use_threads() and not force_single:
-                pool = multiprocessing.pool.ThreadPool()
-                results = pool.map(single_query, X_test)
-            else:
-                p = psutil.Process()
-                initial_affinity = p.cpu_affinity()
-                p.cpu_affinity([initial_affinity[len(initial_affinity) // 2]]) # one of the available virtual CPU cores
-
-                results = [single_query(x) for x in X_test]
-
-                p.cpu_affinity(initial_affinity)
-
-            total_time = sum(time for time, _ in results)
-            total_candidates = sum(len(candidates) for _, candidates in results)
-            search_time = total_time / len(X_test)
-            avg_candidates = total_candidates / len(X_test)
-            best_search_time = min(best_search_time, search_time)
-
-        verbose = hasattr(algo, "query_verbose")
-        attrs = {
-            "batch_mode": use_batch_query,
-            "build_time": build_time,
-            "best_search_time": best_search_time,
-            "candidates": avg_candidates,
-            "expect_extra": verbose,
-            "index_size": index_size,
-            "name": algo.name,
-            "run_count": run_count,
-            "run_alone": force_single,
-            "distance": distance,
-            "count": int(count),
-            "algo": definition.algorithm,
-            "dataset": dataset
-        }
-        store_results(dataset, count, definition, attrs, results)
+        descriptor, results = run_individual_query(algo, X_train, X_test,
+                distance, count, run_count, force_single, use_batch_query)
+        descriptor["build_time"] = build_time
+        descriptor["index_size"] = index_size
+        store_results(dataset, count, definition, descriptor, results)
     finally:
         algo.done()
 
