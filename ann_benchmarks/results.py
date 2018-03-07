@@ -5,8 +5,8 @@ import os
 from ann_benchmarks.algorithms.definitions import get_result_filename
 
 
-def store_results(dataset, count, definition, attrs, results):
-    fn = get_result_filename(dataset, count, definition)
+def store_results(dataset, count, definition, query_arguments, attrs, results):
+    fn = get_result_filename(dataset, count, definition, query_arguments)
     head, tail = os.path.split(fn)
     if not os.path.isdir(head):
         os.makedirs(head)

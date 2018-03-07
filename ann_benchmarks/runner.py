@@ -79,6 +79,11 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count=3, fo
 
 def run(definition, dataset, count, run_count=3, force_single=False, use_batch_query=False):
     algo = instantiate_algorithm(definition)
+    assert not definition.query_argument_groups \
+            or hasattr(algo, "set_query_arguments"), """\
+error: query argument groups have been specified for %s.%s(%s), but the \
+algorithm instantiated from it does not implement the set_query_arguments \
+function""" % (definition.module, definition.constructor, definition.arguments)
 
     D = get_dataset(dataset)
     X_train = numpy.array(D['train'])
@@ -96,11 +101,21 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
         print('Built index in', build_time)
         print('Index size: ', index_size)
 
-        descriptor, results = run_individual_query(algo, X_train, X_test,
-                distance, count, run_count, force_single, use_batch_query)
-        descriptor["build_time"] = build_time
-        descriptor["index_size"] = index_size
-        store_results(dataset, count, definition, descriptor, results)
+        query_argument_groups = definition.query_argument_groups
+        # Make sure that algorithms with no query argument groups still get run
+        # once by providing them with a single, empty, harmless group
+        if not query_argument_groups:
+            query_argument_groups = [[]]
+
+        for query_arguments in query_argument_groups:
+            if query_arguments:
+                algo.set_query_arguments(*query_arguments)
+            descriptor, results = run_individual_query(algo, X_train, X_test,
+                    distance, count, run_count, force_single, use_batch_query)
+            descriptor["build_time"] = build_time
+            descriptor["index_size"] = index_size
+            store_results(dataset,
+                    count, definition, query_arguments, descriptor, results)
     finally:
         algo.done()
 

@@ -36,12 +36,12 @@ def algorithm_status(definition):
     except ImportError:
         return InstantiationStatus.NO_MODULE
 
-def get_result_filename(dataset, count, definition):
+def get_result_filename(dataset, count, definition, query_arguments):
     d = ['results',
          dataset,
          str(count),
          definition.algorithm,
-         re.sub(r'\W+', '_', json.dumps(definition.arguments, sort_keys=True)).strip('_')]
+         re.sub(r'\W+', '_', json.dumps(definition.arguments + query_arguments, sort_keys=True)).strip('_')]
     return os.path.join(*d)
 
 
