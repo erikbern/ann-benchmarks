@@ -126,15 +126,21 @@ def run_from_cmdline():
         type=int)
     parser.add_argument(
         'build')
+    parser.add_argument(
+        'queries',
+        nargs='*',
+        default=[])
     args = parser.parse_args()
     algo_args = json.loads(args.build)
+    query_args = [json.loads(q) for q in args.queries]
 
     definition = Definition(
         algorithm=args.algorithm,
         docker_tag=None, # not needed
         module=args.module,
         constructor=args.constructor,
-        arguments=algo_args
+        arguments=algo_args,
+        query_argument_groups=query_args
     )
     run(definition, args.dataset, args.count)
 
@@ -146,6 +152,7 @@ def run_docker(definition, dataset, count, runs, timeout=3*3600, mem_limit=None)
            '--constructor', definition.constructor,
            '--count', str(count)]
     cmd.append(json.dumps(definition.arguments))
+    cmd += [json.dumps(qag) for qag in definition.query_argument_groups]
     print('Running command', cmd)
     client = docker.from_env()
     if mem_limit is None:

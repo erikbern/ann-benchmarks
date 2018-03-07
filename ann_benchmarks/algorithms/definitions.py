@@ -12,7 +12,7 @@ from enum import Enum
 from itertools import product
 
 
-Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'docker_tag', 'arguments'])
+Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'docker_tag', 'arguments', 'query_argument_groups'])
 
 
 def instantiate_algorithm(definition):
@@ -153,7 +153,8 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
                     docker_tag=algo['docker-tag'],
                     module=algo['module'],
                     constructor=algo['constructor'],
-                    arguments=aargs
+                    arguments=aargs,
+                    query_argument_groups=[]
                 ))
 
     return definitions
