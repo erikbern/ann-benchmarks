@@ -125,16 +125,9 @@ def run_from_cmdline():
         required=True,
         type=int)
     parser.add_argument(
-        '--json-args',
-        action='store_true')
-    parser.add_argument(
-        '-a', '--arg',
-        dest='args', action='append')
+        'build')
     args = parser.parse_args()
-    if args.json_args:
-        algo_args = [json.loads(arg) for arg in args.args]
-    else:
-        algo_args = args.args
+    algo_args = json.loads(args.build)
 
     definition = Definition(
         algorithm=args.algorithm,
@@ -151,10 +144,8 @@ def run_docker(definition, dataset, count, runs, timeout=3*3600, mem_limit=None)
            '--algorithm', definition.algorithm,
            '--module', definition.module,
            '--constructor', definition.constructor,
-           '--count', str(count),
-           '--json-args']
-    for arg in definition.arguments:
-        cmd += ['--arg', json.dumps(arg)]
+           '--count', str(count)]
+    cmd.append(json.dumps(definition.arguments))
     print('Running command', cmd)
     client = docker.from_env()
     if mem_limit is None:
