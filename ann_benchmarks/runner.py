@@ -38,7 +38,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count=3, fo
             if n_items_processed[0] % 1000 == 0:
                 print('Processed %d/%d queries...' % (n_items_processed[0], X_test.shape[0]))
             if len(candidates) > count:
-                print('warning: algorithm %s returned %d results, but count is only %d)' % (algo.name, len(candidates), count))
+                print('warning: algorithm %s returned %d results, but count is only %d)' % (algo, len(candidates), count))
             return (total, candidates)
 
         def batch_query(X):
@@ -70,7 +70,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count=3, fo
         "best_search_time": best_search_time,
         "candidates": avg_candidates,
         "expect_extra": verbose,
-        "name": algo.name,
+        "name": str(algo),
         "run_count": run_count,
         "run_alone": force_single,
     }
