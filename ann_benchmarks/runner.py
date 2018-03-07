@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import argparse
 import datetime
 import docker
@@ -11,6 +13,9 @@ import sys
 import threading
 import time
 import psutil
+
+from functools import partial
+print = partial(print, flush = True)
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm
