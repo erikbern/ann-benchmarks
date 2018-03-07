@@ -55,11 +55,12 @@ float:
       base-args: ["@metric"]
       run-groups:
         annoy:
-          args: [[100, 200, 400], [100, 200, 400, 1000, 2000, 4000, 10000,
-                20000, 40000, 100000, 200000, 400000]]
-          # This run group produces (3 * 12 =) 36 algorithm instances:
-          # Annoy("angular", 100, 100), Annoy("angular", 100, 200), and so on
-          # up to Annoy("angular", 400, 400000).
+          args: [[100, 200, 400]]
+          query-args: [[100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000,
+                      100000, 200000, 400000]]
+          # This run group produces 3 algorithm instances -- Annoy("angular",
+          # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
+          # which will be used to run 12 different queries.
     nearpy:
       docker-tag: ann-benchmarks-nearpy
       module: ann_benchmarks.algorithms.nearpy
