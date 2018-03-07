@@ -133,6 +133,19 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
             else:
                 assert False, "? what? %s" % run_group
 
+            if "query-arg-groups" in run_group:
+                groups = []
+                for arg_group in run_group["query-arg-groups"]:
+                    if isinstance(arg_group, dict):
+                        groups.append(_generate_combinations(arg_group))
+                    else:
+                        groups.append(arg_group)
+                query_args = _generate_combinations(groups)
+            elif "query-args" in run_group:
+                query_args = _generate_combinations(run_group["query-args"])
+            else:
+                query_args = []
+
             for arg_group in args:
                 obj = None
                 aargs = []
@@ -154,7 +167,7 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
                     module=algo['module'],
                     constructor=algo['constructor'],
                     arguments=aargs,
-                    query_argument_groups=[]
+                    query_argument_groups=query_args
                 ))
 
     return definitions
