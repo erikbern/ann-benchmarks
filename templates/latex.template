@@ -1,0 +1,30 @@
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={ {{xlabel}} },
+            ylabel={ {{ylabel}} },
+            ymode = log,
+            yticklabel style={/pgf/number format/fixed,
+                              /pgf/number format/precision=3},
+            legend style = { anchor=west},
+            cycle list name = black white
+            ]
+        {% for algo in plot_data %}
+            {% if algo.scatter %}
+            \addplot [only marks] coordinates {
+            {% else %}
+            \addplot coordinates {
+            {% endif %}
+                {% for coord in algo.coords %}
+                    ({{ coord[0]}}, {{ coord[1] }})
+                {% endfor %}
+            };
+            \addlegendentry{ {{algo.name}} };
+        {% endfor %}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{ {{caption}} }
+    \label{}
+\end{figure}

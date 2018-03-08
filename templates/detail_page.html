@@ -1,0 +1,15 @@
+{% extends "general.html" %}
+{% block content %}
+        <div class="container">
+        {% for item in plot_data.keys() %}
+            {% if item=="normal" %}
+            <h2>Plots for {{title}}</h2>
+            {% elif item=="scatter" and args.scatter %}
+            <h2>Scatterplots for {{title}}</h2>
+            {% endif %}
+            {% for plot in plot_data[item] %}
+            {{ plot }}
+            {% endfor %}
+            <hr />
+        {% endfor %}
+{% endblock %}

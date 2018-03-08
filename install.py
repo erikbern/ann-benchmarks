@@ -9,7 +9,10 @@ client.images.build(path=os.getcwd(), tag='ann-benchmarks', rm=True, dockerfile=
 
 def build(library):
     print('Building %s...' % library)
-    client.images.build(path=os.getcwd(), tag='ann-benchmarks-%s' % library, rm=True, dockerfile='install/Dockerfile.%s' % library)
+    try:
+        client.images.build(path=os.getcwd(), tag='ann-benchmarks-%s' % library, rm=True, dockerfile='install/Dockerfile.%s' % library)
+    except docker.errors.BuildError as err:
+        print("Build error: {0}".format(err))
 
 if os.getenv('LIBRARY'):
     build(os.getenv('LIBRARY'))
