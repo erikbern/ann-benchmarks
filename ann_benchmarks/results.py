@@ -25,11 +25,16 @@ def store_results(dataset, count, definition, query_arguments, attrs, results):
 
 def load_results(dataset, count, definitions):
     for definition in definitions:
-        fn = get_result_filename(dataset, count, definition)
-        if os.path.exists(fn):
-            f = h5py.File(fn)
-            yield definition, f
-            f.close()
+        query_argument_groups = definition.query_argument_groups
+        if not query_argument_groups:
+            query_argument_groups = [[]]
+        for query_arguments in query_argument_groups:
+            fn = get_result_filename(dataset,
+                    count, definition, query_arguments)
+            if os.path.exists(fn):
+                f = h5py.File(fn)
+                yield definition, f
+                f.close()
 
 def load_all_results():
     for root, _, files in os.walk("results/"):
