@@ -57,6 +57,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count=3, fo
         elif algo.use_threads() and not force_single:
             pool = multiprocessing.pool.ThreadPool()
             results = pool.map(single_query, X_test)
+            pool.close()
         else:
             results = [single_query(x) for x in X_test]
 
