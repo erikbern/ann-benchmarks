@@ -1,4 +1,5 @@
 from __future__ import print_function
+__true_print = print
 
 import argparse
 import datetime
@@ -14,8 +15,9 @@ import threading
 import time
 import psutil
 
-from functools import partial
-print = partial(print, flush = True)
+def print(*args, **kwargs):
+    __true_print(*args, **kwargs)
+    sys.stdout.flush()
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm
