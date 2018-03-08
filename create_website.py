@@ -169,7 +169,7 @@ def build_index_site(datasets, algorithms, j2_env, file_name):
                     key = lambda e: int(get_count_from_desc(e)))
             for idd in sorted_matches:
                 d["entries"].append({"name" : idd, "desc" : get_dataset_label(idd)})
-            dataset_data.append(d)
+        dataset_data.append(d)
 
     with open(args.outputdir + "index.html", "w") as text_file:
         text_file.write(j2_env.get_template("summary.html").
