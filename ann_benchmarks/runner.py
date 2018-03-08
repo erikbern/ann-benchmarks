@@ -109,7 +109,9 @@ function""" % (definition.module, definition.constructor, definition.arguments)
         if not query_argument_groups:
             query_argument_groups = [[]]
 
-        for query_arguments in query_argument_groups:
+        for pos, query_arguments in enumerate(query_argument_groups, 1):
+            print("Running query argument group %d of %d..." %
+                    (pos, len(query_argument_groups)))
             if query_arguments:
                 algo.set_query_arguments(*query_arguments)
             descriptor, results = run_individual_query(algo, X_train, X_test,
