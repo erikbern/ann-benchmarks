@@ -75,6 +75,8 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count=3, fo
         "name": str(algo),
         "run_count": run_count,
         "run_alone": force_single,
+        "distance": distance,
+        "count": int(count)
     }
     return (attrs, results)
 
@@ -118,6 +120,8 @@ function""" % (definition.module, definition.constructor, definition.arguments)
                     distance, count, run_count, force_single, use_batch_query)
             descriptor["build_time"] = build_time
             descriptor["index_size"] = index_size
+            descriptor["algo"] = definition.algorithm
+            descriptor["dataset"] = dataset
             store_results(dataset,
                     count, definition, query_arguments, descriptor, results)
     finally:
