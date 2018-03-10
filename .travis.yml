@@ -19,6 +19,7 @@ env:
   - LIBRARY=panns
   - LIBRARY=rpforest
   - LIBRARY=sklearn
+  - LIBRARY=pynndescent
 
 before_install:
   - pip install -r requirements.txt
