@@ -119,6 +119,14 @@ float:
           # {"tuneK": 10, "desiredRecall": 0.97}), and so on up to
           # NmslibNewIndex("angular", "vptree", {"tuneK": 10, "desiredRecall":
           # 0.1}).
+    pynndescent:
+      docker-tag: ann-benchmarks-pynndescent
+      module: ann_benchmarks.algorithms.pynndescent
+      constructor: PyNNDescent
+      base-args: ["@metric"]
+      run-groups:
+        pynndescent:
+          args: [[5, 10, 15, 20], [4, 8, 16], [40], [1.0, 2.0, 4.0, 8.0]]
   euclidean:
     kgraph:
       docker-tag: ann-benchmarks-kgraph
@@ -263,6 +271,15 @@ float:
         base:
           args: [[3, 5, 10, 20, 40, 100, 200, 400],
                 [3, 5, 10, 20, 40, 100, 200, 400]]
+    pynndescent:
+      docker-tag: ann-benchmarks-pynndescent
+      module: ann_benchmarks.algorithms.pynndescent
+      constructor: PyNNDescent
+      base-args: ["@metric"]
+      run-groups:
+        pynndescent:
+          args: [[10, 20, 30, 40], [8, 16, 32], [40], [2.0, 4.0, 8.0, 16.0, 32.0]]
+
 bit:
   hamming:
     kgraph:
