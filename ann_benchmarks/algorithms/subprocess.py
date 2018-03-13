@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from os.path import basename
 import shlex
+import psutil
 import subprocess
 from ann_benchmarks.data import \
     bit_unparse_entry, int_unparse_entry, float_unparse_entry
@@ -70,10 +71,10 @@ transitioning to training mode failed"""
             self.query = self.__query_prepared
         self._result_count = None
 
-    def get_index_size(self, process = None):
+    def get_memory_usage(self):
         if not self._program:
             self.__get_program_handle()
-        return super(Subprocess, self).get_index_size(str(self._program.pid))
+        return psutil.Process(pid=self._program.pid).memory_info().rss / 1024
 
     def supports_prepared_queries(self):
         return self._prepared
