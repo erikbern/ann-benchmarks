@@ -26,8 +26,8 @@ float:
       base-args: ["@metric"]
       run-groups:
         base:
-          args: [[5, 10, 20, 50, 100, 200, 400, 800, 1000],
-                 [1, 2, 3, 4, 5, 8, 10, 20, 50, 100, 200]]
+          args: [[5, 10, 20, 50, 100, 200, 400, 800, 1000]]
+          query-args: [[1, 2, 3, 4, 5, 8, 10, 20, 50, 100, 200]]
     flann:
       docker-tag: ann-benchmarks-flann
       module: ann_benchmarks.algorithms.flann
@@ -55,11 +55,12 @@ float:
       base-args: ["@metric"]
       run-groups:
         annoy:
-          args: [[100, 200, 400], [100, 200, 400, 1000, 2000, 4000, 10000,
-                20000, 40000, 100000, 200000, 400000]]
-          # This run group produces (3 * 12 =) 36 algorithm instances:
-          # Annoy("angular", 100, 100), Annoy("angular", 100, 200), and so on
-          # up to Annoy("angular", 400, 400000).
+          args: [[100, 200, 400]]
+          query-args: [[100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000,
+                      100000, 200000, 400000]]
+          # This run group produces 3 algorithm instances -- Annoy("angular",
+          # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
+          # which will be used to run 12 different queries.
     nearpy:
       docker-tag: ann-benchmarks-nearpy
       module: ann_benchmarks.algorithms.nearpy
@@ -263,28 +264,8 @@ float:
         base:
           args: [[3, 5, 10, 20, 40, 100, 200, 400],
                 [3, 5, 10, 20, 40, 100, 200, 400]]
-    falconn:
-      docker-tag: ann-benchmarks-falconn
-      module: ann_benchmarks.algorithms.falconn
-      constructor: FALCONN
-      base-args: ["@metric", 16]
-      run-groups:
-        base:
-          L: &l [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 21, 24, 27,
-             30, 33, 37, 41, 46, 51, 57, 63, 70, 77, 85, 94, 104, 115, 127,
-             140, 154, 170, 188, 207, 228, 251, 277, 305, 336, 370, 408, 449,
-             494, 544, 599, 659, 725, 798, 878, 966, 1063, 1170, 1287, 1416]
-          args: [*l]
 bit:
   hamming:
-    falconn:
-      docker-tag: ann-benchmarks-falconn
-      module: ann_benchmarks.algorithms.falconn
-      constructor: FALCONN
-      base-args: ["@metric", 16]
-      run-groups:
-        base:
-          args: [*l]
     kgraph:
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph

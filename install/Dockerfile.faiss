@@ -8,5 +8,5 @@ ENV PYTHONPATH lib-faiss
 # faiss doesn't work with python3 afaik
 RUN python -c 'import faiss'
 RUN pip install -rrequirements.txt
-RUN pip install sklearn
+RUN pip install sklearn enum34
 ENTRYPOINT ["python", "run_algorithm.py"]

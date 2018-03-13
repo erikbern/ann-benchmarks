@@ -38,11 +38,9 @@ class FaissLSH(BaseANN):
 import sklearn.preprocessing
 
 class FaissIVF(BaseANN):
-    def __init__(self, metric, n_list, n_probe):
+    def __init__(self, metric, n_list):
         self._n_list = n_list
-        self._n_probe = n_probe
         self._metric = metric
-        self.name = 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list, self._n_probe)
 
     def fit(self, X):
         if self._metric == 'angular':
@@ -55,11 +53,17 @@ class FaissIVF(BaseANN):
         index = faiss.IndexIVFFlat(self.quantizer, X.shape[1], self._n_list, faiss.METRIC_L2)
         index.train(X)
         index.add(X)
-        index.nprobe = self._n_probe
         self._index = index
+
+    def set_query_arguments(self, n_probe):
+        self._n_probe = n_probe
+        self._index.n_probe = self._n_probe
 
     def query(self, v, n):
         if self._metric == 'angular':
             v /= numpy.linalg.norm(v)
         (dist,), (ids,) = self._index.search(v.reshape(1, -1).astype('float32'), n)
         return ids
+
+    def __str__(self):
+        return 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list, self._n_probe)
