@@ -19,7 +19,6 @@ class Subprocess(BaseANN):
         line = self.__raw_line()
         while len(line) < 1 or line[0] != "epbprtv0":
             line = self.__raw_line()
-        print("Got a line! %s" % line[1:])
         return line[1:]
 
     @staticmethod
@@ -90,22 +89,18 @@ encoded training point '%s' was rejected""" % d
 transitioning to query mode failed"""
 
     def __query_normal(self, v, n):
-        print("__query_normal(%s, %s, %s)" % (self, v, n))
         d = Subprocess.__quote(self._encoder(v))
         self.__write("%s %d" % (d, n))
         return self.__handle_query_response()
 
     def __query_prepared(self, v, n):
-        print("__query_prepared(%s, %s, %s)" % (self, v, n))
         self.prepare_query(v, n)
         return self.run_prepared_query()
 
     def __handle_query_response(self):
         status = self.__line()
-        print(status[0], status[0] == "ok", status[0] == u"ok")
         if status[0] == "ok":
             count = int(status[1])
-            print("count is %d" % count)
             results = []
             i = 0
             while i < count:
