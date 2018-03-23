@@ -194,8 +194,9 @@ def transform_bag_of_words(filename, n_dimensions, out_fn):
 
 
 def nytimes(out_fn, n_dimensions):
-    download('https://archive.ics.uci.edu/ml/machine-learning-databases/bag-of-words/docword.nytimes.txt.gz', 'nytimes.txt.gz')
-    transform_bag_of_words('nytimes.txt.gz', n_dimensions, out_fn)
+    fn = 'nytimes_%s.txt.gz' % n_dimensions
+    download('https://archive.ics.uci.edu/ml/machine-learning-databases/bag-of-words/docword.nytimes.txt.gz', fn)
+    transform_bag_of_words(fn, n_dimensions, out_fn)
 
 
 def random(out_fn, n_dims, n_samples, centers, distance):
@@ -205,6 +206,21 @@ def random(out_fn, n_dims, n_samples, centers, distance):
     X, _ = sklearn.datasets.make_blobs(n_samples=n_samples, n_features=n_dims, centers=centers, random_state=1)
     X_train, X_test = sklearn.model_selection.train_test_split(X, test_size=0.1, random_state=1)
     write_output(X_train, X_test, out_fn, distance)
+
+
+def word2bits(out_fn, path, fn):
+    import tarfile
+    local_fn = fn + '.tar.gz'
+    url = 'http://web.stanford.edu/~maxlam/word_vectors/compressed/%s/%s.tar.gz' % (path, fn)
+    download(url, local_fn)
+    with tarfile.open(local_fn, 'r:gz') as t:
+        f = t.extractfile(fn)
+        n_words, k = [int(z) for z in next(f).strip().split()]
+        X = numpy.zeros((n_words, k), dtype=numpy.bool)
+        for i in range(n_words):
+            X[i] = [float(z) > 0 for z in next(f).strip().split()[1:]]
+            print(X[i])
+
 
 DATASETS = {
     'fashion-mnist-784-euclidean': fashion_mnist,
@@ -221,4 +237,5 @@ DATASETS = {
     'sift-128-euclidean': sift,
     'nytimes-256-angular': lambda out_fn: nytimes(out_fn, 256),
     'nytimes-16-angular': lambda out_fn: nytimes(out_fn, 16),
+    'word2bits-800-hamming': lambda out_fn: word2bits(out_fn, '400K', 'w2b_bitlevel1_size800_vocab400K'),
 }
