@@ -10,6 +10,7 @@ import requests
 import sys
 import threading
 import time
+import psutil
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm
@@ -17,7 +18,7 @@ from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
-def run(definition, dataset, count, run_count=3, force_single=False, use_batch_query=False):
+def run(definition, dataset, count, run_count=3, force_single=True, use_batch_query=False):
     algo = instantiate_algorithm(definition)
 
     D = get_dataset(dataset)
@@ -69,7 +70,13 @@ def run(definition, dataset, count, run_count=3, force_single=False, use_batch_q
                 pool = multiprocessing.pool.ThreadPool()
                 results = pool.map(single_query, X_test)
             else:
+                p = psutil.Process()
+                initial_affinity = p.cpu_affinity()
+                p.cpu_affinity([initial_affinity[len(initial_affinity) // 2]]) # one of the available virtual CPU cores
+
                 results = [single_query(x) for x in X_test]
+
+                p.cpu_affinity(initial_affinity)
 
             total_time = sum(time for time, _ in results)
             total_candidates = sum(len(candidates) for _, candidates in results)
