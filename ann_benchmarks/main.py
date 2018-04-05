@@ -9,7 +9,7 @@ import traceback
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.constants import INDEX_DIR
-from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms, get_result_filename
+from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms, get_result_filename, algorithm_status, InstantiationStatus
 from ann_benchmarks.runner import run, run_docker
 
 
@@ -90,14 +90,6 @@ def main():
         list_algorithms(args.definitions)
         sys.exit(0)
 
-    # See which Docker images we have available
-    docker_client = docker.from_env()
-    docker_tags = set()
-    for image in docker_client.images.list():
-        for tag in image.tags:
-            tag, _ = tag.split(':')
-            docker_tags.add(tag)
-
     # Nmslib specific code
     # Remove old indices stored on disk
     if os.path.exists(INDEX_DIR):
@@ -118,14 +110,40 @@ def main():
         print('running only', args.algorithm)
         definitions = [d for d in definitions if d.algorithm == args.algorithm]
 
-    if args.docker_tag:
-        print('running only', args.docker_tag)
-        definitions = [d for d in definitions if d.docker_tag == args.docker_tag]
+    if not args.local:
+        # See which Docker images we have available
+        docker_client = docker.from_env()
+        docker_tags = set()
+        for image in docker_client.images.list():
+            for tag in image.tags:
+                tag, _ = tag.split(':')
+                docker_tags.add(tag)
 
-    if set(d.docker_tag for d in definitions).difference(docker_tags):
-        print('not all docker images available, only:', set(docker_tags))
-        print('missing docker images:', set(d.docker_tag for d in definitions).difference(docker_tags))
-        definitions = [d for d in definitions if d.docker_tag in docker_tags]
+        if args.docker_tag:
+            print('running only', args.docker_tag)
+            definitions = [d for d in definitions if d.docker_tag == args.docker_tag]
+
+        if set(d.docker_tag for d in definitions).difference(docker_tags):
+            print('not all docker images available, only:', set(docker_tags))
+            print('missing docker images:', set(d.docker_tag for d in definitions).difference(docker_tags))
+            definitions = [d for d in definitions if d.docker_tag in docker_tags]
+    else:
+        def _test(df):
+            status = algorithm_status(df)
+            # If the module was loaded but doesn't actually have a constructor of
+            # the right name, then the definition is broken
+            assert status != InstantiationStatus.NO_CONSTRUCTOR, """\
+%s.%s(%s): error: the module '%s' does not expose the named constructor""" % (df.module, df.constructor, df.arguments, df.module)
+            if status == InstantiationStatus.NO_MODULE:
+                # If the module couldn't be loaded (presumably because of a missing
+                # dependency), print a warning and remove this definition from the
+                # list of things to be run
+                print("""\
+%s.%s(%s): warning: the module '%s' could not be loaded; skipping""" % (df.module, df.constructor, df.arguments, df.module))
+                return False
+            else:
+                return True
+        definitions = [d for d in definitions if _test(d)]
 
     if args.max_n_algorithms >= 0:
         definitions = definitions[:args.max_n_algorithms]

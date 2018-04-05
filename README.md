@@ -7,8 +7,6 @@ Doing fast searching of nearest neighbors in high dimensional spaces is an incre
 
 This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics. We have pregenerated datasets (in HDF5) formats and we also have Docker containers for each algorithm. There's a [test suite](https://travis-ci.org/erikbern/ann-benchmarks) that makes sure every algorithm works.
 
-See [the results of this benchmark](http://sss.projects.itu.dk/ann-benchmarks).
-
 Evaluated
 =========
 
@@ -20,10 +18,10 @@ Evaluated
 * [KGraph](https://github.com/aaalgo/kgraph)
 * [NMSLIB (Non-Metric Space Library)](https://github.com/searchivarius/nmslib): SWGraph, HNSW, BallTree, MPLSH
 * [RPForest](https://github.com/lyst/rpforest)
-* [FALCONN](http://falconn-lib.org/)
 * [FAISS](https://github.com/facebookresearch/faiss.git)
 * [DolphinnPy](https://github.com/ipsarros/DolphinnPy)
 * [Datasketch](https://github.com/ekzhu/datasketch)
+* [PyNNDescent](https://github.com/lmcinnes/pynndescent)
 
 Data sets
 =========
@@ -33,14 +31,44 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 | Dataset                                                           | Dimensions | Train size | Test size | Neighbors | Distance  | Download                                                                     |
 | ----------------------------------------------------------------- | ---------: | ---------: | --------: | --------: | --------- | ---------------------------------------------------------------------------- |
 | [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) |        784 |     60,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/fashion-mnist-784-euclidean.hdf5) (217MB) |
-| [GIST](http://corpus-texmex.irisa.fr/)                            |        960 |  1,000,000 |     1,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/gist-960-euclidean.hdf5) (121MB)          |
-| [GloVe](http://nlp.stanford.edu/projects/glove/)                  |         25 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-25-angular.hdf5) (121MB)            |
-| GloVe                                                             |         50 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-50-angular.hdf5) (235MB)            |
-| GloVe                                                             |        100 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-100-angular.hdf5) (463MB)           |
-| GloVe                                                             |        200 |  1,133,628 |    59,886 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-200-angular.hdf5) (918MB)           |
+| [GIST](http://corpus-texmex.irisa.fr/)                            |        960 |  1,000,000 |     1,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/gist-960-euclidean.hdf5) (3.6GB)          |
+| [GloVe](http://nlp.stanford.edu/projects/glove/)                  |         25 |  1,183,514 |    10,000 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-25-angular.hdf5) (121MB)            |
+| GloVe                                                             |         50 |  1,183,514 |    10,000 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-50-angular.hdf5) (235MB)            |
+| GloVe                                                             |        100 |  1,183,514 |    10,000 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-100-angular.hdf5) (463MB)           |
+| GloVe                                                             |        200 |  1,183,514 |    10,000 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/glove-200-angular.hdf5) (918MB)           |
 | [MNIST](http://yann.lecun.com/exdb/mnist/)                        |        784 |     60,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/mnist-784-euclidean.hdf5) (217MB)         |
 | [NYTimes](https://archive.ics.uci.edu/ml/datasets/bag+of+words)   |        256 |    290,000 |    10,000 |       100 | Angular   | [HDF5](http://vectors.erikbern.com/nytimes-256-angular.hdf5) (301MB)         |
 | [SIFT](https://corpus-texmex.irisa.fr/)                           |        128 |  1,000,000 |    10,000 |       100 | Euclidean | [HDF5](http://vectors.erikbern.com/sift-128-euclidean.hdf5) (501MB)          |
+
+Results
+=======
+
+
+glove-100-angular
+
+![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-100-angular.png)
+
+sift-128-euclidean
+
+![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/sift-128-euclidean.png)
+
+fashion-mnist-784-euclidean
+
+![fashion-mnist-784-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/fashion-mnist-784-euclidean.png)
+
+gist-960-euclidean
+
+![gist-960-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/gist-960-euclidean.png)
+
+nytimes-256-angular
+
+![nytimes-256-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/nytimes-256-angular.png)
+
+glove-25-angular
+
+![glove-25-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-25-angular.png)
+
+Results as of Feb 2018-02-05, running all benchmarks on a c5.4xlarge machine on AWS.
 
 Install
 =======
@@ -85,3 +113,8 @@ Principles
 * We currently support CPU-based ANN algorithms. GPU support is planned as future work.
 * Do proper train/test set of index data and query points.
 * Note that Hamming distance and set similarity was supported in the past. This might hopefully be added back soon.
+
+Authors
+=======
+
+Built by [Erik Bernhardsson](https://erikbern.com) with significant contributions from [Martin Aumüller](http://itu.dk/people/maau/) and [Alexander Faithfull](https://github.com/ale-f).

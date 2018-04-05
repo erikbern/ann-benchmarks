@@ -18,7 +18,7 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles):
     labels = []
     plt.figure(figsize=(12, 9))
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-        xs, ys, ls, axs, ays, als = create_pointset(algo, all_data, xn, yn)
+        xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
         color, faded, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=7, mew=3, lw=3, linestyle=linestyle, marker=marker)
         handles.append(handle)
@@ -88,18 +88,19 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not args.output:
-        args.output = args.dataset + '.png'
+        args.output = 'results/%s.png' % args.dataset
         print('writing output to %s' % args.output)
 
     dataset = get_dataset(args.dataset)
     dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
     point_type = 'float' # TODO(erikbern): should look at the type of X_train
     distance = dataset.attrs['distance']
-    definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
+    count = int(args.count)
+    definitions = get_definitions(args.definitions, dimension, point_type, distance, count)
     unique_algorithms = get_unique_algorithms(args.definitions)
     linestyles = create_linestyles(unique_algorithms)
-    results = load_results(args.dataset, args.count, definitions)
-    runs, all_algos = compute_metrics(dataset, results)
+    results = load_results(args.dataset, count, definitions)
+    runs = compute_metrics(list(dataset["distances"]), results, args.x_axis, args.y_axis)
 
     create_plot(runs, args.raw, args.x_log,
             args.y_log, args.x_axis, args.y_axis, args.output, linestyles)

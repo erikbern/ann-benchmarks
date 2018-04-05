@@ -135,6 +135,14 @@ float:
           # {"tuneK": 10, "desiredRecall": 0.97}), and so on up to
           # NmslibNewIndex("angular", "vptree", {"tuneK": 10, "desiredRecall":
           # 0.1}).
+    pynndescent:
+      docker-tag: ann-benchmarks-pynndescent
+      module: ann_benchmarks.algorithms.pynndescent
+      constructor: PyNNDescent
+      base-args: ["@metric"]
+      run-groups:
+        pynndescent:
+          args: [[5, 10, 15, 20], [4, 8, 16], [40], [1.0, 2.0, 4.0, 8.0]]
   euclidean:
     kgraph:
       docker-tag: ann-benchmarks-kgraph
@@ -279,28 +287,17 @@ float:
         base:
           args: [[3, 5, 10, 20, 40, 100, 200, 400],
                 [3, 5, 10, 20, 40, 100, 200, 400]]
-    falconn:
-      docker-tag: ann-benchmarks-falconn
-      module: ann_benchmarks.algorithms.falconn
-      constructor: FALCONN
-      base-args: ["@metric", 16]
+    pynndescent:
+      docker-tag: ann-benchmarks-pynndescent
+      module: ann_benchmarks.algorithms.pynndescent
+      constructor: PyNNDescent
+      base-args: ["@metric"]
       run-groups:
-        base:
-          L: &l [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 21, 24, 27,
-             30, 33, 37, 41, 46, 51, 57, 63, 70, 77, 85, 94, 104, 115, 127,
-             140, 154, 170, 188, 207, 228, 251, 277, 305, 336, 370, 408, 449,
-             494, 544, 599, 659, 725, 798, 878, 966, 1063, 1170, 1287, 1416]
-          args: [*l]
+        pynndescent:
+          args: [[10, 20, 30, 40], [8, 16, 32], [40], [2.0, 4.0, 8.0, 16.0, 32.0]]
+
 bit:
   hamming:
-    falconn:
-      docker-tag: ann-benchmarks-falconn
-      module: ann_benchmarks.algorithms.falconn
-      constructor: FALCONN
-      base-args: ["@metric", 16]
-      run-groups:
-        base:
-          args: [*l]
     kgraph:
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph

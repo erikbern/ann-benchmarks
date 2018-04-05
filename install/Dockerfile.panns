@@ -6,4 +6,5 @@ RUN pip install panns
 # panns doesn't work with python3 afaik
 RUN python -c 'import panns'
 RUN pip install -rrequirements.txt
+RUN pip install enum34
 ENTRYPOINT ["python", "run_algorithm.py"]

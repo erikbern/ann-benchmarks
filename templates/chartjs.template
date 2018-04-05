@@ -1,0 +1,102 @@
+            <h3>{{xlabel}}/{{ylabel}}</h3>
+            <div id="{{ xlabel }}{{ ylabel }}{{ label }}">
+            <canvas id="chart{{ xlabel }}{{ ylabel }}{{ label }}" width="800" height="600"></canvas>
+            <script>
+                var ctx = document.getElementById("chart{{ xlabel }}{{ ylabel }}{{ label }}");
+                var chart = new Chart(ctx, {
+                    {% if not render_all_points %}
+                    type: "line",
+                    {% else %}
+                    type: "bubble",
+                    {% endif %}
+                    data: { datasets: [
+                        {% for run in data_points %}
+                        {
+                            label: "{{ run["name"] }}",
+                            fill: false,
+                            pointStyle: "{{ linestyle[run["name"]][3] }}",
+                            borderColor: "{{ linestyle[run["name"]][0] }}",
+                            data: [
+                                {% for (x, y), l in zip(run["coords"], run["labels"]) %}
+                                    { x: {{ x }} , y: {{ y }}, label: "{{ l }}" },
+                                {% endfor %}
+                            ]
+                        },
+                        {% endfor %}
+                        ]},
+                        options: {
+                            responsive: false,
+                            title:{
+                                display:true,
+                                text: '{{ plot_label }}'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    type: 'linear',
+                                    max: '1',
+                                    position: 'bottom',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' {{ xlabel }}   '
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    type: 'logarithmic',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: ' {{ ylabel }} '
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                function pushOrConcat(base, toPush) {
+                        if (toPush) {
+                                if (Chart.helpers.isArray(toPush)) {
+                                        // base = base.concat(toPush);
+                                        Array.prototype.push.apply(base, toPush);
+                                } else {
+                                        base.push(toPush);
+                                }
+                        }
+
+                        return base;
+                }
+                Chart.Tooltip.prototype.getFooter = function(tooltipItem, data) {
+                    var me = this;
+                    var callbacks = me._options.callbacks;
+                    var item = tooltipItem[0];
+
+                    var beforeFooter = callbacks.beforeFooter.apply(me, arguments);
+                    var footer = "Parameters: " + data.datasets[item.datasetIndex].data[item.index].label || '';
+                    var afterFooter = callbacks.afterFooter.apply(me, arguments);
+
+                    var lines = [];
+                    lines = pushOrConcat(lines, beforeFooter);
+                    lines = pushOrConcat(lines, footer);
+                    lines = pushOrConcat(lines, afterFooter);
+
+                    return lines;
+                }
+
+                </script>
+            </div>
+            {% if args.latex %}
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <button type="button" id="button_{{button_label}}" class="btn btn-default" >Toggle latex code</button>
+                    </div>
+                </div>
+                <script>
+                    $("#button_{{button_label}}").click(function() {
+                        $("#plot_{{button_label}}").toggle();
+                    });
+                </script>
+                <div id="plot_{{button_label}}" style="display:none">
+                    <pre>
+                    {{latex_code}}
+                    </pre>
+                </div>
+            {% endif %}

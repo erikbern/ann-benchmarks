@@ -4,11 +4,10 @@ import os, itertools, json, numpy, pickle
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 import matplotlib.pyplot as plt
 
-def create_pointset(algo, all_data, xn, yn):
+def create_pointset(data, xn, yn):
     xm, ym = (metrics[xn], metrics[yn])
-    data = all_data[algo]
     rev = ym["worst"] < 0
-    data.sort(key=lambda t: t[-1][yn], reverse=rev) # sort by y coordinate
+    data.sort(key=lambda t: t[-1], reverse=rev) # sort by y coordinate
 
     axs, ays, als = [], [], []
     # Generate Pareto frontier
@@ -16,8 +15,7 @@ def create_pointset(algo, all_data, xn, yn):
     last_x = xm["worst"]
     comparator = \
       (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
-    for algo, algo_name, results in data:
-        xv, yv = (results[xn], results[yn])
+    for algo, algo_name, xv, yv in data:
         if not xv or not yv:
             continue
         axs.append(xv)
@@ -30,27 +28,37 @@ def create_pointset(algo, all_data, xn, yn):
             ls.append(algo_name)
     return xs, ys, ls, axs, ays, als
 
-def compute_metrics(dataset, res):
+def compute_metrics(true_nn_distances, res, metric_1, metric_2):
     all_results = {}
-    all_algos = set()
-    for definition, run in res:
+    for i, (definition, run) in enumerate(res):
         algo = definition.algorithm
         algo_name = run.attrs['name']
+        # cache distances to avoid access to hdf5 file
+        run_distances = list(run['distances'])
 
-        print('--')
-        print(algo_name)
-        results = {}
-        for name, metric in metrics.items():
-            v = metric["function"](dataset, run)
-            results[name] = v
-            if v:
-                print('%s: %g' % (name, v))
+        metric_1_value = metrics[metric_1]['function'](true_nn_distances, run_distances, run.attrs)
+        metric_2_value = metrics[metric_2]['function'](true_nn_distances, run_distances, run.attrs)
 
-        all_algos.add(algo)
-        if not algo in all_results:
-            all_results[algo] = []
-        all_results[algo].append((algo, algo_name, results))
-    return (all_results, all_algos)
+        print('%3d: %80s %12.3f %12.3f' % (i, algo_name, metric_1_value, metric_2_value))
+
+        all_results.setdefault(algo, []).append((algo, algo_name, metric_1_value, metric_2_value))
+
+    return all_results
+
+def compute_all_metrics(true_nn_distances, run, algo):
+    algo_name = run.attrs["name"]
+    print('--')
+    print(algo_name)
+    results = {}
+    # cache distances to avoid access to hdf5 file
+    run_distances = list(run["distances"])
+    run_attrs = dict(run.attrs)
+    for name, metric in metrics.items():
+        v = metric["function"](true_nn_distances, run_distances, run_attrs)
+        results[name] = v
+        if v:
+            print('%s: %g' % (name, v))
+    return (algo, algo_name, results)
 
 def generate_n_colors(n):
     vs = numpy.linspace(0.4, 1.0, 7)

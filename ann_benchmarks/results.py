@@ -30,3 +30,14 @@ def load_results(dataset, count, definitions):
             f = h5py.File(fn)
             yield definition, f
             f.close()
+
+def load_all_results():
+    for root, _, files in os.walk("results/"):
+        for fn in files:
+            try:
+                f = h5py.File(os.path.join(root, fn))
+                yield f
+                f.close()
+            except:
+                pass
+

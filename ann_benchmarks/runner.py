@@ -95,6 +95,10 @@ def run(definition, dataset, count, run_count=3, force_single=True, use_batch_qu
             "name": algo.name,
             "run_count": run_count,
             "run_alone": force_single,
+            "distance": distance,
+            "count": int(count),
+            "algo": definition.algorithm,
+            "dataset": dataset
         }
         store_results(dataset, count, definition, attrs, results)
     finally:
