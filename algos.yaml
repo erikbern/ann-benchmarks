@@ -142,7 +142,7 @@ float:
       base-args: ["@metric"]
       run-groups:
         pynndescent:
-          args: [[5, 10, 15, 20], [4, 8, 16], [40], [1.0, 2.0, 4.0, 8.0]]
+          args: [[10, 20, 40, 80], [4, 8], [30], [1.0, 2.0, 4.0, 8.0]]
   euclidean:
     kgraph:
       docker-tag: ann-benchmarks-kgraph
@@ -219,6 +219,14 @@ float:
             - {"NN": 5}
             - True
             - {"efSearch": [30, 25, 20, 15, 10, 5, 4, 3, 2, 1]}
+    pynndescent:
+      docker-tag: ann-benchmarks-pynndescent
+      module: ann_benchmarks.algorithms.pynndescent
+      constructor: PyNNDescent
+      base-args: ["@metric"]
+      run-groups:
+        pynndescent:
+          args: [[5, 10, 20, 40, 80], [4, 8], [20], [1.0, 1.5, 2.0, 4.0, 8.0]]
   angular:
     kgraph:
       docker-tag: ann-benchmarks-kgraph
@@ -294,7 +302,7 @@ float:
       base-args: ["@metric"]
       run-groups:
         pynndescent:
-          args: [[10, 20, 30, 40], [8, 16, 32], [40], [2.0, 4.0, 8.0, 16.0, 32.0]]
+          args: [[5, 10, 20, 40, 80, 160], [8], [40], [1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]]
 
 bit:
   hamming:
@@ -335,6 +343,16 @@ bit:
             - {"M": 12, "post": 0, "efConstruction": 800}
             - True
             - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+    pynndescent:
+      docker-tag: ann-benchmarks-pynndescent
+      module: ann_benchmarks.algorithms.pynndescent
+      constructor: PyNNDescent
+      base-args: ["@metric"]
+      run-groups:
+        pynndescent:
+          args: [[20, 40, 80, 160, 250], [4], [40],
+                 [1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]]
+
 int:
   jaccard:
     bf:
