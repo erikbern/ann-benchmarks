@@ -101,8 +101,27 @@ def main():
     distance = dataset.attrs['distance']
     definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
 
-    # TODO(erikbern): should make this a helper function somewhere
-    definitions = [definition for definition in definitions if not os.path.exists(get_result_filename(args.dataset, args.count, definition))]
+    # Filter out, from the loaded definitions, all those query argument groups
+    # that correspond to experiments that have already been run. (This might
+    # mean removing a definition altogether, so we can't just use a list
+    # comprehension.)
+    filtered_definitions = []
+    for definition in definitions:
+        query_argument_groups = definition.query_argument_groups
+        if not query_argument_groups:
+            query_argument_groups = [[]]
+        not_yet_run = []
+        for query_arguments in query_argument_groups:
+            fn = get_result_filename(args.dataset,
+                    args.count, definition, query_arguments)
+            if not os.path.exists(fn):
+                not_yet_run.append(query_arguments)
+        if not_yet_run:
+            if definition.query_argument_groups:
+                definition = definition._replace(
+                        query_argument_groups = not_yet_run)
+            filtered_definitions.append(definition)
+    definitions = filtered_definitions
 
     random.shuffle(definitions)
     
