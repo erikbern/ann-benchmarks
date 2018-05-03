@@ -30,3 +30,9 @@ class PyNNDescent(BaseANN):
 
     def use_threads(self):
         return False
+
+    def __str__(self):
+        return 'PyNNDescent(n_neighbors=%d, n_trees=%d, leaf_size=%d, queue_size=%.2f)' % (self._n_neighbors,
+                                                                                           self._n_trees,
+                                                                                           self._leaf_size,
+                                                                                           self._queue_size)
