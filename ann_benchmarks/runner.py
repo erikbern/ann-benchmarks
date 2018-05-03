@@ -25,7 +25,7 @@ from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
-def run_individual_query(algo, X_train, X_test, distance, count, run_count=3, force_single=False, use_batch_query=False):
+def run_individual_query(algo, X_train, X_test, distance, count, run_count, force_single, use_batch_query):
     best_search_time = float('inf')
     for i in range(run_count):
         print('Run %d/%d...' % (i+1, run_count))
