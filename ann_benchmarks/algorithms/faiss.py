@@ -57,7 +57,7 @@ class FaissIVF(BaseANN):
 
     def set_query_arguments(self, n_probe):
         self._n_probe = n_probe
-        self._index.n_probe = self._n_probe
+        self._index.nprobe = self._n_probe
 
     def query(self, v, n):
         if self._metric == 'angular':
