@@ -13,7 +13,7 @@ class PyNNDescent(BaseANN):
                               'hamming': 'hamming',
                               'jaccard': 'jaccard'}[metric]
 
-        self.name = 'PyNNDescent(n_neighbors=%d,n_trees=%d,leaf_size=%d,queue_size=%.2f)' % \
+        self.name = 'PyNNDescent(n_neighbors=%d,n_trees=%d,leaf_size=%d)' % \
                         (self._n_neighbors, self._n_trees, self._leaf_size)
 
     def fit(self, X):
