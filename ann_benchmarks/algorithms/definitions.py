@@ -12,7 +12,7 @@ from enum import Enum
 from itertools import product
 
 
-Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'docker_tag', 'arguments'])
+Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'docker_tag', 'arguments', 'query_argument_groups'])
 
 
 def instantiate_algorithm(definition):
@@ -36,16 +36,16 @@ def algorithm_status(definition):
     except ImportError:
         return InstantiationStatus.NO_MODULE
 
-def get_result_filename(dataset, count, definition):
+def get_result_filename(dataset, count, definition, query_arguments):
     d = ['results',
          dataset,
          str(count),
          definition.algorithm,
-         re.sub(r'\W+', '_', json.dumps(definition.arguments, sort_keys=True)).strip('_')]
+         re.sub(r'\W+', '_', json.dumps(definition.arguments + query_arguments, sort_keys=True)).strip('_')]
     return os.path.join(*d)
 
 
-def _handle_args(args):
+def _generate_combinations(args):
     if isinstance(args, list):
         args = [el if isinstance(el, list) else [el] for el in args]
         return [list(x) for x in product(*args)]
@@ -61,12 +61,11 @@ def _handle_args(args):
         raise TypeError("No args handling exists for %s" % type(args).__name__)
 
 
-def _handle(arg, vs):
-    # TODO(erikbern): what's the difference between _handle_args and _handle
+def _substitute_variables(arg, vs):
     if isinstance(arg, dict):
-        return dict([(k, _handle(v, vs)) for k, v in arg.items()])
+        return dict([(k, _substitute_variables(v, vs)) for k, v in arg.items()])
     elif isinstance(arg, list):
-        return [_handle(a, vs) for a in arg]
+        return [_substitute_variables(a, vs) for a in arg]
     elif isinstance(arg, str) and arg in vs:
         return vs[arg]
     else:
@@ -123,16 +122,29 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
                 for arg_group in run_group["arg-groups"]:
                     if isinstance(arg_group, dict):
                         # Dictionaries need to be expanded into lists in order
-                        # for the subsequent call to _handle_args to do the
-                        # right thing
-                        groups.append(_handle_args(arg_group))
+                        # for the subsequent call to _generate_combinations to
+                        # do the right thing
+                        groups.append(_generate_combinations(arg_group))
                     else:
                         groups.append(arg_group)
-                args = _handle_args(groups)
+                args = _generate_combinations(groups)
             elif "args" in run_group:
-                args = _handle_args(run_group["args"])
+                args = _generate_combinations(run_group["args"])
             else:
                 assert False, "? what? %s" % run_group
+
+            if "query-arg-groups" in run_group:
+                groups = []
+                for arg_group in run_group["query-arg-groups"]:
+                    if isinstance(arg_group, dict):
+                        groups.append(_generate_combinations(arg_group))
+                    else:
+                        groups.append(arg_group)
+                query_args = _generate_combinations(groups)
+            elif "query-args" in run_group:
+                query_args = _generate_combinations(run_group["query-args"])
+            else:
+                query_args = []
 
             for arg_group in args:
                 obj = None
@@ -148,13 +160,14 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
                     "@metric": distance_metric,
                     "@dimension": dimension
                 }
-                aargs = [_handle(arg, vs) for arg in aargs]
+                aargs = [_substitute_variables(arg, vs) for arg in aargs]
                 definitions.append(Definition(
                     algorithm=name,
                     docker_tag=algo['docker-tag'],
                     module=algo['module'],
                     constructor=algo['constructor'],
-                    arguments=aargs
+                    arguments=aargs,
+                    query_argument_groups=query_args
                 ))
 
     return definitions
