@@ -23,3 +23,6 @@ class BaseANN(object):
 
     def query(self, q, n):
         return [] # array of candidate indices
+
+    def __str__(self):
+        return self.name

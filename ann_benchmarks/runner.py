@@ -1,3 +1,6 @@
+from __future__ import print_function
+__true_print = print
+
 import argparse
 import datetime
 import docker
@@ -12,14 +15,87 @@ import threading
 import time
 import psutil
 
+def print(*args, **kwargs):
+    __true_print(*args, **kwargs)
+    sys.stdout.flush()
+
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm
 from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
+def run_individual_query(algo, X_train, X_test, distance, count, run_count, force_single, use_batch_query):
+    best_search_time = float('inf')
+    for i in range(run_count):
+        print('Run %d/%d...' % (i+1, run_count))
+        n_items_processed = [0]  # a bit dumb but can't be a scalar since of Python's scoping rules
+
+        def single_query(v):
+            start = time.time()
+            candidates = algo.query(v, count)
+            total = (time.time() - start)
+            candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
+                          for idx in candidates]
+            n_items_processed[0] += 1
+            if n_items_processed[0] % 1000 == 0:
+                print('Processed %d/%d queries...' % (n_items_processed[0], X_test.shape[0]))
+            if len(candidates) > count:
+                print('warning: algorithm %s returned %d results, but count is only %d)' % (algo, len(candidates), count))
+            return (total, candidates)
+
+        def batch_query(X):
+            start = time.time()
+            result = algo.batch_query(X, count)
+            total = (time.time() - start)
+            candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
+                           for idx in single_results]
+                          for v, single_results in zip(X, results)]
+            return [(total / float(len(X)), v) for v in candidates]
+
+        if use_batch_query:
+            results = batch_query(X_test)
+        elif algo.use_threads() and not force_single:
+            pool = multiprocessing.pool.ThreadPool()
+            results = pool.map(single_query, X_test)
+            pool.close()
+        else:
+            p = psutil.Process()
+            initial_affinity = p.cpu_affinity()
+            p.cpu_affinity([initial_affinity[len(initial_affinity) // 2]]) # one of the available virtual CPU cores
+
+            results = [single_query(x) for x in X_test]
+
+            p.cpu_affinity(initial_affinity)
+
+        total_time = sum(time for time, _ in results)
+        total_candidates = sum(len(candidates) for _, candidates in results)
+        search_time = total_time / len(X_test)
+        avg_candidates = total_candidates / len(X_test)
+        best_search_time = min(best_search_time, search_time)
+
+    verbose = hasattr(algo, "query_verbose")
+    attrs = {
+        "batch_mode": use_batch_query,
+        "best_search_time": best_search_time,
+        "candidates": avg_candidates,
+        "expect_extra": verbose,
+        "name": str(algo),
+        "run_count": run_count,
+        "run_alone": force_single,
+        "distance": distance,
+        "count": int(count)
+    }
+    return (attrs, results)
+
+
 def run(definition, dataset, count, run_count=3, force_single=True, use_batch_query=False):
     algo = instantiate_algorithm(definition)
+    assert not definition.query_argument_groups \
+            or hasattr(algo, "set_query_arguments"), """\
+error: query argument groups have been specified for %s.%s(%s), but the \
+algorithm instantiated from it does not implement the set_query_arguments \
+function""" % (definition.module, definition.constructor, definition.arguments)
 
     D = get_dataset(dataset)
     X_train = numpy.array(D['train'])
@@ -37,70 +113,25 @@ def run(definition, dataset, count, run_count=3, force_single=True, use_batch_qu
         print('Built index in', build_time)
         print('Index size: ', index_size)
 
-        best_search_time = float('inf')
-        for i in range(run_count):
-            print('Run %d/%d...' % (i+1, run_count))
-            n_items_processed = [0]  # a bit dumb but can't be a scalar since of Python's scoping rules
+        query_argument_groups = definition.query_argument_groups
+        # Make sure that algorithms with no query argument groups still get run
+        # once by providing them with a single, empty, harmless group
+        if not query_argument_groups:
+            query_argument_groups = [[]]
 
-            def single_query(v):
-                start = time.time()
-                candidates = algo.query(v, count)
-                total = (time.time() - start)
-                candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
-                              for idx in candidates]
-                n_items_processed[0] += 1
-                if n_items_processed[0] % 1000 == 0:
-                    print('Processed %d/%d queries...' % (n_items_processed[0], X_test.shape[0]))
-                if len(candidates) > count:
-                    print('warning: algorithm %s returned %d results, but count is only %d)' % (algo.name, len(candidates), count))
-                return (total, candidates)
-
-            def batch_query(X):
-                start = time.time()
-                result = algo.batch_query(X, count)
-                total = (time.time() - start)
-                candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
-                               for idx in single_results]
-                              for v, single_results in zip(X, results)]
-                return [(total / float(len(X)), v) for v in candidates]
-
-            if use_batch_query:
-                results = batch_query(X_test)
-            elif algo.use_threads() and not force_single:
-                pool = multiprocessing.pool.ThreadPool()
-                results = pool.map(single_query, X_test)
-            else:
-                p = psutil.Process()
-                initial_affinity = p.cpu_affinity()
-                p.cpu_affinity([initial_affinity[len(initial_affinity) // 2]]) # one of the available virtual CPU cores
-
-                results = [single_query(x) for x in X_test]
-
-                p.cpu_affinity(initial_affinity)
-
-            total_time = sum(time for time, _ in results)
-            total_candidates = sum(len(candidates) for _, candidates in results)
-            search_time = total_time / len(X_test)
-            avg_candidates = total_candidates / len(X_test)
-            best_search_time = min(best_search_time, search_time)
-
-        verbose = hasattr(algo, "query_verbose")
-        attrs = {
-            "batch_mode": use_batch_query,
-            "build_time": build_time,
-            "best_search_time": best_search_time,
-            "candidates": avg_candidates,
-            "expect_extra": verbose,
-            "index_size": index_size,
-            "name": algo.name,
-            "run_count": run_count,
-            "run_alone": force_single,
-            "distance": distance,
-            "count": int(count),
-            "algo": definition.algorithm,
-            "dataset": dataset
-        }
-        store_results(dataset, count, definition, attrs, results)
+        for pos, query_arguments in enumerate(query_argument_groups, 1):
+            print("Running query argument group %d of %d..." %
+                    (pos, len(query_argument_groups)))
+            if query_arguments:
+                algo.set_query_arguments(*query_arguments)
+            descriptor, results = run_individual_query(algo, X_train, X_test,
+                    distance, count, run_count, force_single, use_batch_query)
+            descriptor["build_time"] = build_time
+            descriptor["index_size"] = index_size
+            descriptor["algo"] = definition.algorithm
+            descriptor["dataset"] = dataset
+            store_results(dataset,
+                    count, definition, query_arguments, descriptor, results)
     finally:
         algo.done()
 
@@ -125,23 +156,22 @@ def run_from_cmdline():
         required=True,
         type=int)
     parser.add_argument(
-        '--json-args',
-        action='store_true')
+        'build')
     parser.add_argument(
-        '-a', '--arg',
-        dest='args', action='append')
+        'queries',
+        nargs='*',
+        default=[])
     args = parser.parse_args()
-    if args.json_args:
-        algo_args = [json.loads(arg) for arg in args.args]
-    else:
-        algo_args = args.args
+    algo_args = json.loads(args.build)
+    query_args = [json.loads(q) for q in args.queries]
 
     definition = Definition(
         algorithm=args.algorithm,
         docker_tag=None, # not needed
         module=args.module,
         constructor=args.constructor,
-        arguments=algo_args
+        arguments=algo_args,
+        query_argument_groups=query_args
     )
     run(definition, args.dataset, args.count)
 
@@ -151,10 +181,9 @@ def run_docker(definition, dataset, count, runs, timeout=3*3600, mem_limit=None)
            '--algorithm', definition.algorithm,
            '--module', definition.module,
            '--constructor', definition.constructor,
-           '--count', str(count),
-           '--json-args']
-    for arg in definition.arguments:
-        cmd += ['--arg', json.dumps(arg)]
+           '--count', str(count)]
+    cmd.append(json.dumps(definition.arguments))
+    cmd += [json.dumps(qag) for qag in definition.query_argument_groups]
     print('Running command', cmd)
     client = docker.from_env()
     if mem_limit is None:
