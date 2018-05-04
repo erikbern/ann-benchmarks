@@ -13,7 +13,7 @@ class NmslibReuseIndex(BaseANN):
     def __init__(self, metric, method_name, index_param, save_index, query_param):
         self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
         self._method_name = method_name
-        self._save_index = save_index
+        self._save_index = False
         self._index_param = NmslibReuseIndex.encode(index_param)
         self._query_param = NmslibReuseIndex.encode(query_param)
         self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (self._method_name, self._index_param, self._query_param)
