@@ -14,12 +14,13 @@ env:
   - LIBRARY=faiss
   - LIBRARY=flann
   - LIBRARY=kgraph
+  - LIBRARY=mrpt
   - LIBRARY=nearpy
   - LIBRARY=nmslib
   - LIBRARY=panns
+  - LIBRARY=pynndescent
   - LIBRARY=rpforest
   - LIBRARY=sklearn
-  - LIBRARY=pynndescent
 
 before_install:
   - pip install -r requirements.txt
