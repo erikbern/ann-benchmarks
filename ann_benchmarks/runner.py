@@ -171,7 +171,8 @@ def run_from_cmdline():
         module=args.module,
         constructor=args.constructor,
         arguments=algo_args,
-        query_argument_groups=query_args
+        query_argument_groups=query_args,
+        disabled=False
     )
     run(definition, args.dataset, args.count)
 

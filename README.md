@@ -22,6 +22,7 @@ Evaluated
 * [DolphinnPy](https://github.com/ipsarros/DolphinnPy)
 * [Datasketch](https://github.com/ekzhu/datasketch)
 * [PyNNDescent](https://github.com/lmcinnes/pynndescent)
+* [MRPT](https://github.com/teemupitkanen/mrpt)
 
 Data sets
 =========

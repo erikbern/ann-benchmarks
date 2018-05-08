@@ -14,19 +14,20 @@ env:
   - LIBRARY=faiss
   - LIBRARY=flann
   - LIBRARY=kgraph
+  - LIBRARY=mrpt
   - LIBRARY=nearpy
   - LIBRARY=nmslib
   - LIBRARY=panns
+  - LIBRARY=pynndescent
   - LIBRARY=rpforest
   - LIBRARY=sklearn
-  - LIBRARY=pynndescent
 
 before_install:
   - pip install -r requirements.txt
   - python install.py
 
 script:
-  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-20-angular
+  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-20-angular --run-disabled
   - python plot.py --dataset random-xs-20-angular --output plot.png
   - python -m unittest test/test-metrics.py
   - python create_website.py --outputdir . --scatter --latex

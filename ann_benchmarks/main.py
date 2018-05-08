@@ -55,8 +55,7 @@ def main():
     parser.add_argument(
         '--list-algorithms',
         help='print the names of all known algorithms and exit',
-        action='store_true',
-        default=argparse.SUPPRESS)
+        action='store_true')
     parser.add_argument(
         '--force',
         help='''re-run algorithms even if their results already exist''',
@@ -81,12 +80,16 @@ def main():
         type=int,
         help='Max number of algorithms to run (just used for testing)',
         default=-1)
+    parser.add_argument(
+        '--run-disabled',
+        help='run algorithms that are disabled in algos.yml',
+        action='store_true')
 
     args = parser.parse_args()
     if args.timeout == -1:
         args.timeout = None
 
-    if hasattr(args, "list_algorithms"):
+    if args.list_algorithms:
         list_algorithms(args.definitions)
         sys.exit(0)
 
@@ -163,6 +166,11 @@ def main():
             else:
                 return True
         definitions = [d for d in definitions if _test(d)]
+
+    if not args.run_disabled:
+        if len([d for d in definitions if d.disabled]):
+            print('Not running disabled algorithms:', [d for d in definitions if d.disabled])
+        definitions = [d for d in definitions if not d.disabled]
 
     if args.max_n_algorithms >= 0:
         definitions = definitions[:args.max_n_algorithms]
