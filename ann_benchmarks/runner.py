@@ -13,6 +13,7 @@ import requests
 import sys
 import threading
 import time
+import psutil
 
 def print(*args, **kwargs):
     __true_print(*args, **kwargs)
@@ -24,7 +25,7 @@ from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
-def run_individual_query(algo, X_train, X_test, distance, count, run_count=3, force_single=False, use_batch_query=False):
+def run_individual_query(algo, X_train, X_test, distance, count, run_count, force_single, use_batch_query):
     prepared_queries = False
     if hasattr(algo, "supports_prepared_queries"):
         prepared_queries = algo.supports_prepared_queries()
@@ -70,7 +71,13 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count=3, fo
             results = pool.map(single_query, X_test)
             pool.close()
         else:
+            p = psutil.Process()
+            initial_affinity = p.cpu_affinity()
+            p.cpu_affinity([initial_affinity[len(initial_affinity) // 2]]) # one of the available virtual CPU cores
+
             results = [single_query(x) for x in X_test]
+
+            p.cpu_affinity(initial_affinity)
 
         total_time = sum(time for time, _ in results)
         total_candidates = sum(len(candidates) for _, candidates in results)
@@ -93,7 +100,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count=3, fo
     return (attrs, results)
 
 
-def run(definition, dataset, count, run_count=3, force_single=False, use_batch_query=False):
+def run(definition, dataset, count, run_count=3, force_single=True, use_batch_query=False):
     algo = instantiate_algorithm(definition)
     assert not definition.query_argument_groups \
             or hasattr(algo, "set_query_arguments"), """\

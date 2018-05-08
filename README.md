@@ -21,6 +21,7 @@ Evaluated
 * [FAISS](https://github.com/facebookresearch/faiss.git)
 * [DolphinnPy](https://github.com/ipsarros/DolphinnPy)
 * [Datasketch](https://github.com/ekzhu/datasketch)
+* [PyNNDescent](https://github.com/lmcinnes/pynndescent)
 
 Data sets
 =========
