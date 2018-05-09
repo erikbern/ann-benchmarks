@@ -9,7 +9,6 @@ services:
 
 env:
   - LIBRARY=annoy
-  - LIBRARY=datasketch
   - LIBRARY=dolphinn
   - LIBRARY=faiss
   - LIBRARY=flann
