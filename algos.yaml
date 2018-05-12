@@ -30,28 +30,117 @@ float:
         base:
           args: [[5, 10, 20, 50, 100, 200, 400, 800, 1000]]
           query-args: [[1, 2, 3, 4, 5, 8, 10, 20, 50, 100, 200]]
+
+
+    hnswlib:
+      docker-tag: ann-benchmarks-hnswlib
+      module: ann_benchmarks.algorithms.hnswlib
+      constructor: HnswLib
+      base-args: ["@metric"]
+      run-groups:
+        M-4:
+          arg-groups:
+            - {"M": 4,  "efConstruction": 500}
+          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+        M-8:
+          arg-groups:
+            - {"M": 8,  "efConstruction": 500}
+          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+        M-12:
+          arg-groups:
+            - {"M": 12,  "efConstruction": 500}
+          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+        M-16:
+          arg-groups:
+            - {"M": 16,  "efConstruction": 500}
+          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+        M-24:
+          arg-groups:
+            - {"M": 24,  "efConstruction": 500}
+          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+        M-36:
+          arg-groups:
+            - {"M": 36,  "efConstruction": 500}
+          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+        M-48:
+          arg-groups:
+            - {"M": 48,  "efConstruction": 500}
+          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+        M-64:
+          arg-groups:
+            - {"M": 64,  "efConstruction": 500}
+          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+        M-96:
+          arg-groups:
+            - {"M": 96,  "efConstruction": 500}
+          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+
+    hnsw(faiss):
+     docker-tag: ann-benchmarks-faiss
+     module: ann_benchmarks.algorithms.faiss_hnsw
+     constructor: FaissHNSW
+     base-args: ["@metric"]
+     run-groups:
+       M-4:
+         arg-groups:
+           - {"M": 4,  "efConstruction": 500}
+         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+       M-8:
+         arg-groups:
+           - {"M": 8,  "efConstruction": 500}
+         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+       M-12:
+         arg-groups:
+           - {"M": 12,  "efConstruction": 500}
+         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+       M-16:
+         arg-groups:
+           - {"M": 16,  "efConstruction": 500}
+         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+       M-24:
+         arg-groups:
+           - {"M": 24,  "efConstruction": 500}
+         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+       M-36:
+         arg-groups:
+           - {"M": 36,  "efConstruction": 500}
+         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+       M-48:
+         arg-groups:
+           - {"M": 48,  "efConstruction": 500}
+         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+       M-64:
+         arg-groups:
+           - {"M": 64,  "efConstruction": 500}
+         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+       M-96:
+         arg-groups:
+           - {"M": 96,  "efConstruction": 500}
+         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+
+
     flann:
-      docker-tag: ann-benchmarks-flann
-      module: ann_benchmarks.algorithms.flann
-      constructor: FLANN
-      base-args: ["@metric"]
-      run-groups:
-        flann:
-          args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97]]
+     docker-tag: ann-benchmarks-flann
+     module: ann_benchmarks.algorithms.flann
+     constructor: FLANN
+     base-args: ["@metric"]
+     run-groups:
+       flann:
+         args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97]]
     panns:
-      disabled: true
-      docker-tag: ann-benchmarks-panns
-      module: ann_benchmarks.algorithms.panns
-      constructor: PANNS
-      base-args: ["@metric"]
-      run-groups:
-        five-trees:
-          args: [5, 20]
-        ten-trees:
-          args: [10, [10, 50]]
-        hundred-candidates:
-          args: [[10, 20, 40], 100]
-    annoy:
+     disabled: true
+     docker-tag: ann-benchmarks-panns
+     module: ann_benchmarks.algorithms.panns
+     constructor: PANNS
+     base-args: ["@metric"]
+     run-groups:
+       five-trees:
+         args: [5, 20]
+       ten-trees:
+         args: [10, [10, 50]]
+       hundred-candidates:
+         args: [[10, 20, 40], 100]
+     annoy:
       docker-tag: ann-benchmarks-annoy
       module: ann_benchmarks.algorithms.annoy
       constructor: Annoy
@@ -157,8 +246,8 @@ float:
       base-args: ["@metric"]
       run-groups:
         kgraph:
-          args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                 {'reverse': -1}, True] # XXX: hard-codes save_index as True
+          args: [ {'reverse': -1}, True] # XXX: hard-codes save_index as True
+          query-args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]]
     hnsw(nmslib):
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
@@ -177,29 +266,29 @@ float:
           # "efConstruction=400"] -- which didn't work with this at all...)
           arg-groups:
             - {"M": 32, "post": 2, "efConstruction": 400}
-            - True # XXX: hard-codes save_index as True
-            - {"ef": [20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200,
-              300, 400]}
+            - False
+          query-args: [[20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200,
+              300, 400]]
         M-20:
           arg-groups:
             - {"M": 20, "post": 2, "efConstruction": 400}
-            - True
-            - {"ef": [2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120, 200, 400]}
+            - False
+          query-args: [[2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120, 200, 400]]
         M-12:
           arg-groups:
             - {"M": 12, "post": 0, "efConstruction": 400}
-            - True
-            - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120]}
+            - False
+          query-args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120]]
         M-4:
           arg-groups:
             - {"M": 4, "post": 0, "efConstruction": 400}
-            - True
-            - {"ef": [1, 2, 5, 10, 20, 30, 50, 70, 90, 120]}
+            - False
+          query-args: [[1, 2, 5, 10, 20, 30, 50, 70, 90, 120]]
         M-8:
           arg-groups:
             - {"M": 8, "post": 0, "efConstruction": 400}
-            - True
-            - {"ef": [1, 2, 5, 10, 20, 30, 50, 70, 90, 120, 160]}
+            - False
+          query-args: [[1, 2, 5, 10, 20, 30, 50, 70, 90, 120, 160]]
     MP-lsh(lshkit):
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
@@ -218,12 +307,10 @@ float:
         NN-10:
           arg-groups:
             - {"NN": 10}
-            - True
             - {"efSearch": [800, 400, 200, 100, 50, 30, 20, 15, 10]}
         NN-5:
           arg-groups:
             - {"NN": 5}
-            - True
             - {"efSearch": [30, 25, 20, 15, 10, 5, 4, 3, 2, 1]}
     pynndescent:
       docker-tag: ann-benchmarks-pynndescent
@@ -242,8 +329,8 @@ float:
       base-args: ["@metric"]
       run-groups:
         kgraph:
-          args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                 {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
+          args: [{'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
+          query-args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]]
     hnsw(nmslib):
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
@@ -253,25 +340,25 @@ float:
         M-48:
           arg-groups:
             - {"M": 48, "post": 2, "efConstruction": 800}
-            - True # XXX: hard-codes save_index as True
-            - {"ef": [50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000,
-              1400, 1600, 2000]}
+            - False
+          query-args: [[50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000,
+              1400, 1600, 2000]]
         M-32:
           arg-groups:
             - {"M": 32, "post": 2, "efConstruction": 800}
-            - True
-            - {"ef": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160,
-              200, 300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]}
+            - False
+          query-args: [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160,
+              200, 300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]]
         M-20:
           arg-groups:
             - {"M": 20, "post": 0, "efConstruction": 800}
-            - True
-            - {"ef": [2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+            - False
+          query-args: [[2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
         M-12:
           arg-groups:
             - {"M": 12, "post": 0, "efConstruction": 800}
-            - True
-            - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+            - False
+          query-args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
     SW-graph(nmslib):
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
@@ -281,18 +368,15 @@ float:
         NN-30:
           arg-groups:
             - {"NN": 30}
-            - True
             - {"efSearch": [700, 650, 550, 450, 350, 275, 200, 150, 120, 80,
               50, 30]}
         NN-15:
           arg-groups:
             - {"NN": 15}
-            - True
             - {"efSearch": [80, 50, 30, 20]}
         NN-3:
           arg-groups:
             - {"NN": 3}
-            - True
             - {"efSearch": [120, 80, 60, 40, 20, 10, 8, 4, 2]}
     rpforest:
       docker-tag: ann-benchmarks-rpforest
@@ -340,25 +424,21 @@ bit:
         M-48:
           arg-groups:
             - {"M": 48, "post": 2, "efConstruction": 800}
-            - True # XXX: hard-codes save_index as True
-            - {"ef": [50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000,
-              1400, 1600, 2000]}
+          query-args: [[50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000,
+              1400, 1600, 2000]]
         M-32:
           arg-groups:
             - {"M": 32, "post": 2, "efConstruction": 800}
-            - True
-            - {"ef": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160,
-              200, 300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]}
+          query-args: [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160,
+              200, 300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]]
         M-20:
           arg-groups:
             - {"M": 20, "post": 0, "efConstruction": 800}
-            - True
-            - {"ef": [2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+          query-args: [[2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
         M-12:
           arg-groups:
             - {"M": 12, "post": 0, "efConstruction": 800}
-            - True
-            - {"ef": [1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]}
+        query-args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
     pynndescent:
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent

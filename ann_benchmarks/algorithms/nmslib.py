@@ -10,13 +10,20 @@ class NmslibReuseIndex(BaseANN):
     def encode(d):
         return ["%s=%s" % (a, b) for (a, b) in d.iteritems()]
 
-    def __init__(self, metric, method_name, index_param, save_index, query_param):
+    def __init__(self, metric, method_name, index_param, query_param):
         self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
         self._method_name = method_name
         self._save_index = False
         self._index_param = NmslibReuseIndex.encode(index_param)
-        self._query_param = NmslibReuseIndex.encode(query_param)
-        self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (self._method_name, self._index_param, self._query_param)
+        if query_param!=False:
+            self._query_param = NmslibReuseIndex.encode(query_param)
+            self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (
+            self._method_name, self._index_param, self._query_param)
+        else:
+            self._query_param = None
+            self.name = 'Nmslib(method_name=%s, index_param=%s)' % (
+            self._method_name, self._index_param)
+
         self._index_name = os.path.join(INDEX_DIR, "nmslib_%s_%s_%s" % (self._method_name, metric, '_'.join(self._index_param)))
 
         d = os.path.dirname(self._index_name)
@@ -41,9 +48,10 @@ class NmslibReuseIndex(BaseANN):
             self._index.createIndex(self._index_param)
             if self._save_index:
                 self._index.saveIndex(self._index_name)
-
-        self._index.setQueryTimeParams(self._query_param)
-
+        if self._query_param is not None:
+            self._index.setQueryTimeParams(self._query_param)
+    def set_query_arguments(self, ef):
+        self._index.setQueryTimeParams(["efSearch=%s"%(ef)])
     def query(self, v, n):
         ids, distances = self._index.knnQuery(v, n)
         return ids
