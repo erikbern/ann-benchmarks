@@ -175,7 +175,10 @@ def main():
     if args.max_n_algorithms >= 0:
         definitions = definitions[:args.max_n_algorithms]
 
-    print('order:', definitions)
+    if len(definitions) == 0:
+        raise Exception('Nothing to run')
+    else:
+        print('Order:', definitions)
 
     for definition in definitions:
         print(definition, '...')

@@ -1,18 +1,13 @@
-import docker
 import json
 import os
-import sys
+import subprocess
 
-client = docker.from_env()
 print('Building base image...')
-client.images.build(path=os.getcwd(), tag='ann-benchmarks', rm=True, dockerfile='install/Dockerfile')
+subprocess.check_call('docker build --rm -t ann-benchmarks -f install/Dockerfile .', shell=True)
 
 def build(library):
     print('Building %s...' % library)
-    try:
-        client.images.build(path=os.getcwd(), tag='ann-benchmarks-%s' % library, rm=True, dockerfile='install/Dockerfile.%s' % library)
-    except docker.errors.BuildError as err:
-        print("Build error: {0}".format(err))
+    subprocess.check_call('docker build --rm -t ann-benchmarks-%s -f install/Dockerfile.%s .' % (library, library), shell=True)
 
 if os.getenv('LIBRARY'):
     build(os.getenv('LIBRARY'))
