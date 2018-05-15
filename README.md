@@ -23,6 +23,7 @@ Evaluated
 * [Datasketch](https://github.com/ekzhu/datasketch)
 * [PyNNDescent](https://github.com/lmcinnes/pynndescent)
 * [MRPT](https://github.com/teemupitkanen/mrpt)
+* [NGT](https://github.com/yahoojapan/NGT): PANNG
 
 Data sets
 =========
