@@ -15,6 +15,7 @@ env:
   - LIBRARY=kgraph
   - LIBRARY=mrpt
   - LIBRARY=nearpy
+  - LIBRARY=ngt
   - LIBRARY=nmslib
   - LIBRARY=panns
   - LIBRARY=pynndescent
