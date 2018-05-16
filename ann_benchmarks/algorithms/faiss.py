@@ -32,9 +32,6 @@ class FaissLSH(BaseANN):
                 r.append((l, d))
         return r
 
-    def use_threads(self):
-        return False
-
 import sklearn.preprocessing
 
 class FaissIVF(BaseANN):

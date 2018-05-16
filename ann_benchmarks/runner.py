@@ -13,7 +13,6 @@ import requests
 import sys
 import threading
 import time
-import psutil
 
 def print(*args, **kwargs):
     __true_print(*args, **kwargs)
@@ -25,7 +24,7 @@ from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
-def run_individual_query(algo, X_train, X_test, distance, count, run_count, force_single, use_batch_query):
+def run_individual_query(algo, X_train, X_test, distance, count, run_count, use_batch_query):
     best_search_time = float('inf')
     for i in range(run_count):
         print('Run %d/%d...' % (i+1, run_count))
@@ -55,18 +54,8 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, forc
 
         if use_batch_query:
             results = batch_query(X_test)
-        elif algo.use_threads() and not force_single:
-            pool = multiprocessing.pool.ThreadPool()
-            results = pool.map(single_query, X_test)
-            pool.close()
         else:
-            p = psutil.Process()
-            initial_affinity = p.cpu_affinity()
-            p.cpu_affinity([initial_affinity[len(initial_affinity) // 2]]) # one of the available virtual CPU cores
-
             results = [single_query(x) for x in X_test]
-
-            p.cpu_affinity(initial_affinity)
 
         total_time = sum(time for time, _ in results)
         total_candidates = sum(len(candidates) for _, candidates in results)
@@ -82,14 +71,13 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, forc
         "expect_extra": verbose,
         "name": str(algo),
         "run_count": run_count,
-        "run_alone": force_single,
         "distance": distance,
         "count": int(count)
     }
     return (attrs, results)
 
 
-def run(definition, dataset, count, run_count=3, force_single=True, use_batch_query=False):
+def run(definition, dataset, count, run_count=3, use_batch_query=False):
     algo = instantiate_algorithm(definition)
     assert not definition.query_argument_groups \
             or hasattr(algo, "set_query_arguments"), """\
@@ -125,7 +113,7 @@ function""" % (definition.module, definition.constructor, definition.arguments)
             if query_arguments:
                 algo.set_query_arguments(*query_arguments)
             descriptor, results = run_individual_query(algo, X_train, X_test,
-                    distance, count, run_count, force_single, use_batch_query)
+                    distance, count, run_count, use_batch_query)
             descriptor["build_time"] = build_time
             descriptor["index_size"] = index_size
             descriptor["algo"] = definition.algorithm
@@ -199,6 +187,7 @@ def run_docker(definition, dataset, count, runs, timeout=3*3600, mem_limit=None)
             os.path.abspath('results'): {'bind': '/home/app/results', 'mode': 'rw'},
         },
         mem_limit=mem_limit,
+        cpuset_cpus='0', # limit to the 1st CPU
         detach=True)
 
     def stream_logs():

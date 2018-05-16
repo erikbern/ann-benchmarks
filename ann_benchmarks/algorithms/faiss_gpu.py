@@ -48,6 +48,3 @@ class FaissGPU(BaseANN):
                     r.append(l)
             res.append(r)
         return res
-
-    def use_threads(self):
-        return False

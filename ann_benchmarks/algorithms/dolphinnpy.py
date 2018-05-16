@@ -28,6 +28,3 @@ class DolphinnPy(BaseANN):
         q = isotropize(q, len(v), self.m)                
         res = self._index.queries(q, n, self.num_probes)
         return res[0]
-
-    def use_threads(self):
-        return False

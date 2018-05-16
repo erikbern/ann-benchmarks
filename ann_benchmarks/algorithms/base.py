@@ -2,9 +2,6 @@ from __future__ import absolute_import
 import psutil
 
 class BaseANN(object):
-    def use_threads(self):
-        return True
-
     def done(self):
         pass
 
