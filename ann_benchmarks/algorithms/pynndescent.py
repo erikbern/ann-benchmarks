@@ -28,9 +28,6 @@ class PyNNDescent(BaseANN):
         ind, dist = self._index.query(v.reshape(1, -1).astype('float32'), k=n, queue_size=self._queue_size)
         return ind[0]
 
-    def use_threads(self):
-        return False
-
     def __str__(self):
         return 'PyNNDescent(n_neighbors=%d, n_trees=%d, leaf_size=%d, queue_size=%.2f)' % (self._n_neighbors,
                                                                                            self._n_trees,
