@@ -16,7 +16,8 @@ Evaluated
 * [PANNS](https://github.com/ryanrhymes/panns)
 * [NearPy](http://nearpy.io)
 * [KGraph](https://github.com/aaalgo/kgraph)
-* [NMSLIB (Non-Metric Space Library)](https://github.com/searchivarius/nmslib): SWGraph, HNSW, BallTree, MPLSH
+* [NMSLIB (Non-Metric Space Library)](https://github.com/nmslib/nmslib): SWGraph, HNSW, BallTree, MPLSH
+* [hnswlib (a part of nmslib project)](https://github.com/nmslib/hnsw)
 * [RPForest](https://github.com/lyst/rpforest)
 * [FAISS](https://github.com/facebookresearch/faiss.git)
 * [DolphinnPy](https://github.com/ipsarros/DolphinnPy)

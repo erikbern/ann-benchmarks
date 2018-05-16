@@ -17,6 +17,7 @@ env:
   - LIBRARY=nearpy
   - LIBRARY=ngt
   - LIBRARY=nmslib
+  - LIBRARY=hnswlib
   - LIBRARY=panns
   - LIBRARY=pynndescent
   - LIBRARY=rpforest
