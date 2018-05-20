@@ -426,6 +426,7 @@ float:
       docker-tag: ann-benchmarks-mrpt
       module: ann_benchmarks.algorithms.mrpt
       constructor: MRPT
+      base-args: ["@metric"]
       run-groups:
         # See https://github.com/ejaasaari/mrpt-comparison/blob/master/parameters/gist.sh
         mrpt:

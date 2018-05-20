@@ -4,7 +4,8 @@ import mrpt
 from ann_benchmarks.algorithms.base import BaseANN
 
 class MRPT(BaseANN):
-    def __init__(self, n_trees, depth):
+    def __init__(self, metric, n_trees, depth):
+        self._metric = metric
         self._n_trees = n_trees
         self._depth = depth
         self._votes_required = None
