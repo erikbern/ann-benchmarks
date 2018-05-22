@@ -166,6 +166,8 @@ def run_from_cmdline():
 
 
 def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None):
+    import colors  # Think it doesn't work in Python 2
+
     cmd = ['--dataset', dataset,
            '--algorithm', definition.algorithm,
            '--module', definition.module,
@@ -191,9 +193,8 @@ def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None)
         detach=True)
 
     def stream_logs():
-        import colors
         for line in container.logs(stream=True):
-            print(colors.color(line.decode().rstrip(), fg='yellow'))
+            print(colors.color(line.decode().rstrip(), fg='blue'))
 
     t = threading.Thread(target=stream_logs, daemon=True)
     t.start()
@@ -204,6 +205,7 @@ def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None)
         if exit_code == 0:
             return
         elif exit_code is not None:
+            print(colors.color(container.logs().decode(), fg='red'))
             raise Exception('Child process raised exception %d' % exit_code)
 
     finally:
