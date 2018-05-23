@@ -244,7 +244,6 @@ float:
         pynndescent:
           args: [[10, 20, 40, 80], [4, 8], [30]]
           query-args: [[1.0, 2.0, 4.0, 8.0]]
-  euclidean:
     NGT-panng:
       docker-tag: ann-benchmarks-ngt
       module: ann_benchmarks.algorithms.panng_ngt
@@ -253,7 +252,8 @@ float:
       run-groups :
         # # of edges for construction, # of edges for adjusting paths, # of edges for search, epsion for search
         base:
-           args : [[20], [40], [60], [0.4, 0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1]]
+           args : [[20], [40], [60], [0.4, 0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2, 1.3]]
+  euclidean:
     kgraph:
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
@@ -340,15 +340,6 @@ float:
           args: [[5, 10, 20, 40, 80], [4, 8], [20]]
           query-args: [[1.0, 1.5, 2.0, 4.0, 8.0]]
   angular:
-    NGT-panng:
-      docker-tag: ann-benchmarks-ngt
-      module: ann_benchmarks.algorithms.panng_ngt
-      constructor : PANNG
-      base-args : ["@metric", "Float"]
-      run-groups :
-        # # of edges for construction, # of edges for adjusting paths, # of edges for search, epsion for search
-        base:
-           args : [[20], [40], [60], [0.4, 0.6, 0.8, 0.9, 1.0, 1.05, 1.1, 1.2, 1.3]]
     kgraph:
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
