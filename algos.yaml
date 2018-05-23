@@ -166,6 +166,7 @@ float:
         extra:
           args: [16, [5, 10, 15, 20, 25, 30, 40]]
     bruteforce:
+      disabled: true
       docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.bruteforce
       constructor: BruteForce
@@ -182,6 +183,7 @@ float:
         empty:
           args: []
     dummy-algo-st:
+      disabled: true
       docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.dummy_algo
       constructor: DummyAlgoSt
@@ -190,6 +192,7 @@ float:
         empty:
           args: []
     dummy-algo-mt:
+      disabled: true
       docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.dummy_algo
       constructor: DummyAlgoMt
