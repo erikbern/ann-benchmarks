@@ -10,7 +10,7 @@ A front-end begins in configuration mode. When configuration is complete, it tra
 
 A front-end reads lines from standard input, tokenises them, and interprets them according to its current mode; responses are written as lines to standard output. To enable protocol responses to be distinguished from other messages that may appear on standard output, the first token of a line containing a response will always be `epbprtv0`; the second will be `ok` when a command succeeds, potentially followed by other tokens, and `fail` when it doesn't.
 
-(The obscure token `epbprtv0` is intended to uniquely identify this protocol, and is meant to suggest something like "external program benchmarking protocol, version 0".)
+(The obscure token `epbprtv0` is intended to uniquely identify this protocol, and is meant to suggest something like "**e**xternal **p**rogram **b**enchmarking **pr**o**t**ocol, **v**ersion **0**".)
 
 A front-end may choose to include extra tokens in its responses after the tokens required by this specification to communicate more information back to the caller.
 

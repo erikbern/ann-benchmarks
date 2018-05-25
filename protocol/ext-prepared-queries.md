@@ -4,6 +4,36 @@ When the front-end configuration option `prepared-queries` is set to `1`, after 
 
 ## Commands
 
+### Configuration mode
+
+#### `frontend prepared-queries V` (three tokens)
+
+If `V` is `1`, then request that the front-end transition into prepared query mode, and not query mode, after training mode has finished. If `V` is anything else, then request that it transition into query mode as usual.
+
+Responses:
+
+* `epbprtv0 ok`
+
+  The front-end will transition into the requested query mode after the training mode has finished.
+
+* `epbprtv0 fail`
+
+  This command has had no effect on the query mode transition.
+
+### Training mode
+
+This extension changes the behaviour of one command in training mode:
+
+#### *empty line* (zero tokens)
+
+Finish training mode and enter prepared query mode.
+
+Responses:
+
+* `epbprtv0 ok COUNT1 [fail COUNT2]`
+
+  `COUNT1` (potentially zero) entries were successfully interpreted and added to the data structure. (`COUNT2` entries couldn't be interpreted or couldn't be added for other reasons.):
+
 ### Prepared query mode
 
 In prepared query mode, front-ends should respond to three different kinds of command:
