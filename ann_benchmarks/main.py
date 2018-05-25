@@ -65,7 +65,7 @@ def main():
         metavar='COUNT',
         type=positive_int,
         help='run each algorithm instance %(metavar)s times and use only the best result',
-        default=3)
+        default=1)
     parser.add_argument(
         '--timeout',
         type=int,
