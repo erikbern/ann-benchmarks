@@ -42,39 +42,39 @@ float:
         M-4:
           arg-groups:
             - {"M": 4,  "efConstruction": 500}
-          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
         M-8:
           arg-groups:
             - {"M": 8,  "efConstruction": 500}
-          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
         M-12:
           arg-groups:
             - {"M": 12,  "efConstruction": 500}
-          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
         M-16:
           arg-groups:
             - {"M": 16,  "efConstruction": 500}
-          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
         M-24:
           arg-groups:
             - {"M": 24,  "efConstruction": 500}
-          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
         M-36:
           arg-groups:
             - {"M": 36,  "efConstruction": 500}
-          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
         M-48:
           arg-groups:
             - {"M": 48,  "efConstruction": 500}
-          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
         M-64:
           arg-groups:
             - {"M": 64,  "efConstruction": 500}
-          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
         M-96:
           arg-groups:
             - {"M": 96,  "efConstruction": 500}
-          query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
 
     hnsw(faiss):
      docker-tag: ann-benchmarks-faiss
@@ -85,39 +85,39 @@ float:
        M-4:
          arg-groups:
            - {"M": 4,  "efConstruction": 500}
-         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+         query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
        M-8:
          arg-groups:
            - {"M": 8,  "efConstruction": 500}
-         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+         query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
        M-12:
          arg-groups:
            - {"M": 12,  "efConstruction": 500}
-         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+         query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
        M-16:
          arg-groups:
            - {"M": 16,  "efConstruction": 500}
-         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+         query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
        M-24:
          arg-groups:
            - {"M": 24,  "efConstruction": 500}
-         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+         query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
        M-36:
          arg-groups:
            - {"M": 36,  "efConstruction": 500}
-         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+         query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
        M-48:
          arg-groups:
            - {"M": 48,  "efConstruction": 500}
-         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+         query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
        M-64:
          arg-groups:
            - {"M": 64,  "efConstruction": 500}
-         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+         query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
        M-96:
          arg-groups:
            - {"M": 96,  "efConstruction": 500}
-         query-args: [[10, 15,20,25, 30,40, 50,60, 70,80, 90, 120, 160,200, 400, 600, 800]]
+         query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
 
 
     flann:
@@ -261,7 +261,7 @@ float:
       run-groups:
         # See https://github.com/ejaasaari/mrpt-comparison/blob/master/parameters/gist.sh
         mrpt:
-          args: [[5, 10, 25, 50, 100], [1, 2, 3, 4, 6, 8, 12]]
+          args: [[5, 25, 100], [1, 2, 4, 8]]
           query-args: [[1, 2, 4, 10, 20, 40, 100]]
   euclidean:
     kgraph:
@@ -415,8 +415,8 @@ float:
       constructor: RPForest
       run-groups:
         base:
-          args: [[3, 5, 10, 20, 40, 100, 200, 400],
-                [3, 5, 10, 20, 40, 100, 200, 400]]
+          args: [[3, 10, 40, 100, 400],
+                [3, 10, 40, 100, 400]]
     pynndescent:
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
