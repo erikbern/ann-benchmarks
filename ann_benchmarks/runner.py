@@ -144,6 +144,10 @@ def run_from_cmdline():
         required=True,
         type=int)
     parser.add_argument(
+        '--runs',
+        required=True,
+        type=int)
+    parser.add_argument(
         'build')
     parser.add_argument(
         'queries',
@@ -162,7 +166,7 @@ def run_from_cmdline():
         query_argument_groups=query_args,
         disabled=False
     )
-    run(definition, args.dataset, args.count)
+    run(definition, args.dataset, args.count, args.runs)
 
 
 def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None):
@@ -172,6 +176,7 @@ def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None)
            '--algorithm', definition.algorithm,
            '--module', definition.module,
            '--constructor', definition.constructor,
+           '--runs', str(runs),
            '--count', str(count)]
     cmd.append(json.dumps(definition.arguments))
     cmd += [json.dumps(qag) for qag in definition.query_argument_groups]
