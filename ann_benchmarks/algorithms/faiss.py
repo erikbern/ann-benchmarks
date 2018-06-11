@@ -2,6 +2,7 @@ from __future__ import absolute_import
 import sys
 sys.path.append("install/lib-faiss")
 import numpy
+import sklearn.preprocessing
 import ctypes
 import faiss
 from ann_benchmarks.algorithms.base import BaseANN
@@ -32,7 +33,6 @@ class FaissLSH(BaseANN):
                 r.append((l, d))
         return r
 
-import sklearn.preprocessing
 
 class FaissIVF(BaseANN):
     def __init__(self, metric, n_list):
