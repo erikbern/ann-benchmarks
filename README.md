@@ -46,6 +46,7 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 Results
 =======
 
+These are all as of 2018-06-10, running all benchmarks on a c5.4xlarge machine on AWS:
 
 glove-100-angular
 
@@ -70,8 +71,6 @@ nytimes-256-angular
 glove-25-angular
 
 ![glove-25-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-25-angular.png)
-
-Results as of Feb 2018-02-05, running all benchmarks on a c5.4xlarge machine on AWS.
 
 Install
 =======
