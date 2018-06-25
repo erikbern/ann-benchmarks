@@ -77,6 +77,10 @@ def main():
         action='store_true',
         help='If set, then will run everything locally (inside the same process) rather than using Docker')
     parser.add_argument(
+        '--batch',
+        action='store_true',
+        help='If set, algorithms get all queries at once')
+    parser.add_argument(
         '--max-n-algorithms',
         type=int,
         help='Max number of algorithms to run (just used for testing)',
