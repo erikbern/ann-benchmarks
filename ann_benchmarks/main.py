@@ -117,8 +117,8 @@ def main():
         not_yet_run = []
         for query_arguments in query_argument_groups:
             fn = get_result_filename(args.dataset,
-                    args.count, definition, query_arguments)
-            if not os.path.exists(fn):
+                    args.count, definition, query_arguments, args.batch)
+            if args.force or not os.path.exists(fn):
                 not_yet_run.append(query_arguments)
         if not_yet_run:
             if definition.query_argument_groups:
