@@ -36,7 +36,6 @@ def algorithm_status(definition):
     except ImportError:
         return InstantiationStatus.NO_MODULE
 
-
 def _generate_combinations(args):
     if isinstance(args, list):
         args = [el if isinstance(el, list) else [el] for el in args]

@@ -5,7 +5,7 @@ import argparse
 import datetime
 import docker
 import json
-import multiprocessing.pool
+import multiprocessing
 import numpy
 import os
 import psutil
@@ -24,7 +24,7 @@ from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
-def run_individual_query(algo, X_train, X_test, distance, count, run_count, use_batch_query):
+def run_individual_query(algo, X_train, X_test, distance, count, run_count, use_batch_query=False):
     best_search_time = float('inf')
     for i in range(run_count):
         print('Run %d/%d...' % (i+1, run_count))
@@ -45,8 +45,9 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, use_
 
         def batch_query(X):
             start = time.time()
-            result = algo.batch_query(X, count)
+            algo.batch_query(X, count)
             total = (time.time() - start)
+            results = algo.get_batch_results()
             candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
                            for idx in single_results]
                           for v, single_results in zip(X, results)]
@@ -117,9 +118,11 @@ function""" % (definition.module, definition.constructor, definition.arguments)
             descriptor["build_time"] = build_time
             descriptor["index_size"] = index_size
             descriptor["algo"] = definition.algorithm
+            if use_batch_query:
+                descriptor["algo"] += "-batch"
             descriptor["dataset"] = dataset
-            store_results(dataset,
-                    count, definition, query_arguments, descriptor, results)
+            store_results(dataset, count, definition,
+                    query_arguments, descriptor, results, use_batch_query)
     finally:
         algo.done()
 
@@ -148,6 +151,9 @@ def run_from_cmdline():
         required=True,
         type=int)
     parser.add_argument(
+        '--batch',
+        action='store_true')
+    parser.add_argument(
         'build')
     parser.add_argument(
         'queries',
@@ -166,10 +172,10 @@ def run_from_cmdline():
         query_argument_groups=query_args,
         disabled=False
     )
-    run(definition, args.dataset, args.count, args.runs)
+    run(definition, args.dataset, args.count, args.runs, args.batch)
 
 
-def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None):
+def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None, use_batch_query=False):
     import colors  # Think it doesn't work in Python 2
 
     cmd = ['--dataset', dataset,
@@ -178,6 +184,8 @@ def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None)
            '--constructor', definition.constructor,
            '--runs', str(runs),
            '--count', str(count)]
+    if use_batch_query:
+        cmd += ['--batch']
     cmd.append(json.dumps(definition.arguments))
     cmd += [json.dumps(qag) for qag in definition.query_argument_groups]
     print('Running command', cmd)
@@ -185,6 +193,12 @@ def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None)
     if mem_limit is None:
         mem_limit = psutil.virtual_memory().available
     print('Memory limit:', mem_limit)
+    cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
+    if not use_batch_query:
+        # Limit to first cpu if not in batch mode
+        cpu_limit = "0"
+    print('Running on CPUs:', cpu_limit)
+
     container = client.containers.run(
         definition.docker_tag,
         cmd,
@@ -193,8 +207,8 @@ def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None)
             os.path.abspath('data'): {'bind': '/home/app/data', 'mode': 'ro'},
             os.path.abspath('results'): {'bind': '/home/app/results', 'mode': 'rw'},
         },
+        cpuset_cpus=cpu_limit,
         mem_limit=mem_limit,
-        cpuset_cpus='0', # limit to the 1st CPU
         detach=True)
 
     def stream_logs():

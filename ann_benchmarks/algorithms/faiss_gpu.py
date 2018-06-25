@@ -39,9 +39,12 @@ class FaissGPU(BaseANN):
         return r
 
     def batch_query(self, X, n):
-        D, L = self._index.search(X, n)
+        self.res = self._index.search(X.astype(numpy.float32),n)
+
+    def get_batch_results(self):
+        D, L = self.res
         res = []
-        for i in range(len(X)):
+        for i in range(len(D)):
             r = []
             for l, d in zip(L[i], D[i]):
                 if l != -1:

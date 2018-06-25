@@ -190,9 +190,9 @@ def main():
 
         try:
             if args.local:
-                run(definition, args.dataset, args.count, args.runs)
+                run(definition, args.dataset, args.count, args.runs, use_batch_query=args.batch)
             else:
-                run_docker(definition, args.dataset, args.count, args.runs)
+                run_docker(definition, args.dataset, args.count, args.runs, use_batch_query=args.batch)
         except KeyboardInterrupt:
             break
         except:
