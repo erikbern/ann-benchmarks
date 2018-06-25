@@ -3,9 +3,17 @@
         <div class="container">
         {% for item in plot_data.keys() %}
             {% if item=="normal" %}
-            <h2>Plots for {{title}}</h2>
+                {% if batch %}
+                    <h2>Plots for {{title}} in batch mode</h2>
+                {% else %}
+                    <h2>Plots for {{title}}</h2>
+                {% endif %}
             {% elif item=="scatter" and args.scatter %}
-            <h2>Scatterplots for {{title}}</h2>
+                {% if batch %}
+                    <h2>Scatterplots for {{title}} in batch mode</h2>
+                {% else %}
+                    <h2>Scatterplots for {{title}}</h2>
+                {% endif %}
             {% endif %}
             {% for plot in plot_data[item] %}
             {{ plot }}

@@ -126,7 +126,7 @@ def create_plot(all_data, xn, yn, linestyle, j2_env, additional_label = "", plot
                     label = additional_label, linestyle = linestyle,
                     render_all_points = render_all_points)
 
-def build_detail_site(data, label_func, linestyles, j2_env):
+def build_detail_site(data, label_func, j2_env, linestyles, batch=False):
     for (name, runs) in data.items():
         print("Building '%s'" % name)
         all_runs = runs.keys()
@@ -145,40 +145,40 @@ def build_detail_site(data, label_func, linestyles, j2_env):
         for k in runs.keys():
             data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
         plot.create_plot(data_for_plot, False,
-                False, True, 'k-nn', 'qps',  args.outputdir + name + ".png",
-                linestyles)
-        with open(args.outputdir + name + ".html", "w") as text_file:
+                False, True, 'k-nn', 'qps',  args.outputdir + name + "_batch=" + str(batch) + ".png",
+                linestyles, batch)
+        with open(args.outputdir + name + "_batch=" + str(batch) + ".html", "w") as text_file:
             text_file.write(j2_env.get_template("detail_page.html").
-                render(title = label, plot_data = data, args = args))
+                render(title = label, plot_data = data, args = args, batch=batch))
 
 
 def build_index_site(datasets, algorithms, j2_env, file_name):
-    distance_measures = sorted(set([get_distance_from_desc(e) for e in datasets.keys()]))
-    sorted_datasets = sorted(set([get_dataset_from_desc(e) for e in datasets.keys()]))
+    dataset_data = {'batch' : [], 'non-batch' : []}
+    for mode in ['batch', 'non-batch']:
+        distance_measures = sorted(set([get_distance_from_desc(e) for e in datasets[mode].keys()]))
+        sorted_datasets = sorted(set([get_dataset_from_desc(e) for e in datasets[mode].keys()]))
 
-    dataset_data = []
-
-    for dm in distance_measures:
-        d = {"name" : dm.capitalize(), "entries": []}
-        for ds in sorted_datasets:
-            matching_datasets = [e for e in datasets.keys() \
-                    if get_dataset_from_desc(e) == ds and \
-                       get_distance_from_desc(e) == dm]
-            sorted_matches = sorted(matching_datasets, \
-                    key = lambda e: int(get_count_from_desc(e)))
-            for idd in sorted_matches:
-                d["entries"].append({"name" : idd, "desc" : get_dataset_label(idd)})
-        dataset_data.append(d)
+        for dm in distance_measures:
+            d = {"name" : dm.capitalize(), "entries": []}
+            for ds in sorted_datasets:
+                matching_datasets = [e for e in datasets[mode].keys() \
+                        if get_dataset_from_desc(e) == ds and \
+                           get_distance_from_desc(e) == dm]
+                sorted_matches = sorted(matching_datasets, \
+                        key = lambda e: int(get_count_from_desc(e)))
+                for idd in sorted_matches:
+                    d["entries"].append({"name" : idd, "desc" : get_dataset_label(idd)})
+            dataset_data[mode].append(d)
 
     with open(args.outputdir + "index.html", "w") as text_file:
         text_file.write(j2_env.get_template("summary.html").
                 render(title = "ANN-Benchmarks", dataset_with_distances = dataset_data,
-                    algorithms = algorithms.keys()))
+                    algorithms = algorithms))
 
 def load_all_results():
     """Read all result files and compute all metrics"""
-    all_runs_by_dataset = {}
-    all_runs_by_algorithm = {}
+    all_runs_by_dataset = {'batch' : {}, 'non-batch': {}}
+    all_runs_by_algorithm = {'batch' : {}, 'non-batch' : {}}
     cached_true_dist = []
     old_sdn = None
     for properties, f in results.load_all_results():
@@ -190,16 +190,21 @@ def load_all_results():
         algo = properties["algo"]
         ms = compute_all_metrics(cached_true_dist, f, properties)
         algo_ds = get_dataset_label(sdn)
+        idx = "non-batch"
+        if properties["batch_mode"]:
+            idx = "batch"
+        all_runs_by_algorithm[idx].setdefault(algo, {}).setdefault(algo_ds, []).append(ms)
+        all_runs_by_dataset[idx].setdefault(sdn, {}).setdefault(algo, []).append(ms)
 
-        all_runs_by_algorithm.setdefault(algo, {}).setdefault(algo_ds, []).append(ms)
-        all_runs_by_dataset.setdefault(sdn, {}).setdefault(algo, []).append(ms)
     return (all_runs_by_dataset, all_runs_by_algorithm)
 
 j2_env = Environment(loader=FileSystemLoader("./templates/"), trim_blocks = True)
-j2_env.globals.update(zip=zip)
-
+j2_env.globals.update(zip=zip, len=len)
 runs_by_ds, runs_by_algo = load_all_results()
 linestyles = {**create_linestyles([get_dataset_label(x) for x in runs_by_ds.keys()]),  **create_linestyles(runs_by_algo.keys())}
-build_detail_site(runs_by_ds, lambda label: get_dataset_label(label), linestyles, j2_env)
-build_detail_site(runs_by_algo, lambda x: x, linestyles, j2_env)
+
+build_detail_site(runs_by_ds['non-batch'], lambda label: get_dataset_label(label), j2_env, linestyles, False)
+build_detail_site(runs_by_ds['batch'], lambda label: get_dataset_label(label), j2_env, linestyles, True)
+build_detail_site(runs_by_algo['non-batch'], lambda x: x, j2_env, linestyles, False)
+build_detail_site(runs_by_algo['batch'], lambda x: x, j2_env, linestyles, True)
 build_index_site(runs_by_ds, runs_by_algo, j2_env, "index.html")

@@ -11,7 +11,7 @@ from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, crea
 from ann_benchmarks.results import store_results, load_all_results, get_unique_algorithms
 
 
-def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles):
+def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles, batch):
     xm, ym = (metrics[xn], metrics[yn])
     # Now generate each plot
     handles = []
@@ -24,7 +24,10 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles):
         handles.append(handle)
         if raw:
             handle2, = plt.plot(axs, ays, '-', label=algo, color=faded, ms=5, mew=2, lw=2, linestyle=linestyle, marker=marker)
-        labels.append(algo)
+        label = algo
+        if batch:
+            label += "-batch"
+        labels.append(label)
 
     if x_log:
         plt.gca().set_xscale('log')
@@ -86,6 +89,10 @@ if __name__ == "__main__":
         '--raw',
         help='Show raw results (not just Pareto frontier) in faded colours',
         action='store_true')
+    parser.add_argument(
+        '--batch',
+        help='Plot runs in batch mode',
+        action='store_true')
     args = parser.parse_args()
 
     if not args.output:
@@ -95,11 +102,11 @@ if __name__ == "__main__":
     dataset = get_dataset(args.dataset)
     count = int(args.count)
     unique_algorithms = get_unique_algorithms()
-    results = load_all_results(args.dataset, count)
+    results = load_all_results(args.dataset, count, args.batch)
     linestyles = create_linestyles(sorted(unique_algorithms))
     runs = compute_metrics(list(dataset["distances"]), results, args.x_axis, args.y_axis)
     if not runs:
         raise Exception('Nothing to plot')
 
     create_plot(runs, args.raw, args.x_log,
-            args.y_log, args.x_axis, args.y_axis, args.output, linestyles)
+            args.y_log, args.x_axis, args.y_axis, args.output, linestyles, args.batch)
