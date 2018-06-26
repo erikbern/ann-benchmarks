@@ -13,6 +13,7 @@ float:
       docker-tag: ann-benchmarks-faiss
       module: ann_benchmarks.algorithms.faiss
       constructor: FaissLSH
+      base-args: ["@metric"]
       run-groups:
         base:
           # When @args is a list, the result is the Cartesian product of all of
