@@ -457,7 +457,7 @@ bit:
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
-      base-args: ["@metric"]
+      base-args: ["euclidean"]
       run-groups:
         kgraph:
           args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
@@ -466,7 +466,7 @@ bit:
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
-      base-args: ["@metric", "hnsw"]
+      base-args: ["euclidean", "hnsw"]
       run-groups:
         M-48:
           arg-groups:
@@ -490,7 +490,7 @@ bit:
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
       constructor: PyNNDescent
-      base-args: ["@metric"]
+      base-args: ["euclidean"]
       run-groups:
         pynndescent:
           args: [[20, 40, 80, 160, 250], [4], [40]]
@@ -512,7 +512,7 @@ bit:
       docker-tag: ann-benchmarks-faiss
       module: ann_benchmarks.algorithms.faiss
       constructor: FaissIVF
-      base-args: ["@metric"]
+      base-args: ["euclidean"]
       run-groups:
         base:
           args: [[32,64,128,256,512,1024,2048,4096,8192]]

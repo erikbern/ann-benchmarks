@@ -11,7 +11,7 @@ class NmslibReuseIndex(BaseANN):
         return ["%s=%s" % (a, b) for (a, b) in d.iteritems()]
 
     def __init__(self, metric, method_name, index_param, query_param):
-        self._nmslib_metric = {'hamming' : 'cosinesimil', 'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
+        self._nmslib_metric = {'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
         self._method_name = method_name
         self._save_index = False
         self._index_param = NmslibReuseIndex.encode(index_param)
