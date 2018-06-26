@@ -4,11 +4,12 @@ import faiss
 import numpy as np
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.base import BaseANN
+from ann_benchmarks.algorithms.faiss import Faiss
 
 
-class FaissHNSW(BaseANN):
+class FaissHNSW(Faiss):
     def __init__(self, metric, method_param):
-        self.metric = metric
+        self._metric = metric
         self.method_param = method_param
         self.name = 'faiss (%s)' % (self.method_param)
 
@@ -17,7 +18,7 @@ class FaissHNSW(BaseANN):
         self.index.hnsw.efConstruction = self.method_param["efConstruction"]
         self.index.verbose = True
 
-        if self.metric == 'angular':
+        if self._metric == 'angular':
             X = X / np.linalg.norm(X, axis=1)[:, np.newaxis]
         if X.dtype != np.float32:
             X = X.astype(np.float32)
@@ -27,24 +28,6 @@ class FaissHNSW(BaseANN):
 
     def set_query_arguments(self, ef):
         self.index.hnsw.efSearch = ef
-
-    def query(self, v, n):
-        D, I = self.index.search(np.expand_dims(v,axis=0).astype(np.float32), n)
-        return I[0]
-
-    def batch_query(self, X, n):
-        self.res = self.index.search(X.astype(np.float32), n)
-
-    def get_batch_results(self):
-        D, L = self.res
-        res = []
-        for i in range(len(D)):
-            r = []
-            for l, d in zip(L[i], D[i]):
-                if l != -1:
-                    r.append(l)
-            res.append(r)
-        return res
 
     def freeIndex(self):
         del self.p
