@@ -24,7 +24,7 @@ from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
-def run_individual_query(algo, X_train, X_test, distance, count, run_count, use_batch_query):
+def run_individual_query(algo, X_train, X_test, distance, count, run_count, batch):
     best_search_time = float('inf')
     for i in range(run_count):
         print('Run %d/%d...' % (i+1, run_count))
@@ -53,7 +53,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, use_
                           for v, single_results in zip(X, results)]
             return [(total / float(len(X)), v) for v in candidates]
 
-        if use_batch_query:
+        if batch:
             results = batch_query(X_test)
         else:
             results = [single_query(x) for x in X_test]
@@ -66,7 +66,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, use_
 
     verbose = hasattr(algo, "query_verbose")
     attrs = {
-        "batch_mode": use_batch_query,
+        "batch_mode": batch,
         "best_search_time": best_search_time,
         "candidates": avg_candidates,
         "expect_extra": verbose,
@@ -78,7 +78,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, use_
     return (attrs, results)
 
 
-def run(definition, dataset, count, run_count=3, use_batch_query=False):
+def run(definition, dataset, count, run_count=3, batch=False):
     algo = instantiate_algorithm(definition)
     assert not definition.query_argument_groups \
             or hasattr(algo, "set_query_arguments"), """\
@@ -114,15 +114,15 @@ function""" % (definition.module, definition.constructor, definition.arguments)
             if query_arguments:
                 algo.set_query_arguments(*query_arguments)
             descriptor, results = run_individual_query(algo, X_train, X_test,
-                    distance, count, run_count, use_batch_query)
+                    distance, count, run_count, batch)
             descriptor["build_time"] = build_time
             descriptor["index_size"] = index_size
             descriptor["algo"] = definition.algorithm
-            if use_batch_query:
+            if batch:
                 descriptor["algo"] += "-batch"
             descriptor["dataset"] = dataset
             store_results(dataset, count, definition,
-                    query_arguments, descriptor, results, use_batch_query)
+                    query_arguments, descriptor, results, batch)
     finally:
         algo.done()
 
@@ -175,7 +175,7 @@ def run_from_cmdline():
     run(definition, args.dataset, args.count, args.runs, args.batch)
 
 
-def run_docker(definition, dataset, count, runs, timeout, use_batch_query, mem_limit=None):
+def run_docker(definition, dataset, count, runs, timeout, batch, mem_limit=None):
     import colors  # Think it doesn't work in Python 2
 
     cmd = ['--dataset', dataset,
@@ -184,7 +184,7 @@ def run_docker(definition, dataset, count, runs, timeout, use_batch_query, mem_l
            '--constructor', definition.constructor,
            '--runs', str(runs),
            '--count', str(count)]
-    if use_batch_query:
+    if batch:
         cmd += ['--batch']
     cmd.append(json.dumps(definition.arguments))
     cmd += [json.dumps(qag) for qag in definition.query_argument_groups]
@@ -194,7 +194,7 @@ def run_docker(definition, dataset, count, runs, timeout, use_batch_query, mem_l
         mem_limit = psutil.virtual_memory().available
     print('Memory limit:', mem_limit)
     cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
-    if not use_batch_query:
+    if not batch:
         # Limit to first cpu if not in batch mode
         cpu_limit = "0"
     print('Running on CPUs:', cpu_limit)
