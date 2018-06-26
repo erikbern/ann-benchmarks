@@ -236,7 +236,7 @@ def sift_hamming(out_fn, fn):
         lines = f.readlines()
         X = numpy.zeros((len(lines), 256), dtype=numpy.bool)
         for i, line in enumerate(lines):
-            X[i] = numpy.array([int(x) > 0 for x in line.strip()], dtype=numpy.bool)
+            X[i] = numpy.array([int(x) > 0 for x in line.decode().strip()], dtype=numpy.bool)
         X_train, X_test = train_test_split(X, test_size = 1000)
         write_output(X_train, X_test, out_fn, 'hamming', 'bit')
 
