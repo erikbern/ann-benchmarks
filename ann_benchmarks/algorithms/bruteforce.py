@@ -49,7 +49,7 @@ class BruteForceBLAS(BaseANN):
             self.lengths = numpy.ascontiguousarray(lens, dtype=self._precision)
         elif self._metric == 'hamming':
             self.index = numpy.ascontiguousarray(
-                map(numpy.packbits, X), dtype=numpy.uint8)
+                list(map(numpy.packbits, X)), dtype=numpy.uint8)
         elif self._metric == 'jaccard':
             self.index = X
         else:

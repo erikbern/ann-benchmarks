@@ -33,18 +33,19 @@ def get_dataset(which):
 # Everything below this line is related to creating datasets
 # You probably never need to do this at home, just rely on the prepared datasets at http://ann-benchmarks.com
 
-def write_output(train, test, fn, distance, count=100):
+def write_output(train, test, fn, distance, point_type='float', count=100):
     from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
     n = 0
     f = h5py.File(fn, 'w')
     f.attrs['distance'] = distance
+    f.attrs['point_type'] = point_type
     print('train size: %9d * %4d' % train.shape)
     print('test size:  %9d * %4d' % test.shape)
     f.create_dataset('train', (len(train), len(train[0])), dtype=train.dtype)[:] = train
     f.create_dataset('test', (len(test), len(test[0])), dtype=test.dtype)[:] = test
     neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
     distances = f.create_dataset('distances', (len(test), count), dtype='f')
-    bf = BruteForceBLAS(distance, precision=numpy.float32)
+    bf = BruteForceBLAS(distance, precision=train.dtype)
     bf.fit(train)
     queries = []
     for i, x in enumerate(test):
@@ -219,10 +220,10 @@ def word2bits(out_fn, path, fn):
         n_words, k = [int(z) for z in next(f).strip().split()]
         X = numpy.zeros((n_words, k), dtype=numpy.bool)
         for i in range(n_words):
-            X[i] = [float(z) > 0 for z in next(f).strip().split()[1:]]
+            X[i] = numpy.array([float(z) > 0 for z in next(f).strip().split()[1:]], dtype=numpy.bool)
 
-        X_train, X_test = train_test_split(X)
-        write_output(X_train, X_test, out_fn, 'euclidean')  # TODO: use hamming
+        X_train, X_test = train_test_split(X, test_size=50)
+        write_output(X_train, X_test, out_fn, 'hamming', 'bit')
 
 
 def lastfm(out_fn, n_dimensions, test_size=50000):
