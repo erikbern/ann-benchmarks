@@ -50,17 +50,31 @@ class FaissIVF(BaseANN):
         index = faiss.IndexIVFFlat(self.quantizer, X.shape[1], self._n_list, faiss.METRIC_L2)
         index.train(X)
         index.add(X)
-        self._index = index
+        self.index = index
 
     def set_query_arguments(self, n_probe):
         self._n_probe = n_probe
-        self._index.nprobe = self._n_probe
+        self.index.nprobe = self._n_probe
 
     def query(self, v, n):
         if self._metric == 'angular':
             v /= numpy.linalg.norm(v)
-        (dist,), (ids,) = self._index.search(v.reshape(1, -1).astype('float32'), n)
+        (dist,), (ids,) = self.index.search(v.reshape(1, -1).astype('float32'), n)
         return ids
+
+    def batch_query(self, X, n):
+        self.res = self.index.search(X.astype(numpy.float32), n)
+
+    def get_batch_results(self):
+        D, L = self.res
+        res = []
+        for i in range(len(D)):
+            r = []
+            for l, d in zip(L[i], D[i]):
+                if l != -1:
+                    r.append(l)
+            res.append(r)
+        return res
 
     def __str__(self):
         return 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list, self._n_probe)
