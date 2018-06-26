@@ -19,7 +19,7 @@ def print(*args, **kwargs):
     sys.stdout.flush()
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
-from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm
+from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm, get_algorithm_name
 from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
@@ -78,7 +78,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
     return (attrs, results)
 
 
-def run(definition, dataset, count, run_count=3, batch=False):
+def run(definition, dataset, count, run_count, batch):
     algo = instantiate_algorithm(definition)
     assert not definition.query_argument_groups \
             or hasattr(algo, "set_query_arguments"), """\
@@ -117,9 +117,7 @@ function""" % (definition.module, definition.constructor, definition.arguments)
                     distance, count, run_count, batch)
             descriptor["build_time"] = build_time
             descriptor["index_size"] = index_size
-            descriptor["algo"] = definition.algorithm
-            if batch:
-                descriptor["algo"] += "-batch"
+            descriptor["algo"] = get_algorithm_name(definition.algorithm, batch)
             descriptor["dataset"] = dataset
             store_results(dataset, count, definition,
                     query_arguments, descriptor, results, batch)

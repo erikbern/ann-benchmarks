@@ -8,7 +8,7 @@ from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.algorithms.definitions import get_definitions
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_linestyles, create_pointset
-from ann_benchmarks.results import store_results, load_all_results, get_unique_algorithms
+from ann_benchmarks.results import store_results, load_all_results, get_unique_algorithms, get_algorithm_name
 
 
 def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles, batch):
@@ -24,10 +24,7 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles, batch):
         handles.append(handle)
         if raw:
             handle2, = plt.plot(axs, ays, '-', label=algo, color=faded, ms=5, mew=2, lw=2, linestyle=linestyle, marker=marker)
-        label = algo
-        if batch:
-            label += "-batch"
-        labels.append(label)
+        labels.append(get_algorithm_name(algo, batch))
 
     if x_log:
         plt.gca().set_xscale('log')
@@ -96,7 +93,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not args.output:
-        args.output = 'results/%s.png' % args.dataset
+        args.output = 'results/%s.png' % get_algorithm_name(args.dataset, args.batch)
         print('writing output to %s' % args.output)
 
     dataset = get_dataset(args.dataset)
