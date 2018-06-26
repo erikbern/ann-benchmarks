@@ -18,7 +18,7 @@ class BaseANN(object):
     def batch_query(self, X, n):
         self.res = []
         for q in X:
-            res.append(self.query(q, n))
+            self.res.append(self.query(q, n))
 
     def get_batch_results(self):
         return self.res

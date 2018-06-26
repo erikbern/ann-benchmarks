@@ -24,7 +24,7 @@ from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
-def run_individual_query(algo, X_train, X_test, distance, count, run_count, use_batch_query=False):
+def run_individual_query(algo, X_train, X_test, distance, count, run_count, use_batch_query):
     best_search_time = float('inf')
     for i in range(run_count):
         print('Run %d/%d...' % (i+1, run_count))
@@ -175,7 +175,7 @@ def run_from_cmdline():
     run(definition, args.dataset, args.count, args.runs, args.batch)
 
 
-def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None, use_batch_query=False):
+def run_docker(definition, dataset, count, runs, timeout, use_batch_query, mem_limit=None):
     import colors  # Think it doesn't work in Python 2
 
     cmd = ['--dataset', dataset,

@@ -71,7 +71,7 @@ def main():
         '--timeout',
         type=int,
         help='Timeout (in seconds) for each individual algorithm run, or -1 if no timeout should be set',
-        default=-1)
+        default=5*3600)
     parser.add_argument(
         '--local',
         action='store_true',
@@ -189,10 +189,10 @@ def main():
         print(definition, '...')
 
         try:
+            f = run_docker
             if args.local:
-                run(definition, args.dataset, args.count, args.runs, use_batch_query=args.batch)
-            else:
-                run_docker(definition, args.dataset, args.count, args.runs, use_batch_query=args.batch)
+                f = run
+            f(definition, args.dataset, args.count, args.runs, args.timeout, args.batch)
         except KeyboardInterrupt:
             break
         except:
