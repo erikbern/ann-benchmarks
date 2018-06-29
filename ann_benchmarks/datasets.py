@@ -24,14 +24,14 @@ def get_dataset_fn(dataset):
 
 def get_dataset(which):
     hdf5_fn = get_dataset_fn(which)
-    url = 'http://vectors.erikbern.com/%s.hdf5' % which
+    url = 'http://ann-benchmarks.com/%s.hdf5' % which
     download(url, hdf5_fn)
     hdf5_f = h5py.File(hdf5_fn)
     return hdf5_f
 
 
 # Everything below this line is related to creating datasets
-# You probably never need to do this at home, just rely on the prepared datasets at http://vectors.erikbern.com
+# You probably never need to do this at home, just rely on the prepared datasets at http://ann-benchmarks.com
 
 def write_output(train, test, fn, distance, count=100):
     from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
