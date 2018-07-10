@@ -3,17 +3,7 @@ import os
 import argparse
 import subprocess
 from multiprocessing import Pool
-
-
-def positive_int(s):
-    i = None
-    try:
-        i = int(s)
-    except ValueError:
-        pass
-    if not i or i < 1:
-        raise argparse.ArgumentTypeError("%r is not a positive integer" % s)
-    return i
+from ann_benchmarks.main import positive_int
 
 
 def build(library):
