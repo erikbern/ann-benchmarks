@@ -41,9 +41,12 @@ if __name__ == "__main__":
         build(os.getenv('LIBRARY'))
     else:
         print('Building algorithm images... with (%d) processes' % args.proc)
-        pool = Pool(processes=args.proc)
         dockerfiles = []
         for fn in os.listdir('install'):
             if fn.startswith('Dockerfile.'):
                 dockerfiles.append(fn.split('.')[-1])
+
+        pool = Pool(processes=args.proc)
         pool.map(build, dockerfiles)
+        pool.close()
+        pool.join()
