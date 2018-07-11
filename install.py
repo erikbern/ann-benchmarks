@@ -18,7 +18,7 @@ if __name__ == "__main__":
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
         "--proc",
-        default=4,
+        default=1,
         type=positive_int,
         help="the number of process to build docker images")
     parser.add_argument(
@@ -46,7 +46,10 @@ if __name__ == "__main__":
             if fn.startswith('Dockerfile.'):
                 dockerfiles.append(fn.split('.')[-1])
 
-        pool = Pool(processes=args.proc)
-        pool.map(build, dockerfiles)
-        pool.close()
-        pool.join()
+        if args.proc == 1:
+            [build(tag) for tag in dockerfiles]
+        else:
+            pool = Pool(processes=args.proc)
+            pool.map(build, dockerfiles)
+            pool.close()
+            pool.join()
