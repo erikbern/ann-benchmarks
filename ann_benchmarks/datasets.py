@@ -225,6 +225,45 @@ def word2bits(out_fn, path, fn):
         write_output(X_train, X_test, out_fn, 'euclidean')  # TODO: use hamming
 
 
+def lastfm(out_fn, n_dimensions, test_size=50000):
+    # This tests out ANN methods for retrieval on simple matrix factorization based
+    # recommendation algorithms. The idea being that the query/test vectors are user factors
+    # and the train set are item factors from the matrix factorization model.
+
+    # Since the predictor is a dot product, we transform the factors first as described in this
+    # paper: https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/XboxInnerProduct.pdf
+    # This hopefully replicates the experiments done in this post:
+    # http://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/
+
+    # The dataset is from "Last.fm Dataset - 360K users":
+    # http://www.dtic.upf.edu/~ocelma/MusicRecommendationDataset/lastfm-360K.html
+
+    # this requires the implicit package to generate the factors (on my desktop/gpu this only
+    # takes 4-5 seconds to train - but could take 1-2 minutes on a laptop)
+    from implicit.datasets.lastfm import get_lastfm
+    from implicit.approximate_als import augment_inner_product_matrix
+    import implicit
+
+    # train an als model on the lastfm data
+    _, _, play_counts = get_lastfm()
+    model = implicit.als.AlternatingLeastSquares(factors=n_dimensions)
+    model.fit(implicit.nearest_neighbours.bm25_weight(play_counts, K1=100, B=0.8))
+
+    # transform item factors so that each one has the same norm, and transform the user
+    # factors such by appending a 0 column
+    _, item_factors = augment_inner_product_matrix(model.item_factors)
+    user_factors = numpy.append(model.user_factors,
+                                numpy.zeros((model.user_factors.shape[0], 1)),
+                                axis=1)
+
+    # only query the first 50k users (speeds things up signficantly without changing results)
+    user_factors = user_factors[:test_size]
+
+    # after that transformation a cosine lookup will return the same results as the inner product
+    # on the untransformed data
+    write_output(item_factors, user_factors, out_fn, 'angular')
+
+
 DATASETS = {
     'fashion-mnist-784-euclidean': fashion_mnist,
     'gist-960-euclidean': gist,
@@ -241,4 +280,5 @@ DATASETS = {
     'nytimes-256-angular': lambda out_fn: nytimes(out_fn, 256),
     'nytimes-16-angular': lambda out_fn: nytimes(out_fn, 16),
     'word2bits-800-hamming': lambda out_fn: word2bits(out_fn, '400K', 'w2b_bitlevel1_size800_vocab400K'),
+    'lastfm-64-dot': lambda out_fn: lastfm(out_fn, 64),
 }

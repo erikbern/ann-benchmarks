@@ -46,32 +46,37 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 Results
 =======
 
+These are all as of 2018-06-10, running all benchmarks on a c5.4xlarge machine on AWS:
 
 glove-100-angular
+-----------------
 
 ![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-100-angular.png)
 
 sift-128-euclidean
+------------------
 
 ![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/sift-128-euclidean.png)
 
 fashion-mnist-784-euclidean
+---------------------------
 
 ![fashion-mnist-784-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/fashion-mnist-784-euclidean.png)
 
 gist-960-euclidean
+------------------
 
 ![gist-960-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/gist-960-euclidean.png)
 
 nytimes-256-angular
+-------------------
 
 ![nytimes-256-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/nytimes-256-angular.png)
 
 glove-25-angular
+----------------
 
 ![glove-25-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-25-angular.png)
-
-Results as of Feb 2018-02-05, running all benchmarks on a c5.4xlarge machine on AWS.
 
 Install
 =======
