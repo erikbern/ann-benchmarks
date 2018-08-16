@@ -1,0 +1,12 @@
+FROM ann-benchmarks
+
+#ENV TERM linux
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get install -y \
+    python-opencv \
+    python-pip
+RUN pip install cython
+RUN pip install hdidx
+
+RUN python -c 'import hdidx'
