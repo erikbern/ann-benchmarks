@@ -249,9 +249,18 @@ float:
       constructor : PANNG
       base-args : ["@metric", "Float"]
       run-groups :
-        # # of edges for construction, # of edges for adjusting paths, # of edges for search, epsion for search
-        base:
-           args : [[20], [40], [60], [0.4, 0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2, 1.3]]
+        panng:
+           args : [{'edge': 20, 'pathadj': 40, 'searchedge': 60}]
+           query-args : [[0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2]]
+    NGT-onng:
+      docker-tag: ann-benchmarks-ngt
+      module: ann_benchmarks.algorithms.onng_ngt
+      constructor : ONNG
+      base-args : ["@metric", "Float"]
+      run-groups :
+        onng:
+           args : [{'edge': 100, 'outdegree': 10, 'indegree': 120}]
+           query-args : [[0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2]]
     mrpt:
       docker-tag: ann-benchmarks-mrpt
       module: ann_benchmarks.algorithms.mrpt
