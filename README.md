@@ -24,7 +24,7 @@ Evaluated
 * [Datasketch](https://github.com/ekzhu/datasketch)
 * [PyNNDescent](https://github.com/lmcinnes/pynndescent)
 * [MRPT](https://github.com/teemupitkanen/mrpt)
-* [NGT](https://github.com/yahoojapan/NGT): PANNG
+* [NGT](https://github.com/yahoojapan/NGT): ONNG, PANNG
 
 Data sets
 =========
@@ -97,7 +97,7 @@ You can customize the algorithms and datasets if you want to:
 
 * Check that `algos.yaml` contains the parameter settings that you want to test
 * To run experiments on SIFT, invoke `python run.py --dataset glove-100-angular`. See `python run.py --help` for more information on possible settings. Note that experiments can take a long time. 
-* To process the results, either use `python plot.py --dataset glove-100-angular` or `python createwebsite.py`. An example call: `python createwebsite.py --plottype recall/time --latex --scatter --outputdir website/`. 
+* To process the results, either use `python plot.py --dataset glove-100-angular` or `python create_website.py`. An example call: `python create_website.py --plottype recall/time --latex --scatter --outputdir website/`. 
 
 Including your algorithm
 ========================
