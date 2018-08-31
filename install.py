@@ -6,11 +6,15 @@ from multiprocessing import Pool
 from ann_benchmarks.main import positive_int
 
 
-def build(library):
+def build(library,args):
     print('Building %s...' % library)
+    if args is not None and len(args) != 0:
+        q = " ".join(["--build-arg " + x.replace(" ","\\ ") for x in args])
+    else:
+        q = ""
     subprocess.check_call(
-        'docker build \
-        --rm -t ann-benchmarks-%s -f install/Dockerfile.%s .' % (library, library), shell=True)
+        'docker build %s\
+        --rm -t ann-benchmarks-%s -f install/Dockerfile.%s .' % (q, library, library), shell=True)
 
 
 if __name__ == "__main__":
@@ -26,6 +30,10 @@ if __name__ == "__main__":
         metavar='NAME',
         help='build only the named algorithm image',
         default=None)
+    parser.add_argument(
+        '--build-arg',
+        help='pass given args to all docker builds',
+        nargs="+")
     args = parser.parse_args()
 
     print('Building base image...')
@@ -35,10 +43,10 @@ if __name__ == "__main__":
 
     if args.algorithm:
         print('Building algorithm(%s) image...' % args.algorithm)
-        build(args.algorithm)
+        build(args.algorithm,args.build_arg)
     elif os.getenv('LIBRARY'):
         print('Building algorithm(%s) image...' % os.getenv('LIBRARY'))
-        build(os.getenv('LIBRARY'))
+        build(os.getenv('LIBRARY'),args.build_arg)
     else:
         print('Building algorithm images... with (%d) processes' % args.proc)
         dockerfiles = []
@@ -47,9 +55,9 @@ if __name__ == "__main__":
                 dockerfiles.append(fn.split('.')[-1])
 
         if args.proc == 1:
-            [build(tag) for tag in dockerfiles]
+            [build(tag,args.build_arg) for tag in dockerfiles]
         else:
             pool = Pool(processes=args.proc)
-            pool.map(build, dockerfiles)
+            pool.map(lambda x: build(x, args.build_arg), dockerfiles)
             pool.close()
             pool.join()
