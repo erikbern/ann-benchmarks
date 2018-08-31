@@ -201,7 +201,11 @@ def run_docker(definition, dataset, count, runs, timeout=5*3600, mem_limit=None)
         for line in container.logs(stream=True):
             print(colors.color(line.decode().rstrip(), fg='blue'))
 
-    t = threading.Thread(target=stream_logs, daemon=True)
+    if sys.version_info >= (3, 0):
+        t = threading.Thread(target=stream_logs, daemon=True)
+    else:
+        t = threading.Thread(target=stream_logs)
+        t.daemon = True
     t.start()
     try:
         exit_code = container.wait(timeout=timeout)
