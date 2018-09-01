@@ -11,8 +11,10 @@ class HdIdx(BaseANN):
         self._params = dict()  # set by sub-classes
 
     def fit(self, X):
-        self._params['vals'] = X
-        self._index.build(self._params)
+        # don't update self._params directly, as it's used in __str__
+        fit_params = dict(self._params)
+        fit_params['vals'] = X
+        self._index.build(fit_params)
         self._index.add(X)
 
     def query(self, v, n):
