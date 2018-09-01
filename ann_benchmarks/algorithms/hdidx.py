@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import numpy as np
 from hdidx.indexer import SHIndexer
 from ann_benchmarks.algorithms.base import BaseANN
@@ -18,9 +19,9 @@ class HdIdx(BaseANN):
         return self._index.search(np.expand_dims(v, axis=0), n)[0][0].tolist()
 
 
-class SHIndexer_(HdIdx):
+class SHIdx(HdIdx):
     def __init__(self, n_bits=256):
-        super(SHIndexer_, self).__init__(SHIndexer())
+        super(SHIdx, self).__init__(SHIndexer())
         self._params['nbits'] = n_bits
 
     def __str__(self):

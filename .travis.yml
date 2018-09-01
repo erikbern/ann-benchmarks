@@ -12,6 +12,7 @@ env:
   - LIBRARY=dolphinn
   - LIBRARY=faiss
   - LIBRARY=flann
+  - LIBRARY=hdidx
   - LIBRARY=kgraph
   - LIBRARY=mrpt
   - LIBRARY=nearpy

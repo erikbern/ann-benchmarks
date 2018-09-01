@@ -154,8 +154,8 @@ float:
           # which will be used to run 12 different queries.
     shidx:
       docker-tag: ann-benchmarks-hdidx
-      module: ann_benchmarks.algorithms.hdidx_
-      constructor: SHIndexer_
+      module: ann_benchmarks.algorithms.hdidx
+      constructor: SHIdx
       base-args: []
       run-groups:
         shidx:
