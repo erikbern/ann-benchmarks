@@ -11,11 +11,8 @@ RUN apt-get update && apt-get install -y \
 RUN pip install cython
 RUN pip install -r requirements.txt
 
-# download from aagnone's fork, which fixes some type-casting bugs
-RUN git clone https://github.com/aagnone3/hdidx.git
+RUN git clone https://github.com/hdidx/hdidx.git
 RUN cd hdidx && python setup.py install
 
-RUN python -c 'import hdidx'
-RUN python -c 'import hdidx.indexer'
 RUN python -c 'import hdidx; a = hdidx.indexer.SHIndexer'
 ENTRYPOINT ["python", "run_algorithm.py"]
