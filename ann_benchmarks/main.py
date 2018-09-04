@@ -127,7 +127,7 @@ def main():
     definitions = filtered_definitions
 
     random.shuffle(definitions)
-    
+
     if args.algorithm:
         print('running only', args.algorithm)
         definitions = [d for d in definitions if d.algorithm == args.algorithm]
@@ -138,7 +138,7 @@ def main():
         docker_tags = set()
         for image in docker_client.images.list():
             for tag in image.tags:
-                tag, _ = tag.split(':')
+                tag = tag.split(':')[0]
                 docker_tags.add(tag)
 
         if args.docker_tag:
