@@ -126,20 +126,19 @@ def create_plot(all_data, xn, yn, linestyle, j2_env, additional_label = "", plot
                     label = additional_label, linestyle = linestyle,
                     render_all_points = render_all_points)
 
-def build_detail_site(data, label_func, j2_env):
+def build_detail_site(data, label_func, linestyles, j2_env):
     for (name, runs) in data.items():
         print("Building '%s'" % name)
         all_runs = runs.keys()
-        linestyles = convert_linestyle(create_linestyles(all_runs))
         label = label_func(name)
         data = {"normal" : [], "scatter" : []}
 
         for plottype in args.plottype:
             xn, yn = plot_variants[plottype]
-            data["normal"].append(create_plot(runs, xn, yn, linestyles, j2_env))
+            data["normal"].append(create_plot(runs, xn, yn, convert_linestyle(linestyles), j2_env))
             if args.scatter:
                 data["scatter"].append(create_plot(runs, xn, yn,
-                    linestyles, j2_env, "Scatterplot ", "bubble"))
+                    convert_linestyle(linestyles), j2_env, "Scatterplot ", "bubble"))
 
         # create png plot for summary page
         data_for_plot = {}
@@ -147,7 +146,7 @@ def build_detail_site(data, label_func, j2_env):
             data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
         plot.create_plot(data_for_plot, False,
                 False, True, 'k-nn', 'qps',  args.outputdir + name + ".png",
-                create_linestyles(all_runs))
+                linestyles)
         with open(args.outputdir + name + ".html", "w") as text_file:
             text_file.write(j2_env.get_template("detail_page.html").
                 render(title = label, plot_data = data, args = args))
@@ -182,31 +181,25 @@ def load_all_results():
     all_runs_by_algorithm = {}
     cached_true_dist = []
     old_sdn = None
-    for f in results.load_all_results():
-        properties = dict(f.attrs)
-        # TODO Fix this properly. Sometimes the hdf5 file returns bytes
-        # This converts these bytes to strings before we work with them
-        for k in properties.keys():
-            try:
-                properties[k]= properties[k].decode()
-            except:
-                pass
+    for properties, f in results.load_all_results():
         sdn = get_run_desc(properties)
         if sdn != old_sdn:
             dataset = get_dataset(properties["dataset"])
             cached_true_dist = list(dataset["distances"])
             old_sdn = sdn
         algo = properties["algo"]
-        ms = compute_all_metrics(cached_true_dist, f, properties["algo"])
+        ms = compute_all_metrics(cached_true_dist, f, properties)
         algo_ds = get_dataset_label(sdn)
 
         all_runs_by_algorithm.setdefault(algo, {}).setdefault(algo_ds, []).append(ms)
         all_runs_by_dataset.setdefault(sdn, {}).setdefault(algo, []).append(ms)
     return (all_runs_by_dataset, all_runs_by_algorithm)
 
-runs_by_ds, runs_by_algo = load_all_results()
 j2_env = Environment(loader=FileSystemLoader("./templates/"), trim_blocks = True)
 j2_env.globals.update(zip=zip)
-build_detail_site(runs_by_ds, lambda label: get_dataset_label(label), j2_env)
-build_detail_site(runs_by_algo, lambda x: x, j2_env)
+
+runs_by_ds, runs_by_algo = load_all_results()
+linestyles = {**create_linestyles([get_dataset_label(x) for x in runs_by_ds.keys()]),  **create_linestyles(runs_by_algo.keys())}
+build_detail_site(runs_by_ds, lambda label: get_dataset_label(label), linestyles, j2_env)
+build_detail_site(runs_by_algo, lambda x: x, linestyles, j2_env)
 build_index_site(runs_by_ds, runs_by_algo, j2_env, "index.html")

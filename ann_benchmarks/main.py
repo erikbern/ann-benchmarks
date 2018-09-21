@@ -9,7 +9,8 @@ import traceback
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.constants import INDEX_DIR
-from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms, get_result_filename, algorithm_status, InstantiationStatus
+from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms, algorithm_status, InstantiationStatus
+from ann_benchmarks.results import get_result_filename
 from ann_benchmarks.runner import run, run_docker
 
 
@@ -127,7 +128,7 @@ def main():
     definitions = filtered_definitions
 
     random.shuffle(definitions)
-    
+
     if args.algorithm:
         print('running only', args.algorithm)
         definitions = [d for d in definitions if d.algorithm == args.algorithm]
