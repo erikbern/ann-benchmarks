@@ -10,19 +10,19 @@ from ann_benchmarks.constants import INDEX_DIR
 
 class ONNG(BaseANN):
     def __init__(self, metric, object_type, param):
-        edge_size_for_search = -2
         metrics = {'euclidean': '2', 'angular': 'C'}
         self._edge_size = int(param['edge'])
         self._outdegree = int(param['outdegree'])
         self._indegree = int(param['indegree'])
         self._metric = metrics[metric]
         self._object_type = object_type
-        self._edge_size_for_search = int(edge_size_for_search)
+        self._edge_size_for_search = -2
+        self._build_time_limit = 4
         self._epsilon = 0.0
         print('ONNG: edge_size=' + str(self._edge_size))
         print('ONNG: outdegree=' + str(self._outdegree))
         print('ONNG: indegree=' + str(self._indegree))
-        print('ONNG: edge_size_for_search=' + str(edge_size_for_search))
+        print('ONNG: edge_size_for_search=' + str(self._edge_size_for_search))
         print('ONNG: epsilon=' + str(self._epsilon))
         print('ONNG: metric=' + metric)
         print('ONNG: object_type=' + object_type)
@@ -41,7 +41,7 @@ class ONNG(BaseANN):
         if (not os.path.exists(index)) and (not os.path.exists(anngIndex)):
             print('ONNG: create ANNG')
             t = time.time()
-            args = ['ngt', 'create', '-it', '-p8', '-b500', '-ga', '-of', '-D' + self._metric, '-d' + str(dim), '-E' + str(self._edge_size), '-S0', '-e' + str(self._epsilon), '-P0', '-B30', anngIndex]
+            args = ['ngt', 'create', '-it', '-p8', '-b500', '-ga', '-of', '-D' + self._metric, '-d' + str(dim), '-E' + str(self._edge_size), '-S0', '-e' + str(self._epsilon), '-P0', '-B30', '-T' + str(self._build_time_limit), anngIndex]
             subprocess.call(args)
             idx = ngtpy.Index(path=anngIndex)
             idx.batch_insert(X, num_threads=24, debug=False)
