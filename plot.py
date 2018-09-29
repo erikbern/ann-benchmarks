@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import argparse
 
 from ann_benchmarks.datasets import get_dataset
-from ann_benchmarks.algorithms.definitions import get_definitions, get_unique_algorithms
+from ann_benchmarks.algorithms.definitions import get_definitions
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_linestyles, create_pointset
-from ann_benchmarks.results import store_results, load_results
+from ann_benchmarks.results import store_results, load_all_results, get_unique_algorithms
 
 
 def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles):
@@ -93,14 +93,10 @@ if __name__ == "__main__":
         print('writing output to %s' % args.output)
 
     dataset = get_dataset(args.dataset)
-    dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
-    point_type = 'float' # TODO(erikbern): should look at the type of X_train
-    distance = dataset.attrs['distance']
     count = int(args.count)
-    definitions = get_definitions(args.definitions, dimension, point_type, distance, count)
-    unique_algorithms = get_unique_algorithms(args.definitions)
-    linestyles = create_linestyles(unique_algorithms)
-    results = load_results(args.dataset, count, definitions)
+    unique_algorithms = get_unique_algorithms()
+    results = load_all_results(args.dataset, count)
+    linestyles = create_linestyles(sorted(unique_algorithms))
     runs = compute_metrics(list(dataset["distances"]), results, args.x_axis, args.y_axis)
     if not runs:
         raise Exception('Nothing to plot')

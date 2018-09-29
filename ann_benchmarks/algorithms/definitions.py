@@ -2,9 +2,7 @@ from __future__ import absolute_import
 from os import sep as pathsep
 import collections
 import importlib
-import json
 import os
-import re
 import sys
 import traceback
 import yaml
@@ -37,15 +35,6 @@ def algorithm_status(definition):
             return InstantiationStatus.NO_CONSTRUCTOR
     except ImportError:
         return InstantiationStatus.NO_MODULE
-
-
-def get_result_filename(dataset, count, definition, query_arguments):
-    d = ['results',
-         dataset,
-         str(count),
-         definition.algorithm,
-         re.sub(r'\W+', '_', json.dumps(definition.arguments + query_arguments, sort_keys=True)).strip('_')]
-    return os.path.join(*d)
 
 
 def _generate_combinations(args):

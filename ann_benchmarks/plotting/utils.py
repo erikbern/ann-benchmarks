@@ -30,14 +30,14 @@ def create_pointset(data, xn, yn):
 
 def compute_metrics(true_nn_distances, res, metric_1, metric_2):
     all_results = {}
-    for i, (definition, run) in enumerate(res):
-        algo = definition.algorithm
-        algo_name = run.attrs['name']
+    for i, (properties, run) in enumerate(res):
+        algo = properties['algo']
+        algo_name = properties['name']
         # cache distances to avoid access to hdf5 file
         run_distances = list(run['distances'])
 
-        metric_1_value = metrics[metric_1]['function'](true_nn_distances, run_distances, run.attrs)
-        metric_2_value = metrics[metric_2]['function'](true_nn_distances, run_distances, run.attrs)
+        metric_1_value = metrics[metric_1]['function'](true_nn_distances, run_distances, properties)
+        metric_2_value = metrics[metric_2]['function'](true_nn_distances, run_distances, properties)
 
         print('%3d: %80s %12.3f %12.3f' % (i, algo_name, metric_1_value, metric_2_value))
 
@@ -45,16 +45,16 @@ def compute_metrics(true_nn_distances, res, metric_1, metric_2):
 
     return all_results
 
-def compute_all_metrics(true_nn_distances, run, algo):
-    algo_name = run.attrs["name"]
+def compute_all_metrics(true_nn_distances, run, properties):
+    algo = properties["algo"]
+    algo_name = properties["name"]
     print('--')
     print(algo_name)
     results = {}
     # cache distances to avoid access to hdf5 file
     run_distances = list(run["distances"])
-    run_attrs = dict(run.attrs)
     for name, metric in metrics.items():
-        v = metric["function"](true_nn_distances, run_distances, run_attrs)
+        v = metric["function"](true_nn_distances, run_distances, properties)
         results[name] = v
         if v:
             print('%s: %g' % (name, v))

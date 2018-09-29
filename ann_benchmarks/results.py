@@ -1,9 +1,21 @@
 from __future__ import absolute_import
 
 import h5py
+import json
 import os
-from ann_benchmarks.algorithms.definitions import get_result_filename
+import re
 
+def get_result_filename(dataset=None, count=None, definition=None, query_arguments=None):
+    d = ['results']
+    if dataset:
+        d.append(dataset)
+    if count:
+        d.append(str(count))
+    if definition:
+        d.append(definition.algorithm)
+        if query_arguments:
+            d.append(re.sub(r'\W+', '_', json.dumps(definition.arguments + query_arguments, sort_keys=True)).strip('_'))
+    return os.path.join(*d)
 
 def store_results(dataset, count, definition, query_arguments, attrs, results):
     fn = get_result_filename(dataset, count, definition, query_arguments)
@@ -23,26 +35,26 @@ def store_results(dataset, count, definition, query_arguments, attrs, results):
     f.close()
 
 
-def load_results(dataset, count, definitions):
-    for definition in definitions:
-        query_argument_groups = definition.query_argument_groups
-        if not query_argument_groups:
-            query_argument_groups = [[]]
-        for query_arguments in query_argument_groups:
-            fn = get_result_filename(dataset,
-                    count, definition, query_arguments)
-            if os.path.exists(fn):
-                f = h5py.File(fn)
-                yield definition, f
-                f.close()
-
-def load_all_results():
-    for root, _, files in os.walk("results/"):
+def load_all_results(dataset=None, count=None):
+    for root, _, files in os.walk(get_result_filename(dataset, count)):
         for fn in files:
             try:
                 f = h5py.File(os.path.join(root, fn))
-                yield f
+                properties = dict(f.attrs)
+                # TODO Fix this properly. Sometimes the hdf5 file returns bytes
+                # This converts these bytes to strings before we work with them
+                for k in properties.keys():
+                    try:
+                        properties[k]= properties[k].decode()
+                    except:
+                        pass
+                yield properties, f
                 f.close()
             except:
                 pass
 
+def get_unique_algorithms():
+    algorithms = set()
+    for properties, _ in load_all_results():
+        algorithms.add(properties['algo'])
+    return algorithms
