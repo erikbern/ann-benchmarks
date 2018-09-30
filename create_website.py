@@ -202,7 +202,9 @@ def load_all_results():
 j2_env = Environment(loader=FileSystemLoader("./templates/"), trim_blocks = True)
 j2_env.globals.update(zip=zip, len=len)
 runs_by_ds, runs_by_algo = load_all_results()
-linestyles = {**create_linestyles([get_dataset_label(x) for x in runs_by_ds.keys()]),  **create_linestyles(runs_by_algo.keys())}
+dataset_names = [get_dataset_label(x) for x in list(runs_by_ds['batch'].keys()) + list(runs_by_ds['non-batch'].keys())]
+algorithm_names = list(runs_by_algo['batch'].keys()) + list(runs_by_algo['non-batch'].keys())
+linestyles = {**create_linestyles(dataset_names), **create_linestyles(algorithm_names)}
 
 build_detail_site(runs_by_ds['non-batch'], lambda label: get_dataset_label(label), j2_env, linestyles, False)
 build_detail_site(runs_by_ds['batch'], lambda label: get_dataset_label(label), j2_env, linestyles, True)

@@ -99,7 +99,7 @@ if __name__ == "__main__":
     dataset = get_dataset(args.dataset)
     count = int(args.count)
     unique_algorithms = get_unique_algorithms()
-    results = load_all_results(args.dataset, count, args.batch)
+    results = load_all_results(args.dataset, count, True, args.batch)
     linestyles = create_linestyles(sorted(unique_algorithms))
     runs = compute_metrics(list(dataset["distances"]), results, args.x_axis, args.y_axis)
     if not runs:

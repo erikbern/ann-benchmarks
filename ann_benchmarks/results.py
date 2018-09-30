@@ -43,11 +43,11 @@ def store_results(dataset, count, definition, query_arguments, attrs, results, b
     f.close()
 
 
-def load_all_results(dataset=None, count=None, batch_mode=False):
+def load_all_results(dataset=None, count=None, split_batched=False,  batch_mode=False):
     for root, _, files in os.walk(get_result_filename(dataset, count)):
         for fn in files:
             try:
-                if batch_mode != is_batch(root):
+                if split_batched and batch_mode != is_batch(root):
                     continue
                 f = h5py.File(os.path.join(root, fn))
                 properties = dict(f.attrs)
