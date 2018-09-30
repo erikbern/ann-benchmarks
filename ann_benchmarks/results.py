@@ -21,8 +21,7 @@ def get_result_filename(dataset=None, count=None, definition=None, query_argumen
         d.append(str(count))
     if definition:
         d.append(get_algorithm_name(definition.algorithm, batch_mode))
-        if query_arguments:
-            d.append(re.sub(r'\W+', '_', json.dumps(definition.arguments + query_arguments, sort_keys=True)).strip('_'))
+        d.append(re.sub(r'\W+', '_', json.dumps(definition.arguments + query_arguments, sort_keys=True)).strip('_'))
     return os.path.join(*d)
 
 def store_results(dataset, count, definition, query_arguments, attrs, results, batch):
