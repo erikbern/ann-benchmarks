@@ -71,11 +71,15 @@ def main():
         '--timeout',
         type=int,
         help='Timeout (in seconds) for each individual algorithm run, or -1 if no timeout should be set',
-        default=-1)
+        default=5*3600)
     parser.add_argument(
         '--local',
         action='store_true',
         help='If set, then will run everything locally (inside the same process) rather than using Docker')
+    parser.add_argument(
+        '--batch',
+        action='store_true',
+        help='If set, algorithms get all queries at once')
     parser.add_argument(
         '--max-n-algorithms',
         type=int,
@@ -117,8 +121,8 @@ def main():
         not_yet_run = []
         for query_arguments in query_argument_groups:
             fn = get_result_filename(args.dataset,
-                    args.count, definition, query_arguments)
-            if not os.path.exists(fn):
+                    args.count, definition, query_arguments, args.batch)
+            if args.force or not os.path.exists(fn):
                 not_yet_run.append(query_arguments)
         if not_yet_run:
             if definition.query_argument_groups:
@@ -186,9 +190,9 @@ def main():
 
         try:
             if args.local:
-                run(definition, args.dataset, args.count, args.runs)
+                run(definition, args.dataset, args.count, args.runs, args.batch)
             else:
-                run_docker(definition, args.dataset, args.count, args.runs)
+                run_docker(definition, args.dataset, args.count, args.runs, args.timeout, args.batch)
         except KeyboardInterrupt:
             break
         except:

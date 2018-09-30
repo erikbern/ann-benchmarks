@@ -12,6 +12,11 @@ from itertools import product
 
 Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'docker_tag', 'arguments', 'query_argument_groups', 'disabled'])
 
+def get_algorithm_name(name, batch):
+    if batch:
+        return name + "-batch"
+    return name
+
 
 def instantiate_algorithm(definition):
     print('Trying to instantiate %s.%s(%s)' % (definition.module, definition.constructor, definition.arguments))
@@ -35,7 +40,6 @@ def algorithm_status(definition):
             return InstantiationStatus.NO_CONSTRUCTOR
     except ImportError:
         return InstantiationStatus.NO_MODULE
-
 
 def _generate_combinations(args):
     if isinstance(args, list):

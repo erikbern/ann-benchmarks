@@ -4,11 +4,12 @@ import faiss
 import numpy as np
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.base import BaseANN
+from ann_benchmarks.algorithms.faiss import Faiss
 
 
-class FaissHNSW(BaseANN):
+class FaissHNSW(Faiss):
     def __init__(self, metric, method_param):
-        self.metric = metric
+        self._metric = metric
         self.method_param = method_param
         self.name = 'faiss (%s)' % (self.method_param)
 
@@ -16,17 +17,17 @@ class FaissHNSW(BaseANN):
         self.index = faiss.IndexHNSWFlat(len(X[0]),self.method_param["M"])
         self.index.hnsw.efConstruction = self.method_param["efConstruction"]
         self.index.verbose = True
-        if(self.metric == 'angular'):
+
+        if self._metric == 'angular':
             X = X / np.linalg.norm(X, axis=1)[:, np.newaxis]
+        if X.dtype != np.float32:
+            X = X.astype(np.float32)
+
         self.index.add(X)
         faiss.omp_set_num_threads(1)
 
     def set_query_arguments(self, ef):
         self.index.hnsw.efSearch = ef
-
-    def query(self, v, n):
-        D, I = self.index.search(np.expand_dims(v,axis=0), n)
-        return I[0]
 
     def freeIndex(self):
         del self.p
