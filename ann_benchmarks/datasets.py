@@ -24,8 +24,14 @@ def get_dataset_fn(dataset):
 
 def get_dataset(which):
     hdf5_fn = get_dataset_fn(which)
-    url = 'http://ann-benchmarks.com/%s.hdf5' % which
-    download(url, hdf5_fn)
+    try:
+        url = 'http://ann-benchmarks.com/%s.hdf5' % which
+        download(url, hdf5_fn)
+    except:
+        print("Cannot download %s" % url)
+        if which in DATASETS:
+            print("Creating dataset locally")
+            DATASETS[which](hdf5_fn)
     hdf5_f = h5py.File(hdf5_fn)
     return hdf5_f
 
