@@ -485,7 +485,7 @@ bit:
         M-12:
           arg-groups:
             - {"M": 12, "post": 0, "efConstruction": 800}
-        query-args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
+          query-args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
     pynndescent:
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
