@@ -105,7 +105,7 @@ def main():
 
     dataset = get_dataset(args.dataset)
     dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
-    point_type = 'float' # TODO(erikbern): should look at the type of X_train
+    point_type = dataset.attrs.get('point_type', 'float')
     distance = dataset.attrs['distance']
     definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
 

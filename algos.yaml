@@ -457,7 +457,7 @@ bit:
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
-      base-args: ["@metric"]
+      base-args: ["euclidean"]
       run-groups:
         kgraph:
           args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
@@ -466,7 +466,7 @@ bit:
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
-      base-args: ["@metric", "hnsw"]
+      base-args: ["euclidean", "hnsw"]
       run-groups:
         M-48:
           arg-groups:
@@ -485,16 +485,38 @@ bit:
         M-12:
           arg-groups:
             - {"M": 12, "post": 0, "efConstruction": 800}
-        query-args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
+          query-args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
     pynndescent:
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
       constructor: PyNNDescent
-      base-args: ["@metric"]
+      base-args: ["euclidean"]
       run-groups:
         pynndescent:
           args: [[20, 40, 80, 160, 250], [4], [40]]
           query-args: [[1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]]
+    annoy:
+      docker-tag: ann-benchmarks-annoy
+      module: ann_benchmarks.algorithms.annoy
+      constructor: Annoy
+      base-args: ["@metric"]
+      run-groups:
+        annoy:
+          args: [[100, 200, 400]]
+          query-args: [[100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000,
+                      100000, 200000, 400000]]
+          # This run group produces 3 algorithm instances -- Annoy("angular",
+          # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
+          # which will be used to run 12 different queries.
+    faiss-ivf:
+      docker-tag: ann-benchmarks-faiss
+      module: ann_benchmarks.algorithms.faiss
+      constructor: FaissIVF
+      base-args: ["euclidean"]
+      run-groups:
+        base:
+          args: [[32,64,128,256,512,1024,2048,4096,8192]]
+          query-args: [[1, 5, 10, 50, 100, 200]]
 int:
   jaccard:
     bf:

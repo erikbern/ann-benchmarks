@@ -24,8 +24,14 @@ def get_dataset_fn(dataset):
 
 def get_dataset(which):
     hdf5_fn = get_dataset_fn(which)
-    url = 'http://ann-benchmarks.com/%s.hdf5' % which
-    download(url, hdf5_fn)
+    try:
+        url = 'http://ann-benchmarks.com/%s.hdf5' % which
+        download(url, hdf5_fn)
+    except:
+        print("Cannot download %s" % url)
+        if which in DATASETS:
+            print("Creating dataset locally")
+            DATASETS[which](hdf5_fn)
     hdf5_f = h5py.File(hdf5_fn)
     return hdf5_f
 
@@ -33,18 +39,19 @@ def get_dataset(which):
 # Everything below this line is related to creating datasets
 # You probably never need to do this at home, just rely on the prepared datasets at http://ann-benchmarks.com
 
-def write_output(train, test, fn, distance, count=100):
+def write_output(train, test, fn, distance, point_type='float', count=100):
     from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
     n = 0
     f = h5py.File(fn, 'w')
     f.attrs['distance'] = distance
+    f.attrs['point_type'] = point_type
     print('train size: %9d * %4d' % train.shape)
     print('test size:  %9d * %4d' % test.shape)
     f.create_dataset('train', (len(train), len(train[0])), dtype=train.dtype)[:] = train
     f.create_dataset('test', (len(test), len(test[0])), dtype=test.dtype)[:] = test
     neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
     distances = f.create_dataset('distances', (len(test), count), dtype='f')
-    bf = BruteForceBLAS(distance, precision=numpy.float32)
+    bf = BruteForceBLAS(distance, precision=train.dtype)
     bf.fit(train)
     queries = []
     for i, x in enumerate(test):
@@ -219,11 +226,25 @@ def word2bits(out_fn, path, fn):
         n_words, k = [int(z) for z in next(f).strip().split()]
         X = numpy.zeros((n_words, k), dtype=numpy.bool)
         for i in range(n_words):
-            X[i] = [float(z) > 0 for z in next(f).strip().split()[1:]]
+            X[i] = numpy.array([float(z) > 0 for z in next(f).strip().split()[1:]], dtype=numpy.bool)
 
-        X_train, X_test = train_test_split(X)
-        write_output(X_train, X_test, out_fn, 'euclidean')  # TODO: use hamming
+        X_train, X_test = train_test_split(X, test_size=1000)
+        write_output(X_train, X_test, out_fn, 'hamming', 'bit')
 
+def sift_hamming(out_fn, fn):
+    import tarfile
+    local_fn = fn + '.tar.gz'
+    url = 'http://sss.projects.itu.dk/ann-benchmarks/datasets/%s.tar.gz' % fn
+    download(url, local_fn)
+    print('parsing vectors in %s...' % local_fn)
+    with tarfile.open(local_fn, 'r:gz') as t:
+        f = t.extractfile(fn)
+        lines = f.readlines()
+        X = numpy.zeros((len(lines), 256), dtype=numpy.bool)
+        for i, line in enumerate(lines):
+            X[i] = numpy.array([int(x) > 0 for x in line.decode().strip()], dtype=numpy.bool)
+        X_train, X_test = train_test_split(X, test_size = 1000)
+        write_output(X_train, X_test, out_fn, 'hamming', 'bit')
 
 def lastfm(out_fn, n_dimensions, test_size=50000):
     # This tests out ANN methods for retrieval on simple matrix factorization based
@@ -281,4 +302,5 @@ DATASETS = {
     'nytimes-16-angular': lambda out_fn: nytimes(out_fn, 16),
     'word2bits-800-hamming': lambda out_fn: word2bits(out_fn, '400K', 'w2b_bitlevel1_size800_vocab400K'),
     'lastfm-64-dot': lambda out_fn: lastfm(out_fn, 64),
+    'sift-256-hamming': lambda out_fn: sift_hamming(out_fn, 'sift.hamming.256'),
 }
