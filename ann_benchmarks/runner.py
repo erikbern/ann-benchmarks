@@ -5,7 +5,7 @@ import argparse
 import datetime
 import docker
 import json
-import multiprocessing.pool
+import multiprocessing
 import numpy
 import os
 import psutil
@@ -20,12 +20,12 @@ def print(*args, **kwargs):
     sys.stdout.flush()
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
-from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm
+from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm, get_algorithm_name
 from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
-def run_individual_query(algo, X_train, X_test, distance, count, run_count, force_single, use_batch_query):
+def run_individual_query(algo, X_train, X_test, distance, count, run_count, batch):
     prepared_queries = False
     if hasattr(algo, "supports_prepared_queries"):
         prepared_queries = algo.supports_prepared_queries()
@@ -57,27 +57,18 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, forc
 
         def batch_query(X):
             start = time.time()
-            result = algo.batch_query(X, count)
+            algo.batch_query(X, count)
             total = (time.time() - start)
+            results = algo.get_batch_results()
             candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
                            for idx in single_results]
                           for v, single_results in zip(X, results)]
             return [(total / float(len(X)), v) for v in candidates]
 
-        if use_batch_query:
+        if batch:
             results = batch_query(X_test)
-        elif algo.use_threads() and not force_single:
-            pool = multiprocessing.pool.ThreadPool()
-            results = pool.map(single_query, X_test)
-            pool.close()
         else:
-            p = psutil.Process()
-            initial_affinity = p.cpu_affinity()
-            p.cpu_affinity([initial_affinity[len(initial_affinity) // 2]]) # one of the available virtual CPU cores
-
             results = [single_query(x) for x in X_test]
-
-            p.cpu_affinity(initial_affinity)
 
         total_time = sum(time for time, _ in results)
         total_candidates = sum(len(candidates) for _, candidates in results)
@@ -87,20 +78,19 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, forc
 
     verbose = hasattr(algo, "query_verbose")
     attrs = {
-        "batch_mode": use_batch_query,
+        "batch_mode": batch,
         "best_search_time": best_search_time,
         "candidates": avg_candidates,
         "expect_extra": verbose,
         "name": str(algo),
         "run_count": run_count,
-        "run_alone": force_single,
         "distance": distance,
         "count": int(count)
     }
     return (attrs, results)
 
 
-def run(definition, dataset, count, run_count=3, force_single=True, use_batch_query=False):
+def run(definition, dataset, count, run_count, batch):
     algo = instantiate_algorithm(definition)
     assert not definition.query_argument_groups \
             or hasattr(algo, "set_query_arguments"), """\
@@ -140,13 +130,13 @@ function""" % (definition.module, definition.constructor, definition.arguments)
             if query_arguments:
                 algo.set_query_arguments(*query_arguments)
             descriptor, results = run_individual_query(algo, X_train, X_test,
-                    distance, count, run_count, force_single, use_batch_query)
+                    distance, count, run_count, batch)
             descriptor["build_time"] = build_time
             descriptor["index_size"] = index_size
-            descriptor["algo"] = definition.algorithm
+            descriptor["algo"] = get_algorithm_name(definition.algorithm, batch)
             descriptor["dataset"] = dataset
-            store_results(dataset,
-                    count, definition, query_arguments, descriptor, results)
+            store_results(dataset, count, definition,
+                    query_arguments, descriptor, results, batch)
     finally:
         algo.done()
 
@@ -171,6 +161,13 @@ def run_from_cmdline():
         required=True,
         type=int)
     parser.add_argument(
+        '--runs',
+        required=True,
+        type=int)
+    parser.add_argument(
+        '--batch',
+        action='store_true')
+    parser.add_argument(
         'build')
     parser.add_argument(
         'queries',
@@ -186,17 +183,23 @@ def run_from_cmdline():
         module=args.module,
         constructor=args.constructor,
         arguments=algo_args,
-        query_argument_groups=query_args
+        query_argument_groups=query_args,
+        disabled=False
     )
-    run(definition, args.dataset, args.count)
+    run(definition, args.dataset, args.count, args.runs, args.batch)
 
 
-def run_docker(definition, dataset, count, runs, timeout=3*3600, mem_limit=None):
+def run_docker(definition, dataset, count, runs, timeout, batch, mem_limit=None):
+    import colors  # Think it doesn't work in Python 2
+
     cmd = ['--dataset', dataset,
            '--algorithm', definition.algorithm,
            '--module', definition.module,
            '--constructor', definition.constructor,
+           '--runs', str(runs),
            '--count', str(count)]
+    if batch:
+        cmd += ['--batch']
     cmd.append(json.dumps(definition.arguments))
     cmd += [json.dumps(qag) for qag in definition.query_argument_groups]
     print('Running command', cmd)
@@ -204,6 +207,12 @@ def run_docker(definition, dataset, count, runs, timeout=3*3600, mem_limit=None)
     if mem_limit is None:
         mem_limit = psutil.virtual_memory().available
     print('Memory limit:', mem_limit)
+    cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
+    if not batch:
+        # Limit to first cpu if not in batch mode
+        cpu_limit = "0"
+    print('Running on CPUs:', cpu_limit)
+
     container = client.containers.run(
         definition.docker_tag,
         cmd,
@@ -212,15 +221,19 @@ def run_docker(definition, dataset, count, runs, timeout=3*3600, mem_limit=None)
             os.path.abspath('data'): {'bind': '/home/app/data', 'mode': 'ro'},
             os.path.abspath('results'): {'bind': '/home/app/results', 'mode': 'rw'},
         },
+        cpuset_cpus=cpu_limit,
         mem_limit=mem_limit,
         detach=True)
 
     def stream_logs():
-        import colors
         for line in container.logs(stream=True):
-            print(colors.color(line.decode().rstrip(), fg='yellow'))
+            print(colors.color(line.decode().rstrip(), fg='blue'))
 
-    t = threading.Thread(target=stream_logs, daemon=True)
+    if sys.version_info >= (3, 0):
+        t = threading.Thread(target=stream_logs, daemon=True)
+    else:
+        t = threading.Thread(target=stream_logs)
+        t.daemon = True
     t.start()
     try:
         exit_code = container.wait(timeout=timeout)
@@ -229,6 +242,7 @@ def run_docker(definition, dataset, count, runs, timeout=3*3600, mem_limit=None)
         if exit_code == 0:
             return
         elif exit_code is not None:
+            print(colors.color(container.logs().decode(), fg='red'))
             raise Exception('Child process raised exception %d' % exit_code)
 
     finally:

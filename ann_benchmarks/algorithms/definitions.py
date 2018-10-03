@@ -2,9 +2,7 @@ from __future__ import absolute_import
 from os import sep as pathsep
 import collections
 import importlib
-import json
 import os
-import re
 import sys
 import traceback
 import yaml
@@ -12,7 +10,12 @@ from enum import Enum
 from itertools import product
 
 
-Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'docker_tag', 'arguments', 'query_argument_groups'])
+Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'docker_tag', 'arguments', 'query_argument_groups', 'disabled'])
+
+def get_algorithm_name(name, batch):
+    if batch:
+        return name + "-batch"
+    return name
 
 
 def instantiate_algorithm(definition):
@@ -21,10 +24,12 @@ def instantiate_algorithm(definition):
     constructor = getattr(module, definition.constructor)
     return constructor(*definition.arguments)
 
+
 class InstantiationStatus(Enum):
     AVAILABLE = 0
     NO_CONSTRUCTOR = 1
     NO_MODULE = 2
+
 
 def algorithm_status(definition):
     try:
@@ -35,15 +40,6 @@ def algorithm_status(definition):
             return InstantiationStatus.NO_CONSTRUCTOR
     except ImportError:
         return InstantiationStatus.NO_MODULE
-
-def get_result_filename(dataset, count, definition, query_arguments):
-    d = ['results',
-         dataset,
-         str(count),
-         definition.algorithm,
-         re.sub(r'\W+', '_', json.dumps(definition.arguments + query_arguments, sort_keys=True)).strip('_')]
-    return os.path.join(*d)
-
 
 def _generate_combinations(args):
     if isinstance(args, list):
@@ -97,6 +93,7 @@ def get_unique_algorithms(definition_file):
             for algorithm in definitions[point][metric]:
                 algos.add(algorithm)
     return list(sorted(algos))
+
 
 def get_definitions(definition_file, dimension, point_type="float", distance_metric="euclidean", count=10):
     definitions = _get_definitions(definition_file)
@@ -167,7 +164,8 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
                     module=algo['module'],
                     constructor=algo['constructor'],
                     arguments=aargs,
-                    query_argument_groups=query_args
+                    query_argument_groups=query_args,
+                    disabled=algo.get('disabled', False)
                 ))
 
     return definitions

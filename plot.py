@@ -5,15 +5,15 @@ import matplotlib.pyplot as plt
 import argparse
 
 from ann_benchmarks.datasets import get_dataset
-from ann_benchmarks.algorithms.definitions import get_definitions, get_unique_algorithms
+from ann_benchmarks.algorithms.definitions import get_definitions
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_linestyles, create_pointset
-from ann_benchmarks.results import store_results, load_results
+from ann_benchmarks.results import store_results, load_all_results, get_unique_algorithms, get_algorithm_name
 
 
-def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles):
+def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles, batch):
     xm, ym = (metrics[xn], metrics[yn])
-# Now generate each plot
+    # Now generate each plot
     handles = []
     labels = []
     plt.figure(figsize=(12, 9))
@@ -24,7 +24,7 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles):
         handles.append(handle)
         if raw:
             handle2, = plt.plot(axs, ays, '-', label=algo, color=faded, ms=5, mew=2, lw=2, linestyle=linestyle, marker=marker)
-        labels.append(algo)
+        labels.append(get_algorithm_name(algo, batch))
 
     if x_log:
         plt.gca().set_xscale('log')
@@ -43,6 +43,7 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles):
         plt.ylim(ym['lim'])
     plt.savefig(fn_out, bbox_inches='tight')
     plt.close()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -85,22 +86,24 @@ if __name__ == "__main__":
         '--raw',
         help='Show raw results (not just Pareto frontier) in faded colours',
         action='store_true')
+    parser.add_argument(
+        '--batch',
+        help='Plot runs in batch mode',
+        action='store_true')
     args = parser.parse_args()
 
     if not args.output:
-        args.output = 'results/%s.png' % args.dataset
+        args.output = 'results/%s.png' % get_algorithm_name(args.dataset, args.batch)
         print('writing output to %s' % args.output)
 
     dataset = get_dataset(args.dataset)
-    dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
-    point_type = 'float' # TODO(erikbern): should look at the type of X_train
-    distance = dataset.attrs['distance']
     count = int(args.count)
-    definitions = get_definitions(args.definitions, dimension, point_type, distance, count)
-    unique_algorithms = get_unique_algorithms(args.definitions)
-    linestyles = create_linestyles(unique_algorithms)
-    results = load_results(args.dataset, count, definitions)
+    unique_algorithms = get_unique_algorithms()
+    results = load_all_results(args.dataset, count, True, args.batch)
+    linestyles = create_linestyles(sorted(unique_algorithms))
     runs = compute_metrics(list(dataset["distances"]), results, args.x_axis, args.y_axis)
+    if not runs:
+        raise Exception('Nothing to plot')
 
     create_plot(runs, args.raw, args.x_log,
-            args.y_log, args.x_axis, args.y_axis, args.output, linestyles)
+            args.y_log, args.x_axis, args.y_axis, args.output, linestyles, args.batch)

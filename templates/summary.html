@@ -11,40 +11,50 @@
             by <em>(k = ...)</em>, the number of nearest neighbors an algorithm was supposed to return. The plot shown depicts <em>Recall</em> (the fraction
             of true nearest neighbors found, on average over all queries) against <em>Queries per second</em>.  Clicking on a plot reveils detailled interactive plots, including
             approximate recall, index size, and build time.</p>
-            <h2 id ="datasets">Results by Dataset</h2>
-            {% for distance_data in dataset_with_distances %}
-                <h3>Distance: {{ distance_data.name }} </h3>
-                {% for entry in distance_data.entries %}
-                <a href="./{{entry.name}}.html">
-                    <div class="row" id="{{entry.name}}">
-                        <div class = "col-md-4 bg-success">
-                            <h4>{{entry.desc}}</h4>
+            {% for type in ['non-batch', 'batch'] %}
+                {% if len(dataset_with_distances[type]) > 0 %}
+                    {% if type == 'batch' %}
+                        <h2>Benchmarks for Batched Queries</h2>
+                    {% else %}
+                        <h2>Benchmarks for Single Queries</h2>
+                    {% endif %}
+
+                    <h2 id ="datasets">Results by Dataset</h2>
+                    {% for distance_data in dataset_with_distances[type] %}
+                        <h3>Distance: {{ distance_data.name }} </h3>
+                        {% for entry in distance_data.entries %}
+                            <a href="./{{label_func(entry.name, type == 'batch')}}.html">
+                            <div class="row" id="{{entry.name}}">
+                                <div class = "col-md-4 bg-success">
+                                    <h4>{{entry.desc}}</h4>
+                            </div>
+                            <div class = "col-md-8">
+                                <img class = "img-responsive" src="{{label_func(entry.name, type == 'batch')}}.png" />
+                            </div>
+                        </div>
+                        </a>
+                        <hr />
+                        {% endfor %}
+                    {% endfor %}
+                    <h2 id="algorithms">Results by Algorithm</h2>
+                    <ul class="list-inline"><b>Algorithms:</b>
+                        {% for algo in algorithms[type].keys() %}
+                            <li><a href="#{{algo}}">{{algo}}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% for algo in algorithms[type].keys()%}
+                    <a href="./{{label_func(algo, type == 'batch')}}.html">
+                        <div class="row" id="{{algo}}">
+                            <div class = "col-md-4 bg-success">
+                                <h4>{{algo}}</h4>
+                        </div>
+                        <div class = "col-md-8">
+                            <img class = "img-responsive" src="{{label_func(algo, type == 'batch')}}.png" />
+                        </div>
                     </div>
-                    <div class = "col-md-8">
-                        <img class = "img-responsive" src="{{entry.name}}.png" />
-                    </div>
-                </div>
-                </a>
-                <hr />
-                {% endfor %}
-            {% endfor %}
-            <h2 id="algorithms">Results by Algorithm</h2>
-            <ul class="list-inline"><b>Algorithms:</b>
-                {% for algo in algorithms %}
-                <li><a href="#{{algo}}">{{algo}}</a></li>
-                {% endfor %}
-            </ul>
-            {% for algo in algorithms%}
-            <a href="./{{algo}}.html">
-                <div class="row" id="{{algo}}">
-                    <div class = "col-md-4 bg-success">
-                        <h4>{{algo}}</h4>
-                </div>
-                <div class = "col-md-8">
-                    <img class = "img-responsive" src="{{algo}}.png" />
-                </div>
-            </div>
-            </a>
-            <hr />
+                    </a>
+                    <hr />
+                    {% endfor %}
+                {% endif %}
             {% endfor %}
 {% endblock %}

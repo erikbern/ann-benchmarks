@@ -9,24 +9,29 @@ services:
 
 env:
   - LIBRARY=annoy
-  - LIBRARY=datasketch
   - LIBRARY=dolphinn
   - LIBRARY=faiss
   - LIBRARY=flann
+  - LIBRARY=hdidx
   - LIBRARY=kgraph
+  - LIBRARY=mrpt
   - LIBRARY=nearpy
+  - LIBRARY=ngt
   - LIBRARY=nmslib
+  - LIBRARY=hnswlib
   - LIBRARY=panns
+  - LIBRARY=pynndescent
   - LIBRARY=rpforest
   - LIBRARY=sklearn
-  - LIBRARY=pynndescent
 
 before_install:
   - pip install -r requirements.txt
   - python install.py
 
 script:
-  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-20-angular
+  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-20-angular --run-disabled
+  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-20-angular --run-disabled --batch
   - python plot.py --dataset random-xs-20-angular --output plot.png
+  - python plot.py --dataset random-xs-20-angular --output plot-batch.png --batch
   - python -m unittest test/test-metrics.py
   - python create_website.py --outputdir . --scatter --latex

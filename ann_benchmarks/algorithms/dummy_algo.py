@@ -12,6 +12,7 @@ class DummyAlgoMt(BaseANN):
     def query(self, v, n):
         return np.random.randint(self.len, size=n)
 
+
 class DummyAlgoSt(BaseANN):
     def __init__(self, metric):
         self.name = 'DummyAlgoSingleThread'
@@ -21,6 +22,3 @@ class DummyAlgoSt(BaseANN):
 
     def query(self, v, n):
         return np.random.randint(self.len, size=n)
-
-    def use_threads(self):
-        return False

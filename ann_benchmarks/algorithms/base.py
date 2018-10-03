@@ -2,17 +2,8 @@ from __future__ import absolute_import
 import psutil
 
 class BaseANN(object):
-    def use_threads(self):
-        return True
-
     def done(self):
         pass
-
-    def batch_query(self, X, n):
-        res = []
-        for q in X:
-            res.append(self.query(q, n))
-        return res
 
     def get_memory_usage(self):
         """Return the current memory usage of this algorithm instance (in kilobytes), or None if this information is not available."""
@@ -23,6 +14,14 @@ class BaseANN(object):
 
     def query(self, q, n):
         return [] # array of candidate indices
+
+    def batch_query(self, X, n):
+        self.res = []
+        for q in X:
+            self.res.append(self.query(q, n))
+
+    def get_batch_results(self):
+        return self.res
 
     def __str__(self):
         return self.name
