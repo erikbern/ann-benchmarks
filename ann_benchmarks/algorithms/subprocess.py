@@ -141,25 +141,27 @@ query neither succeeded nor failed"""
         self._result_count = 0
         return results
 
-    def use_threads(self):
-        return False
     def done(self):
         if self._program:
             self._program.poll()
             if not self._program.returncode:
                 self._program.terminate()
 
+class PreparedSubprocess(Subprocess):
+    def __init__(self, args, encoder, params, prepared = False):
+        super.__init__(args, encoder, params, True)
+
 def BitSubprocess(args, params):
-    return Subprocess(args, bit_unparse_entry, params, False)
+    return Subprocess(args, bit_unparse_entry, params)
 
 def BitSubprocessPrepared(args, params):
-    return Subprocess(args, bit_unparse_entry, params, True)
+    return PreparedSubprocess(args, bit_unparse_entry, params)
 
 def FloatSubprocess(args, params):
-    return Subprocess(args, float_unparse_entry, params, False)
+    return Subprocess(args, float_unparse_entry, params)
 
 def FloatSubprocessPrepared(args, params):
-    return Subprocess(args, float_unparse_entry, params, True)
+    return PreparedSubprocess(args, float_unparse_entry, params)
 
 def IntSubprocess(args, params):
-    return Subprocess(args, int_unparse_entry, params, False)
+    return Subprocess(args, int_unparse_entry, params)
