@@ -56,9 +56,15 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
             return (total, candidates)
 
         def batch_query(X):
-            start = time.time()
-            algo.batch_query(X, count)
-            total = (time.time() - start)
+            if prepared_queries:
+                algo.prepare_query(X, count)
+                start = time.time()
+                algo.run_prepared_query()
+                total = (time.time() - start)
+            else:
+                start = time.time()
+                algo.batch_query(X, count)
+                total = (time.time() - start)
             results = algo.get_batch_results()
             candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
                            for idx in single_results]
