@@ -1,6 +1,4 @@
-This document specifies a simple text-based protocol that can be used to benchmark algorithms that don't have a Python wrapper. Using this protocol necessarily means some overhead, but not much -- anecdotally, the author has found that a linear search implemented in Java using this protocol was benchmarked *from Python* as being faster than a linear search implemented directly *in* Python.
-
-A program that implements the algorithm side of this specification will be referred to in the rest of this document as a "front-end".
+This document specifies a simple text-based protocol that can be used to benchmark algorithms that don't have a Python wrapper. A program that implements the algorithm side of this specification will be referred to in the rest of this document as a "front-end".
 
 This protocol is line-oriented; both sides should configure their input and output streams to be line-buffered. Front-ends receive messages by reading lines from standard input and send messages by writing lines to standard output.
 
