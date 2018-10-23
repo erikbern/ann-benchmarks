@@ -26,9 +26,9 @@ from ann_benchmarks.results import store_results
 
 
 def run_individual_query(algo, X_train, X_test, distance, count, run_count, batch):
-    prepared_queries = False
-    if hasattr(algo, "supports_prepared_queries"):
-        prepared_queries = algo.supports_prepared_queries()
+    prepared_queries = \
+        (batch and hasattr(algo, "prepare_batch_query")) or \
+        ((not batch) and hasattr(algo, "prepare_query"))
 
     best_search_time = float('inf')
     for i in range(run_count):
@@ -57,9 +57,9 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
 
         def batch_query(X):
             if prepared_queries:
-                algo.prepare_query(X, count)
+                algo.prepare_batch_query(X, count)
                 start = time.time()
-                algo.run_prepared_query()
+                algo.run_batch_query()
                 total = (time.time() - start)
             else:
                 start = time.time()
