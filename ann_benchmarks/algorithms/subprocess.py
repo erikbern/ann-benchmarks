@@ -153,6 +153,48 @@ query neither succeeded nor failed"""
         else:
             return []
 
+class BatchSubprocess(Subprocess):
+    def __init__(self, args, encoder, params):
+        super(BatchSubprocess, self).__init__(args, encoder, params)
+        self._qp_count = None
+
+    def _configuration_hook(self):
+        self._write("frontend batch-queries 1")
+        assert self._line()[0] == "ok", """\
+enabling batch queries mode failed"""
+
+    def query(self, v, n):
+        self.prepare_batch_query([v], n)
+        self.run_batch_query()
+        return self.get_batch_results()[0]
+
+    def prepare_batch_query(self, X, n):
+        d = " ".join(map(lambda p: Subprocess._quote(self._encoder(p)), X))
+        self._qp_count = len(X)
+        self._write("%s %d" % (d, n))
+        assert self._line()[0] == "ok", """\
+preparing the batch query '%s' failed""" % d
+
+    def run_batch_query(self):
+        self._write("query")
+        status = self._line()
+        assert status[0] == "ok", """\
+batch query failed completely"""
+
+    def get_batch_results(self):
+        results = []
+        i = 0
+        while i < self._qp_count:
+#           print("%d/%d" % (i, self._qp_count))
+            status = self._line()
+            if status[0] == "ok":
+                rc = int(status[1])
+                results.append(self._collect_query_response_lines(rc))
+            else:
+                results.append([])
+            i += 1
+        return results
+
 def BitSubprocess(args, params):
     return Subprocess(args, bit_unparse_entry, params)
 
@@ -164,6 +206,9 @@ def FloatSubprocess(args, params):
 
 def FloatSubprocessPrepared(args, params):
     return PreparedSubprocess(args, float_unparse_entry, params)
+
+def FloatSubprocessBatch(args, params):
+    return BatchSubprocess(args, float_unparse_entry, params)
 
 def IntSubprocess(args, params):
     return Subprocess(args, int_unparse_entry, params)
