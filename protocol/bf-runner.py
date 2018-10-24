@@ -27,6 +27,7 @@ if __name__ == '__main__':
   distance = None
   query_mode = QueryMode.NORMAL
   fast = False
+  query_parameters = False
   # Configuration mode
   for line in next_line():
     if not line:
@@ -57,6 +58,9 @@ if __name__ == '__main__':
         print("epbprtv0 ok")
       elif var == "batch-queries":
         query_mode = QueryMode.BATCH if val == "1" else QueryMode.NORMAL
+        print("epbprtv0 ok")
+      elif var == "query-parameters":
+        query_parameters = (val == "1")
         print("epbprtv0 ok")
       else:
         print("epbprtv0 fail")
@@ -95,11 +99,24 @@ if __name__ == '__main__':
   obj.fit(points)
   print("epbprtv0 ok %d" % len(points))
 
+  def _query_parameters(line):
+    if hasattr(obj, "set_query_arguments"):
+      try:
+        obj.set_query_arguments(*line[1:-1])
+        print("epbprtv0 ok")
+      except TypeError:
+        print("epbprtv0 fail")
+    else:
+      print("epbprtv0 fail")
+
   if query_mode == QueryMode.NORMAL:
     # Query mode
     for line in next_line():
       if not line:
         break
+      elif query_parameters and line[0] == "query-params" \
+          and line[-1] == "set":
+        _query_parameters(line)
       elif len(line) == 2:
         try:
           query_point, k = line[0], int(line[1])
@@ -122,6 +139,9 @@ if __name__ == '__main__':
     for line in next_line():
       if not line:
         break
+      elif query_parameters and line[0] == "query-params" \
+          and line[-1] == "set":
+        _query_parameters(line)
       elif line == ["query"]:
         if parsed and k:
           results = obj.query(parsed, k)
@@ -148,6 +168,9 @@ if __name__ == '__main__':
     for line in next_line():
       if not line:
         break
+      elif query_parameters and line[0] == "query-params" \
+          and line[-1] == "set":
+        _query_parameters(line)
       elif line == ["query"]:
         if parsed and k:
           results = obj.batch_query(parsed, k)
