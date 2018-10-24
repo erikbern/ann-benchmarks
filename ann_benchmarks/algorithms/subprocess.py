@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from os.path import basename
 import shlex
+from types import MethodType
 import psutil
 import subprocess
 from ann_benchmarks.data import \
@@ -212,3 +213,20 @@ def FloatSubprocessBatch(args, params):
 
 def IntSubprocess(args, params):
     return Subprocess(args, int_unparse_entry, params)
+
+def QueryParamWrapper(constructor, args, params):
+    r = constructor(args, params)
+    def _do(self, original = r._configuration_hook):
+        original()
+        self._write("frontend query-parameters 1")
+        assert self._line()[0] == "ok", """\
+enabling query parameter support failed"""
+    r._configuration_hook = MethodType(_do, r)
+    def _sqa(self, *args):
+        self._write("query-params %s set" %
+            (" ".join(map(Subprocess._quote, args))))
+        assert self._line()[0] == "ok", """\
+reconfiguring query parameters failed"""
+        print(args)
+    r.set_query_arguments = MethodType(_sqa, r)
+    return r
