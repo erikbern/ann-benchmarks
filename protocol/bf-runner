@@ -7,4 +7,4 @@ else
 	PYTHON=python3
 fi
 export PYTHONPATH="$where/..:$PYTHONPATH"
-$PYTHON "$where/bf-runner.py"
+exec $PYTHON "$where/bf-runner.py"
