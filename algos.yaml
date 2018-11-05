@@ -453,6 +453,22 @@ float:
           query-args: [[1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]]
 bit:
   hamming:
+    mih:
+      docker-tag: ann-benchmarks-mih
+      module: ann_benchmarks.algorithms.subprocess
+      constructor: BitSubprocessPrepared
+      base-args: [["mih/bin/mihwrapper"]]
+      run-groups:
+        base:
+          # Note that MIH assumes that 5 <= dimension / chunks <= 37 and segfaults otherwise.
+          # This parameter space is explored below using the `chunk-factor`.
+          # A factor of 0 means that dimension / chunks = 5 which proceeds linearly to
+          # dimension / chunks = 37 for a factor of 1.
+          # The r parameter denotes a reordering with n / r steps. If r is 0, no reordering
+          # takes places. Otherwise, n / r points from the dataset are used for a
+          # re-ording process. MIH requires either r = 0 or r >= 2.
+          args: { "d" : "@dimension", "r" : [0, 2, 3],
+            "chunk-factor" : [0, 0.5, 0.8] }
     kgraph:
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
