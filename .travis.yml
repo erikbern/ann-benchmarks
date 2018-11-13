@@ -23,6 +23,7 @@ env:
   - LIBRARY=pynndescent
   - LIBRARY=rpforest
   - LIBRARY=sklearn
+  - LIBRARY=mih
 
 before_install:
   - pip install -r requirements.txt
@@ -35,6 +36,3 @@ script:
   - python plot.py --dataset random-xs-20-angular --output plot-batch.png --batch
   - python -m unittest test/test-metrics.py
   - python create_website.py --outputdir . --scatter --latex
-  - python run.py --definitions algosP.yaml --dataset random-xs-20-angular --local --runs 20
-  - python run.py --definitions algosP.yaml --dataset random-xs-20-angular --local --runs 20 --batch
-  
