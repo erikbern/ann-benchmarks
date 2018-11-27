@@ -284,10 +284,10 @@ float:
       constructor: MRPT
       base-args: ["@metric"]
       run-groups:
-        # See https://github.com/ejaasaari/mrpt-comparison/blob/master/parameters/gist.sh
         mrpt:
-          args: [[5, 25, 100], [1, 2, 4, 8]]
-          query-args: [[1, 2, 4, 10, 20, 40, 100]]
+          args: ["@count"]
+          query-args: [[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9,
+                        0.925, 0.95, 0.97, 0.98, 0.99, 0.995]]
   euclidean:
     kgraph:
       docker-tag: ann-benchmarks-kgraph
