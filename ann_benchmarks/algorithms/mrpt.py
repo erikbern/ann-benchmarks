@@ -19,6 +19,7 @@ class MRPT(BaseANN):
     def set_query_arguments(self, target_recall):
         self._target_recall = target_recall
         self._index = self._index_autotuned.subset(target_recall)
+        self._par = self._index.parameters()
 
     def query(self, v, n):
         if self._metric == 'angular':
@@ -27,4 +28,5 @@ class MRPT(BaseANN):
         return self._index.ann(v)
 
     def __str__(self):
-        return 'MRPT(target recall = %.3f)' % (self._target_recall)
+        return 'MRPT(target recall=%.3f, trees=%d, depth=%d, vote threshold=%d, estimated recall=%.3f)' % (self._target_recall,
+         self._par['n_trees'], self._par['depth'], self._par['votes'], self._par['estimated_recall'])
