@@ -23,7 +23,7 @@ env:
   - LIBRARY=pynndescent DATASET=random-xs-20-angular
   - LIBRARY=rpforest DATASET=random-xs-20-angular
   - LIBRARY=sklearn DATASET=random-xs-20-angular
-  - LIBRARY=mih DATASET=random-xs-20-hamming
+  - LIBRARY=mih DATASET=random-xs-16-hamming
 
 before_install:
   - pip install -r requirements.txt
