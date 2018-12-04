@@ -197,6 +197,7 @@ def transform_bag_of_words(filename, n_dimensions, out_fn):
         B = TfidfTransformer().fit_transform(A)
         print("reducing dimensionality...")
         C = random_projection.GaussianRandomProjection(n_components = n_dimensions).fit_transform(B)
+        C = numpy.unique(C, axis = 0) # remove duplicates
         X_train, X_test = train_test_split(C)
         write_output(numpy.array(X_train), numpy.array(X_test), out_fn, 'angular')
 
