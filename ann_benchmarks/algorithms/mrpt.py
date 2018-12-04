@@ -10,6 +10,8 @@ class MRPT(BaseANN):
         self._k = count
 
     def fit(self, X):
+        if X.dtype != numpy.float32:
+            X = X.astype(numpy.float32)
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
 
@@ -22,10 +24,12 @@ class MRPT(BaseANN):
         self._par = self._index.parameters()
 
     def query(self, v, n):
+        if v.dtype != numpy.float32:
+            v = v.astype(numpy.float32)
         if self._metric == 'angular':
-            v /= numpy.linalg.norm(v)
-
+            v = sklearn.preprocessing.normalize(v.reshape(1,-1), axis=1, norm='l2').flatten()
         return self._index.ann(v)
+
 
     def __str__(self):
         return 'MRPT(target recall=%.3f, trees=%d, depth=%d, vote threshold=%d, estimated recall=%.3f)' % (self._target_recall,
