@@ -468,7 +468,7 @@ bit:
           # takes places. Otherwise, n / r points from the dataset are used for a
           # re-ording process. MIH requires either r = 0 or r >= 2.
           args: { "d" : "@dimension", "r" : [0, 2, 3],
-            "chunk-factor" : [0, 0.5, 0.8] }
+            "chunk-factor" : [0.2, 0.5, 0.8] }
     kgraph:
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph

@@ -8,30 +8,30 @@ services:
   - docker
 
 env:
-  - LIBRARY=annoy
-  - LIBRARY=dolphinn
-  - LIBRARY=faiss
-  - LIBRARY=flann
-  - LIBRARY=hdidx
-  - LIBRARY=kgraph
-  - LIBRARY=mrpt
-  - LIBRARY=nearpy
-  - LIBRARY=ngt
-  - LIBRARY=nmslib
-  - LIBRARY=hnswlib
-  - LIBRARY=panns
-  - LIBRARY=pynndescent
-  - LIBRARY=rpforest
-  - LIBRARY=sklearn
-  - LIBRARY=mih
+  - LIBRARY=annoy DATASET=random-xs-20-angular
+  - LIBRARY=dolphinn DATASET=random-xs-20-angular
+  - LIBRARY=faiss  DATASET=random-xs-20-angular
+  - LIBRARY=flann DATASET=random-xs-20-angular
+  - LIBRARY=hdidx DATASET=random-xs-20-angular
+  - LIBRARY=kgraph DATASET=random-xs-20-angular
+  - LIBRARY=mrpt DATASET=random-xs-20-angular
+  - LIBRARY=nearpy DATASET=random-xs-20-angular
+  - LIBRARY=ngt DATASET=random-xs-20-angular
+  - LIBRARY=nmslib DATASET=random-xs-20-angular
+  - LIBRARY=hnswlib DATASET=random-xs-20-angular
+  - LIBRARY=panns DATASET=random-xs-20-angular
+  - LIBRARY=pynndescent DATASET=random-xs-20-angular
+  - LIBRARY=rpforest DATASET=random-xs-20-angular
+  - LIBRARY=sklearn DATASET=random-xs-20-angular
+  - LIBRARY=mih DATASET=random-xs-16-hamming
 
 before_install:
   - pip install -r requirements.txt
   - python install.py
 
 script:
-  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-20-angular --run-disabled
-  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset random-xs-20-angular --run-disabled --batch
+  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled
+  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --batch
   - python plot.py --dataset random-xs-20-angular --output plot.png
   - python plot.py --dataset random-xs-20-angular --output plot-batch.png --batch
   - python -m unittest test/test-metrics.py
