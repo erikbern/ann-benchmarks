@@ -32,7 +32,7 @@ before_install:
 script:
   - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled
   - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --batch
-  - python plot.py --dataset random-xs-20-angular --output plot.png
-  - python plot.py --dataset random-xs-20-angular --output plot-batch.png --batch
+  - python plot.py --dataset $DATASET --output plot.png
+  - python plot.py --dataset $DATASET --output plot-batch.png --batch
   - python -m unittest test/test-metrics.py
   - python create_website.py --outputdir . --scatter --latex
