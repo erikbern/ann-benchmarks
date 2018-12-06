@@ -214,6 +214,17 @@ def random(out_fn, n_dims, n_samples, centers, distance):
     X_train, X_test = train_test_split(X, test_size=0.1)
     write_output(X_train, X_test, out_fn, distance)
 
+def random_bitstring(out_fn, n_dims, n_samples, n_queries):
+    import sklearn.datasets
+
+    Y, _ = sklearn.datasets.make_blobs(n_samples=n_samples, n_features=n_dims, centers=n_queries, random_state=1)
+    X = numpy.zeros((n_samples, n_dims), dtype=numpy.bool)
+    for i, vec in enumerate(Y):
+        X[i] = numpy.array([v > 0 for v in vec], dtype=numpy.bool)
+
+    X_train, X_test = train_test_split(X, test_size=n_queries)
+    write_output(X_train, X_test, out_fn, 'hamming', 'bit')
+
 
 def word2bits(out_fn, path, fn):
     import tarfile
@@ -297,6 +308,9 @@ DATASETS = {
     'random-s-100-euclidean': lambda out_fn: random(out_fn, 100, 100000, 1000, 'euclidean'),
     'random-xs-20-angular': lambda out_fn: random(out_fn, 20, 10000, 100, 'angular'),
     'random-s-100-angular': lambda out_fn: random(out_fn, 100, 100000, 1000, 'angular'),
+    'random-xs-16-hamming': lambda out_fn: random_bitstring(out_fn, 16, 10000, 100),
+    'random-s-128-hamming': lambda out_fn: random_bitstring(out_fn, 128, 50000, 1000),
+    'random-l-256-hamming': lambda out_fn: random_bitstring(out_fn, 256, 100000, 1000),
     'sift-128-euclidean': sift,
     'nytimes-256-angular': lambda out_fn: nytimes(out_fn, 256),
     'nytimes-16-angular': lambda out_fn: nytimes(out_fn, 16),

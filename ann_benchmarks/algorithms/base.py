@@ -5,8 +5,8 @@ class BaseANN(object):
     def done(self):
         pass
 
-    def get_index_size(self, process):
-        """Returns the size of the index in kB or -1 if not implemented."""
+    def get_memory_usage(self):
+        """Return the current memory usage of this algorithm instance (in kilobytes), or None if this information is not available."""
         return psutil.Process().memory_info().rss / 1024  # return in kB for backwards compatibility
 
     def fit(self, X):

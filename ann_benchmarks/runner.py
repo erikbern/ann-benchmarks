@@ -13,6 +13,7 @@ import requests
 import sys
 import threading
 import time
+import psutil
 
 def print(*args, **kwargs):
     __true_print(*args, **kwargs)
@@ -25,15 +26,26 @@ from ann_benchmarks.results import store_results
 
 
 def run_individual_query(algo, X_train, X_test, distance, count, run_count, batch):
+    prepared_queries = \
+        (batch and hasattr(algo, "prepare_batch_query")) or \
+        ((not batch) and hasattr(algo, "prepare_query"))
+
     best_search_time = float('inf')
     for i in range(run_count):
         print('Run %d/%d...' % (i+1, run_count))
         n_items_processed = [0]  # a bit dumb but can't be a scalar since of Python's scoping rules
 
         def single_query(v):
-            start = time.time()
-            candidates = algo.query(v, count)
-            total = (time.time() - start)
+            if prepared_queries:
+                algo.prepare_query(v, count)
+                start = time.time()
+                algo.run_prepared_query()
+                total = (time.time() - start)
+                candidates = algo.get_prepared_query_results()
+            else:
+                start = time.time()
+                candidates = algo.query(v, count)
+                total = (time.time() - start)
             candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
                           for idx in candidates]
             n_items_processed[0] += 1
@@ -44,9 +56,15 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
             return (total, candidates)
 
         def batch_query(X):
-            start = time.time()
-            algo.batch_query(X, count)
-            total = (time.time() - start)
+            if prepared_queries:
+                algo.prepare_batch_query(X, count)
+                start = time.time()
+                algo.run_batch_query()
+                total = (time.time() - start)
+            else:
+                start = time.time()
+                algo.batch_query(X, count)
+                total = (time.time() - start)
             results = algo.get_batch_results()
             candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
                            for idx in single_results]
@@ -94,11 +112,15 @@ function""" % (definition.module, definition.constructor, definition.arguments)
     print('got %d queries' % len(X_test))
 
     try:
+        prepared_queries = False
+        if hasattr(algo, "supports_prepared_queries"):
+            prepared_queries = algo.supports_prepared_queries()
+
         t0 = time.time()
-        index_size_before = algo.get_index_size("self")
+        memory_usage_before = algo.get_memory_usage()
         algo.fit(X_train)
         build_time = time.time() - t0
-        index_size = algo.get_index_size("self") - index_size_before
+        index_size = algo.get_memory_usage() - memory_usage_before
         print('Built index in', build_time)
         print('Index size: ', index_size)
 
