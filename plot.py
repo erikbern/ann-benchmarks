@@ -2,6 +2,7 @@ import os
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 import argparse
 
 from ann_benchmarks.datasets import get_dataset
@@ -90,6 +91,10 @@ if __name__ == "__main__":
         '--batch',
         help='Plot runs in batch mode',
         action='store_true')
+    parser.add_argument(
+        '--recompute',
+        help='Clears the cache and recomputes the metrics',
+        action='store_true')
     args = parser.parse_args()
 
     if not args.output:
@@ -101,7 +106,8 @@ if __name__ == "__main__":
     unique_algorithms = get_unique_algorithms()
     results = load_all_results(args.dataset, count, True, args.batch)
     linestyles = create_linestyles(sorted(unique_algorithms))
-    runs = compute_metrics(list(dataset["distances"]), results, args.x_axis, args.y_axis)
+    runs = compute_metrics(np.array(dataset["distances"]),
+            results, args.x_axis, args.y_axis, args.recompute)
     if not runs:
         raise Exception('Nothing to plot')
 
