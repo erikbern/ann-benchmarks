@@ -103,6 +103,11 @@ all_metrics = {
         "function": lambda true_distances, run_distances, metrics, run_attrs: queries_per_second(true_distances, run_attrs),
         "worst": float("-inf")
     },
+    "distcomps" : {
+        "description": "Distance computations",
+        "function": lambda true_distances, run_distances,  metrics, run_attrs: dist_computations(true_distances, run_attrs),
+        "worst": float("inf")
+    },
     "build": {
         "description": "Build time (s)",
         "function": lambda true_distances, run_distances, metrics, run_attrs: build_time(true_distances, run_attrs),
