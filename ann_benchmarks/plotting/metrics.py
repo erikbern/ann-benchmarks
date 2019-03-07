@@ -13,14 +13,11 @@ def get_recall_values(dataset_distances, run_distances, count, threshold, epsilo
     for i in range(len(run_distances)):
         t = threshold(dataset_distances[i], count, epsilon)
         actual = 0
-        for j in range(min(count, len(run_distances[i]))):
-            if run_distances[i][j] <= t:
+        for d in run_distances[i][:count]:
+            if d <= t:
                 actual += 1
-            else:
-                break
         recalls[i] = actual
     return np.mean(recalls) / float(count), np.std(recalls) / float(count), recalls
-
 
 def knn(dataset_distances, run_distances, count, metrics, epsilon=1e-3):
     if 'knn' not in metrics:
