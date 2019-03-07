@@ -95,6 +95,10 @@ parser.add_argument(
     '--scatter',
     help='create scatterplot for data',
     action = 'store_true')
+parser.add_argument(
+    '--recompute',
+    help='Clears the cache and recomputes the metrics',
+    action='store_true')
 args = parser.parse_args()
 
 def get_lines(all_data, xn, yn, render_all_points):
@@ -189,7 +193,7 @@ def load_all_results():
             cached_true_dist = list(dataset["distances"])
             old_sdn = sdn
         algo = properties["algo"]
-        ms = compute_all_metrics(cached_true_dist, f, properties)
+        ms = compute_all_metrics(cached_true_dist, f, properties, args.recompute)
         algo_ds = get_dataset_label(sdn)
         idx = "non-batch"
         if properties["batch_mode"]:

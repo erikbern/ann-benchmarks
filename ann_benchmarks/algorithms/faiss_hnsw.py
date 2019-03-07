@@ -27,7 +27,11 @@ class FaissHNSW(Faiss):
         faiss.omp_set_num_threads(1)
 
     def set_query_arguments(self, ef):
+        faiss.cvar.hnsw_stats.reset()
         self.index.hnsw.efSearch = ef
+
+    def get_additional(self):
+        return {"dist_comps" : faiss.cvar.hnsw_stats.ndis}
 
     def freeIndex(self):
         del self.p

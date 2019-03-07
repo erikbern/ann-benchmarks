@@ -48,7 +48,7 @@ def load_all_results(dataset=None, count=None, split_batched=False,  batch_mode=
             try:
                 if split_batched and batch_mode != is_batch(root):
                     continue
-                f = h5py.File(os.path.join(root, fn))
+                f = h5py.File(os.path.join(root, fn), 'r+')
                 properties = dict(f.attrs)
                 # TODO Fix this properly. Sometimes the hdf5 file returns bytes
                 # This converts these bytes to strings before we work with them

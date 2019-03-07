@@ -23,5 +23,8 @@ class BaseANN(object):
     def get_batch_results(self):
         return self.res
 
+    def get_additional(self):
+        return {}
+
     def __str__(self):
         return self.name
