@@ -11,7 +11,7 @@ env:
   - LIBRARY=annoy DATASET=random-xs-20-angular
   - LIBRARY=dolphinn DATASET=random-xs-20-angular
   - LIBRARY=faiss  DATASET=random-xs-20-angular
-  - LIBRARY=flann DATASET=random-xs-20-angular
+#  - LIBRARY=flann DATASET=random-xs-20-angular  DISABLED TEMPORARILY until maintainer fixes
   - LIBRARY=hdidx DATASET=random-xs-20-angular
   - LIBRARY=kgraph DATASET=random-xs-20-angular
   - LIBRARY=mrpt DATASET=random-xs-20-angular
