@@ -1,0 +1,13 @@
+FROM ann-benchmarks
+
+RUN apt-get -y update
+RUN apt-get install -y build-essential scons git openmpi-bin openmpi-common openssh-client openssh-server libopenmpi-dev
+RUN git clone https://github.com/schulzchristian/KaHIP
+RUN cd KaHIP && ./compile.sh && cd ..
+
+RUN git clone https://gitlab.com/Arend/nann.git --branch package
+WORKDIR nann
+RUN pip3 install -r requirements.txt
+
+RUN python3 setup.py install
+RUN python3 -c 'import nann'
