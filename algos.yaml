@@ -170,6 +170,14 @@ float:
       run-groups:
         shidx:
           args: [[4, 8, 16, 32, 64, 128, 256]]
+    nann:
+      docker-tag: ann-benchmarks-nann
+      module: ann_benchmarks.algorithms.nann
+      constructor: Nann
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
     nearpy:
       disabled: true
       docker-tag: ann-benchmarks-nearpy
