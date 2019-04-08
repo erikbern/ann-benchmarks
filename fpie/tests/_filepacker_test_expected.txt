@@ -1,0 +1,5 @@
+.
+./file with spaces
+./includedir
+./includedir/.letsinclude
+./includefile

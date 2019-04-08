@@ -1,0 +1,7 @@
+ann-benchmarks/*
+nann/*
+
+!ann-benchmarks/data
+!ann-benchmarks/data/*
+!nann/datasets
+!nann/datasets/*

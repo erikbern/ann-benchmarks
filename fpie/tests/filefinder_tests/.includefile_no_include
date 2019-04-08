@@ -1,0 +1,7 @@
+# This is a comment, it needs to be on it's own line.
+#onlyincludedincomments
+!**/*.exclude
+!excludedir
+!**/excludefolder
+!**/excludefolder/*
+!includedir/exclude this file

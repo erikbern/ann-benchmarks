@@ -1,0 +1,9 @@
+./includedir/alsoincludethisfile
+./includedir/excludefolder
+./includedir/excludefolder/excludefile
+./includedir/exclude this file
+./includedir/innerincludedir
+./includedir/innerincludedir/innerincludefile
+./includedir/.letsinclude
+./includedir/notthis.exclude
+./includefile
