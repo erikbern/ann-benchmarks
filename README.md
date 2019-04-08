@@ -14,7 +14,7 @@ Evaluated
 * [FLANN](http://www.cs.ubc.ca/research/flann/)
 * [scikit-learn](http://scikit-learn.org/stable/modules/neighbors.html): LSHForest, KDTree, BallTree
 * [PANNS](https://github.com/ryanrhymes/panns)
-* [NearPy](http://nearpy.io)
+* [NearPy](http://pixelogik.github.io/NearPy/)
 * [KGraph](https://github.com/aaalgo/kgraph)
 * [NMSLIB (Non-Metric Space Library)](https://github.com/nmslib/nmslib): SWGraph, HNSW, BallTree, MPLSH
 * [hnswlib (a part of nmslib project)](https://github.com/nmslib/hnsw)
