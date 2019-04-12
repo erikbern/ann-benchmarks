@@ -11,8 +11,9 @@ def get_or_create_metrics(run):
 
 def create_pointset(data, xn, yn):
     xm, ym = (metrics[xn], metrics[yn])
-    rev = ym["worst"] < 0
-    data.sort(key=lambda t: t[-1], reverse=rev) # sort by y coordinate
+    rev_y = -1 if ym["worst"] < 0 else 1
+    rev_x = -1 if xm["worst"] < 0 else 1
+    data.sort(key=lambda t: (rev_y * t[-1], rev_x * t[-2]))
 
     axs, ays, als = [], [], []
     # Generate Pareto frontier
