@@ -24,6 +24,7 @@ def positive_int(s):
         raise argparse.ArgumentTypeError("%r is not a positive integer" % s)
     return i
 
+
 def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -104,10 +105,11 @@ def main():
         shutil.rmtree(INDEX_DIR)
 
     dataset = get_dataset(args.dataset)
-    dimension = len(dataset['train'][0]) # TODO(erikbern): ugly
+    dimension = len(dataset['train'][0])  # TODO(erikbern): ugly
     point_type = dataset.attrs.get('point_type', 'float')
     distance = dataset.attrs['distance']
-    definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
+    definitions = get_definitions(
+        args.definitions, dimension, point_type, distance, args.count)
 
     # Filter out, from the loaded definitions, all those query argument groups
     # that correspond to experiments that have already been run. (This might
@@ -121,13 +123,13 @@ def main():
         not_yet_run = []
         for query_arguments in query_argument_groups:
             fn = get_result_filename(args.dataset,
-                    args.count, definition, query_arguments, args.batch)
+                                     args.count, definition, query_arguments, args.batch)
             if args.force or not os.path.exists(fn):
                 not_yet_run.append(query_arguments)
         if not_yet_run:
             if definition.query_argument_groups:
                 definition = definition._replace(
-                        query_argument_groups = not_yet_run)
+                    query_argument_groups=not_yet_run)
             filtered_definitions.append(definition)
     definitions = filtered_definitions
 
@@ -148,12 +150,15 @@ def main():
 
         if args.docker_tag:
             print('running only', args.docker_tag)
-            definitions = [d for d in definitions if d.docker_tag == args.docker_tag]
+            definitions = [
+                d for d in definitions if d.docker_tag == args.docker_tag]
 
         if set(d.docker_tag for d in definitions).difference(docker_tags):
             print('not all docker images available, only:', set(docker_tags))
-            print('missing docker images:', set(d.docker_tag for d in definitions).difference(docker_tags))
-            definitions = [d for d in definitions if d.docker_tag in docker_tags]
+            print('missing docker images:', set(
+                d.docker_tag for d in definitions).difference(docker_tags))
+            definitions = [
+                d for d in definitions if d.docker_tag in docker_tags]
     else:
         def _test(df):
             status = algorithm_status(df)
@@ -174,7 +179,8 @@ def main():
 
     if not args.run_disabled:
         if len([d for d in definitions if d.disabled]):
-            print('Not running disabled algorithms:', [d for d in definitions if d.disabled])
+            print('Not running disabled algorithms:', [
+                  d for d in definitions if d.disabled])
         definitions = [d for d in definitions if not d.disabled]
 
     if args.max_n_algorithms >= 0:
@@ -192,7 +198,8 @@ def main():
             if args.local:
                 run(definition, args.dataset, args.count, args.runs, args.batch)
             else:
-                run_docker(definition, args.dataset, args.count, args.runs, args.timeout, args.batch)
+                run_docker(definition, args.dataset, args.count,
+                           args.runs, args.timeout, args.batch)
         except KeyboardInterrupt:
             break
         except:

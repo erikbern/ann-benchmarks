@@ -2,6 +2,7 @@ from __future__ import absolute_import
 import annoy
 from ann_benchmarks.algorithms.base import BaseANN
 
+
 class Annoy(BaseANN):
     def __init__(self, metric, n_trees):
         self._n_trees = n_trees

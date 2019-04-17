@@ -6,7 +6,7 @@ import sys
 try:
     from urllib import urlretrieve
 except ImportError:
-    from urllib.request import urlretrieve # Python 3
+    from urllib.request import urlretrieve  # Python 3
 
 
 def download(src, dst):
@@ -47,8 +47,10 @@ def write_output(train, test, fn, distance, point_type='float', count=100):
     f.attrs['point_type'] = point_type
     print('train size: %9d * %4d' % train.shape)
     print('test size:  %9d * %4d' % test.shape)
-    f.create_dataset('train', (len(train), len(train[0])), dtype=train.dtype)[:] = train
-    f.create_dataset('test', (len(test), len(test[0])), dtype=test.dtype)[:] = test
+    f.create_dataset('train', (len(train), len(
+        train[0])), dtype=train.dtype)[:] = train
+    f.create_dataset('test', (len(test), len(
+        test[0])), dtype=test.dtype)[:] = test
     neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
     distances = f.create_dataset('distances', (len(test), count), dtype='f')
     bf = BruteForceBLAS(distance, precision=train.dtype)
@@ -84,7 +86,8 @@ def glove(out_fn, d):
             v = [float(x) for x in line.strip().split()[1:]]
             X.append(numpy.array(v))
         X_train, X_test = train_test_split(X)
-        write_output(numpy.array(X_train), numpy.array(X_test), out_fn, 'angular')
+        write_output(numpy.array(X_train), numpy.array(
+            X_test), out_fn, 'angular')
 
 
 def _load_texmex_vectors(f, n, k):
@@ -158,21 +161,26 @@ def _load_mnist_vectors(fn):
     b, format_string = type_code_info[type_code]
     vectors = []
     for i in range(entry_count):
-        vectors.append([struct.unpack(format_string, f.read(b))[0] for j in range(entry_size)])
+        vectors.append([struct.unpack(format_string, f.read(b))[0]
+                        for j in range(entry_size)])
     return numpy.array(vectors)
 
 
 def mnist(out_fn):
-    download('http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz', 'mnist-train.gz')
-    download('http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz', 'mnist-test.gz')
+    download(
+        'http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz', 'mnist-train.gz')
+    download(
+        'http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz', 'mnist-test.gz')
     train = _load_mnist_vectors('mnist-train.gz')
     test = _load_mnist_vectors('mnist-test.gz')
     write_output(train, test, out_fn, 'euclidean')
 
 
 def fashion_mnist(out_fn):
-    download('http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz', 'fashion-mnist-train.gz')
-    download('http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz', 'fashion-mnist-test.gz')
+    download('http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz',
+             'fashion-mnist-train.gz')
+    download('http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz',
+             'fashion-mnist-test.gz')
     train = _load_mnist_vectors('fashion-mnist-train.gz')
     test = _load_mnist_vectors('fashion-mnist-test.gz')
     write_output(train, test, out_fn, 'euclidean')
@@ -187,7 +195,7 @@ def transform_bag_of_words(filename, n_dimensions, out_fn):
         file_content = f.readlines()
         entries = int(file_content[0])
         words = int(file_content[1])
-        file_content = file_content[3:] # strip first three entries
+        file_content = file_content[3:]  # strip first three entries
         print("building matrix...")
         A = lil_matrix((entries, words))
         for e in file_content:
@@ -196,9 +204,11 @@ def transform_bag_of_words(filename, n_dimensions, out_fn):
         print("normalizing matrix entries with tfidf...")
         B = TfidfTransformer().fit_transform(A)
         print("reducing dimensionality...")
-        C = random_projection.GaussianRandomProjection(n_components = n_dimensions).fit_transform(B)
+        C = random_projection.GaussianRandomProjection(
+            n_components=n_dimensions).fit_transform(B)
         X_train, X_test = train_test_split(C)
-        write_output(numpy.array(X_train), numpy.array(X_test), out_fn, 'angular')
+        write_output(numpy.array(X_train), numpy.array(
+            X_test), out_fn, 'angular')
 
 
 def nytimes(out_fn, n_dimensions):
@@ -210,14 +220,17 @@ def nytimes(out_fn, n_dimensions):
 def random(out_fn, n_dims, n_samples, centers, distance):
     import sklearn.datasets
 
-    X, _ = sklearn.datasets.make_blobs(n_samples=n_samples, n_features=n_dims, centers=centers, random_state=1)
+    X, _ = sklearn.datasets.make_blobs(
+        n_samples=n_samples, n_features=n_dims, centers=centers, random_state=1)
     X_train, X_test = train_test_split(X, test_size=0.1)
     write_output(X_train, X_test, out_fn, distance)
+
 
 def random_bitstring(out_fn, n_dims, n_samples, n_queries):
     import sklearn.datasets
 
-    Y, _ = sklearn.datasets.make_blobs(n_samples=n_samples, n_features=n_dims, centers=n_queries, random_state=1)
+    Y, _ = sklearn.datasets.make_blobs(
+        n_samples=n_samples, n_features=n_dims, centers=n_queries, random_state=1)
     X = numpy.zeros((n_samples, n_dims), dtype=numpy.bool)
     for i, vec in enumerate(Y):
         X[i] = numpy.array([v > 0 for v in vec], dtype=numpy.bool)
@@ -229,7 +242,8 @@ def random_bitstring(out_fn, n_dims, n_samples, n_queries):
 def word2bits(out_fn, path, fn):
     import tarfile
     local_fn = fn + '.tar.gz'
-    url = 'http://web.stanford.edu/~maxlam/word_vectors/compressed/%s/%s.tar.gz' % (path, fn)
+    url = 'http://web.stanford.edu/~maxlam/word_vectors/compressed/%s/%s.tar.gz' % (
+        path, fn)
     download(url, local_fn)
     print('parsing vectors in %s...' % local_fn)
     with tarfile.open(local_fn, 'r:gz') as t:
@@ -237,10 +251,12 @@ def word2bits(out_fn, path, fn):
         n_words, k = [int(z) for z in next(f).strip().split()]
         X = numpy.zeros((n_words, k), dtype=numpy.bool)
         for i in range(n_words):
-            X[i] = numpy.array([float(z) > 0 for z in next(f).strip().split()[1:]], dtype=numpy.bool)
+            X[i] = numpy.array([float(z) > 0 for z in next(
+                f).strip().split()[1:]], dtype=numpy.bool)
 
         X_train, X_test = train_test_split(X, test_size=1000)
         write_output(X_train, X_test, out_fn, 'hamming', 'bit')
+
 
 def sift_hamming(out_fn, fn):
     import tarfile
@@ -253,9 +269,11 @@ def sift_hamming(out_fn, fn):
         lines = f.readlines()
         X = numpy.zeros((len(lines), 256), dtype=numpy.bool)
         for i, line in enumerate(lines):
-            X[i] = numpy.array([int(x) > 0 for x in line.decode().strip()], dtype=numpy.bool)
-        X_train, X_test = train_test_split(X, test_size = 1000)
+            X[i] = numpy.array(
+                [int(x) > 0 for x in line.decode().strip()], dtype=numpy.bool)
+        X_train, X_test = train_test_split(X, test_size=1000)
         write_output(X_train, X_test, out_fn, 'hamming', 'bit')
+
 
 def lastfm(out_fn, n_dimensions, test_size=50000):
     # This tests out ANN methods for retrieval on simple matrix factorization based
@@ -279,7 +297,8 @@ def lastfm(out_fn, n_dimensions, test_size=50000):
     # train an als model on the lastfm data
     _, _, play_counts = get_lastfm()
     model = implicit.als.AlternatingLeastSquares(factors=n_dimensions)
-    model.fit(implicit.nearest_neighbours.bm25_weight(play_counts, K1=100, B=0.8))
+    model.fit(implicit.nearest_neighbours.bm25_weight(
+        play_counts, K1=100, B=0.8))
 
     # transform item factors so that each one has the same norm, and transform the user
     # factors such by appending a 0 column

@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 import psutil
 
+
 class BaseANN(object):
     def done(self):
         pass
@@ -13,7 +14,7 @@ class BaseANN(object):
         pass
 
     def query(self, q, n):
-        return [] # array of candidate indices
+        return []  # array of candidate indices
 
     def batch_query(self, X, n):
         self.res = []

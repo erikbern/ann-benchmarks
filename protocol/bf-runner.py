@@ -8,19 +8,25 @@ from ann_benchmarks.data import type_info
 from ann_benchmarks.distance import metrics
 from ann_benchmarks.algorithms.bruteforce import BruteForce, BruteForceBLAS
 
+
 class QueryMode(Enum):
     NORMAL = 0,
     PREPARED = 1,
     BATCH = 2
 
+
 __true_print = print
+
+
 def print(*args, **kwargs):
     __true_print(*args, **kwargs)
     sys.stdout.flush()
 
+
 def next_line():
     for line in iter(sys.stdin.readline, ''):
         yield split(line.strip())
+
 
 if __name__ == '__main__':
     point_type = None

@@ -10,7 +10,9 @@ from enum import Enum
 from itertools import product
 
 
-Definition = collections.namedtuple('Definition', ['algorithm', 'constructor', 'module', 'docker_tag', 'arguments', 'query_argument_groups', 'disabled'])
+Definition = collections.namedtuple('Definition', [
+                                    'algorithm', 'constructor', 'module', 'docker_tag', 'arguments', 'query_argument_groups', 'disabled'])
+
 
 def get_algorithm_name(name, batch):
     if batch:
@@ -19,7 +21,8 @@ def get_algorithm_name(name, batch):
 
 
 def instantiate_algorithm(definition):
-    print('Trying to instantiate %s.%s(%s)' % (definition.module, definition.constructor, definition.arguments))
+    print('Trying to instantiate %s.%s(%s)' %
+          (definition.module, definition.constructor, definition.arguments))
     module = importlib.import_module(definition.module)
     constructor = getattr(module, definition.constructor)
     return constructor(*definition.arguments)
@@ -40,6 +43,7 @@ def algorithm_status(definition):
             return InstantiationStatus.NO_CONSTRUCTOR
     except ImportError:
         return InstantiationStatus.NO_MODULE
+
 
 def _generate_combinations(args):
     if isinstance(args, list):
@@ -107,7 +111,8 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
     for (name, algo) in algorithm_definitions.items():
         for k in ['docker-tag', 'module', 'constructor']:
             if k not in algo:
-                raise Exception('algorithm %s does not define a "%s" property' % (name, k))
+                raise Exception(
+                    'algorithm %s does not define a "%s" property' % (name, k))
 
         base_args = []
         if "base-args" in algo:

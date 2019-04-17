@@ -7,11 +7,13 @@ import ctypes
 import faiss
 from ann_benchmarks.algorithms.base import BaseANN
 
+
 class Faiss(BaseANN):
     def query(self, v, n):
         if self._metric == 'angular':
             v /= numpy.linalg.norm(v)
-        D, I = self.index.search(numpy.expand_dims(v,axis=0).astype(numpy.float32), n)
+        D, I = self.index.search(numpy.expand_dims(
+            v, axis=0).astype(numpy.float32), n)
         return I[0]
 
     def batch_query(self, X, n):
@@ -30,6 +32,7 @@ class Faiss(BaseANN):
             res.append(r)
         return res
 
+
 class FaissLSH(Faiss):
     def __init__(self, metric, n_bits):
         self._n_bits = n_bits
@@ -45,6 +48,7 @@ class FaissLSH(Faiss):
         self.index.train(X)
         self.index.add(X)
 
+
 class FaissIVF(Faiss):
     def __init__(self, metric, n_list):
         self._n_list = n_list
@@ -58,7 +62,8 @@ class FaissIVF(Faiss):
             X = X.astype(numpy.float32)
 
         self.quantizer = faiss.IndexFlatL2(X.shape[1])
-        index = faiss.IndexIVFFlat(self.quantizer, X.shape[1], self._n_list, faiss.METRIC_L2)
+        index = faiss.IndexIVFFlat(
+            self.quantizer, X.shape[1], self._n_list, faiss.METRIC_L2)
         index.train(X)
         index.add(X)
         self.index = index
@@ -69,8 +74,8 @@ class FaissIVF(Faiss):
         self.index.nprobe = self._n_probe
 
     def get_additional(self):
-        return {"dist_comps" : faiss.cvar.indexIVF_stats.ndis +
-                  faiss.cvar.indexIVF_stats.nq * self._n_list}
+        return {"dist_comps": faiss.cvar.indexIVF_stats.ndis +
+                faiss.cvar.indexIVF_stats.nq * self._n_list}
 
     def __str__(self):
         return 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list, self._n_probe)
