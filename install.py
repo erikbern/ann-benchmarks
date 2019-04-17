@@ -6,10 +6,10 @@ from multiprocessing import Pool
 from ann_benchmarks.main import positive_int
 
 
-def build(library,args):
+def build(library, args):
     print('Building %s...' % library)
     if args is not None and len(args) != 0:
-        q = " ".join(["--build-arg " + x.replace(" ","\\ ") for x in args])
+        q = " ".join(["--build-arg " + x.replace(" ", "\\ ") for x in args])
     else:
         q = ""
     subprocess.check_call(
@@ -43,10 +43,10 @@ if __name__ == "__main__":
 
     if args.algorithm:
         print('Building algorithm(%s) image...' % args.algorithm)
-        build(args.algorithm,args.build_arg)
+        build(args.algorithm, args.build_arg)
     elif os.getenv('LIBRARY'):
         print('Building algorithm(%s) image...' % os.getenv('LIBRARY'))
-        build(os.getenv('LIBRARY'),args.build_arg)
+        build(os.getenv('LIBRARY'), args.build_arg)
     else:
         print('Building algorithm images... with (%d) processes' % args.proc)
         dockerfiles = []
@@ -55,7 +55,7 @@ if __name__ == "__main__":
                 dockerfiles.append(fn.split('.')[-1])
 
         if args.proc == 1:
-            [build(tag,args.build_arg) for tag in dockerfiles]
+            [build(tag, args.build_arg) for tag in dockerfiles]
         else:
             pool = Pool(processes=args.proc)
             pool.map(lambda x: build(x, args.build_arg), dockerfiles)

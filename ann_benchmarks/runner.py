@@ -15,9 +15,11 @@ import threading
 import time
 import psutil
 
+
 def print(*args, **kwargs):
     __true_print(*args, **kwargs)
     sys.stdout.flush()
+
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm, get_algorithm_name
@@ -33,7 +35,8 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
     best_search_time = float('inf')
     for i in range(run_count):
         print('Run %d/%d...' % (i+1, run_count))
-        n_items_processed = [0]  # a bit dumb but can't be a scalar since of Python's scoping rules
+        # a bit dumb but can't be a scalar since of Python's scoping rules
+        n_items_processed = [0]
 
         def single_query(v):
             if prepared_queries:
@@ -50,9 +53,11 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
                           for idx in candidates]
             n_items_processed[0] += 1
             if n_items_processed[0] % 1000 == 0:
-                print('Processed %d/%d queries...' % (n_items_processed[0], X_test.shape[0]))
+                print('Processed %d/%d queries...' %
+                      (n_items_processed[0], X_test.shape[0]))
             if len(candidates) > count:
-                print('warning: algorithm %s returned %d results, but count is only %d)' % (algo, len(candidates), count))
+                print('warning: algorithm %s returned %d results, but count is only %d)' % (
+                    algo, len(candidates), count))
             return (total, candidates)
 
         def batch_query(X):
@@ -102,7 +107,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
 def run(definition, dataset, count, run_count, batch):
     algo = instantiate_algorithm(definition)
     assert not definition.query_argument_groups \
-            or hasattr(algo, "set_query_arguments"), """\
+        or hasattr(algo, "set_query_arguments"), """\
 error: query argument groups have been specified for %s.%s(%s), but the \
 algorithm instantiated from it does not implement the set_query_arguments \
 function""" % (definition.module, definition.constructor, definition.arguments)
@@ -135,17 +140,18 @@ function""" % (definition.module, definition.constructor, definition.arguments)
 
         for pos, query_arguments in enumerate(query_argument_groups, 1):
             print("Running query argument group %d of %d..." %
-                    (pos, len(query_argument_groups)))
+                  (pos, len(query_argument_groups)))
             if query_arguments:
                 algo.set_query_arguments(*query_arguments)
             descriptor, results = run_individual_query(algo, X_train, X_test,
-                    distance, count, run_count, batch)
+                                                       distance, count, run_count, batch)
             descriptor["build_time"] = build_time
             descriptor["index_size"] = index_size
-            descriptor["algo"] = get_algorithm_name(definition.algorithm, batch)
+            descriptor["algo"] = get_algorithm_name(
+                definition.algorithm, batch)
             descriptor["dataset"] = dataset
             store_results(dataset, count, definition,
-                    query_arguments, descriptor, results, batch)
+                          query_arguments, descriptor, results, batch)
     finally:
         algo.done()
 
@@ -188,7 +194,7 @@ def run_from_cmdline():
 
     definition = Definition(
         algorithm=args.algorithm,
-        docker_tag=None, # not needed
+        docker_tag=None,  # not needed
         module=args.module,
         constructor=args.constructor,
         arguments=algo_args,

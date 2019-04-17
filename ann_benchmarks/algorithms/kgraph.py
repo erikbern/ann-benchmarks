@@ -5,6 +5,7 @@ import pykgraph
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.base import BaseANN
 
+
 class KGraph(BaseANN):
     def __init__(self, metric, index_params, save_index):
         if type(metric) == unicode:
@@ -22,9 +23,10 @@ class KGraph(BaseANN):
         if os.path.exists(path):
             self._kgraph.load(path)
         else:
-            self._kgraph.build(**self._index_params) #iterations=30, L=100, delta=0.002, recall=0.99, K=25)
+            # iterations=30, L=100, delta=0.002, recall=0.99, K=25)
+            self._kgraph.build(**self._index_params)
             if not os.path.exists(INDEX_DIR):
-              os.makedirs(INDEX_DIR)
+                os.makedirs(INDEX_DIR)
             self._kgraph.save(path)
 
     def set_query_arguments(self, P):
@@ -33,5 +35,6 @@ class KGraph(BaseANN):
     def query(self, v, n):
         if v.dtype != numpy.float32:
             v = v.astype(numpy.float32)
-        result = self._kgraph.search(numpy.array([v]), K=n, threads=1, P=self._P)
+        result = self._kgraph.search(
+            numpy.array([v]), K=n, threads=1, P=self._P)
         return result[0]

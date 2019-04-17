@@ -3,6 +3,7 @@ import sklearn.neighbors
 import sklearn.preprocessing
 from ann_benchmarks.algorithms.base import BaseANN
 
+
 class BallTree(BaseANN):
     def __init__(self, metric, leaf_size=20):
         self._leaf_size = leaf_size

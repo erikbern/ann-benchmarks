@@ -9,6 +9,8 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 # Implementation based on
 # https://github.com/facebookresearch/faiss/blob/master/benchs/bench_gpu_sift1m.py
+
+
 class FaissGPU(BaseANN):
     def __init__(self, n_bits, n_probes):
         self.name = 'FaissGPU(n_bits={}, n_probes={})'.format(n_bits, n_probes)
@@ -20,7 +22,7 @@ class FaissGPU(BaseANN):
     def fit(self, X):
         X = X.astype(numpy.float32)
         self._index = faiss.GpuIndexIVFFlat(self._res, len(X[0]), self._n_bits,
-                                               faiss.METRIC_L2)
+                                            faiss.METRIC_L2)
 #        self._index = faiss.index_factory(len(X[0]), "IVF%d,Flat" % self._n_bits)
 #        co = faiss.GpuClonerOptions()
 #        co.useFloat16 = True
@@ -42,7 +44,7 @@ class FaissGPU(BaseANN):
         return r
 
     def batch_query(self, X, n):
-        self.res = self._index.search(X.astype(numpy.float32),n)
+        self.res = self._index.search(X.astype(numpy.float32), n)
 
     def get_batch_results(self):
         D, L = self.res

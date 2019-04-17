@@ -4,6 +4,7 @@ import numpy
 import sklearn.preprocessing
 from ann_benchmarks.algorithms.base import BaseANN
 
+
 class FLANN(BaseANN):
     def __init__(self, metric, target_precision):
         self._target_precision = target_precision
@@ -11,7 +12,8 @@ class FLANN(BaseANN):
         self._metric = metric
 
     def fit(self, X):
-        self._flann = pyflann.FLANN(target_precision=self._target_precision, algorithm='autotuned', log_level='info')
+        self._flann = pyflann.FLANN(
+            target_precision=self._target_precision, algorithm='autotuned', log_level='info')
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._flann.build_index(X)

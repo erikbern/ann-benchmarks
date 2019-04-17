@@ -8,7 +8,7 @@ import argparse
 from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.algorithms.definitions import get_definitions
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
-from ann_benchmarks.plotting.utils  import get_plot_label, compute_metrics, create_linestyles, create_pointset
+from ann_benchmarks.plotting.utils import get_plot_label, compute_metrics, create_linestyles, create_pointset
 from ann_benchmarks.results import store_results, load_all_results, get_unique_algorithms, get_algorithm_name
 
 
@@ -21,10 +21,12 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles, batch):
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
         xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
         color, faded, linestyle, marker = linestyles[algo]
-        handle, = plt.plot(xs, ys, '-', label=algo, color=color, ms=7, mew=3, lw=3, linestyle=linestyle, marker=marker)
+        handle, = plt.plot(xs, ys, '-', label=algo, color=color,
+                           ms=7, mew=3, lw=3, linestyle=linestyle, marker=marker)
         handles.append(handle)
         if raw:
-            handle2, = plt.plot(axs, ays, '-', label=algo, color=faded, ms=5, mew=2, lw=2, linestyle=linestyle, marker=marker)
+            handle2, = plt.plot(axs, ays, '-', label=algo, color=faded,
+                                ms=5, mew=2, lw=2, linestyle=linestyle, marker=marker)
         labels.append(get_algorithm_name(algo, batch))
 
     if x_log:
@@ -36,8 +38,9 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles, batch):
     plt.gca().set_xlabel(xm['description'])
     box = plt.gca().get_position()
     # plt.gca().set_position([box.x0, box.y0, box.width * 0.8, box.height])
-    plt.gca().legend(handles, labels, loc='center left', bbox_to_anchor=(1, 0.5), prop={'size': 9})
-    plt.grid(b=True, which='major', color='0.65',linestyle='-')
+    plt.gca().legend(handles, labels, loc='center left',
+                     bbox_to_anchor=(1, 0.5), prop={'size': 9})
+    plt.grid(b=True, which='major', color='0.65', linestyle='-')
     if 'lim' in xm:
         plt.xlim(xm['lim'])
     if 'lim' in ym:
@@ -67,14 +70,14 @@ if __name__ == "__main__":
         '-o', '--output')
     parser.add_argument(
         '-x', '--x-axis',
-        help = 'Which metric to use on the X-axis',
-        choices = metrics.keys(),
-        default = "k-nn")
+        help='Which metric to use on the X-axis',
+        choices=metrics.keys(),
+        default="k-nn")
     parser.add_argument(
         '-y', '--y-axis',
-        help = 'Which metric to use on the Y-axis',
-        choices = metrics.keys(),
-        default = "qps")
+        help='Which metric to use on the Y-axis',
+        choices=metrics.keys(),
+        default="qps")
     parser.add_argument(
         '-X', '--x-log',
         help='Draw the X-axis using a logarithmic scale',
@@ -98,7 +101,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not args.output:
-        args.output = 'results/%s.png' % get_algorithm_name(args.dataset, args.batch)
+        args.output = 'results/%s.png' % get_algorithm_name(
+            args.dataset, args.batch)
         print('writing output to %s' % args.output)
 
     dataset = get_dataset(args.dataset)
@@ -107,9 +111,9 @@ if __name__ == "__main__":
     results = load_all_results(args.dataset, count, True, args.batch)
     linestyles = create_linestyles(sorted(unique_algorithms))
     runs = compute_metrics(np.array(dataset["distances"]),
-            results, args.x_axis, args.y_axis, args.recompute)
+                           results, args.x_axis, args.y_axis, args.recompute)
     if not runs:
         raise Exception('Nothing to plot')
 
     create_plot(runs, args.raw, args.x_log,
-            args.y_log, args.x_axis, args.y_axis, args.output, linestyles, args.batch)
+                args.y_log, args.x_axis, args.y_axis, args.output, linestyles, args.batch)

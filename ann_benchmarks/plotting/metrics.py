@@ -1,11 +1,14 @@
 from __future__ import absolute_import
 import numpy as np
 
+
 def knn_threshold(data, count, epsilon):
     return data[count - 1] + epsilon
 
+
 def epsilon_threshold(data, count, epsilon):
     return data[count - 1] * (1 + epsilon)
+
 
 def get_recall_values(dataset_distances, run_distances, count, threshold, epsilon=1e-3):
     total = len(run_distances) * count
@@ -19,12 +22,13 @@ def get_recall_values(dataset_distances, run_distances, count, threshold, epsilo
         recalls[i] = actual
     return np.mean(recalls) / float(count), np.std(recalls) / float(count), recalls
 
+
 def knn(dataset_distances, run_distances, count, metrics, epsilon=1e-3):
     if 'knn' not in metrics:
         print('Computing knn metrics')
         knn_metrics = metrics.create_group('knn')
         mean, std, recalls = get_recall_values(dataset_distances,
-                run_distances, count, knn_threshold, epsilon)
+                                               run_distances, count, knn_threshold, epsilon)
         knn_metrics.attrs['mean'] = mean
         knn_metrics.attrs['std'] = std
         knn_metrics['recalls'] = recalls
@@ -32,19 +36,21 @@ def knn(dataset_distances, run_distances, count, metrics, epsilon=1e-3):
         print("Found cached result")
     return metrics['knn']
 
+
 def epsilon(dataset_distances, run_distances, count, metrics, epsilon=0.01):
     s = 'eps' + str(epsilon)
     if s not in metrics:
         print('Computing epsilon metrics')
         epsilon_metrics = metrics.create_group(s)
         mean, std, recalls = get_recall_values(dataset_distances,
-                run_distances, count, epsilon_threshold, epsilon)
+                                               run_distances, count, epsilon_threshold, epsilon)
         epsilon_metrics.attrs['mean'] = mean
         epsilon_metrics.attrs['std'] = std
         epsilon_metrics['recalls'] = recalls
     else:
         print("Found cached result")
     return metrics[s]
+
 
 def rel(dataset_distances, run_distances, metrics):
     if 'rel' not in metrics.attrs:
@@ -58,26 +64,33 @@ def rel(dataset_distances, run_distances, metrics):
         if total_closest_distance < 0.01:
             metrics.attrs['rel'] = float("inf")
         else:
-            metrics.attrs['rel'] = total_candidate_distance / total_closest_distance
+            metrics.attrs['rel'] = total_candidate_distance / \
+                total_closest_distance
     else:
         print("Found cached result")
     return metrics.attrs['rel']
 
+
 def queries_per_second(queries, attrs):
     return 1.0 / attrs["best_search_time"]
+
 
 def index_size(queries, attrs):
     # TODO(erikbern): should replace this with peak memory usage or something
     return attrs.get("index_size", 0)
 
+
 def build_time(queries, attrs):
     return attrs["build_time"]
+
 
 def candidates(queries, attrs):
     return attrs["candidates"]
 
+
 def dist_computations(queries, attrs):
     return attrs.get("dist_comps", 0) / (attrs['run_count'] * len(queries))
+
 
 all_metrics = {
     "k-nn": {
@@ -106,7 +119,7 @@ all_metrics = {
         "function": lambda true_distances, run_distances, metrics, run_attrs: queries_per_second(true_distances, run_attrs),
         "worst": float("-inf")
     },
-    "distcomps" : {
+    "distcomps": {
         "description": "Distance computations",
         "function": lambda true_distances, run_distances,  metrics, run_attrs: dist_computations(true_distances, run_attrs),
         "worst": float("inf")
@@ -116,17 +129,17 @@ all_metrics = {
         "function": lambda true_distances, run_distances, metrics, run_attrs: build_time(true_distances, run_attrs),
         "worst": float("inf")
     },
-    "candidates" : {
+    "candidates": {
         "description": "Candidates generated",
         "function": lambda true_distances, run_distances, metrics, run_attrs: candidates(true_distances, run_attrs),
         "worst": float("inf")
     },
-    "indexsize" : {
+    "indexsize": {
         "description": "Index size (kB)",
         "function": lambda true_distances, run_distances, metrics, run_attrs: index_size(true_distances, run_attrs),
         "worst": float("inf")
     },
-    "queriessize" : {
+    "queriessize": {
         "description": "Index size (kB)/Queries per second (s)",
         "function": lambda true_distances, run_distances, metrics, run_attrs: index_size(true_distances, run_attrs) / queries_per_second(true_distances, run_attrs),
         "worst": float("inf")
