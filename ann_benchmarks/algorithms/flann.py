@@ -13,7 +13,8 @@ class FLANN(BaseANN):
 
     def fit(self, X):
         self._flann = pyflann.FLANN(
-            target_precision=self._target_precision, algorithm='autotuned', log_level='info')
+            target_precision=self._target_precision,
+            algorithm='autotuned', log_level='info')
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         self._flann.build_index(X)

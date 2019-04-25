@@ -10,8 +10,10 @@ from enum import Enum
 from itertools import product
 
 
-Definition = collections.namedtuple('Definition', [
-                                    'algorithm', 'constructor', 'module', 'docker_tag', 'arguments', 'query_argument_groups', 'disabled'])
+Definition = collections.namedtuple(
+    'Definition',
+    ['algorithm', 'constructor', 'module', 'docker_tag',
+     'arguments', 'query_argument_groups', 'disabled'])
 
 
 def get_algorithm_name(name, batch):
@@ -63,7 +65,8 @@ def _generate_combinations(args):
 
 def _substitute_variables(arg, vs):
     if isinstance(arg, dict):
-        return dict([(k, _substitute_variables(v, vs)) for k, v in arg.items()])
+        return dict([(k, _substitute_variables(v, vs))
+                     for k, v in arg.items()])
     elif isinstance(arg, list):
         return [_substitute_variables(a, vs) for a in arg]
     elif isinstance(arg, str) and arg in vs:
@@ -99,7 +102,8 @@ def get_unique_algorithms(definition_file):
     return list(sorted(algos))
 
 
-def get_definitions(definition_file, dimension, point_type="float", distance_metric="euclidean", count=10):
+def get_definitions(definition_file, dimension, point_type="float",
+                    distance_metric="euclidean", count=10):
     definitions = _get_definitions(definition_file)
 
     algorithm_definitions = {}
@@ -149,7 +153,6 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
                 query_args = []
 
             for arg_group in args:
-                obj = None
                 aargs = []
                 aargs.extend(base_args)
                 if isinstance(arg_group, list):

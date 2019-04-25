@@ -1,12 +1,8 @@
 from __future__ import absolute_import
 
-import os
 import itertools
-import json
 import numpy
-import pickle
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
-import matplotlib.pyplot as plt
 
 
 def get_or_create_metrics(run):
@@ -25,8 +21,8 @@ def create_pointset(data, xn, yn):
     # Generate Pareto frontier
     xs, ys, ls = [], [], []
     last_x = xm["worst"]
-    comparator = \
-        (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
+    comparator = ((lambda xv, lx: xv > lx)
+                  if last_x < 0 else (lambda xv, lx: xv < lx))
     for algo, algo_name, xv, yv in data:
         if not xv or not yv:
             continue
@@ -41,7 +37,8 @@ def create_pointset(data, xn, yn):
     return xs, ys, ls, axs, ays, als
 
 
-def compute_metrics(true_nn_distances, res, metric_1, metric_2, recompute=False):
+def compute_metrics(true_nn_distances, res, metric_1, metric_2,
+                    recompute=False):
     all_results = {}
     for i, (properties, run) in enumerate(res):
         algo = properties['algo']
@@ -52,10 +49,12 @@ def compute_metrics(true_nn_distances, res, metric_1, metric_2, recompute=False)
             del run['metrics']
         metrics_cache = get_or_create_metrics(run)
 
-        metric_1_value = metrics[metric_1]['function'](true_nn_distances,
-                                                       run_distances, metrics_cache, properties)
-        metric_2_value = metrics[metric_2]['function'](true_nn_distances,
-                                                       run_distances, metrics_cache, properties)
+        metric_1_value = metrics[metric_1]['function'](
+            true_nn_distances,
+            run_distances, metrics_cache, properties)
+        metric_2_value = metrics[metric_2]['function'](
+            true_nn_distances,
+            run_distances, metrics_cache, properties)
 
         print('%3d: %80s %12.3f %12.3f' %
               (i, algo_name, metric_1_value, metric_2_value))
@@ -92,7 +91,7 @@ def generate_n_colors(n):
     colors = [(.9, .4, .4, 1.)]
 
     def euclidean(a, b):
-        return sum((x-y)**2 for x, y in zip(a, b))
+        return sum((x - y)**2 for x, y in zip(a, b))
     while len(colors) < n:
         new_color = max(itertools.product(vs, vs, vs),
                         key=lambda a: min(euclidean(a, b) for b in colors))
@@ -109,7 +108,9 @@ def create_linestyles(unique_algorithms):
                         for i, algo in enumerate(unique_algorithms))
     faded = dict((algo, (r, g, b, 0.3))
                  for algo, (r, g, b, a) in colors.items())
-    return dict((algo, (colors[algo], faded[algo], linestyles[algo], markerstyles[algo])) for algo in unique_algorithms)
+    return dict((algo, (colors[algo], faded[algo],
+                        linestyles[algo], markerstyles[algo]))
+                for algo in unique_algorithms)
 
 
 def get_up_down(metric):
@@ -125,5 +126,9 @@ def get_left_right(metric):
 
 
 def get_plot_label(xm, ym):
-    return "%(xlabel)s-%(ylabel)s tradeoff - %(updown)s and to the %(leftright)s is better" % {
-        "xlabel": xm["description"], "ylabel": ym["description"], "updown": get_up_down(ym), "leftright": get_left_right(xm)}
+    template = ("%(xlabel)s-%(ylabel)s tradeoff - %(updown)s and"
+                " to the %(leftright)s is better")
+    return template % {"xlabel": xm["description"],
+                       "ylabel": ym["description"],
+                       "updown": get_up_down(ym),
+                       "leftright": get_left_right(xm)}

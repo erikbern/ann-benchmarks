@@ -5,7 +5,8 @@ from scipy.spatial.distance import pdist as scipy_pdist
 def pdist(a, b, metric):
     return scipy_pdist([a, b], metric=metric)[0]
 
-# Need own implementation of jaccard because numpy's implementation is different
+# Need own implementation of jaccard because numpy's
+# implementation is different
 
 
 def jaccard(a, b):
@@ -22,7 +23,7 @@ metrics = {
     },
     # return 1 - jaccard similarity, because smaller distances are better.
     'jaccard': {
-        'distance': lambda a, b:  1 - jaccard(a, b),
+        'distance': lambda a, b: 1 - jaccard(a, b),
         'distance_valid': lambda a: a < 1 - 1e-5
     },
     'euclidean': {

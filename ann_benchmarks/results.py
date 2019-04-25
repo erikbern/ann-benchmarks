@@ -16,7 +16,8 @@ def is_batch(name):
     return "-batch" in name
 
 
-def get_result_filename(dataset=None, count=None, definition=None, query_arguments=None, batch_mode=False):
+def get_result_filename(dataset=None, count=None, definition=None,
+                        query_arguments=None, batch_mode=False):
     d = ['results']
     if dataset:
         d.append(dataset)
@@ -24,12 +25,14 @@ def get_result_filename(dataset=None, count=None, definition=None, query_argumen
         d.append(str(count))
     if definition:
         d.append(get_algorithm_name(definition.algorithm, batch_mode))
-        d.append(re.sub(r'\W+', '_', json.dumps(definition.arguments +
-                                                query_arguments, sort_keys=True)).strip('_'))
+        data = definition.arguments + query_arguments
+        d.append(re.sub(r'\W+', '_', json.dumps(data,
+                                                sort_keys=True)).strip('_'))
     return os.path.join(*d)
 
 
-def store_results(dataset, count, definition, query_arguments, attrs, results, batch):
+def store_results(dataset, count, definition, query_arguments, attrs, results,
+                  batch):
     fn = get_result_filename(
         dataset, count, definition, query_arguments, batch)
     head, tail = os.path.split(fn)
@@ -48,7 +51,8 @@ def store_results(dataset, count, definition, query_arguments, attrs, results, b
     f.close()
 
 
-def load_all_results(dataset=None, count=None, split_batched=False,  batch_mode=False):
+def load_all_results(dataset=None, count=None, split_batched=False,
+                     batch_mode=False):
     for root, _, files in os.walk(get_result_filename(dataset, count)):
         for fn in files:
             try:

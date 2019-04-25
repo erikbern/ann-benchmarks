@@ -7,8 +7,10 @@ class BaseANN(object):
         pass
 
     def get_memory_usage(self):
-        """Return the current memory usage of this algorithm instance (in kilobytes), or None if this information is not available."""
-        return psutil.Process().memory_info().rss / 1024  # return in kB for backwards compatibility
+        """Return the current memory usage of this algorithm instance
+        (in kilobytes), or None if this information is not available."""
+        # return in kB for backwards compatibility
+        return psutil.Process().memory_info().rss / 1024
 
     def fit(self, X):
         pass

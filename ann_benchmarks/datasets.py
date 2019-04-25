@@ -37,7 +37,8 @@ def get_dataset(which):
 
 
 # Everything below this line is related to creating datasets
-# You probably never need to do this at home, just rely on the prepared datasets at http://ann-benchmarks.com
+# You probably never need to do this at home,
+# just rely on the prepared datasets at http://ann-benchmarks.com
 
 def write_output(train, test, fn, distance, point_type='float', count=100):
     from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
@@ -69,7 +70,8 @@ def write_output(train, test, fn, distance, point_type='float', count=100):
 def train_test_split(X, test_size=10000):
     import sklearn.model_selection
     print('Splitting %d*%d into train/test' % X.shape)
-    return sklearn.model_selection.train_test_split(X, test_size=test_size, random_state=1)
+    return sklearn.model_selection.train_test_split(
+        X, test_size=test_size, random_state=1)
 
 
 def glove(out_fn, d):
@@ -96,7 +98,7 @@ def _load_texmex_vectors(f, n, k):
     v = numpy.zeros((n, k))
     for i in range(n):
         f.read(4)  # ignore vec length
-        v[i] = struct.unpack('f' * k, f.read(k*4))
+        v[i] = struct.unpack('f' * k, f.read(k * 4))
 
     return v
 
@@ -106,7 +108,7 @@ def _get_irisa_matrix(t, fn):
     m = t.getmember(fn)
     f = t.extractfile(m)
     k, = struct.unpack('i', f.read(4))
-    n = m.size // (4 + 4*k)
+    n = m.size // (4 + 4 * k)
     f.seek(0)
     return _load_texmex_vectors(f, n, k)
 
@@ -153,7 +155,8 @@ def _load_mnist_vectors(fn):
     assert magic == 0
     assert type_code in type_code_info
 
-    dimensions = [struct.unpack("!I", f.read(4))[0] for i in range(dim_count)]
+    dimensions = [struct.unpack("!I", f.read(4))[0]
+                  for i in range(dim_count)]
 
     entry_count = dimensions[0]
     entry_size = numpy.product(dimensions[1:])
@@ -168,18 +171,18 @@ def _load_mnist_vectors(fn):
 
 def mnist(out_fn):
     download(
-        'http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz', 'mnist-train.gz')
+        'http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz', 'mnist-train.gz')  # noqa
     download(
-        'http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz', 'mnist-test.gz')
+        'http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz', 'mnist-test.gz')  # noqa
     train = _load_mnist_vectors('mnist-train.gz')
     test = _load_mnist_vectors('mnist-test.gz')
     write_output(train, test, out_fn, 'euclidean')
 
 
 def fashion_mnist(out_fn):
-    download('http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz',
+    download('http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz',  # noqa
              'fashion-mnist-train.gz')
-    download('http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz',
+    download('http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz',  # noqa
              'fashion-mnist-test.gz')
     train = _load_mnist_vectors('fashion-mnist-train.gz')
     test = _load_mnist_vectors('fashion-mnist-test.gz')
@@ -213,7 +216,7 @@ def transform_bag_of_words(filename, n_dimensions, out_fn):
 
 def nytimes(out_fn, n_dimensions):
     fn = 'nytimes_%s.txt.gz' % n_dimensions
-    download('https://archive.ics.uci.edu/ml/machine-learning-databases/bag-of-words/docword.nytimes.txt.gz', fn)
+    download('https://archive.ics.uci.edu/ml/machine-learning-databases/bag-of-words/docword.nytimes.txt.gz', fn)  # noqa
     transform_bag_of_words(fn, n_dimensions, out_fn)
 
 
@@ -221,7 +224,8 @@ def random(out_fn, n_dims, n_samples, centers, distance):
     import sklearn.datasets
 
     X, _ = sklearn.datasets.make_blobs(
-        n_samples=n_samples, n_features=n_dims, centers=centers, random_state=1)
+        n_samples=n_samples, n_features=n_dims,
+        centers=centers, random_state=1)
     X_train, X_test = train_test_split(X, test_size=0.1)
     write_output(X_train, X_test, out_fn, distance)
 
@@ -230,7 +234,8 @@ def random_bitstring(out_fn, n_dims, n_samples, n_queries):
     import sklearn.datasets
 
     Y, _ = sklearn.datasets.make_blobs(
-        n_samples=n_samples, n_features=n_dims, centers=n_queries, random_state=1)
+        n_samples=n_samples, n_features=n_dims,
+        centers=n_queries, random_state=1)
     X = numpy.zeros((n_samples, n_dims), dtype=numpy.bool)
     for i, vec in enumerate(Y):
         X[i] = numpy.array([v > 0 for v in vec], dtype=numpy.bool)
@@ -242,7 +247,7 @@ def random_bitstring(out_fn, n_dims, n_samples, n_queries):
 def word2bits(out_fn, path, fn):
     import tarfile
     local_fn = fn + '.tar.gz'
-    url = 'http://web.stanford.edu/~maxlam/word_vectors/compressed/%s/%s.tar.gz' % (
+    url = 'http://web.stanford.edu/~maxlam/word_vectors/compressed/%s/%s.tar.gz' % (  # noqa
         path, fn)
     download(url, local_fn)
     print('parsing vectors in %s...' % local_fn)
@@ -276,20 +281,23 @@ def sift_hamming(out_fn, fn):
 
 
 def lastfm(out_fn, n_dimensions, test_size=50000):
-    # This tests out ANN methods for retrieval on simple matrix factorization based
-    # recommendation algorithms. The idea being that the query/test vectors are user factors
-    # and the train set are item factors from the matrix factorization model.
+    # This tests out ANN methods for retrieval on simple matrix factorization
+    # based recommendation algorithms. The idea being that the query/test
+    # vectors are user factors and the train set are item factors from
+    # the matrix factorization model.
 
-    # Since the predictor is a dot product, we transform the factors first as described in this
-    # paper: https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/XboxInnerProduct.pdf
+    # Since the predictor is a dot product, we transform the factors first
+    # as described in this
+    # paper: https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/XboxInnerProduct.pdf  # noqa
     # This hopefully replicates the experiments done in this post:
-    # http://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/
+    # http://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/  # noqa
 
     # The dataset is from "Last.fm Dataset - 360K users":
-    # http://www.dtic.upf.edu/~ocelma/MusicRecommendationDataset/lastfm-360K.html
+    # http://www.dtic.upf.edu/~ocelma/MusicRecommendationDataset/lastfm-360K.html  # noqa
 
-    # this requires the implicit package to generate the factors (on my desktop/gpu this only
-    # takes 4-5 seconds to train - but could take 1-2 minutes on a laptop)
+    # This requires the implicit package to generate the factors
+    # (on my desktop/gpu this only takes 4-5 seconds to train - but
+    # could take 1-2 minutes on a laptop)
     from implicit.datasets.lastfm import get_lastfm
     from implicit.approximate_als import augment_inner_product_matrix
     import implicit
@@ -300,18 +308,19 @@ def lastfm(out_fn, n_dimensions, test_size=50000):
     model.fit(implicit.nearest_neighbours.bm25_weight(
         play_counts, K1=100, B=0.8))
 
-    # transform item factors so that each one has the same norm, and transform the user
-    # factors such by appending a 0 column
+    # transform item factors so that each one has the same norm,
+    # and transform the user factors such by appending a 0 column
     _, item_factors = augment_inner_product_matrix(model.item_factors)
     user_factors = numpy.append(model.user_factors,
                                 numpy.zeros((model.user_factors.shape[0], 1)),
                                 axis=1)
 
-    # only query the first 50k users (speeds things up signficantly without changing results)
+    # only query the first 50k users (speeds things up signficantly
+    # without changing results)
     user_factors = user_factors[:test_size]
 
-    # after that transformation a cosine lookup will return the same results as the inner product
-    # on the untransformed data
+    # after that transformation a cosine lookup will return the same results
+    # as the inner product on the untransformed data
     write_output(item_factors, user_factors, out_fn, 'angular')
 
 
@@ -323,17 +332,27 @@ DATASETS = {
     'glove-100-angular': lambda out_fn: glove(out_fn, 100),
     'glove-200-angular': lambda out_fn: glove(out_fn, 200),
     'mnist-784-euclidean': mnist,
-    'random-xs-20-euclidean': lambda out_fn: random(out_fn, 20, 10000, 100, 'euclidean'),
-    'random-s-100-euclidean': lambda out_fn: random(out_fn, 100, 100000, 1000, 'euclidean'),
-    'random-xs-20-angular': lambda out_fn: random(out_fn, 20, 10000, 100, 'angular'),
-    'random-s-100-angular': lambda out_fn: random(out_fn, 100, 100000, 1000, 'angular'),
-    'random-xs-16-hamming': lambda out_fn: random_bitstring(out_fn, 16, 10000, 100),
-    'random-s-128-hamming': lambda out_fn: random_bitstring(out_fn, 128, 50000, 1000),
-    'random-l-256-hamming': lambda out_fn: random_bitstring(out_fn, 256, 100000, 1000),
+    'random-xs-20-euclidean': lambda out_fn: random(out_fn, 20, 10000, 100,
+                                                    'euclidean'),
+    'random-s-100-euclidean': lambda out_fn: random(out_fn, 100, 100000, 1000,
+                                                    'euclidean'),
+    'random-xs-20-angular': lambda out_fn: random(out_fn, 20, 10000, 100,
+                                                  'angular'),
+    'random-s-100-angular': lambda out_fn: random(out_fn, 100, 100000, 1000,
+                                                  'angular'),
+    'random-xs-16-hamming': lambda out_fn: random_bitstring(out_fn, 16, 10000,
+                                                            100),
+    'random-s-128-hamming': lambda out_fn: random_bitstring(out_fn, 128,
+                                                            50000, 1000),
+    'random-l-256-hamming': lambda out_fn: random_bitstring(out_fn, 256,
+                                                            100000, 1000),
     'sift-128-euclidean': sift,
     'nytimes-256-angular': lambda out_fn: nytimes(out_fn, 256),
     'nytimes-16-angular': lambda out_fn: nytimes(out_fn, 16),
-    'word2bits-800-hamming': lambda out_fn: word2bits(out_fn, '400K', 'w2b_bitlevel1_size800_vocab400K'),
+    'word2bits-800-hamming': lambda out_fn: word2bits(
+        out_fn, '400K',
+        'w2b_bitlevel1_size800_vocab400K'),
     'lastfm-64-dot': lambda out_fn: lastfm(out_fn, 64),
-    'sift-256-hamming': lambda out_fn: sift_hamming(out_fn, 'sift.hamming.256'),
+    'sift-256-hamming': lambda out_fn: sift_hamming(
+        out_fn, 'sift.hamming.256'),
 }

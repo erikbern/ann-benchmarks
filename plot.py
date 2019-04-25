@@ -1,6 +1,6 @@
 import os
 import matplotlib as mpl
-mpl.use('Agg')
+mpl.use('Agg')  # noqa
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
@@ -8,11 +8,14 @@ import argparse
 from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.algorithms.definitions import get_definitions
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
-from ann_benchmarks.plotting.utils import get_plot_label, compute_metrics, create_linestyles, create_pointset
-from ann_benchmarks.results import store_results, load_all_results, get_unique_algorithms, get_algorithm_name
+from ann_benchmarks.plotting.utils import (get_plot_label, compute_metrics,
+                                           create_linestyles, create_pointset)
+from ann_benchmarks.results import (store_results, load_all_results,
+                                    get_unique_algorithms, get_algorithm_name)
 
 
-def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles, batch):
+def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles,
+                batch):
     xm, ym = (metrics[xn], metrics[yn])
     # Now generate each plot
     handles = []
@@ -22,11 +25,13 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles, batch):
         xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
         color, faded, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color,
-                           ms=7, mew=3, lw=3, linestyle=linestyle, marker=marker)
+                           ms=7, mew=3, lw=3, linestyle=linestyle,
+                           marker=marker)
         handles.append(handle)
         if raw:
             handle2, = plt.plot(axs, ays, '-', label=algo, color=faded,
-                                ms=5, mew=2, lw=2, linestyle=linestyle, marker=marker)
+                                ms=5, mew=2, lw=2, linestyle=linestyle,
+                                marker=marker)
         labels.append(get_algorithm_name(algo, batch))
 
     if x_log:
@@ -116,4 +121,5 @@ if __name__ == "__main__":
         raise Exception('Nothing to plot')
 
     create_plot(runs, args.raw, args.x_log,
-                args.y_log, args.x_axis, args.y_axis, args.output, linestyles, args.batch)
+                args.y_log, args.x_axis, args.y_axis, args.output,
+                linestyles, args.batch)
