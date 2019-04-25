@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 import sys
-sys.path.append("install/lib-faiss")
+sys.path.append("install/lib-faiss")  # noqa
 import numpy
 import sklearn.preprocessing
 import ctypes
@@ -74,8 +74,9 @@ class FaissIVF(Faiss):
         self.index.nprobe = self._n_probe
 
     def get_additional(self):
-        return {"dist_comps": faiss.cvar.indexIVF_stats.ndis +
+        return {"dist_comps": faiss.cvar.indexIVF_stats.ndis +      # noqa
                 faiss.cvar.indexIVF_stats.nq * self._n_list}
 
     def __str__(self):
-        return 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list, self._n_probe)
+        return 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list,
+                                                    self._n_probe)

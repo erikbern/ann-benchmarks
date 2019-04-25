@@ -1,3 +1,4 @@
+.DS_Store
 *.pyc
 *.o
 protocol/c/fr-*
@@ -5,5 +6,5 @@ protocol/c/fr-*
 install/*.txt
 install/*.yaml
 install/lib-*/
-
+data/*
 *.class

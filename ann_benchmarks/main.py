@@ -9,7 +9,10 @@ import traceback
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.constants import INDEX_DIR
-from ann_benchmarks.algorithms.definitions import get_definitions, list_algorithms, algorithm_status, InstantiationStatus
+from ann_benchmarks.algorithms.definitions import (get_definitions,
+                                                   list_algorithms,
+                                                   algorithm_status,
+                                                   InstantiationStatus)
 from ann_benchmarks.results import get_result_filename
 from ann_benchmarks.runner import run, run_docker
 
@@ -60,23 +63,26 @@ def main():
         action='store_true')
     parser.add_argument(
         '--force',
-        help='''re-run algorithms even if their results already exist''',
+        help='re-run algorithms even if their results already exist',
         action='store_true')
     parser.add_argument(
         '--runs',
         metavar='COUNT',
         type=positive_int,
-        help='run each algorithm instance %(metavar)s times and use only the best result',
+        help='run each algorithm instance %(metavar)s times and use only'
+             ' the best result',
         default=2)
     parser.add_argument(
         '--timeout',
         type=int,
-        help='Timeout (in seconds) for each individual algorithm run, or -1 if no timeout should be set',
-        default=5*3600)
+        help='Timeout (in seconds) for each individual algorithm run, or -1'
+             'if no timeout should be set',
+        default=5 * 3600)
     parser.add_argument(
         '--local',
         action='store_true',
-        help='If set, then will run everything locally (inside the same process) rather than using Docker')
+        help='If set, then will run everything locally (inside the same '
+             'process) rather than using Docker')
     parser.add_argument(
         '--batch',
         action='store_true',
@@ -123,7 +129,8 @@ def main():
         not_yet_run = []
         for query_arguments in query_argument_groups:
             fn = get_result_filename(args.dataset,
-                                     args.count, definition, query_arguments, args.batch)
+                                     args.count, definition,
+                                     query_arguments, args.batch)
             if args.force or not os.path.exists(fn):
                 not_yet_run.append(query_arguments)
         if not_yet_run:
@@ -162,16 +169,21 @@ def main():
     else:
         def _test(df):
             status = algorithm_status(df)
-            # If the module was loaded but doesn't actually have a constructor of
-            # the right name, then the definition is broken
-            assert status != InstantiationStatus.NO_CONSTRUCTOR, """\
-%s.%s(%s): error: the module '%s' does not expose the named constructor""" % (df.module, df.constructor, df.arguments, df.module)
+            # If the module was loaded but doesn't actually have a constructor
+            # of the right name, then the definition is broken
+            if status != InstantiationStatus.NO_CONSTRUCTOR:
+                raise Exception("%s.%s(%s): error: the module '%s' does not"
+                                " expose the named constructor" % (
+                                    df.module, df.constructor,
+                                    df.arguments, df.module))
+
             if status == InstantiationStatus.NO_MODULE:
-                # If the module couldn't be loaded (presumably because of a missing
-                # dependency), print a warning and remove this definition from the
-                # list of things to be run
-                print("""\
-%s.%s(%s): warning: the module '%s' could not be loaded; skipping""" % (df.module, df.constructor, df.arguments, df.module))
+                # If the module couldn't be loaded (presumably because
+                # of a missing dependency), print a warning and remove
+                # this definition from the list of things to be run
+                print("%s.%s(%s): warning: the module '%s' could not be "
+                      "loaded; skipping" % (df.module, df.constructor,
+                                            df.arguments, df.module))
                 return False
             else:
                 return True
@@ -196,7 +208,8 @@ def main():
 
         try:
             if args.local:
-                run(definition, args.dataset, args.count, args.runs, args.batch)
+                run(definition, args.dataset, args.count, args.runs,
+                    args.batch)
             else:
                 run_docker(definition, args.dataset, args.count,
                            args.runs, args.timeout, args.batch)

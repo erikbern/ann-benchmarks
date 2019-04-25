@@ -16,10 +16,12 @@ class NmslibReuseIndex(BaseANN):
         self._method_name = method_name
         self._save_index = False
         self._index_param = NmslibReuseIndex.encode(index_param)
-        if query_param != False:
+        if query_param is not False:
             self._query_param = NmslibReuseIndex.encode(query_param)
-            self.name = 'Nmslib(method_name=%s, index_param=%s, query_param=%s)' % (
-                self._method_name, self._index_param, self._query_param)
+            self.name = ('Nmslib(method_name={}, index_param={}, '
+                         'query_param={})'.format(self._method_name,
+                                                  self._index_param,
+                                                  self._query_param))
         else:
             self._query_param = None
             self.name = 'Nmslib(method_name=%s, index_param=%s)' % (
@@ -34,9 +36,11 @@ class NmslibReuseIndex(BaseANN):
 
     def fit(self, X):
         if self._method_name == 'vptree':
-            # To avoid this issue:
-            # terminate called after throwing an instance of 'std::runtime_error'
-            # what():  The data size is too small or the bucket size is too big. Select the parameters so that <total # of records> is NOT less than <bucket size> * 1000
+            # To avoid this issue: terminate called after throwing an instance
+            # of 'std::runtime_error'
+            # what():  The data size is too small or the bucket size is too
+            # big. Select the parameters so that <total # of records> is NOT
+            # less than <bucket size> * 1000
             # Aborted (core dumped)
             self._index_param.append('bucketSize=%d' %
                                      min(int(X.shape[0] * 0.0005), 1000))

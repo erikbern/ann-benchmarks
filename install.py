@@ -13,8 +13,8 @@ def build(library, args):
     else:
         q = ""
     subprocess.check_call(
-        'docker build %s\
-        --rm -t ann-benchmarks-%s -f install/Dockerfile.%s .' % (q, library, library), shell=True)
+        'docker build %s --rm -t ann-benchmarks-%s -f'
+        ' install/Dockerfile.%s .' % (q, library, library), shell=True)
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ class DummyAlgoMt(BaseANN):
         self.name = 'DummyAlgoMultiThread'
 
     def fit(self, X):
-        self.len = len(X)-1
+        self.len = len(X) - 1
 
     def query(self, v, n):
         return np.random.randint(self.len, size=n)
@@ -19,7 +19,7 @@ class DummyAlgoSt(BaseANN):
         self.name = 'DummyAlgoSingleThread'
 
     def fit(self, X):
-        self.len = len(X)-1
+        self.len = len(X) - 1
 
     def query(self, v, n):
         return np.random.randint(self.len, size=n)

@@ -19,7 +19,9 @@ def int_unparse_entry(entry):
 
 
 def bit_parse_entry(line):
-    return [bool(int(x)) for x in list(line.strip().replace(" ", "").replace("\t", ""))]
+    return [bool(int(x)) for x in list(line.strip()
+                                       .replace(" ", "")
+                                       .replace("\t", ""))]
 
 
 def bit_unparse_entry(entry):

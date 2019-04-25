@@ -32,13 +32,16 @@ class PANNG(BaseANN):
         if not os.path.exists(index_dir):
             os.makedirs(index_dir)
         index = os.path.join(
-            index_dir, 'PANNG-' + str(self._edge_size) + '-' + str(self._pathadj_size))
+            index_dir,
+            'PANNG-' + str(self._edge_size) + '-' + str(self._pathadj_size))
         print(index)
         if os.path.exists(index):
             print('PANNG: index already exists! ' + str(index))
         else:
             t0 = time.time()
-            ngtpy.create(path=index, dimension=dim, edge_size_for_creation=self._edge_size, distance_type=self._metric,
+            ngtpy.create(path=index, dimension=dim,
+                         edge_size_for_creation=self._edge_size,
+                         distance_type=self._metric,
                          object_type=self._object_type)
             idx = ngtpy.Index(path=index)
             idx.batch_insert(X, num_threads=24, debug=False)
@@ -46,11 +49,12 @@ class PANNG(BaseANN):
             idx.close()
             if self._pathadj_size > 0:
                 print('PANNG: path adjustment')
-                args = ['ngt', 'prune', '-s ' + str(self._pathadj_size), index]
+                args = ['ngt', 'prune', '-s ' + str(self._pathadj_size),
+                        index]
                 subprocess.call(args)
             indexingtime = time.time() - t0
-            print('PANNG: indexing, adjustment and saving time(sec)=' +
-                  str(indexingtime))
+            print('PANNG: indexing, adjustment and saving time(sec)={}'
+                  .format(indexingtime))
         t0 = time.time()
         self.index = ngtpy.Index(path=index, read_only=True)
         opentime = time.time() - t0
@@ -59,12 +63,16 @@ class PANNG(BaseANN):
     def set_query_arguments(self, epsilon):
         print("PANNG: epsilon=" + str(epsilon))
         self._epsilon = epsilon - 1.0
-        self.name = 'PANNG-NGT(%d, %d, %d, %1.3f)' % (self._edge_size,
-                                                      self._pathadj_size, self._edge_size_for_search, self._epsilon + 1.0)
+        self.name = 'PANNG-NGT(%d, %d, %d, %1.3f)' % (
+            self._edge_size,
+            self._pathadj_size,
+            self._edge_size_for_search,
+            self._epsilon + 1.0)
 
     def query(self, v, n):
         results = self.index.search(
-            v, n, self._epsilon, self._edge_size_for_search, with_distance=False)
+            v, n, self._epsilon, self._edge_size_for_search,
+            with_distance=False)
         return results
 
     def freeIndex(self):

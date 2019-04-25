@@ -1,5 +1,7 @@
 from __future__ import print_function
-__true_print = print
+import functools
+
+print = functools.partial(print, flush=True)   # noqa
 
 import argparse
 import datetime
@@ -13,28 +15,24 @@ import requests
 import sys
 import threading
 import time
-import psutil
-
-
-def print(*args, **kwargs):
-    __true_print(*args, **kwargs)
-    sys.stdout.flush()
-
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
-from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm, get_algorithm_name
+from ann_benchmarks.algorithms.definitions import (Definition,
+                                                   instantiate_algorithm,
+                                                   get_algorithm_name)
 from ann_benchmarks.distance import metrics
 from ann_benchmarks.results import store_results
 
 
-def run_individual_query(algo, X_train, X_test, distance, count, run_count, batch):
+def run_individual_query(algo, X_train, X_test, distance, count, run_count,
+                         batch):
     prepared_queries = \
         (batch and hasattr(algo, "prepare_batch_query")) or \
         ((not batch) and hasattr(algo, "prepare_query"))
 
     best_search_time = float('inf')
     for i in range(run_count):
-        print('Run %d/%d...' % (i+1, run_count))
+        print('Run %d/%d...' % (i + 1, run_count))
         # a bit dumb but can't be a scalar since of Python's scoping rules
         n_items_processed = [0]
 
@@ -49,15 +47,15 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
                 start = time.time()
                 candidates = algo.query(v, count)
                 total = (time.time() - start)
-            candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
+            candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))  # noqa
                           for idx in candidates]
             n_items_processed[0] += 1
             if n_items_processed[0] % 1000 == 0:
                 print('Processed %d/%d queries...' %
                       (n_items_processed[0], X_test.shape[0]))
             if len(candidates) > count:
-                print('warning: algorithm %s returned %d results, but count is only %d)' % (
-                    algo, len(candidates), count))
+                print('warning: algorithm %s returned %d results, but count'
+                      ' is only %d)' % (algo, len(candidates), count))
             return (total, candidates)
 
         def batch_query(X):
@@ -71,7 +69,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
                 algo.batch_query(X, count)
                 total = (time.time() - start)
             results = algo.get_batch_results()
-            candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))
+            candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))  # noqa
                            for idx in single_results]
                           for v, single_results in zip(X, results)]
             return [(total / float(len(X)), v) for v in candidates]
@@ -143,8 +141,8 @@ function""" % (definition.module, definition.constructor, definition.arguments)
                   (pos, len(query_argument_groups)))
             if query_arguments:
                 algo.set_query_arguments(*query_arguments)
-            descriptor, results = run_individual_query(algo, X_train, X_test,
-                                                       distance, count, run_count, batch)
+            descriptor, results = run_individual_query(
+                algo, X_train, X_test, distance, count, run_count, batch)
             descriptor["build_time"] = build_time
             descriptor["index_size"] = index_size
             descriptor["algo"] = get_algorithm_name(
@@ -204,7 +202,8 @@ def run_from_cmdline():
     run(definition, args.dataset, args.count, args.runs, args.batch)
 
 
-def run_docker(definition, dataset, count, runs, timeout, batch, mem_limit=None):
+def run_docker(definition, dataset, count, runs, timeout, batch,
+               mem_limit=None):
     import colors  # Think it doesn't work in Python 2
 
     cmd = ['--dataset', dataset,
@@ -232,9 +231,12 @@ def run_docker(definition, dataset, count, runs, timeout, batch, mem_limit=None)
         definition.docker_tag,
         cmd,
         volumes={
-            os.path.abspath('ann_benchmarks'): {'bind': '/home/app/ann_benchmarks', 'mode': 'ro'},
-            os.path.abspath('data'): {'bind': '/home/app/data', 'mode': 'ro'},
-            os.path.abspath('results'): {'bind': '/home/app/results', 'mode': 'rw'},
+            os.path.abspath('ann_benchmarks'):
+                {'bind': '/home/app/ann_benchmarks', 'mode': 'ro'},
+            os.path.abspath('data'):
+                {'bind': '/home/app/data', 'mode': 'ro'},
+            os.path.abspath('results'):
+                {'bind': '/home/app/results', 'mode': 'rw'},
         },
         cpuset_cpus=cpu_limit,
         mem_limit=mem_limit,
