@@ -1,7 +1,5 @@
 from __future__ import print_function
-import functools
-
-print = functools.partial(print, flush=True)   # noqa
+ __true_print = print  # noqa
 
 import argparse
 import datetime
@@ -15,6 +13,12 @@ import requests
 import sys
 import threading
 import time
+
+
+def print(*args, **kwargs):  # noqa
+    __true_print(*args, **kwargs)
+    sys.stdout.flush()
+
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.algorithms.definitions import (Definition,
