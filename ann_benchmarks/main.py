@@ -171,7 +171,7 @@ def main():
             status = algorithm_status(df)
             # If the module was loaded but doesn't actually have a constructor
             # of the right name, then the definition is broken
-            if status != InstantiationStatus.NO_CONSTRUCTOR:
+            if status == InstantiationStatus.NO_CONSTRUCTOR:
                 raise Exception("%s.%s(%s): error: the module '%s' does not"
                                 " expose the named constructor" % (
                                     df.module, df.constructor,
