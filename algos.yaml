@@ -451,6 +451,15 @@ float:
         pynndescent:
           args: [[5, 10, 20, 40, 80, 160], [8], [40]]
           query-args: [[1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]]
+    sptag:
+      docker-tag: ann-benchmarks-sptag
+      module: ann_benchmarks.algorithms.sptag
+      constructor: Sptag
+      base-args: ["@metric"]
+      run-groups:
+        sptag:
+          args: [['BKT', 'KDT']]
+          query-args: [[100, 200, 400, 1000, 2000, 4000]]
 bit:
   hamming:
     mih:
