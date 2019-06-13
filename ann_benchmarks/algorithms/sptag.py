@@ -24,3 +24,4 @@ class Sptag(BaseANN):
     def __str__(self):
         return 'Sptag(metric=%s, algo=%s)' % (self._metric,
                                               self._algo)
+
