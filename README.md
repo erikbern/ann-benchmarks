@@ -25,6 +25,7 @@ Evaluated
 * [PyNNDescent](https://github.com/lmcinnes/pynndescent)
 * [MRPT](https://github.com/teemupitkanen/mrpt)
 * [NGT](https://github.com/yahoojapan/NGT): ONNG, PANNG
+* [SPTAG](https://github.com/microsoft/SPTAG)
 
 Data sets
 =========
