@@ -47,7 +47,7 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 Results
 =======
 
-These are all as of 2018-06-10, running all benchmarks on a c5.4xlarge machine on AWS:
+These are all as of 2019-06-10, running all benchmarks on a c5.4xlarge machine on AWS:
 
 glove-100-angular
 -----------------
