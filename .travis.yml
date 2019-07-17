@@ -20,6 +20,7 @@ env:
   - LIBRARY=nmslib DATASET=random-xs-20-angular
   - LIBRARY=hnswlib DATASET=random-xs-20-angular
   - LIBRARY=panns DATASET=random-xs-20-angular
+  - LIBRARY=puffinn DATASET=random-xs-20-angular
   - LIBRARY=pynndescent DATASET=random-xs-20-angular
   - LIBRARY=rpforest DATASET=random-xs-20-angular
   - LIBRARY=sklearn DATASET=random-xs-20-angular
