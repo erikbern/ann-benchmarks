@@ -7,8 +7,6 @@ class Puffinn(BaseANN):
     def __init__(self, metric, space=10**6, hash_function="fht_crosspolytope", hash_source='pool', hash_args=None):
         self.metric = metric
         self.space = space
-        self.filter_type = 'filter'
-        self.eps = 1.0
         self.hash_function = hash_function
         self.hash_source = hash_source
         self.hash_args = hash_args
