@@ -5,7 +5,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class Sptag(BaseANN):
     def __init__(self, metric, algo):
-        self._algo = algo
+        self._algo = str(algo)
         self._metric = {
             'angular': 'Cosine', 'euclidean': 'L2'}[metric]
 

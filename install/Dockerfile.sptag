@@ -2,27 +2,22 @@ FROM ann-benchmarks
 
 RUN git clone https://github.com/microsoft/SPTAG
 
-RUN apt-get update && apt-get -y install wget build-essential libtbb-dev \
+RUN apt-get update && apt-get -y install wget build-essential libtbb-dev software-properties-common \
     # remove the following if you don't want to build the wrappers
-    openjdk-8-jdk python3-pip swig
+    python-pip swig
 
 # cmake >= 3.12 is required
 RUN wget "https://github.com/Kitware/CMake/releases/download/v3.14.4/cmake-3.14.4-Linux-x86_64.tar.gz" -q -O - \
         | tar -xz --strip-components=1 -C /usr/local
 
-# specific version of boost
-RUN wget "https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz" -q -O - \
-        | tar -xz && \
-        cd boost_1_67_0 && \
-        ./bootstrap.sh && \
-        ./b2 install && \
-        # update ld cache so it finds boost in /usr/local/lib
-        ldconfig && \
-        cd .. && rm -rf boost_1_67_0
+RUN add-apt-repository 'deb http://archive.ubuntu.com/ubuntu disco main universe' && apt-get update && apt-get -y install libboost1.67-all-dev
 
 # build
 RUN cd SPTAG && mkdir build && cd build && cmake .. && make && cd ..
 
 # so python can find the SPTAG module
 ENV PYTHONPATH=/home/app/SPTAG/Release
-RUN python3 -c 'import SPTAG'
+RUN python -c 'import SPTAG'
+RUN pip install -r requirements.txt
+RUN pip install sklearn enum34
+ENTRYPOINT ["python", "run_algorithm.py"]
