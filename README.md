@@ -26,6 +26,7 @@ Evaluated
 * [MRPT](https://github.com/teemupitkanen/mrpt)
 * [NGT](https://github.com/yahoojapan/NGT): ONNG, PANNG
 * [SPTAG](https://github.com/microsoft/SPTAG)
+* [PUFFINN](https://github.com/puffinn/puffinn)
 
 Data sets
 =========
