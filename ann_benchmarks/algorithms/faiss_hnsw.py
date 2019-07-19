@@ -11,7 +11,6 @@ class FaissHNSW(Faiss):
     def __init__(self, metric, method_param):
         self._metric = metric
         self.method_param = method_param
-        self.name = 'faiss (%s)' % (self.method_param)
 
     def fit(self, X):
         self.index = faiss.IndexHNSWFlat(len(X[0]), self.method_param["M"])
@@ -32,6 +31,9 @@ class FaissHNSW(Faiss):
 
     def get_additional(self):
         return {"dist_comps": faiss.cvar.hnsw_stats.ndis}
+
+    def __str__(self):
+        return 'faiss (%s, ef: %d)' % (self.method_param, self.index.hnsw.efSearch)
 
     def freeIndex(self):
         del self.p

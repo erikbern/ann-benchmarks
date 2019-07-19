@@ -5,7 +5,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class Sptag(BaseANN):
     def __init__(self, metric, algo):
-        self._algo = algo
+        self._algo = str(algo)
         self._metric = {
             'angular': 'Cosine', 'euclidean': 'L2'}[metric]
 
@@ -13,15 +13,16 @@ class Sptag(BaseANN):
         self._sptag = SPTAG.AnnIndex(self._algo, 'Float', X.shape[1])
         self._sptag.SetBuildParam("NumberOfThreads", '32')
         self._sptag.SetBuildParam("DistCalcMethod", self._metric)
-        self._sptag.Build(X.tobytes(), X.shape[0])
+        self._sptag.Build(X, X.shape[0])
 
     def set_query_arguments(self, MaxCheck):
-        self._sptag.SetSearchParam("MaxCheck", str(MaxCheck))
+        self._maxCheck = MaxCheck
+        self._sptag.SetSearchParam("MaxCheck", str(self._maxCheck))
 
     def query(self, v, k):
-        return self._sptag.Search(v.tobytes(), k)[0]
+        return self._sptag.Search(v, k)[0]
 
     def __str__(self):
-        return 'Sptag(metric=%s, algo=%s)' % (self._metric,
-                                              self._algo)
+        return 'Sptag(metric=%s, algo=%s, check=%d)' % (self._metric,
+                                              self._algo, self._maxCheck)
 
