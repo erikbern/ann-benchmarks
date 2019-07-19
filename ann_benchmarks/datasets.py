@@ -8,6 +8,8 @@ try:
 except ImportError:
     from urllib.request import urlretrieve  # Python 3
 
+from ann_benchmarks.distance import dataset_transform
+
 
 def download(src, dst):
     if not os.path.exists(dst):
@@ -55,11 +57,13 @@ def write_output(train, test, fn, distance, point_type='float', count=100):
     neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
     distances = f.create_dataset('distances', (len(test), count), dtype='f')
     bf = BruteForceBLAS(distance, precision=train.dtype)
+    train = dataset_transform[distance](train)
+    test = dataset_transform[distance](test)
     bf.fit(train)
     queries = []
     for i, x in enumerate(test):
         if i % 1000 == 0:
-            print('%d/%d...' % (i, test.shape[0]))
+            print('%d/%d...' % (i, len(test)))
         res = list(bf.query_with_distances(x, count))
         res.sort(key=lambda t: t[-1])
         neighbors[i] = [j for j, _ in res]

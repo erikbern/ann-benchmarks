@@ -24,7 +24,7 @@ from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.algorithms.definitions import (Definition,
                                                    instantiate_algorithm,
                                                    get_algorithm_name)
-from ann_benchmarks.distance import metrics
+from ann_benchmarks.distance import metrics, dataset_transform
 from ann_benchmarks.results import store_results
 
 
@@ -56,7 +56,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
             n_items_processed[0] += 1
             if n_items_processed[0] % 1000 == 0:
                 print('Processed %d/%d queries...' %
-                      (n_items_processed[0], X_test.shape[0]))
+                      (n_items_processed[0], len(X_test)))
             if len(candidates) > count:
                 print('warning: algorithm %s returned %d results, but count'
                       ' is only %d)' % (algo, len(candidates), count))
@@ -120,6 +120,9 @@ function""" % (definition.module, definition.constructor, definition.arguments)
     distance = D.attrs['distance']
     print('got a train set of size (%d * %d)' % X_train.shape)
     print('got %d queries' % len(X_test))
+
+    X_train = dataset_transform[distance](X_train)
+    X_test = dataset_transform[distance](X_test)
 
     try:
         prepared_queries = False

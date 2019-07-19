@@ -35,3 +35,10 @@ metrics = {
         'distance_valid': lambda a: True
     }
 }
+
+dataset_transform = {
+    'hamming': lambda X: X,
+    'euclidean': lambda X: X,
+    'angular': lambda X: X,
+    'jaccard' : lambda X: transform_dense_to_sparse(X)
+}
