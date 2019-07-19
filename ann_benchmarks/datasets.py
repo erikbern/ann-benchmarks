@@ -220,7 +220,7 @@ def nytimes(out_fn, n_dimensions):
     transform_bag_of_words(fn, n_dimensions, out_fn)
 
 
-def random(out_fn, n_dims, n_samples, centers, distance):
+def random_float(out_fn, n_dims, n_samples, centers, distance):
     import sklearn.datasets
 
     X, _ = sklearn.datasets.make_blobs(
@@ -332,13 +332,13 @@ DATASETS = {
     'glove-100-angular': lambda out_fn: glove(out_fn, 100),
     'glove-200-angular': lambda out_fn: glove(out_fn, 200),
     'mnist-784-euclidean': mnist,
-    'random-xs-20-euclidean': lambda out_fn: random(out_fn, 20, 10000, 100,
+    'random-xs-20-euclidean': lambda out_fn: random_float(out_fn, 20, 10000, 100,
                                                     'euclidean'),
-    'random-s-100-euclidean': lambda out_fn: random(out_fn, 100, 100000, 1000,
+    'random-s-100-euclidean': lambda out_fn: random_float(out_fn, 100, 100000, 1000,
                                                     'euclidean'),
-    'random-xs-20-angular': lambda out_fn: random(out_fn, 20, 10000, 100,
+    'random-xs-20-angular': lambda out_fn: random_float(out_fn, 20, 10000, 100,
                                                   'angular'),
-    'random-s-100-angular': lambda out_fn: random(out_fn, 100, 100000, 1000,
+    'random-s-100-angular': lambda out_fn: random_float(out_fn, 100, 100000, 1000,
                                                   'angular'),
     'random-xs-16-hamming': lambda out_fn: random_bitstring(out_fn, 16, 10000,
                                                             100),
