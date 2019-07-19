@@ -283,6 +283,50 @@ def sift_hamming(out_fn, fn):
         X_train, X_test = train_test_split(X, test_size=1000)
         write_output(X_train, X_test, out_fn, 'hamming', 'bit')
 
+def kosarak(out_fn):
+    import gzip
+    local_fn = 'kosarak.dat.gz'
+    # only consider sets with at least min_elements many elements
+    min_elements = 20
+    url = 'http://fimi.uantwerpen.be/data/%s' % local_fn
+    download(url, local_fn)
+
+    with gzip.open('kosarak.dat.gz', 'r') as f:
+        content = f.readlines()
+        # preprocess data to find sets with more than 20 elements
+        # keep track of used ids for reenumeration
+        ids = {}
+        next_id = 0
+        cnt = 0
+        for line in content:
+            if len(line.split()) >= min_elements:
+                cnt += 1
+                for x in line.split():
+                    if int(x) not in ids:
+                        ids[int(x)] = next_id
+                        next_id += 1
+
+    X = numpy.zeros((cnt, len(ids)), dtype=numpy.bool)
+    i = 0
+    for line in content:
+        if len(line.split()) >= min_elements:
+            for x in line.split():
+                X[i][ids[int(x)]] = 1
+            i += 1
+
+    X_train, X_test = train_test_split(numpy.array(X), test_size=500)
+    write_output(X_train, X_test, out_fn, 'jaccard', 'bit')
+
+def random_jaccard(out_fn, n=10000, size=50, universe=80):
+    l = list(range(universe))
+    X = numpy.zeros((n, universe), dtype=numpy.bool)
+    for i in range(len(X)):
+        for j in random.sample(l, size):
+            X[i][j] = True
+    X_train, X_test = train_test_split(X, test_size=100)
+    write_output(X_train, X_test, out_fn, 'jaccard', 'bit')
+
+
 
 def lastfm(out_fn, n_dimensions, test_size=50000):
     # This tests out ANN methods for retrieval on simple matrix factorization
@@ -350,6 +394,10 @@ DATASETS = {
                                                             50000, 1000),
     'random-l-256-hamming': lambda out_fn: random_bitstring(out_fn, 256,
                                                             100000, 1000),
+    'random-s-jaccard': lambda out_fn: random_jaccard(out_fn, n=10000,
+                                                       size=20, universe=40),
+    'random-l-jaccard': lambda out_fn: random_jaccard(out_fn, n=100000,
+                                                       size=70, universe=100),
     'sift-128-euclidean': sift,
     'nytimes-256-angular': lambda out_fn: nytimes(out_fn, 256),
     'nytimes-16-angular': lambda out_fn: nytimes(out_fn, 16),
@@ -359,4 +407,5 @@ DATASETS = {
     'lastfm-64-dot': lambda out_fn: lastfm(out_fn, 64),
     'sift-256-hamming': lambda out_fn: sift_hamming(
         out_fn, 'sift.hamming.256'),
+    'kosarak-jaccard': lambda out_fn: kosarak(out_fn),
 }
