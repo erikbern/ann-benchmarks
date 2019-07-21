@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 from scipy.spatial.distance import pdist as scipy_pdist
+import itertools
 import numpy as np
 
 def pdist(a, b, metric):
@@ -20,15 +21,8 @@ def transform_dense_to_sparse(X):
     # get list of indices of non-zero elements
     indices = np.transpose(np.where(X))
     keys = []
-    l = []
-    last_i = None
-    for i, j in indices:
-        if last_i != None and last_i != i:
-            keys.append(l)
-            l = []
-        l.append(j)
-        last_i = i
-    keys.append(l)
+    for _, js in itertools.groupby(indices, lambda ij: ij[0]):
+        keys.append([j for _, j in js])
 
     assert len(X) == len(keys)
 
