@@ -318,6 +318,7 @@ def kosarak(out_fn):
     write_output(X_train, X_test, out_fn, 'jaccard', 'bit')
 
 def random_jaccard(out_fn, n=10000, size=50, universe=80):
+    random.seed(1)
     l = list(range(universe))
     X = numpy.zeros((n, universe), dtype=numpy.bool)
     for i in range(len(X)):
