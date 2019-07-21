@@ -554,7 +554,6 @@ bit:
         base:
           args: [[32,64,128,256,512,1024,2048,4096,8192]]
           query-args: [[1, 5, 10, 50, 100, 200]]
-bit:
   jaccard:
     bf:
       docker-tag: ann-benchmarks-sklearn
