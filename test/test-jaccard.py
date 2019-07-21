@@ -15,6 +15,7 @@ class TestJaccard(unittest.TestCase):
         self.assertAlmostEqual(jaccard(a, b), 0.0)
         self.assertAlmostEqual(jaccard(a, a), 1.0)
         self.assertAlmostEqual(jaccard(a, c), 0.5)
+        self.assertAlmostEqual(jaccard(c, d), 0.0)
 
     def test_transformation(self):
         X = numpy.array([[True, False, False], [True, False, True], [False, False, True]])
