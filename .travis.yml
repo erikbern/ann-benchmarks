@@ -26,6 +26,7 @@ env:
   - LIBRARY=sklearn DATASET=random-xs-20-angular
   - LIBRARY=sptag DATASET=random-xs-20-angular
   - LIBRARY=mih DATASET=random-xs-16-hamming
+  - LIBRARY=datasketch DATASET=random-s-jaccard
 
 before_install:
   - pip install -r requirements.txt
@@ -38,4 +39,5 @@ script:
   - python plot.py --dataset $DATASET --output plot.png
   - python plot.py --dataset $DATASET --output plot-batch.png --batch
   - python -m unittest test/test-metrics.py
+  - python -m unittest test/test-jaccard.py
   - python create_website.py --outputdir . --scatter --latex

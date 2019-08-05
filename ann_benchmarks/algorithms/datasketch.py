@@ -18,12 +18,12 @@ class DataSketch(BaseANN):
         for i, x in enumerate(X):
             m = MinHash(num_perm=self._n_perm)
             for e in x:
-                m.update(str(e))
+                m.update(str(e).encode('utf8'))
             self._index.add(str(i), m)
         self._index.index()
 
     def query(self, v, n):
         m = MinHash(num_perm=self._n_perm)
         for e in v:
-            m.update(str(e))
+            m.update(str(e).encode('utf8'))
         return map(int, self._index.query(m, n))
