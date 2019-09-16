@@ -138,4 +138,4 @@ Related Publication
 The following publication details design principles behind the benchmarking framework: 
 
 - M. Aumüller, E. Bernhardsson, A. Faithfull:
-[ANN-Benchmarks: A Benchmarking Tool for Approximate Nearest Neighbor Algorithms](http://www.itu.dk/people/maau/additional/sisap2017-preprint.pdf). SISAP 2017: 34-49
+[ANN-Benchmarks: A Benchmarking Tool for Approximate Nearest Neighbor Algorithms](https://arxiv.org/abs/1807.05614). Information Systems 2019. DOI: [10.1016/j.is.2019.02.006](https://doi.org/10.1016/j.is.2019.02.006)
