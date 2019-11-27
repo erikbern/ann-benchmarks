@@ -268,11 +268,13 @@ float:
       run-groups:
         NN-10-20:
           arg-groups:
-            - {"n_neighbors": [10, 20], "diversify_epsilon": [1.0], "pruning_degree_multiplier":[1.0, 1.5, 2.0], "leaf_size":32}
+            - {"n_neighbors": [10, 20], "diversify_epsilon": [1.0],
+               "pruning_degree_multiplier":[1.5, 2.0], "leaf_size": 32}
           query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16]]
         NN-40-80:
           arg-groups:
-            - {"n_neighbors": [40, 80], "diversify_epsilon": [0.0, 1.0], "pruning_degree_multiplier":[2.0, 2.5], "leaf_size":64}
+            - {"n_neighbors": [40, 80], "diversify_epsilon": [0.0, 1.0],
+               "pruning_degree_multiplier":[2.0, 2.5], "leaf_size": 64}
           query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
     NGT-panng:
       docker-tag: ann-benchmarks-ngt
@@ -388,12 +390,12 @@ float:
         NN-10-20:
           arg-groups:
             - {"n_neighbors": [10, 20], "diversify_epsilon": [1.0],
-               "pruning_degree_multiplier":[1.0, 1.5, 2.0], "leaf_size":32}
+               "pruning_degree_multiplier":[1.5, 2.0], "leaf_size": 32}
           query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16]]
         NN-40-80:
           arg-groups:
             - {"n_neighbors": [40, 80], "diversify_epsilon": [0.0, 1.0],
-               "pruning_degree_multiplier":[2.0, 2.5], "leaf_size":64}
+               "pruning_degree_multiplier":[2.0, 2.5], "leaf_size": 64}
           query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
   angular:
     puffinn:
