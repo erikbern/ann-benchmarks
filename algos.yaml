@@ -266,9 +266,16 @@ float:
       constructor: PyNNDescent
       base-args: ["@metric"]
       run-groups:
-        pynndescent:
-          args: [[10, 20, 40, 80], [4, 8], [30]]
-          query-args: [[1.0, 2.0, 4.0, 8.0]]
+        NN-10-20:
+          arg-groups:
+            - {"n_neighbors": [10, 20], "diversify_epsilon": [1.0],
+               "pruning_degree_multiplier":[1.5, 2.0], "leaf_size": 32}
+          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16]]
+        NN-40-80:
+          arg-groups:
+            - {"n_neighbors": [40, 80], "diversify_epsilon": [0.0, 1.0],
+               "pruning_degree_multiplier":[2.0, 2.5], "leaf_size": 64}
+          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
     NGT-panng:
       docker-tag: ann-benchmarks-ngt
       module: ann_benchmarks.algorithms.panng_ngt
@@ -380,9 +387,16 @@ float:
       constructor: PyNNDescent
       base-args: ["@metric"]
       run-groups:
-        pynndescent:
-          args: [[5, 10, 20, 40, 80], [4, 8], [20]]
-          query-args: [[1.0, 1.5, 2.0, 4.0, 8.0]]
+        NN-10-20:
+          arg-groups:
+            - {"n_neighbors": [10, 20], "diversify_epsilon": [1.0],
+               "pruning_degree_multiplier":[1.5, 2.0], "leaf_size": 32}
+          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16]]
+        NN-40-80:
+          arg-groups:
+            - {"n_neighbors": [40, 80], "diversify_epsilon": [0.0, 1.0],
+               "pruning_degree_multiplier":[2.0, 2.5], "leaf_size": 64}
+          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
   angular:
     puffinn:
       docker-tag: ann-benchmarks-puffinn
@@ -469,9 +483,26 @@ float:
       constructor: PyNNDescent
       base-args: ["@metric"]
       run-groups:
-        pynndescent:
-          args: [[5, 10, 20, 40, 80, 160], [8], [40]]
-          query-args: [[1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]]
+        NN-20:
+          arg-groups:
+            - {"n_neighbors": [20], "diversify_epsilon": [0.75, 1.0],
+               "pruning_degree_multiplier":[1.0, 1.5], leaf_size: 32}
+          query-args: [[0.0, 0.01, 0.02, 0.04, 0.08, 0.12, 0.16]]
+        NN-40:
+          arg-groups:
+            - {"n_neighbors": [40], "diversify_epsilon": [0.5, 1.0],
+               "pruning_degree_multiplier":[1.5, 2.0], leaf_size: 48}
+          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24]]
+        NN-80:
+          arg-groups:
+            - {"n_neighbors": [80], "diversify_epsilon": [0.25, 1.0],
+               "pruning_degree_multiplier":[1.75, 2.25], leaf_size: 64}
+          query-args: [[0.0, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
+        NN-120:
+          arg-groups:
+            - {"n_neighbors": [120], "diversify_epsilon": [0.0, 1.0],
+               "pruning_degree_multiplier":[2.0, 2.5], leaf_size: 80}
+          query-args: [[0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
 bit:
   hamming:
     mih:
@@ -527,11 +558,28 @@ bit:
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
       constructor: PyNNDescent
-      base-args: ["euclidean"]
+      base-args: ["@metric"]
       run-groups:
-        pynndescent:
-          args: [[20, 40, 80, 160, 250], [4], [40]]
-          query-args: [[1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]]
+        NN-20:
+          arg-groups:
+            - {"n_neighbors": [20], "diversify_epsilon": [0.75, 1.0],
+               "pruning_degree_multiplier":[1.0, 1.5], leaf_size: 32}
+          query-args: [[0.0, 0.01, 0.02, 0.04, 0.08, 0.12, 0.16]]
+        NN-40:
+          arg-groups:
+            - {"n_neighbors": [40], "diversify_epsilon": [0.5, 1.0],
+               "pruning_degree_multiplier":[1.5, 2.0], leaf_size: 48}
+          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24]]
+        NN-80:
+          arg-groups:
+            - {"n_neighbors": [80], "diversify_epsilon": [0.25, 1.0],
+               "pruning_degree_multiplier":[1.75, 2.25], leaf_size: 64}
+          query-args: [[0.0, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
+        NN-120:
+          arg-groups:
+            - {"n_neighbors": [120], "diversify_epsilon": [0.0, 1.0],
+               "pruning_degree_multiplier":[2.0, 2.5], leaf_size: 80}
+          query-args: [[0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
     annoy:
       docker-tag: ann-benchmarks-annoy
       module: ann_benchmarks.algorithms.annoy
@@ -583,3 +631,29 @@ bit:
               ['1bit_minhash'],
             ]
             query-args: [[0.1, 0.2, 0.5, 0.7, 0.9, 0.95, 0.99]]
+    pynndescent:
+      docker-tag: ann-benchmarks-pynndescent
+      module: ann_benchmarks.algorithms.pynndescent
+      constructor: PyNNDescent
+      base-args: ["@metric"]
+      run-groups:
+        NN-20:
+          arg-groups:
+            - {"n_neighbors": [20], "diversify_epsilon": [0.75, 1.0],
+               "pruning_degree_multiplier":[1.0, 1.5], leaf_size: 32}
+          query-args: [[0.0, 0.01, 0.02, 0.04, 0.08, 0.12, 0.16]]
+        NN-40:
+          arg-groups:
+            - {"n_neighbors": [40], "diversify_epsilon": [0.5, 1.0],
+               "pruning_degree_multiplier":[1.5, 2.0], leaf_size: 48}
+          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24]]
+        NN-80:
+          arg-groups:
+            - {"n_neighbors": [80], "diversify_epsilon": [0.25, 1.0],
+               "pruning_degree_multiplier":[1.75, 2.25], leaf_size: 64}
+          query-args: [[0.0, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
+        NN-120:
+          arg-groups:
+            - {"n_neighbors": [120], "diversify_epsilon": [0.0, 1.0],
+               "pruning_degree_multiplier":[2.0, 2.5], leaf_size: 80}
+          query-args: [[0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
