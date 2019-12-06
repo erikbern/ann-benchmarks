@@ -1,0 +1,26 @@
+FROM ann-benchmarks
+
+ENV PG_VERSION 10
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive \ 
+    apt-get install -y \ 
+        postgresql-$PG_VERSION \
+        postgresql-client-$PG_VERSION \
+        postgresql-contrib-$PG_VERSION \
+        postgresql-doc-$PG_VERSION \
+        postgresql-$PG_VERSION-plv8 \
+        postgresql-plpython-$PG_VERSION \
+        libpq-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/*
+    
+RUN pip3 install psycopg2 umap-learn
+
+USER postgres
+RUN service postgresql restart && psql --command \
+    "ALTER USER postgres WITH PASSWORD 'password';" \
+    && createdb -O postgres ann_benchmark 
+
+USER root
+

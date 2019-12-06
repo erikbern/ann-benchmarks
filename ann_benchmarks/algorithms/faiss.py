@@ -6,7 +6,7 @@ import sklearn.preprocessing
 import ctypes
 import faiss
 from ann_benchmarks.algorithms.base import BaseANN
-
+import tempfile
 
 class Faiss(BaseANN):
     def query(self, v, n):
@@ -80,3 +80,17 @@ class FaissIVF(Faiss):
     def __str__(self):
         return 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list,
                                                     self._n_probe)
+
+
+class FaissIVFDisk(FaissIVF):
+    def __init__(self, metric, n_list):
+        super(FaissIVFDisk, self).__init__(metric, n_list)
+        f = tempfile.NamedTemporaryFile(mode='w+b', delete=False)
+        self.save_name = f.name
+        f.close()
+
+    def fit(self, X):
+        super(FaissIVFDisk, self).fit(X)
+        faiss.write_index(self.index, self.save_name)
+        self.index.reset()
+        self.index = faiss.read_index(self.save_name, faiss.IO_FLAG_MMAP)

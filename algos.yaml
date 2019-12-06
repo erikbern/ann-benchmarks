@@ -40,6 +40,15 @@ float:
         base:
           args: [[32,64,128,256,512,1024,2048,4096,8192]]
           query-args: [[1, 5, 10, 50, 100, 200]]
+    faiss-ivf-disk:
+      docker-tag: ann-benchmarks-faiss
+      module: ann_benchmarks.algorithms.faiss
+      constructor: FaissIVFDisk
+      base-args: ["@metric"]
+      run-groups:
+        base:
+          args: [[32,64,128,256,512,1024,2048,4096,8192]]
+          query-args: [[1, 5, 10, 50, 100, 200]]
     faiss-gpu:
       disabled: true
       docker-tag: ann-benchmarks-faiss
@@ -170,6 +179,19 @@ float:
           # This run group produces 3 algorithm instances -- Annoy("angular",
           # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
           # which will be used to run 12 different queries.
+    annoy-disk:
+      docker-tag: ann-benchmarks-annoy
+      module: ann_benchmarks.algorithms.annoy
+      constructor: AnnoyDisk
+      base-args: ["@metric"]
+      run-groups:
+        annoy:
+          args: [[100, 200, 400]]
+          query-args: [[100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000,
+                      100000, 200000, 400000]]
+          # This run group produces 3 algorithm instances -- Annoy("angular",
+          # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
+          # which will be used to run 12 different queries.
     shidx:
       docker-tag: ann-benchmarks-hdidx
       module: ann_benchmarks.algorithms.hdidx
@@ -266,16 +288,9 @@ float:
       constructor: PyNNDescent
       base-args: ["@metric"]
       run-groups:
-        NN-10-20:
-          arg-groups:
-            - {"n_neighbors": [10, 20], "diversify_epsilon": [1.0],
-               "pruning_degree_multiplier":[1.5, 2.0], "leaf_size": 32}
-          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16]]
-        NN-40-80:
-          arg-groups:
-            - {"n_neighbors": [40, 80], "diversify_epsilon": [0.0, 1.0],
-               "pruning_degree_multiplier":[2.0, 2.5], "leaf_size": 64}
-          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
+        pynndescent:
+          args: [[10, 20, 40, 80], [4, 8], [30]]
+          query-args: [[1.0, 2.0, 4.0, 8.0]]
     NGT-panng:
       docker-tag: ann-benchmarks-ngt
       module: ann_benchmarks.algorithms.panng_ngt
@@ -285,8 +300,26 @@ float:
         panng:
            args : [{'edge': 20, 'pathadj': 40, 'searchedge': 60}]
            query-args : [[0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2]]
+    NGT-panng-disk:
+      docker-tag: ann-benchmarks-ngt_disk
+      module: ann_benchmarks.algorithms.panng_ngt
+      constructor : PANNG
+      base-args : ["@metric", "Float"]
+      run-groups :
+        panng:
+           args : [{'edge': 20, 'pathadj': 40, 'searchedge': 60}]
+           query-args : [[0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2]]
     NGT-onng:
       docker-tag: ann-benchmarks-ngt
+      module: ann_benchmarks.algorithms.onng_ngt
+      constructor : ONNG
+      base-args : ["@metric", "Float", 0.1]
+      run-groups :
+        onng:
+           args : [{'edge': 100, 'outdegree': 10, 'indegree': 120}]
+           query-args : [[0.6, 0.9, 1.0, 1.02, 1.03, 1.05, 1.07, 1.1, 1.2]]
+    NGT-onng-disk:
+      docker-tag: ann-benchmarks-ngt_disk
       module: ann_benchmarks.algorithms.onng_ngt
       constructor : ONNG
       base-args : ["@metric", "Float", 0.1]
@@ -304,6 +337,15 @@ float:
           args: ["@count"]
           query-args: [[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9,
                         0.925, 0.95, 0.97, 0.98, 0.99, 0.995]]
+    pgann:
+      docker-tag: ann-benchmarks-pgann
+      module: ann_benchmarks.algorithms.pgann
+      constructor: PgANN
+      base-args: ["@metric"]
+      run-groups:
+        pgann:
+          args: [[10, 20, 30, 40], [-1]]
+          query-args: [[0.5, 1, 5, 10, 20]]
   euclidean:
     kgraph:
       docker-tag: ann-benchmarks-kgraph
@@ -387,16 +429,9 @@ float:
       constructor: PyNNDescent
       base-args: ["@metric"]
       run-groups:
-        NN-10-20:
-          arg-groups:
-            - {"n_neighbors": [10, 20], "diversify_epsilon": [1.0],
-               "pruning_degree_multiplier":[1.5, 2.0], "leaf_size": 32}
-          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16]]
-        NN-40-80:
-          arg-groups:
-            - {"n_neighbors": [40, 80], "diversify_epsilon": [0.0, 1.0],
-               "pruning_degree_multiplier":[2.0, 2.5], "leaf_size": 64}
-          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
+        pynndescent:
+          args: [[5, 10, 20, 40, 80], [4, 8], [20]]
+          query-args: [[1.0, 1.5, 2.0, 4.0, 8.0]]
   angular:
     puffinn:
       docker-tag: ann-benchmarks-puffinn
@@ -483,26 +518,9 @@ float:
       constructor: PyNNDescent
       base-args: ["@metric"]
       run-groups:
-        NN-20:
-          arg-groups:
-            - {"n_neighbors": [20], "diversify_epsilon": [0.75, 1.0],
-               "pruning_degree_multiplier":[1.0, 1.5], leaf_size: 32}
-          query-args: [[0.0, 0.01, 0.02, 0.04, 0.08, 0.12, 0.16]]
-        NN-40:
-          arg-groups:
-            - {"n_neighbors": [40], "diversify_epsilon": [0.5, 1.0],
-               "pruning_degree_multiplier":[1.5, 2.0], leaf_size: 48}
-          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24]]
-        NN-80:
-          arg-groups:
-            - {"n_neighbors": [80], "diversify_epsilon": [0.25, 1.0],
-               "pruning_degree_multiplier":[1.75, 2.25], leaf_size: 64}
-          query-args: [[0.0, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
-        NN-120:
-          arg-groups:
-            - {"n_neighbors": [120], "diversify_epsilon": [0.0, 1.0],
-               "pruning_degree_multiplier":[2.0, 2.5], leaf_size: 80}
-          query-args: [[0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
+        pynndescent:
+          args: [[5, 10, 20, 40, 80, 160], [8], [40]]
+          query-args: [[1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]]
 bit:
   hamming:
     mih:
@@ -558,28 +576,11 @@ bit:
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
       constructor: PyNNDescent
-      base-args: ["@metric"]
+      base-args: ["euclidean"]
       run-groups:
-        NN-20:
-          arg-groups:
-            - {"n_neighbors": [20], "diversify_epsilon": [0.75, 1.0],
-               "pruning_degree_multiplier":[1.0, 1.5], leaf_size: 32}
-          query-args: [[0.0, 0.01, 0.02, 0.04, 0.08, 0.12, 0.16]]
-        NN-40:
-          arg-groups:
-            - {"n_neighbors": [40], "diversify_epsilon": [0.5, 1.0],
-               "pruning_degree_multiplier":[1.5, 2.0], leaf_size: 48}
-          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24]]
-        NN-80:
-          arg-groups:
-            - {"n_neighbors": [80], "diversify_epsilon": [0.25, 1.0],
-               "pruning_degree_multiplier":[1.75, 2.25], leaf_size: 64}
-          query-args: [[0.0, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
-        NN-120:
-          arg-groups:
-            - {"n_neighbors": [120], "diversify_epsilon": [0.0, 1.0],
-               "pruning_degree_multiplier":[2.0, 2.5], leaf_size: 80}
-          query-args: [[0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
+        pynndescent:
+          args: [[20, 40, 80, 160, 250], [4], [40]]
+          query-args: [[1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]]
     annoy:
       docker-tag: ann-benchmarks-annoy
       module: ann_benchmarks.algorithms.annoy
@@ -593,10 +594,32 @@ bit:
           # This run group produces 3 algorithm instances -- Annoy("angular",
           # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
           # which will be used to run 12 different queries.
+    annoy-disk:
+      docker-tag: ann-benchmarks-annoy
+      module: ann_benchmarks.algorithms.annoy
+      constructor: AnnoyDisk
+      base-args: ["@metric"]
+      run-groups:
+        annoy:
+          args: [[100, 200, 400]]
+          query-args: [[100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000,
+                      100000, 200000, 400000]]
+          # This run group produces 3 algorithm instances -- Annoy("angular",
+          # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
+          # which will be used to run 12 different queries.
     faiss-ivf:
       docker-tag: ann-benchmarks-faiss
       module: ann_benchmarks.algorithms.faiss
       constructor: FaissIVF
+      base-args: ["euclidean"]
+      run-groups:
+        base:
+          args: [[32,64,128,256,512,1024,2048,4096,8192]]
+          query-args: [[1, 5, 10, 50, 100, 200]]
+    faiss-ivf-disk:
+      docker-tag: ann-benchmarks-faiss
+      module: ann_benchmarks.algorithms.faiss
+      constructor: FaissIVFDisk
       base-args: ["euclidean"]
       run-groups:
         base:
@@ -631,29 +654,3 @@ bit:
               ['1bit_minhash'],
             ]
             query-args: [[0.1, 0.2, 0.5, 0.7, 0.9, 0.95, 0.99]]
-    pynndescent:
-      docker-tag: ann-benchmarks-pynndescent
-      module: ann_benchmarks.algorithms.pynndescent
-      constructor: PyNNDescent
-      base-args: ["@metric"]
-      run-groups:
-        NN-20:
-          arg-groups:
-            - {"n_neighbors": [20], "diversify_epsilon": [0.75, 1.0],
-               "pruning_degree_multiplier":[1.0, 1.5], leaf_size: 32}
-          query-args: [[0.0, 0.01, 0.02, 0.04, 0.08, 0.12, 0.16]]
-        NN-40:
-          arg-groups:
-            - {"n_neighbors": [40], "diversify_epsilon": [0.5, 1.0],
-               "pruning_degree_multiplier":[1.5, 2.0], leaf_size: 48}
-          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24]]
-        NN-80:
-          arg-groups:
-            - {"n_neighbors": [80], "diversify_epsilon": [0.25, 1.0],
-               "pruning_degree_multiplier":[1.75, 2.25], leaf_size: 64}
-          query-args: [[0.0, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
-        NN-120:
-          arg-groups:
-            - {"n_neighbors": [120], "diversify_epsilon": [0.0, 1.0],
-               "pruning_degree_multiplier":[2.0, 2.5], leaf_size: 80}
-          query-args: [[0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
