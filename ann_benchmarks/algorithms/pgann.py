@@ -13,16 +13,17 @@ import numpy as np
 import umap
 import subprocess
 import psycopg2
-import dataset
 
 class PgANN(BaseANN):
-    def __init__(self, metric, embed_size=None, sample_prc=None, num_neigh=12):
+    def __init__(self, metric, embed_size=None, num_neigh=12, init='random'):
         self.metric = metric
         if metric == 'angular':
             self.metric = 'cosine'
         self.embed_size = embed_size
-        self.sample_prc = sample_prc
+        if embed_size == 'None':
+            self.embed_size = None
         self.num_neigh = num_neigh
+        self.init = init
         # restart cluster (remove stale pid)
         args = ['pg_ctlcluster', '10', 'main', 'restart']
         subprocess.call(args)
@@ -35,62 +36,39 @@ class PgANN(BaseANN):
         self.cursor.execute("CREATE EXTENSION cube;")
         # create table
         table_creation = """
-        CREATE TABLE ann (
-            id serial PRIMARY KEY, 
-            index_num integer, 
-            embeddings cube);
+            CREATE TABLE ann (
+                id serial PRIMARY KEY, 
+                index_num integer, 
+                embeddings cube);
         """
         self.cursor.execute(table_creation)
-        # create GIST
+        # create GIST index on embeddings
         gist_creation = """
-        CREATE INDEX ix_gist 
-        ON ann USING GIST (embeddings);
+            CREATE INDEX ix_gist 
+            ON ann USING GIST (embeddings);
         """
         self.cursor.execute(gist_creation)
 
 
     def fit(self, X):
-        # reduce vector dimension
         if self.embed_size:
-            # sample or initiate random Umap fit
-            if self.sample_prc:
-                # UMAP errors out with really big data.
-                # Can either sample or initiate
-                # randomly (instead of a spectral embeddings)
-                if self.sample_prc <= 0:
-                    # no sample, random initialization
-                    init = 'random'
-                    X_train = X
-                else:
-                    # sample, spectral embeddings
-                    init = 'spectral'
-                    rand = np.random.choice(
-                        np.arange(len(X)), 
-                        int(len(X)*self.sample_prc), 
-                        replace=False)
-                    X_train = X[rand]
-            # no sample, use spectral embeddings
-            else:
-                init = 'spectral'
-                X_train = X 
-
+            # reduce vector dimension
             self.reducer = umap.UMAP(
                 metric = self.metric,
                 n_neighbors = self.num_neigh, 
                 n_components = self.embed_size,
-                init = init).fit(X_train)
+                init = self.init).fit(X)
             embeddings = self.reducer.transform(X)
-        # no vector reduction, really slow querying
         else:
+            # no reduction
             embeddings = X
-
         # populate DB
         for t, embed in enumerate(embeddings):
-            embed_string= "({0})".format(
+            embed_string= "'({0})'".format(
                 ','.join("%10.8f" % x for x in embed))
             insert="""
-            INSERT INTO ann (index_num, embeddings) 
-            VALUES ({}, Cube'{}');
+                INSERT INTO ann (index_num, embeddings) 
+                VALUES ({}, cube{});
             """.format(t, embed_string)
             self.cursor.execute(insert)
 
@@ -107,10 +85,10 @@ class PgANN(BaseANN):
         emb_string = "'({0})'".format(','.join("%10.8f" % x for x in v))
         # create query
         query = """
-        SELECT index_num from ann 
-        WHERE embeddings <-> cube({}) < {}
-        ORDER BY embeddings <-> cube({}) ASC
-        LIMIT {} 
+            SELECT index_num FROM ann 
+            WHERE embeddings <-> cube({}) < {}
+            ORDER BY embeddings <-> cube({}) ASC
+            LIMIT {};
         """.format(emb_string, self.thresh, emb_string, n)
         # run and get query results
         self.cursor.execute(query)
@@ -120,6 +98,7 @@ class PgANN(BaseANN):
 
     def __str__(self):
         return ('PgANN(threshold={}, embed_size={}, \
-            sample_prc={}, num_neigh={}').format(
+            num_neigh={}, init={}').format(
             self.thresh, self.embed_size,
-            self.sample_prc, self.num_neigh) 
+            self.num_neigh, self.init) 
+
