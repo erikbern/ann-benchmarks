@@ -7,8 +7,13 @@ Doing fast searching of nearest neighbors in high dimensional spaces is an incre
 
 This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics. We have pregenerated datasets (in HDF5) formats and we also have Docker containers for each algorithm. There's a [test suite](https://travis-ci.org/erikbern/ann-benchmarks) that makes sure every algorithm works.
 
+All algorithms work in memory with full datasets stored in RAM. For larger datasets that cannot fit in memory, some algorithms offer (slower) out-of-core options to keep data stored on disk. Separate benchmarking experiments are conducted for in RAM algorithms and on disk algorithms.
+
 Evaluated
 =========
+
+In RAM
+------
 
 * [Annoy](https://github.com/spotify/annoy)
 * [FLANN](http://www.cs.ubc.ca/research/flann/)
@@ -27,6 +32,14 @@ Evaluated
 * [NGT](https://github.com/yahoojapan/NGT): ONNG, PANNG
 * [SPTAG](https://github.com/microsoft/SPTAG)
 * [PUFFINN](https://github.com/puffinn/puffinn)
+
+On Disk
+------- 
+
+* [Annoy](https://github.com/spotify/annoy)
+* [FAISS](https://github.com/facebookresearch/faiss.git): IVF 
+* [NGT](https://github.com/yahoojapan/NGT): PANNG, ONNG (not optimized)
+* [PGANN](https://github.com/netrasys/pgANN): Baseline Postgresql approach
 
 Data sets
 =========
@@ -49,37 +62,39 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 Results
 =======
 
+In RAM
+------
+
 These are all as of 2019-06-10, running all benchmarks on a c5.4xlarge machine on AWS:
 
-glove-100-angular
------------------
+### glove-100-angular
 
 ![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-100-angular.png)
 
-sift-128-euclidean
-------------------
+### sift-128-euclidean
 
-![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/sift-128-euclidean.png)
+![sift-128-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/sift-128-euclidean.png)
 
-fashion-mnist-784-euclidean
----------------------------
+### fashion-mnist-784-euclidean
 
 ![fashion-mnist-784-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/fashion-mnist-784-euclidean.png)
 
-gist-960-euclidean
-------------------
+### gist-960-euclidean
 
 ![gist-960-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/gist-960-euclidean.png)
 
-nytimes-256-angular
--------------------
+### nytimes-256-angular
 
 ![nytimes-256-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/nytimes-256-angular.png)
 
-glove-25-angular
-----------------
+### glove-25-angular
 
 ![glove-25-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-25-angular.png)
+
+On Disk
+-------
+
+### glove-25-angular
 
 Install
 =======
@@ -121,7 +136,7 @@ Principles
 * High-dimensional datasets with approximately 100-1000 dimensions. This is challenging but also realistic. Not more than 1000 dimensions because those problems should probably be solved by doing dimensionality reduction separately.
 * Single queries are used by default. ANN-Benchmarks enforces that only one CPU is saturated during experimentation, i.e., no multi-threading. A batch mode is available that provides all queries to the implementations at once. Add the flag `--batch` to `run.py` and `plot.py` to enable batch mode. 
 * Avoid extremely costly index building (more than several hours).
-* Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
+* Focus on datasets that fit in RAM. Eventually try on disk algorithms with larger data
 * We mainly support CPU-based ANN algorithms. GPU support exists for FAISS, but it has to be compiled with GPU support locally and experiments must be run using the flags `--local --batch`. 
 * Do proper train/test set of index data and query points.
 * Note that set similarity was supported in the past. This might hopefully be added back soon.

@@ -1,12 +1,8 @@
 # Implementation of pgANN from https://github.com/netrasys/pgANN
-# Stores reduced embeddings (Umap) in PostGres Cube structure 
-# for nearest neighour search. Smaller Umap embeddings allow for 
-# faster searches. On-disk (out-of-core) so will be slower than 
-# in-RAM methods.
-# NOTE: Having problems fitting the whole Glove-100 training set
-# with Umap. Either sampling or randomly initializing the Umap 
-# training. This adds more sources of error and should be fixed 
-# before any actual benchmarks.  
+# Stores vectors as GIST index cube structures for nearest neighour 
+# search in postgresql. Can possibly reduce vector with Umap.
+# Slow for benchmark, ideally want separate postgresql server.
+# A good baseline for on-disk nearest neighbour search.
 from __future__ import absolute_import
 from ann_benchmarks.algorithms.base import BaseANN
 import numpy as np
@@ -15,7 +11,8 @@ import subprocess
 import psycopg2
 
 class PgANN(BaseANN):
-    def __init__(self, metric, embed_size=None, num_neigh=12, init='random'):
+    def __init__(self, metric, embed_size=None, num_neigh=12, 
+                 init='random'):
         self.metric = metric
         if metric == 'angular':
             self.metric = 'cosine'
@@ -68,7 +65,7 @@ class PgANN(BaseANN):
                 ','.join("%10.8f" % x for x in embed))
             insert="""
                 INSERT INTO ann (index_num, embeddings) 
-                VALUES ({}, cube{});
+                VALUES ({0}, cube{1});
             """.format(t, embed_string)
             self.cursor.execute(insert)
 
@@ -82,14 +79,15 @@ class PgANN(BaseANN):
         if self.embed_size:
             v = self.reducer.transform([v])[0]
         # convert to string
-        emb_string = "'({0})'".format(','.join("%10.8f" % x for x in v))
+        emb_string = "'({0})'".format(','.join(
+            "%10.8f" % x for x in v))
         # create query
         query = """
             SELECT index_num FROM ann 
-            WHERE embeddings <-> cube({}) < {}
-            ORDER BY embeddings <-> cube({}) ASC
-            LIMIT {};
-        """.format(emb_string, self.thresh, emb_string, n)
+            WHERE embeddings <-> cube({0}) < {1}
+            ORDER BY embeddings <-> cube({0}) ASC
+            LIMIT {2};
+        """.format(emb_string, self.thresh, n)
         # run and get query results
         self.cursor.execute(query)
         results = self.cursor.fetchall()
