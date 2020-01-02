@@ -96,6 +96,8 @@ On Disk
 
 ### glove-25-angular
 
+![glove-25-angular-disk](https://raw.githubusercontent.com/jpleet/ann-benchmarks/ondisk/results/glove-25-angular_disk.png)
+
 Install
 =======
 
