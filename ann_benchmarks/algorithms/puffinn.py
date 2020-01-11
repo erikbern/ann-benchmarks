@@ -26,7 +26,7 @@ class Puffinn(BaseANN):
             if self.metric == 'angular':
                 x = x.tolist()
             self.index.insert(x)
-        self.index.rebuild(10)
+        self.index.rebuild()
 
     def set_query_arguments(self, recall):
         self.recall = recall
