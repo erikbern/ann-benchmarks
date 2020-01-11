@@ -34,7 +34,7 @@ def get_dataset(which):
         if which in DATASETS:
             print("Creating dataset locally")
             DATASETS[which](hdf5_fn)
-    hdf5_f = h5py.File(hdf5_fn)
+    hdf5_f = h5py.File(hdf5_fn, 'r')
     return hdf5_f
 
 

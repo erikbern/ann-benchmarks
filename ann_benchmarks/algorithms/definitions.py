@@ -77,7 +77,7 @@ def _substitute_variables(arg, vs):
 
 def _get_definitions(definition_file):
     with open(definition_file, "r") as f:
-        return yaml.load(f)
+        return yaml.load(f, yaml.SafeLoader)
 
 
 def list_algorithms(definition_file):
