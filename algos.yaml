@@ -170,14 +170,6 @@ float:
           # This run group produces 3 algorithm instances -- Annoy("angular",
           # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
           # which will be used to run 12 different queries.
-    shidx:
-      docker-tag: ann-benchmarks-hdidx
-      module: ann_benchmarks.algorithms.hdidx
-      constructor: SHIdx
-      base-args: []
-      run-groups:
-        shidx:
-          args: [[4, 8, 16, 32, 64, 128, 256]]
     nearpy:
       disabled: true
       docker-tag: ann-benchmarks-nearpy
