@@ -11,6 +11,6 @@ RUN cd nmslib/python_bindings && python setup.py install
 
 # nmslib doesn't work with python3 afaik
 RUN python -c 'import nmslib'
-RUN pip install -rrequirements.txt
+RUN pip install -rrequirements.txt --ignore-installed
 RUN pip install enum34
 ENTRYPOINT ["python", "run_algorithm.py"]
