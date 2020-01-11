@@ -32,8 +32,8 @@ before_install:
   - python install.py
 
 script:
-  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled
-  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --batch
+  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --timeout 300
+  - python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --batch --timeout 300
   - sudo chmod -R 777 results/
   - python plot.py --dataset $DATASET --output plot.png
   - python plot.py --dataset $DATASET --output plot-batch.png --batch
