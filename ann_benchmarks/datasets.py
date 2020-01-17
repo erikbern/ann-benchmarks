@@ -3,6 +3,8 @@ import numpy
 import os
 import random
 import sys
+
+from  urllib.request import urlopen
 try:
     from urllib import urlretrieve
 except ImportError:
@@ -192,6 +194,33 @@ def fashion_mnist(out_fn):
     test = _load_mnist_vectors('fashion-mnist-test.gz')
     write_output(train, test, out_fn, 'euclidean')
 
+# Creates a 'deep image descriptor' dataset using the 'deep10M.fvecs' sample
+# from http://sites.skoltech.ru/compvision/noimi/. The download logic is adapted
+# from the script https://github.com/arbabenko/GNOIMI/blob/master/downloadDeep1B.py.
+def deep_image(out_fn):
+    train_size = 10 * 1000 * 1000
+    test_size = 1000
+
+    yadisk_key = 'https://yadi.sk/d/11eDCm7Dsn9GA'
+    response = urlopen('https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key=' \
+        + yadisk_key + '&path=/base/base_00')
+    response_body = response.read().decode("utf-8")
+
+    dataset_url = response_body.split(',')[0][9:-1]
+    filename = os.path.join('data', 'deep-image.fvecs')
+    download(dataset_url, filename)
+
+    # In the fvecs file format, each vector is stored by first writing its
+    # length as an integer, then writing its components as floats.
+    fv = numpy.fromfile(filename, dtype=numpy.float32)
+    dim = fv.view(numpy.int32)[0]
+
+    limit = (dim + 1) * (train_size + test_size)
+    fv = fv[0:limit]
+    X_train = fv.reshape(-1, dim + 1)[:, 1:]
+
+    X_train, X_test = train_test_split(X, test_size=test_size)
+    write_output(X_train, X_test, out_fn, 'angular')
 
 def transform_bag_of_words(filename, n_dimensions, out_fn):
     import gzip
@@ -374,6 +403,7 @@ def lastfm(out_fn, n_dimensions, test_size=50000):
 
 
 DATASETS = {
+    'deep-image-96-angular': deep_image,
     'fashion-mnist-784-euclidean': fashion_mnist,
     'gist-960-euclidean': gist,
     'glove-25-angular': lambda out_fn: glove(out_fn, 25),
