@@ -199,7 +199,7 @@ def fashion_mnist(out_fn):
 # from the script https://github.com/arbabenko/GNOIMI/blob/master/downloadDeep1B.py.
 def deep_image(out_fn):
     train_size = 10 * 1000 * 1000
-    test_size = 1000
+    test_size = 10000
 
     yadisk_key = 'https://yadi.sk/d/11eDCm7Dsn9GA'
     response = urlopen('https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key=' \
@@ -217,7 +217,7 @@ def deep_image(out_fn):
 
     limit = (dim + 1) * (train_size + test_size)
     fv = fv[0:limit]
-    X_train = fv.reshape(-1, dim + 1)[:, 1:]
+    X = fv.reshape(-1, dim + 1)[:, 1:]
 
     X_train, X_test = train_test_split(X, test_size=test_size)
     write_output(X_train, X_test, out_fn, 'angular')
