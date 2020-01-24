@@ -211,9 +211,9 @@ def deep_image(out_fn):
     # length as an integer, then writing its components as floats.
     fv = numpy.fromfile(filename, dtype=numpy.float32)
     dim = fv.view(numpy.int32)[0]
-    X = fv.reshape(-1, dim + 1)[:, 1:]
+    fv = fv.reshape(-1, dim + 1)[:, 1:]
 
-    X_train, X_test = train_test_split(X)
+    X_train, X_test = train_test_split(fv)
     write_output(X_train, X_test, out_fn, 'angular')
 
 def transform_bag_of_words(filename, n_dimensions, out_fn):
