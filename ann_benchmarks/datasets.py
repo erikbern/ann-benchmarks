@@ -4,7 +4,7 @@ import os
 import random
 import sys
 
-from  urllib.request import urlopen
+from urllib.request import urlopen
 try:
     from urllib import urlretrieve
 except ImportError:
@@ -198,12 +198,9 @@ def fashion_mnist(out_fn):
 # from http://sites.skoltech.ru/compvision/noimi/. The download logic is adapted
 # from the script https://github.com/arbabenko/GNOIMI/blob/master/downloadDeep1B.py.
 def deep_image(out_fn):
-    train_size = 10 * 1000 * 1000
-    test_size = 10000
-
     yadisk_key = 'https://yadi.sk/d/11eDCm7Dsn9GA'
     response = urlopen('https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key=' \
-        + yadisk_key + '&path=/base/base_00')
+        + yadisk_key + '&path=/deep10M.fvecs')
     response_body = response.read().decode("utf-8")
 
     dataset_url = response_body.split(',')[0][9:-1]
@@ -214,12 +211,9 @@ def deep_image(out_fn):
     # length as an integer, then writing its components as floats.
     fv = numpy.fromfile(filename, dtype=numpy.float32)
     dim = fv.view(numpy.int32)[0]
-
-    limit = (dim + 1) * (train_size + test_size)
-    fv = fv[0:limit]
     X = fv.reshape(-1, dim + 1)[:, 1:]
 
-    X_train, X_test = train_test_split(X, test_size=test_size)
+    X_train, X_test = train_test_split(X)
     write_output(X_train, X_test, out_fn, 'angular')
 
 def transform_bag_of_words(filename, n_dimensions, out_fn):
