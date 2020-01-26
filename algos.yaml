@@ -144,19 +144,6 @@ float:
      run-groups:
        flann:
          args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97]]
-    panns:
-     disabled: true
-     docker-tag: ann-benchmarks-panns
-     module: ann_benchmarks.algorithms.panns
-     constructor: PANNS
-     base-args: ["@metric"]
-     run-groups:
-       five-trees:
-         args: [5, 20]
-       ten-trees:
-         args: [10, [10, 50]]
-       hundred-candidates:
-         args: [[10, 20, 40], 100]
     annoy:
       docker-tag: ann-benchmarks-annoy
       module: ann_benchmarks.algorithms.annoy
