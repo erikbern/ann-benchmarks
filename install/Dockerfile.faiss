@@ -1,12 +1,11 @@
 FROM ann-benchmarks
 
-RUN apt-get update && apt-get install -y libopenblas-base libopenblas-dev libpython-dev python-numpy python-pip swig
+RUN apt-get update && apt-get install -y libopenblas-base libopenblas-dev libpython3-dev swig python3-dev
 RUN git clone https://github.com/facebookresearch/faiss lib-faiss
-RUN cd lib-faiss && git checkout tags/v1.2.1 -b lib-faiss && cp example_makefiles/makefile.inc.Linux makefile.inc && make -j4 py BLASLDFLAGS=/usr/lib/x86_64-linux-gnu/libopenblas.so.0
-ENV PYTHONPATH lib-faiss
+RUN cd lib-faiss && ./configure --with-python=/usr/bin/python3 --without-cuda CXXFLAGS="-I/usr/include/python3.6 -I.."
+RUN cd lib-faiss && make -j4 py BLASLDFLAGS=/usr/lib/x86_64-linux-gnu/libopenblas.so.0 PYTHON=/usr/bin/python3
+RUN cd lib-faiss && cd python && python3 setup.py install
 
-# faiss doesn't work with python3 afaik
-RUN python -c 'import faiss'
-RUN pip install -r requirements.txt
-RUN pip install sklearn enum34
-ENTRYPOINT ["python", "run_algorithm.py"]
+RUN python3 -c 'import faiss; print(faiss.IndexFlatL2)'
+RUN pip3 install sklearn enum34
+ENTRYPOINT ["python3", "run_algorithm.py"]
