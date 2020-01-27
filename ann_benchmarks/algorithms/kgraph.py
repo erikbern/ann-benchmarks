@@ -8,8 +8,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class KGraph(BaseANN):
     def __init__(self, metric, index_params, save_index):
-        if type(metric) == unicode:
-            metric = str(metric)
+        metric = str(metric)
         self.name = 'KGraph(%s)' % (metric)
         self._metric = metric
         self._index_params = index_params
