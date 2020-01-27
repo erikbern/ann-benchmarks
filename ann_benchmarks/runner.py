@@ -1,8 +1,6 @@
-from __future__ import print_function
-__true_print = print  # noqa
-
 import argparse
 import datetime
+import colors
 import docker
 import json
 import multiprocessing
@@ -13,11 +11,6 @@ import requests
 import sys
 import threading
 import time
-
-
-def print(*args, **kwargs):  # noqa
-    __true_print(*args, **kwargs)
-    sys.stdout.flush()
 
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
@@ -211,8 +204,6 @@ def run_from_cmdline():
 
 def run_docker(definition, dataset, count, runs, timeout, batch,
                mem_limit=None):
-    import colors  # Think it doesn't work in Python 2
-
     cmd = ['--dataset', dataset,
            '--algorithm', definition.algorithm,
            '--module', definition.module,

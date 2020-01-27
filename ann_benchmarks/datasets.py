@@ -5,10 +5,7 @@ import random
 import sys
 
 from urllib.request import urlopen
-try:
-    from urllib import urlretrieve
-except ImportError:
-    from urllib.request import urlretrieve  # Python 3
+from urllib.request import urlretrieve
 
 from ann_benchmarks.distance import dataset_transform
 
