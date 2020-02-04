@@ -14,7 +14,7 @@ env:
   - LIBRARY=flann DATASET=random-xs-20-angular
   - LIBRARY=kgraph DATASET=random-xs-20-angular
   - LIBRARY=mrpt DATASET=random-xs-20-angular
-  - LIBRARY=n2 DATASET=random-s-20-angular
+  - LIBRARY=n2 DATASET=random-xs-20-angular
   - LIBRARY=nearpy DATASET=random-xs-20-angular
   - LIBRARY=ngt DATASET=random-xs-20-angular
   - LIBRARY=nmslib DATASET=random-xs-20-angular
