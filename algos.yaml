@@ -168,6 +168,16 @@ float:
           args: [[10, 12, 14, 16], [5, 10, 20, 40]]
         extra:
           args: [16, [5, 10, 15, 20, 25, 30, 40]]
+    n2:
+      docker-tag: ann-benchmarks-n2
+      module: ann_benchmarks.algorithms.n2
+      constructor: N2
+      base-args: ["@metric"]
+      run-groups:
+        n2:
+          args: [[5, 10, 20, 40, 100]]
+          query-args: [[100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000,
+                      100000, 200000, 400000]]
     bruteforce:
       disabled: true
       docker-tag: ann-benchmarks-sklearn
@@ -283,6 +293,16 @@ float:
           args: ["@count"]
           query-args: [[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9,
                         0.925, 0.95, 0.97, 0.98, 0.99, 0.995]]
+    n2:
+      docker-tag: ann-benchmarks-n2
+      module: ann_benchmarks.algorithms.n2
+      constructor: N2
+      base-args: ["@metric"]
+      run-groups:
+        n2:
+          args: [[5, 10, 20, 40, 100]]
+          query-args: [[100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000,
+                      100000, 200000, 400000]]
   euclidean:
     kgraph:
       docker-tag: ann-benchmarks-kgraph
