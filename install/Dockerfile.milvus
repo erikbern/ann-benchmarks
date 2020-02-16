@@ -1,0 +1,19 @@
+FROM ann-benchmarks
+
+# Install deps
+RUN apt-get update
+RUN apt-get install -y wget sudo
+RUN git clone https://github.com/milvus-io/milvus
+RUN cd milvus/core && ./ubuntu_build_deps.sh
+
+# Install cmake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-Linux-x86_64.tar.gz && tar -xzf cmake-3.16.4-Linux-x86_64.tar.gz
+RUN cp cmake-3.16.4-Linux-x86_64/bin/cmake /usr/bin/cmake
+RUN cp -r cmake-3.16.4-Linux-x86_64/share/cmake-3.16 /usr/share/cmake-3.16
+
+# Build Milvus
+RUN cd milvus/core && ./build.sh -t Release  # Add -g to build with GPU support
+
+# Run
+ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:milvus/core/milvus/lib"
+RUN cd milvus/scripts && ./start_server.sh
