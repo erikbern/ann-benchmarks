@@ -3,9 +3,8 @@ FROM milvusdb/milvus:0.6.0-cpu-d120719-2b40dd as milvus
 RUN apt-get update
 RUN apt-get install -y wget
 RUN wget https://raw.githubusercontent.com/milvus-io/docs/v0.6.0/assets/server_config.yaml
-RUN sed -i 's/cpu_cache_capacity: 16/cpu_cache_capacity: 4/' server_config.yaml
+RUN sed -i 's/cpu_cache_capacity: 16/cpu_cache_capacity: 4/' server_config.yaml  # otherwise my Docker blows up
 RUN mv server_config.yaml /var/lib/milvus/conf/server_config.yaml
-RUN cat /var/lib/milvus/conf/server_config.yaml
 
 # Switch back to ANN-benchmarks base image and copy all files
 FROM ann-benchmarks
@@ -24,5 +23,3 @@ RUN echo 'sleep 5' >> entrypoint.sh
 RUN echo 'python3 run_algorithm.py "$@"' >> entrypoint.sh
 RUN chmod u+x entrypoint.sh
 ENTRYPOINT ["/home/app/entrypoint.sh"]
-
-# ENTRYPOINT /var/lib/milvus/bin/milvus_server -d -c conf/server_config.yaml -l conf/log_config.conf && python3 run_algorithm.py
