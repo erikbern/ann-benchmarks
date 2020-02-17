@@ -1,20 +1,28 @@
-FROM ann-benchmarks
-
-# Install deps
+# Install Milvus
+FROM milvusdb/milvus:0.6.0-cpu-d120719-2b40dd as milvus
 RUN apt-get update
-RUN apt-get install -y wget sudo
-RUN git clone https://github.com/milvus-io/milvus
-RUN cd milvus/core && ./ubuntu_build_deps.sh
+RUN apt-get install -y wget
+RUN wget https://raw.githubusercontent.com/milvus-io/docs/v0.6.0/assets/server_config.yaml
+RUN sed -i 's/cpu_cache_capacity: 16/cpu_cache_capacity: 4/' server_config.yaml
+RUN mv server_config.yaml /var/lib/milvus/conf/server_config.yaml
+RUN cat /var/lib/milvus/conf/server_config.yaml
 
-# Install cmake
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-Linux-x86_64.tar.gz && tar -xzf cmake-3.16.4-Linux-x86_64.tar.gz
-RUN cp cmake-3.16.4-Linux-x86_64/bin/cmake /usr/bin/cmake
-RUN cp -r cmake-3.16.4-Linux-x86_64/share/cmake-3.16 /usr/share/cmake-3.16
+# Switch back to ANN-benchmarks base image and copy all files
+FROM ann-benchmarks
+COPY --from=milvus /var/lib/milvus /var/lib/milvus
+ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/var/lib/milvus/lib"
+RUN apt-get update
+RUN apt-get install -y libmysqlclient-dev
 
-# Build Milvus
-RUN sed -i 's/-j 8/-j 1/g' milvus/core/build.sh  # Reduce parallelism to avoid memory issues
-RUN cd milvus/core && ./build.sh -e -t Release  # Add -g to build with GPU support
+# Python client
+RUN pip3 install pymilvus
 
-# Run
-ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:milvus/core/milvus/lib"
-RUN cd milvus/scripts && ./start_server.sh
+# Dumb entrypoint thing that runs the daemon as well
+RUN echo '#!/bin/bash' >> entrypoint.sh
+RUN echo '/var/lib/milvus/bin/milvus_server -d -c /var/lib/milvus/conf/server_config.yaml -l /var/lib/milvus/conf/log_config.conf' >> entrypoint.sh
+RUN echo 'sleep 5' >> entrypoint.sh
+RUN echo 'python3 run_algorithm.py "$@"' >> entrypoint.sh
+RUN chmod u+x entrypoint.sh
+ENTRYPOINT ["/home/app/entrypoint.sh"]
+
+# ENTRYPOINT /var/lib/milvus/bin/milvus_server -d -c conf/server_config.yaml -l conf/log_config.conf && python3 run_algorithm.py
