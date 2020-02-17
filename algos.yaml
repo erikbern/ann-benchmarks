@@ -164,8 +164,8 @@ float:
       base-args: ["@metric"]
       run-groups:
         milvus:
-          args: [[1, 3, 10, 30, 100, 300, 1000]]
-          query-args: [[20, 40, 100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000]]
+          args: [['IVF_FLAT', 'IVF_SQ8'], [100, 300, 1000, 3000, 10000, 30000]]  # nlist
+          query-args: [[1, 3, 10, 30, 100, 300]]  # nprobe (should be <= nlist)
     nearpy:
       disabled: true
       docker-tag: ann-benchmarks-nearpy
