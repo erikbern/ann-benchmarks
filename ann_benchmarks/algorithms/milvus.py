@@ -6,13 +6,14 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 
 class Milvus(BaseANN):
-    def __init__(self, metric, nlist):
+    def __init__(self, metric, index_type, nlist):
         self._nlist = nlist
         self._nprobe = None
         self._metric = metric
         self._milvus = milvus.Milvus()
         self._milvus.connect(host='localhost', port='19530')
         self._table_name = 'test01'
+        self._index_type = index_type
 
     def fit(self, X):
         if self._metric == 'angular':
@@ -20,12 +21,16 @@ class Milvus(BaseANN):
 
         self._milvus.create_table({'table_name': self._table_name, 'dimension': X.shape[1]})
         status, ids = self._milvus.insert(table_name=self._table_name, records=X.tolist())
-        self._milvus.create_index(self._table_name, {'index_type': milvus.IndexType.FLAT, 'nlist': self._nlist})
+        index_type = getattr(milvus.IndexType, self._index_type)  # a bit hacky but works
+        self._milvus.create_index(self._table_name, {'index_type': index_type, 'nlist': self._nlist})
         self._milvus_id_to_index = {}
         for i, id in enumerate(ids):
             self._milvus_id_to_index[id] = i
 
     def set_query_arguments(self, nprobe):
+        if nprobe > self._nlist:
+            print('warning! nprobe > nlist')
+            nprobe = self._nlist
         self._nprobe = nprobe
 
     def query(self, v, n):
@@ -39,4 +44,4 @@ class Milvus(BaseANN):
         return r
 
     def __str__(self):
-        return 'Milvus(nlist=%d, nprobe=%d)' % (self._nlist, self._nprobe)
+        return 'Milvus(index_type=%s, nlist=%d, nprobe=%d)' % (self._index_type, self._nlist, self._nprobe)
