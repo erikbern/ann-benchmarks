@@ -24,6 +24,7 @@ class Milvus(BaseANN):
         index_type = getattr(milvus.IndexType, self._index_type)  # a bit hacky but works
         self._milvus.create_index(self._table_name, {'index_type': index_type, 'nlist': self._nlist})
         self._milvus_id_to_index = {}
+        self._milvus_id_to_index[-1] = -1 #  -1 means no results found
         for i, id in enumerate(ids):
             self._milvus_id_to_index[id] = i
 
