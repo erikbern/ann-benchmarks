@@ -96,6 +96,11 @@ def main():
         '--run-disabled',
         help='run algorithms that are disabled in algos.yml',
         action='store_true')
+    parser.add_argument(
+        '--cpu-number',
+        type=positive_int,
+        help='specify cpu number',
+        default=0)
 
     args = parser.parse_args()
     if args.timeout == -1:
@@ -212,7 +217,7 @@ def main():
                     args.batch)
             else:
                 run_docker(definition, args.dataset, args.count,
-                           args.runs, args.timeout, args.batch)
+                           args.runs, args.timeout, args.batch, str(args.cpu_number))
         except KeyboardInterrupt:
             break
         except:
