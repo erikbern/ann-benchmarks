@@ -1,6 +1,7 @@
+        <div class="chart" id="s{{ xlabel }}{{ ylabel }}{{ label }}">
             <h3>{{xlabel}}/{{ylabel}}</h3>
             <div id="{{ xlabel }}{{ ylabel }}{{ label }}">
-            <canvas id="chart{{ xlabel }}{{ ylabel }}{{ label }}" width="800" height="600"></canvas>
+            <canvas id="chart{{ xlabel }}{{ ylabel }}{{ label }}" width="100%"></canvas>
             <script>
                 var ctx = document.getElementById("chart{{ xlabel }}{{ ylabel }}{{ label }}");
                 var chart = new Chart(ctx, {
@@ -25,7 +26,7 @@
                         {% endfor %}
                         ]},
                         options: {
-                            responsive: false,
+                            responsive: true,
                             title:{
                                 display:true,
                                 text: '{{ plot_label }}'
@@ -100,3 +101,5 @@
                     </pre>
                 </div>
             {% endif %}
+        </div>
+
