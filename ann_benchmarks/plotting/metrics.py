@@ -104,15 +104,33 @@ all_metrics = {
         "worst": float("-inf"),
         "lim": [0.0, 1.03]
     },
+    "k-nn_0.8": {
+        "description": "Recall 0.8+",
+        "function": lambda true_distances, run_distances, metrics, run_attrs: knn(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
+        "worst": float("-inf"),
+        "lim": [0.80, 1.03]
+    },
     "epsilon": {
         "description": "Epsilon 0.01 Recall",
         "function": lambda true_distances, run_distances, metrics, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
         "worst": float("-inf")
     },
+    "epsilon_0.8": {
+        "description": "Epsilon 0.01 Recall 0.8+",
+        "function": lambda true_distances, run_distances, metrics, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
+        "worst": float("-inf"),
+        "lim": [0.80, 1.03]
+    },
     "largeepsilon": {
         "description": "Epsilon 0.1 Recall",
         "function": lambda true_distances, run_distances, metrics, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics, 0.1).attrs['mean'],  # noqa
         "worst": float("-inf")
+    },
+    "largeepsilon_0.8": {
+        "description": "Epsilon 0.1 Recall 0.8+",
+        "function": lambda true_distances, run_distances, metrics, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics, 0.1).attrs['mean'],  # noqa
+        "worst": float("-inf"),
+        "lim": [0.80, 1.03]
     },
     "rel": {
         "description": "Relative Error",

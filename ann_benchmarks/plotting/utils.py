@@ -26,6 +26,10 @@ def create_pointset(data, xn, yn):
     for algo, algo_name, xv, yv in data:
         if not xv or not yv:
             continue
+        if "lim" in xm and not (xm["lim"][0] <= xv <= xm["lim"][1]):
+            continue
+        if "lim" in ym and not (ym["lim"][0] <= yv <= ym["lim"][1]):
+            continue
         axs.append(xv)
         ays.append(yv)
         als.append(algo_name)

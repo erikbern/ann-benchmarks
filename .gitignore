@@ -8,3 +8,5 @@ install/*.yaml
 install/lib-*/
 data/*
 *.class
+
+.idea/
