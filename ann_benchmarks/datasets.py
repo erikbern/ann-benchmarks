@@ -3,6 +3,7 @@ import numpy
 import os
 import random
 import sys
+import progressbar
 
 from urllib.request import urlopen
 from urllib.request import urlretrieve
@@ -10,11 +11,26 @@ from urllib.request import urlretrieve
 from ann_benchmarks.distance import dataset_transform
 
 
+class MyProgressBar():
+    def __init__(self):
+        self.pbar = None
+
+    def __call__(self, block_num, block_size, total_size):
+        if not self.pbar:
+            self.pbar=progressbar.ProgressBar(maxval=total_size)
+            self.pbar.start()
+
+        downloaded = block_num * block_size
+        if downloaded < total_size:
+            self.pbar.update(downloaded)
+        else:
+            self.pbar.finish()
+
 def download(src, dst):
     if not os.path.exists(dst):
         # TODO: should be atomic
         print('downloading %s -> %s...' % (src, dst))
-        urlretrieve(src, dst)
+        urlretrieve(src, dst, MyProgressBar())
 
 
 def get_dataset_fn(dataset):
