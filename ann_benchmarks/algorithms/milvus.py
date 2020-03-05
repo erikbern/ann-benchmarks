@@ -20,13 +20,10 @@ class Milvus(BaseANN):
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
 
         self._milvus.create_table({'table_name': self._table_name, 'dimension': X.shape[1]})
-        status, ids = self._milvus.insert(table_name=self._table_name, records=X.tolist())
+        vector_ids = [id for id in range(len(X))]
+        self._milvus.insert(table_name=self._table_name, records=X.tolist(), ids=vector_ids)
         index_type = getattr(milvus.IndexType, self._index_type)  # a bit hacky but works
         self._milvus.create_index(self._table_name, {'index_type': index_type, 'nlist': self._nlist})
-        self._milvus_id_to_index = {}
-        self._milvus_id_to_index[-1] = -1 #  -1 means no results found
-        for i, id in enumerate(ids):
-            self._milvus_id_to_index[id] = i
 
     def set_query_arguments(self, nprobe):
         if nprobe > self._nlist:
@@ -41,8 +38,8 @@ class Milvus(BaseANN):
         status, results = self._milvus.search(table_name=self._table_name, query_records=[v], top_k=n, nprobe=self._nprobe)
         if not results:
             return []  # Seems to happen occasionally, not sure why
-        r = [self._milvus_id_to_index[z.id] for z in results[0]]
-        return r
+        result_ids = [result.id for result in results[0]]
+        return result_ids
 
     def __str__(self):
         return 'Milvus(index_type=%s, nlist=%d, nprobe=%d)' % (self._index_type, self._nlist, self._nprobe)
