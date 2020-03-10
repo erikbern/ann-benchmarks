@@ -27,6 +27,7 @@ Evaluated
 * [NGT](https://github.com/yahoojapan/NGT): ONNG, PANNG
 * [SPTAG](https://github.com/microsoft/SPTAG)
 * [PUFFINN](https://github.com/puffinn/puffinn)
+* [N2](https://github.com/kakao/n2)
 
 Data sets
 =========
