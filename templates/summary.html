@@ -1,66 +1,84 @@
-{% extends "general.html" %}
-{% block content %}
-        <div class="container">
-            
-            <h1>Info</h1>
-            <p>ANN-Benchmarks is a benchmarking environment for approximate nearest neighbor algorithms search. This website contains the current benchmarking results. Please visit <a href="http://github.com/erikbern/ann-benchmarks/">http://github.com/erikbern/ann-benchmarks/</a> to get an overview over evaluated data sets and algorithms. Make a pull request on <a href="http://github.com/erikbern/ann-benchmarks/">Github</a> to add your own code or improvements to the
-            benchmarking system.
-            </p>
-            <div id="results">
-            <h1>Benchmarking Results</h1>
-            <p>Results are split by distance measure and dataset. In the bottom, you can find an overview of an algorithm's performance on all datasets. Each dataset is annoted
-            by <em>(k = ...)</em>, the number of nearest neighbors an algorithm was supposed to return. The plot shown depicts <em>Recall</em> (the fraction
-            of true nearest neighbors found, on average over all queries) against <em>Queries per second</em>.  Clicking on a plot reveils detailled interactive plots, including
-            approximate recall, index size, and build time.</p>
-            {% for type in ['non-batch', 'batch'] %}
-                {% if len(dataset_with_distances[type]) > 0 %}
-                    {% if type == 'batch' %}
-                        <h2>Benchmarks for Batched Queries</h2>
-                    {% else %}
-                        <h2>Benchmarks for Single Queries</h2>
-                    {% endif %}
-                    <div class="resultsContainer">
-                    <div class="datasetsContainer">
-                        <h2 id ="datasets">Results by Dataset</h2>
-                        {% for distance_data in dataset_with_distances[type] %}
-                            <h3>Distance: {{ distance_data.name }} </h3>
-                            {% for entry in distance_data.entries %}
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{entry.name}}</h5>
-                                    <a href="./{{label_func(entry.name, type == 'batch')}}.html">
-                                        <img class="card-img-top" src="{{label_func(entry.name, type == 'batch')}}.png" />
-                                    </a>
-                                <p class="card-text">{{entry.desc}}</p>
-                                <a href="./{{label_func(entry.name, type == 'batch')}}.html" class="btn btn-primary">Detail</a>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
-                    <div class="algorithmsContainer">
-                        <h2 id="algorithms">Results by Algorithm</h2>
-                        <!-- <ul class="list-inline"><b>Algorithms:</b>
-                            {% for algo in algorithms[type].keys() %}
-                                <li><a href="#{{algo}}">{{algo}}</a></li>
-                            {% endfor %}
-                        </ul> -->
-                        <div class="algorithmResult">
-                        {% for algo in algorithms[type].keys()%}
-                        <div class="algorithm card" >
-                            <div class="card-body">
-                            <h5 class="card-title">{{algo}}</h5>
-                            <a href="./{{label_func(algo, type == 'batch')}}.html">
-                                <img class="card-img-top" src="{{label_func(algo, type == 'batch')}}.png" />
-                            </a>
-                            <a href="./{{label_func(algo, type == 'batch')}}.html" class="btn btn-primary">Detail</a>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    </div>
-                </div>
-                {% endif %}
-            {% endfor %}
-{% endblock %}
+{% extends "general.html" %} {% block content %}
+<div class="container">
+  <h1>AWS Benchmarks Machine Specifications</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">vCPU</th>
+        <th scope="col">Mem (GiB)</th>
+        <th scope="col">Disk</th>
+        <th scope="col">Network Performance (Gbps)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">a1.4xlarge</th>
+        <td>16</td>
+        <td>32</td>
+        <td>1 x 50 NVMe SSD</td>
+        <td>Up to 10</td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="results">
+    <h1>Benchmarking Results</h1>
+    <p>
+      Results are split by distance measure and dataset. In the bottom, you can
+      find an overview of an algorithm's performance on all datasets. Each
+      dataset is annoted by <em>(k = ...)</em>, the number of nearest neighbors
+      an algorithm was supposed to return. The plot shown depicts
+      <em>Recall</em> (the fraction of true nearest neighbors found, on average
+      over all queries) against <em>Queries per second</em>. Clicking on a plot
+      reveils detailled interactive plots, including approximate recall, index
+      size, and build time.
+    </p>
+    {% for type in ['non-batch', 'batch'] %} {% if
+    len(dataset_with_distances[type]) > 0 %}
+    <div class="resultsContainer">
+      {% for distance_data in dataset_with_distances[type] %}
+      <h3>Distance: {{ distance_data.name }}</h3>
+      <div class="datasetsContainer">
+        {% for entry in distance_data.entries %}
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{entry.name}}</h5>
+            <a href="./{{label_func(entry.name, type == 'batch')}}.html">
+              <img
+                class="card-img-top"
+                src="{{label_func(entry.name, type == 'batch')}}.png"
+              />
+            </a>
+            <p class="card-text">{{entry.desc}}</p>
+            <a
+              href="./{{label_func(entry.name, type == 'batch')}}.html"
+              class="btn btn-primary"
+              >Detail</a
+            >
+          </div>
+        </div>
 
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{entry.name}}</h5>
+            <a href="./{{label_func(entry.name, type == 'batch')}}.html">
+              <img
+                class="card-img-top"
+                src="{{label_func(entry.name, type == 'batch')}}.png"
+              />
+            </a>
+            <p class="card-text">{{entry.desc}}</p>
+            <a
+              href="./{{label_func(entry.name, type == 'batch')}}.html"
+              class="btn btn-primary"
+              >Detail</a
+            >
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %} {% endfor %} {% endblock %}
+</div>

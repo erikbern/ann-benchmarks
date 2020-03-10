@@ -37,8 +37,13 @@
       right: 10px;
       top: 10px;
     }
+    .datasetsContainer {
+      width: 100%;
+      display: flex;
+    }
     .card {
-      width: 28rem;
+      width: 15rem;
+      margin-right: 2rem;
       margin-bottom: 2rem;
     }
     .algorithm.card {
@@ -50,7 +55,7 @@
     }
   </style>
   <script type="text/javascript">
-    window.addEventListener('load', () => {
+    window.addEventListener('DOMContentLoaded', () => {
       let canvas = [...document.querySelectorAll('.chart')];
       let originIds =  canvas.map(c => c.id.replace('s', ''));
       canvas.forEach(c => {
