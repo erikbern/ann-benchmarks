@@ -9,15 +9,17 @@
         <th scope="col">Mem (GiB)</th>
         <th scope="col">Disk</th>
         <th scope="col">Network Performance (Gbps)</th>
+        <th scope="col">EBS Bandwidth(Mbps)</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <th scope="row">a1.4xlarge</th>
+        <th scope="row">c5.4xlarge</th>
         <td>16</td>
         <td>32</td>
-        <td>1 x 50 NVMe SSD</td>
+        <td>EBS-only</td>
         <td>Up to 10</td>
+        <td>4750</td>
       </tr>
     </tbody>
   </table>
@@ -40,24 +42,6 @@
       <h3>Distance: {{ distance_data.name }}</h3>
       <div class="datasetsContainer">
         {% for entry in distance_data.entries %}
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{{entry.name}}</h5>
-            <a href="./{{label_func(entry.name, type == 'batch')}}.html">
-              <img
-                class="card-img-top"
-                src="{{label_func(entry.name, type == 'batch')}}.png"
-              />
-            </a>
-            <p class="card-text">{{entry.desc}}</p>
-            <a
-              href="./{{label_func(entry.name, type == 'batch')}}.html"
-              class="btn btn-primary"
-              >Detail</a
-            >
-          </div>
-        </div>
-
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{entry.name}}</h5>
