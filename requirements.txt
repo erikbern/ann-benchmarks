@@ -4,7 +4,7 @@ h5py==2.7.1
 matplotlib==2.1.0
 numpy==1.13.3
 pyyaml==3.12
-psutil==5.4.2
+psutil==5.6.6
 scipy==1.0.0
 scikit-learn==0.19.1
 jinja2==2.10
