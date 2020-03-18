@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>ANN-Benchmarks</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+      body {
+        padding-top: 25px;
+      }
+    </style>
+  
+  </head>
+  <body>
+    <div class="container">
+  <h1>Benchmarking on Aliyun</h1>
+  <h2>Machine Details</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">vCPU</th>
+        <th scope="col">Mem (GiB)</th>
+        <th scope="col">CPU model</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">ecs.c5.4xlarge</th>
+        <td>16</td>
+        <td>32</td>
+        <td>Intel(R) Xeon(R) Platinum 8163 CPU @ 2.50GHz</td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="results">
+    <h2>Benchmarking Results</h2>
+    <p>
+      Results are split by distance measure and dataset. Each
+      dataset is annoted by <em>(k = ...)</em>, the number of nearest neighbors
+      an algorithm was supposed to return. The plot shown depicts
+      <em>Recall</em> (the fraction of true nearest neighbors found, on average
+      over all queries) against <em>Queries per second</em>. Clicking on a plot
+      reveils detailled interactive plots, including approximate recall, index
+      size, and build time.
+    </p>
+         <div class="resultsContainer">
+            <h3>Distance: Angular</h3>
+      <div class="datasetsContainer">
+                <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">glove-200-angular_10_angular</h5>
+            <a href="./glove-200-angular_10_angular.html">
+              <img
+                class="card-img-top"
+                src="glove-200-angular_10_angular.png"
+              />
+            </a>
+            <p class="card-text">glove-200-angular (k = 10)</p>
+            <a
+              href="./glove-200-angular_10_angular.html"
+              class="btn btn-primary"
+              >Detail</a
+            >
+          </div>
+        </div>
+                <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">nytimes-256-angular_10_angular</h5>
+            <a href="./nytimes-256-angular_10_angular.html">
+              <img
+                class="card-img-top"
+                src="nytimes-256-angular_10_angular.png"
+              />
+            </a>
+            <p class="card-text">nytimes-256-angular (k = 10)</p>
+            <a
+              href="./nytimes-256-angular_10_angular.html"
+              class="btn btn-primary"
+              >Detail</a
+            >
+          </div>
+        </div>
+              </div>
+            <h3>Distance: Euclidean</h3>
+      <div class="datasetsContainer">
+                <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">fashion-mnist-784-euclidean_10_euclidean</h5>
+            <a href="./fashion-mnist-784-euclidean_10_euclidean.html">
+              <img
+                class="card-img-top"
+                src="fashion-mnist-784-euclidean_10_euclidean.png"
+              />
+            </a>
+            <p class="card-text">fashion-mnist-784-euclidean (k = 10)</p>
+            <a
+              href="./fashion-mnist-784-euclidean_10_euclidean.html"
+              class="btn btn-primary"
+              >Detail</a
+            >
+          </div>
+        </div>
+                <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">gist-960-euclidean_10_euclidean</h5>
+            <a href="./gist-960-euclidean_10_euclidean.html">
+              <img
+                class="card-img-top"
+                src="gist-960-euclidean_10_euclidean.png"
+              />
+            </a>
+            <p class="card-text">gist-960-euclidean (k = 10)</p>
+            <a
+              href="./gist-960-euclidean_10_euclidean.html"
+              class="btn btn-primary"
+              >Detail</a
+            >
+          </div>
+        </div>
+                <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">sift-128-euclidean_10_euclidean</h5>
+            <a href="./sift-128-euclidean_10_euclidean.html">
+              <img
+                class="card-img-top"
+                src="sift-128-euclidean_10_euclidean.png"
+              />
+            </a>
+            <p class="card-text">sift-128-euclidean (k = 10)</p>
+            <a
+              href="./sift-128-euclidean_10_euclidean.html"
+              class="btn btn-primary"
+              >Detail</a
+            >
+          </div>
+        </div>
+              </div>
+            <h3>Distance: Hamming</h3>
+      <div class="datasetsContainer">
+                <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">sift-256-hamming_10_hamming</h5>
+            <a href="./sift-256-hamming_10_hamming.html">
+              <img
+                class="card-img-top"
+                src="sift-256-hamming_10_hamming.png"
+              />
+            </a>
+            <p class="card-text">sift-256-hamming (k = 10)</p>
+            <a
+              href="./sift-256-hamming_10_hamming.html"
+              class="btn btn-primary"
+              >Detail</a
+            >
+          </div>
+        </div>
+              </div>
+          </div>
+  </div>
+        </div>
+  </body>
+  <style>
+    .container {
+      width: 100%;
+      position: relative;
+      padding-top: 40px;
+    }
+    .chart {
+        margin: 16px;
+        width: 100%;
+    }
+    .dropdown {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+    .datasetsContainer {
+      width: 100%;
+      display: flex;
+    }
+    .card {
+      width: 15rem;
+      margin-right: 2rem;
+      margin-bottom: 2rem;
+    }
+    .algorithm.card {
+      width: 18rem;
+      margin-right: 2rem;
+    }
+    .algorithmResult {
+      display: flex;
+    }
+  </style>
+  <script type="text/javascript">
+    window.addEventListener('DOMContentLoaded', () => {
+      let canvas = [...document.querySelectorAll('.chart')];
+      let originIds =  canvas.map(c => c.id.replace('s', ''));
+      canvas.forEach(c => {
+        c.id = c.id.replace(/\s/g, '')
+      });
+      let ids = canvas.map(c => c.id);
+      let menu = document.querySelector('.dropdown-menu');
+      ids.forEach((id, index) => {
+        const item = document.createElement('a');
+        item.className="dropdown-item";
+        item.href = `#${id}`;
+        item.innerHTML = originIds[index];
+        menu.appendChild(item);
+      })
+    });
+  </script>
+</html>
