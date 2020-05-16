@@ -20,7 +20,14 @@ class Milvus(BaseANN):
 
         self._milvus.create_collection({'collection_name': self._table_name, 'dimension': X.shape[1]})
         vector_ids = [id for id in range(len(X))]
-        status, ids = self._milvus.insert(collection_name=self._table_name, records=X.tolist(), ids=vector_ids)
+        records = X.tolist()
+        records_len = len(records)
+        step = records_len // 4
+        for i in range(0, records_len, step):
+            end = min(i + step, records_len)
+            # insert_records = records[i: end]
+            status, ids = self._milvus.insert(collection_name=self._table_name, records=records[i:end], ids=vector_ids[i:end])
+        self._milvus.flush([self._table_name])
         index_type = getattr(milvus.IndexType, self._index_type)  # a bit hacky but works
         self._milvus.create_index(self._table_name, index_type, params=self._index_param)
 #         self._milvus_id_to_index = {}
