@@ -77,13 +77,14 @@ def compute_all_metrics(true_nn_distances, run, properties, recompute=False):
     results = {}
     # cache distances to avoid access to hdf5 file
     run_distances = numpy.array(run["distances"])
+    run_neighbors = numpy.array(run["neighbors"])
     if recompute and 'metrics' in run:
         del run['metrics']
     metrics_cache = get_or_create_metrics(run)
 
     for name, metric in metrics.items():
         v = metric["function"](
-            true_nn_distances, run_distances, metrics_cache, properties)
+            true_nn_distances, run_distances, metrics_cache, properties, run_neighbors)
         results[name] = v
         if v:
             print('%s: %g' % (name, v))

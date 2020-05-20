@@ -234,7 +234,7 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
             os.path.abspath('results'):
                 {'bind': '/home/app/results', 'mode': 'rw'},
         },
-        cpuset_cpus=cpu_limit,
+        # cpuset_cpus=cpu_limit,
         mem_limit=mem_limit,
         detach=True)
 
