@@ -10,3 +10,7 @@ data/*
 *.class
 
 .idea/
+*.bak/
+results*/
+*.txt
+*.log
