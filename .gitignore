@@ -9,8 +9,12 @@ install/lib-*/
 data/*
 *.class
 
+# IDE
 .idea/
+
+# temp files
 *.bak/
 results*/
+html*/
 *.txt
 *.log
