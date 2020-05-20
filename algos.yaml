@@ -164,8 +164,17 @@ float:
       base-args: ["@metric"]
       run-groups:
         milvus:
-          args: [['IVF_FLAT', 'IVF_SQ8'], [100, 300, 1000, 3000, 10000, 30000]]  # nlist
-          query-args: [[1, 3, 10, 30, 100, 300]]  # nprobe (should be <= nlist)
+          args: [[32,64,128,256,512,1024,2048,4096,8192]]
+          query-args: [[1, 5, 10, 50, 100, 200]]
+    milvus-async:
+      docker-tag: ann-benchmarks-milvus
+      module: ann_benchmarks.algorithms.milvus_async
+      constructor: Milvus
+      base-args: ["@metric"]
+      run-groups:
+        milvus:
+          args: [[32,64,128,256,512,1024,2048,4096,8192]]
+          query-args: [[1, 5, 10, 50, 100, 200]]
     nearpy:
       disabled: true
       docker-tag: ann-benchmarks-nearpy
