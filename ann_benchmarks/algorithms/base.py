@@ -3,6 +3,7 @@ import psutil
 
 
 class BaseANN(object):
+
     def done(self):
         pass
 
@@ -17,6 +18,9 @@ class BaseANN(object):
 
     def query(self, q, n):
         return []  # array of candidate indices
+
+    def handle_query_list_result(self, query_list):
+        return 0, query_list
 
     def batch_query(self, X, n):
         self.res = []

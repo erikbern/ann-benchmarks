@@ -44,16 +44,8 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
                 start = time.time()
                 candidates = algo.query(v, count)
                 total = (time.time() - start)
-            candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))  # noqa
-                          for idx in candidates]
-            n_items_processed[0] += 1
-            if n_items_processed[0] % 1000 == 0:
-                print('Processed %d/%d queries...' %
-                      (n_items_processed[0], len(X_test)))
-            if len(candidates) > count:
-                print('warning: algorithm %s returned %d results, but count'
-                      ' is only %d)' % (algo, len(candidates), count))
-            return (total, candidates)
+
+            return (total, v, candidates)
 
         def batch_query(X):
             if prepared_queries:
@@ -71,12 +63,28 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
                           for v, single_results in zip(X, results)]
             return [(total / float(len(X)), v) for v in candidates]
 
+        def get_candidates(result):
+            total, v, ids = result
+            candidates = [(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))  # noqa
+                          for idx in ids]
+            n_items_processed[0] += 1
+            if n_items_processed[0] % 1000 == 0:
+                print('Processed %d/%d queries...' %
+                      (n_items_processed[0], len(X_test)))
+            if len(candidates) > count:
+                print('warning: algorithm %s returned %d results, but count'
+                      ' is only %d)' % (algo, len(candidates), count))
+            return (total, candidates)
+
         if batch:
             results = batch_query(X_test)
+            handle_time = 0
         else:
-            results = [single_query(x) for x in X_test]
+            query_list = [single_query(x) for x in X_test]
+            handle_time, handled_list = algo.handle_query_list_result(query_list)
+            results = [get_candidates(l) for l in handled_list]
 
-        total_time = sum(time for time, _ in results)
+        total_time = sum(time for time, _ in results) + handle_time
         total_candidates = sum(len(candidates) for _, candidates in results)
         search_time = total_time / len(X_test)
         avg_candidates = total_candidates / len(X_test)
@@ -234,7 +242,7 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
             os.path.abspath('results'):
                 {'bind': '/home/app/results', 'mode': 'rw'},
         },
-        # cpuset_cpus=cpu_limit,
+        cpuset_cpus=cpu_limit,
         mem_limit=mem_limit,
         detach=True)
 

@@ -20,12 +20,6 @@ def get_recall_values(dataset_distances, run_distances, count, threshold,
         for di, d in enumerate(run_distances[i][:count]):
             if d <= t:
                 actual += 1
-            else:
-                if run_neighbors is not None:
-                    print(f"neighbors[{i}] {run_neighbors[i]}")
-                print(f"distances[{i}, {di}] > {t}") #, file=sys.stderr)
-                print(f"run_distances[{i}] {run_distances[i]}")
-                # print(f"{dataset_distances[i]}")
         recalls[i] = actual
     return (np.mean(recalls) / float(count),
             np.std(recalls) / float(count),
