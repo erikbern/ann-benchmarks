@@ -167,7 +167,7 @@ float:
           args: [["IVF_FLAT"], [32,64,128,256,512,1024,2048,4096,8192]]   # nlist
           query-args: [[1, 5, 10, 50, 100, 200]]# nprobe (should be <= nlist)
     milvus-async:
-      docker-tag: ann-benchmarks-milvus-async
+      docker-tag: ann-benchmarks-milvus
       module: ann_benchmarks.algorithms.milvus_async
       constructor: MilvusASYNC
       base-args: ["@metric"]
