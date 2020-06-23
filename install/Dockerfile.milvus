@@ -1,5 +1,5 @@
 # Install Milvus
-FROM milvus-local-dev-0100:latest as milvus
+FROM milvusdb/milvus:0.10.0-cpu-d061620-5f3c00 as milvus
 RUN apt-get update
 RUN apt-get install -y wget make
 RUN wget https://github.com/xianyi/OpenBLAS/archive/v0.3.9.tar.gz && \
@@ -8,7 +8,7 @@ RUN wget https://github.com/xianyi/OpenBLAS/archive/v0.3.9.tar.gz && \
     make PREFIX=./ install && mv ./lib/* /var/lib/milvus/lib && \
     cd .. && rm -rf OpenBLAS-0.3.9 && rm v0.3.9.tar.gz
 RUN wget https://raw.githubusercontent.com/milvus-io/milvus/master/core/conf/demo/server_config.yaml
-RUN sed -i 's/cpu_cache_capacity: 16/cpu_cache_capacity: 4/' server_config.yaml  # otherwise my Docker blows up
+# RUN sed -i 's/cpu_cache_capacity: 16/cpu_cache_capacity: 4/' server_config.yaml  # otherwise my Docker blows up
 RUN mv server_config.yaml /var/lib/milvus/conf/server_config.yaml
 
 # Switch back to ANN-benchmarks base image and copy all files
@@ -20,7 +20,7 @@ RUN apt-get update
 RUN apt-get install -y libmysqlclient-dev curl
 
 # Python client
-RUN pip3 install pymilvus-test==0.3.21
+RUN pip3 install pymilvus==0.2.13
 
 # Dumb entrypoint thing that runs the daemon as well
 RUN echo '#!/bin/bash' >> entrypoint.sh
