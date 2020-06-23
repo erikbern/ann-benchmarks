@@ -11,6 +11,7 @@ import requests
 import sys
 import threading
 import time
+import psutil
 
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
@@ -231,6 +232,8 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
     print('Running on CPUs:', cpu_limit)
 
+    logic_cpu_num = psutil.cpu_count(logical=True)
+    omp_thread = logic_cpu_num * 2 // 3 if logic_cpu_num > 1 else 1
     container = client.containers.run(
         definition.docker_tag,
         cmd,
@@ -242,8 +245,9 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
             os.path.abspath('results'):
                 {'bind': '/home/app/results', 'mode': 'rw'},
         },
-        cpuset_cpus=cpu_limit,
-        mem_limit=mem_limit,
+        environment=["OMP_NUM_THREADS={}".format(omp_thread)],
+        # cpuset_cpus=cpu_limit,
+        # mem_limit=mem_limit,
         detach=True)
 
     def stream_logs():

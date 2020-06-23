@@ -157,24 +157,67 @@ float:
           # This run group produces 3 algorithm instances -- Annoy("angular",
           # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
           # which will be used to run 12 different queries.
-    milvus:
+    milvus-ivf-flat:
       docker-tag: ann-benchmarks-milvus
-      module: ann_benchmarks.algorithms.milvus
-      constructor: Milvus
+      module: ann_benchmarks.algorithms.milvus_ivf_flat
+      constructor: MilvusIVFFLAT
       base-args: ["@metric"]
       run-groups:
         milvus:
-          args: [["IVF_FLAT"], [32,64,128,256,512,1024,2048,4096,8192]]   # nlist
-          query-args: [[1, 5, 10, 50, 100, 200]]# nprobe (should be <= nlist)
-    milvus-async:
+          args: [["IVF_FLAT"], [32,64,128,256,512,1024,2048,4096,8192]]
+          query-args: [[1, 5, 10, 50, 100, 200]]
+    milvus-hnsw:
       docker-tag: ann-benchmarks-milvus
-      module: ann_benchmarks.algorithms.milvus_async
-      constructor: MilvusASYNC
+      module: ann_benchmarks.algorithms.milvus_hnsw
+      constructor: MilvusHNSW
       base-args: ["@metric"]
       run-groups:
-        milvus-async:
-          args: [["IVF_FLAT"], [32,64,128,256,512,1024,2048,4096,8192]]   # nlist
-          query-args: [[1, 5, 10, 50, 100, 200]]# nprobe (should be <= nlist)
+        M-4:
+          arg-groups:
+            - {"M": 4,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-8:
+          arg-groups:
+            - {"M": 8,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-12:
+          arg-groups:
+            - {"M": 12,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-16:
+          arg-groups:
+            - {"M": 16,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-24:
+          arg-groups:
+            - {"M": 24,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-36:
+          arg-groups:
+            - {"M": 36,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-48:
+          arg-groups:
+            - {"M": 48,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-64:
+          arg-groups:
+            - {"M": 64,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-96:
+          arg-groups:
+            - {"M": 96,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+    milvus-annoy:
+      docker-tag: ann-benchmarks-milvus
+      module: ann_benchmarks.algorithms.milvus_annoy
+      constructor: MilvusAnnoy
+      base-args: ["@metric"]
+      run-groups:
+        milvus-annoy:
+          args: [[100, 200, 400]]
+          query-args: [[100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000,
+                      100000, 200000, 400000]]
     nearpy:
       disabled: true
       docker-tag: ann-benchmarks-nearpy

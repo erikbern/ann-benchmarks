@@ -1,5 +1,4 @@
 from __future__ import absolute_import
-import sys
 import numpy as np
 
 
@@ -12,12 +11,12 @@ def epsilon_threshold(data, count, epsilon):
 
 
 def get_recall_values(dataset_distances, run_distances, count, threshold,
-                      epsilon=1e-3, run_neighbors=None):
+                      epsilon=1e-3):
     recalls = np.zeros(len(run_distances))
     for i in range(len(run_distances)):
         t = threshold(dataset_distances[i], count, epsilon)
         actual = 0
-        for di, d in enumerate(run_distances[i][:count]):
+        for d in run_distances[i][:count]:
             if d <= t:
                 actual += 1
         recalls[i] = actual
@@ -26,13 +25,13 @@ def get_recall_values(dataset_distances, run_distances, count, threshold,
             recalls)
 
 
-def knn(dataset_distances, run_distances, count, metrics, epsilon=1e-3, run_neighbors=None):
+def knn(dataset_distances, run_distances, count, metrics, epsilon=1e-3):
     if 'knn' not in metrics:
         print('Computing knn metrics')
         knn_metrics = metrics.create_group('knn')
         mean, std, recalls = get_recall_values(dataset_distances,
                                                run_distances, count,
-                                               knn_threshold, epsilon, run_neighbors)
+                                               knn_threshold, epsilon)
         knn_metrics.attrs['mean'] = mean
         knn_metrics.attrs['std'] = std
         knn_metrics['recalls'] = recalls
@@ -101,71 +100,71 @@ def dist_computations(queries, attrs):
 all_metrics = {
     "k-nn": {
         "description": "Recall",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: knn(true_distances, run_distances, run_attrs["count"], metrics, run_neighbors=run_neighbors).attrs['mean'],  # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: knn(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
         "worst": float("-inf"),
         "lim": [0.0, 1.03]
     },
     "k-nn_0.8": {
         "description": "Recall 0.8+",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: knn(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: knn(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
         "worst": float("-inf"),
         "lim": [0.80, 1.03]
     },
     "epsilon": {
         "description": "Epsilon 0.01 Recall",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: epsilon(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
         "worst": float("-inf")
     },
     "epsilon_0.8": {
         "description": "Epsilon 0.01 Recall 0.8+",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: epsilon(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
         "worst": float("-inf"),
         "lim": [0.80, 1.03]
     },
     "largeepsilon": {
         "description": "Epsilon 0.1 Recall",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: epsilon(true_distances, run_distances, run_attrs["count"], metrics, 0.1).attrs['mean'],  # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics, 0.1).attrs['mean'],  # noqa
         "worst": float("-inf")
     },
     "largeepsilon_0.8": {
         "description": "Epsilon 0.1 Recall 0.8+",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: epsilon(true_distances, run_distances, run_attrs["count"], metrics, 0.1).attrs['mean'],  # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics, 0.1).attrs['mean'],  # noqa
         "worst": float("-inf"),
         "lim": [0.80, 1.03]
     },
     "rel": {
         "description": "Relative Error",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: rel(true_distances, run_distances, metrics),  # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: rel(true_distances, run_distances, metrics),  # noqa
         "worst": float("inf")
     },
     "qps": {
         "description": "Queries per second (1/s)",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: queries_per_second(true_distances, run_attrs),  # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: queries_per_second(true_distances, run_attrs),  # noqa
         "worst": float("-inf")
     },
     "distcomps": {
         "description": "Distance computations",
-        "function": lambda true_distances, run_distances,  metrics, run_attrs, run_neighbors: dist_computations(true_distances, run_attrs), # noqa
+        "function": lambda true_distances, run_distances,  metrics, run_attrs: dist_computations(true_distances, run_attrs), # noqa
         "worst": float("inf")
     },
     "build": {
         "description": "Build time (s)",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: build_time(true_distances, run_attrs), # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: build_time(true_distances, run_attrs), # noqa
         "worst": float("inf")
     },
     "candidates": {
         "description": "Candidates generated",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: candidates(true_distances, run_attrs), # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: candidates(true_distances, run_attrs), # noqa
         "worst": float("inf")
     },
     "indexsize": {
         "description": "Index size (kB)",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: index_size(true_distances, run_attrs),  # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: index_size(true_distances, run_attrs),  # noqa
         "worst": float("inf")
     },
     "queriessize": {
         "description": "Index size (kB)/Queries per second (s)",
-        "function": lambda true_distances, run_distances, metrics, run_attrs, run_neighbors: index_size(true_distances, run_attrs) / queries_per_second(true_distances, run_attrs), # noqa
+        "function": lambda true_distances, run_distances, metrics, run_attrs: index_size(true_distances, run_attrs) / queries_per_second(true_distances, run_attrs), # noqa
         "worst": float("inf")
     }
 }

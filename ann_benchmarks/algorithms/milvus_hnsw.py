@@ -6,24 +6,24 @@ import sklearn.preprocessing
 from ann_benchmarks.algorithms.base import BaseANN
 
 
-class MilvusASYNC(BaseANN):
-    def __init__(self, metric, index_type, nlist):
-        self._index_param = {'nlist': nlist}
-        self._search_param = {'nprobe': None}
+class MilvusHNSW(BaseANN):
+    def __init__(self, metric, method_param):
         self._metric = metric
+        self._method_param = method_param
+        self._ef = None
         self._milvus = milvus.Milvus(host='localhost', port='19530', try_connect=False, pre_ping=False)
         self._table_name = 'test01'
-        self._index_type = index_type
 
     def fit(self, X):
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
 
         self._milvus.create_collection({'collection_name': self._table_name, 'dimension': X.shape[1], 'index_file_size': 2048})
-        vector_ids = [id for id in range(len(X))]
+        vector_ids = [id_ for id_ in range(len(X))]
         records = X.tolist()
         records_len = len(records)
         step = 100000
+
         for i in range(0, records_len, step):
             end = min(i + step, records_len)
             status, ids = self._milvus.insert(collection_name=self._table_name, records=records[i:end], ids=vector_ids[i:end])
@@ -38,8 +38,13 @@ class MilvusASYNC(BaseANN):
             else:
                 break
 
-        index_type = getattr(milvus.IndexType, self._index_type)  # a bit hacky but works
-        status = self._milvus.create_index(self._table_name, index_type, params=self._index_param)
+        # index_type = getattr(milvus.IndexType, self._index_type)  # a bit hacky but works
+        index_param = {
+            "M": self._method_param["M"],
+            "efConstruction": self._method_param["efConstruction"]
+        }
+
+        status = self._milvus.create_index(self._table_name, milvus.IndexType.HNSW, params=index_param)
         if not status.OK():
             raise Exception("Create index failed. {}".format(status))
 #         self._milvus_id_to_index = {}
@@ -47,17 +52,21 @@ class MilvusASYNC(BaseANN):
 #         for i, id in enumerate(ids):
 #             self._milvus_id_to_index[id] = i
 
-    def set_query_arguments(self, nprobe):
-        if nprobe > self._index_param['nlist']:
-            print('warning! nprobe > nlist')
-            nprobe = self._index_param['nlist']
-        self._search_param['nprobe'] = nprobe
+    def set_query_arguments(self, ef):
+        self._ef = ef
+        # if nprobe > self._index_param['nlist']:
+        #     print('warning! nprobe > nlist')
+        #     nprobe = self._index_param['nlist']
+        # self._search_param['nprobe'] = nprobe
 
     def query(self, v, n):
         if self._metric == 'angular':
             v /= numpy.linalg.norm(v)
         v = v.tolist()
-        future = self._milvus.search(collection_name=self._table_name, query_records=[v], top_k=n, params=self._search_param, _async=True)
+        search_param = {
+            "ef": self._ef
+        }
+        future = self._milvus.search(collection_name=self._table_name, query_records=[v], top_k=n, params=search_param, _async=True)
         return future
 
     def handle_query_list_result(self, query_list):
@@ -80,4 +89,4 @@ class MilvusASYNC(BaseANN):
         return time.time() - t0, handled_result
 
     def __str__(self):
-        return 'Milvus(index={}, index_param={}, search_param={})'.format(self._index_type, self._index_param, self._search_param)
+        return 'Milvus(index={}, index_param={}, search_param={})'.format("HNSW", self._method_param, self._ef)
