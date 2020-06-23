@@ -31,12 +31,12 @@ class MilvusHNSW(BaseANN):
                 raise Exception("Insert failed. {}".format(status))
         self._milvus.flush([self._table_name])
 
-        while True:
-            status, stats = self._milvus.get_collection_stats(self._table_name)
-            if len(stats["partitions"][0]["segments"]) > 1:
-                time.sleep(2)
-            else:
-                break
+        # while True:
+        #     status, stats = self._milvus.get_collection_stats(self._table_name)
+        #     if len(stats["partitions"][0]["segments"]) > 1:
+        #         time.sleep(2)
+        #     else:
+        #         break
 
         # index_type = getattr(milvus.IndexType, self._index_type)  # a bit hacky but works
         index_param = {
