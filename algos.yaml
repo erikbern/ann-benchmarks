@@ -204,10 +204,6 @@ float:
           arg-groups:
             - {"M": 64,  "efConstruction": 500}
           query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
-        M-96:
-          arg-groups:
-            - {"M": 96,  "efConstruction": 500}
-          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
     milvus-annoy:
       docker-tag: ann-benchmarks-milvus
       module: ann_benchmarks.algorithms.milvus_annoy
