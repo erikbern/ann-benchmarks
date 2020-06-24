@@ -15,6 +15,9 @@ class MilvusIVFFLAT(BaseANN):
         self._table_name = 'test01'
         self._index_type = index_type
 
+        # batch search
+        self._res = None
+
     def fit(self, X):
         if self._metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
@@ -78,6 +81,20 @@ class MilvusIVFFLAT(BaseANN):
             handled_result.append((total, v, results_ids))
             # return results_ids
         return time.time() - t0, handled_result
+
+    def batch_query(self, X, n):
+        status, results = self._milvus.search(collection_name=self._table_name, query_records=X, top_k=n, params=self._search_param)
+        if not status.OK():
+            raise Exception("[Search] search failed: {}".format(status.message))
+
+        self._res = results
+
+    def get_batch_results(self):
+        batch_results = []
+        for r in self._res:
+            batch_results.append([result.id for result in r])
+
+        return batch_results
 
     def __str__(self):
         return 'Milvus(index={}, index_param={}, search_param={})'.format(self._index_type, self._index_param, self._search_param)

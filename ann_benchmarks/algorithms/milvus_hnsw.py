@@ -88,5 +88,19 @@ class MilvusHNSW(BaseANN):
             # return results_ids
         return time.time() - t0, handled_result
 
+    def batch_query(self, X, n):
+        status, results = self._milvus.search(collection_name=self._table_name, query_records=X, top_k=n, params={"ef": self._ef})
+        if not status.OK():
+            raise Exception("[Search] search failed: {}".format(status.message))
+
+        self._res = results
+
+    def get_batch_results(self):
+        batch_results = []
+        for r in self._res:
+            batch_results.append([result.id for result in r])
+
+        return batch_results
+
     def __str__(self):
         return 'Milvus(index={}, index_param={}, search_param={})'.format("HNSW", self._method_param, self._ef)
