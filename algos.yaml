@@ -525,6 +525,14 @@ float:
             - {"n_neighbors": [120], "diversify_epsilon": [0.0, 1.0],
                "pruning_degree_multiplier":[2.0, 2.5], leaf_size: 80}
           query-args: [[0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
+    scann:
+      docker-tag: ann-benchmarks-scann
+      module: ann_benchmarks.algorithms.scann
+      constructor: Scann
+      run-groups:
+        scann:
+          args: [[2000], [0.2]]
+          query-args: [[[30, 120], [35, 100], [40, 80], [45, 80], [50, 80], [55, 95], [60, 110], [65, 110], [75, 110], [90, 110], [110, 120], [130, 150], [150, 200], [170, 200], [200, 300], [220, 500], [250, 500], [310, 300], [400, 300], [500, 500], [800, 1000]]]
 bit:
   hamming:
     mih:
