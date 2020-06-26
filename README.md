@@ -28,6 +28,7 @@ Evaluated
 * [SPTAG](https://github.com/microsoft/SPTAG)
 * [PUFFINN](https://github.com/puffinn/puffinn)
 * [N2](https://github.com/kakao/n2)
+* [ScaNN](https://github.com/google-research/google-research/tree/master/scann)
 
 Data sets
 =========
