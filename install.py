@@ -17,6 +17,10 @@ def build(library, args):
         ' install/Dockerfile.%s .' % (q, library, library), shell=True)
 
 
+def build_multiprocess(args):
+    return build(*args)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -49,15 +53,12 @@ if __name__ == "__main__":
         build(os.getenv('LIBRARY'), args.build_arg)
     else:
         print('Building algorithm images... with (%d) processes' % args.proc)
-        dockerfiles = []
-        for fn in os.listdir('install'):
-            if fn.startswith('Dockerfile.'):
-                dockerfiles.append(fn.split('.')[-1])
+        tags = [fn.split('.')[-1] for fn in os.listdir('install') if fn.startswith('Dockerfile.')]
 
         if args.proc == 1:
-            [build(tag, args.build_arg) for tag in dockerfiles]
+            [build(tag, args.build_arg) for tag in tags]
         else:
             pool = Pool(processes=args.proc)
-            pool.map(lambda x: build(x, args.build_arg), dockerfiles)
+            pool.map(build_multiprocess, [(tag, args.build_arg) for tag in tags])
             pool.close()
             pool.join()
