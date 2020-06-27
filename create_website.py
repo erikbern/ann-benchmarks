@@ -89,6 +89,9 @@ def prepare_data(data, xn, yn):
     """Change format from (algo, instance, dict) to (algo, instance, x, y)."""
     res = []
     for algo, algo_name, result in data:
+        if xn == "rel" and result[xn] == float("inf"):
+            continue
+
         res.append((algo, algo_name, result[xn], result[yn]))
     return res
 

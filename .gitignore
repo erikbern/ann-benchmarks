@@ -18,6 +18,7 @@ results*/
 html*/
 *.txt
 *.log
+*.tar
 
 # data
 data*/
