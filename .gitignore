@@ -18,3 +18,7 @@ results*/
 html*/
 *.txt
 *.log
+
+# data
+data*/
+data*
