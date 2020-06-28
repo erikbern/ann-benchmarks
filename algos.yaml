@@ -157,6 +157,15 @@ float:
           # This run group produces 3 algorithm instances -- Annoy("angular",
           # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
           # which will be used to run 12 different queries.
+    milvus:
+      docker-tag: ann-benchmarks-milvus
+      module: ann_benchmarks.algorithms.milvus
+      constructor: Milvus
+      base-args: ["@metric"]
+      run-groups:
+        milvus:
+          args: [['IVF_FLAT', 'IVF_SQ8'], [100, 300, 1000, 3000, 10000, 30000]]  # nlist
+          query-args: [[1, 3, 10, 30, 100, 300]]  # nprobe (should be <= nlist)
     nearpy:
       disabled: true
       docker-tag: ann-benchmarks-nearpy
