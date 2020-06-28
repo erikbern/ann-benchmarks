@@ -240,11 +240,7 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         for line in container.logs(stream=True):
             print(colors.color(line.decode().rstrip(), fg='blue'))
 
-    if sys.version_info >= (3, 0):
-        t = threading.Thread(target=stream_logs, daemon=True)
-    else:
-        t = threading.Thread(target=stream_logs)
-        t.daemon = True
+    t = threading.Thread(target=stream_logs, daemon=True)
     t.start()
 
     print('Waiting for %d seconds' % timeout)
