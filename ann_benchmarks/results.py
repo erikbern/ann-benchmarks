@@ -4,6 +4,7 @@ import h5py
 import json
 import os
 import re
+import traceback
 
 
 def get_algorithm_name(name, batch_mode):
@@ -70,7 +71,8 @@ def load_all_results(dataset=None, count=None, split_batched=False,
                 yield properties, f
                 f.close()
             except:
-                pass
+                print('Was unable to read', fn)
+                traceback.print_exc()
 
 
 def get_unique_algorithms():
