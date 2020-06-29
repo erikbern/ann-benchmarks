@@ -14,7 +14,10 @@ RUN apt-get update
 RUN apt-get install -y libmysqlclient-dev
 
 # Python client
-RUN pip3 install pymilvus
+RUN pip3 install pymilvus==0.2.7
+
+# Fixing some version incompatibility thing
+RUN pip3 install numpy==1.18 scipy==1.1.0 scikit-learn==0.21
 
 # Dumb entrypoint thing that runs the daemon as well
 RUN echo '#!/bin/bash' >> entrypoint.sh
