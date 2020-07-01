@@ -1,3 +1,8 @@
+import time
+import h5py
+import collections
+import concurrent.futures
+import threading
 import matplotlib as mpl
 mpl.use('Agg')  # noqa
 import argparse
@@ -59,6 +64,7 @@ def convert_linestyle(ls):
 
 
 def get_run_desc(properties):
+    # import pdb;pdb.set_trace()
     return "%(dataset)s_%(count)d_%(distance)s" % properties
 
 
@@ -222,25 +228,61 @@ def build_index_site(datasets, algorithms, j2_env, file_name):
                                label_func=get_algorithm_name))
 
 
+def time_wrapper(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print("----run {} cost {}s".format(func.__name__, round(end - start, 2)))
+        return result
+    return wrapper
+
+
+cached_true_dist = dict()
+
+
+def process(ds):
+    c, properties, root, fn = ds
+    f = h5py.File(os.path.join(root, fn), 'r+')
+    print("--------process pos: %s" % c)
+    sdn = get_run_desc(properties)
+    if sdn not in cached_true_dist:
+        dataset = get_dataset(properties["dataset"])
+        cached_true_dist[sdn] = list(dataset["distances"])
+    ms = compute_all_metrics(
+        cached_true_dist[sdn], f, properties, args.recompute)
+    idx = "non-batch"
+    if properties["batch_mode"]:
+        idx = "batch"
+    f.close()
+
+    return [c, sdn, properties, idx, ms]
+
+
+@time_wrapper
 def load_all_results():
     """Read all result files and compute all metrics"""
     all_runs_by_dataset = {'batch': {}, 'non-batch': {}}
     all_runs_by_algorithm = {'batch': {}, 'non-batch': {}}
-    cached_true_dist = []
-    old_sdn = None
-    for properties, f in results.load_all_results():
-        sdn = get_run_desc(properties)
-        if sdn != old_sdn:
-            dataset = get_dataset(properties["dataset"])
-            cached_true_dist = list(dataset["distances"])
-            old_sdn = sdn
+
+    # {position: [sdn, properties, idx, ms]}
+    cache = collections.OrderedDict()
+
+    with concurrent.futures.ProcessPoolExecutor(max_workers=16) as executor:
+        future_results = {executor.submit(process, (c, p, r, f))
+                          for c, (p, r, f) in enumerate(results.load_all_results_v2())}
+        for future in concurrent.futures.as_completed(future_results):
+            d = future.result()
+            cache[d[0]] = d[1:]
+
+    for pos, v in sorted(cache.items()):
+        print("pos: %s" % pos)
+        sdn = v[0]
+        properties = v[1]
+        idx = v[2]
+        ms = v[3]
         algo = properties["algo"]
-        ms = compute_all_metrics(
-            cached_true_dist, f, properties, args.recompute)
         algo_ds = get_dataset_label(sdn)
-        idx = "non-batch"
-        if properties["batch_mode"]:
-            idx = "batch"
         all_runs_by_algorithm[idx].setdefault(
             algo, {}).setdefault(algo_ds, []).append(ms)
         all_runs_by_dataset[idx].setdefault(

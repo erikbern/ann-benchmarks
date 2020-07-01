@@ -68,9 +68,31 @@ def load_all_results(dataset=None, count=None, split_batched=False,
                     except:
                         pass
                 yield properties, f
-                f.close()
             except:
                 pass
+
+
+def load_all_results_v2(dataset=None, count=None, split_batched=False,
+                     batch_mode=False):
+    r = []
+    for root, _, files in os.walk(get_result_filename(dataset, count)):
+        for fn in sorted(files):
+            try:
+                if split_batched and batch_mode != is_batch(root):
+                    print("xx")
+                    continue
+                f = h5py.File(os.path.join(root, fn), 'r+')
+                properties = dict(f.attrs)
+                f.close()
+                for k in properties.keys():
+                    try:
+                        properties[k] = properties[k].decode()
+                    except:
+                        pass
+                r.append((properties, root, fn))
+            except:
+                pass
+    return r
 
 
 def get_unique_algorithms():
