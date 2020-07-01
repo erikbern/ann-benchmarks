@@ -1,7 +1,9 @@
 from __future__ import absolute_import
 import argparse
 import docker
+import multiprocessing.pool
 import os
+import psutil
 import random
 import sys
 import shutil
@@ -101,6 +103,11 @@ def main():
         type=positive_int,
         help='specify cpu number',
         default=0)
+    parser.add_argument(
+        '--parallelism',
+        type=positive_int,
+        help='Number of Docker containers in parallel',
+        default=1)
 
     args = parser.parse_args()
     if args.timeout == -1:
@@ -208,7 +215,7 @@ def main():
     else:
         print('Order:', definitions)
 
-    for definition in definitions:
+    def run_definition(definition):
         print(definition, '...')
 
         try:
@@ -217,8 +224,12 @@ def main():
                     args.batch)
             else:
                 run_docker(definition, args.dataset, args.count,
-                           args.runs, args.timeout, args.batch, str(args.cpu_number))
-        except KeyboardInterrupt:
-            break
+                           args.runs, args.timeout, args.batch, str(args.cpu_number), mem_limit)
         except:
             traceback.print_exc()
+
+
+    mem_limit = int(psutil.virtual_memory().available / args.parallelism)
+    pool = multiprocessing.pool.ThreadPool(processes=args.parallelism)
+    pool.map(run_definition, definitions)
+    pool.join()
