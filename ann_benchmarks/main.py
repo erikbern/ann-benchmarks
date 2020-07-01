@@ -19,6 +19,14 @@ from ann_benchmarks.results import get_result_filename
 from ann_benchmarks.runner import run, run_docker
 
 
+def run_docker_args(z):
+    return run_docker(*z)
+
+
+def run_local_args(z):
+    return run(*z)
+
+
 def positive_int(s):
     i = None
     try:
@@ -215,21 +223,17 @@ def main():
     else:
         print('Order:', definitions)
 
-    def run_definition(definition):
-        print(definition, '...')
-
-        try:
-            if args.local:
-                run(definition, args.dataset, args.count, args.runs,
-                    args.batch)
-            else:
-                run_docker(definition, args.dataset, args.count,
-                           args.runs, args.timeout, args.batch, str(args.cpu_number), mem_limit)
-        except:
-            traceback.print_exc()
-
-
     mem_limit = int(psutil.virtual_memory().available / args.parallelism)
-    pool = multiprocessing.pool.ThreadPool(processes=args.parallelism)
-    pool.map(run_definition, definitions)
+    pool = multiprocessing.pool.Pool(processes=args.parallelism)
+    if args.local:
+        fn = run_local_args
+        args = [(definition, args.dataset, args.count, args.runs, args.batch)
+                for definition in definitions]
+    else:
+        fn = run_docker_args
+        args = [(definition, args.dataset, args.count,
+                 args.runs, args.timeout, args.batch, str(args.cpu_number), mem_limit)
+                for definition in definitions]
+
+    pool.map(fn, args)
     pool.join()
