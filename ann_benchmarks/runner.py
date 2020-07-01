@@ -220,7 +220,7 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
     if batch:
         cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
 
-    print('Creating container: %s CPUs, mem limit %s, command %s' % (cpu_limit, mem_limit, cmd))
+    print('Creating container: %s CPUs, mem limit %s, timeout %d, command %s' % (cpu_limit, mem_limit, timeout, cmd))
     container = client.containers.run(
         definition.docker_tag,
         cmd,
@@ -243,7 +243,6 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
     t = threading.Thread(target=stream_logs, daemon=True)
     t.start()
 
-    print('Waiting for %d seconds' % timeout)
     try:
         exit_code = container.wait(timeout=timeout)
 
