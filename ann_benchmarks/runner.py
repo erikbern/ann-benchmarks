@@ -217,10 +217,8 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
     client = docker.from_env()
     if mem_limit is None:
         mem_limit = psutil.virtual_memory().available
-    if batch:
-        cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
 
-    print('Creating container: %s CPUs, mem limit %s, timeout %d, command %s' % (cpu_limit, mem_limit, timeout, cmd))
+    print('Creating container: CPU limit %s, mem limit %s, timeout %d, command %s' % (cpu_limit, mem_limit, timeout, cmd))
     container = client.containers.run(
         definition.docker_tag,
         cmd,
