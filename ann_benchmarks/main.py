@@ -1,7 +1,9 @@
 from __future__ import absolute_import
 import argparse
 import docker
+import multiprocessing.pool
 import os
+import psutil
 import random
 import sys
 import shutil
@@ -26,6 +28,17 @@ def positive_int(s):
     if not i or i < 1:
         raise argparse.ArgumentTypeError("%r is not a positive integer" % s)
     return i
+
+
+def run_worker(cpu, args, queue):
+    while not queue.empty():
+        definition = queue.get()
+        if args.local:
+            run(definition, args.dataset, args.count, args.runs, args.batch)
+        else:
+            mem_limit = int(psutil.virtual_memory().available / args.parallelism)
+            run_docker(definition, args.dataset, args.count,
+                       args.runs, args.timeout, args.batch, str(cpu), mem_limit)
 
 
 def main():
@@ -97,10 +110,10 @@ def main():
         help='run algorithms that are disabled in algos.yml',
         action='store_true')
     parser.add_argument(
-        '--cpu-number',
+        '--parallelism',
         type=positive_int,
-        help='specify cpu number',
-        default=0)
+        help='Number of Docker containers in parallel',
+        default=1)
 
     args = parser.parse_args()
     if args.timeout == -1:
@@ -208,17 +221,15 @@ def main():
     else:
         print('Order:', definitions)
 
-    for definition in definitions:
-        print(definition, '...')
+    if args.parallelism > multiprocessing.cpu_count() - 1:
+        raise Exception('Parallelism larger than %d! (CPU count minus one)' % (multiprocessing.cpu_count() - 1))
 
-        try:
-            if args.local:
-                run(definition, args.dataset, args.count, args.runs,
-                    args.batch)
-            else:
-                run_docker(definition, args.dataset, args.count,
-                           args.runs, args.timeout, args.batch, str(args.cpu_number))
-        except KeyboardInterrupt:
-            break
-        except:
-            traceback.print_exc()
+    # Multiprocessing magic to farm this out to all CPUs
+    queue = multiprocessing.Queue()
+    for definition in definitions:
+        queue.put(definition)
+    workers = []
+    for i in range(args.parallelism):
+        worker = multiprocessing.Process(target=run_worker, args=(i+1, args, queue))
+        worker.start()
+        workers.append(worker)
