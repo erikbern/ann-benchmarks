@@ -5,8 +5,8 @@ import multiprocessing.pool
 import os
 import psutil
 import random
-import sys
 import shutil
+import sys
 import traceback
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
@@ -36,7 +36,8 @@ def run_worker(cpu, args, queue):
         if args.local:
             run(definition, args.dataset, args.count, args.runs, args.batch)
         else:
-            mem_limit = int(psutil.virtual_memory().available / args.parallelism)
+            memory_margin = 500e6  # reserve some extra memory for misc stuff
+            mem_limit = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
             run_docker(definition, args.dataset, args.count,
                        args.runs, args.timeout, args.batch, str(cpu), mem_limit)
 
@@ -228,8 +229,9 @@ def main():
     queue = multiprocessing.Queue()
     for definition in definitions:
         queue.put(definition)
-    workers = []
-    for i in range(args.parallelism):
-        worker = multiprocessing.Process(target=run_worker, args=(i+1, args, queue))
-        worker.start()
-        workers.append(worker)
+    workers = [multiprocessing.Process(target=run_worker, args=(i+1, args, queue))
+               for i in range(args.parallelism)]
+    [worker.start() for worker in workers]
+    [worker.join() for worker in workers]
+
+    # TODO: need to figure out cleanup handling here

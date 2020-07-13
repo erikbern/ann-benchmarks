@@ -11,6 +11,7 @@ import requests
 import sys
 import threading
 import time
+import traceback
 
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
@@ -247,7 +248,9 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         # Exit if exit code
         if exit_code not in [0, None]:
             print(colors.color(container.logs().decode(), fg='red'))
-            raise Exception('Child process raised exception %d' % exit_code)
-
+            print('Child process raised exception %d' % exit_code)
+    except:
+        print('Container.wait failed with exception')
+        traceback.print_exc()
     finally:
         container.remove(force=True)
