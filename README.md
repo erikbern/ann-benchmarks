@@ -70,10 +70,10 @@ fashion-mnist-784-euclidean
 
 ![fashion-mnist-784-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/fashion-mnist-784-euclidean.png)
 
-gist-960-euclidean
+lastfm-64-dot
 ------------------
 
-![gist-960-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/gist-960-euclidean.png)
+![lastfm-64-dot](https://raw.github.com/erikbern/ann-benchmarks/master/results/lastfm-64-dot.png)
 
 nytimes-256-angular
 -------------------
