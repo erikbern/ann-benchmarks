@@ -11,6 +11,7 @@ import requests
 import sys
 import threading
 import time
+import traceback
 
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
@@ -214,15 +215,11 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         cmd += ['--batch']
     cmd.append(json.dumps(definition.arguments))
     cmd += [json.dumps(qag) for qag in definition.query_argument_groups]
-    print('Running command', cmd)
     client = docker.from_env()
     if mem_limit is None:
         mem_limit = psutil.virtual_memory().available
-    print('Memory limit:', mem_limit)
-    if batch:
-        cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
-    print('Running on CPUs:', cpu_limit)
 
+    print('Creating container: CPU limit %s, mem limit %s, timeout %d, command %s' % (cpu_limit, mem_limit, timeout, cmd))
     container = client.containers.run(
         definition.docker_tag,
         cmd,
@@ -242,21 +239,18 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         for line in container.logs(stream=True):
             print(colors.color(line.decode().rstrip(), fg='blue'))
 
-    if sys.version_info >= (3, 0):
-        t = threading.Thread(target=stream_logs, daemon=True)
-    else:
-        t = threading.Thread(target=stream_logs)
-        t.daemon = True
+    t = threading.Thread(target=stream_logs, daemon=True)
     t.start()
+
     try:
         exit_code = container.wait(timeout=timeout)
 
         # Exit if exit code
-        if exit_code == 0:
-            return
-        elif exit_code is not None:
+        if exit_code not in [0, None]:
             print(colors.color(container.logs().decode(), fg='red'))
-            raise Exception('Child process raised exception %d' % exit_code)
-
+            print('Child process raised exception %d' % exit_code)
+    except:
+        print('Container.wait failed with exception')
+        traceback.print_exc()
     finally:
         container.remove(force=True)

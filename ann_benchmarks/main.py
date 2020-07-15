@@ -1,10 +1,12 @@
 from __future__ import absolute_import
 import argparse
 import docker
+import multiprocessing.pool
 import os
+import psutil
 import random
-import sys
 import shutil
+import sys
 import traceback
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
@@ -26,6 +28,18 @@ def positive_int(s):
     if not i or i < 1:
         raise argparse.ArgumentTypeError("%r is not a positive integer" % s)
     return i
+
+
+def run_worker(cpu, args, queue):
+    while not queue.empty():
+        definition = queue.get()
+        if args.local:
+            run(definition, args.dataset, args.count, args.runs, args.batch)
+        else:
+            memory_margin = 500e6  # reserve some extra memory for misc stuff
+            mem_limit = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
+            run_docker(definition, args.dataset, args.count,
+                       args.runs, args.timeout, args.batch, str(cpu), mem_limit)
 
 
 def main():
@@ -71,13 +85,13 @@ def main():
         type=positive_int,
         help='run each algorithm instance %(metavar)s times and use only'
              ' the best result',
-        default=2)
+        default=5)
     parser.add_argument(
         '--timeout',
         type=int,
         help='Timeout (in seconds) for each individual algorithm run, or -1'
              'if no timeout should be set',
-        default=5 * 3600)
+        default=2 * 3600)
     parser.add_argument(
         '--local',
         action='store_true',
@@ -97,10 +111,10 @@ def main():
         help='run algorithms that are disabled in algos.yml',
         action='store_true')
     parser.add_argument(
-        '--cpu-number',
+        '--parallelism',
         type=positive_int,
-        help='specify cpu number',
-        default=0)
+        help='Number of Docker containers in parallel',
+        default=1)
 
     args = parser.parse_args()
     if args.timeout == -1:
@@ -208,17 +222,16 @@ def main():
     else:
         print('Order:', definitions)
 
-    for definition in definitions:
-        print(definition, '...')
+    if args.parallelism > multiprocessing.cpu_count() - 1:
+        raise Exception('Parallelism larger than %d! (CPU count minus one)' % (multiprocessing.cpu_count() - 1))
 
-        try:
-            if args.local:
-                run(definition, args.dataset, args.count, args.runs,
-                    args.batch)
-            else:
-                run_docker(definition, args.dataset, args.count,
-                           args.runs, args.timeout, args.batch, str(args.cpu_number))
-        except KeyboardInterrupt:
-            break
-        except:
-            traceback.print_exc()
+    # Multiprocessing magic to farm this out to all CPUs
+    queue = multiprocessing.Queue()
+    for definition in definitions:
+        queue.put(definition)
+    workers = [multiprocessing.Process(target=run_worker, args=(i+1, args, queue))
+               for i in range(args.parallelism)]
+    [worker.start() for worker in workers]
+    [worker.join() for worker in workers]
+
+    # TODO: need to figure out cleanup handling here
