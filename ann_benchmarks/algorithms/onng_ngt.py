@@ -17,7 +17,8 @@ class ONNG(BaseANN):
         self._indegree = int(param['indegree'])
         self._metric = metrics[metric]
         self._object_type = object_type
-        self._edge_size_for_search = -2
+        self._edge_size_for_search = int(param['search_edge']) if 'search_edge' in param.keys() else -2
+        self._tree_disabled = (param['tree'] == False) if 'tree' in param.keys() else False
         self._build_time_limit = 4
         self._epsilon = epsilon
         print('ONNG: edge_size=' + str(self._edge_size))
@@ -67,6 +68,8 @@ class ONNG(BaseANN):
         if os.path.exists(index):
             print('ONNG: index already exists! ' + str(index))
             t = time.time()
+            print(self._tree_disabled)
+            #self.index = ngtpy.Index(index, read_only=True, tree_disabled=self._tree_disabled)
             self.index = ngtpy.Index(index, read_only=True)
             self.indexName = index
             print('ONNG: open time(sec)=' + str(time.time() - t))

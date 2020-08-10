@@ -325,6 +325,9 @@ float:
         onng:
            args : [{'edge': 100, 'outdegree': 10, 'indegree': 120}]
            query-args : [[0.6, 0.9, 1.0, 1.02, 1.03, 1.05, 1.07, 1.1, 1.2]]
+        onng-80-60-graph:
+           args : [{'edge': 100, 'outdegree': 10, 'indegree': 80, 'search_edge': 60, 'tree': False}]
+           query-args : [[0.6, 0.9, 0.995, 0.998, 1.0, 1.01, 1.02, 1.05, 1.07]]
     mrpt:
       docker-tag: ann-benchmarks-mrpt
       module: ann_benchmarks.algorithms.mrpt
