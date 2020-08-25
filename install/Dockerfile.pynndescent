@@ -1,5 +1,5 @@
 FROM ann-benchmarks
 
-RUN pip3 install 'numba==0.46' 'llvmlite==0.30' scikit-learn
-RUN pip3 install pynndescent
+RUN pip3 install 'numba==0.51' 'llvmlite==0.34' scikit-learn icc_rt
+RUN pip3 install 'pynndescent>=0.5'
 RUN python3 -c 'import pynndescent'

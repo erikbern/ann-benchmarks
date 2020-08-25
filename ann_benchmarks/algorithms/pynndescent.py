@@ -7,7 +7,7 @@ import scipy.sparse
 
 class PyNNDescent(BaseANN):
 
-    def __init__(self, metric, index_param_dict, n_search_trees=1, n_jobs=1):
+    def __init__(self, metric, index_param_dict, n_search_trees=1):
         if "n_neighbors" in index_param_dict:
             self._n_neighbors = int(index_param_dict["n_neighbors"])
         else:
@@ -30,7 +30,6 @@ class PyNNDescent(BaseANN):
             leaf_size = 32
 
         self._n_search_trees = int(n_search_trees)
-        self._n_jobs = int(n_jobs)
 
         self._n_search_trees = int(n_search_trees)
         self._pynnd_metric = {'angular': 'cosine',
@@ -47,7 +46,7 @@ class PyNNDescent(BaseANN):
             if max(X[i]) + 1 > self._n_cols:
                 self._n_cols = max(X[i]) + 1
 
-        result = scipy.sparse.lil_matriux((self._n_rows, self._n_cols), dtype=np.int)
+        result = scipy.sparse.lil_matrix((self._n_rows, self._n_cols), dtype=np.int)
         result.rows = np.array(X)
         result.data = np.array(lil_data)
         return result.tocsr()
@@ -72,8 +71,10 @@ class PyNNDescent(BaseANN):
                                             pruning_degree_multiplier=self._pruning_degree_multiplier,
                                             diversify_epsilon=self._diversify_epsilon,
                                             n_search_trees=self._n_search_trees,
-                                            n_jobs=self._n_jobs)
+                                            n_jobs=1)
         self._index._init_search_graph()
+        if hasattr(self._index, "_init_search_function"):
+            self._index._init_search_function()
 
     def set_query_arguments(self, epsilon=0.1):
         self._epsilon = float(epsilon)
