@@ -19,10 +19,10 @@ class PyNNDescent(BaseANN):
         else:
             self._pruning_degree_multiplier = 1.5
 
-        if "diversify_epsilon" in index_param_dict:
-            self._diversify_epsilon = float(index_param_dict["diversify_epsilon"])
+        if "diversify_prob" in index_param_dict:
+            self._diversify_prob = float(index_param_dict["diversify_prob"])
         else:
-            self._diversify_epsilon = 1.0
+            self._diversify_prob = 1.0
 
         if "leaf_size" in index_param_dict:
             self._leaf_size = int(index_param_dict["leaf_size"])
@@ -69,9 +69,8 @@ class PyNNDescent(BaseANN):
                                             low_memory=True,
                                             leaf_size=self._leaf_size,
                                             pruning_degree_multiplier=self._pruning_degree_multiplier,
-                                            diversify_epsilon=self._diversify_epsilon,
-                                            n_search_trees=self._n_search_trees,
-                                            n_jobs=1)
+                                            diversify_prob=self._diversify_prob,
+                                            n_search_trees=self._n_search_trees)
         self._index._init_search_graph()
         if hasattr(self._index, "_init_search_function"):
             self._index._init_search_function()
@@ -92,8 +91,8 @@ class PyNNDescent(BaseANN):
 
     def __str__(self):
         str_template = (
-            'PyNNDescent(n_neighbors=%d, pruning_mult=%.1f, diversify_epsilon=%.2f, epsilon=%.3f, leaf_size=%03d)')
+            'PyNNDescent(n_neighbors=%d, pruning_mult=%.2f, diversify_prob=%.3f, epsilon=%.3f, leaf_size=%02d)')
         return str_template % (
-        self._n_neighbors, self._pruning_degree_multiplier, self._diversify_epsilon,
+        self._n_neighbors, self._pruning_degree_multiplier, self._diversify_prob,
         self._epsilon, self._leaf_size)
 
