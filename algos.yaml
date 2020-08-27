@@ -541,12 +541,12 @@ float:
           arg-groups:
             - {"n_neighbors": 120, "diversify_prob": 1.0,
                "pruning_degree_multiplier":2.5, leaf_size: 35}
-          query-args: [[0.0, 0.04, 0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
+          query-args: [[0.0, 0.04, 0.08, 0.16, 0.20, 0.24, 0.28, 0.32]]
         NN-120-accurate:
           arg-groups:
             - {"n_neighbors": 120, "diversify_prob": 0.125,
                "pruning_degree_multiplier":2.5, leaf_size: 35}
-          query-args: [[0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
+          query-args: [[0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
     scann:
       docker-tag: ann-benchmarks-scann
       module: ann_benchmarks.algorithms.scann
