@@ -11,7 +11,7 @@ class PyNNDescent(BaseANN):
         if "n_neighbors" in index_param_dict:
             self._n_neighbors = int(index_param_dict["n_neighbors"])
         else:
-            self._n_neighbors = 10
+            self._n_neighbors = 30
 
         if "pruning_degree_multiplier" in index_param_dict:
             self._pruning_degree_multiplier = float(
@@ -31,11 +31,13 @@ class PyNNDescent(BaseANN):
 
         self._n_search_trees = int(n_search_trees)
 
-        self._n_search_trees = int(n_search_trees)
-        self._pynnd_metric = {'angular': 'cosine',
-                              'euclidean': 'euclidean',
-                              'hamming': 'hamming',
-                              'jaccard': 'jaccard'}[metric]
+        self._pynnd_metric = {
+            'angular': 'dot',
+            # 'angular': 'cosine',
+            'euclidean': 'euclidean',
+            'hamming': 'hamming',
+            'jaccard': 'jaccard'
+        }[metric]
 
     def _sparse_convert_for_fit(self, X):
         lil_data = []
