@@ -429,18 +429,18 @@ float:
         NN-20:
           arg-groups:
             - {"n_neighbors": 20, "diversify_prob": 1.0,
-               "pruning_degree_multiplier":[1.0, 1.5], "leaf_size": 24}
-          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16]]
+               "pruning_degree_multiplier":[0.75, 1.5], "leaf_size": 24}
+          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16, 0.20]]
         NN-40:
           arg-groups:
-            - {"n_neighbors": 40, "diversify_prob": [0.25, 1.0],
-               "pruning_degree_multiplier":[1.5, 2.0], "leaf_size": 36}
-          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
-        NN-80:
+            - {"n_neighbors": 40, "diversify_prob": [0.0, 1.0],
+               "pruning_degree_multiplier":[1.0, 2.0], "leaf_size": 36}
+          query-args: [[0.0, 0.02, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
+        NN-60:
           arg-groups:
-            - {"n_neighbors": 80, "diversify_prob": [0.125, 1.0],
-               "pruning_degree_multiplier":[2.0, 2.5], "leaf_size": 36}
-          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
+            - {"n_neighbors": 60, "diversify_prob": 0.0,
+               "pruning_degree_multiplier":[2.0, 3.0], "leaf_size": 48}
+          query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
   angular:
     puffinn:
       docker-tag: ann-benchmarks-puffinn
