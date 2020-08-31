@@ -72,7 +72,8 @@ class PyNNDescent(BaseANN):
                                             leaf_size=self._leaf_size,
                                             pruning_degree_multiplier=self._pruning_degree_multiplier,
                                             diversify_prob=self._diversify_prob,
-                                            n_search_trees=self._n_search_trees)
+                                            n_search_trees=self._n_search_trees,
+                                            verbose=True)
         self._index._init_search_graph()
         if hasattr(self._index, "_init_search_function"):
             self._index._init_search_function()
