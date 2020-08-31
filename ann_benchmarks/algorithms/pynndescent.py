@@ -49,8 +49,8 @@ class PyNNDescent(BaseANN):
                 self._n_cols = max(X[i]) + 1
 
         result = scipy.sparse.lil_matrix((self._n_rows, self._n_cols), dtype=np.int)
-        result.rows = np.array(X)
-        result.data = np.array(lil_data)
+        result.rows[:] = list(X)
+        result.data[:] = lil_data
         return result.tocsr()
 
     def _sparse_convert_for_query(self, v):
