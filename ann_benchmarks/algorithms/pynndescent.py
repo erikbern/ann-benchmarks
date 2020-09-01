@@ -49,8 +49,8 @@ class PyNNDescent(BaseANN):
                 self._n_cols = max(X[i]) + 1
 
         result = scipy.sparse.lil_matrix((self._n_rows, self._n_cols), dtype=np.int)
-        result.rows = np.array(X)
-        result.data = np.array(lil_data)
+        result.rows[:] = list(X)
+        result.data[:] = lil_data
         return result.tocsr()
 
     def _sparse_convert_for_query(self, v):
@@ -72,7 +72,8 @@ class PyNNDescent(BaseANN):
                                             leaf_size=self._leaf_size,
                                             pruning_degree_multiplier=self._pruning_degree_multiplier,
                                             diversify_prob=self._diversify_prob,
-                                            n_search_trees=self._n_search_trees)
+                                            n_search_trees=self._n_search_trees,
+                                            verbose=True)
         self._index._init_search_graph()
         if hasattr(self._index, "_init_search_function"):
             self._index._init_search_function()
