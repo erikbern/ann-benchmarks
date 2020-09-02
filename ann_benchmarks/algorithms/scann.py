@@ -14,6 +14,7 @@ class Scann(BaseANN):
     self.dims_per_block = dims_per_block
 
   def fit(self, X):
+    X[np.linalg.norm(X, axis=1) == 0] = 1.0 / np.sqrt(X.shape[1])
     X /= np.linalg.norm(X, axis=1)[:, np.newaxis]
 
     self.searcher = scann.ScannBuilder(X, 10, "dot_product").tree(
