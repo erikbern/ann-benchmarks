@@ -78,9 +78,16 @@ class PyNNDescent(BaseANN):
             n_search_trees=self._n_search_trees,
             verbose=True,
         )
-        self._index._init_search_graph()
-        if hasattr(self._index, "_init_search_function"):
-            self._index._init_search_function()
+        if hasattr(self._index, "prepare"):
+            self._index.prepare()
+        else:
+            self._index._init_search_graph()
+            if self._index._is_sparse:
+                if hasattr(self._index, "_init_sparse_search_function"):
+                    self._index._init_sparse_search_function()
+            else:
+                if hasattr(self._index, "_init_search_function"):
+                    self._index._init_search_function()
 
     def set_query_arguments(self, epsilon=0.1):
         self._epsilon = float(epsilon)
