@@ -76,6 +76,7 @@ class PyNNDescent(BaseANN):
             pruning_degree_multiplier=self._pruning_degree_multiplier,
             diversify_prob=self._diversify_prob,
             n_search_trees=self._n_search_trees,
+            compressed=True,
             verbose=True,
         )
         if hasattr(self._index, "prepare"):
