@@ -1,5 +1,6 @@
 FROM ann-benchmarks
 
+RUN apt install llvm-10
 RUN pip3 install 'numba==0.51' 'llvmlite==0.34' scikit-learn icc_rt
 RUN ldconfig
 RUN pip3 install 'pynndescent>=0.5'
