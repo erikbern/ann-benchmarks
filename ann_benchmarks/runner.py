@@ -248,9 +248,9 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         # Exit if exit code
         if exit_code not in [0, None]:
             print(colors.color(container.logs().decode(), fg='red'))
-            print('Child process raised exception %d' % exit_code)
+            print('Child process for container %s raised exception %d' % (container.short_id, exit_code))
     except:
-        print('Container.wait failed with exception')
+        print('Container.wait for container %s failed with exception' % container.short_id)
         traceback.print_exc()
     finally:
         container.remove(force=True)
