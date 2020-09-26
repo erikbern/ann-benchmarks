@@ -16,10 +16,10 @@ class Scann(BaseANN):
   def fit(self, X):
     X /= np.linalg.norm(X, axis=1)[:, np.newaxis]
 
-    self.searcher = scann.ScannBuilder(X, 10, "dot_product").tree(
+    self.searcher = scann.scann_ops_pybind.builder(X, 10, "dot_product").tree(
         self.n_leaves, 1, training_sample_size=350000, spherical=True, quantize_centroids=True).score_ah(
             self.dims_per_block, anisotropic_quantization_threshold=self.avq_threshold).reorder(
-                1).create_pybind()
+                1).build()
 
   def set_query_arguments(self, leaves_reorder):
       self.leaves_to_search, self.reorder = leaves_reorder
