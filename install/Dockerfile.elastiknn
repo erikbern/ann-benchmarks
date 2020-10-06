@@ -17,7 +17,7 @@ RUN python3 -m pip install --upgrade elastiknn-client==0.1.0rc35
 
 # Install plugin.
 RUN elasticsearch-plugin install --batch \
-    https://github.com/alexklibisz/elastiknn/releases/download/0.1.0-PRE35/elastiknn-0.1.0-PRE35_es7.6.2.zip
+    https://github.com/alexklibisz/elastiknn/releases/download/0.1.0-PRE38/elastiknn-0.1.0-PRE38_es7.6.2.zip
 
 # Configure elasticsearch and JVM for single-node, single-core.
 RUN cp /etc/elasticsearch/jvm.options /etc/elasticsearch/jvm.options.bak

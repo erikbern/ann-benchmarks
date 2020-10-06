@@ -1,23 +1,20 @@
 import argparse
-import datetime
-import colors
-import docker
 import json
-import multiprocessing
-import numpy
+import logging
 import os
-import psutil
-import requests
-import sys
 import threading
 import time
 import traceback
 
+import colors
+import docker
+import numpy
+import psutil
 
-from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.algorithms.definitions import (Definition,
                                                    instantiate_algorithm,
                                                    get_algorithm_name)
+from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.distance import metrics, dataset_transform
 from ann_benchmarks.results import store_results
 
@@ -49,8 +46,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
                           for idx in candidates]
             n_items_processed[0] += 1
             if n_items_processed[0] % 1000 == 0:
-                print('Processed %d/%d queries...' %
-                      (n_items_processed[0], len(X_test)))
+                print('Processed %d/%d queries...' % (n_items_processed[0], len(X_test)))
             if len(candidates) > count:
                 print('warning: algorithm %s returned %d results, but count'
                       ' is only %d)' % (algo, len(candidates), count))
@@ -103,7 +99,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
 def run(definition, dataset, count, run_count, batch):
     algo = instantiate_algorithm(definition)
     assert not definition.query_argument_groups \
-        or hasattr(algo, "set_query_arguments"), """\
+           or hasattr(algo, "set_query_arguments"), """\
 error: query argument groups have been specified for %s.%s(%s), but the \
 algorithm instantiated from it does not implement the set_query_arguments \
 function""" % (definition.module, definition.constructor, definition.arguments)
@@ -215,11 +211,11 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         cmd += ['--batch']
     cmd.append(json.dumps(definition.arguments))
     cmd += [json.dumps(qag) for qag in definition.query_argument_groups]
+
     client = docker.from_env()
     if mem_limit is None:
         mem_limit = psutil.virtual_memory().available
 
-    print('Creating container: CPU limit %s, mem limit %s, timeout %d, command %s' % (cpu_limit, mem_limit, timeout, cmd))
     container = client.containers.run(
         definition.docker_tag,
         cmd,
@@ -234,10 +230,14 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         cpuset_cpus=cpu_limit,
         mem_limit=mem_limit,
         detach=True)
+    logging.info('Created container %s: CPU limit %s, mem limit %s, timeout %d, command %s' % \
+                 (container.short_id, cpu_limit, mem_limit, timeout, cmd))
+
+    logger = logging.getLogger(container.short_id)
 
     def stream_logs():
         for line in container.logs(stream=True):
-            print(colors.color(line.decode().rstrip(), fg='blue'))
+            logger.info(colors.color(line.decode().rstrip(), fg='blue'))
 
     t = threading.Thread(target=stream_logs, daemon=True)
     t.start()
@@ -247,10 +247,11 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
 
         # Exit if exit code
         if exit_code not in [0, None]:
-            print(colors.color(container.logs().decode(), fg='red'))
-            print('Child process for container %s raised exception %d' % (container.short_id, exit_code))
+            logger.error(colors.color(container.logs().decode(), fg='red'))
+            logger.error('Child process for container %s raised exception %d' % (container.short_id, exit_code))
     except:
-        print('Container.wait for container %s failed with exception' % container.short_id)
+        logger.error('Container.wait for container %s failed with exception' % container.short_id)
         traceback.print_exc()
     finally:
-        container.remove(force=True)
+        pass
+        # container.remove(force=True)

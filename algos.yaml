@@ -447,12 +447,12 @@ float:
       run-groups:
         elastiknn-lsh:
           args:
-            - [50, 75]
-            - [3, 4]
-            - [1, 3, 7]
+            - [50, 75, 100]
+            - [4]
+            - [1]
           query-args:
-            - [1000, 10000]
-            - [0, 3, 6, 9]
+            - [1000]
+            - [9]
 
   angular:
     puffinn:
