@@ -4,6 +4,7 @@ Uses the elastiknn python client
 To install a local copy of the client, run `pip install --upgrade -e /path/to/elastiknn/client-python/`
 To monitor the Elasticsearch JVM using Visualvm, add `ports={ "8097": 8097 }` to the `containers.run` call in runner.py.
 """
+from sys import stderr
 from urllib.error import URLError
 
 import numpy as np
@@ -14,7 +15,7 @@ from elastiknn.utils import dealias_metric
 from ann_benchmarks.algorithms.base import BaseANN
 
 from urllib.request import Request, urlopen
-from time import sleep
+from time import sleep, time
 
 
 def es_wait():
@@ -77,6 +78,8 @@ class L2Lsh(BaseANN):
         self.X_max = 1.0
         self.query_params = dict()
         self.batch_res = None
+        self.num_queries = 0
+        self.sum_query_dur = 0
         es_wait()
 
     def fit(self, X):
@@ -88,7 +91,17 @@ class L2Lsh(BaseANN):
         self.query_params = dict(candidates=candidates, probes=probes)
 
     def query(self, q, n):
-        return self.model.kneighbors(np.expand_dims(q, 0) / self.X_max, n, query_params=self.query_params)[0]
+        # If mean latency is > 100ms after 100 queries, this means the parameter setting is bad for this dataset.
+        # The results will be mediocre, so it's best to just exit instead of wasting time/money.
+        if self.num_queries > 100 and self.sum_query_dur / self.num_queries > 100:
+            stderr.write("Mean latency exceeds 100ms after 100 queries. Stopping to avoid wasteful computation.")
+            exit(0)
+        else:
+            t0 = time()
+            res = self.model.kneighbors(np.expand_dims(q, 0) / self.X_max, n, query_params=self.query_params)[0]
+            self.sum_query_dur += (time() - t0) * 1000
+            self.num_queries += 1
+            return res
 
     def batch_query(self, X, n):
         self.batch_res = self.model.kneighbors(X, n)
