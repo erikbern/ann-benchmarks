@@ -88,13 +88,13 @@ class L2Lsh(BaseANN):
 
     def set_query_arguments(self, candidates: int, probes: int):
         self.name = f"{self.name_prefix}_candidates={candidates}_probes={probes}"
-        self.query_params = dict(candidates=candidates, probes=probes)
+        self.query_params = dict(candidates=candidates, probes=probes, limit=0.4)
 
     def query(self, q, n):
         # If mean latency is > 100ms after 100 queries, this means the parameter setting is bad for this dataset.
         # The results will be mediocre, so it's best to just exit instead of wasting time/money.
-        if self.num_queries > 100 and self.sum_query_dur / self.num_queries > 100:
-            stderr.write("Mean latency exceeds 100ms after 100 queries. Stopping to avoid wasteful computation.")
+        if self.num_queries > 100 and self.sum_query_dur / self.num_queries > 40:
+            stderr.write("Mean latency exceeds 40ms after 100 queries. Stopping to avoid wasteful computation.")
             exit(0)
         else:
             t0 = time()
