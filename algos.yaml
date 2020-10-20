@@ -446,13 +446,22 @@ float:
       base-args: []
       run-groups:
         elastiknn-lsh:
+          # This setting should get ~0.8 recall, ~200 q/s on fashion mnist. On sift, it should be <0.1 recall, ~105 q/s.
+          # args:
+          # - [50]
+          # - [4]
+          # - [6]
+          # query-args:
+          # - [1000]
+          # - [3]
+          # These run end-to-end but don't quite match the results from internal benchmarks
           args:
-            - [50, 75, 100]
-            - [3, 4]
-            - [1, 3, 7]
+          - [50, 75]
+          - [3, 4]
+          - [1, 3, 7]
           query-args:
-            - [1000, 10000]
-            - [3, 6, 9]
+          - [1000, 10000]
+          - [0, 3, 6, 9]
 
   angular:
     puffinn:

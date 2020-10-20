@@ -17,6 +17,12 @@ from ann_benchmarks.algorithms.base import BaseANN
 from urllib.request import Request, urlopen
 from time import sleep, time
 
+import logging
+
+# Mute the elasticsearch logger.
+# By default, it writes an INFO statement for every request.
+logging.getLogger("elasticsearch").setLevel(logging.WARN)
+
 
 def es_wait():
     print("Waiting for elasticsearch health endpoint...")
@@ -76,32 +82,29 @@ class L2Lsh(BaseANN):
         self.name = None  # set based on query args.
         self.model = ElastiknnModel("lsh", "l2", mapping_params=dict(L=L, k=k, w=w))
         self.X_max = 1.0
+        self.limit = 1.0
         self.query_params = dict()
         self.batch_res = None
-        self.num_queries = 0
-        self.sum_query_dur = 0
         es_wait()
 
     def fit(self, X):
+        # The `limit` parameter controls when the approximate query stops matching new vectors.
+        # In this case, if 40% of the corpus has matched an approximate query, it stops finding new vectors and just
+        # evaluates the ones it already matched. This helps to short-circuit extremely long-running queries, which
+        # would probably have mediocre recall anyways.
+        if len(X) >= 1e6:
+            self.limit = 0.4
+
+        # I found it's best to scale the vectors into [0, 1], i.e. divide by the max.
         self.X_max = X.max()
         return self.model.fit(X / self.X_max, shards=1)
 
     def set_query_arguments(self, candidates: int, probes: int):
         self.name = f"{self.name_prefix}_candidates={candidates}_probes={probes}"
-        self.query_params = dict(candidates=candidates, probes=probes, limit=0.4)
+        self.model.set_query_params(dict(candidates=candidates, probes=probes, limit=self.limit))
 
     def query(self, q, n):
-        # If mean latency is > 100ms after 100 queries, this means the parameter setting is bad for this dataset.
-        # The results will be mediocre, so it's best to just exit instead of wasting time/money.
-        if self.num_queries > 100 and self.sum_query_dur / self.num_queries > 40:
-            stderr.write("Mean latency exceeds 40ms after 100 queries. Stopping to avoid wasteful computation.")
-            exit(0)
-        else:
-            t0 = time()
-            res = self.model.kneighbors(np.expand_dims(q, 0) / self.X_max, n, query_params=self.query_params)[0]
-            self.sum_query_dur += (time() - t0) * 1000
-            self.num_queries += 1
-            return res
+        return self.model.kneighbors(q.reshape(1, len(q)) / self.X_max, n)[0]
 
     def batch_query(self, X, n):
         self.batch_res = self.model.kneighbors(X, n)

@@ -40,7 +40,6 @@ def run_worker(cpu, args, queue):
         else:
             memory_margin = 500e6  # reserve some extra memory for misc stuff
             mem_limit = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
-            mem_limit = 8 * 10**9
             run_docker(definition, args.dataset, args.count,
                        args.runs, args.timeout, args.batch, str(cpu), mem_limit)
 
