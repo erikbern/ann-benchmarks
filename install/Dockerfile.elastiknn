@@ -5,9 +5,9 @@ WORKDIR /home/app
 # Install elasticsearch.
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt install -y wget curl htop
-RUN wget --quiet https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-7.6.2-amd64.deb \
-    && dpkg -i elasticsearch-oss-7.6.2-amd64.deb \
-    && rm elasticsearch-oss-7.6.2-amd64.deb
+RUN wget --quiet https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-7.9.2-amd64.deb \
+    && dpkg -i elasticsearch-oss-7.9.2-amd64.deb \
+    && rm elasticsearch-oss-7.9.2-amd64.deb
 
 # Put ES on the path.
 ENV PATH="/usr/share/elasticsearch/bin:$PATH"
@@ -17,7 +17,7 @@ RUN python3 -m pip install --upgrade elastiknn-client==0.1.0rc40.dev674
 
 # Install plugin.
 RUN elasticsearch-plugin install --batch \
-    https://github.com/alexklibisz/elastiknn/releases/download/0.1.0-PRE40-PR172-SNAPSHOT/elastiknn-0.1.0-PRE40-PR172-SNAPSHOT_es7.6.2.zip
+    https://github.com/alexklibisz/elastiknn/releases/download/0.1.0-PRE46/elastiknn-0.1.0-PRE46_es7.9.2.zip
 
 # Configure elasticsearch and JVM for single-node, single-core.
 RUN cp /etc/elasticsearch/jvm.options /etc/elasticsearch/jvm.options.bak
