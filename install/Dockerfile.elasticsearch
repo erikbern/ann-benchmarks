@@ -9,16 +9,10 @@ RUN wget --quiet https://artifacts.elastic.co/downloads/elasticsearch/elasticsea
     && dpkg -i elasticsearch-7.9.2-amd64.deb \
     && rm elasticsearch-7.9.2-amd64.deb
 
-# Put ES on the path.
-ENV PATH="/usr/share/elasticsearch/bin:$PATH"
-
 # Install python client.
 RUN python3 -m pip install --upgrade elasticsearch==7.9.1
 
 # Configure elasticsearch and JVM for single-node, single-core.
-RUN cp /etc/elasticsearch/jvm.options /etc/elasticsearch/jvm.options.bak
-RUN cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.bak
-
 RUN echo '\
 discovery.type: single-node\n\
 network.host: 0.0.0.0\n\
@@ -41,8 +35,7 @@ RUN echo '\
 -XX:+HeapDumpOnOutOfMemoryError\n\
 -XX:HeapDumpPath=/var/lib/elasticsearch\n\
 -XX:ErrorFile=/var/log/elasticsearch/hs_err_pid%p.log\n\
--Xlog:gc*,gc+age=trace,safepoint:file=/var/log/elasticsearch/gc.log:utctime,pid,tags:filecount=32,filesize=64m\n\
--Djava.rmi.server.hostname=localhost' > /etc/elasticsearch/jvm.options
+-Xlog:gc*,gc+age=trace,safepoint:file=/var/log/elasticsearch/gc.log:utctime,pid,tags:filecount=32,filesize=64m' > /etc/elasticsearch/jvm.options
 
 # Make sure you can start the service.
 RUN service elasticsearch start && service elasticsearch stop
