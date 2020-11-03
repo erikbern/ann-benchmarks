@@ -36,7 +36,7 @@ def es_wait():
         except URLError:
             pass
         sleep(1)
-    raise RuntimeError("Failed to connec to local elasticsearch")
+    raise RuntimeError("Failed to connect to local elasticsearch")
 
 
 class Exact(BaseANN):
