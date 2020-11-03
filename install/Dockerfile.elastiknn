@@ -9,14 +9,11 @@ RUN wget --quiet https://artifacts.elastic.co/downloads/elasticsearch/elasticsea
     && dpkg -i elasticsearch-oss-7.9.2-amd64.deb \
     && rm elasticsearch-oss-7.9.2-amd64.deb
 
-# Put ES on the path.
-ENV PATH="/usr/share/elasticsearch/bin:$PATH"
-
 # Install python client.
-RUN python3 -m pip install --upgrade elastiknn-client==0.1.0rc40.dev674
+RUN python3 -m pip install --upgrade elastiknn-client==0.1.0rc46
 
 # Install plugin.
-RUN elasticsearch-plugin install --batch \
+RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch \
     https://github.com/alexklibisz/elastiknn/releases/download/0.1.0-PRE46/elastiknn-0.1.0-PRE46_es7.9.2.zip
 
 # Configure elasticsearch and JVM for single-node, single-core.
