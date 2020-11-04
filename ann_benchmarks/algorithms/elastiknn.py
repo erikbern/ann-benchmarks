@@ -15,7 +15,7 @@ from elastiknn.utils import dealias_metric
 from ann_benchmarks.algorithms.base import BaseANN
 
 from urllib.request import Request, urlopen
-from time import sleep, time
+from time import sleep, perf_counter
 
 import logging
 
@@ -82,18 +82,16 @@ class L2Lsh(BaseANN):
         self.name = None  # set based on query args.
         self.model = ElastiknnModel("lsh", "l2", mapping_params=dict(L=L, k=k, w=w))
         self.X_max = 1.0
-        self.limit = 1.0
         self.query_params = dict()
         self.batch_res = None
+        self.sum_query_dur = 0
+        self.num_queries = 0
         es_wait()
 
     def fit(self, X):
-        # The `limit` parameter controls when the approximate query stops matching new vectors.
-        # In this case, if 40% of the corpus has matched an approximate query, it stops finding new vectors and just
-        # evaluates the ones it already matched. This helps to short-circuit extremely long-running queries, which
-        # would probably have mediocre recall anyways.
-        if len(X) >= 1e6:
-            self.limit = 0.4
+        # Reset the counters.
+        self.num_queries = 0
+        self.sum_query_dur = 0
 
         # I found it's best to scale the vectors into [0, 1], i.e. divide by the max.
         self.X_max = X.max()
@@ -101,10 +99,19 @@ class L2Lsh(BaseANN):
 
     def set_query_arguments(self, candidates: int, probes: int):
         self.name = f"{self.name_prefix}_candidates={candidates}_probes={probes}"
-        self.model.set_query_params(dict(candidates=candidates, probes=probes, limit=self.limit))
+        self.model.set_query_params(dict(candidates=candidates, probes=probes))
 
     def query(self, q, n):
-        return self.model.kneighbors(q.reshape(1, len(q)) / self.X_max, n)[0]
+        # If QPS after 100 queries is < 20, this parameter setting is bad for this dataset.
+        if self.num_queries > 100 and self.num_queries / self.sum_query_dur < 10:
+            stderr.write("Throughput after 100 queries is less than 10 q/s. Terminating to avoid wasteful computation.")
+            exit(0)
+        else:
+            t0 = perf_counter()
+            res = self.model.kneighbors(np.expand_dims(q, 0) / self.X_max, n)[0]
+            self.sum_query_dur += (perf_counter() - t0)
+            self.num_queries += 1
+            return res
 
     def batch_query(self, X, n):
         self.batch_res = self.model.kneighbors(X, n)
