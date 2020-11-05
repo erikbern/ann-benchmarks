@@ -9,7 +9,9 @@ install/lib-*/
 data/*
 *.class
 
-.idea
-venv
 results/*
 !results/*.png
+
+venv
+
+.idea
