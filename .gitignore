@@ -9,6 +9,8 @@ install/lib-*/
 data/*
 *.class
 
+*.log
+
 results/*
 !results/*.png
 
