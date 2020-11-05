@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 import argparse
 import logging
+import logging.config
 
 import docker
 import multiprocessing.pool
@@ -126,7 +127,8 @@ def main():
         list_algorithms(args.definitions)
         sys.exit(0)
 
-    logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [%(name)s] [%(levelname)s]\t %(message)s")
+    logging.config.fileConfig("logging.conf")
+    logger = logging.getLogger("annb")
 
     # Nmslib specific code
     # Remove old indices stored on disk
@@ -166,7 +168,7 @@ def main():
     random.shuffle(definitions)
 
     if args.algorithm:
-        logging.info(f'running only {args.algorithm}')
+        logger.info(f'running only {args.algorithm}')
         definitions = [d for d in definitions if d.algorithm == args.algorithm]
 
     if not args.local:
@@ -179,13 +181,13 @@ def main():
                 docker_tags.add(tag)
 
         if args.docker_tag:
-            logging.info(f'running only {args.docker_tag}')
+            logger.info(f'running only {args.docker_tag}')
             definitions = [
                 d for d in definitions if d.docker_tag == args.docker_tag]
 
         if set(d.docker_tag for d in definitions).difference(docker_tags):
-            logging.info(f'not all docker images available, only: {set(docker_tags)}')
-            logging.info(f'missing docker images: '
+            logger.info(f'not all docker images available, only: {set(docker_tags)}')
+            logger.info(f'missing docker images: '
                         f'{str(set(d.docker_tag for d in definitions).difference(docker_tags))}')
             definitions = [
                 d for d in definitions if d.docker_tag in docker_tags]
@@ -214,7 +216,7 @@ def main():
 
     if not args.run_disabled:
         if len([d for d in definitions if d.disabled]):
-            logging.info(f'Not running disabled algorithms {[d for d in definitions if d.disabled]}')
+            logger.info(f'Not running disabled algorithms {[d for d in definitions if d.disabled]}')
         definitions = [d for d in definitions if not d.disabled]
 
     if args.max_n_algorithms >= 0:
@@ -223,7 +225,7 @@ def main():
     if len(definitions) == 0:
         raise Exception('Nothing to run')
     else:
-        logging.info(f'Order: {definitions}')
+        logger.info(f'Order: {definitions}')
 
     if args.parallelism > multiprocessing.cpu_count() - 1:
         raise Exception('Parallelism larger than %d! (CPU count minus one)' % (multiprocessing.cpu_count() - 1))

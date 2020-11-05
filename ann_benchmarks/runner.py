@@ -230,10 +230,10 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         cpuset_cpus=cpu_limit,
         mem_limit=mem_limit,
         detach=True)
-    logging.info('Created container %s: CPU limit %s, mem limit %s, timeout %d, command %s' % \
-                 (container.short_id, cpu_limit, mem_limit, timeout, cmd))
+    logger = logging.getLogger(f"annb.{container.short_id}")
 
-    logger = logging.getLogger(container.short_id)
+    logger.info('Created container %s: CPU limit %s, mem limit %s, timeout %d, command %s' % \
+                (container.short_id, cpu_limit, mem_limit, timeout, cmd))
 
     def stream_logs():
         for line in container.logs(stream=True):

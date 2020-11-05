@@ -89,27 +89,31 @@ class L2Lsh(BaseANN):
         es_wait()
 
     def fit(self, X):
-        # Reset the counters.
-        self.num_queries = 0
-        self.sum_query_dur = 0
+        print(f"{self.name_prefix}: indexing {len(X)} vectors")
 
         # I found it's best to scale the vectors into [0, 1], i.e. divide by the max.
         self.X_max = X.max()
         return self.model.fit(X / self.X_max, shards=1)
 
     def set_query_arguments(self, candidates: int, probes: int):
+        # This gets called when starting a new batch of queries.
+        # Update the name and model's query parameters based on the given params.
         self.name = f"{self.name_prefix}_candidates={candidates}_probes={probes}"
         self.model.set_query_params(dict(candidates=candidates, probes=probes))
+        # Reset the counters.
+        self.num_queries = 0
+        self.sum_query_dur = 0
 
     def query(self, q, n):
-        # If QPS after 100 queries is < 20, this parameter setting is bad for this dataset.
+        # If QPS after 100 queries is < 10, this setting is bad and won't complete within the default timeout.
         if self.num_queries > 100 and self.num_queries / self.sum_query_dur < 10:
-            stderr.write("Throughput after 100 queries is less than 10 q/s. Terminating to avoid wasteful computation.")
+            print("Throughput after 100 queries is less than 10 q/s. Terminating to avoid wasteful computation.", flush=True)
             exit(0)
         else:
             t0 = perf_counter()
             res = self.model.kneighbors(np.expand_dims(q, 0) / self.X_max, n)[0]
-            self.sum_query_dur += (perf_counter() - t0)
+            dur = (perf_counter() - t0)
+            self.sum_query_dur += dur
             self.num_queries += 1
             return res
 
