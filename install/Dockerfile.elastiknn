@@ -10,7 +10,7 @@ RUN wget --quiet https://artifacts.elastic.co/downloads/elasticsearch/elasticsea
     && rm elasticsearch-oss-7.9.2-amd64.deb
 
 # Install python client.
-RUN python3 -m pip install --upgrade elastiknn-client==0.1.0rc46
+RUN python3 -m pip install --upgrade elastiknn-client==0.1.0rc46.dev744
 
 # Install plugin.
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch \
