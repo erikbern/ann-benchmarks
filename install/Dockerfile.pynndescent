@@ -1,5 +1,5 @@
 FROM ann-benchmarks
 
-RUN pip3 install 'numba==0.46' 'llvmlite==0.33.0' 'numpy==1.17' scikit-learn
-RUN pip3 install 'pynndescent==0.4.4'
+RUN pip3 install 'numpy==1.17'
+RUN pip3 install pynndescent
 RUN python3 -c 'import pynndescent'
