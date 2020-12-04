@@ -8,3 +8,12 @@ install/*.yaml
 install/lib-*/
 data/*
 *.class
+
+*.log
+
+results/*
+!results/*.png
+
+venv
+
+.idea

@@ -12,9 +12,14 @@ def build(library, args):
         q = " ".join(["--build-arg " + x.replace(" ", "\\ ") for x in args])
     else:
         q = ""
-    subprocess.check_call(
-        'docker build %s --rm -t ann-benchmarks-%s -f'
-        ' install/Dockerfile.%s .' % (q, library, library), shell=True)
+    
+    try:
+        subprocess.check_call(
+            'docker build %s --rm -t ann-benchmarks-%s -f'
+            ' install/Dockerfile.%s .' % (q, library, library), shell=True)
+        return {library: 'success'}
+    except subprocess.CalledProcessError:
+        return {library: 'fail'}
 
 
 def build_multiprocess(args):
@@ -56,9 +61,11 @@ if __name__ == "__main__":
         tags = [fn.split('.')[-1] for fn in os.listdir('install') if fn.startswith('Dockerfile.')]
 
         if args.proc == 1:
-            [build(tag, args.build_arg) for tag in tags]
+            install_status = [build(tag, args.build_arg) for tag in tags]
         else:
             pool = Pool(processes=args.proc)
-            pool.map(build_multiprocess, [(tag, args.build_arg) for tag in tags])
+            install_status = pool.map(build_multiprocess, [(tag, args.build_arg) for tag in tags])
             pool.close()
             pool.join()
+
+    print('\n\nInstall Status:\n' + '\n'.join(str(algo) for algo in install_status))
