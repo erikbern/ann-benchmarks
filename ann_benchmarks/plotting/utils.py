@@ -87,7 +87,7 @@ def compute_all_metrics(true_nn_distances, run, properties, recompute=False):
 
 
 def generate_n_colors(n):
-    vs = numpy.linspace(0.4, 1.0, 7)
+    vs = numpy.linspace(0.3, 0.9, 7)
     colors = [(.9, .4, .4, 1.)]
 
     def euclidean(a, b):
