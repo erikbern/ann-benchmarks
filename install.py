@@ -51,21 +51,20 @@ if __name__ == "__main__":
         --rm -t ann-benchmarks -f install/Dockerfile .', shell=True)
 
     if args.algorithm:
-        print('Building algorithm(%s) image...' % args.algorithm)
-        build(args.algorithm, args.build_arg)
+        tags = [args.algorithm]
     elif os.getenv('LIBRARY'):
-        print('Building algorithm(%s) image...' % os.getenv('LIBRARY'))
-        build(os.getenv('LIBRARY'), args.build_arg)
+        tags = [os.getenv('LIBRARY')]
     else:
-        print('Building algorithm images... with (%d) processes' % args.proc)
         tags = [fn.split('.')[-1] for fn in os.listdir('install') if fn.startswith('Dockerfile.')]
 
-        if args.proc == 1:
-            install_status = [build(tag, args.build_arg) for tag in tags]
-        else:
-            pool = Pool(processes=args.proc)
-            install_status = pool.map(build_multiprocess, [(tag, args.build_arg) for tag in tags])
-            pool.close()
-            pool.join()
+    print('Building algorithm images... with (%d) processes' % args.proc)
+
+    if args.proc == 1:
+        install_status = [build(tag, args.build_arg) for tag in tags]
+    else:
+        pool = Pool(processes=args.proc)
+        install_status = pool.map(build_multiprocess, [(tag, args.build_arg) for tag in tags])
+        pool.close()
+        pool.join()
 
     print('\n\nInstall Status:\n' + '\n'.join(str(algo) for algo in install_status))
