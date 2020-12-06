@@ -13,6 +13,10 @@ def get_algorithm_name(name, batch_mode):
     return name
 
 
+def is_batch(name):	
+    return "-batch" in name
+
+
 def get_result_filename(dataset=None, count=None, definition=None,
                         query_arguments=None, batch_mode=False):
     d = ['results']
@@ -52,6 +56,8 @@ def load_all_results(dataset=None, count=None, batch_mode=False):
     for root, _, files in os.walk(get_result_filename(dataset, count)):
         for fn in files:
             if os.path.splitext(fn)[-1] != '.hdf5':
+                continue
+            if batch_mode != is_batch(root):	
                 continue
             try:
                 f = h5py.File(os.path.join(root, fn), 'r+')
