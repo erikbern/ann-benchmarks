@@ -6,15 +6,14 @@ import os
 import re
 import traceback
 
-
 def get_algorithm_name(name, batch_mode):
     if batch_mode:
-        return name + "-batch"
+        return name + '-batch'
     return name
 
 
 def is_batch(name):	
-    return "-batch" in name
+    return '-batch' in name
 
 
 def get_result_filename(dataset=None, count=None, definition=None,
