@@ -1,5 +1,9 @@
 FROM ann-benchmarks
 
+
+RUN apt-get -y install llvm-10
+RUN export LLVM_CONFIG=/usr/bin/llvm-config-10; pip3 install 'numba==0.51.2' 'llvmlite==0.34' 'numpy==1.16.4' scikit-learn icc_rt
+RUN ldconfig
 RUN pip3 install 'numpy==1.17'
-RUN pip3 install pynndescent
+RUN pip3 install 'pynndescent>=0.5'
 RUN python3 -c 'import pynndescent'

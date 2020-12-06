@@ -6,23 +6,23 @@ import scipy.sparse
 
 
 class PyNNDescent(BaseANN):
-
-    def __init__(self, metric, index_param_dict, n_search_trees=1, n_jobs=1):
+    def __init__(self, metric, index_param_dict, n_search_trees=1):
         if "n_neighbors" in index_param_dict:
             self._n_neighbors = int(index_param_dict["n_neighbors"])
         else:
-            self._n_neighbors = 10
+            self._n_neighbors = 30
 
         if "pruning_degree_multiplier" in index_param_dict:
             self._pruning_degree_multiplier = float(
-                index_param_dict["pruning_degree_multiplier"])
+                index_param_dict["pruning_degree_multiplier"]
+            )
         else:
             self._pruning_degree_multiplier = 1.5
 
-        if "diversify_epsilon" in index_param_dict:
-            self._diversify_epsilon = float(index_param_dict["diversify_epsilon"])
+        if "diversify_prob" in index_param_dict:
+            self._diversify_prob = float(index_param_dict["diversify_prob"])
         else:
-            self._diversify_epsilon = 1.0
+            self._diversify_prob = 1.0
 
         if "leaf_size" in index_param_dict:
             self._leaf_size = int(index_param_dict["leaf_size"])
@@ -30,13 +30,14 @@ class PyNNDescent(BaseANN):
             leaf_size = 32
 
         self._n_search_trees = int(n_search_trees)
-        self._n_jobs = int(n_jobs)
 
-        self._n_search_trees = int(n_search_trees)
-        self._pynnd_metric = {'angular': 'cosine',
-                              'euclidean': 'euclidean',
-                              'hamming': 'hamming',
-                              'jaccard': 'jaccard'}[metric]
+        self._pynnd_metric = {
+            "angular": "dot",
+            # 'angular': 'cosine',
+            "euclidean": "euclidean",
+            "hamming": "hamming",
+            "jaccard": "jaccard",
+        }[metric]
 
     def _sparse_convert_for_fit(self, X):
         lil_data = []
@@ -47,9 +48,11 @@ class PyNNDescent(BaseANN):
             if max(X[i]) + 1 > self._n_cols:
                 self._n_cols = max(X[i]) + 1
 
-        result = scipy.sparse.lil_matriux((self._n_rows, self._n_cols), dtype=np.int)
-        result.rows = np.array(X)
-        result.data = np.array(lil_data)
+        result = scipy.sparse.lil_matrix(
+            (self._n_rows, self._n_cols), dtype=np.int
+        )
+        result.rows[:] = list(X)
+        result.data[:] = lil_data
         return result.tocsr()
 
     def _sparse_convert_for_query(self, v):
@@ -60,39 +63,53 @@ class PyNNDescent(BaseANN):
         return result
 
     def fit(self, X):
-        if self._pynnd_metric == 'jaccard':
+        if self._pynnd_metric == "jaccard":
             # Convert to sparse matrix format
             X = self._sparse_convert_for_fit(X)
 
-        self._index = pynndescent.NNDescent(X,
-                                            n_neighbors=self._n_neighbors,
-                                            metric=self._pynnd_metric,
-                                            low_memory=True,
-                                            leaf_size=self._leaf_size,
-                                            pruning_degree_multiplier=self._pruning_degree_multiplier,
-                                            diversify_epsilon=self._diversify_epsilon,
-                                            n_search_trees=self._n_search_trees,
-                                            n_jobs=self._n_jobs)
-        self._index._init_search_graph()
+        self._index = pynndescent.NNDescent(
+            X,
+            n_neighbors=self._n_neighbors,
+            metric=self._pynnd_metric,
+            low_memory=True,
+            leaf_size=self._leaf_size,
+            pruning_degree_multiplier=self._pruning_degree_multiplier,
+            diversify_prob=self._diversify_prob,
+            n_search_trees=self._n_search_trees,
+            compressed=True,
+            verbose=True,
+        )
+        if hasattr(self._index, "prepare"):
+            self._index.prepare()
+        else:
+            self._index._init_search_graph()
+            if self._index._is_sparse:
+                if hasattr(self._index, "_init_sparse_search_function"):
+                    self._index._init_sparse_search_function()
+            else:
+                if hasattr(self._index, "_init_search_function"):
+                    self._index._init_search_function()
 
     def set_query_arguments(self, epsilon=0.1):
         self._epsilon = float(epsilon)
 
     def query(self, v, n):
-        if self._pynnd_metric == 'jaccard':
+        if self._pynnd_metric == "jaccard":
             # convert index array to sparse matrix format and query
             v = self._sparse_convert_for_query(v)
             ind, dist = self._index.query(v, k=n, epsilon=self._epsilon)
         else:
             ind, dist = self._index.query(
-                v.reshape(1, -1).astype('float32'), k=n,
-                epsilon=self._epsilon)
+                v.reshape(1, -1).astype("float32"), k=n, epsilon=self._epsilon
+            )
         return ind[0]
 
     def __str__(self):
-        str_template = (
-            'PyNNDescent(n_neighbors=%d, pruning_mult=%.1f, diversify_epsilon=%.2f, epsilon=%.3f, leaf_size=%03d)')
+        str_template = "PyNNDescent(n_neighbors=%d, pruning_mult=%.2f, diversify_prob=%.3f, epsilon=%.3f, leaf_size=%02d)"
         return str_template % (
-        self._n_neighbors, self._pruning_degree_multiplier, self._diversify_epsilon,
-        self._epsilon, self._leaf_size)
-
+            self._n_neighbors,
+            self._pruning_degree_multiplier,
+            self._diversify_prob,
+            self._epsilon,
+            self._leaf_size,
+        )
