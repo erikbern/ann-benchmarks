@@ -6,15 +6,6 @@ import os
 import re
 import traceback
 
-def get_algorithm_name(name, batch_mode):
-    if batch_mode:
-        return name + '-batch'
-    return name
-
-
-def is_batch(name):	
-    return '-batch' in name
-
 
 def get_result_filename(dataset=None, count=None, definition=None,
                         query_arguments=None, batch_mode=False):
@@ -24,10 +15,10 @@ def get_result_filename(dataset=None, count=None, definition=None,
     if count:
         d.append(str(count))
     if definition:
-        d.append(get_algorithm_name(definition.algorithm, batch_mode))
+        d.append(definition.algorithm + ('-batch' if batch_mode else ''))
         data = definition.arguments + query_arguments
-        d.append(re.sub(r'\W+', '_', json.dumps(data,
-                                                sort_keys=True)).strip('_'))
+        d.append(re.sub(r'\W+', '_', json.dumps(data, sort_keys=True))
+                 .strip('_'))
     return os.path.join(*d)
 
 
@@ -56,11 +47,11 @@ def load_all_results(dataset=None, count=None, batch_mode=False):
         for fn in files:
             if os.path.splitext(fn)[-1] != '.hdf5':
                 continue
-            if batch_mode != is_batch(root):	
-                continue
             try:
                 f = h5py.File(os.path.join(root, fn), 'r+')
                 properties = dict(f.attrs)
+                if batch_mode != properties['batch_mode']:
+                    continue
                 yield properties, f
                 f.close()
             except:
