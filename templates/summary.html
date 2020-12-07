@@ -23,13 +23,13 @@
                     {% for distance_data in dataset_with_distances[type] %}
                         <h3>Distance: {{ distance_data.name }} </h3>
                         {% for entry in distance_data.entries %}
-                            <a href="./{{label_func(entry.name, type == 'batch')}}.html">
+                            <a href="./{{ entry.name }}.html">
                             <div class="row" id="{{entry.name}}">
                                 <div class = "col-md-4 bg-success">
                                     <h4>{{entry.desc}}</h4>
                             </div>
                             <div class = "col-md-8">
-                                <img class = "img-responsive" src="{{label_func(entry.name, type == 'batch')}}.png" />
+                                <img class = "img-responsive" src="{{ entry.name }}.png" />
                             </div>
                         </div>
                         </a>
@@ -43,13 +43,13 @@
                         {% endfor %}
                     </ul>
                     {% for algo in algorithms[type].keys()%}
-                    <a href="./{{label_func(algo, type == 'batch')}}.html">
+                    <a href="./{{ algo }}.html">
                         <div class="row" id="{{algo}}">
                             <div class = "col-md-4 bg-success">
                                 <h4>{{algo}}</h4>
                         </div>
                         <div class = "col-md-8">
-                            <img class = "img-responsive" src="{{label_func(algo, type == 'batch')}}.png" />
+                            <img class = "img-responsive" src="{{ algo }}.png" />
                         </div>
                     </div>
                     </a>
