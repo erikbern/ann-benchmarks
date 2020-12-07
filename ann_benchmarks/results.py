@@ -61,6 +61,7 @@ def load_all_results(dataset=None, count=None, batch_mode=False):
 
 def get_unique_algorithms():
     algorithms = set()
-    for properties, _ in load_all_results():
-        algorithms.add(properties['algo'])
+    for batch_mode in [False, True]:
+        for properties, _ in load_all_results(batch_mode=batch_mode):
+            algorithms.add(properties['algo'])
     return algorithms
