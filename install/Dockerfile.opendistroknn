@@ -21,6 +21,7 @@ RUN python3 -m pip install --upgrade elasticsearch==7.9.1
 
 # Configure elasticsearch and JVM for single-node, single-core.
 RUN echo '\
+opendistro_security.disabled: true\n\
 discovery.type: single-node\n\
 network.host: 0.0.0.0\n\
 node.master: true\n\
