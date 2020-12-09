@@ -16,12 +16,6 @@ Definition = collections.namedtuple(
      'arguments', 'query_argument_groups', 'disabled'])
 
 
-def get_algorithm_name(name, batch):
-    if batch:
-        return name + "-batch"
-    return name
-
-
 def instantiate_algorithm(definition):
     print('Trying to instantiate %s.%s(%s)' %
           (definition.module, definition.constructor, definition.arguments))

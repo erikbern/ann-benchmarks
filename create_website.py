@@ -10,7 +10,6 @@ import hashlib
 from jinja2 import Environment, FileSystemLoader
 
 from ann_benchmarks import results
-from ann_benchmarks.algorithms.definitions import get_algorithm_name
 from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.plotting.plot_variants import (all_plot_variants
                                                    as plot_variants)
@@ -178,11 +177,10 @@ def build_detail_site(data, label_func, j2_env, linestyles, batch=False):
         plot.create_plot(
             data_for_plot, False,
             False, True, 'k-nn', 'qps',
-            args.outputdir + get_algorithm_name(name, batch) + ".png",
+            args.outputdir + name + ('-batch' if batch else '') + '.png',
             linestyles, batch)
-        output_path = "".join([args.outputdir,
-                               get_algorithm_name(name, batch),
-                               ".html"])
+        output_path = \
+            args.outputdir + name + ('-batch' if batch else '') + '.html'
         with open(output_path, "w") as text_file:
             text_file.write(j2_env.get_template("detail_page.html").
                             render(title=label, plot_data=data,
@@ -215,8 +213,7 @@ def build_index_site(datasets, algorithms, j2_env, file_name):
         text_file.write(j2_env.get_template("summary.html").
                         render(title="ANN-Benchmarks",
                                dataset_with_distances=dataset_data,
-                               algorithms=algorithms,
-                               label_func=get_algorithm_name))
+                               algorithms=algorithms))
 
 
 def load_all_results():

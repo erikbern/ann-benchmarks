@@ -11,7 +11,7 @@ from ann_benchmarks.plotting.metrics import all_metrics as metrics
 from ann_benchmarks.plotting.utils import (get_plot_label, compute_metrics,
                                            create_linestyles, create_pointset)
 from ann_benchmarks.results import (store_results, load_all_results,
-                                    get_unique_algorithms, get_algorithm_name)
+                                    get_unique_algorithms)
 
 
 def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles,
@@ -32,7 +32,7 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles,
             handle2, = plt.plot(axs, ays, '-', label=algo, color=faded,
                                 ms=5, mew=2, lw=2, linestyle=linestyle,
                                 marker=marker)
-        labels.append(get_algorithm_name(algo, batch))
+        labels.append(algo)
 
     if x_log:
         plt.gca().set_xscale('log')
