@@ -8,11 +8,6 @@ from elasticsearch.helpers import bulk
 
 from ann_benchmarks.algorithms.base import BaseANN
 
-# Leo additional
-import sys
-import requests
-import json
-
 # Configure the logger.
 logging.getLogger("elasticsearch").setLevel(logging.WARN)
 
@@ -38,7 +33,6 @@ class OpenDistroKNN(BaseANN):
         self.param_string = "-".join(k+"-"+str(v) for k,v in self.method_param.items()).lower()
         self.name = f"od-{self.param_string}"
         self.es = Elasticsearch(["http://localhost:9200"])
-        self.url = "http://localhost:9200/"+self.name
         es_wait()
 
     def fit(self, X):
@@ -51,7 +45,8 @@ class OpenDistroKNN(BaseANN):
                     "knn.algo_param.m": self.method_param["M"]
                 },
                 "number_of_shards": 1, 
-                "number_of_replicas": 0, 
+                "number_of_replicas": 0,
+                "refresh_interval": -1
             }
         }
 
@@ -70,28 +65,18 @@ class OpenDistroKNN(BaseANN):
             for i, vec in enumerate(X):
                 yield { "_op_type": "index", "_index": self.name, "vec": vec.tolist(), 'id': str(i + 1) }
 
-        (_, errors) = bulk(self.es, gen(), chunk_size=500, max_retries=9)
+        (_, errors) = bulk(self.es, gen(), chunk_size=500, max_retries=9, request_timeout=10)
         assert len(errors) == 0, errors
-   
+          
+        print("Force Merge...")
+        self.es.indices.forcemerge(self.name, max_num_segments=1, request_timeout=1000)
+               
+        print("Refreshing the Index...")
+        self.es.indices.refresh(self.name, request_timeout=1000)
+       
         print("Running Warmup API...")
         res = urlopen(Request("http://localhost:9200/_opendistro/_knn/warmup/"+self.name+"?pretty"))
         print(res.read().decode("utf-8"))
-
-        # Read once to load into memory    
-        search_url = self.url + "/_msearch" # Query Multiple products at a time
-        step = 10
-
-        for n in range(0, 500, step):
-            subset_X = X[n:n+step, :]
-            data_payload = ''
-            for row in subset_X:
-                prod_payload = {"size": 5, "query": {"knn": {"vec": {"vector": row.tolist(), "k": 5}}}}
-                data_payload += '{}\n' + json.dumps(prod_payload) + '\n'
-
-            r = requests.get(search_url, data=data_payload, headers={'content-type':'application/json'})
-
-        # self.es.indices.refresh(self.name, request_timeout=1000)
-        # self.es.indices.forcemerge(self.name, max_num_segments=1, request_timeout=1000)
 
     def set_query_arguments(self, ef):
         body = {
@@ -103,7 +88,6 @@ class OpenDistroKNN(BaseANN):
 
     def query(self, q, n):
         body = {
-            "size": n, 
             "query": {
                 "knn": {
                     "vec": {"vector": q.tolist(), "k": n}
