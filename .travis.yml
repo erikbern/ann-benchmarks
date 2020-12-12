@@ -30,6 +30,7 @@ env:
   - LIBRARY=scann DATASET=random-xs-20-angular
   - LIBRARY=elasticsearch DATASET=random-xs-20-angular
   - LIBRARY=elastiknn DATASET=random-xs-20-angular
+  - LIBRARY=opendistroknn DATASET=random-xs-20-angular
 
 before_install:
   - pip install -r requirements.txt
