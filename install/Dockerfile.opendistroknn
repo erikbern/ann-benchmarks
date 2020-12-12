@@ -1,3 +1,5 @@
+# Warning! Do not use this config in production! This is only for testing and security has been turned off.
+
 FROM ann-benchmarks
 
 WORKDIR /home/app
