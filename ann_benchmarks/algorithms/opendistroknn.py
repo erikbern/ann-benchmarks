@@ -8,22 +8,10 @@ from elasticsearch.helpers import bulk
 
 from ann_benchmarks.algorithms.base import BaseANN
 
+from .elasticsearch import es_wait
+
 # Configure the logger.
 logging.getLogger("elasticsearch").setLevel(logging.WARN)
-
-def es_wait():
-    print("Waiting for elasticsearch health endpoint...")
-    req = Request("http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=1s")
-    for i in range(30):
-        try:
-            res = urlopen(req)
-            if res.getcode() == 200:
-                print("Elasticsearch is ready")
-                return
-        except URLError:
-            pass
-        sleep(1)
-    raise RuntimeError("Failed to connect to local elasticsearch")
 
 class OpenDistroKNN(BaseANN):
     def __init__(self, metric, dimension, method_param):
