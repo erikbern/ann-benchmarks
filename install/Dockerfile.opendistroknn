@@ -5,7 +5,8 @@ FROM ann-benchmarks
 WORKDIR /home/app
 
 # Install Open Distro following instructions from https://opendistro.github.io/for-elasticsearch-docs/docs/install/deb/
-RUN apt-get install software-properties-common -y
+RUN apt-get update \
+    && apt-get install software-properties-common -y
 RUN add-apt-repository ppa:openjdk-r/ppa \ 
     && apt update \
     && apt install openjdk-11-jdk -y
@@ -13,13 +14,13 @@ RUN apt install unzip -y \
     && apt-get install wget -y
 RUN wget -qO - https://d3g5vo6xdbdb9a.cloudfront.net/GPG-KEY-opendistroforelasticsearch | apt-key add -
 RUN echo "deb https://d3g5vo6xdbdb9a.cloudfront.net/apt stable main" | tee -a   /etc/apt/sources.list.d/opendistroforelasticsearch.list
-RUN wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-7.9.1-amd64.deb \
-    && dpkg -i elasticsearch-oss-7.9.1-amd64.deb
+RUN wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-7.10.0-amd64.deb \
+    && dpkg -i elasticsearch-oss-7.10.0-amd64.deb
 RUN apt-get update \
-    && apt install opendistroforelasticsearch -y
+    && apt install opendistroforelasticsearch=1.12.0-1 -y
 
 # Install python client.
-RUN python3 -m pip install --upgrade elasticsearch==7.9.1
+RUN python3 -m pip install --upgrade elasticsearch>=7.0.0
 
 # Configure elasticsearch and JVM for single-node, single-core.
 RUN echo '\
