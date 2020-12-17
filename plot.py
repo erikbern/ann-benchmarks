@@ -106,8 +106,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not args.output:
-        args.output = 'results/%s.png' % get_algorithm_name(
-            args.dataset, args.batch)
+        args.output = 'results/%s.png' % (args.dataset + ('-batch' if args.batch else ''))
         print('writing output to %s' % args.output)
 
     dataset = get_dataset(args.dataset)
