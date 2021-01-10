@@ -14,7 +14,7 @@ from ann_benchmarks.results import (store_results, load_all_results,
                                     get_unique_algorithms)
 
 
-def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles,
+def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles,
                 batch):
     xm, ym = (metrics[xn], metrics[yn])
     # Now generate each plot
@@ -34,22 +34,26 @@ def create_plot(all_data, raw, x_log, y_log, xn, yn, fn_out, linestyles,
                                 marker=marker)
         labels.append(algo)
 
-    if x_log:
-        plt.gca().set_xscale('log')
-    if y_log:
-        plt.gca().set_yscale('log')
-    plt.gca().set_title(get_plot_label(xm, ym))
     plt.gca().set_ylabel(ym['description'])
     plt.gca().set_xlabel(xm['description'])
+    plt.gca().set_xscale(x_scale)
+    plt.gca().set_yscale(y_scale)
+    plt.gca().set_title(get_plot_label(xm, ym))
     box = plt.gca().get_position()
     # plt.gca().set_position([box.x0, box.y0, box.width * 0.8, box.height])
     plt.gca().legend(handles, labels, loc='center left',
                      bbox_to_anchor=(1, 0.5), prop={'size': 9})
     plt.grid(b=True, which='major', color='0.65', linestyle='-')
-    if 'lim' in xm:
+    
+    # Logit scale has its own lim built in.
+    if 'lim' in xm and x_scale != 'logit':
         plt.xlim(xm['lim'])
     if 'lim' in ym:
         plt.ylim(ym['lim'])
+
+    # Workaround for bug https://github.com/matplotlib/matplotlib/issues/6789
+    plt.gca().spines['bottom']._adjust_location()
+
     plt.savefig(fn_out, bbox_inches='tight')
     plt.close()
 
@@ -84,13 +88,15 @@ if __name__ == "__main__":
         choices=metrics.keys(),
         default="qps")
     parser.add_argument(
-        '-X', '--x-log',
-        help='Draw the X-axis using a logarithmic scale',
-        action='store_true')
+        '-X', '--x-scale',
+        help='Scale to use when drawing the X-axis',
+        choices=["linear", "log", "symlog", "logit"],
+        default='linear')
     parser.add_argument(
-        '-Y', '--y-log',
-        help='Draw the Y-axis using a logarithmic scale',
-        action='store_true')
+        '-Y', '--y-scale',
+        help='Scale to use when drawing the Y-axis',
+        choices=["linear", "log", "symlog", "logit"],
+        default='linear')
     parser.add_argument(
         '--raw',
         help='Show raw results (not just Pareto frontier) in faded colours',
@@ -119,6 +125,6 @@ if __name__ == "__main__":
     if not runs:
         raise Exception('Nothing to plot')
 
-    create_plot(runs, args.raw, args.x_log,
-                args.y_log, args.x_axis, args.y_axis, args.output,
+    create_plot(runs, args.raw, args.x_scale,
+                args.y_scale, args.x_axis, args.y_axis, args.output,
                 linestyles, args.batch)

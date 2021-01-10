@@ -176,7 +176,7 @@ def build_detail_site(data, label_func, j2_env, linestyles, batch=False):
             data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
         plot.create_plot(
             data_for_plot, False,
-            False, True, 'k-nn', 'qps',
+            'linear', 'log', 'k-nn', 'qps',
             args.outputdir + name + ('-batch' if batch else '') + '.png',
             linestyles, batch)
         output_path = \
