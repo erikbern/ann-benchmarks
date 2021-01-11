@@ -150,39 +150,54 @@ function""" % (definition.module, definition.constructor, definition.arguments)
 
 
 def run_from_cmdline():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser('''
+
+            NOTICE: You probably want to run.py rather than this script.
+
+''')
     parser.add_argument(
         '--dataset',
         choices=DATASETS.keys(),
+        help=f'Dataset to benchmark on.',
         required=True)
     parser.add_argument(
         '--algorithm',
+        help='Name of algorithm for saving the results.',
         required=True)
     parser.add_argument(
         '--module',
+        help='Python module containing algorithm. E.g. "ann_benchmarks.algorithms.annoy"',
         required=True)
     parser.add_argument(
         '--constructor',
+        help='Constructer to load from modulel. E.g. "Annoy"',
         required=True)
     parser.add_argument(
         '--count',
+        help='K: Number of nearest neighbours for the algorithm to return.',
         required=True,
         type=int)
     parser.add_argument(
         '--runs',
+        help='Number of times to run the algorihm. Will use the fastest run-time over the bunch.',
         required=True,
         type=int)
     parser.add_argument(
         '--batch',
+        help='If flag included, algorithms will be run in batch mode, rather than "individual query" mode.',
         action='store_true')
     parser.add_argument(
-        'build')
+        'build',
+        help='JSON of arguments to pass to the constructor. E.g. ["angular", 100]'
+        )
     parser.add_argument(
         'queries',
+        help='JSON of arguments to pass to the queries. E.g. [100]',
         nargs='*',
         default=[])
     args = parser.parse_args()
     algo_args = json.loads(args.build)
+    print(algo_args)
     query_args = [json.loads(q) for q in args.queries]
 
     definition = Definition(
