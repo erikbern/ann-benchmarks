@@ -21,8 +21,17 @@ def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles,
     handles = []
     labels = []
     plt.figure(figsize=(12, 9))
-    for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
+
+    # Sorting by mean y-value helps aligning plots with labels
+    def mean_y(algo):
         xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
+        return -np.log(np.array(ys)).mean()
+    # Find range for logit x-scale
+    min_x, max_x = 1, 0
+    for algo in sorted(all_data.keys(), key=mean_y):
+        xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
+        min_x = min([min_x]+[x for x in xs if x > 0])
+        max_x = max([max_x]+[x for x in xs if x < 1])
         color, faded, linestyle, marker = linestyles[algo]
         handle, = plt.plot(xs, ys, '-', label=algo, color=color,
                            ms=7, mew=3, lw=3, linestyle=linestyle,
@@ -34,25 +43,46 @@ def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles,
                                 marker=marker)
         labels.append(algo)
 
-    plt.gca().set_ylabel(ym['description'])
-    plt.gca().set_xlabel(xm['description'])
-    plt.gca().set_xscale(x_scale)
-    plt.gca().set_yscale(y_scale)
-    plt.gca().set_title(get_plot_label(xm, ym))
+    ax = plt.gca()
+    ax.set_ylabel(ym['description'])
+    ax.set_xlabel(xm['description'])
+    # Custom scales of the type --x-scale a3
+    if x_scale[0] == 'a':
+        alpha = int(x_scale[1:])
+        fun = lambda x: 1-(1-x)**(1/alpha)
+        inv_fun = lambda x: 1-(1-x)**alpha
+        ax.set_xscale('function', functions=(fun, inv_fun))
+        if alpha <= 3:
+            ticks = [inv_fun(x) for x in np.arange(0,1.2,.2)]
+            plt.xticks(ticks)
+        if alpha > 3:
+            from matplotlib import ticker
+            ax.xaxis.set_major_formatter(ticker.LogitFormatter())
+            #plt.xticks(ticker.LogitLocator().tick_values(min_x, max_x))
+            plt.xticks([0, 1/2, 1-1e-1, 1-1e-2, 1-1e-3, 1-1e-4, 1])
+    # Other x-scales
+    else:
+        ax.set_xscale(x_scale)
+    ax.set_yscale(y_scale)
+    ax.set_title(get_plot_label(xm, ym))
     box = plt.gca().get_position()
     # plt.gca().set_position([box.x0, box.y0, box.width * 0.8, box.height])
-    plt.gca().legend(handles, labels, loc='center left',
-                     bbox_to_anchor=(1, 0.5), prop={'size': 9})
+    ax.legend(handles, labels, loc='center left',
+              bbox_to_anchor=(1, 0.5), prop={'size': 9})
     plt.grid(b=True, which='major', color='0.65', linestyle='-')
-    
-    # Logit scale has its own lim built in.
+    plt.setp(ax.get_xminorticklabels(), visible=True)
+
+    # Logit scale has to be a subset of (0,1)
     if 'lim' in xm and x_scale != 'logit':
-        plt.xlim(xm['lim'])
+        x0, x1 = xm['lim']
+        plt.xlim(max(x0,0), min(x1,1))
+    elif x_scale == 'logit':
+        plt.xlim(min_x, max_x)
     if 'lim' in ym:
         plt.ylim(ym['lim'])
 
     # Workaround for bug https://github.com/matplotlib/matplotlib/issues/6789
-    plt.gca().spines['bottom']._adjust_location()
+    ax.spines['bottom']._adjust_location()
 
     plt.savefig(fn_out, bbox_inches='tight')
     plt.close()
@@ -89,8 +119,7 @@ if __name__ == "__main__":
         default="qps")
     parser.add_argument(
         '-X', '--x-scale',
-        help='Scale to use when drawing the X-axis',
-        choices=["linear", "log", "symlog", "logit"],
+        help='Scale to use when drawing the X-axis. Typically linear, logit or a2',
         default='linear')
     parser.add_argument(
         '-Y', '--y-scale',
