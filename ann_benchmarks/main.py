@@ -41,8 +41,12 @@ def run_worker(cpu, args, queue):
         else:
             memory_margin = 500e6  # reserve some extra memory for misc stuff
             mem_limit = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
+            cpu_limit = str(cpu)
+            if args.batch:
+                cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
+
             run_docker(definition, args.dataset, args.count,
-                       args.runs, args.timeout, args.batch, str(cpu), mem_limit)
+                       args.runs, args.timeout, args.batch, cpu_limit, mem_limit)
 
 
 def main():
@@ -234,6 +238,8 @@ def main():
     queue = multiprocessing.Queue()
     for definition in definitions:
         queue.put(definition)
+    if args.batch and args.parallelism > 1:
+        raise Exception(f"Batch mode uses all available CPU resources, --parallelism should be set to 1. (Was: {args.parallelism})")
     workers = [multiprocessing.Process(target=run_worker, args=(i+1, args, queue))
                for i in range(args.parallelism)]
     [worker.start() for worker in workers]

@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+from multiprocessing.pool import ThreadPool
 import psutil
 
 
@@ -19,9 +20,11 @@ class BaseANN(object):
         return []  # array of candidate indices
 
     def batch_query(self, X, n):
-        self.res = []
-        for q in X:
-            self.res.append(self.query(q, n))
+        """Provide all queries at once and let algorithm figure out
+           how to handle it. Default implementation uses a ThreadPool
+           to parallelize query processing."""
+        pool = ThreadPool()
+        self.res = pool.map(lambda q: self.query(q, n), X)
 
     def get_batch_results(self):
         return self.res

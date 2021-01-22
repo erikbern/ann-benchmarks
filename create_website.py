@@ -222,23 +222,23 @@ def load_all_results():
     all_runs_by_algorithm = {'batch': {}, 'non-batch': {}}
     cached_true_dist = []
     old_sdn = None
-    for properties, f in results.load_all_results():
-        sdn = get_run_desc(properties)
-        if sdn != old_sdn:
-            dataset = get_dataset(properties["dataset"])
-            cached_true_dist = list(dataset["distances"])
-            old_sdn = sdn
-        algo = properties["algo"]
-        ms = compute_all_metrics(
-            cached_true_dist, f, properties, args.recompute)
-        algo_ds = get_dataset_label(sdn)
-        idx = "non-batch"
-        if properties["batch_mode"]:
-            idx = "batch"
-        all_runs_by_algorithm[idx].setdefault(
-            algo, {}).setdefault(algo_ds, []).append(ms)
-        all_runs_by_dataset[idx].setdefault(
-            sdn, {}).setdefault(algo, []).append(ms)
+    for mode in ["non-batch", "batch"]:
+        for properties, f in results.load_all_results(batch_mode=(mode == "batch")):
+            sdn = get_run_desc(properties)
+            if sdn != old_sdn:
+                dataset = get_dataset(properties["dataset"])
+                cached_true_dist = list(dataset["distances"])
+                old_sdn = sdn
+            algo_ds = get_dataset_label(sdn)
+            desc_suffix = ("-batch" if mode == "batch" else "")
+            algo = properties["algo"] + desc_suffix
+            sdn += desc_suffix
+            ms = compute_all_metrics(
+                cached_true_dist, f, properties, args.recompute)
+            all_runs_by_algorithm[mode].setdefault(
+                algo, {}).setdefault(algo_ds, []).append(ms)
+            all_runs_by_dataset[mode].setdefault(
+                sdn, {}).setdefault(algo, []).append(ms)
 
     return (all_runs_by_dataset, all_runs_by_algorithm)
 
