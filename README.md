@@ -24,7 +24,7 @@ Evaluated
 * [Datasketch](https://github.com/ekzhu/datasketch)
 * [PyNNDescent](https://github.com/lmcinnes/pynndescent)
 * [MRPT](https://github.com/teemupitkanen/mrpt)
-* [NGT](https://github.com/yahoojapan/NGT): ONNG, PANNG
+* [NGT](https://github.com/yahoojapan/NGT): ONNG, PANNG, QG
 * [SPTAG](https://github.com/microsoft/SPTAG)
 * [PUFFINN](https://github.com/puffinn/puffinn)
 * [N2](https://github.com/kakao/n2)

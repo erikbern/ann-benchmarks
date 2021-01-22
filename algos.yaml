@@ -327,6 +327,16 @@ float:
         onng-80-60-graph:
            args : [{'edge': 100, 'outdegree': 10, 'indegree': 80, 'search_edge': 60, 'tree': False}]
            query-args : [[0.6, 0.9, 0.995, 0.998, 1.0, 1.01, 1.02, 1.05, 1.07]]
+    NGT-qg:
+      docker-tag: ann-benchmarks-ngt
+      module: ann_benchmarks.algorithms.qg_ngt
+      constructor : QG
+      base-args : ["@metric", "Float", 0.1]
+      run-groups :
+        me-96:
+           args : [{'edge': 100, 'outdegree': 64, 'indegree': 120, 'max_edge': 96}]
+           query-args : [[1.5, 1.7, 2.0, 2.5, 3.0, 5.0, 8.0],
+                         [0.9, 0.95, 1.0, 1.01, 1.02, 1.03, 1.04, 1.05, 1.06]]
     mrpt:
       docker-tag: ann-benchmarks-mrpt
       module: ann_benchmarks.algorithms.mrpt

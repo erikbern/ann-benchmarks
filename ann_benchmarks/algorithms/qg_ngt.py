@@ -8,32 +8,32 @@ import time
 from ann_benchmarks.algorithms.base import BaseANN
 from ann_benchmarks.constants import INDEX_DIR
 
-
-class ONNG(BaseANN):
+class QG(BaseANN):
     def __init__(self, metric, object_type, epsilon, param):
-        metrics = {'euclidean': '2', 'angular': 'C'}
+        metrics = {'euclidean': '2', 'angular': 'E'}
         self._edge_size = int(param['edge'])
         self._outdegree = int(param['outdegree'])
         self._indegree = int(param['indegree'])
+        self._max_edge_size = int(param['max_edge']) if 'max_edge' in param.keys() else 128
         self._metric = metrics[metric]
         self._object_type = object_type
         self._edge_size_for_search = int(param['search_edge']) if 'search_edge' in param.keys() else -2
         self._tree_disabled = (param['tree'] == False) if 'tree' in param.keys() else False
         self._build_time_limit = 4
         self._epsilon = epsilon
-        print('ONNG: edge_size=' + str(self._edge_size))
-        print('ONNG: outdegree=' + str(self._outdegree))
-        print('ONNG: indegree=' + str(self._indegree))
-        print('ONNG: edge_size_for_search=' + str(self._edge_size_for_search))
-        print('ONNG: epsilon=' + str(self._epsilon))
-        print('ONNG: metric=' + metric)
-        print('ONNG: object_type=' + object_type)
+        print('QG: edge_size=' + str(self._edge_size))
+        print('QG: outdegree=' + str(self._outdegree))
+        print('QG: indegree=' + str(self._indegree))
+        print('QG: edge_size_for_search=' + str(self._edge_size_for_search))
+        print('QG: epsilon=' + str(self._epsilon))
+        print('QG: metric=' + metric)
+        print('QG: object_type=' + object_type)
 
     def fit(self, X):
-        print('ONNG: start indexing...')
+        print('QG: start indexing...')
         dim = len(X[0])
-        print('ONNG: # of data=' + str(len(X)))
-        print('ONNG: dimensionality=' + str(dim))
+        print('QG: # of data=' + str(len(X)))
+        print('QG: dimensionality=' + str(dim))
         index_dir = 'indexes'
         if not os.path.exists(index_dir):
             os.makedirs(index_dir)
@@ -42,13 +42,13 @@ class ONNG(BaseANN):
             'ONNG-{}-{}-{}'.format(self._edge_size, self._outdegree,
                                    self._indegree))
         anngIndex = os.path.join(index_dir, 'ANNG-' + str(self._edge_size))
-        print('ONNG: index=' + index)
+        print('QG: index=' + index)
         if (not os.path.exists(index)) and (not os.path.exists(anngIndex)):
-            print('ONNG: create ANNG')
+            print('QG: create ANNG')
             t = time.time()
             args = ['ngt', 'create', '-it', '-p8', '-b500', '-ga', '-of',
                     '-D' + self._metric, '-d' + str(dim),
-                    '-E' + str(self._edge_size), '-S0',
+                    '-E' + str(self._edge_size), '-S40',
                     '-e' + str(self._epsilon), '-P0', '-B30',
                     '-T' + str(self._build_time_limit), anngIndex]
             subprocess.call(args)
@@ -56,39 +56,48 @@ class ONNG(BaseANN):
             idx.batch_insert(X, num_threads=24, debug=False)
             idx.save()
             idx.close()
-            print('ONNG: ANNG construction time(sec)=' + str(time.time() - t))
+            print('QG: ANNG construction time(sec)=' + str(time.time() - t))
         if not os.path.exists(index):
-            print('ONNG: degree adjustment')
+            print('QG: degree adjustment')
             t = time.time()
             args = ['ngt', 'reconstruct-graph', '-mS',
+                    '-E ' + str(self._outdegree),
                     '-o ' + str(self._outdegree),
                     '-i ' + str(self._indegree), anngIndex, index]
             subprocess.call(args)
-            print('ONNG: degree adjustment time(sec)=' + str(time.time() - t))
-        if os.path.exists(index):
-            print('ONNG: index already exists! ' + str(index))
+            print('QG: degree adjustment time(sec)=' + str(time.time() - t))
+        if not os.path.exists(index + '/qg'):
+            print('QG: quantization')
             t = time.time()
-            print(self._tree_disabled)
-            self.index = ngtpy.Index(index, read_only=True, tree_disabled=self._tree_disabled)
+            args = ['ngtqg', 'quantize', '-C1', '-c16',
+                    '-N ' + str(dim), '-Ms', '-lk', index]
+            subprocess.call(args)
+            print('QG: quantization time(sec)=' + str(time.time() - t))
+        if os.path.exists(index):
+            print('QG: index already exists! ' + str(index))
+            t = time.time()
+            self.index = ngtpy.QuantizedIndex(index, self._max_edge_size)
+            self.index.set_with_distance(False)
             self.indexName = index
-            print('ONNG: open time(sec)=' + str(time.time() - t))
+            print('QG: open time(sec)=' + str(time.time() - t))
         else:
-            print('ONNG: something wrong.')
-        print('ONNG: end of fit')
+            print('QG: something wrong.')
+        print('QG: end of fit')
 
-    def set_query_arguments(self, epsilon):
-        print("ONNG: epsilon=" + str(epsilon))
-        self._epsilon = epsilon - 1.0
-        self.name = 'ONNG-NGT(%s, %s, %s, %s, %1.3f)' % (
+    def set_query_arguments(self, result_expansion, epsilon):
+        print("QG: result_expansion=" + str(result_expansion))
+        print("QG: epsilon=" + str(epsilon))
+        self.name = 'QG-NGT(%s, %s, %s, %s, %s, %1.3f)' % (
             self._edge_size, self._outdegree,
-            self._indegree, self._edge_size_for_search,
-            self._epsilon + 1.0)
+            self._indegree, self._max_edge_size,
+            epsilon,
+            result_expansion)
+        epsilon = epsilon - 1.0
+        self.index.set_defaults(epsilon=epsilon, result_expansion=result_expansion)
 
     def query(self, v, n):
-        results = self.index.search(
-            v, n, self._epsilon, self._edge_size_for_search,
-            with_distance=False)
+        results = self.index.search(v, n)
         return results
 
     def freeIndex(self):
-        print('ONNG: free')
+        print('QG: free')
