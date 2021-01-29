@@ -359,6 +359,30 @@ float:
           args: []
 
   euclidean:
+    vamana(diskann):
+      docker-tag: ann-benchmarks-diskann
+      module: ann_benchmarks.algorithms.diskann
+      constructor: Vamana
+      base-args : ["@metric"]
+      run-groups :
+        vamana_100_64_1-2:
+           args : [{'l_build': 100, 'max_outdegree': 64, 'alpha': 1.2}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_100_64_1:
+           args : [{'l_build': 100, 'max_outdegree': 64, 'alpha': 1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_75_64_1-2:
+           args : [{'l_build': 75, 'max_outdegree': 64, 'alpha': 1.2}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_75_64_1:
+           args : [{'l_build': 75, 'max_outdegree': 64, 'alpha': 1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_125_32_1-2:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.2}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_125_32_1:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
     scann:
       docker-tag: ann-benchmarks-scann
       module: ann_benchmarks.algorithms.scann
