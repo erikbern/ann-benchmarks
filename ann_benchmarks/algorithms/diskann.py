@@ -9,6 +9,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class Vamana(BaseANN):
     def __init__(self, metric, param):
+        self.metric = {'angular': 'cosine', 'euclidean': 'l2'}[metric]
         self.l_build = int(param["l_build"])
         self.max_outdegree = int(param["max_outdegree"])
         self.alpha = float(param["alpha"])
@@ -48,7 +49,12 @@ class Vamana(BaseANN):
         if not os.path.exists(save_path):
             print('Vamana: Creating Index')
             s = time.time()
-            index = vp.SinglePrecisionIndex(vp.Metric.L2, data_path)
+            if self.metric == 'l2':
+                index = vp.SinglePrecisionIndex(vp.Metric.L2, data_path)
+            elif self.metric == 'cosine':
+                index = vp.SinglePrecisionIndex(vp.Metric.INNER_PRODUCT, data_path)
+            else:
+                print('Vamana: Unknown Metric Error!')
             index.build(self.params, [])
             t = time.time()
             print('Vamana: Index Build Time (sec) = ' + str(t - s))
@@ -56,7 +62,12 @@ class Vamana(BaseANN):
         if os.path.exists(save_path):
             print('Vamana: Loading Index: ' + str(save_path))
             s = time.time()
-            self.index = vp.SinglePrecisionIndex(vp.Metric.FAST_L2, data_path)
+            if self.metric == 'l2':
+                self.index = vp.SinglePrecisionIndex(vp.Metric.FAST_L2, data_path)
+            elif self.metric == 'cosine':
+                self.index = vp.SinglePrecisionIndex(vp.Metric.INNER_PRODUCT, data_path)
+            else:
+                print('Vamana: Unknown Metric Error!')
             self.index.load(file_name = save_path)
             print("Vamana: Index Loaded")
             self.index.optimize_graph()
