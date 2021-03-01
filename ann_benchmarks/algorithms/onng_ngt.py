@@ -76,19 +76,18 @@ class ONNG(BaseANN):
             print('ONNG: something wrong.')
         print('ONNG: end of fit')
 
-    def set_query_arguments(self, epsilon):
+    def set_query_arguments(self, parameters):
+        epsilon, edge_size = parameters
+        print("ONNG: edge_size=" + str(edge_size))
         print("ONNG: epsilon=" + str(epsilon))
-        self._epsilon = epsilon - 1.0
         self.name = 'ONNG-NGT(%s, %s, %s, %s, %1.3f)' % (
             self._edge_size, self._outdegree,
-            self._indegree, self._edge_size_for_search,
-            self._epsilon + 1.0)
+            self._indegree, edge_size, epsilon)
+        epsilon = epsilon - 1.0
+        self.index.set(epsilon=epsilon, edge_size=edge_size)
 
     def query(self, v, n):
-        results = self.index.search(
-            v, n, self._epsilon, self._edge_size_for_search,
-            with_distance=False)
-        return results
+        return self.index.search(v, n, with_distance=False)
 
     def freeIndex(self):
         print('ONNG: free')
