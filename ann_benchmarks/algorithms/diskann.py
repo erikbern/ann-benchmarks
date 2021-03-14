@@ -50,7 +50,7 @@ class Vamana(BaseANN):
             print('Vamana: Creating Index')
             s = time.time()
             if self.metric == 'l2':
-                index = vp.SinglePrecisionIndex(vp.Metric.L2, data_path)
+                index = vp.SinglePrecisionIndex(vp.Metric.FAST_L2, data_path)
             elif self.metric == 'cosine':
                 index = vp.SinglePrecisionIndex(vp.Metric.INNER_PRODUCT, data_path)
             else:
