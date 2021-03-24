@@ -14,9 +14,10 @@ RUN echo '----->'
 RUN echo 'root:Docker!' | chpasswd
 # ugly
 RUN chown -R $USER_NAME:$GROUP_ID /usr/local
+WORKDIR /home/app
+RUN chown -R $USER_NAME:$GROUP_ID /home/app
 USER $USER_NAME
 
-WORKDIR /home/app
 COPY requirements.txt run_algorithm.py ./
 RUN pip3 install --user -rrequirements.txt
 
