@@ -9,14 +9,13 @@ RUN mv server_config.yaml /var/lib/milvus/conf/server_config.yaml
 FROM ann-benchmarks
 COPY --from=milvus /var/lib/milvus /var/lib/milvus
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/var/lib/milvus/lib"
-RUN apt-get update
-RUN apt-get install -y libmysqlclient-dev
+RUN sudo apt-get update && sudo apt-get install -y libmysqlclient-dev
 
 # Python client
-RUN pip3 install pymilvus==0.2.7
+RUN sudo pip3 install pymilvus==0.2.7
 
 # Fixing some version incompatibility thing
-RUN pip3 install numpy==1.18 scipy==1.1.0 scikit-learn==0.21
+RUN sudo pip3 install numpy==1.18 scipy==1.1.0 scikit-learn==0.21
 
 # Dumb entrypoint thing that runs the daemon as well
 RUN echo '#!/bin/bash' >> entrypoint.sh
