@@ -12,7 +12,7 @@ def build(library, args):
         q = " ".join(["--build-arg " + x.replace(" ", "\\ ") for x in args])
     else:
         q = ""
-    
+
     try:
         subprocess.check_call(
             'docker build %s --rm -t ann-benchmarks-%s -f'
@@ -48,7 +48,9 @@ if __name__ == "__main__":
     print('Building base image...')
     subprocess.check_call(
         'docker build \
-        --rm -t ann-benchmarks -f install/Dockerfile .', shell=True)
+        --rm -t ann-benchmarks -f install/Dockerfile \
+         --build-arg USER_NAME="$USER"  --build-arg USER_ID=$(id -u) \
+         --build-arg GROUP_ID=$(id -g) .', shell=True)
 
     if args.algorithm:
         tags = [args.algorithm]
