@@ -20,9 +20,9 @@ USER $USER_NAME
 RUN sudo pip3 install -U pip
 
 # ugly
-#RUN chown -R $USER_NAME:$GROUP_ID /usr/local
-#RUN chown -R $USER_NAME:$GROUP_ID /home/app
 WORKDIR /home/app
+
+RUN sudo chown -R $USER_NAME:$GROUP_ID /home/app
 
 COPY requirements.txt run_algorithm.py ./
 RUN pip3 install -rrequirements.txt
