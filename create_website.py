@@ -177,10 +177,10 @@ def build_detail_site(data, label_func, j2_env, linestyles, batch=False):
         plot.create_plot(
             data_for_plot, False,
             'linear', 'log', 'k-nn', 'qps',
-            args.outputdir + name + ('-batch' if batch else '') + '.png',
+            args.outputdir + name + '.png',
             linestyles, batch)
         output_path = \
-            args.outputdir + name + ('-batch' if batch else '') + '.html'
+            args.outputdir + name + '.html'
         with open(output_path, "w") as text_file:
             text_file.write(j2_env.get_template("detail_page.html").
                             render(title=label, plot_data=data,
