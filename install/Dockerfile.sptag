@@ -17,7 +17,7 @@ RUN wget "https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar
         sudo ./b2 install && \
         # update ld cache so it finds boost in /usr/local/lib
         sudo ldconfig && \
-        cd .. && rm -rf boost_1_67_0
+        cd .. && sudo rm -rf boost_1_67_0
 
 # SPTAG defaults to Python 2 if it's found on the system, so as a hack, we remove it. See https://github.com/microsoft/SPTAG/blob/master/Wrappers/CMakeLists.txt
 RUN sudo apt-get -y remove libpython2.7
