@@ -122,6 +122,9 @@ class VamanaPQ(BaseANN):
         print("Vamana PQ: Starting Fit...")
         index_dir = 'indices'
 
+        if self.chunks > X.shape[1]:
+            raise ValueError
+
         if not os.path.exists(index_dir):
             os.makedirs(index_dir)
 
