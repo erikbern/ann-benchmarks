@@ -266,5 +266,4 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         logger.error('Container.wait for container %s failed with exception' % container.short_id)
         traceback.print_exc()
     finally:
-        pass
-        # container.remove(force=True)
+        container.remove(force=True)
