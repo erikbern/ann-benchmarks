@@ -35,10 +35,10 @@ RUN echo '\
 -XX:+HeapDumpOnOutOfMemoryError\n\
 -XX:HeapDumpPath=/var/lib/elasticsearch\n\
 -XX:ErrorFile=/var/log/elasticsearch/hs_err_pid%p.log\n\
--Xlog:gc*,gc+age=trace,safepoint:file=/var/log/elasticsearch/gc.log:utctime,pid,tags:filecount=32,filesize=64m' | sudo tee  /etc/elasticsearch/jvm.options
+-Xlog:gc*,gc+age=trace,safepoint:file=/var/log/elasticsearch/gc.log:utctime,pid,tags:filecount=32,filesize=64m' | sudo tee  /etc/elasticsearch/jvm.options 
 
 # Make sure you can start the service.
-RUN sudo service elasticsearch start && service elasticsearch stop
+RUN sudo service elasticsearch start && sudo service elasticsearch stop
 
 # Custom entrypoint that also starts the Elasticsearch server.
 RUN echo 'sudo service elasticsearch start && python3 -u run_algorithm.py "$@"' > entrypoint.sh
