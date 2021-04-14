@@ -19,7 +19,7 @@ RUN sudo pip3 install numpy==1.18 scipy==1.1.0 scikit-learn==0.21
 
 # Dumb entrypoint thing that runs the daemon as well
 RUN echo '#!/bin/bash' >> entrypoint.sh
-RUN echo 'sudo /var/lib/milvus/bin/milvus_server -d -c /var/lib/milvus/conf/server_config.yaml -l /var/lib/milvus/conf/log_config.conf' >> entrypoint.sh
+RUN echo 'sudo LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/var/lib/milvus/lib /var/lib/milvus/bin/milvus_server -d -c /var/lib/milvus/conf/server_config.yaml -l /var/lib/milvus/conf/log_config.conf' >> entrypoint.sh
 RUN echo 'sleep 5' >> entrypoint.sh
 RUN echo 'python3 run_algorithm.py "$@"' >> entrypoint.sh
 RUN chmod u+x entrypoint.sh
