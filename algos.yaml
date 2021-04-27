@@ -359,6 +359,72 @@ float:
           args: []
 
   euclidean:
+    vamana(diskann):
+      docker-tag: ann-benchmarks-diskann
+      module: ann_benchmarks.algorithms.diskann
+      constructor: Vamana
+      base-args : ["@metric"]
+      run-groups :
+        vamana_100_64_1-2:
+           args : [{'l_build': 100, 'max_outdegree': 64, 'alpha': 1.2}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_100_64_1-1:
+           args : [{'l_build': 100, 'max_outdegree': 64, 'alpha': 1.1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_100_64_1:
+           args : [{'l_build': 100, 'max_outdegree': 64, 'alpha': 1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_125_32_1-2:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.2}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_125_32_1-1:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_125_32_1:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+    vamana-pq(diskann):
+      docker-tag: ann-benchmarks-diskann_pq
+      module: ann_benchmarks.algorithms.diskann
+      constructor: VamanaPQ
+      base-args : ["@metric"]
+      run-groups :
+        vamana_pq_100_64_1-2_32:
+           args : [{'l_build': 100, 'max_outdegree': 64, 'alpha': 1.2, 'chunks': 32}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_100_64_1_32:
+           args : [{'l_build': 100, 'max_outdegree': 64, 'alpha': 1, 'chunks': 32}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_80_64_1-2_96:
+           args : [{'l_build': 80, 'max_outdegree': 64, 'alpha': 1.2, 'chunks': 96}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_80_64_1_96:
+           args : [{'l_build': 80, 'max_outdegree': 64, 'alpha': 1, 'chunks': 96}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_80_64_1-2_112:
+           args : [{'l_build': 80, 'max_outdegree': 64, 'alpha': 1.2, 'chunks': 112}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_80_64_1_112:
+           args : [{'l_build': 80, 'max_outdegree': 64, 'alpha': 1, 'chunks': 112}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1-2_32:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.2, 'chunks': 32}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1_32:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1, 'chunks': 32}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1-2_96:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.2, 'chunks': 96}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1_96:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1, 'chunks': 96}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1-2_112:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.2, 'chunks': 112}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1_112:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1, 'chunks': 112}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
     scann:
       docker-tag: ann-benchmarks-scann
       module: ann_benchmarks.algorithms.scann
@@ -533,6 +599,72 @@ float:
           query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
 
   angular:
+    vamana(diskann):
+      docker-tag: ann-benchmarks-diskann
+      module: ann_benchmarks.algorithms.diskann
+      constructor: Vamana
+      base-args : ["@metric"]
+      run-groups :
+        vamana_125_64_1-2:
+           args : [{'l_build': 125, 'max_outdegree': 64, 'alpha': 1.2}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_125_64_1-1:
+           args : [{'l_build': 125, 'max_outdegree': 64, 'alpha': 1.1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_125_64_1:
+           args : [{'l_build': 125, 'max_outdegree': 64, 'alpha': 1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_125_32_1-2:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.2}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_125_32_1-1:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_125_32_1:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+    vamana-pq(diskann):
+      docker-tag: ann-benchmarks-diskann_pq
+      module: ann_benchmarks.algorithms.diskann
+      constructor: VamanaPQ
+      base-args : ["@metric"]
+      run-groups :
+        vamana_pq_125_64_1-2_14:
+           args : [{'l_build': 125, 'max_outdegree': 64, 'alpha': 1.2, 'chunks': 14}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_64_1_14:
+           args : [{'l_build': 125, 'max_outdegree': 64, 'alpha': 1, 'chunks': 14}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_64_1-2_28:
+           args : [{'l_build': 125, 'max_outdegree': 64, 'alpha': 1.2, 'chunks': 28}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_64_1_28:
+           args : [{'l_build': 125, 'max_outdegree': 64, 'alpha': 1, 'chunks': 28}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_64_1-2_42:
+           args : [{'l_build': 125, 'max_outdegree': 64, 'alpha': 1.2, 'chunks': 42}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_64_1_42:
+           args : [{'l_build': 125, 'max_outdegree': 64, 'alpha': 1, 'chunks': 42}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1-2_14:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.2, 'chunks': 14}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1_14:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1, 'chunks': 14}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1-2_28:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.2, 'chunks': 28}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1_28:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1, 'chunks': 28}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1-2_42:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1.2, 'chunks': 42}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
+        vamana_pq_125_32_1_42:
+           args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1, 'chunks': 42}]
+           query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
     puffinn:
       docker-tag: ann-benchmarks-puffinn
       module: ann_benchmarks.algorithms.puffinn
