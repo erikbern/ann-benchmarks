@@ -34,6 +34,7 @@ def get_dataset(which):
             DATASETS[which](hdf5_fn)
     hdf5_f = h5py.File(hdf5_fn, 'r')
 
+    # here for backward compatibility, to ensure old datasets can still be used with newer versions
     dimension = hdf5_f.attrs['dimension'] if 'dimension' in hdf5_f.attrs else len(hdf5_f['train'][0])
 
     return hdf5_f, dimension
@@ -85,6 +86,7 @@ def write_sparse_output(train, test, fn, distance, dimension, count=100):
     print('train size: %9d * %4d' % (train.shape[0], dimension))
     print('test size:  %9d * %4d' % (test.shape[0], dimension))
 
+    # We ensure the sets are sorted
     train = numpy.array(list(map(sorted, train)))
     test = numpy.array(list(map(sorted, test)))
 

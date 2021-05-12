@@ -131,7 +131,7 @@ Principles
 * Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
 * We mainly support CPU-based ANN algorithms. GPU support exists for FAISS, but it has to be compiled with GPU support locally and experiments must be run using the flags `--local --batch`. 
 * Do proper train/test set of index data and query points.
-* Note that set similarity was supported in the past. This might hopefully be added back soon.
+* Note that we consider that set similarity datasets are sparse and thus we pass a **sorted** array of integers to algorithms to represent the set of each user.
 
 
 Authors
