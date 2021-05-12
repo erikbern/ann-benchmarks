@@ -103,15 +103,14 @@ error: query argument groups have been specified for %s.%s(%s), but the \
 algorithm instantiated from it does not implement the set_query_arguments \
 function""" % (definition.module, definition.constructor, definition.arguments)
 
-    D = get_dataset(dataset)
+    D, dimension = get_dataset(dataset)
     X_train = numpy.array(D['train'])
     X_test = numpy.array(D['test'])
     distance = D.attrs['distance']
-    print('got a train set of size (%d * %d)' % X_train.shape)
+    print('got a train set of size (%d * %d)' % (X_train.shape[0], dimension))
     print('got %d queries' % len(X_test))
 
-    X_train = dataset_transform[distance](X_train)
-    X_test = dataset_transform[distance](X_test)
+    X_train, X_test = dataset_transform(D)
 
     try:
         prepared_queries = False

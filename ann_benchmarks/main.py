@@ -139,8 +139,7 @@ def main():
     if os.path.exists(INDEX_DIR):
         shutil.rmtree(INDEX_DIR)
 
-    dataset = get_dataset(args.dataset)
-    dimension = len(dataset['train'][0])  # TODO(erikbern): ugly
+    dataset, dimension = get_dataset(args.dataset)
     point_type = dataset.attrs.get('point_type', 'float')
     distance = dataset.attrs['distance']
     definitions = get_definitions(
