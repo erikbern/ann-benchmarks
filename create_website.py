@@ -226,7 +226,7 @@ def load_all_results():
         for properties, f in results.load_all_results(batch_mode=(mode == "batch")):
             sdn = get_run_desc(properties)
             if sdn != old_sdn:
-                dataset = get_dataset(properties["dataset"])
+                dataset, _ = get_dataset(properties["dataset"])
                 cached_true_dist = list(dataset["distances"])
                 old_sdn = sdn
             algo_ds = get_dataset_label(sdn)
