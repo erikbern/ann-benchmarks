@@ -1,0 +1,92 @@
+name: ANN benchmarks
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - library: annoy
+            dataset: random-xs-20-angular
+          - library: dolphinn
+            dataset: random-xs-20-angular
+          - library: faiss
+            dataset: random-xs-20-angular
+          - library: flann
+            dataset: random-xs-20-angular
+          - library: kgraph
+            dataset: random-xs-20-angular
+          - library: milvus
+            dataset: random-xs-20-angular
+          - library: mrpt
+            dataset: random-xs-20-angular
+          - library: n2
+            dataset: random-xs-20-angular
+          - library: nearpy
+            dataset: random-xs-20-angular
+          - library: ngt
+            dataset: random-xs-20-angular
+          - library: nmslib
+            dataset: random-xs-20-angular
+          - library: hnswlib
+            dataset: random-xs-20-angular
+          - library: puffinn
+            dataset: random-xs-20-angular
+          - library: pynndescent
+            dataset: random-xs-20-angular
+          - library: rpforest
+            dataset: random-xs-20-angular
+          - library: sklearn
+            dataset: random-xs-20-angular
+          - library: sptag
+            dataset: random-xs-20-angular
+          - library: mih
+            dataset: random-xs-16-hamming
+          - library: datasketch
+            dataset: random-s-jaccard
+          - library: scann
+            dataset: random-xs-20-angular
+          - library: elasticsearch
+            dataset: random-xs-20-angular
+          - library: elastiknn
+            dataset: random-xs-20-angular
+          - library: opendistroknn
+            dataset: random-xs-20-angular
+          - library: diskann
+            dataset: random-xs-20-angular
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v2 # Pull the repository
+
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        python install.py
+
+      env:
+        LIBRARY: ${{ matrix.library }}
+        DATASET: ${{ matrix.dataset }}
+    
+    - name: Run the benchmark
+      run: |
+        python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --timeout 300
+        python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --batch --timeout 300
+        sudo chmod -R 777 results/
+        python plot.py --dataset $DATASET --output plot.png
+        python plot.py --dataset $DATASET --output plot-batch.png --batch
+        python -m unittest test/test-metrics.py
+        python -m unittest test/test-jaccard.py
+        python create_website.py --outputdir . --scatter --latex
+
+      env:
+        LIBRARY: ${{ matrix.library }}
+        DATASET: ${{ matrix.dataset }}
