@@ -323,9 +323,12 @@ float:
       run-groups :
         onng:
            args : [{'edge': 100, 'outdegree': 10, 'indegree': 120}]
-           query-args : [[[0.60, -2], [0.90, -2], [0.995, 40], [0.998, 40], [1.00, 40],
-                          [1.00, -2], [1.01, 40], [ 1.02, -2], [ 1.02, 40], [1.03, -2],
-                          [1.05, -2], [1.07, -2], [ 1.10, -2], [ 1.20, -2]]]
+           query-args : [[[0.60, -2], [0.90, -2], [1.00, -2], [1.02, -2], [1.03, -2],
+                          [1.04, -2], [1.05, -2], [1.07, -2], [1.10, -2], [1.20, -2]]]
+        onng-with-refinement:
+           args : [{'edge': 100, 'outdegree': 10, 'indegree': 120, 'tree': False, 'refine': True}]
+           query-args : [[[0.995, 40], [0.998, 40], [1.00, 40], [1.005, 40], [1.010, 40],
+                          [1.015, 40], [1.020, 40]]]
     NGT-qg:
       docker-tag: ann-benchmarks-ngt
       module: ann_benchmarks.algorithms.qg_ngt
