@@ -59,6 +59,8 @@ jobs:
             dataset: random-xs-20-angular
           - library: puffinn
             dataset: random-s-jaccard
+          - library: pynndescent
+            dataset: random-s-jaccard
       fail-fast: false
 
     steps:
