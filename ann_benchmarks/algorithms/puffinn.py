@@ -30,8 +30,7 @@ class Puffinn(BaseANN):
             self.index = puffinn.Index(self.metric, dimensions, self.space,\
                     hash_function=self.hash_function, hash_source=self.hash_source)
         for i, x in enumerate(X):
-            if self.metric == 'angular':
-                x = x.tolist()
+            x = x.tolist()
             self.index.insert(x)
         self.index.rebuild()
 
@@ -39,8 +38,7 @@ class Puffinn(BaseANN):
         self.recall = recall
 
     def query(self, v, n):
-        if self.metric == 'angular':
-            v = v.tolist()
+        v = v.tolist()
         return self.index.search(v, n, self.recall)
 
     def __str__(self):
