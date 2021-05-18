@@ -1,6 +1,6 @@
 import unittest
 import numpy
-from ann_benchmarks.distance import jaccard, transform_dense_to_sparse
+from ann_benchmarks.distance import jaccard
 
 class TestJaccard(unittest.TestCase):
     def setUp(self):
@@ -16,8 +16,4 @@ class TestJaccard(unittest.TestCase):
         self.assertAlmostEqual(jaccard(a, a), 1.0)
         self.assertAlmostEqual(jaccard(a, c), 0.5)
         self.assertAlmostEqual(jaccard(c, d), 0.0)
-
-    def test_transformation(self):
-        X = numpy.array([[True, False, False], [True, False, True], [False, False, True]])
-        self.assertEqual(transform_dense_to_sparse(X), [[0],[0, 2], [2]])
 

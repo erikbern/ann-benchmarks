@@ -15,19 +15,6 @@ def jaccard(a, b):
     intersect = len(set(a) & set(b))
     return intersect / (float)(len(a) + len(b) - intersect)
 
-def transform_dense_to_sparse(X):
-    """Converts the n * m dataset into a sparse format
-    that only holds the non-zero entries (Jaccard)."""
-    # get list of indices of non-zero elements
-    indices = np.transpose(np.where(X))
-    keys = []
-    for _, js in itertools.groupby(indices, lambda ij: ij[0]):
-        keys.append([j for _, j in js])
-
-    assert len(X) == len(keys)
-
-    return keys
-
 metrics = {
     'hamming': {
         'distance': lambda a, b: pdist(a, b, "hamming"),
