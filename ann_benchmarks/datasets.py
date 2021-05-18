@@ -2,7 +2,6 @@ import h5py
 import numpy
 import os
 import random
-import sys
 
 from urllib.request import urlopen
 from urllib.request import urlretrieve
@@ -34,18 +33,25 @@ def get_dataset(which):
             print("Creating dataset locally")
             DATASETS[which](hdf5_fn)
     hdf5_f = h5py.File(hdf5_fn, 'r')
-    return hdf5_f
+
+    # here for backward compatibility, to ensure old datasets can still be used with newer versions
+    dimension = hdf5_f.attrs['dimension'] if 'dimension' in hdf5_f.attrs else len(hdf5_f['train'][0])
+
+    return hdf5_f, dimension
 
 
 # Everything below this line is related to creating datasets
 # You probably never need to do this at home,
 # just rely on the prepared datasets at http://ann-benchmarks.com
 
+
 def write_output(train, test, fn, distance, point_type='float', count=100):
     from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
     n = 0
     f = h5py.File(fn, 'w')
+    f.attrs['type'] = 'dense'
     f.attrs['distance'] = distance
+    f.attrs['dimension'] = len(train[0])
     f.attrs['point_type'] = point_type
     print('train size: %9d * %4d' % train.shape)
     print('test size:  %9d * %4d' % test.shape)
@@ -56,10 +62,8 @@ def write_output(train, test, fn, distance, point_type='float', count=100):
     neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
     distances = f.create_dataset('distances', (len(test), count), dtype='f')
     bf = BruteForceBLAS(distance, precision=train.dtype)
-    train = dataset_transform[distance](train)
-    test = dataset_transform[distance](test)
+
     bf.fit(train)
-    queries = []
     for i, x in enumerate(test):
         if i % 1000 == 0:
             print('%d/%d...' % (i, len(test)))
@@ -69,10 +73,50 @@ def write_output(train, test, fn, distance, point_type='float', count=100):
         distances[i] = [d for _, d in res]
     f.close()
 
+"""
+param: train and test are arrays of arrays of indices.
+"""
+def write_sparse_output(train, test, fn, distance, dimension, count=100):
+    from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
+    f = h5py.File(fn, 'w')
+    f.attrs['type'] = 'sparse'
+    f.attrs['distance'] = distance
+    f.attrs['dimension'] = dimension
+    f.attrs['point_type'] = 'bit'
+    print('train size: %9d * %4d' % (train.shape[0], dimension))
+    print('test size:  %9d * %4d' % (test.shape[0], dimension))
 
-def train_test_split(X, test_size=10000):
+    # We ensure the sets are sorted
+    train = numpy.array(list(map(sorted, train)))
+    test = numpy.array(list(map(sorted, test)))
+
+    flat_train = numpy.hstack(train.flatten())
+    flat_test = numpy.hstack(test.flatten())
+
+    f.create_dataset('train', (len(flat_train),), dtype=flat_train.dtype)[:] = flat_train
+    f.create_dataset('test', (len(flat_test),), dtype=flat_test.dtype)[:] = flat_test
+    neighbors = f.create_dataset('neighbors', (len(test), count), dtype='i')
+    distances = f.create_dataset('distances', (len(test), count), dtype='f')
+
+    f.create_dataset('size_test', (len(test),), dtype='i')[:] = list(map(len, test))
+    f.create_dataset('size_train', (len(train),), dtype='i')[:] = list(map(len, train))
+
+    bf = BruteForceBLAS(distance, precision=train.dtype)
+    bf.fit(train)
+    for i, x in enumerate(test):
+        if i % 1000 == 0:
+            print('%d/%d...' % (i, len(test)))
+        res = list(bf.query_with_distances(x, count))
+        res.sort(key=lambda t: t[-1])
+        neighbors[i] = [j for j, _ in res]
+        distances[i] = [d for _, d in res]
+    f.close()
+
+def train_test_split(X, test_size=10000, dimension=None):
     import sklearn.model_selection
-    print('Splitting %d*%d into train/test' % X.shape)
+    if dimension == None:
+        dimension = X.shape[1]
+    print('Splitting %d*%d into train/test' % (X.shape[0], dimension))
     return sklearn.model_selection.train_test_split(
         X, test_size=test_size, random_state=1)
 
@@ -311,41 +355,29 @@ def kosarak(out_fn):
     url = 'http://fimi.uantwerpen.be/data/%s' % local_fn
     download(url, local_fn)
 
+    X = []
+    dimension = 0
     with gzip.open('kosarak.dat.gz', 'r') as f:
         content = f.readlines()
         # preprocess data to find sets with more than 20 elements
         # keep track of used ids for reenumeration
-        ids = {}
-        next_id = 0
-        cnt = 0
         for line in content:
             if len(line.split()) >= min_elements:
-                cnt += 1
-                for x in line.split():
-                    if int(x) not in ids:
-                        ids[int(x)] = next_id
-                        next_id += 1
+                X.append(list(map(int, line.split())))
+                dimension = max(dimension, max(X[-1]) + 1)
 
-    X = numpy.zeros((cnt, len(ids)), dtype=numpy.bool)
-    i = 0
-    for line in content:
-        if len(line.split()) >= min_elements:
-            for x in line.split():
-                X[i][ids[int(x)]] = 1
-            i += 1
-
-    X_train, X_test = train_test_split(numpy.array(X), test_size=500)
-    write_output(X_train, X_test, out_fn, 'jaccard', 'bit')
+    X_train, X_test = train_test_split(numpy.array(X), test_size=500, dimension=dimension)
+    write_sparse_output(X_train, X_test, out_fn, 'jaccard', dimension)
 
 def random_jaccard(out_fn, n=10000, size=50, universe=80):
     random.seed(1)
     l = list(range(universe))
-    X = numpy.zeros((n, universe), dtype=numpy.bool)
-    for i in range(len(X)):
-        for j in random.sample(l, size):
-            X[i][j] = True
-    X_train, X_test = train_test_split(X, test_size=100)
-    write_output(X_train, X_test, out_fn, 'jaccard', 'bit')
+    X = []
+    for i in range(n):
+        X.append(random.sample(l, size))
+
+    X_train, X_test = train_test_split(numpy.array(X), test_size=100, dimension=universe)
+    write_sparse_output(X_train, X_test, out_fn, 'jaccard', universe)
 
 
 

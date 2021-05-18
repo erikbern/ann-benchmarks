@@ -144,7 +144,7 @@ if __name__ == "__main__":
         args.output = 'results/%s.png' % (args.dataset + ('-batch' if args.batch else ''))
         print('writing output to %s' % args.output)
 
-    dataset = get_dataset(args.dataset)
+    dataset, _ = get_dataset(args.dataset)
     count = int(args.count)
     unique_algorithms = get_unique_algorithms()
     results = load_all_results(args.dataset, count, args.batch)
