@@ -4,15 +4,15 @@ import nmslib
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.base import BaseANN
 
-
 class NmslibReuseIndex(BaseANN):
     @staticmethod
     def encode(d):
         return ["%s=%s" % (a, b) for (a, b) in d.items()]
 
     def __init__(self, metric, method_name, index_param, query_param):
+        self._metric = metric
         self._nmslib_metric = {
-            'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
+            'angular': 'cosinesimil', 'euclidean': 'l2', 'jaccard': 'jaccard_sparse'}[metric]
         self._method_name = method_name
         self._save_index = False
         self._index_param = NmslibReuseIndex.encode(index_param)
@@ -34,6 +34,13 @@ class NmslibReuseIndex(BaseANN):
         if not os.path.exists(d):
             os.makedirs(d)
 
+    def _sparse_convert_matrix(self, X):
+        return [self._sparse_convert_vector(x) for x in X]
+
+
+    def _sparse_convert_vector(self, v):
+        return ' '.join([str(k) for k in v])
+
     def fit(self, X):
         if self._method_name == 'vptree':
             # To avoid this issue: terminate called after throwing an instance
@@ -43,10 +50,19 @@ class NmslibReuseIndex(BaseANN):
             # less than <bucket size> * 1000
             # Aborted (core dumped)
             self._index_param.append('bucketSize=%d' %
-                                     min(int(X.shape[0] * 0.0005), 1000))
+                                     min(int(len(X) * 0.0005), 1000))
 
-        self._index = nmslib.init(
-            space=self._nmslib_metric, method=self._method_name)
+        if self._metric == "jaccard":
+            # Pass sets as strings since couldn't get SPARSE_VECTOR to work so far
+            self._index = nmslib.init(
+                space=self._nmslib_metric, method=self._method_name, data_type=nmslib.DataType.OBJECT_AS_STRING)
+            
+            # Convert to string
+            X = self._sparse_convert_matrix(X)
+        else:
+            self._index = nmslib.init(
+                space=self._nmslib_metric, method=self._method_name)
+
         self._index.addDataPointBatch(X)
 
         if os.path.exists(self._index_name):
@@ -64,10 +80,16 @@ class NmslibReuseIndex(BaseANN):
             self._index.setQueryTimeParams(["efSearch=%s" % (ef)])
 
     def query(self, v, n):
+        if self._metric == "jaccard":
+            v = self._sparse_convert_vector(v)
         ids, distances = self._index.knnQuery(v, n)
+
         return ids
 
     def batch_query(self, X, n):
+        if self._metric == "jaccard":
+            X = self._sparse_convert_matrix(X)
+
         self.res = self._index.knnQueryBatch(X, n)
 
     def get_batch_results(self):
