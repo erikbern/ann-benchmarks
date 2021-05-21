@@ -17,9 +17,8 @@ class ONNG(BaseANN):
         self._indegree = int(param['indegree'])
         self._metric = metrics[metric]
         self._object_type = object_type
-        self._edge_size_for_search = int(param['search_edge']) if 'search_edge' in param.keys() else 0
+        self._edge_size_for_search = int(param['search_edge']) if 'search_edge' in param.keys() else -2
         self._tree_disabled = (param['tree'] == False) if 'tree' in param.keys() else False
-        self._refine_enabled = (param['refine'] == True) if 'refine' in param.keys() else False
         self._build_time_limit = 4
         self._epsilon = epsilon
         print('ONNG: edge_size=' + str(self._edge_size))
@@ -49,21 +48,15 @@ class ONNG(BaseANN):
             t = time.time()
             args = ['ngt', 'create', '-it', '-p8', '-b500', '-ga', '-of',
                     '-D' + self._metric, '-d' + str(dim),
-                    '-E' + str(self._edge_size),
-                    '-S' + str(self._edge_size_for_search),
+                    '-E' + str(self._edge_size), '-S0',
                     '-e' + str(self._epsilon), '-P0', '-B30',
                     '-T' + str(self._build_time_limit), anngIndex]
             subprocess.call(args)
             idx = ngtpy.Index(path=anngIndex)
             idx.batch_insert(X, num_threads=24, debug=False)
-            print('ONNG: ANNG construction time(sec)=' + str(time.time() - t))
-            t = time.time()
-            if self._refine_enabled:
-                idx.refine_anng(epsilon=self._epsilon, num_of_edges=self._edge_size,
-                                num_of_explored_edges=self._edge_size_for_search)
-            print('ONNG: RNNG construction time(sec)=' + str(time.time() - t))
             idx.save()
             idx.close()
+            print('ONNG: ANNG construction time(sec)=' + str(time.time() - t))
         if not os.path.exists(index):
             print('ONNG: degree adjustment')
             t = time.time()
@@ -83,18 +76,19 @@ class ONNG(BaseANN):
             print('ONNG: something wrong.')
         print('ONNG: end of fit')
 
-    def set_query_arguments(self, parameters):
-        epsilon, edge_size = parameters
-        print("ONNG: edge_size=" + str(edge_size))
+    def set_query_arguments(self, epsilon):
         print("ONNG: epsilon=" + str(epsilon))
+        self._epsilon = epsilon - 1.0
         self.name = 'ONNG-NGT(%s, %s, %s, %s, %1.3f)' % (
             self._edge_size, self._outdegree,
-            self._indegree, edge_size, epsilon)
-        epsilon = epsilon - 1.0
-        self.index.set(epsilon=epsilon, edge_size=edge_size)
+            self._indegree, self._edge_size_for_search,
+            self._epsilon + 1.0)
 
     def query(self, v, n):
-        return self.index.search(v, n, with_distance=False)
+        results = self.index.search(
+            v, n, self._epsilon, self._edge_size_for_search,
+            with_distance=False)
+        return results
 
     def freeIndex(self):
         print('ONNG: free')
