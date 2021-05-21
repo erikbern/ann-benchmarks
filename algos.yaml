@@ -323,12 +323,10 @@ float:
       run-groups :
         onng:
            args : [{'edge': 100, 'outdegree': 10, 'indegree': 120}]
-           query-args : [[[0.60, -2], [0.90, -2], [1.00, -2], [1.02, -2], [1.03, -2],
-                          [1.04, -2], [1.05, -2], [1.07, -2], [1.10, -2], [1.20, -2]]]
-        onng-with-refinement:
-           args : [{'edge': 100, 'outdegree': 10, 'indegree': 120, 'tree': False, 'refine': True}]
-           query-args : [[[0.995, 40], [0.998, 40], [1.00, 40], [1.005, 40], [1.010, 40],
-                          [1.015, 40], [1.020, 40]]]
+           query-args : [[0.6, 0.9, 1.0, 1.02, 1.03, 1.05, 1.07, 1.1, 1.2]]
+        onng-80-60-graph:
+           args : [{'edge': 100, 'outdegree': 10, 'indegree': 80, 'search_edge': 60, 'tree': False}]
+           query-args : [[0.6, 0.9, 0.995, 0.998, 1.0, 1.01, 1.02, 1.05, 1.07]]
     NGT-qg:
       docker-tag: ann-benchmarks-ngt
       module: ann_benchmarks.algorithms.qg_ngt
@@ -337,12 +335,8 @@ float:
       run-groups :
         me-96:
            args : [{'edge': 100, 'outdegree': 64, 'indegree': 120, 'max_edge': 96}]
-           query-args : [[[1.2, 0.90], [1.2, 0.95], [1.2, 0.98], [1.2, 1.00], [1.2, 1.02],
-                          [1.5, 0.90], [1.5, 0.95], [1.5, 0.98], [1.5, 1.00], [1.5, 1.02],
-                          [2.0, 0.90], [2.0, 0.95], [2.0, 0.98], [2.0, 1.00], [2.0, 1.02],
-                          [3.0, 0.90], [3.0, 0.95], [3.0, 0.98], [3.0, 1.00], [3.0, 1.02],
-                          [  5, 1.00], [ 10, 1.00], [ 20, 1.00],
-                          [  2, 1.04], [  3, 1.04], [  5, 1.04], [  8, 1.04]]]
+           query-args : [[1.5, 1.7, 2.0, 2.5, 3.0, 5.0, 8.0],
+                         [0.9, 0.95, 1.0, 1.01, 1.02, 1.03, 1.04, 1.05, 1.06]]
     mrpt:
       docker-tag: ann-benchmarks-mrpt
       module: ann_benchmarks.algorithms.mrpt
