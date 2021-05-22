@@ -69,8 +69,7 @@ class QG(BaseANN):
         if not os.path.exists(index + '/qg'):
             print('QG: quantization')
             t = time.time()
-            args = ['ngtqg', 'quantize', '-C1', '-c16',
-                    '-N ' + str(dim), '-Ms', '-lk', index]
+            args = ['ngtqg', 'quantize', index]
             subprocess.call(args)
             print('QG: quantization time(sec)=' + str(time.time() - t))
         if os.path.exists(index):
@@ -84,7 +83,8 @@ class QG(BaseANN):
             print('QG: something wrong.')
         print('QG: end of fit')
 
-    def set_query_arguments(self, result_expansion, epsilon):
+    def set_query_arguments(self, parameters):
+        result_expansion, epsilon = parameters
         print("QG: result_expansion=" + str(result_expansion))
         print("QG: epsilon=" + str(epsilon))
         self.name = 'QG-NGT(%s, %s, %s, %s, %s, %1.3f)' % (
@@ -93,11 +93,10 @@ class QG(BaseANN):
             epsilon,
             result_expansion)
         epsilon = epsilon - 1.0
-        self.index.set_defaults(epsilon=epsilon, result_expansion=result_expansion)
+        self.index.set(epsilon=epsilon, result_expansion=result_expansion)
 
     def query(self, v, n):
-        results = self.index.search(v, n)
-        return results
+        return self.index.search(v, n)
 
     def freeIndex(self):
         print('QG: free')
