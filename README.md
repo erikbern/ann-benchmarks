@@ -32,6 +32,7 @@ Evaluated
 * [Elastiknn](https://github.com/alexklibisz/elastiknn)
 * [OpenDistro Elasticsearch KNN](https://github.com/opendistro-for-elasticsearch/k-NN)
 * [DiskANN](https://github.com/microsoft/diskann): Vamana, Vamana-PQ
+* [Vespa](https://github.com/vespa-engine/vespa)
 
 Data sets
 =========
