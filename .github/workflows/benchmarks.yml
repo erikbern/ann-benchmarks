@@ -61,6 +61,8 @@ jobs:
             dataset: random-s-jaccard
           - library: pynndescent
             dataset: random-s-jaccard
+          - library: vespa
+            dataset: random-xs-20-angular
       fail-fast: false
 
     steps:
