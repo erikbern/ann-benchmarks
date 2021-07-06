@@ -35,7 +35,8 @@ def get_dataset(which):
     hdf5_f = h5py.File(hdf5_fn, 'r')
 
     # here for backward compatibility, to ensure old datasets can still be used with newer versions
-    dimension = hdf5_f.attrs['dimension'] if 'dimension' in hdf5_f.attrs else len(hdf5_f['train'][0])
+    # cast to integer because the json parser (later on) cannot interpret numpy integers
+    dimension = int(hdf5_f.attrs['dimension']) if 'dimension' in hdf5_f.attrs else len(hdf5_f['train'][0])
 
     return hdf5_f, dimension
 
