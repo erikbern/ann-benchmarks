@@ -40,6 +40,15 @@ float:
         base:
           args: [[32,64,128,256,512,1024,2048,4096,8192]]
           query-args: [[1, 5, 10, 50, 100, 200]]
+    faiss-ivfpqfs:
+      docker-tag: ann-benchmarks-faiss
+      module: ann_benchmarks.algorithms.faiss
+      constructor: FaissIVFPQfs
+      base-args: ["@metric"]
+      run-groups:
+        base:
+          args: [[512, 1204, 2048, 4096]]
+          query-args: [[1, 5, 10, 50, 100, 200], [0, 10, 100, 1000]]
     faiss-gpu:
       disabled: true
       docker-tag: ann-benchmarks-faiss

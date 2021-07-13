@@ -80,3 +80,45 @@ class FaissIVF(Faiss):
     def __str__(self):
         return 'FaissIVF(n_list=%d, n_probe=%d)' % (self._n_list,
                                                     self._n_probe)
+
+
+class FaissIVFPQfs(Faiss):
+    def __init__(self, metric, n_list):
+        self._n_list = n_list
+        self._metric = metric
+
+    def fit(self, X):
+        if X.dtype != numpy.float32:
+            X = X.astype(numpy.float32)
+        if self._metric == 'angular':
+            faiss.normalize_L2(X)
+
+        d = X.shape[1]
+        faiss_metric = faiss.METRIC_INNER_PRODUCT if self._metric == 'angular' else faiss.METRIC_L2
+        factory_string = f"IVF{self._n_list},PQ{d//2}x4fs"
+        index = faiss.index_factory(d, factory_string, faiss_metric)
+        index.train(X)
+        index.add(X)
+        index_refine = faiss.IndexRefineFlat(index, faiss.swig_ptr(X))
+        self.base_index = index
+        self.refine_index = index_refine
+
+    def set_query_arguments(self, n_probe, k_reorder):
+        faiss.cvar.indexIVF_stats.reset()
+        self._n_probe = n_probe
+        self._k_reorder = k_reorder
+        self.base_index.nprobe = self._n_probe
+        self.refine_index.k_factor = self._k_reorder
+        if self._k_reorder == 0:
+            self.index = self.base_index
+        else:
+            self.index = self.refine_index
+
+    def get_additional(self):
+        return {"dist_comps": faiss.cvar.indexIVF_stats.ndis +      # noqa
+                faiss.cvar.indexIVF_stats.nq * self._n_list}
+
+    def __str__(self):
+        return 'FaissIVFPQfs(n_list=%d, n_probe=%d, k_reorder=%d)' % (self._n_list,
+                                                                      self._n_probe,
+                                                                      self._k_reorder)
