@@ -1,0 +1,18 @@
+FROM redislabs/redisearch:feature-vecsim as redis
+FROM ann-benchmarks
+# COPY --from=redis /usr/local/ /usr/local/
+
+run git clone https://github.com/redis/redis.git
+run cd redis; \
+    git checkout 6.2.5; \
+    make install
+
+
+COPY --from=redis /usr/lib/redis /usr/lib/redis
+
+
+RUN pip3 install redisearch redis
+
+# CMD ["redis-server", "--loadmodule", "/usr/lib/redis/modules/redisearch.so"]
+RUN echo 'redis-server --daemonize yes --loadmodule /usr/lib/redis/modules/redisearch.so && python3 -u run_algorithm.py "$@"' > entrypoint.sh
+ENTRYPOINT ["/bin/bash", "/home/app/entrypoint.sh"]

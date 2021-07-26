@@ -1,5 +1,47 @@
 float:
   any:
+    redisearch:
+      docker-tag: ann-benchmarks-redisearch
+      module: ann_benchmarks.algorithms.redisearch
+      constructor: RediSearch
+      base-args: ["@metric"]
+      run-groups:
+        M-4:
+          arg-groups:
+            - {"M": 4,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-8:
+          arg-groups:
+            - {"M": 8,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-12:
+          arg-groups:
+            - {"M": 12,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-16:
+          arg-groups:
+            - {"M": 16,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-24:
+          arg-groups:
+            - {"M": 24,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-36:
+          arg-groups:
+            - {"M": 36,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-48:
+          arg-groups:
+            - {"M": 48,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-64:
+          arg-groups:
+            - {"M": 64,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-96:
+          arg-groups:
+            - {"M": 96,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
     sptag:
       docker-tag: ann-benchmarks-sptag
       module: ann_benchmarks.algorithms.sptag
