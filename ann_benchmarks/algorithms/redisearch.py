@@ -33,7 +33,7 @@ class RediSearch(BaseANN):
         base64_vector_escaped = base64_vector.translate(str.maketrans({"=":  r"\=",
                                               "/":  r"\/",
                                               "+":  r"\+"}))
-        q = Query('@vector:[' + base64_vector_escaped + ' TOPK ' +str(k)+'] => {$BASE64:TRUE}')
+        q = Query('@vector:[' + base64_vector_escaped + ' TOPK ' +str(k)+'] => {$BASE64:TRUE}').sort_by('vector', asc=True).no_content()
         return [int(doc.id.replace('ann_','')) for doc in self.client.search(q).docs]
 
     def freeIndex(self):
