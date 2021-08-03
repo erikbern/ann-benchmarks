@@ -26,14 +26,14 @@ class RediSearch(BaseANN):
 
 
     def set_query_arguments(self, ef):
-        pass
+        self.ef = ef
 
     def query(self, v, k):
         base64_vector = base64.b64encode(v).decode('ascii')
         base64_vector_escaped = base64_vector.translate(str.maketrans({"=":  r"\=",
                                               "/":  r"\/",
                                               "+":  r"\+"}))
-        q = Query('@vector:[' + base64_vector_escaped + ' TOPK ' +str(k)+'] => {$BASE64:TRUE}').sort_by('vector', asc=True).no_content()
+        q = Query('@vector:[' + base64_vector_escaped + ' TOPK ' +str(k)+'] => {$BASE64:TRUE; $efruntime:' + str(self.ef) + '}').sort_by('vector', asc=True).no_content()
         return [int(doc.id.replace('ann_','')) for doc in self.client.search(q).docs]
 
     def freeIndex(self):
