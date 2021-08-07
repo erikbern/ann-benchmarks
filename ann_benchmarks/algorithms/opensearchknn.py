@@ -28,12 +28,7 @@ class OpenSearchKNN(BaseANN):
     def fit(self, X):
         body = {
             "settings": {
-                "index": {
-                    "knn": True, 
-                    "knn.space_type": self.metric, 
-                    "knn.algo_param.ef_construction": self.method_param["efConstruction"], 
-                    "knn.algo_param.m": self.method_param["M"]
-                },
+                "index": {"knn": True},
                 "number_of_shards": 1, 
                 "number_of_replicas": 0,
                 "refresh_interval": -1
@@ -43,7 +38,19 @@ class OpenSearchKNN(BaseANN):
         mapping = {
             "properties": {
                 "id": {"type": "keyword", "store": True},
-                "vec": {"type": "knn_vector", "dimension": self.dimension}
+                "vec": {
+                    "type": "knn_vector", 
+                    "dimension": self.dimension,
+                    "method": {
+                        "name": "hnsw",
+                        "space_type": self.metric,
+                        "engine": "nmslib",
+                        "parameters": {
+                            "ef_construction": self.method_param["efConstruction"],
+                            "m": self.method_param["M"]
+                        }
+                    }
+                }
             }
         }
             
