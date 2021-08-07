@@ -30,7 +30,7 @@ Evaluated
 * [N2](https://github.com/kakao/n2)
 * [ScaNN](https://github.com/google-research/google-research/tree/master/scann)
 * [Elastiknn](https://github.com/alexklibisz/elastiknn)
-* [OpenDistro Elasticsearch KNN](https://github.com/opendistro-for-elasticsearch/k-NN)
+* [OpenSearch KNN](https://github.com/opensearch-project/k-NN)
 * [DiskANN](https://github.com/microsoft/diskann): Vamana, Vamana-PQ
 * [Vespa](https://github.com/vespa-engine/vespa)
 
@@ -116,7 +116,7 @@ Including your algorithm
 1. Add your algorithm into `ann_benchmarks/algorithms` by providing a small Python wrapper.
 2. Add a Dockerfile in `install/` for it
 3. Add it to `algos.yaml`
-4. Add it to `.travis.yml`
+4. Add it to `.github/workflows/benchmarks.yml`
 
 Principles
 ==========

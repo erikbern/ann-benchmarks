@@ -13,13 +13,13 @@ from .elasticsearch import es_wait
 # Configure the logger.
 logging.getLogger("elasticsearch").setLevel(logging.WARN)
 
-class OpenDistroKNN(BaseANN):
+class OpenSearchKNN(BaseANN):
     def __init__(self, metric, dimension, method_param):
         self.metric = {"angular": "cosinesimil", "euclidean": "l2"}[metric]
         self.dimension = dimension
         self.method_param = method_param
         self.param_string = "-".join(k+"-"+str(v) for k,v in self.method_param.items()).lower()
-        self.name = f"od-{self.param_string}"
+        self.name = f"os-{self.param_string}"
         self.es = Elasticsearch(["http://localhost:9200"])
         es_wait()
 
@@ -63,7 +63,7 @@ class OpenDistroKNN(BaseANN):
         self.es.indices.refresh(self.name, request_timeout=1000)
        
         print("Running Warmup API...")
-        res = urlopen(Request("http://localhost:9200/_opendistro/_knn/warmup/"+self.name+"?pretty"))
+        res = urlopen(Request("http://localhost:9200/_plugins/_knn/warmup/"+self.name+"?pretty"))
         print(res.read().decode("utf-8"))
 
     def set_query_arguments(self, ef):
