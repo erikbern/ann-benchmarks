@@ -10,6 +10,8 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 from .elasticsearch import es_wait
 
+from tqdm import tqdm
+
 # Configure the logger.
 logging.getLogger("elasticsearch").setLevel(logging.WARN)
 
@@ -50,10 +52,10 @@ class OpenSearchKNN(BaseANN):
 
         print("Uploading data to the Index:", self.name)
         def gen():
-            for i, vec in enumerate(X):
+            for i, vec in enumerate(tqdm(X)):
                 yield { "_op_type": "index", "_index": self.name, "vec": vec.tolist(), 'id': str(i + 1) }
 
-        (_, errors) = bulk(self.es, gen(), chunk_size=500, max_retries=9, request_timeout=10)
+        (_, errors) = bulk(self.es, gen(), chunk_size=500, max_retries=2, request_timeout=10)
         assert len(errors) == 0, errors
           
         print("Force Merge...")

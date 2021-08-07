@@ -15,7 +15,7 @@ RUN chmod -R 777 opensearch-1.0.0
 RUN sysctl -w vm.max_map_count=262144
 
 # Install python client.
-RUN python3 -m pip install --upgrade elasticsearch==7.13.4
+RUN python3 -m pip install --upgrade elasticsearch==7.13.4 tqdm
 
 # Configure opensearch for single-node, single-core.
 RUN echo '\
