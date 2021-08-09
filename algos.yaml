@@ -578,10 +578,10 @@ float:
           query-args:
           - [1000, 10000]
           - [0, 6]
-    opendistroknn:
-      docker-tag: ann-benchmarks-opendistroknn
-      module: ann_benchmarks.algorithms.opendistroknn
-      constructor: OpenDistroKNN
+    opensearchknn:
+      docker-tag: ann-benchmarks-opensearchknn
+      module: ann_benchmarks.algorithms.opensearchknn
+      constructor: OpenSearchKNN
       base-args: ["@metric", "@dimension"]
       run-groups:
         M-4:
@@ -862,10 +862,10 @@ float:
       run-groups:
         empty:
           args: []
-    opendistroknn:
-      docker-tag: ann-benchmarks-opendistroknn
-      module: ann_benchmarks.algorithms.opendistroknn
-      constructor: OpenDistroKNN
+    opensearchknn:
+      docker-tag: ann-benchmarks-opensearchknn
+      module: ann_benchmarks.algorithms.opensearchknn
+      constructor: OpenSearchKNN
       base-args: ["@metric", "@dimension"]
       run-groups:
         M-4:

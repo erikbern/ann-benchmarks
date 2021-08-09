@@ -10,28 +10,25 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 from .elasticsearch import es_wait
 
+from tqdm import tqdm
+
 # Configure the logger.
 logging.getLogger("elasticsearch").setLevel(logging.WARN)
 
-class OpenDistroKNN(BaseANN):
+class OpenSearchKNN(BaseANN):
     def __init__(self, metric, dimension, method_param):
         self.metric = {"angular": "cosinesimil", "euclidean": "l2"}[metric]
         self.dimension = dimension
         self.method_param = method_param
         self.param_string = "-".join(k+"-"+str(v) for k,v in self.method_param.items()).lower()
-        self.name = f"od-{self.param_string}"
+        self.name = f"os-{self.param_string}"
         self.es = Elasticsearch(["http://localhost:9200"])
         es_wait()
 
     def fit(self, X):
         body = {
             "settings": {
-                "index": {
-                    "knn": True, 
-                    "knn.space_type": self.metric, 
-                    "knn.algo_param.ef_construction": self.method_param["efConstruction"], 
-                    "knn.algo_param.m": self.method_param["M"]
-                },
+                "index": {"knn": True},
                 "number_of_shards": 1, 
                 "number_of_replicas": 0,
                 "refresh_interval": -1
@@ -41,7 +38,19 @@ class OpenDistroKNN(BaseANN):
         mapping = {
             "properties": {
                 "id": {"type": "keyword", "store": True},
-                "vec": {"type": "knn_vector", "dimension": self.dimension}
+                "vec": {
+                    "type": "knn_vector", 
+                    "dimension": self.dimension,
+                    "method": {
+                        "name": "hnsw",
+                        "space_type": self.metric,
+                        "engine": "nmslib",
+                        "parameters": {
+                            "ef_construction": self.method_param["efConstruction"],
+                            "m": self.method_param["M"]
+                        }
+                    }
+                }
             }
         }
             
@@ -50,10 +59,10 @@ class OpenDistroKNN(BaseANN):
 
         print("Uploading data to the Index:", self.name)
         def gen():
-            for i, vec in enumerate(X):
+            for i, vec in enumerate(tqdm(X)):
                 yield { "_op_type": "index", "_index": self.name, "vec": vec.tolist(), 'id': str(i + 1) }
 
-        (_, errors) = bulk(self.es, gen(), chunk_size=500, max_retries=9, request_timeout=10)
+        (_, errors) = bulk(self.es, gen(), chunk_size=500, max_retries=2, request_timeout=10)
         assert len(errors) == 0, errors
           
         print("Force Merge...")
@@ -63,7 +72,7 @@ class OpenDistroKNN(BaseANN):
         self.es.indices.refresh(self.name, request_timeout=1000)
        
         print("Running Warmup API...")
-        res = urlopen(Request("http://localhost:9200/_opendistro/_knn/warmup/"+self.name+"?pretty"))
+        res = urlopen(Request("http://localhost:9200/_plugins/_knn/warmup/"+self.name+"?pretty"))
         print(res.read().decode("utf-8"))
 
     def set_query_arguments(self, ef):
