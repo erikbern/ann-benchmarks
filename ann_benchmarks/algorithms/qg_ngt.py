@@ -93,7 +93,6 @@ class QG(BaseANN):
             epsilon,
             result_expansion)
         epsilon = epsilon - 1.0
-        self.index.set_defaults(epsilon=epsilon, result_expansion=result_expansion)
         self.index.set(epsilon=epsilon, result_expansion=result_expansion)
 
     def query(self, v, n):

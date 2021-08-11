@@ -53,7 +53,7 @@ jobs:
             dataset: random-xs-20-angular
           - library: elastiknn
             dataset: random-xs-20-angular
-          - library: opendistroknn
+          - library: opensearchknn
             dataset: random-xs-20-angular
           - library: diskann
             dataset: random-xs-20-angular
@@ -63,6 +63,8 @@ jobs:
             dataset: random-s-jaccard
           - library: nmslib
             dataset: random-s-jaccard
+          - library: vespa
+            dataset: random-xs-20-angular
       fail-fast: false
 
     steps:

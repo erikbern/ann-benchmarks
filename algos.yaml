@@ -40,6 +40,15 @@ float:
         base:
           args: [[32,64,128,256,512,1024,2048,4096,8192]]
           query-args: [[1, 5, 10, 50, 100, 200]]
+    faiss-ivfpqfs:
+      docker-tag: ann-benchmarks-faiss
+      module: ann_benchmarks.algorithms.faiss
+      constructor: FaissIVFPQfs
+      base-args: ["@metric"]
+      run-groups:
+        base:
+          args: [[512, 1204, 2048, 4096]]
+          query-args: [[1, 5, 10, 50, 100, 200], [0, 10, 100, 1000]]
     faiss-gpu:
       disabled: true
       docker-tag: ann-benchmarks-faiss
@@ -569,10 +578,10 @@ float:
           query-args:
           - [1000, 10000]
           - [0, 6]
-    opendistroknn:
-      docker-tag: ann-benchmarks-opendistroknn
-      module: ann_benchmarks.algorithms.opendistroknn
-      constructor: OpenDistroKNN
+    opensearchknn:
+      docker-tag: ann-benchmarks-opensearchknn
+      module: ann_benchmarks.algorithms.opensearchknn
+      constructor: OpenSearchKNN
       base-args: ["@metric", "@dimension"]
       run-groups:
         M-4:
@@ -602,6 +611,48 @@ float:
         M-48:
           arg-groups:
             - {"M": 48,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+    hnsw(vespa):
+      docker-tag: ann-benchmarks-vespa
+      module: ann_benchmarks.algorithms.vespa
+      constructor: VespaHnsw
+      base-args: ["@metric", "@dimension"]
+      run-groups:
+        M-4:
+          arg-groups:
+            - {"M": 4, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-8:
+          arg-groups:
+            - {"M": 8, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-12:
+          arg-groups:
+            - {"M": 12, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-16:
+          arg-groups:
+            - {"M": 16, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-24:
+          arg-groups:
+            - {"M": 24, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-36:
+          arg-groups:
+            - {"M": 36, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-48:
+          arg-groups:
+            - {"M": 48, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-64:
+          arg-groups:
+            - {"M": 64, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-96:
+          arg-groups:
+            - {"M": 96, "efConstruction": 500}
           query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
 
   angular:
@@ -811,10 +862,10 @@ float:
       run-groups:
         empty:
           args: []
-    opendistroknn:
-      docker-tag: ann-benchmarks-opendistroknn
-      module: ann_benchmarks.algorithms.opendistroknn
-      constructor: OpenDistroKNN
+    opensearchknn:
+      docker-tag: ann-benchmarks-opensearchknn
+      module: ann_benchmarks.algorithms.opensearchknn
+      constructor: OpenSearchKNN
       base-args: ["@metric", "@dimension"]
       run-groups:
         M-4:
@@ -844,6 +895,48 @@ float:
         M-48:
           arg-groups:
             - {"M": 48,  "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+    hnsw(vespa):
+      docker-tag: ann-benchmarks-vespa
+      module: ann_benchmarks.algorithms.vespa
+      constructor: VespaHnsw
+      base-args: ["@metric", "@dimension"]
+      run-groups:
+        M-4:
+          arg-groups:
+            - {"M": 4, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-8:
+          arg-groups:
+            - {"M": 8, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-12:
+          arg-groups:
+            - {"M": 12, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-16:
+          arg-groups:
+            - {"M": 16, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-24:
+          arg-groups:
+            - {"M": 24, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-36:
+          arg-groups:
+            - {"M": 36, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-48:
+          arg-groups:
+            - {"M": 48, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-64:
+          arg-groups:
+            - {"M": 64, "efConstruction": 500}
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+        M-96:
+          arg-groups:
+            - {"M": 96, "efConstruction": 500}
           query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
 
 bit:
