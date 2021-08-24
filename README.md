@@ -33,6 +33,7 @@ Evaluated
 * [OpenSearch KNN](https://github.com/opensearch-project/k-NN)
 * [DiskANN](https://github.com/microsoft/diskann): Vamana, Vamana-PQ
 * [Vespa](https://github.com/vespa-engine/vespa)
+* [scipy](https://docs.scipy.org/doc/scipy/reference/spatial.html): cKDTree
 
 Data sets
 =========
