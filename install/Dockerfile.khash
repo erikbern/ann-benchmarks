@@ -1,0 +1,6 @@
+FROM ann-benchmarks
+
+RUN apt-get update && apt-get install -y automake autoconf libtool g++ libnuma-dev
+RUN git clone https://github.com/alex--m/ucx.git
+RUN cd ucx && git checkout topic/mdht
+RUN cd ucx && ./autogen.sh && ./contrib/configure-opt --prefix=`pwd`/build --enable-examples && make -j4 && make install

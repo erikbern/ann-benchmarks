@@ -37,6 +37,7 @@ Evaluated
 * [vald](https://github.com/vdaas/vald)
 * [Qdrant](https://github.com/qdrant/qdrant)
 * [qsgngtlib](https://gitee.com/WPJIANG-gitee/hwtl_sdu-anns-qsgngtlib)
+* [Khash](https://github.com/alex--m/ucx/blob/topic/mdht/src/ucs/datastruct/ndim_knn.h)
 
 Data sets
 =========
