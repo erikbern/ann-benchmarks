@@ -89,6 +89,7 @@ jobs:
         sudo chmod -R 777 results/
         python plot.py --dataset $DATASET --output plot.png
         python plot.py --dataset $DATASET --output plot-batch.png --batch
+        python data_export.py --out test.csv
         python -m unittest test/test-metrics.py
         python -m unittest test/test-jaccard.py
         python create_website.py --outputdir . --scatter --latex
