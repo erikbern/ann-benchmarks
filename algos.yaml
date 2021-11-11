@@ -380,6 +380,15 @@ float:
       run-groups:
         exact:
           args: []
+    vald(NGT-panng):
+      docker-tag: ann-benchmarks-vald
+      module: ann_benchmarks.algorithms.vald
+      constructor: Vald
+      base-args: ["@metric", "Float"]
+      run-groups:
+        vald:
+          args: [{'edge': 20, 'searchedge': 60, 'bulk': 100}]
+          query-args: [[0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2]]
 
   euclidean:
     vamana(diskann):
