@@ -259,7 +259,7 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
 
         # Exit if exit code
         try:
-            exit_code = exit_code.StatusCode
+            exit_code = exit_code["StatusCode"]
         except AttributeError:
             pass
         if exit_code not in [0, None]:
