@@ -157,7 +157,8 @@ def get_definitions(definition_file, dimension, point_type="float",
                 vs = {
                     "@count": count,
                     "@metric": distance_metric,
-                    "@dimension": dimension
+                    "@dimension": dimension,
+                    "@point_type": point_type
                 }
                 aargs = [_substitute_variables(arg, vs) for arg in aargs]
                 definitions.append(Definition(
