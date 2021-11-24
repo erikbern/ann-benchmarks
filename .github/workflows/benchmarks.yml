@@ -65,6 +65,8 @@ jobs:
             dataset: random-xs-20-angular
           - library: scipy
             dataset: random-xs-20-angular
+          - library: vald
+            dataset: random-xs-20-angular
       fail-fast: false
 
     steps:
