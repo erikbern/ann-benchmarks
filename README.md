@@ -34,6 +34,7 @@ Evaluated
 * [DiskANN](https://github.com/microsoft/diskann): Vamana, Vamana-PQ
 * [Vespa](https://github.com/vespa-engine/vespa)
 * [scipy](https://docs.scipy.org/doc/scipy/reference/spatial.html): cKDTree
+* [vald](https://github.com/vdaas/vald)
 
 Data sets
 =========
