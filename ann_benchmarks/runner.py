@@ -256,16 +256,15 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
 
     try:
         return_value = container.wait(timeout=timeout)
-        _handle_container_return_value(return_value, container)
+        _handle_container_return_value(return_value, container, logger)
     except:
         logger.error('Container.wait for container %s failed with exception' % container.short_id)
         traceback.print_exc()
     finally:
         container.remove(force=True)
 
-
 def _handle_container_return_value(return_value, container, logger):
-    base_msg = 'Child process for container %s' % (container.short_d)
+    base_msg = 'Child process for container %s' % (container.short_id)
     if type(return_value) is dict: # The return value from container.wait changes from int to dict in docker 3.0.0
         error_msg = return_value['Error']
         exit_code = return_value['StatusCode']
@@ -277,5 +276,3 @@ def _handle_container_return_value(return_value, container, logger):
     if exit_code not in [0, None]:
         logger.error(colors.color(container.logs().decode(), fg='red'))
         logger.error(msg)
-
-
