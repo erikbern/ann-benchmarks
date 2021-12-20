@@ -48,7 +48,7 @@ def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles,
     ax.set_xlabel(xm['description'])
     # Custom scales of the type --x-scale a3
     if x_scale[0] == 'a':
-        alpha = int(x_scale[1:])
+        alpha = float(x_scale[1:])
         fun = lambda x: 1-(1-x)**(1/alpha)
         inv_fun = lambda x: 1-(1-x)**alpha
         ax.set_xscale('function', functions=(fun, inv_fun))

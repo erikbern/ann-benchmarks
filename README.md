@@ -59,8 +59,7 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 Results
 =======
 
-Interactive plots can be found at <http://ann-benchmarks.com>.
-The following results are all as of 2020-07-12, running all benchmarks on a c5.4xlarge machine on AWS with `--parallelism` set to 3:
+Interactive plots can be found at <http://ann-benchmarks.com>. These are all as of December 2021, running all benchmarks on a r5.4xlarge machine on AWS with `--parallelism 7`:
 
 glove-100-angular
 -----------------
