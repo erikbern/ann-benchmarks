@@ -107,7 +107,7 @@ class Vald(BaseANN):
         vectors = [
             payload_pb2.Insert.Request(
                 vector=payload_pb2.Object.Vector(id=str(i), vector=x.tolist()),
-                config=cfg) for i, x in enumerate(X[:100])]
+                config=cfg) for i, x in enumerate(X)]
 
         p = subprocess.Popen(['/go/bin/ngt', '-f', 'config.yaml'])
         atexit.register(lambda: p.kill())
