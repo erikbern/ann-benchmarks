@@ -1,10 +1,10 @@
-ansicolors==1.1.8
+ansicolors
 docker==5.0.2
-h5py==2.7.1
-matplotlib==2.1.0
-numpy==1.13.3
+h5py
+matplotlib
+numpy
 pyyaml==5.4
 psutil==5.6.6
-scipy==1.0.0
-scikit-learn==0.19.1
+scipy
+scikit-learn
 jinja2==2.10

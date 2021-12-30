@@ -72,8 +72,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2 # Pull the repository
 
-    - name: Install HDF5 development support
-      run: sudo apt-get install -y libhdf5-serial-dev
+    - name: Install various apt packages
+      run: sudo apt-get install -y libhdf5-dev python3-numpy python3-scipy python3-matplotlib python3-sklearn
 
     - name: Install dependencies
       run: |
