@@ -72,15 +72,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2 # Pull the repository
 
-    - name: Set up Python 3.6
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.6
-    
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
-        python install.py
+        pip3 install -r requirements.txt
+        python3 install.py
 
       env:
         LIBRARY: ${{ matrix.library }}
@@ -88,14 +83,14 @@ jobs:
     
     - name: Run the benchmark
       run: |
-        python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --timeout 300
-        python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --batch --timeout 300
+        python3 run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --timeout 300
+        python3 run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --batch --timeout 300
         sudo chmod -R 777 results/
-        python plot.py --dataset $DATASET --output plot.png
-        python plot.py --dataset $DATASET --output plot-batch.png --batch
-        python -m unittest test/test-metrics.py
-        python -m unittest test/test-jaccard.py
-        python create_website.py --outputdir . --scatter --latex
+        python3 plot.py --dataset $DATASET --output plot.png
+        python3 plot.py --dataset $DATASET --output plot-batch.png --batch
+        python3 -m unittest test/test-metrics.py
+        python3 -m unittest test/test-jaccard.py
+        python3 create_website.py --outputdir . --scatter --latex
 
       env:
         LIBRARY: ${{ matrix.library }}
