@@ -23,20 +23,17 @@ class HnswLib(BaseANN):
         self.name = 'hnswlib (%s)' % (self.method_param)
 
     def _sparse_convert_for_fit(self, X):
-        lil_data = []
-        self._n_cols = 1
+        self._n_cols = np.max([max(x) for x in X])
         self._n_rows = len(X)
-        for i in range(self._n_rows):
-            lil_data.append([1] * len(X[i]))
-            if max(X[i]) + 1 > self._n_cols:
-                self._n_cols = max(X[i]) + 1
 
-        result = scipy.sparse.lil_matrix(
-            (self._n_rows, self._n_cols), dtype=np.int
+        X_indices = np.array(sum(X, []), dtype=np.int32)
+        X_data = np.ones(X_indices.shape[0], dtype=np.float32)
+        X_indptr = np.concatenate([np.zeros(1, dtype=np.int32), np.cumsum([len(x) for x in X])])
+
+        result = scipy.sparse.csr_matrix(
+            (X_data, X_indices, X_indptr),
+            shape=(self._n_rows, self._n_cols)
         )
-        result.rows[:] = list(X)
-        result.data[:] = lil_data
-        result = result.tocsr()
 
         n_components = self.method_param.get('n_components', 256)
         U, Sigma, VT = randomized_svd(result, n_components)
