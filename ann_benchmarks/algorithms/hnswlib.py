@@ -23,10 +23,10 @@ class HnswLib(BaseANN):
         self.name = 'hnswlib (%s)' % (self.method_param)
 
     def _sparse_convert_for_fit(self, X):
-        self._n_cols = np.max([max(x) for x in X])
+        self._n_cols = np.max([x.max() for x in X])
         self._n_rows = len(X)
 
-        X_indices = np.array(sum(X, []), dtype=np.int32)
+        X_indices = np.array(sum([x.tolist() for x in X], []), dtype=np.int32)
         X_data = np.ones(X_indices.shape[0], dtype=np.float32)
         X_indptr = np.concatenate([np.zeros(1, dtype=np.int32), np.cumsum([len(x) for x in X])])
 
