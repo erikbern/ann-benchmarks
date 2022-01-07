@@ -56,10 +56,10 @@ class PyNNDescent(BaseANN):
         return result.tocsr()
 
     def _sparse_convert_for_query(self, v):
-        result = scipy.sparse.csr_matrix((1, self._n_cols), dtype=np.int)
+        result = scipy.sparse.csr_matrix((1, self._n_cols), dtype=np.float32)
         result.indptr = np.array([0, len(v)])
         result.indices = np.array(v).astype(np.int32)
-        result.data = np.ones(len(v), dtype=np.int)
+        result.data = np.ones(len(v), dtype=np.float32)
         return result
 
     def fit(self, X):
