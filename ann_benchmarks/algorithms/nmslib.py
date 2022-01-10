@@ -1,9 +1,22 @@
 from __future__ import absolute_import
 import os
 import nmslib
+import scipy.sparse
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.base import BaseANN
 
+def sparse_matrix_to_str(matrix):
+    result = []
+    for row in range(matrix.shape[0]):
+        arr = [k for k in matrix.indices[matrix.inptr[row] : matrix.indptr[row + 1]]]
+        arr.sort()
+        result.append(' '.join([str(k) for k in arr]))
+    return result
+
+def dense_vector_to_str(vector):
+    indices = vector.nonzero()[0]
+    result = ' '.join([str(k) for k in indices])
+    return result
 
 class NmslibReuseIndex(BaseANN):
     @staticmethod
@@ -12,7 +25,7 @@ class NmslibReuseIndex(BaseANN):
 
     def __init__(self, metric, method_name, index_param, query_param):
         self._nmslib_metric = {
-            'angular': 'cosinesimil', 'euclidean': 'l2'}[metric]
+            'angular': 'cosinesimil', 'euclidean': 'l2', 'jaccard': 'jaccard_sparse'}[metric]
         self._method_name = method_name
         self._save_index = False
         self._index_param = NmslibReuseIndex.encode(index_param)
@@ -45,9 +58,19 @@ class NmslibReuseIndex(BaseANN):
             self._index_param.append('bucketSize=%d' %
                                      min(int(X.shape[0] * 0.0005), 1000))
 
-        self._index = nmslib.init(
-            space=self._nmslib_metric, method=self._method_name)
-        self._index.addDataPointBatch(X)
+        if self._nmslib_metric == 'jaccard_sparse':
+            self._index = nmslib.init(
+                space=self._nmslib_metric,
+                method=self._method_name,
+                data_type=nmslib.DataType.OBJECT_AS_STRING,
+            )
+            sparse_matrix = scipy.sparse.csr_matrix(X)
+            string_data = sparse_matrix_to_str(sparse_matrix)
+            self._index.addDataPointBatch(string_data)
+        else:
+            self._index = nmslib.init(
+                space=self._nmslib_metric, method=self._method_name)
+            self._index.addDataPointBatch(X)
 
         if os.path.exists(self._index_name):
             print('Loading index from file')
@@ -64,11 +87,20 @@ class NmslibReuseIndex(BaseANN):
             self._index.setQueryTimeParams(["efSearch=%s" % (ef)])
 
     def query(self, v, n):
-        ids, distances = self._index.knnQuery(v, n)
+        if self._nmslib_metric == 'jaccard_sparse':
+            v_string = dense_vector_to_str(v)
+            ids, distances = self._index.knnQuery(v_string, n)
+        else:
+            ids, distances = self._index.knnQuery(v, n)
         return ids
 
     def batch_query(self, X, n):
-        self.res = self._index.knnQueryBatch(X, n)
+        if self._nmslib_metric == 'jaccard_sparse':
+            sparse_matrix = scipy.sparse.csr_matrix(X)
+            string_data = sparse_matrix_to_str(sparse_matrix)
+            self.res = self._index.knnQueryBatch(string_data, n)
+        else:
+            self.res = self._index.knnQueryBatch(X, n)
 
     def get_batch_results(self):
         return [x for x, _ in self.res]
