@@ -14,4 +14,4 @@ COPY requirements.txt run_algorithm.py ./
 RUN python3 -m pip install -r requirements.txt && \
     python3 -m pip install /opt/vespa/libexec/vespa_ann_benchmark
 
-ENTRYPOINT ["python3", "run_algorithm.py"]
+ENTRYPOINT ["python3", "-u", "run_algorithm.py"]

@@ -33,6 +33,8 @@ Evaluated
 * [OpenSearch KNN](https://github.com/opensearch-project/k-NN)
 * [DiskANN](https://github.com/microsoft/diskann): Vamana, Vamana-PQ
 * [Vespa](https://github.com/vespa-engine/vespa)
+* [scipy](https://docs.scipy.org/doc/scipy/reference/spatial.html): cKDTree
+* [vald](https://github.com/vdaas/vald)
 
 Data sets
 =========
@@ -57,7 +59,7 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 Results
 =======
 
-These are all as of 2020-07-12, running all benchmarks on a c5.4xlarge machine on AWS with `--parallelism` set to 3:
+Interactive plots can be found at <http://ann-benchmarks.com>. These are all as of December 2021, running all benchmarks on a r5.4xlarge machine on AWS with `--parallelism 7`:
 
 glove-100-angular
 -----------------
@@ -130,7 +132,7 @@ Principles
 * High-dimensional datasets with approximately 100-1000 dimensions. This is challenging but also realistic. Not more than 1000 dimensions because those problems should probably be solved by doing dimensionality reduction separately.
 * Single queries are used by default. ANN-Benchmarks enforces that only one CPU is saturated during experimentation, i.e., no multi-threading. A batch mode is available that provides all queries to the implementations at once. Add the flag `--batch` to `run.py` and `plot.py` to enable batch mode. 
 * Avoid extremely costly index building (more than several hours).
-* Focus on datasets that fit in RAM. Out of core ANN could be the topic of a later comparison.
+* Focus on datasets that fit in RAM. For billion-scale benchmarks, see the related [big-ann-benchmarks](https://github.com/harsha-simhadri/big-ann-benchmarks) project.
 * We mainly support CPU-based ANN algorithms. GPU support exists for FAISS, but it has to be compiled with GPU support locally and experiments must be run using the flags `--local --batch`. 
 * Do proper train/test set of index data and query points.
 * Note that we consider that set similarity datasets are sparse and thus we pass a **sorted** array of integers to algorithms to represent the set of each user.
@@ -148,3 +150,9 @@ The following publication details design principles behind the benchmarking fram
 
 - M. Aumüller, E. Bernhardsson, A. Faithfull:
 [ANN-Benchmarks: A Benchmarking Tool for Approximate Nearest Neighbor Algorithms](https://arxiv.org/abs/1807.05614). Information Systems 2019. DOI: [10.1016/j.is.2019.02.006](https://doi.org/10.1016/j.is.2019.02.006)
+
+Related Projects
+================
+
+- [big-ann-benchmarks](https://github.com/harsha-simhadri/big-ann-benchmarks) is a benchmarking effort for billion-scale approximate nearest neighbor search as part of the [NeurIPS'21 Competition track](https://neurips.cc/Conferences/2021/CompetitionTrack).
+

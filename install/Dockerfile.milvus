@@ -22,6 +22,6 @@ RUN pip3 install numpy==1.18 scipy==1.1.0 scikit-learn==0.21
 RUN echo '#!/bin/bash' >> entrypoint.sh
 RUN echo '/var/lib/milvus/bin/milvus_server -d -c /var/lib/milvus/conf/server_config.yaml -l /var/lib/milvus/conf/log_config.conf' >> entrypoint.sh
 RUN echo 'sleep 5' >> entrypoint.sh
-RUN echo 'python3 run_algorithm.py "$@"' >> entrypoint.sh
+RUN echo 'python3 -u run_algorithm.py "$@"' >> entrypoint.sh
 RUN chmod u+x entrypoint.sh
 ENTRYPOINT ["/home/app/entrypoint.sh"]

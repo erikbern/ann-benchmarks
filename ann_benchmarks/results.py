@@ -18,14 +18,14 @@ def get_result_filename(dataset=None, count=None, definition=None,
         d.append(definition.algorithm + ('-batch' if batch_mode else ''))
         data = definition.arguments + query_arguments
         d.append(re.sub(r'\W+', '_', json.dumps(data, sort_keys=True))
-                 .strip('_'))
+                 .strip('_') + ".hdf5")
     return os.path.join(*d)
 
 
 def store_results(dataset, count, definition, query_arguments, attrs, results,
                   batch):
     fn = get_result_filename(
-        dataset, count, definition, query_arguments, batch) + '.hdf5'
+        dataset, count, definition, query_arguments, batch)
     head, tail = os.path.split(fn)
     if not os.path.isdir(head):
         os.makedirs(head)

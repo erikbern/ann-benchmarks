@@ -8,4 +8,4 @@ WORKDIR /home/app
 COPY requirements.txt run_algorithm.py ./
 RUN pip3 install -r requirements.txt
 
-ENTRYPOINT ["python3", "run_algorithm.py"]
+ENTRYPOINT ["python3", "-u", "run_algorithm.py"]
