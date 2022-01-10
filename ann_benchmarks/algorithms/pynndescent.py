@@ -40,27 +40,29 @@ class PyNNDescent(BaseANN):
         }[metric]
 
     def _sparse_convert_for_fit(self, X):
-        lil_data = []
-        self._n_cols = 1
-        self._n_rows = len(X)
-        for i in range(self._n_rows):
-            lil_data.append([1] * len(X[i]))
-            if max(X[i]) + 1 > self._n_cols:
-                self._n_cols = max(X[i]) + 1
-
-        result = scipy.sparse.lil_matrix(
-            (self._n_rows, self._n_cols), dtype=np.int
-        )
-        result.rows[:] = list(X)
-        result.data[:] = lil_data
-        return result.tocsr()
+        # lil_data = []
+        # self._n_cols = 1
+        # self._n_rows = len(X)
+        # for i in range(self._n_rows):
+        #     lil_data.append([1] * len(X[i]))
+        #     if max(X[i]) + 1 > self._n_cols:
+        #         self._n_cols = max(X[i]) + 1
+        #
+        # result = scipy.sparse.lil_matrix(
+        #     (self._n_rows, self._n_cols), dtype=np.int
+        # )
+        # result.rows[:] = list(X)
+        # result.data[:] = lil_data
+        # return result.tocsr()
+        return scipy.sparse.csr_matrix(X)
 
     def _sparse_convert_for_query(self, v):
-        result = scipy.sparse.csr_matrix((1, self._n_cols), dtype=np.float32)
-        result.indptr = np.array([0, len(v)])
-        result.indices = np.array(v).astype(np.int32)
-        result.data = np.ones(len(v), dtype=np.float32)
-        return result
+        # result = scipy.sparse.csr_matrix((1, self._n_cols), dtype=np.float32)
+        # result.indptr = np.array([0, len(v)])
+        # result.indices = np.array(v).astype(np.int32)
+        # result.data = np.ones(len(v), dtype=np.float32)
+        # return result
+        return scipy.sparse.csr_matrix(v.reshape(1, -1))
 
     def fit(self, X):
         if self._pynnd_metric == "jaccard":

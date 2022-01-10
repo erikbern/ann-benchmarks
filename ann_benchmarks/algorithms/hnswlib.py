@@ -12,10 +12,6 @@ from ann_benchmarks.algorithms.base import BaseANN
 class HnswLib(BaseANN):
     def __init__(self, metric, method_param):
         self.metric = {'angular': 'cosine', 'euclidean': 'l2', 'jaccard': 'cosine'}[metric]
-        if metric == 'jaccard':
-            self._sparse = True
-        else:
-            self._sparse = False
 
         self.method_param = method_param
         # print(self.method_param,save_index,query_param)
@@ -52,10 +48,6 @@ class HnswLib(BaseANN):
         return result
 
     def fit(self, X):
-        if self._sparse:
-            # Convert to SVD reduced from sparse matrix format
-            X = self._sparse_convert_for_fit(X)
-
         # Only l2 is supported currently
         self.p = hnswlib.Index(space=self.metric, dim=len(X[0]))
         self.p.init_index(max_elements=len(X),
@@ -69,8 +61,6 @@ class HnswLib(BaseANN):
         self.p.set_ef(ef)
 
     def query(self, v, n):
-        if self._sparse:
-            v = self._sparse_convert_for_query(v)
         # print(np.expand_dims(v,axis=0).shape)
         # print(self.p.knn_query(np.expand_dims(v,axis=0), k = n)[0])
         return self.p.knn_query(np.expand_dims(v, axis=0), k=n)[0][0]
