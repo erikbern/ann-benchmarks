@@ -8,7 +8,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 def sparse_matrix_to_str(matrix):
     result = []
     for row in range(matrix.shape[0]):
-        arr = [k for k in matrix.indices[matrix.inptr[row] : matrix.indptr[row + 1]]]
+        arr = [k for k in matrix.indices[matrix.indptr[row] : matrix.indptr[row + 1]]]
         arr.sort()
         result.append(' '.join([str(k) for k in arr]))
     return result
