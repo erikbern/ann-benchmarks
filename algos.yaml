@@ -1166,17 +1166,17 @@ bit:
         NN-10:
           arg-groups:
             - {"n_neighbors": [10], "diversify_prob": [1.0],
-               "pruning_degree_multiplier":[0.5, 1.0], leaf_size: 20}
+               "pruning_degree_multiplier":[0.5, 1.0], leaf_size: [20, 120]}
           query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16]]
         NN-20:
           arg-groups:
             - {"n_neighbors": [20], "diversify_prob": [1.0],
-               "pruning_degree_multiplier":[0.5, 1.0], leaf_size: 20}
+               "pruning_degree_multiplier":[0.5, 1.0], leaf_size: [20, 120]}
           query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16]]
         NN-40:
           arg-groups:
             - {"n_neighbors": [40], "diversify_prob": [0.5, 1.0],
-               "pruning_degree_multiplier":[1.5], leaf_size: 25}
+               "pruning_degree_multiplier":[1.5], leaf_size: [25, 120]}
           query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16]]
         NN-80-fast:
           arg-groups:
