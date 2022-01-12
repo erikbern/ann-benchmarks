@@ -1163,41 +1163,31 @@ bit:
       constructor: PyNNDescent
       base-args: ["@metric"]
       run-groups:
-        NN-10:
-          arg-groups:
-            - {"n_neighbors": [10], "diversify_prob": [1.0],
-               "pruning_degree_multiplier":[0.5, 1.0], leaf_size: [20, 120]}
-          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16]]
-        NN-20:
-          arg-groups:
-            - {"n_neighbors": [20], "diversify_prob": [1.0],
-               "pruning_degree_multiplier":[0.5, 1.0], leaf_size: [20, 120]}
-          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16]]
         NN-40:
           arg-groups:
             - {"n_neighbors": [40], "diversify_prob": [0.5, 1.0],
-               "pruning_degree_multiplier":[1.5], leaf_size: [40, 120]}
-          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16]]
+               "pruning_degree_multiplier":[1.5], leaf_size: [120, 240]}
+          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.12, 0.16, 0.20, 0.24, 0.36]]
         NN-80-fast:
           arg-groups:
             - {"n_neighbors": 80, diversify_prob: 1.0,
-               "pruning_degree_multiplier": 2.0, leaf_size: [80, 160]}
-          query-args: [[0.0, 0.02, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24]]
+               "pruning_degree_multiplier": 2.0, leaf_size: [160, 320]}
+          query-args: [[0.0, 0.02, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.36]]
         NN-80-accurate:
           arg-groups:
             - {"n_neighbors": 80, diversify_prob: 0.25,
-                "pruning_degree_multiplier": 2.0, leaf_size: [80, 160]}
+                "pruning_degree_multiplier": 2.0, leaf_size: [160, 320]}
           query-args: [[0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
         NN-120-fast:
           arg-groups:
             - {"n_neighbors": 120, "diversify_prob": 1.0,
-               "pruning_degree_multiplier":2.5, leaf_size: [120, 240]}
-          query-args: [[0.0, 0.04, 0.08, 0.16, 0.20, 0.24, 0.28, 0.32]]
+               "pruning_degree_multiplier":2.5, leaf_size: [240, 480]}
+          query-args: [[0.0, 0.04, 0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.40]]
         NN-120-accurate:
           arg-groups:
             - {"n_neighbors": 120, "diversify_prob": 0.125,
-               "pruning_degree_multiplier":2.5, leaf_size: [120, 360]}
-          query-args: [[0.0, 0.04, 0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
+               "pruning_degree_multiplier":2.5, leaf_size: [360, 720]}
+          query-args: [[0.0, 0.04, 0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36, 0.42]]
     hnsw(nmslib):
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
