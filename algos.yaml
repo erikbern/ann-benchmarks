@@ -1163,11 +1163,16 @@ bit:
       constructor: PyNNDescent
       base-args: ["@metric"]
       run-groups:
+        NN-10:
+          arg-groups:
+            - {"n_neighbors": [10], "diversify_prob": [1.0],
+               "pruning_degree_multiplier":[0.5, 1.0], leaf_size: 20}
+          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16]]
         NN-20:
           arg-groups:
             - {"n_neighbors": [20], "diversify_prob": [1.0],
                "pruning_degree_multiplier":[0.5, 1.0], leaf_size: 20}
-          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12]]
+          query-args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16]]
         NN-40:
           arg-groups:
             - {"n_neighbors": [40], "diversify_prob": [0.5, 1.0],
@@ -1192,7 +1197,7 @@ bit:
           arg-groups:
             - {"n_neighbors": 120, "diversify_prob": 0.125,
                "pruning_degree_multiplier":2.5, leaf_size: 35}
-          query-args: [[0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
+          query-args: [[0.0, 0.04, 0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
     hnsw(nmslib):
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
