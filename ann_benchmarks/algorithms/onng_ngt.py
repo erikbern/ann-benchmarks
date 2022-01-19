@@ -34,7 +34,7 @@ class ONNG(BaseANN):
         print('ONNG: start indexing...')
         if self._metric == 'J':
             dim = max([len(x) for x in X]) + 1
-            X = [np.flatnonzero(x) for x in X]
+            X = [np.flatnonzero(x) + 1 for x in X]
         else:
             dim = len(X[0])
         print('ONNG: # of data=' + str(len(X)))
@@ -59,7 +59,11 @@ class ONNG(BaseANN):
                     '-T' + str(self._build_time_limit), anngIndex]
             subprocess.call(args)
             idx = ngtpy.Index(path=anngIndex)
-            idx.batch_insert(X, num_threads=24, debug=False)
+            if self._metric == "J":
+                for x in X:
+                    idx.insert_object(x)
+            else:
+                idx.batch_insert(X, num_threads=24, debug=False)
             print('ONNG: ANNG construction time(sec)=' + str(time.time() - t))
             t = time.time()
             if self._refine_enabled:
@@ -99,7 +103,7 @@ class ONNG(BaseANN):
 
     def query(self, v, n):
         if self._metric == "J":
-            v = np.flatnonzero(v)
+            v = np.flatnonzero(v) + 1
         return self.index.search(v, n, with_distance=False)
 
     def freeIndex(self):
