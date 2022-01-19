@@ -1,4 +1,7 @@
 from __future__ import absolute_import
+
+import numpy as np
+
 import puffinn
 from ann_benchmarks.algorithms.base import BaseANN
 import numpy
@@ -30,6 +33,8 @@ class Puffinn(BaseANN):
             self.index = puffinn.Index(self.metric, dimensions, self.space,\
                     hash_function=self.hash_function, hash_source=self.hash_source)
         for i, x in enumerate(X):
+            if self.metric == "jaccard":
+                x = np.flatnonzero(x)
             x = x.tolist()
             self.index.insert(x)
         self.index.rebuild()
