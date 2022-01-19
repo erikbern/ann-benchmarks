@@ -11,7 +11,7 @@ from ann_benchmarks.constants import INDEX_DIR
 
 class ONNG(BaseANN):
     def __init__(self, metric, object_type, epsilon, param):
-        metrics = {'euclidean': '2', 'angular': 'C'}
+        metrics = {'euclidean': '2', 'angular': 'C', 'jaccard': 'J'}
         self._edge_size = int(param['edge'])
         self._outdegree = int(param['outdegree'])
         self._indegree = int(param['indegree'])
@@ -32,7 +32,11 @@ class ONNG(BaseANN):
 
     def fit(self, X):
         print('ONNG: start indexing...')
-        dim = len(X[0])
+        if self._metric == 'J':
+            dim = max([len(x) for x in X]) + 1
+            X = [np.flatnonzero(x) for x in X]
+        else:
+            dim = len(X[0])
         print('ONNG: # of data=' + str(len(X)))
         print('ONNG: dimensionality=' + str(dim))
         index_dir = 'indexes'
@@ -94,6 +98,8 @@ class ONNG(BaseANN):
         self.index.set(epsilon=epsilon, edge_size=edge_size)
 
     def query(self, v, n):
+        if self._metric == "J":
+            v = np.flatnonzero(v)
         return self.index.search(v, n, with_distance=False)
 
     def freeIndex(self):

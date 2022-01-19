@@ -1204,3 +1204,17 @@ bit:
                 - {"tuneK": 10, "desiredRecall": [0.99, 0.97, 0.95, 0.9, 0.85, 0.8,
                     0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]}
                 - False
+    NGT-onng:
+      docker-tag: ann-benchmarks-ngt
+      module: ann_benchmarks.algorithms.onng_ngt
+      constructor : ONNG
+      base-args : ["@metric", "Float", 0.1]
+      run-groups :
+        onng:
+           args : [{'edge': 100, 'outdegree': 10, 'indegree': 120}]
+           query-args : [[[0.60, -2], [0.90, -2], [1.00, -2], [1.02, -2], [1.03, -2],
+                          [1.04, -2], [1.05, -2], [1.07, -2], [1.10, -2], [1.20, -2]]]
+        onng-with-refinement:
+           args : [{'edge': 100, 'outdegree': 10, 'indegree': 120, 'tree': False, 'refine': True}]
+           query-args : [[[0.995, 40], [0.998, 40], [1.00, 40], [1.005, 40], [1.010, 40],
+                          [1.015, 40], [1.020, 40]]]
