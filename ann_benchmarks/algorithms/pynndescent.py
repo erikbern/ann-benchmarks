@@ -39,35 +39,11 @@ class PyNNDescent(BaseANN):
             "jaccard": "jaccard",
         }[metric]
 
-    def _sparse_convert_for_fit(self, X):
-        # lil_data = []
-        # self._n_cols = 1
-        # self._n_rows = len(X)
-        # for i in range(self._n_rows):
-        #     lil_data.append([1] * len(X[i]))
-        #     if max(X[i]) + 1 > self._n_cols:
-        #         self._n_cols = max(X[i]) + 1
-        #
-        # result = scipy.sparse.lil_matrix(
-        #     (self._n_rows, self._n_cols), dtype=np.int
-        # )
-        # result.rows[:] = list(X)
-        # result.data[:] = lil_data
-        # return result.tocsr()
-        return scipy.sparse.csr_matrix(X)
-
-    def _sparse_convert_for_query(self, v):
-        # result = scipy.sparse.csr_matrix((1, self._n_cols), dtype=np.float32)
-        # result.indptr = np.array([0, len(v)])
-        # result.indices = np.array(v).astype(np.int32)
-        # result.data = np.ones(len(v), dtype=np.float32)
-        # return result
-        return scipy.sparse.csr_matrix(v.reshape(1, -1))
-
     def fit(self, X):
         if self._pynnd_metric == "jaccard":
             # Convert to sparse matrix format
-            X = self._sparse_convert_for_fit(X)
+            X = scipy.sparse.csr_matrix(X)
+            self._query_matrix = scipy.sparse.csr_matrix((1, X.shape[1]), dtype=np.float32)
 
         self._index = pynndescent.NNDescent(
             X,
@@ -96,10 +72,17 @@ class PyNNDescent(BaseANN):
         self._epsilon = float(epsilon)
 
     def query(self, v, n):
-        if self._pynnd_metric == "jaccard":
-            # convert index array to sparse matrix format and query
-            v = self._sparse_convert_for_query(v)
-            ind, dist = self._index.query(v, k=n, epsilon=self._epsilon)
+        if self._index._is_sparse:
+            # convert index array to sparse matrix format and query;
+            # the overhead of direct conversion is high for single
+            # queries (converting the entire test dataset and sending
+            # single rows is better), so we just populate the required
+            # structures.
+            self._query_matrix.indices = np.flatnonzero(v).astype(np.int32)
+            size = self._query_matrix.indices.shape[0]
+            self._query_matrix.indptr = np.array([0, size], dtype=np.int32)
+            self._query_matrix.data = np.ones(size, dtype=np.float32)
+            ind, dist = self._index.query(self._query_matrix, k=n, epsilon=self._epsilon)
         else:
             ind, dist = self._index.query(
                 v.reshape(1, -1).astype("float32"), k=n, epsilon=self._epsilon
