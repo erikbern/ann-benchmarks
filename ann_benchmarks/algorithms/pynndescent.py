@@ -42,7 +42,18 @@ class PyNNDescent(BaseANN):
     def fit(self, X):
         if self._pynnd_metric == "jaccard":
             # Convert to sparse matrix format
-            X = scipy.sparse.csr_matrix(X)
+            if type(X) == list:
+                sizes = [len(x) for x in X]
+                n_cols = max(sizes) + 1
+                matrix = scipy.sparse.csr_matrix((len(X), n_cols), dtype=np.float32)
+                matrix.indices = np.hstack(X).astype(np.int32)
+                matrix.indptr = np.concatenate([[0], np.cumsum(sizes)]).astype(np.int32)
+                matrix.data = np.ones(matrix.indices.shape[0], dtype=np.float32)
+                matrix.sort_indices()
+                X = matrix
+            else:
+                X = scipy.sparse.csr_matrix(X)
+
             self._query_matrix = scipy.sparse.csr_matrix((1, X.shape[1]), dtype=np.float32)
 
         self._index = pynndescent.NNDescent(
@@ -78,7 +89,10 @@ class PyNNDescent(BaseANN):
             # queries (converting the entire test dataset and sending
             # single rows is better), so we just populate the required
             # structures.
-            self._query_matrix.indices = np.flatnonzero(v).astype(np.int32)
+            if v.dtype == np.bool_:
+                self._query_matrix.indices = np.flatnonzero(v).astype(np.int32)
+            else:
+                self._query_matrix.indices = v.astype(np.int32)
             size = self._query_matrix.indices.shape[0]
             self._query_matrix.indptr = np.array([0, size], dtype=np.int32)
             self._query_matrix.data = np.ones(size, dtype=np.float32)

@@ -33,7 +33,7 @@ class Puffinn(BaseANN):
             self.index = puffinn.Index(self.metric, dimensions, self.space,\
                     hash_function=self.hash_function, hash_source=self.hash_source)
         for i, x in enumerate(X):
-            if self.metric == "jaccard":
+            if self.metric == "jaccard" and x.dtype == np.bool_:
                 x = np.flatnonzero(x)
             x = x.tolist()
             self.index.insert(x)
@@ -43,6 +43,8 @@ class Puffinn(BaseANN):
         self.recall = recall
 
     def query(self, v, n):
+        if self.metric == "jaccard" and v.dtype == np.bool_:
+            v = np.flatnonzero(v)
         v = v.tolist()
         return self.index.search(v, n, self.recall)
 

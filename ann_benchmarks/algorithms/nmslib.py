@@ -15,7 +15,10 @@ def sparse_matrix_to_str(matrix):
     return result
 
 def dense_vector_to_str(vector):
-    indices = np.flatnonzero(vector)
+    if vector.dtype == np.bool_:
+        indices = np.flatnonzero(vector)
+    else:
+        indices = vector
     result = ' '.join([str(k) for k in indices])
     return result
 
@@ -65,7 +68,16 @@ class NmslibReuseIndex(BaseANN):
                 method=self._method_name,
                 data_type=nmslib.DataType.OBJECT_AS_STRING,
             )
-            sparse_matrix = scipy.sparse.csr_matrix(X)
+            if type(X) == list:
+                sizes = [len(x) for x in X]
+                n_cols = max(sizes) + 1
+                sparse_matrix = scipy.sparse.csr_matrix((len(X), n_cols), dtype=np.float32)
+                sparse_matrix.indices = np.hstack(X).astype(np.int32)
+                sparse_matrix.indptr = np.concatenate([[0], np.cumsum(sizes)]).astype(np.int32)
+                sparse_matrix.data = np.ones(sparse_matrix.indices.shape[0], dtype=np.float32)
+                sparse_matrix.sort_indices()
+            else:
+                sparse_matrix = scipy.sparse.csr_matrix(X)
             string_data = sparse_matrix_to_str(sparse_matrix)
             self._index.addDataPointBatch(string_data)
         else:
