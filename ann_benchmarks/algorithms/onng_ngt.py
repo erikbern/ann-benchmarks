@@ -60,8 +60,7 @@ class ONNG(BaseANN):
             subprocess.call(args)
             idx = ngtpy.Index(path=anngIndex)
             if self._metric == "J":
-                for x in X:
-                    idx.insert_object(x)
+                idx.insert(X)
             else:
                 idx.batch_insert(X, num_threads=24, debug=False)
             print('ONNG: ANNG construction time(sec)=' + str(time.time() - t))
