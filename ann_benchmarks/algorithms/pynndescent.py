@@ -44,7 +44,7 @@ class PyNNDescent(BaseANN):
             # Convert to sparse matrix format
             if type(X) == list:
                 sizes = [len(x) for x in X]
-                n_cols = max(sizes) + 1
+                n_cols = max([max(x) for x in X]) + 1
                 matrix = scipy.sparse.csr_matrix((len(X), n_cols), dtype=np.float32)
                 matrix.indices = np.hstack(X).astype(np.int32)
                 matrix.indptr = np.concatenate([[0], np.cumsum(sizes)]).astype(np.int32)
