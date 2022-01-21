@@ -1,51 +1,18 @@
 from __future__ import absolute_import
 import os
 import hnswlib
-import scipy.sparse
 import numpy as np
-
-from sklearn.utils.extmath import randomized_svd
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.base import BaseANN
 
 
 class HnswLib(BaseANN):
     def __init__(self, metric, method_param):
-        self.metric = {'angular': 'cosine', 'euclidean': 'l2', 'jaccard': 'cosine'}[metric]
-
+        self.metric = {'angular': 'cosine', 'euclidean': 'l2'}[metric]
         self.method_param = method_param
         # print(self.method_param,save_index,query_param)
         # self.ef=query_param['ef']
         self.name = 'hnswlib (%s)' % (self.method_param)
-
-    def _sparse_convert_for_fit(self, X):
-        self._n_cols = np.max([x.max() for x in X])
-        self._n_rows = len(X)
-
-        X_indices = np.array(sum([x.tolist() for x in X], []), dtype=np.int32)
-        X_data = np.ones(X_indices.shape[0], dtype=np.float32)
-        X_indptr = np.concatenate([np.zeros(1, dtype=np.int32), np.cumsum([len(x) for x in X])])
-
-        result = scipy.sparse.csr_matrix(
-            (X_data, X_indices, X_indptr),
-            shape=(self._n_rows, self._n_cols)
-        )
-
-        n_components = self.method_param.get('n_components', 256)
-        U, Sigma, VT = randomized_svd(result, n_components)
-        self._sparse_components = VT.T
-        result = U * Sigma
-
-        return result
-
-    def _sparse_convert_for_query(self, v):
-        result = scipy.sparse.csr_matrix((1, self._n_cols), dtype=np.float32)
-        result.indptr = np.array([0, len(v)])
-        result.indices = np.array(v).astype(np.int32)
-        result.data = np.ones(len(v), dtype=np.float32)
-        result = result @ self._sparse_components
-
-        return result
 
     def fit(self, X):
         # Only l2 is supported currently
