@@ -11,7 +11,7 @@ from ann_benchmarks.constants import INDEX_DIR
 
 class ONNG(BaseANN):
     def __init__(self, metric, object_type, epsilon, param):
-        metrics = {'euclidean': '2', 'angular': 'C', 'jaccard': 'J'}
+        metrics = {'euclidean': '2', 'angular': 'C'}
         self._edge_size = int(param['edge'])
         self._outdegree = int(param['outdegree'])
         self._indegree = int(param['indegree'])
@@ -32,11 +32,7 @@ class ONNG(BaseANN):
 
     def fit(self, X):
         print('ONNG: start indexing...')
-        if self._metric == 'J':
-            dim = max([len(x) for x in X]) + 1
-            X = [np.flatnonzero(x) + 1 for x in X]
-        else:
-            dim = len(X[0])
+        dim = len(X[0])
         print('ONNG: # of data=' + str(len(X)))
         print('ONNG: dimensionality=' + str(dim))
         index_dir = 'indexes'
@@ -59,10 +55,7 @@ class ONNG(BaseANN):
                     '-T' + str(self._build_time_limit), anngIndex]
             subprocess.call(args)
             idx = ngtpy.Index(path=anngIndex)
-            if self._metric == "J":
-                idx.insert(X)
-            else:
-                idx.batch_insert(X, num_threads=24, debug=False)
+            idx.batch_insert(X, num_threads=24, debug=False)
             print('ONNG: ANNG construction time(sec)=' + str(time.time() - t))
             t = time.time()
             if self._refine_enabled:
@@ -101,8 +94,6 @@ class ONNG(BaseANN):
         self.index.set(epsilon=epsilon, edge_size=edge_size)
 
     def query(self, v, n):
-        if self._metric == "J":
-            v = np.flatnonzero(v) + 1
         return self.index.search(v, n, with_distance=False)
 
     def freeIndex(self):
