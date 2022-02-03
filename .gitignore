@@ -17,3 +17,4 @@ results/*
 venv
 
 .idea
+.vscode
