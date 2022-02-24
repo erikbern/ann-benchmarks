@@ -14,16 +14,17 @@ class RediSearch(BaseANN):
         self.index_name = "ann_benchmark"
         
         redis = RedisCluster if conn_params['cluster'] else Redis
-        self.redis = redis(host=conn_params["host"], port=conn_params["port"],
-                           password=conn_params["auth"], username=conn_params["user"],
-                           decode_responses=False)
+        host = conn_params["host"] if conn_params["host"] else 'localhost'
+        port = conn_params["port"] if conn_params["port"] else 6379
+        self.redis = redis(host=host, port=port, decode_responses=False,
+                           password=conn_params["auth"], username=conn_params["user"])
 
     def fit(self, X, offset=0, limit=None):
         limit = limit if limit else len(X)
         try:
             # https://oss.redis.com/redisearch/master/Commands/#ftcreate
             if self.algo == "HNSW":
-                self.redis.execute_command('FT.CREATE', self.index_name, 'SCHEMA', 'vector', 'VECTOR', self.algo, '12', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric, 'INITIAL_CAP', len(X), 'M', self.method_param['M'] , 'EF_CONSTRUCTION', self.method_param["efConstruction"], target_nodes='random')
+                self.redis.execute_command('FT.CREATE', self.index_name, 'SCHEMA', 'vector', 'VECTOR', self.algo, '12', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric, 'INITIAL_CAP', len(X), 'M', self.method_param['M'], 'EF_CONSTRUCTION', self.method_param["efConstruction"], target_nodes='random')
             elif self.algo == "FLAT":
                 self.redis.execute_command('FT.CREATE', self.index_name, 'SCHEMA', 'vector', 'VECTOR', self.algo, '10', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric, 'INITIAL_CAP', len(X), 'BLOCK_SIZE', self.method_param['BLOCK_SIZE'], target_nodes='random')
         except Exception as e:
