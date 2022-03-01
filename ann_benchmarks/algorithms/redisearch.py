@@ -40,7 +40,7 @@ class RediSearch(BaseANN):
     def query(self, v, k):
         # https://oss.redis.com/redisearch/master/Commands/#ftsearch
         qparams = f' EF_RUNTIME {self.ef}' if self.algo == 'HNSW' else ''
-        vq = f'*=>[TOP_K {k} @vector $BLOB {qparams}]'
+        vq = f'*=>[KNN {k} @vector $BLOB {qparams}]'
         q = ['FT.SEARCH', self.index_name, vq, 'NOCONTENT', 'SORTBY', '__vector_score', 'LIMIT', '0', str(k), 'PARAMS', '2', 'BLOB', v.tobytes()]
         return [int(doc.replace(b'ann_',b'')) for doc in self.redis.execute_command(*q, target_nodes='random')[1:]]
 
