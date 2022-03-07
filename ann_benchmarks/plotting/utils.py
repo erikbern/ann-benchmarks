@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 import itertools
-import numpy
+import numpy as np
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 
 
@@ -44,7 +44,7 @@ def compute_metrics(true_nn_distances, res, metric_1, metric_2,
         algo = properties['algo']
         algo_name = properties['name']
         # cache distances to avoid access to hdf5 file
-        run_distances = numpy.array(run['distances'])
+        run_distances = np.array(run['distances'])
         if recompute and 'metrics' in run:
             del run['metrics']
         metrics_cache = get_or_create_metrics(run)
@@ -72,7 +72,7 @@ def compute_all_metrics(true_nn_distances, run, properties, recompute=False):
     print(algo_name)
     results = {}
     # cache distances to avoid access to hdf5 file
-    run_distances = numpy.array(run["distances"])
+    run_distances = np.array(run["distances"])
     if recompute and 'metrics' in run:
         del run['metrics']
     metrics_cache = get_or_create_metrics(run)
@@ -85,9 +85,36 @@ def compute_all_metrics(true_nn_distances, run, properties, recompute=False):
             print('%s: %g' % (name, v))
     return (algo, algo_name, results)
 
+def compute_metrics_all_runs(dataset, res, recompute=False):
+    true_nn_distances=list(dataset['distances'])
+    for i, (properties, run) in enumerate(res):
+        algo = properties['algo']
+        algo_name = properties['name']
+        # cache distances to avoid access to hdf5 file
+        # print('Load distances and times')
+        run_distances = np.array(run['distances'])
+        query_times = np.array(run['times'])
+        # print('... done')
+        if recompute and 'metrics' in run:
+            print('Recomputing metrics, clearing cache')
+            del run['metrics']
+        metrics_cache = get_or_create_metrics(run)
+        
+        dataset = properties['dataset']
+
+        run_result = {
+            'algorithm': algo,
+            'parameters': algo_name,
+            'count': properties['count']
+        }
+        for name, metric in metrics.items():
+            v = metric["function"](true_nn_distances, run_distances, metrics_cache, properties)
+            run_result[name] = v
+        yield run_result
+
 
 def generate_n_colors(n):
-    vs = numpy.linspace(0.3, 0.9, 7)
+    vs = np.linspace(0.3, 0.9, 7)
     colors = [(.9, .4, .4, 1.)]
 
     def euclidean(a, b):

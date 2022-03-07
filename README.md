@@ -105,6 +105,7 @@ Running
 
 1. Run `python run.py` (this can take an extremely long time, potentially days)
 2. Run `python plot.py` or `python create_website.py` to plot results.
+3. Run `python data_export.py --out res.csv` to export all results into a csv file for additional post-processing.
 
 You can customize the algorithms and datasets if you want to:
 
