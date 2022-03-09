@@ -1,9 +1,21 @@
 import argparse
 import csv
+import json
+import numpy as np
 
 from ann_benchmarks.datasets import DATASETS, get_dataset
 from ann_benchmarks.plotting.utils  import compute_metrics_all_runs
 from ann_benchmarks.results import load_all_results
+
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super(NpEncoder, self).default(obj)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -15,6 +27,10 @@ if __name__ == "__main__":
         '--recompute',
         action='store_true',
         help='Recompute metrics')
+    parser.add_argument(
+        '--json',
+        action='store_true',
+        help='store as json')
     args = parser.parse_args()
 
     datasets = DATASETS.keys()
@@ -29,10 +45,14 @@ if __name__ == "__main__":
                 res['dataset'] = dataset_name
                 dfs.append(res)
     if len(dfs) > 0:
-        with open(args.output, 'w', newline='') as csvfile:
-            names = list(dfs[0].keys())
-            writer = csv.DictWriter(csvfile, fieldnames=names)
-            writer.writeheader()
-            for res in dfs:
-                writer.writerow(res)
+        if args.json:
+            with open(args.output, 'w') as jsonfile:
+                json.dump(dfs, jsonfile, cls=NpEncoder, indent=4)
+        else:
+            with open(args.output, 'w', newline='') as csvfile:
+                names = list(dfs[0].keys())
+                writer = csv.DictWriter(csvfile, fieldnames=names)
+                writer.writeheader()
+                for res in dfs:
+                    writer.writerow(res)
 
