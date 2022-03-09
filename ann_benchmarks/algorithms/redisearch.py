@@ -43,24 +43,22 @@ class RediSearch(BaseANN):
                 ids = bucket['ids']
                 text = bucket['text'].decode()
                 number = bucket['number']
-                print('calling HSET', f'ann_<id>', 'vector', '<vector blob>', 't', text, 'n', number)
+                print('calling HSET', f'<id>', 'vector', '<vector blob>', 't', text, 'n', number)
                 for id in ids:
                     if id >= offset and id < limit:
-                        p.execute_command('HSET', f'ann_{id}', 'vector', X[id].tobytes(), 't', text, 'n', int(number))
+                        p.execute_command('HSET', int(id), 'vector', X[id].tobytes(), 't', text, 'n', int(number))
                         count+=1
-                        if count == 1000:
+                        if count % 1000 == 0:
                             p.execute()
                             p.reset()
-                            count = 0
             p.execute()
         else:
             for i in range(offset, limit):
-                p.execute_command('HSET', f'ann_{i}', 'vector', X[i].tobytes())
+                p.execute_command('HSET', i, 'vector', X[i].tobytes())
                 count+=1
-                if count == 1000:
+                if count % 1000 == 0:
                     p.execute()
                     p.reset()
-                    count = 0
             p.execute()
 
     def set_query_arguments(self, ef):
@@ -77,7 +75,7 @@ class RediSearch(BaseANN):
         else:
             vq = f'*=>[KNN {k} @vector $BLOB {qparams}]'
         q = ['FT.SEARCH', self.index_name, vq, 'NOCONTENT', 'SORTBY', '__vector_score', 'LIMIT', '0', str(k), 'PARAMS', '2', 'BLOB', v.tobytes()]
-        return [int(doc.replace(b'ann_',b'')) for doc in self.redis.execute_command(*q, target_nodes='random')[1:]]
+        return [int(doc) for doc in self.redis.execute_command(*q, target_nodes='random')[1:]]
 
     def freeIndex(self):
         self.redis.execute_command("FLUSHALL")

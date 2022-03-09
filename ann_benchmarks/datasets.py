@@ -472,5 +472,5 @@ hybrid_datasets = ['glove-200-angular', 'gist-960-euclidean', 'deep-image-96-ang
 percentiles= ['0.5', '1', '2', '5', '10', '20', '50']
 for dataset in hybrid_datasets:
     for percentile in percentiles:
-        DATASETS[f'{dataset}-hybrid_{percentile}'] = lambda fn: ()
+        DATASETS[f'{dataset}-hybrid-{percentile}'] = lambda fn: ()
 
