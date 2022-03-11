@@ -13,6 +13,7 @@ class RediSearch(BaseANN):
         self.algo = algo
         self.name = 'redisearch-%s (%s)' % (self.algo, self.method_param)
         self.index_name = "ann_benchmark"
+        self.text = None
         
         redis = RedisCluster if conn_params['cluster'] else Redis
         host = conn_params["host"] if conn_params["host"] else 'localhost'
