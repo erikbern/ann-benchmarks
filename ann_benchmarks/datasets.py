@@ -476,7 +476,8 @@ for dataset in big_ann_datasets:
      DATASETS[dataset] = lambda fn: ()
 
 
-hybrid_datasets = ['glove-200-angular', 'gist-960-euclidean', 'deep-image-96-angular'].extend(big_ann_datasets)
+hybrid_datasets = ['glove-200-angular', 'gist-960-euclidean', 'deep-image-96-angular']
+hybrid_datasets.extend(big_ann_datasets)
 percentiles= ['0.5', '1', '2', '5', '10', '20', '50']
 for dataset in hybrid_datasets:
     for percentile in percentiles:
