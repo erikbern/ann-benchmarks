@@ -468,7 +468,13 @@ DATASETS = {
     'kosarak-jaccard': lambda out_fn: kosarak(out_fn),
 }
 
-hybrid_datasets = ['glove-200-angular', 'gist-960-euclidean', 'deep-image-96-angular']
+
+big_ann_datasets = [f'Text-to-Image-{x}' for x in ['10M', '20M', '30M', '40M', '50M', '60M', '70M', '80M', '90M', '100M']]
+for dataset in big_ann_datasets:
+     DATASETS[dataset] = lambda fn: ()
+
+
+hybrid_datasets = ['glove-200-angular', 'gist-960-euclidean', 'deep-image-96-angular'].extend(big_ann_datasets)
 percentiles= ['0.5', '1', '2', '5', '10', '20', '50']
 for dataset in hybrid_datasets:
     for percentile in percentiles:
