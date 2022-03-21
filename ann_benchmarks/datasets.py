@@ -28,6 +28,8 @@ def get_dataset(which):
     try:
         if 'hybrid' in which:
             url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/hybrid_datasets/%s.hdf5' % urllib.parse.quote(which)
+        elif 'Text-to-Image' in which:
+            url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/big_ann/%s.hdf5' % urllib.parse.quote(which)
         else:    
             url = 'http://ann-benchmarks.com/%s.hdf5' % which
         download(url, hdf5_fn)
