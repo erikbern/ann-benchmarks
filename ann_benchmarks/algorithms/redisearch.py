@@ -4,6 +4,7 @@ from redis import Redis
 from redis.cluster import RedisCluster
 from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.base import BaseANN
+import math
 
 
 class RediSearch(BaseANN):
@@ -20,6 +21,9 @@ class RediSearch(BaseANN):
         port = conn_params["port"] if conn_params["port"] else 6379
         self.redis = redis(host=host, port=port, decode_responses=False,
                            password=conn_params["auth"], username=conn_params["user"])
+        self.shards = 1
+        if conn_params['cluster']:
+            self.shards = len(self.redis.get_primaries())
 
     def fit(self, X, offset=0, limit=None, hybrid_buckets = None):
         limit = limit if limit else len(X)
@@ -29,9 +33,10 @@ class RediSearch(BaseANN):
                 args.extend(['n', 'NUMERIC', 't', 'TEXT'])
             # https://oss.redis.com/redisearch/master/Commands/#ftcreate
             if self.algo == "HNSW":
-                args.extend(['vector', 'VECTOR', self.algo, '12', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric, 'INITIAL_CAP', len(X), 'M', self.method_param['M'], 'EF_CONSTRUCTION', self.method_param["efConstruction"]])
+                args.extend(['vector', 'VECTOR', self.algo, '12', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric, 'INITIAL_CAP', math.ceil(len(X)/self.shards), 'M', self.method_param['M'], 'EF_CONSTRUCTION', self.method_param["efConstruction"]])
             elif self.algo == "FLAT":
-                args.extend(['vector', 'VECTOR', self.algo, '10', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric, 'INITIAL_CAP', len(X), 'BLOCK_SIZE', self.method_param['BLOCK_SIZE']])
+                args.extend(['vector', 'VECTOR', self.algo, '10', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric, 'INITIAL_CAP', math.ceil(len(X)/self.shards), 'BLOCK_SIZE', self.method_param['BLOCK_SIZE']])
+            print("Calling FT.CREATE", *args)
             self.redis.execute_command('FT.CREATE', *args,  target_nodes='random')
         except Exception as e:
             if 'Index already exists' not in str(e):
