@@ -19,7 +19,10 @@ def download(src, dst):
 
 def get_dataset_fn(dataset):
     if not os.path.exists('data'):
-        os.mkdir('data')
+        try:
+            os.mkdir('data')
+        except FileExistsError:
+            pass # fixes race condition
     return os.path.join('data', '%s.hdf5' % dataset)
 
 
