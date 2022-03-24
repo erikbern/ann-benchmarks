@@ -81,7 +81,7 @@ class RediSearch(BaseANN):
             vq = f'(@t:{self.text})=>[KNN {k} @vector $BLOB {qparams}]'
         else:
             vq = f'*=>[KNN {k} @vector $BLOB {qparams}]'
-        q = ['FT.SEARCH', self.index_name, vq, 'NOCONTENT', 'SORTBY', '__vector_score', 'LIMIT', '0', str(k), 'PARAMS', '2', 'BLOB', v.tobytes()]
+        q = ['FT.SEARCH', self.index_name, vq, 'NOCONTENT', 'SORTBY', '__vector_score', 'LIMIT', '0', str(k), 'PARAMS', '2', 'BLOB', v.tobytes(), 'DIALECT', '2']
         return [int(doc) for doc in self.redis.execute_command(*q, target_nodes='random')[1:]]
 
     def freeIndex(self):
