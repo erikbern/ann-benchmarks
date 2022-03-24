@@ -26,6 +26,7 @@ class RediSearch(BaseANN):
             self.shards = len(self.redis.get_primaries())
 
     def fit(self, X, offset=0, limit=None, hybrid_buckets = None):
+        self.redis.execute_command("FLUSHALL")
         limit = limit if limit else len(X)
         try:
             args = [self.index_name, 'SCHEMA']
