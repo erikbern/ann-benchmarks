@@ -13,7 +13,7 @@ class Sptag(BaseANN):
         self._sptag = SPTAG.AnnIndex(self._algo, 'Float', X.shape[1])
         self._sptag.SetBuildParam("NumberOfThreads", '32', "Index")
         self._sptag.SetBuildParam("DistCalcMethod", self._metric, "Index")
-        self._sptag.Build(X, X.shape[0])
+        self._sptag.Build(X, X.shape[0], False)
 
     def set_query_arguments(self, MaxCheck):
         self._maxCheck = MaxCheck
