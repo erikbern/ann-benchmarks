@@ -17,7 +17,7 @@ class Sptag(BaseANN):
 
     def set_query_arguments(self, MaxCheck):
         self._maxCheck = MaxCheck
-        self._sptag.SetSearchParam("MaxCheck", str(self._maxCheck))
+        self._sptag.SetSearchParam("MaxCheck", str(self._maxCheck), "Index")
 
     def query(self, v, k):
         return self._sptag.Search(v, k)[0]
