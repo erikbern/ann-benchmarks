@@ -29,7 +29,9 @@ def get_dataset_fn(dataset):
 def get_dataset(which):
     hdf5_fn = get_dataset_fn(which)
     try:
-        if 'hybrid' in which:
+        if 'dbpedia' in which:
+             url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/dbpedia/dbpedia-768.hdf5'
+        elif 'hybrid' in which:
             url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/hybrid_datasets/%s.hdf5' % urllib.parse.quote(which)
         elif 'Text-to-Image' in which:
             url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/big_ann/%s.hdf5' % urllib.parse.quote(which)
@@ -433,6 +435,103 @@ def lastfm(out_fn, n_dimensions, test_size=50000):
     # as the inner product on the untransformed data
     write_output(item_factors, user_factors, out_fn, 'angular')
 
+def parse_dbpedia_data(source_file, max_docs: int):
+    import re
+    """
+    Parses the input file of abstracts and returns an iterable
+    :param max_docs: maximum number of input documents to process; -1 for no limit
+    :param source_file: input file
+    :return: yields document by document to the consumer
+    """
+    global VERBOSE
+    count = 0
+    max_tokens = 0
+
+    if -1 < max_docs < 50:
+        VERBOSE = True
+
+    percent = 0.1
+    bulk_size = (percent / 100) * max_docs
+
+    print(f"bulk_size={bulk_size}")
+
+    if bulk_size <= 0:
+        bulk_size = 1000
+
+    for line in source_file:
+        line = line.decode("utf-8")
+
+        # skip commented out lines
+        comment_regex = '^#'
+        if re.search(comment_regex, line):
+            continue
+
+        token_size = len(line.split())
+        if token_size > max_tokens:
+            max_tokens = token_size
+
+        # skip lines with 20 tokens or less, because they tend to contain noise
+        # (this may vary in your dataset)
+        if token_size <= 20:
+            continue
+
+        first_url_regex = '^<([^\>]+)>\s*'
+
+        x = re.search(first_url_regex, line)
+        if x:
+            url = x.group(1)
+            # also remove the url from the string
+            line = re.sub(first_url_regex, '', line)
+        else:
+            url = ''
+
+        # remove the second url from the string: we don't need to capture it, because it is repetitive across
+        # all abstracts
+        second_url_regex = '^<[^\>]+>\s*'
+        line = re.sub(second_url_regex, '', line)
+
+        # remove some strange line ending, that occurs in many abstracts
+        language_at_ending_regex = '@en \.\n$'
+        line = re.sub(language_at_ending_regex, '', line)
+
+        # form the input object for this abstract
+        doc = {
+            "_text_": line,
+            "url": url,
+            "id": count+1
+        }
+
+        yield doc
+        count += 1
+
+        if count % bulk_size == 0:
+            print(f"Processed {count} documents", end="\r")
+
+        if count == max_docs:
+            break
+
+    source_file.close()
+    print("Maximum tokens observed per abstract: {}".format(max_tokens))
+
+def dbpedia(out_fn):
+    import bz2
+    from sentence_transformers import SentenceTransformer
+    import torch
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    print(device)
+    local_fn = "long_abstracts_en.ttl.bz2"
+    url = "http://downloads.dbpedia.org/2016-10/core-i18n/en/long_abstracts_en.ttl.bz2"
+    download(url, local_fn)
+    source_file = bz2.BZ2File(local_fn, "r")
+    docs_iter = parse_dbpedia_data(source_file=source_file, max_docs=1000000)
+    text = []
+    for doc in docs_iter:
+        text.append(doc['_text_'])
+    model = SentenceTransformer('bert-base-nli-mean-tokens')
+    model.to(device)
+    sentence_embeddings = model.encode(text, show_progress_bar=True)
+    write_output(sentence_embeddings, sentence_embeddings[:10000], out_fn, 'angular')
+
 
 DATASETS = {
     'deep-image-96-angular': deep_image,
@@ -474,12 +573,15 @@ DATASETS = {
 }
 
 
+DATASETS['dbpedia-768'] = lambda fn: dbpedia(fn)
+
+
 big_ann_datasets = [f'Text-to-Image-{x}' for x in ['10M', '20M', '30M', '40M', '50M', '60M', '70M', '80M', '90M', '100M']]
 for dataset in big_ann_datasets:
      DATASETS[dataset] = lambda fn: ()
 
 
-hybrid_datasets = ['glove-200-angular', 'gist-960-euclidean', 'deep-image-96-angular']
+hybrid_datasets = ['glove-200-angular', 'gist-960-euclidean', 'deep-image-96-angular', 'fashion-mnist-784-euclidean']
 hybrid_datasets.extend(big_ann_datasets)
 percentiles= ['0.5', '1', '2', '5', '10', '20', '50']
 for dataset in hybrid_datasets:
