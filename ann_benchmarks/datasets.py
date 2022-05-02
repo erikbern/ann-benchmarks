@@ -570,10 +570,10 @@ DATASETS = {
     'sift-256-hamming': lambda out_fn: sift_hamming(
         out_fn, 'sift.hamming.256'),
     'kosarak-jaccard': lambda out_fn: kosarak(out_fn),
+    'dbpedia-768' : lambda out_fn: dbpedia(out_fn),
 }
 
 
-DATASETS['dbpedia-768'] = lambda fn: dbpedia(fn)
 
 
 big_ann_datasets = [f'Text-to-Image-{x}' for x in ['10M', '20M', '30M', '40M', '50M', '60M', '70M', '80M', '90M', '100M']]
