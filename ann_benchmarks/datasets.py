@@ -1,3 +1,4 @@
+from copyreg import pickle
 import h5py
 import numpy
 import os
@@ -31,6 +32,8 @@ def get_dataset(which):
     try:
         if 'dbpedia' in which:
              url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/dbpedia/dbpedia-768.hdf5'
+        if 'amazon-reviews' in which:
+             url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/amazon_reviews/amazon-reviews-384.hdf5'
         elif 'hybrid' in which:
             url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/hybrid_datasets/%s.hdf5' % urllib.parse.quote(which)
         elif 'Text-to-Image' in which:
@@ -533,6 +536,24 @@ def dbpedia(out_fn):
     write_output(sentence_embeddings, sentence_embeddings[:10000], out_fn, 'angular')
 
 
+def amazon_reviews(out_fn):
+    import os
+    import math
+    import pickle
+    subsets = ['Wireless_v1_00', 'Watches_v1_00', 'Video_Games_v1_00', 'Video_DVD_v1_00', 'Video_v1_00', 'Toys_v1_00', 'Tools_v1_00', 'Sports_v1_00', 'Software_v1_00', 'Shoes_v1_00', 'Pet_Products_v1_00', 'Personal_Care_Appliances_v1_00', 'PC_v1_00', 'Outdoors_v1_00', 'Office_Products_v1_00', 'Musical_Instruments_v1_00', 'Music_v1_00', 'Mobile_Electronics_v1_00', 'Mobile_Apps_v1_00', 'Major_Appliances_v1_00', 'Luggage_v1_00', 'Lawn_and_Garden_v1_00', 'Kitchen_v1_00', 'Jewelry_v1_00', 'Home_Improvement_v1_00', 'Home_Entertainment_v1_00', 'Home_v1_00', 'Health_Personal_Care_v1_00', 'Grocery_v1_00', 'Gift_Card_v1_00', 'Furniture_v1_00', 'Electronics_v1_00', 'Digital_Video_Games_v1_00', 'Digital_Video_Download_v1_00', 'Digital_Software_v1_00', 'Digital_Music_Purchase_v1_00', 'Digital_Ebook_Purchase_v1_00', 'Camera_v1_00', 'Books_v1_00', 'Beauty_v1_00', 'Baby_v1_00', 'Automotive_v1_00', 'Apparel_v1_00', 'Digital_Ebook_Purchase_v1_01', 'Books_v1_01', 'Books_v1_02']
+    train_set = []
+    test_set = []
+    for subset in subsets:
+        url = f'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/amazon_reviews/{subset}_embeddings'
+        local_fn = f'{subset}_embeddings'
+        download(url, local_fn)
+        subset_embeddings = pickle.load(open(local_fn, "rb"))
+        train_set.extend(subset_embeddings)
+        test_set.extend(subset_embeddings[:math.ceil(10000/len(subsets))])
+        os.remove(local_fn)
+    write_output(train_set, test_set[:10000], out_fn, 'angular')
+
+
 DATASETS = {
     'deep-image-96-angular': deep_image,
     'fashion-mnist-784-euclidean': fashion_mnist,
@@ -571,6 +592,7 @@ DATASETS = {
         out_fn, 'sift.hamming.256'),
     'kosarak-jaccard': lambda out_fn: kosarak(out_fn),
     'dbpedia-768' : lambda out_fn: dbpedia(out_fn),
+    'amazon-reviews-384': lambda out_fn: amazon_reviews(out_fn),
 }
 
 
