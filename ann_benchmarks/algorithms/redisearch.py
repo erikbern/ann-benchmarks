@@ -21,7 +21,7 @@ class RediSearch(BaseANN):
         port = conn_params["port"] if conn_params["port"] else 6379
         self.redis = redis(host=host, port=port, decode_responses=False,
                            password=conn_params["auth"], username=conn_params["user"])
-        self.shards = 1
+        self.shards = conn_params["shards"]
         if conn_params['cluster']:
             self.shards = len(self.redis.get_primaries())
 
