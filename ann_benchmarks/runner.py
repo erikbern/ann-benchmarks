@@ -79,6 +79,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
         search_time = total_time / len(X_test)
         avg_candidates = total_candidates / len(X_test)
         best_search_time = min(best_search_time, search_time)
+        print("qps:", len(X_test)/total_time)
 
     verbose = hasattr(algo, "query_verbose")
     attrs = {
