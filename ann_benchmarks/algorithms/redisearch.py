@@ -86,3 +86,5 @@ class RediSearch(BaseANN):
     def freeIndex(self):
         self.redis.execute_command("FLUSHALL")
 
+    def __str__(self):
+        return self.name + f", efRuntime: {self.ef}"
