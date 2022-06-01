@@ -32,7 +32,7 @@ def get_dataset(which):
     try:
         if 'dbpedia' in which:
              url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/dbpedia/dbpedia-768.hdf5'
-        if 'amazon-reviews' in which:
+        elif 'amazon-reviews' in which:
              url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/amazon_reviews/amazon-reviews-384.hdf5'
         elif 'hybrid' in which:
             url = 'https://s3.us-east-1.amazonaws.com/benchmarks.redislabs/vecsim/hybrid_datasets/%s.hdf5' % urllib.parse.quote(which)
