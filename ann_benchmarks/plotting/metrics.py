@@ -79,6 +79,17 @@ def rel(dataset_distances, run_distances, metrics):
 def queries_per_second(queries, attrs):
     return 1.0 / attrs["best_search_time"]
 
+def percentile_50(times):
+    return np.percentile(times, 50.0) * 1000.0
+
+def percentile_95(times):
+    return np.percentile(times, 95.0) * 1000.0
+
+def percentile_99(times):
+    return np.percentile(times, 99.0) * 1000.0
+
+def percentile_999(times):
+    return np.percentile(times, 99.9) * 1000.0
 
 def index_size(queries, attrs):
     # TODO(erikbern): should replace this with peak memory usage or something
@@ -100,53 +111,73 @@ def dist_computations(queries, attrs):
 all_metrics = {
     "k-nn": {
         "description": "Recall",
-        "function": lambda true_distances, run_distances, metrics, run_attrs: knn(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: knn(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
         "worst": float("-inf"),
         "lim": [0.0, 1.03]
     },
     "epsilon": {
         "description": "Epsilon 0.01 Recall",
-        "function": lambda true_distances, run_distances, metrics, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics).attrs['mean'],  # noqa
         "worst": float("-inf")
     },
     "largeepsilon": {
         "description": "Epsilon 0.1 Recall",
-        "function": lambda true_distances, run_distances, metrics, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics, 0.1).attrs['mean'],  # noqa
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: epsilon(true_distances, run_distances, run_attrs["count"], metrics, 0.1).attrs['mean'],  # noqa
         "worst": float("-inf")
     },
     "rel": {
         "description": "Relative Error",
-        "function": lambda true_distances, run_distances, metrics, run_attrs: rel(true_distances, run_distances, metrics),  # noqa
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: rel(true_distances, run_distances, metrics),  # noqa
         "worst": float("inf")
     },
     "qps": {
         "description": "Queries per second (1/s)",
-        "function": lambda true_distances, run_distances, metrics, run_attrs: queries_per_second(true_distances, run_attrs),  # noqa
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: queries_per_second(true_distances, run_attrs),  # noqa
         "worst": float("-inf")
+    },
+    "p50": {
+        "description": "Percentile 50 (millis)",
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: percentile_50(times),  # noqa
+        "worst": float("inf")
+    },
+    "p95": {
+        "description": "Percentile 95 (millis)",
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: percentile_95(times),  # noqa
+        "worst": float("inf")
+    },
+    "p99": {
+        "description": "Percentile 99 (millis)",
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: percentile_99(times),  # noqa
+        "worst": float("inf")
+    },
+    "p999": {
+        "description": "Percentile 99.9 (millis)",
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: percentile_999(times),  # noqa
+        "worst": float("inf")
     },
     "distcomps": {
         "description": "Distance computations",
-        "function": lambda true_distances, run_distances,  metrics, run_attrs: dist_computations(true_distances, run_attrs), # noqa
+        "function": lambda true_distances, run_distances,  metrics, times, run_attrs: dist_computations(true_distances, run_attrs), # noqa
         "worst": float("inf")
     },
     "build": {
         "description": "Build time (s)",
-        "function": lambda true_distances, run_distances, metrics, run_attrs: build_time(true_distances, run_attrs), # noqa
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: build_time(true_distances, run_attrs), # noqa
         "worst": float("inf")
     },
     "candidates": {
         "description": "Candidates generated",
-        "function": lambda true_distances, run_distances, metrics, run_attrs: candidates(true_distances, run_attrs), # noqa
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: candidates(true_distances, run_attrs), # noqa
         "worst": float("inf")
     },
     "indexsize": {
         "description": "Index size (kB)",
-        "function": lambda true_distances, run_distances, metrics, run_attrs: index_size(true_distances, run_attrs),  # noqa
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: index_size(true_distances, run_attrs),  # noqa
         "worst": float("inf")
     },
     "queriessize": {
         "description": "Index size (kB)/Queries per second (s)",
-        "function": lambda true_distances, run_distances, metrics, run_attrs: index_size(true_distances, run_attrs) / queries_per_second(true_distances, run_attrs), # noqa
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: index_size(true_distances, run_attrs) / queries_per_second(true_distances, run_attrs), # noqa
         "worst": float("inf")
     }
 }
