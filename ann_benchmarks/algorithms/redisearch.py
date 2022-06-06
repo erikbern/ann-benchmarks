@@ -33,9 +33,9 @@ class RediSearch(BaseANN):
                 args.extend(['n', 'NUMERIC', 't', 'TEXT'])
             # https://oss.redis.com/redisearch/master/Commands/#ftcreate
             if self.algo == "HNSW":
-                args.extend(['vector', 'VECTOR', self.algo, '12', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric, 'INITIAL_CAP', math.ceil(len(X)/self.shards), 'M', self.method_param['M'], 'EF_CONSTRUCTION', self.method_param["efConstruction"]])
+                args.extend(['vector', 'VECTOR', self.algo, '10', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric, 'M', self.method_param['M'], 'EF_CONSTRUCTION', self.method_param["efConstruction"]])
             elif self.algo == "FLAT":
-                args.extend(['vector', 'VECTOR', self.algo, '10', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric, 'INITIAL_CAP', math.ceil(len(X)/self.shards), 'BLOCK_SIZE', self.method_param['BLOCK_SIZE']])
+                args.extend(['vector', 'VECTOR', self.algo, '6', 'TYPE', 'FLOAT32', 'DIM', len(X[0]), 'DISTANCE_METRIC', self.metric])
             print("Calling FT.CREATE", *args)
             self.redis.execute_command('FT.CREATE', *args,  target_nodes='random')
         except Exception as e:
