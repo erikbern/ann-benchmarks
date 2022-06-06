@@ -53,10 +53,10 @@ def compute_metrics(true_nn_distances, res, metric_1, metric_2,
 
         metric_1_value = metrics[metric_1]['function'](
             true_nn_distances,
-            run_distances, metrics_cache, properties)
+            run_distances, metrics_cache, times, properties)
         metric_2_value = metrics[metric_2]['function'](
             true_nn_distances,
-            run_distances, metrics_cache, properties)
+            run_distances, metrics_cache, times, properties)
 
         print('%3d: %80s %12.3f %12.3f' %
               (i, algo_name, metric_1_value, metric_2_value))
