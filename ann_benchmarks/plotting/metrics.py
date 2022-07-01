@@ -63,9 +63,8 @@ def rel(dataset_distances, run_distances, metrics):
         total_candidate_distance = 0.0
         for true_distances, found_distances in zip(dataset_distances,
                                                    run_distances):
-            for rdist, cdist in zip(true_distances, found_distances):
-                total_closest_distance += rdist
-                total_candidate_distance += cdist
+            total_closest_distance += np.sum(true_distances)
+            total_candidate_distance += np.sum(found_distances)
         if total_closest_distance < 0.01:
             metrics.attrs['rel'] = float("inf")
         else:
