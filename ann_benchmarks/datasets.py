@@ -425,6 +425,50 @@ def lastfm(out_fn, n_dimensions, test_size=50000):
     # as the inner product on the untransformed data
     write_output(item_factors, user_factors, out_fn, 'angular')
 
+def movielens(fn, ratings_file, out_fn, separator='::', ignore_header=False):
+    import zipfile
+
+    url = 'http://files.grouplens.org/datasets/movielens/%s' % fn
+
+    download(url, fn)
+    with zipfile.ZipFile(fn) as z:
+        file = z.open(ratings_file)
+        if ignore_header:
+            file.readline()
+
+        print('preparing %s' % out_fn)
+
+        users = {}
+        X = []
+        dimension = 0
+        for line in file:
+            el = line.decode('UTF-8').split(separator)
+
+            userId = el[0]
+            itemId = int(el[1])
+            rating = float(el[2])
+
+            if rating < 3: # We only keep ratings >= 3
+                continue
+
+            if not userId in users:
+                users[userId] = len(users)
+                X.append([])
+
+            X[users[userId]].append(itemId)
+            dimension = max(dimension, itemId+1)
+
+        X_train, X_test = train_test_split(numpy.array(X), test_size=500, dimension=dimension)
+        write_sparse_output(X_train, X_test, out_fn, 'jaccard', dimension)
+
+def movielens1m(out_fn):
+    movielens('ml-1m.zip', 'ml-1m/ratings.dat', out_fn)
+
+def movielens10m(out_fn):
+    movielens('ml-10m.zip', 'ml-10M100K/ratings.dat', out_fn)
+
+def movielens20m(out_fn):
+    movielens('ml-20m.zip', 'ml-20m/ratings.csv', out_fn, ',', True)
 
 DATASETS = {
     'deep-image-96-angular': deep_image,
@@ -463,4 +507,7 @@ DATASETS = {
     'sift-256-hamming': lambda out_fn: sift_hamming(
         out_fn, 'sift.hamming.256'),
     'kosarak-jaccard': lambda out_fn: kosarak(out_fn),
+    'movielens1m-jaccard': movielens1m,
+    'movielens10m-jaccard': movielens10m,
+    'movielens20m-jaccard': movielens20m,
 }
