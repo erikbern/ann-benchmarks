@@ -61,7 +61,7 @@ class NmslibReuseIndex(BaseANN):
             # less than <bucket size> * 1000
             # Aborted (core dumped)
             self._index_param.append('bucketSize=%d' %
-                                     min(int(X.shape[0] * 0.0005), 1000))
+                                     min(int(len(X) * 0.0005), 1000))
 
         if self._nmslib_metric == 'jaccard_sparse':
             self._index = nmslib.init(

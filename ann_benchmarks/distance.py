@@ -23,7 +23,7 @@ metrics = {
     # return 1 - jaccard similarity, because smaller distances are better.
     # modified to use pdist jaccard given new data format (boolean ndarray)
     'jaccard': {
-        'distance': lambda a, b: pdist(a, b, "jaccard"), # 1 - jaccard(a, b),
+        'distance': lambda a, b: 1 - jaccard(a, b), #pdist(a, b, "jaccard"), 
         'distance_valid': lambda a: a < 1 - 1e-5
     },
     'euclidean': {
@@ -42,13 +42,13 @@ def sparse_to_lists(data, lengths):
     for l in lengths:
         X.append(data[index:index+l])
         index += l
-    
+
     return X
 
 def dataset_transform(dataset):
     if dataset.attrs.get('type', 'dense') != 'sparse':
         return np.array(dataset['train']), np.array(dataset['test'])
-    
+
     # we store the dataset as a list of integers, accompanied by a list of lengths in hdf5
     # so we transform it back to the format expected by the algorithms here (array of array of ints)
     return sparse_to_lists(dataset['train'], dataset['size_train']), sparse_to_lists(dataset['test'], dataset['size_test'])

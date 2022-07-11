@@ -990,6 +990,7 @@ bit:
       module: ann_benchmarks.algorithms.subprocess
       constructor: BitSubprocessPrepared
       base-args: [["mih/bin/mihwrapper"]]
+      disabled: True
       run-groups:
         base:
           # Note that MIH assumes that 5 <= dimension / chunks <= 37 and segfaults otherwise.

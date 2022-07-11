@@ -43,7 +43,7 @@ jobs:
             dataset: random-xs-20-angular
           - library: sptag
             dataset: random-xs-20-angular
-          - library: mih
+          - library: pynndescent 
             dataset: random-xs-16-hamming
           - library: datasketch
             dataset: random-s-jaccard
