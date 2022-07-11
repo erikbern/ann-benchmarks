@@ -45,16 +45,18 @@ def compute_metrics(true_nn_distances, res, metric_1, metric_2,
         algo_name = properties['name']
         # cache distances to avoid access to hdf5 file
         run_distances = np.array(run['distances'])
+        # cache times to avoid access to hdf5 file
+        times = np.array(run['times'])
         if recompute and 'metrics' in run:
             del run['metrics']
         metrics_cache = get_or_create_metrics(run)
 
         metric_1_value = metrics[metric_1]['function'](
             true_nn_distances,
-            run_distances, metrics_cache, properties)
+            run_distances, metrics_cache, times, properties)
         metric_2_value = metrics[metric_2]['function'](
             true_nn_distances,
-            run_distances, metrics_cache, properties)
+            run_distances, metrics_cache, times, properties)
 
         print('%3d: %80s %12.3f %12.3f' %
               (i, algo_name, metric_1_value, metric_2_value))
@@ -73,13 +75,15 @@ def compute_all_metrics(true_nn_distances, run, properties, recompute=False):
     results = {}
     # cache distances to avoid access to hdf5 file
     run_distances = np.array(run["distances"])
+    # cache times to avoid access to hdf5 file
+    times = np.array(run['times'])
     if recompute and 'metrics' in run:
         del run['metrics']
     metrics_cache = get_or_create_metrics(run)
 
     for name, metric in metrics.items():
         v = metric["function"](
-            true_nn_distances, run_distances, metrics_cache, properties)
+            true_nn_distances, run_distances, metrics_cache, times, properties)
         results[name] = v
         if v:
             print('%s: %g' % (name, v))
@@ -93,7 +97,7 @@ def compute_metrics_all_runs(dataset, res, recompute=False):
         # cache distances to avoid access to hdf5 file
         # print('Load distances and times')
         run_distances = np.array(run['distances'])
-        query_times = np.array(run['times'])
+        times = np.array(run['times'])
         # print('... done')
         if recompute and 'metrics' in run:
             print('Recomputing metrics, clearing cache')
@@ -108,7 +112,7 @@ def compute_metrics_all_runs(dataset, res, recompute=False):
             'count': properties['count']
         }
         for name, metric in metrics.items():
-            v = metric["function"](true_nn_distances, run_distances, metrics_cache, properties)
+            v = metric["function"](true_nn_distances, run_distances, metrics_cache, times, properties)
             run_result[name] = v
         yield run_result
 
