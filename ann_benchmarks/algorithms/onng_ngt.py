@@ -11,7 +11,7 @@ from ann_benchmarks.constants import INDEX_DIR
 
 class ONNG(BaseANN):
     def __init__(self, metric, object_type, epsilon, param):
-        metrics = {'euclidean': '2', 'angular': 'C'}
+        metrics = {'euclidean': '2', 'angular': 'E'}
         self._edge_size = int(param['edge'])
         self._outdegree = int(param['outdegree'])
         self._indegree = int(param['indegree'])

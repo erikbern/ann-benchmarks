@@ -67,12 +67,20 @@ class QG(BaseANN):
             subprocess.call(args)
             print('QG: degree adjustment time(sec)=' + str(time.time() - t))
         if not os.path.exists(index + '/qg'):
-            print('QG: quantization')
+            print('QG:create and append...')
             t = time.time()
-            args = ['ngtqg', 'quantize', index]
+            args = ['qbg', 'create-qg', index]
             subprocess.call(args)
-            print('QG: quantization time(sec)=' + str(time.time() - t))
-        if os.path.exists(index):
+            print('QG: create qg time(sec)=' + str(time.time() - t))
+            print('QB: build...')
+            t = time.time()
+            args = ['qbg', 'build-qg', '-o20000', '-M6', '-ib',
+                    '-I400', '-Gz', '-Pn',
+                    '-E' + str(self._max_edge_size),
+                    index]
+            subprocess.call(args)
+            print('QG: build qg time(sec)=' + str(time.time() - t))
+        if os.path.exists(index + '/qg/grp'):
             print('QG: index already exists! ' + str(index))
             t = time.time()
             self.index = ngtpy.QuantizedIndex(index, self._max_edge_size)
