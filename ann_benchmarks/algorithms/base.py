@@ -17,6 +17,10 @@ class BaseANN(object):
         pass
 
     def query(self, q, n):
+        """
+        Run a a single query and return the array of candidate indices.
+        If the query fails in a recoverable fashion, raise a BaseANNQueryException.
+        """
         return []  # array of candidate indices
 
     def batch_query(self, X, n):
@@ -34,3 +38,6 @@ class BaseANN(object):
 
     def __str__(self):
         return self.name
+
+class BaseANNQueryException(Exception):
+    pass

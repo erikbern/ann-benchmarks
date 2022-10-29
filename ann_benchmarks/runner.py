@@ -11,6 +11,7 @@ import docker
 import numpy
 import psutil
 
+from ann_benchmarks.algorihms.base import BaseANNQueryException
 from ann_benchmarks.algorithms.definitions import (Definition,
                                                    instantiate_algorithm)
 from ann_benchmarks.datasets import get_dataset, DATASETS
@@ -136,14 +137,20 @@ function""" % (definition.module, definition.constructor, definition.arguments)
                   (pos, len(query_argument_groups)))
             if query_arguments:
                 algo.set_query_arguments(*query_arguments)
-            descriptor, results = run_individual_query(
-                algo, X_train, X_test, distance, count, run_count, batch)
-            descriptor["build_time"] = build_time
-            descriptor["index_size"] = index_size
-            descriptor["algo"] = definition.algorithm
-            descriptor["dataset"] = dataset
-            store_results(dataset, count, definition,
-                          query_arguments, descriptor, results, batch)
+            try:
+                descriptor, results = run_individual_query(
+                    algo, X_train, X_test, distance, count, run_count, batch)
+                descriptor["build_time"] = build_time
+                descriptor["index_size"] = index_size
+                descriptor["algo"] = definition.algorithm
+                descriptor["dataset"] = dataset
+                store_results(dataset, count, definition,
+                            query_arguments, descriptor, results, batch)
+            # If the query fails with a known exception type, just ignore the exception
+            # and move on to the next query_arguments.
+            except BaseANNQueryException as ex:
+                print(f"Ignoring query exception: {ex}")
+                pass
     finally:
         algo.done()
 

@@ -11,7 +11,7 @@ import numpy as np
 from elastiknn.api import Vec
 from elastiknn.models import ElastiknnModel
 
-from ann_benchmarks.algorithms.base import BaseANN
+from ann_benchmarks.algorithms.base import BaseANN, BaseANNQueryException
 
 from urllib.request import Request, urlopen
 from time import sleep, perf_counter
@@ -122,9 +122,9 @@ class L2Lsh(BaseANN):
         self.sum_query_dur += dur
         self.num_queries += 1
         if self.num_queries > 500 and self.num_queries / self.sum_query_dur < 50:
-            raise Exception("Throughput after 500 queries is less than 50 q/s. Giving up to avoid wasteful computation.")
+            raise BaseANNQueryException("Throughput after 500 queries is less than 50 q/s. Giving up to avoid wasteful computation.")
         elif res[-2:].sum() < 0:
-            raise Exception(f"Model returned fewer than {n} neighbors. Giving up to avoid wasteful computation.")
+            raise BaseANNQueryException(f"Model returned fewer than {n} neighbors. Giving up to avoid wasteful computation.")
         else:
             return res
 
