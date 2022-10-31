@@ -55,6 +55,8 @@ jobs:
             dataset: random-xs-20-angular
           - library: opensearchknn
             dataset: random-xs-20-angular
+          - library: luceneknn
+            dataset: random-xs-20-angular
           - library: diskann
             dataset: random-xs-20-angular
           - library: puffinn
