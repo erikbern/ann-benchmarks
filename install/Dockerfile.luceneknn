@@ -1,0 +1,29 @@
+FROM ann-benchmarks
+
+WORKDIR /home/app
+
+# Install temurin JDK
+RUN apt-get update
+RUN apt-get install -y wget apt-transport-https gnupg
+RUN wget -O - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add -
+RUN echo "deb https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list
+RUN apt-get update
+RUN apt-get install -y temurin-17-jdk
+
+# Install PyLucene & JCC
+RUN wget https://dlcdn.apache.org/lucene/pylucene/pylucene-9.1.0-src.tar.gz
+RUN tar -xzf pylucene-9.1.0-src.tar.gz
+ENV JCC_JDK=/usr/lib/jvm/temurin-17-jdk-arm64
+WORKDIR /home/app/pylucene-9.1.0/jcc
+RUN python3 ./setup.py build
+RUN python3 ./setup.py install
+
+WORKDIR /home/app/pylucene-9.1.0
+ENV PYTHON=python3
+ENV JCC="$(PYTHON) -m jcc --shared"
+ENV NUM_FILES=16
+RUN make
+RUN make install
+
+# Reset the work dir so scripts can be ran
+WORKDIR /home/app
