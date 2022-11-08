@@ -74,8 +74,8 @@ class PyLuceneKNN(BaseANN):
             doc = Document()
             doc.add(KnnVectorField("knn", JArray('float')(x), fieldType))
             doc.add(StoredField("id", id))
-            id += 1
             iw.addDocument(doc)
+            id += 1
             if id + 1 % 1000 == 0:
                 print(f"LuceneKNN: written {id} docs")
         # Force merge so only one HNSW graph is searched.
@@ -91,7 +91,7 @@ class PyLuceneKNN(BaseANN):
     def query(self, q, n):
         if self.metric == 'angular':
             q = q / np.linalg.norm(q)
-        return self.run_knn_query(self.ef, n, q.tolist())
+        return self.run_knn_query(num_candidates=self.ef, n=n, q=q.tolist())
 
     def prepare_batch_query(self, X, n):
         if self.metric == 'angular':
@@ -113,7 +113,7 @@ class PyLuceneKNN(BaseANN):
     def run_knn_query(self, num_candidates, n, q):
         query = KnnVectorQuery("knn", JArray('float')(q), num_candidates)
         topdocs = self.searcher.search(query, n)
-        return [d.doc for d in topdocs.scoreDocs]
+        return [int(self.searcher.doc(d.doc).get("id")) for d in topdocs.scoreDocs]
 
     def batch_query(self, X, n):
         pool = ThreadPool()
