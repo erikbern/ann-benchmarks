@@ -38,11 +38,14 @@ class PyLuceneKNN(BaseANN):
     """
 
     def __init__(self, metric: str, dimension: int, param):
-        lucene.initVM(vmargs=['-Djava.awt.headless=true -Xmx6g -Xms6g'])
+        try:
+            lucene.initVM(vmargs=['-Djava.awt.headless=true -Xmx6g -Xms6g'])
+        except ValueError:
+            print(f'VM already initialized')
         self.metric = metric
         self.dimension = dimension
         self.param = param
-        self.short_name = f"luceneknn-{dimension}-{param['M']}-{param['efConstruction']}"
+        self.short_name = f"luceneknn-{param['M']}-{param['efConstruction']}"
         self.simFunc = VectorSimilarityFunction.DOT_PRODUCT if self.metric == "angular" \
             else VectorSimilarityFunction.EUCLIDEAN
         if self.metric not in ("euclidean", "angular"):
