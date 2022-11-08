@@ -13,15 +13,15 @@ from java.nio.file import Paths
 from org.apache.lucene.store import FSDirectory
 from org.apache.lucene.search import KnnVectorQuery, IndexSearcher
 from org.apache.lucene.index import IndexWriter, IndexWriterConfig, VectorSimilarityFunction, DirectoryReader
-from org.apache.lucene.codecs.lucene91 import Lucene91Codec, Lucene91HnswVectorsFormat
+from org.apache.lucene.codecs.lucene94 import Lucene94Codec, Lucene94HnswVectorsFormat
 from org.apache.lucene.document import Document, FieldType, KnnVectorField, StoredField
 
 from ann_benchmarks.algorithms.base import BaseANN
 
 
-class Codec(Lucene91Codec):
+class Codec(Lucene94Codec):
     """
-    Custom codec so that the appropriate Lucene91 codec can be returned with the configured M and efConstruction
+    Custom codec so that the appropriate Lucene94 codec can be returned with the configured M and efConstruction
     """
     def __init__(self, M, efConstruction):
         super(Codec, self).__init__()
@@ -29,7 +29,7 @@ class Codec(Lucene91Codec):
         self.efConstruction = efConstruction
 
     def getKnnVectorsFormatForField(self):
-        Lucene91HnswVectorsFormat(self.M, self.efConstruction)
+        Lucene94HnswVectorsFormat(self.M, self.efConstruction)
 
 
 class PyLuceneKNN(BaseANN):
@@ -81,13 +81,14 @@ class PyLuceneKNN(BaseANN):
         iw.close()
         self.searcher = IndexSearcher(DirectoryReader.open(self.dir))
 
-    def set_query_arguments(self, fanout):
-        self.fanout = fanout
+    def set_query_arguments(self, ef_const):
+        self.name = f"luceneknn-{self.dimension}-{self.param['M']}-{self.param['efConstruction']}-{ef_const}"
+        self.ef_const = ef_const
 
     def query(self, q, n):
         if self.metric == 'angular':
             q = q / np.linalg.norm(q)
-        return self.run_knn_query(n + self.fanout, n, q.tolist())
+        return self.run_knn_query(n + self.ef_const, n, q.tolist())
 
     def prepare_batch_query(self, X, n):
         if self.metric == 'angular':
@@ -99,7 +100,7 @@ class PyLuceneKNN(BaseANN):
         self.res = []
         append = self.res.append
         n = self.topK
-        num_candidates = self.topK + self.fanout
+        num_candidates = self.topK + self.ef_const
         for q in self.queries:
             append(self.run_knn_query(num_candidates=num_candidates, n=n, q=q))
 
@@ -116,5 +117,5 @@ class PyLuceneKNN(BaseANN):
         if self.metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         X = X.tolist()
-        num_candidates = n + self.fanout
+        num_candidates = n + self.ef_const
         self.res = pool.map(lambda q: self.run_knn_query(num_candidates=num_candidates, n=n, q=q), X)
