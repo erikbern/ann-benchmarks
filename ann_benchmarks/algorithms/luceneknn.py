@@ -84,14 +84,14 @@ class PyLuceneKNN(BaseANN):
         iw.close()
         self.searcher = IndexSearcher(DirectoryReader.open(self.dir))
 
-    def set_query_arguments(self, ef_const):
-        self.name = f"luceneknn-{self.dimension}-{self.param['M']}-{self.param['efConstruction']}-{ef_const}"
-        self.ef_const = ef_const
+    def set_query_arguments(self, ef):
+        self.name = f"luceneknn-{self.dimension}-{self.param['M']}-{self.param['efConstruction']}-{ef}"
+        self.ef = ef
 
     def query(self, q, n):
         if self.metric == 'angular':
             q = q / np.linalg.norm(q)
-        return self.run_knn_query(n + self.ef_const, n, q.tolist())
+        return self.run_knn_query(self.ef, n, q.tolist())
 
     def prepare_batch_query(self, X, n):
         if self.metric == 'angular':
@@ -103,7 +103,7 @@ class PyLuceneKNN(BaseANN):
         self.res = []
         append = self.res.append
         n = self.topK
-        num_candidates = self.topK + self.ef_const
+        num_candidates = self.ef
         for q in self.queries:
             append(self.run_knn_query(num_candidates=num_candidates, n=n, q=q))
 
@@ -120,5 +120,5 @@ class PyLuceneKNN(BaseANN):
         if self.metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         X = X.tolist()
-        num_candidates = n + self.ef_const
+        num_candidates = self.ef
         self.res = pool.map(lambda q: self.run_knn_query(num_candidates=num_candidates, n=n, q=q), X)
