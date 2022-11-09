@@ -29,7 +29,7 @@ class Codec(Lucene94Codec):
         self.efConstruction = efConstruction
 
     def getKnnVectorsFormatForField(self):
-        Lucene94HnswVectorsFormat(self.M, self.efConstruction)
+        return Lucene94HnswVectorsFormat(self.M, self.efConstruction)
 
 
 class PyLuceneKNN(BaseANN):
