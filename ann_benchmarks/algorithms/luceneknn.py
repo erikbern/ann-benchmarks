@@ -93,20 +93,6 @@ class PyLuceneKNN(BaseANN):
             q = q / np.linalg.norm(q)
         return self.run_knn_query(num_candidates=self.ef, n=n, q=q.tolist())
 
-    def prepare_batch_query(self, X, n):
-        if self.metric == 'angular':
-            X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
-        self.queries = X.tolist()
-        self.topK = n
-
-    def run_batch_query(self):
-        self.res = []
-        append = self.res.append
-        n = self.topK
-        num_candidates = self.ef
-        for q in self.queries:
-            append(self.run_knn_query(num_candidates=num_candidates, n=n, q=q))
-
     def get_batch_results(self):
         return self.res
 
