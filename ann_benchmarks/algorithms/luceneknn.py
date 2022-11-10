@@ -4,8 +4,6 @@ ann-benchmarks interface for Apache Lucene.
 
 import sklearn.preprocessing
 import numpy as np
-from multiprocessing.pool import ThreadPool
-
 
 import lucene
 from lucene import JArray
@@ -102,9 +100,8 @@ class PyLuceneKNN(BaseANN):
         return [int(self.searcher.doc(d.doc).get("id")) for d in topdocs.scoreDocs]
 
     def batch_query(self, X, n):
-        pool = ThreadPool()
         if self.metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
         X = X.tolist()
         num_candidates = self.ef
-        self.res = pool.map(lambda q: self.run_knn_query(num_candidates=num_candidates, n=n, q=q), X)
+        self.res = [self.run_knn_query(num_candidates=num_candidates, n=n, q=q) for q in X]
