@@ -86,22 +86,34 @@ class PyLuceneKNN(BaseANN):
         self.name = f"luceneknn-{self.dimension}-{self.param['M']}-{self.param['efConstruction']}-{ef}"
         self.ef = ef
 
-    def query(self, q, n):
-        if self.metric == 'angular':
-            q = q / np.linalg.norm(q)
-        return self.run_knn_query(num_candidates=self.ef, n=n, q=q.tolist())
-
     def get_batch_results(self):
         return self.res
 
-    def run_knn_query(self, num_candidates, n, q):
-        query = KnnVectorQuery("knn", JArray('float')(q), num_candidates)
+    def run_knn_query_inner(self, num_candidates, n, q):
+        query = KnnVectorQuery("knn", q, num_candidates)
         topdocs = self.searcher.search(query, n)
         return [int(self.searcher.doc(d.doc).get("id")) for d in topdocs.scoreDocs]
 
-    def batch_query(self, X, n):
+    def prepare_query(self, q, n):
+        if self.metric == 'angular':
+            q = q / np.linalg.norm(q)
+        self.q = JArray('float')(q.tolist())
+        self.n = n
+
+    def get_prepared_query_results(self):
+        return self.res
+
+    def run_prepared_query(self):
+        self.res = self.run_knn_query_inner(self.ef, self.n, self.q)
+
+    def prepare_batch_query(self, X, n):
         if self.metric == 'angular':
             X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
-        X = X.tolist()
+        self.queries = [JArray('float')(q) for q in X.tolist()]
+        self.n = n
+
+    def run_batch_query(self):
         num_candidates = self.ef
-        self.res = [self.run_knn_query(num_candidates=num_candidates, n=n, q=q) for q in X]
+        n = self.n
+        queries = self.queries
+        self.res = [self.run_knn_query_inner(num_candidates=num_candidates, n=n, q=q) for q in queries]
