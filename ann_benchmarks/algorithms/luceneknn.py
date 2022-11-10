@@ -13,13 +13,13 @@ from java.nio.file import Paths
 from org.apache.lucene.store import FSDirectory
 from org.apache.lucene.search import KnnVectorQuery, IndexSearcher
 from org.apache.lucene.index import IndexWriter, IndexWriterConfig, VectorSimilarityFunction, DirectoryReader
-from org.apache.lucene.codecs.lucene94 import Lucene94Codec, Lucene94HnswVectorsFormat
+from org.apache.lucene.codecs.lucene94 import Lucene94HnswVectorsFormat
 from org.apache.lucene.document import Document, FieldType, KnnVectorField, StoredField
-
+from org.apache.pylucene.codecs import PyLucene94Codec
 from ann_benchmarks.algorithms.base import BaseANN
 
 
-class Codec(Lucene94Codec):
+class Codec(PyLucene94Codec):
     """
     Custom codec so that the appropriate Lucene94 codec can be returned with the configured M and efConstruction
     """
@@ -28,7 +28,7 @@ class Codec(Lucene94Codec):
         self.M = M
         self.efConstruction = efConstruction
 
-    def getKnnVectorsFormatForField(self):
+    def getKnnVectorsFormatForField(self, field):
         return Lucene94HnswVectorsFormat(self.M, self.efConstruction)
 
 
