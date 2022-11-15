@@ -13,7 +13,8 @@ RUN apt-get install -y temurin-17-jdk
 # Install PyLucene & JCC
 RUN wget https://dlcdn.apache.org/lucene/pylucene/pylucene-9.4.1-src.tar.gz
 RUN tar -xzf pylucene-9.4.1-src.tar.gz
-ENV JCC_JDK=/usr/lib/jvm/temurin-17-jdk-arm64
+ARG TARGETARCH
+ENV JCC_JDK="/usr/lib/jvm/temurin-17-jdk-${TARGETARCH}"
 WORKDIR /home/app/pylucene-9.4.1/jcc
 RUN python3 ./setup.py build
 RUN python3 ./setup.py install
