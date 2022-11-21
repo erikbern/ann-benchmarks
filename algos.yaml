@@ -433,6 +433,15 @@ float:
         vald:
           args: [{'edge': 20, 'searchedge': 60, 'bulk': 100}]
           query-args: [[0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2]]
+    qdrant:
+      docker-tag: ann-benchmarks-qdrant
+      module: ann_benchmarks.algorithms.qdrant
+      constructor: Qdrant
+      base-args: ["@metric"]
+      run-groups:
+        default:
+          args: [[True, False]] #grpc
+          query-args: [[null, 8, 16, 32, 64, 128, 256]] #hnsw_ef
 
   euclidean:
     vamana(diskann):
