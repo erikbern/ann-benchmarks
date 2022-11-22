@@ -20,7 +20,6 @@ class Qdrant(BaseANN):
             'hnsw_ef': None
         }
 
-        #TODO: test with grpc as well
         qdrant_client_params = {
             'host': 'localhost',
             'port': 6333,
