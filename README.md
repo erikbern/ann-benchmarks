@@ -35,6 +35,7 @@ Evaluated
 * [Vespa](https://github.com/vespa-engine/vespa)
 * [scipy](https://docs.scipy.org/doc/scipy/reference/spatial.html): cKDTree
 * [vald](https://github.com/vdaas/vald)
+* [Qdrant](https://github.com/qdrant/qdrant)
 
 Data sets
 =========
