@@ -72,7 +72,9 @@ jobs:
           - library: vearch
             dataset: random-xs-20-angular
           - library: qdrant
-            dataset: random-xs-20-angular            
+            dataset: random-xs-20-angular
+          - library: qsgngt
+            dataset: random-xs-20-angular
       fail-fast: false
 
     steps:
