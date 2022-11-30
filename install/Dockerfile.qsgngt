@@ -1,0 +1,11 @@
+FROM ann-benchmarks
+
+RUN apt update
+RUN apt install -y git cmake g++ python3 python3-setuptools python3-pip libblas-dev liblapack-dev
+RUN pip3 install wheel pybind11==2.5.0
+RUN git clone -b master https://gitee.com/WPJIANG-gitee/hwtl_sdu-anns-qsgngtlib.git
+RUN cp hwtl_sdu-anns-qsgngtlib/lib/* /usr/local/lib/
+RUN cp hwtl_sdu-anns-qsgngtlib/bin/* /usr/local/bin/
+RUN chmod a+x /usr/local/bin/*
+RUN ldconfig
+RUN pip3 install hwtl_sdu-anns-qsgngtlib/qsgngt-*-linux_x86_64.whl
