@@ -8,4 +8,4 @@ RUN cp hwtl_sdu-anns-qsgngtlib/lib/* /usr/local/lib/
 RUN cp hwtl_sdu-anns-qsgngtlib/bin/* /usr/local/bin/
 RUN chmod a+x /usr/local/bin/*
 RUN ldconfig
-RUN pip3 install hwtl_sdu-anns-qsgngtlib/qsgngt-*-linux_x86_64.whl
+RUN pip3 install hwtl_sdu-anns-qsgngtlib/ngt-*-linux_x86_64.whl
