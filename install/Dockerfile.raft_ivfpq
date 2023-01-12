@@ -1,0 +1,4 @@
+# Install RAFT
+RUN pip3 install raft-cu11 --extra-index-url=https://pypi.ngc.nvidia.com
+
+RUN python3 -c 'import pylibraft'
