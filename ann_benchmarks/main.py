@@ -45,6 +45,7 @@ def run_worker(cpu, args, queue):
             if args.batch:
                 cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
 
+
             run_docker(definition, args.dataset, args.count,
                        args.runs, args.timeout, args.batch, cpu_limit, mem_limit)
 

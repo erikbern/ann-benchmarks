@@ -142,8 +142,13 @@ function""" % (definition.module, definition.constructor, definition.arguments)
             descriptor["index_size"] = index_size
             descriptor["algo"] = definition.algorithm
             descriptor["dataset"] = dataset
+
+            print(str(descriptor))
             store_results(dataset, count, definition,
                           query_arguments, descriptor, results, batch)
+    except:
+        print("FAILED!")
+        print(str(e))
     finally:
         algo.done()
 
