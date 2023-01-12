@@ -8,7 +8,7 @@ import pylibraft
 from pylibraft.neighbors import ivf_pq
 from ann_benchmarks.algorithms.base import BaseANN
 
-pylibraft.config.set_output_as(lambda device_ndarray: return device_ndarray.copy_to_host())
+pylibraft.config.set_output_as(lambda device_ndarray: device_ndarray.copy_to_host())
 
 
 # Implementation based on
