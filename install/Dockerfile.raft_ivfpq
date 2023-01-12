@@ -1,4 +1,13 @@
-# Install RAFT
-RUN pip3 install raft-cu11 --extra-index-url=https://pypi.ngc.nvidia.com
+FROM ann-benchmarks
 
-RUN python3 -c 'import pylibraft'
+RUN apt update && apt install -y wget
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py38_22.11.1-1-Linux-x86_64.sh
+RUN bash Miniconda3-py38_22.11.1-1-Linux-x86_64.sh -b
+
+ENV PATH /root/miniconda3/bin:$PATH
+
+RUN conda install -y -c conda-forge mamba
+RUN mamba install -y -c conda-forge -c nvidia -c rapidsai-nightly pylibraft==23.02*
+RUN python3 -m pip install ansicolors==1.1.8 docker==5.0.2
+
+RUN python3 -c 'from pylibraft import ivf_pq;'
