@@ -59,6 +59,7 @@ float:
           args: [[400, 1024, 4096, 8192, 16384],
                  [1, 10, 40, 100, 200]]
     raft-ivfpq:
+      disabled: true
       docker-tag: ann-benchmarks-raft_ivfpq
       module: ann_benchmarks.algorithms.raft_ivfpq
       constructor: RAFTIVFPQ

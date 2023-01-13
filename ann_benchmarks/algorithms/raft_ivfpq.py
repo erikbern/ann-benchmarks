@@ -60,55 +60,36 @@ class RAFTIVFPQ(BaseANN):
         X = X.astype(numpy.float32)
         X = cupy.asarray(X)
 
-        print("Called fit on %s with n_probes=%s" % (X, self._n_list))
-
         index_params = ivf_pq.IndexParams(n_lists=self._n_list,
                                           add_data_on_build=True,
+                                          pq_dim=X.shape[1]//2,
                                           metric="l2_expanded")
 
-        try:
-            print("Running algo...")
-            self._index = ivf_pq.build(index_params, X)
-            printf("Done running: " + str(self._index))
-        except Exception as e:
-            print(str(e))
-
-        print("Done.")
+        self._index = ivf_pq.build(index_params, X)
 
 
     def query(self, v, n):
         return [label for label, _ in self.query_with_distances(v, n)]
 
     def query_with_distances(self, v, n):
-        print("Called query_with_distances on %s, %s" % (v, n))
-        v = v.astype(numpy.float32).reshape(1, -1)
+
+        v = cupy.asarray(v.astype(numpy.float32).reshape(1, -1))
 
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes)
         distances, labels = ivf_pq.search(search_params, self._index, v, n)
         r = []
-        for l, d in zip(labels, distances):
-            if l != -1:
-                r.append((l, d))
+        for l, d in zip(labels[0], distances[0]):
+            r.append((l, d))
         return r
 
     def batch_query(self, X, n):
         X = cupy.asarray(X.astype(numpy.float32))
-
-        print("INDEX: " + str(self._index))
-        print("Called batch_query on %s, %s" % (X, n))
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes)
         self.res = ivf_pq.search(search_params, self._index, X, n)
-        print("Done.")
 
     def get_batch_results(self):
-        print("Called get_batch_results")
         D, L = self.res
-
-        print("D %s, L %s" % (D, L))
-        res = []
-        for l, d in zip(L, D):
-            res.append(l)
-        return res
+        return L
 
     def set_query_arguments(self, n_probe):
         self._n_probes = n_probe
