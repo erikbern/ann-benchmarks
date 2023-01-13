@@ -63,6 +63,7 @@ class RAFTIVFPQ(BaseANN):
         X = cupy.asarray(X)
 
         index_params = ivf_pq.IndexParams(n_lists=self._n_list,
+                                          pq_dim=128,
                                           add_data_on_build=True,
                                           metric="l2_expanded")
 
