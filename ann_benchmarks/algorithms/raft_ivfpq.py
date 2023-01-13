@@ -6,7 +6,7 @@ import numpy
 import ctypes
 import cupy
 import pylibraft
-from pylibraft.neighbors import ivf_pq
+from pylibraft.neighbors import ivf_pq, refine
 from ann_benchmarks.algorithms.base import BaseANN
 
 pylibraft.config.set_output_as(lambda device_ndarray: device_ndarray.copy_to_host())
@@ -55,6 +55,8 @@ class RAFTIVFPQ(BaseANN):
         n_list)
         self._n_list = n_list
         self._index = None
+        self._dataset = None
+        self._k_refine = None
 
     def fit(self, X):
         X = X.astype(numpy.float32)
@@ -62,11 +64,10 @@ class RAFTIVFPQ(BaseANN):
 
         index_params = ivf_pq.IndexParams(n_lists=self._n_list,
                                           add_data_on_build=True,
-                                          pq_dim=X.shape[1]//2,
                                           metric="l2_expanded")
 
         self._index = ivf_pq.build(index_params, X)
-
+        self._dataset = X
 
     def query(self, v, n):
         return [label for label, _ in self.query_with_distances(v, n)]
@@ -85,12 +86,22 @@ class RAFTIVFPQ(BaseANN):
     def batch_query(self, X, n):
         X = cupy.asarray(X.astype(numpy.float32))
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes)
-        self.res = ivf_pq.search(search_params, self._index, X, n)
+
+        k_refine = self._k_refine if self._k_refine is not None else n
+        D, L = ivf_pq.search(search_params, self._index, X, k_refine)
+
+        self.res = (D, L)
+
+        if self._k_refine is not None:
+            self.res = refine(self._dataset, X, cupy.asarray(L), k=n)
 
     def get_batch_results(self):
         D, L = self.res
         return L
 
-    def set_query_arguments(self, n_probe):
+    def set_query_arguments(self, n_probe, k_refine):
+        print("Setting refine: %s" % k_refine)
         self._n_probes = n_probe
+        if k_refine > 0:
+            self._k_refine = k_refine
 
