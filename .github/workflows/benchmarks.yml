@@ -2,10 +2,15 @@ name: ANN benchmarks
 
 on: [push, pull_request]
 
+# Cancel the workflow for the previous commit when the new commit is pushed.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: True
+
 jobs:
   build:
-
     runs-on: ubuntu-20.04
+    timeout-minutes: 30
     strategy:
       matrix:
         include:
@@ -77,20 +82,21 @@ jobs:
             dataset: random-xs-20-angular
       fail-fast: false
 
+    env:
+      LIBRARY: ${{ matrix.library }}
+      DATASET: ${{ matrix.dataset }}
+
     steps:
     - uses: actions/checkout@v2 # Pull the repository
 
-    - name: Install various apt packages
+    - name: Install OS Dependencies
       run: sudo apt-get install -y libhdf5-dev python3-numpy python3-scipy python3-matplotlib python3-sklearn
 
-    - name: Install dependencies
-      run: |
-        pip3 install -r requirements.txt
-        python3 install.py
+    - name: Install Project Dependencies
+      run: pip3 install --quiet -r requirements.txt
 
-      env:
-        LIBRARY: ${{ matrix.library }}
-        DATASET: ${{ matrix.dataset }}
+    - name: Build Library Docker Image
+      run: python3 install.py
     
     - name: Run the benchmark
       run: |
@@ -103,7 +109,3 @@ jobs:
         python3 -m unittest test/test-metrics.py
         python3 -m unittest test/test-jaccard.py
         python3 create_website.py --outputdir . --scatter --latex
-
-      env:
-        LIBRARY: ${{ matrix.library }}
-        DATASET: ${{ matrix.dataset }}
