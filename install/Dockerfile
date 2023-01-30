@@ -1,8 +1,9 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 RUN apt-get update
 RUN apt-get install -y python3-numpy python3-scipy python3-pip build-essential git
 RUN pip3 install -U pip
+RUN python3 --version | grep 'Python 3.8.10'
 
 WORKDIR /home/app
 COPY requirements.txt run_algorithm.py ./

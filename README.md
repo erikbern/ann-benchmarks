@@ -97,7 +97,7 @@ glove-25-angular
 Install
 =======
 
-The only prerequisite is Python (tested with 3.6) and Docker.
+The only prerequisite is Python (tested with 3.8) and Docker.
 
 1. Clone the repo.
 2. Run `pip install -r requirements.txt`.
