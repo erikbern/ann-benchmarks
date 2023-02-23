@@ -1,42 +1,50 @@
 FROM ann-benchmarks
 
+# Install curl.
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt install -y curl
+
+# Create an app user, as elasticsearch cannot run as root.
+RUN mkdir -p /home/app
+RUN groupadd app
+RUN useradd app -g app -p app
+RUN chown -R app:app /home/app
 WORKDIR /home/app
+USER app
 
 # Install elasticsearch.
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt install -y wget curl htop
-RUN wget --quiet https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.5-amd64.deb \
-    && dpkg -i elasticsearch-7.17.5-amd64.deb \
-    && rm elasticsearch-7.17.5-amd64.deb
+RUN curl -o elasticsearch.tar.gz https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.6.2-linux-x86_64.tar.gz
+RUN tar xzf elasticsearch.tar.gz
+RUN mv elasticsearch-* elasticsearch && rm elasticsearch.tar.gz
 
 # Install python client.
 # Using no-deps because scipy (1.7.0) is incompatible with the container version of Python (3.6).
 # Then we need to install the deps manually.
-RUN python3 -m pip install --no-deps elastiknn-client==7.17.5.0
-RUN python3 -m pip install elasticsearch==7.17.4 dataclasses-json==0.3.7 tqdm==4.61.1
+RUN python3 -m pip install --no-deps elastiknn-client==8.6.2.0
+RUN python3 -m pip install elasticsearch==8.6.1 dataclasses-json==0.3.7 tqdm==4.61.1
 
 # Install plugin.
-RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch \
-    https://github.com/alexklibisz/elastiknn/releases/download/7.17.5.0/elastiknn-7.17.5.0.zip
+RUN ./elasticsearch/bin/elasticsearch-plugin install --batch \
+    https://github.com/alexklibisz/elastiknn/releases/download/8.6.2.0/elastiknn-8.6.2.0.zip
+
+# Configuration
+# Backup the original configurations, which can be useful for comparing.
+RUN cp elasticsearch/config/jvm.options elasticsearch/config/jvm.options.bak
+RUN cp elasticsearch/config/elasticsearch.yml elasticsearch/config/elasticsearch.yml.bak
 
 # Configure elasticsearch and JVM for single-node, single-core.
-RUN cp /etc/elasticsearch/jvm.options /etc/elasticsearch/jvm.options.bak
-RUN cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.bak
-
 RUN echo '\
-discovery.type: single-node\n\
-network.host: 0.0.0.0\n\
-node.master: true\n\
-node.data: true\n\
+cluster.initial_master_nodes: main\n\
+node.name: main\n\
+node.roles: [master,data]\n\
 node.processors: 1\n\
+path.data: /home/app/elasticsearch/data\n\
+path.logs: /home/app/elasticsearch/logs\n\
 thread_pool.write.size: 1\n\
 thread_pool.search.size: 1\n\
 thread_pool.search.queue_size: 1\n\
-bootstrap.memory_lock: true\n\
 xpack.security.enabled: false\n\
-path.data: /var/lib/elasticsearch\n\
-path.logs: /var/log/elasticsearch\n\
-' > /etc/elasticsearch/elasticsearch.yml
+' > elasticsearch/config/elasticsearch.yml
 
 RUN echo '\
 -Xms3G\n\
@@ -45,19 +53,23 @@ RUN echo '\
 -XX:G1ReservePercent=25\n\
 -XX:InitiatingHeapOccupancyPercent=30\n\
 -XX:+HeapDumpOnOutOfMemoryError\n\
--XX:HeapDumpPath=/var/lib/elasticsearch\n\
--XX:ErrorFile=/var/log/elasticsearch/hs_err_pid%p.log\n\
--Xlog:gc*,gc+age=trace,safepoint:file=/var/log/elasticsearch/gc.log:utctime,pid,tags:filecount=32,filesize=64m\n\
+-XX:HeapDumpPath=/home/app/elasticsearch/logs\n\
+-XX:ErrorFile=/home/app/elasticsearch/logs/hs_err_pid%p.log\n\
+-Xlog:gc*,gc+age=trace,safepoint:file=/home/app/elasticsearch/logs/gc.log:utctime,pid,tags:filecount=32,filesize=64m\n\
 -Dcom.sun.management.jmxremote.ssl=false\n\
 -Dcom.sun.management.jmxremote.authenticate=false\n\
 -Dcom.sun.management.jmxremote.local.only=false\n\
 -Dcom.sun.management.jmxremote.port=8097\n\
 -Dcom.sun.management.jmxremote.rmi.port=8097\n\
--Djava.rmi.server.hostname=localhost' > /etc/elasticsearch/jvm.options
+-Djava.rmi.server.hostname=localhost' > elasticsearch/config/jvm.options
 
 # JMX port. Need to also map the port when running.
 EXPOSE 8097
 
-# Custom entrypoint that also starts the Elasticsearch server.\
-RUN echo 'service elasticsearch start && python3 -u run_algorithm.py "$@"' > entrypoint.sh
+# Custom entrypoint that also starts the Elasticsearch server in the background
+RUN echo '\
+set -e\n\
+nohup /home/app/elasticsearch/bin/elasticsearch > nohup.out &\n\
+python3 -u run_algorithm.py "$@" || (cat nohup.out && exit 1)\n\
+' > entrypoint.sh
 ENTRYPOINT ["/bin/bash", "/home/app/entrypoint.sh"]
