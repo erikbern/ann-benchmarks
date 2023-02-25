@@ -37,7 +37,7 @@ def run_worker(cpu, args, queue):
     while not queue.empty():
         definition = queue.get()
         if args.local:
-            run(definition, args.dataset, args.count, args.runs, args.batch)
+            run(definition, args.dataset, args.count, args.runs, args.batch, args.batch_size)
         else:
             memory_margin = 500e6  # reserve some extra memory for misc stuff
             mem_limit = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
@@ -123,6 +123,12 @@ def main():
         type=positive_int,
         help='Number of Docker containers in parallel',
         default=1)
+    parser.add_argument(
+        '--batch-size',
+        help='Number of vectors in each batch. only works in batch mode. default (-1) is a single batch',
+        required=True,
+        type=int,
+        default=-1)
 
     args = parser.parse_args()
     if args.timeout == -1:

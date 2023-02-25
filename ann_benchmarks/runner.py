@@ -19,7 +19,7 @@ from ann_benchmarks.results import store_results
 
 
 def run_individual_query(algo, X_train, X_test, distance, count, run_count,
-                         batch):
+                         batch, batch_size=-1):
     prepared_queries = \
         (batch and hasattr(algo, "prepare_batch_query")) or \
         ((not batch) and hasattr(algo, "prepare_query"))
@@ -51,24 +51,34 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
                       ' is only %d)' % (algo, len(candidates), count))
             return (total, candidates)
 
-        def batch_query(X):
-            if prepared_queries:
-                algo.prepare_batch_query(X, count)
-                start = time.time()
-                algo.run_batch_query()
-                total = (time.time() - start)
-            else:
-                start = time.time()
-                algo.batch_query(X, count)
-                total = (time.time() - start)
-            results = algo.get_batch_results()
-            candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))  # noqa
-                           for idx in single_results]
-                          for v, single_results in zip(X, results)]
-            return [(total / float(len(X)), v) for v in candidates]
+        def batch_query(X, batch_size):
+            # Chunk into bits of batch_size
+            batch_size = X.shape[0] if batch_size == -1 else min(batch_size, X.shape[0])
+            n_batches = int(X.shape[0] / batch_size)
+            batches = numpy.array_split(X, n_batches)
+            global_results = []
+            print("Running {} batches with batch size {}".format(n_batches, batch_size))
+            for X_batch in batches:
+                if prepared_queries:
+                    algo.prepare_batch_query(X_batch, count)
+                    start = time.time()
+                    algo.run_batch_query()
+                    total = (time.time() - start)
+                else:
+                    start = time.time()
+                    algo.batch_query(X_batch, count)
+                    total = (time.time() - start)
+                results = algo.get_batch_results()
+                candidates = [[(int(idx), float(metrics[distance]['distance'](v, X_train[idx])))  # noqa
+                               for idx in single_results]
+                              for v, single_results in zip(X_batch, results)]
+
+                global_results.extend([(total / float(len(X)), v) for v in candidates])
+
+            return global_results
 
         if batch:
-            results = batch_query(X_test)
+            results = batch_query(X_test, batch_size)
         else:
             results = [single_query(x) for x in X_test]
 
@@ -95,7 +105,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
     return (attrs, results)
 
 
-def run(definition, dataset, count, run_count, batch):
+def run(definition, dataset, count, run_count, batch, batch_size=-1):
     algo = instantiate_algorithm(definition)
     assert not definition.query_argument_groups \
            or hasattr(algo, "set_query_arguments"), """\
@@ -137,7 +147,7 @@ function""" % (definition.module, definition.constructor, definition.arguments)
             if query_arguments:
                 algo.set_query_arguments(*query_arguments)
             descriptor, results = run_individual_query(
-                algo, X_train, X_test, distance, count, run_count, batch)
+                algo, X_train, X_test, distance, count, run_count, batch, batch_size)
             descriptor["build_time"] = build_time
             descriptor["index_size"] = index_size
             descriptor["algo"] = definition.algorithm
@@ -199,6 +209,12 @@ def run_from_cmdline():
         help='JSON of arguments to pass to the queries. E.g. [100]',
         nargs='*',
         default=[])
+    parser.add_argument(
+        '--batch-size',
+        help='Number of vectors in each batch. only works in batch mode. default (-1) is a single batch',
+        required=True,
+        type=int,
+        default=[-1])
     args = parser.parse_args()
     algo_args = json.loads(args.build)
     print(algo_args)
@@ -213,7 +229,7 @@ def run_from_cmdline():
         query_argument_groups=query_args,
         disabled=False
     )
-    run(definition, args.dataset, args.count, args.runs, args.batch)
+    run(definition, args.dataset, args.count, args.runs, args.batch, args.batch_size)
 
 
 def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,

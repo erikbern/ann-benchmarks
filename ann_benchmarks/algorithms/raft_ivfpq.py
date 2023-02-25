@@ -60,7 +60,7 @@ def get_dtype(dt_str):
 class RAFTIVFPQ(BaseANN):
     def __init__(self, n_list, pq_bits, pq_dim, dtype):
         self.name = 'RAFTIVFPQ(n_list={}, pq_bits={}, pq_dim={}, dtype={})'.format(
-        n_list)
+        n_list, pq_bits, pq_dim, dtype)
         self._n_list = n_list
         self._index = None
         self._dataset = None
@@ -76,13 +76,13 @@ class RAFTIVFPQ(BaseANN):
                                           pq_bits=self._pq_bits,
                                           pq_dim=self._pq_dim,
                                           add_data_on_build=True,
-                                          metric="l2_expanded")
+                                          metric="euclidean")
 
         self._index = ivf_pq.build(index_params, X)
         self._dataset = X
 
     def query(self, v, k):
-        v = cupy.asarray(v.reshape(1, -1).astype(self._dt))
+        v = cupy.asarray(v.reshape(1, -1)).astype(self._dt)
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes, lut_dtype=self._lut_dtype)
 
         k_refine = self._k_refine if self._k_refine is not None else k
@@ -90,38 +90,25 @@ class RAFTIVFPQ(BaseANN):
 
         if self._k_refine is not None:
             D, L = refine(self._dataset, v, cupy.asarray(L), k=k)
-
         return cupy.asarray(L).flatten().get()
 
-    def query_with_distances(self, v, n):
-
-        v = cupy.asarray(v.astype(self._dt).reshape(1, -1))
-
-        search_params = ivf_pq.SearchParams(n_probes=self._n_probes)
-        distances, labels = ivf_pq.search(search_params, self._index, v, n)
-        r = []
-        for l, d in zip(labels[0], distances[0]):
-            r.append((l, d))
-        return r
-
-    def batch_query(self, X, n):
-        X = cupy.asarray(X.astype(numpy.byte))
+    def batch_query(self, X, k):
+        X = cupy.asarray(X).astype(self._dt)
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes, lut_dtype=self._lut_dtype)
 
-        k_refine = self._k_refine if self._k_refine is not None else n
+        k_refine = self._k_refine+k if self._k_refine is not None else k
         D, L = ivf_pq.search(search_params, self._index, X, k_refine)
 
         self.res = (D, L)
 
         if self._k_refine is not None:
-            self.res = refine(self._dataset, X, cupy.asarray(L), k=n)
+            self.res = refine(self._dataset, X, cupy.asarray(L), k=k)
 
     def get_batch_results(self):
         _, L = self.res
         return L
 
     def set_query_arguments(self, n_probe, k_refine, lut_dtype):
-        print("Setting refine: %s" % k_refine)
         self._n_probes = min(n_probe, self._n_list)
         self._lut_dtype = get_dtype(lut_dtype)
         if k_refine > 0:
