@@ -59,7 +59,7 @@ def get_dtype(dt_str):
 
 class RAFTIVFPQ(BaseANN):
     def __init__(self, n_list, pq_bits, pq_dim, dtype):
-        self.name = 'RAFTIVFPQ(n_list={})'.format(
+        self.name = 'RAFTIVFPQ(n_list={}, pq_bits={}, pq_dim={}, dtype={})'.format(
         n_list)
         self._n_list = n_list
         self._index = None
