@@ -10,6 +10,7 @@ This project contains some tools to benchmark various implementations of approxi
 
 Running RAFT Benchmarks From Start to Finish on SIFT-1M
 =======================================================
+NOTE: This is just temporary for folks to test it. It will be removed
 
 To benchmark SCaNN:
 ```bash
@@ -18,7 +19,7 @@ mamba create --name ann_benchmarks_scann python=3.6
 conda activate ann_benchmarks_scann
 pip install -r requirements.txt
 pip install scann
-python run.py --batch --local --dataset=sift-128-euclidean --algorithm scann
+python run.py --batch --local --dataset=sift-128-euclidean --algorithm scann --batch-size 1000
 conda deactivate
 ```
 
@@ -28,7 +29,7 @@ To benchmark RAFT:
 mamba create --name ann_benchmarks_raft python=3.10
 mamba install -c conda-forge -c rapidsai -c nvidia pylibraft==23.02 rmm scipy h5py psutil pyyaml cupy
 pip install docker ansicolors
-python run.py --batch --local --dataset=sift-128-euclidean --algorithm=raft-ivfpq --run-disabled
+python run.py --batch --local --dataset=sift-128-euclidean --algorithm=raft-ivfpq --run-disabled --batch-size 1000
 conda deactivate
 ```
 
