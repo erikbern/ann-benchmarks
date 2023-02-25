@@ -49,6 +49,14 @@ pylibraft.config.set_output_as(lambda device_ndarray: device_ndarray.copy_to_hos
     >>> # handle needs to be explicitly synchronized
     >>> handle.sync()"""
 
+def get_dtype(dt_str):
+    if dt_str == "float":
+        return numpy.float32
+    elif dt_str == "ubyte":
+        return numpy.uint8
+    elif dt_str == "byte":
+        return numpy.byte
+
 class RAFTIVFPQ(BaseANN):
     def __init__(self, n_list, pq_bits, pq_dim, dtype):
         self.name = 'RAFTIVFPQ(n_list={})'.format(
@@ -59,7 +67,7 @@ class RAFTIVFPQ(BaseANN):
         self._k_refine = None
         self._pq_bits = pq_bits
         self._pq_dim = pq_dim
-        self._dt = numpy.dtype(dtype)
+        self._dt = get_dtype(dtype)
 
     def fit(self, X):
         X = cupy.asarray(X).astype(self._dt)
@@ -115,7 +123,7 @@ class RAFTIVFPQ(BaseANN):
     def set_query_arguments(self, n_probe, k_refine, lut_dtype):
         print("Setting refine: %s" % k_refine)
         self._n_probes = min(n_probe, self._n_list)
-        self._lut_dtype = numpy.dtype(lut_dtype) if lut_dtype != "ubyte" else numpy.uint8
+        self._lut_dtype = get_dtype(lut_dtype)
         if k_refine > 0:
             self._k_refine = k_refine
 
