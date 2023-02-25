@@ -27,6 +27,11 @@ class Scann(BaseANN):
             self.dims_per_block, anisotropic_quantization_threshold=self.avq_threshold).reorder(
                 1).build()
 
+  def batch_query(self, X, k):
+      self.res = self.searcher.search_batched(X, k, self.reorder, self.leaves_to_search)[0]
+
+  def get_batch_results(self):
+      return self.res
   def set_query_arguments(self, leaves_reorder):
       self.leaves_to_search, self.reorder = leaves_reorder
 
