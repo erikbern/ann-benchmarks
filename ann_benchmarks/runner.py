@@ -233,7 +233,7 @@ def run_from_cmdline():
 
 
 def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
-               mem_limit=None):
+               mem_limit=None, batch_size=-1):
     cmd = ['--dataset', dataset,
            '--algorithm', definition.algorithm,
            '--module', definition.module,
