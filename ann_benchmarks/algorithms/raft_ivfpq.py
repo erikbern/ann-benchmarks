@@ -50,32 +50,44 @@ pylibraft.config.set_output_as(lambda device_ndarray: device_ndarray.copy_to_hos
     >>> handle.sync()"""
 
 class RAFTIVFPQ(BaseANN):
-    def __init__(self, n_list):
+    def __init__(self, n_list, pq_bits, pq_dim, dtype):
         self.name = 'RAFTIVFPQ(n_list={})'.format(
         n_list)
         self._n_list = n_list
         self._index = None
         self._dataset = None
         self._k_refine = None
+        self._pq_bits = pq_bits
+        self._pq_dim = pq_dim
+        self._dt = numpy.dtype(dtype)
 
     def fit(self, X):
-        X = X.astype(numpy.float32)
-        X = cupy.asarray(X)
+        X = cupy.asarray(X).astype(self._dt)
 
         index_params = ivf_pq.IndexParams(n_lists=self._n_list,
-                                          pq_dim=128,
+                                          pq_bits=self._pq_bits,
+                                          pq_dim=self._pq_dim,
                                           add_data_on_build=True,
                                           metric="l2_expanded")
 
         self._index = ivf_pq.build(index_params, X)
         self._dataset = X
 
-    def query(self, v, n):
-        return [label for label, _ in self.query_with_distances(v, n)]
+    def query(self, v, k):
+        v = cupy.asarray(v.reshape(1, -1).astype(self._dt))
+        search_params = ivf_pq.SearchParams(n_probes=self._n_probes, lut_dtype=self._lut_dtype)
+
+        k_refine = self._k_refine if self._k_refine is not None else k
+        D, L = ivf_pq.search(search_params, self._index, v, k_refine)
+
+        if self._k_refine is not None:
+            D, L = refine(self._dataset, v, cupy.asarray(L), k=k)
+
+        return cupy.asarray(L).flatten().get()
 
     def query_with_distances(self, v, n):
 
-        v = cupy.asarray(v.astype(numpy.float32).reshape(1, -1))
+        v = cupy.asarray(v.astype(self._dt).reshape(1, -1))
 
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes)
         distances, labels = ivf_pq.search(search_params, self._index, v, n)
@@ -85,8 +97,8 @@ class RAFTIVFPQ(BaseANN):
         return r
 
     def batch_query(self, X, n):
-        X = cupy.asarray(X.astype(numpy.float32))
-        search_params = ivf_pq.SearchParams(n_probes=self._n_probes)
+        X = cupy.asarray(X.astype(numpy.byte))
+        search_params = ivf_pq.SearchParams(n_probes=self._n_probes, lut_dtype=self._lut_dtype)
 
         k_refine = self._k_refine if self._k_refine is not None else n
         D, L = ivf_pq.search(search_params, self._index, X, k_refine)
@@ -97,12 +109,13 @@ class RAFTIVFPQ(BaseANN):
             self.res = refine(self._dataset, X, cupy.asarray(L), k=n)
 
     def get_batch_results(self):
-        D, L = self.res
+        _, L = self.res
         return L
 
-    def set_query_arguments(self, n_probe, k_refine):
+    def set_query_arguments(self, n_probe, k_refine, lut_dtype):
         print("Setting refine: %s" % k_refine)
-        self._n_probes = n_probe
+        self._n_probes = min(n_probe, self._n_list)
+        self._lut_dtype = numpy.dtype(lut_dtype) if lut_dtype != "ubyte" else numpy.uint8
         if k_refine > 0:
             self._k_refine = k_refine
 
