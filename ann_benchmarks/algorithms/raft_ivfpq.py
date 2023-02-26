@@ -58,9 +58,10 @@ def get_dtype(dt_str):
         return numpy.byte
 
 class RAFTIVFPQ(BaseANN):
-    def __init__(self, n_list, pq_bits, pq_dim, dtype):
+    def __init__(self, metric, n_list, pq_bits, pq_dim, dtype):
         self.name = 'RAFTIVFPQ(n_list={}, pq_bits={}, pq_dim={}, dtype={})'.format(
         n_list, pq_bits, pq_dim, dtype)
+        print(metric)
         self._n_list = n_list
         self._index = None
         self._dataset = None
@@ -68,6 +69,7 @@ class RAFTIVFPQ(BaseANN):
         self._pq_bits = pq_bits
         self._pq_dim = pq_dim
         self._dt = get_dtype(dtype)
+        self._metric = "sqeuclidean"
 
     def fit(self, X):
         X = cupy.asarray(X).astype(self._dt)
@@ -76,7 +78,7 @@ class RAFTIVFPQ(BaseANN):
                                           pq_bits=self._pq_bits,
                                           pq_dim=self._pq_dim,
                                           add_data_on_build=True,
-                                          metric="euclidean")
+                                          metric=self._metric)
 
         self._index = ivf_pq.build(index_params, X)
         self._dataset = X
@@ -89,7 +91,7 @@ class RAFTIVFPQ(BaseANN):
         D, L = ivf_pq.search(search_params, self._index, v, k_refine)
 
         if self._k_refine is not None:
-            D, L = refine(self._dataset, v, cupy.asarray(L), k=k)
+            D, L = refine(self._dataset, v, cupy.asarray(L), k=k, metric=self._metric)
         return cupy.asarray(L).flatten().get()
 
     def batch_query(self, X, k):
@@ -102,7 +104,7 @@ class RAFTIVFPQ(BaseANN):
         self.res = (D, L)
 
         if self._k_refine is not None:
-            self.res = refine(self._dataset, X, cupy.asarray(L), k=k)
+            self.res = refine(self._dataset, X, cupy.asarray(L), k=k, metric=self._metric)
 
     def get_batch_results(self):
         _, L = self.res

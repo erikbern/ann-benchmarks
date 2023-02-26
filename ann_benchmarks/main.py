@@ -126,7 +126,7 @@ def main():
     parser.add_argument(
         '--batch-size',
         help='Number of vectors in each batch. only works in batch mode. default (-1) is a single batch',
-        required=True,
+        required=False,
         type=int,
         default=-1)
 
