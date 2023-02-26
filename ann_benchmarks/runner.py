@@ -59,6 +59,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
             global_results = []
             print("Running {} batches with batch size {}".format(n_batches, batch_size))
             for X_batch in batches:
+                total = 0
                 if prepared_queries:
                     algo.prepare_batch_query(X_batch, count)
                     start = time.time()
@@ -73,7 +74,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
                                for idx in single_results]
                               for v, single_results in zip(X_batch, results)]
 
-                global_results.extend([(total / float(len(X)), v) for v in candidates])
+                global_results.extend([(total / float(len(X_batch)), v) for v in candidates])
 
             return global_results
 
