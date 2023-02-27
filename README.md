@@ -7,40 +7,6 @@ Doing fast searching of nearest neighbors in high dimensional spaces is an incre
 
 This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics. We have pregenerated datasets (in HDF5) formats and we also have Docker containers for each algorithm. There's a [test suite](https://travis-ci.org/erikbern/ann-benchmarks) that makes sure every algorithm works.
 
-
-Running RAFT Benchmarks From Start to Finish on SIFT-1M
-=======================================================
-NOTE: This is just temporary for folks to test it. It will be removed
-
-To benchmark SCaNN:
-```bash
-# To benchmark scann
-mamba create --name ann_benchmarks_scann python=3.6
-conda activate ann_benchmarks_scann
-pip install -r requirements.txt
-pip install scann
-python run.py --batch --local --dataset=sift-128-euclidean --algorithm scann --batch-size 1000
-conda deactivate
-```
-
-To benchmark RAFT:
-```bash
-# To benchmark RAFT
-mamba create --name ann_benchmarks_raft python=3.10
-mamba install -c conda-forge -c rapidsai -c nvidia pylibraft==23.02 rmm scipy h5py psutil pyyaml cupy
-pip install docker ansicolors
-python run.py --batch --local --dataset=sift-128-euclidean --algorithm=raft-ivfpq --run-disabled --batch-size 1000
-conda deactivate
-```
-
-To Plot results:
-```bash
-conda activate ann_benchmarks_scann
-python plot.py --batch --dataset sift-128-euclidean -o sift-128-euclidean.png
-open sift-128-euclidean.png
-```
-
-
 Evaluated
 =========
 
