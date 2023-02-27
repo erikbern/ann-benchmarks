@@ -263,7 +263,8 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         },
         cpuset_cpus=cpu_limit,
         mem_limit=mem_limit,
-        detach=True)
+        detach=True,
+        runtime=definition.docker_runtime)
     logger = logging.getLogger(f"annb.{container.short_id}")
 
     logger.info('Created container %s: CPU limit %s, mem limit %s, timeout %d, command %s' % \

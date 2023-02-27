@@ -13,7 +13,8 @@ from itertools import product
 Definition = collections.namedtuple(
     'Definition',
     ['algorithm', 'constructor', 'module', 'docker_tag',
-     'arguments', 'query_argument_groups', 'disabled'])
+     'docker_runtime', 'arguments', 'query_argument_groups',
+     'disabled'])
 
 
 def instantiate_algorithm(definition):
@@ -163,6 +164,7 @@ def get_definitions(definition_file, dimension, point_type="float",
                 definitions.append(Definition(
                     algorithm=name,
                     docker_tag=algo['docker-tag'],
+                    docker_runtime=algo.get('docker-runtime', None),
                     module=algo['module'],
                     constructor=algo['constructor'],
                     arguments=aargs,

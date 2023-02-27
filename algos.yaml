@@ -61,6 +61,7 @@ float:
     raft-ivfpq:
       disabled: true
       docker-tag: ann-benchmarks-raft_ivfpq
+      docker-runtime: "nvidia"
       module: ann_benchmarks.algorithms.raft_ivfpq
       constructor: RAFTIVFPQ
       base-args: ["@metric"]
