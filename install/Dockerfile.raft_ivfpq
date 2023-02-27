@@ -1,16 +1,6 @@
-FROM ann-benchmarks
+FROM nvcr.io/nvidia/rapidsai/rapidsai-core:23.02-cuda11.8-runtime-ubuntu22.04-py3.10
 
-RUN apt update && apt install -y wget
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py38_22.11.1-1-Linux-x86_64.sh
-RUN bash Miniconda3-py38_22.11.1-1-Linux-x86_64.sh -b
+RUN mamba install -y -c conda-forge h5py psutil pyyaml matplotlib
+RUN pip install docker ansicolors
 
-ENV PATH /root/miniconda3/bin:$PATH
-
-RUN pip install -r requirements.txt
-
-RUN conda install -y -c conda-forge mamba
-RUN mamba install -y -c conda-forge -c nvidia -c rapidsai-nightly numpy==1.23.5 rmm==23.02* pylibraft==23.02* cudatoolkit==11.6* --force-reinstall
-
-RUN nvidia-smi
-
-RUN python -c 'from pylibraft.neighbors import ivf_pq;'
+RUN python3 -c 'from pylibraft.neighbors import ivf_pq;'
