@@ -240,9 +240,12 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
            '--module', definition.module,
            '--constructor', definition.constructor,
            '--runs', str(runs),
-           '--count', str(count)]
+           '--count', str(count),
+           '--batch-size', str(batch_size)]
+
     if batch:
         cmd += ['--batch']
+
     cmd.append(json.dumps(definition.arguments))
     cmd += [json.dumps(qag) for qag in definition.query_argument_groups]
 

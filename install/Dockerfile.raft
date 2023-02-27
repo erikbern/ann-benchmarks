@@ -1,6 +1,10 @@
-FROM nvcr.io/nvidia/rapidsai/rapidsai-core:23.02-cuda11.8-runtime-ubuntu22.04-py3.10
+FROM nvcr.io/nvidia/rapidsai/rapidsai-core:23.02-cuda11.8-runtime-ubuntu22.04-py3.10 as rapids
 
 RUN mamba install -y -c conda-forge h5py psutil pyyaml matplotlib
 RUN pip install docker ansicolors
 
 RUN python3 -c 'from pylibraft.neighbors import ivf_pq;'
+
+COPY --from=ann-benchmarks /home/app /home/app
+
+ENTRYPOINT ["python3", "-u", "/home/app/run_algorithm.py"]
