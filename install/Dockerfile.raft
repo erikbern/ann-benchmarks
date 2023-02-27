@@ -1,6 +1,6 @@
-FROM nvcr.io/nvidia/rapidsai/rapidsai-core:23.02-cuda11.8-runtime-ubuntu22.04-py3.10 as rapids
+FROM nvcr.io/nvidia/rapidsai/rapidsai-core:23.02-cuda11.8-runtime-ubuntu22.04-py3.10
 
-RUN mamba install -y -c conda-forge h5py psutil pyyaml matplotlib
+RUN pip install h5py psutil pyyaml matplotlib
 RUN pip install docker ansicolors
 
 RUN python3 -c 'from pylibraft.neighbors import ivf_pq;'

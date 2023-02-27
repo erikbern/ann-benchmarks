@@ -224,6 +224,8 @@ def run_from_cmdline():
     definition = Definition(
         algorithm=args.algorithm,
         docker_tag=None,  # not needed
+        docker_runtime=None,
+        docker_env={},
         module=args.module,
         constructor=args.constructor,
         arguments=algo_args,
@@ -267,7 +269,8 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
         cpuset_cpus=cpu_limit,
         mem_limit=mem_limit,
         detach=True,
-        runtime=definition.docker_runtime)
+        runtime=definition.docker_runtime,
+        environment=definition.docker_env)
     logger = logging.getLogger(f"annb.{container.short_id}")
 
     logger.info('Created container %s: CPU limit %s, mem limit %s, timeout %d, command %s' % \
