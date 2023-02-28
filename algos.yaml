@@ -56,8 +56,8 @@ float:
       constructor: FaissGPU
       run-groups:
         base:
-          args: [[512, 1204, 2048, 4096]]
-          query-args: [[1, 5, 10, 50, 100, 200], [0, 10, 100]]
+          args: [[400, 1024, 4096, 8192, 16384],
+                 [1, 10, 40, 100, 200]]
     raft-ivfpq:
       disabled: true
       docker-tag: ann-benchmarks-raft
@@ -68,7 +68,7 @@ float:
       base-args: ["@metric"]
       run-groups:
         base:
-          args: [[512, 1024, 2048, 4096], [4, 5], [0], ["float", "byte"]]
+          args: [[400, 1024, 4096, 8192, 16384], [4, 5], [0], ["float", "byte"]]
           query-args: [[1, 5, 10, 50, 100, 200], [0, 10, 100], ["ubyte", "float"]]
     luceneknn:
       docker-tag: ann-benchmarks-luceneknn
