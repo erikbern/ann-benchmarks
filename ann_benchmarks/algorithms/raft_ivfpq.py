@@ -12,6 +12,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 pylibraft.config.set_output_as(
     lambda device_ndarray: device_ndarray.copy_to_host())
 
+
 def get_dtype(dt_str):
     if dt_str == "float":
         return numpy.float32
@@ -20,9 +21,11 @@ def get_dtype(dt_str):
     elif dt_str == "byte":
         return numpy.byte
 
+
 class RAFTIVFPQ(BaseANN):
     def __init__(self, metric, n_list, pq_bits, pq_dim, dtype):
-        self.name = 'RAFTIVFPQ(n_list={}, pq_bits={}, pq_dim={}, dtype={})'.format(
+        self.name = 'RAFTIVFPQ(n_list={}, pq_bits={}, pq_dim={}, ' \
+                    'dtype={})'.format(
         n_list, pq_bits, pq_dim, dtype)
         print(metric)
         self._n_list = n_list
@@ -48,18 +51,21 @@ class RAFTIVFPQ(BaseANN):
 
     def query(self, v, k):
         v = cupy.asarray(v.reshape(1, -1)).astype(self._dt)
-        search_params = ivf_pq.SearchParams(n_probes=self._n_probes, lut_dtype=self._lut_dtype)
+        search_params = ivf_pq.SearchParams(n_probes=self._n_probes,
+                                            lut_dtype=self._lut_dtype)
 
         k_refine = self._k_refine if self._k_refine is not None else k
         D, L = ivf_pq.search(search_params, self._index, v, k_refine)
 
         if self._k_refine is not None:
-            D, L = refine(self._dataset, v, cupy.asarray(L), k=k, metric=self._metric)
+            D, L = refine(self._dataset, v, cupy.asarray(L), k=k,
+                          metric=self._metric)
         return cupy.asarray(L).flatten().get()
 
     def batch_query(self, X, k):
         X = cupy.asarray(X).astype(self._dt)
-        search_params = ivf_pq.SearchParams(n_probes=self._n_probes, lut_dtype=self._lut_dtype)
+        search_params = ivf_pq.SearchParams(n_probes=self._n_probes,
+                                            lut_dtype=self._lut_dtype)
 
         k_refine = self._k_refine+k if self._k_refine is not None else k
         D, L = ivf_pq.search(search_params, self._index, X, k_refine)
@@ -67,7 +73,8 @@ class RAFTIVFPQ(BaseANN):
         self.res = (D, L)
 
         if self._k_refine is not None:
-            self.res = refine(self._dataset, X, cupy.asarray(L), k=k, metric=self._metric)
+            self.res = refine(self._dataset, X, cupy.asarray(L), k=k,
+                              metric=self._metric)
 
     def get_batch_results(self):
         _, L = self.res
