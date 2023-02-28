@@ -6,5 +6,6 @@ RUN pip install docker ansicolors
 RUN python3 -c 'from pylibraft.neighbors import ivf_pq;'
 
 COPY --from=ann-benchmarks /home/app /home/app
+WORKDIR /home/app
 
-ENTRYPOINT ["python3", "-u", "/home/app/run_algorithm.py"]
+ENTRYPOINT ["python3", "-u", "run_algorithm.py"]

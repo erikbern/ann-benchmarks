@@ -283,6 +283,7 @@ def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
     try:
         return_value = container.wait(timeout=timeout)
         _handle_container_return_value(return_value, container, logger)
+
     except:
         logger.error('Container.wait for container %s failed with exception' % container.short_id)
         traceback.print_exc()
