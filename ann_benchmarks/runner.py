@@ -153,13 +153,10 @@ function""" % (definition.module, definition.constructor, definition.arguments)
             descriptor["index_size"] = index_size
             descriptor["algo"] = definition.algorithm
             descriptor["dataset"] = dataset
-
-            print(str(descriptor))
             store_results(dataset, count, definition,
                           query_arguments, descriptor, results, batch)
     except:
-        print("FAILED!")
-        print(str(e))
+        traceback.print_exc()
     finally:
         algo.done()
 
@@ -218,7 +215,6 @@ def run_from_cmdline():
         default=[-1])
     args = parser.parse_args()
     algo_args = json.loads(args.build)
-    print(algo_args)
     query_args = [json.loads(q) for q in args.queries]
 
     definition = Definition(
