@@ -215,6 +215,7 @@ def run_from_cmdline():
         default=[-1])
     args = parser.parse_args()
     algo_args = json.loads(args.build)
+    print(algo_args)
     query_args = [json.loads(q) for q in args.queries]
 
     definition = Definition(
