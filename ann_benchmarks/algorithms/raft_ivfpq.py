@@ -5,6 +5,7 @@ sys.path.append("faiss")  # noqa
 import numpy
 import ctypes
 import cupy
+import rmm
 import pylibraft
 from pylibraft.neighbors import ivf_pq, refine
 from ann_benchmarks.algorithms.base import BaseANN
@@ -27,7 +28,12 @@ class RAFTIVFPQ(BaseANN):
         self.name = 'RAFTIVFPQ(n_list={}, pq_bits={}, pq_dim={}, ' \
                     'dtype={})'.format(
         n_list, pq_bits, pq_dim, dtype)
-        print(metric)
+
+        # Will use 8GB of memory by default. Raise this if more is needed.
+        mr = rmm.mr.PoolMemoryResource(rmm.mr.CudaMemoryResource(),
+                                       initial_pool_size=2**30,
+                                       maximum_pool_size=(2**32)*2)
+
         self._n_list = n_list
         self._index = None
         self._dataset = None
@@ -36,10 +42,13 @@ class RAFTIVFPQ(BaseANN):
         self._pq_dim = pq_dim
         self._dt = get_dtype(dtype)
         self._metric = "sqeuclidean"
+        self._mr = mr
+
+        rmm.mr.set_current_device_resource(pool)
+        cupy.cuda.set_allocator(rmm.rmm_cupy_allocator)
 
     def fit(self, X):
         X = cupy.asarray(X).astype(self._dt)
-
         index_params = ivf_pq.IndexParams(n_lists=self._n_list,
                                           pq_bits=self._pq_bits,
                                           pq_dim=self._pq_dim,
@@ -55,7 +64,8 @@ class RAFTIVFPQ(BaseANN):
                                             lut_dtype=self._lut_dtype)
 
         k_refine = self._k_refine if self._k_refine is not None else k
-        D, L = ivf_pq.search(search_params, self._index, v, k_refine)
+        D, L = ivf_pq.search(search_params, self._index, v, k_refine,
+                             memory_resource=self._mr)
 
         if self._k_refine is not None:
             D, L = refine(self._dataset, v, cupy.asarray(L), k=k,
