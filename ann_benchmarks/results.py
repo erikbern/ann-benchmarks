@@ -44,7 +44,7 @@ def store_results(dataset, count, definition, query_arguments, attrs, results,
     f.close()
 
 
-def load_all_results(dataset=None, count=None, batch_mode=False, batch_size=None):
+def load_all_results(dataset=None, count=None, batch_mode=False, batch_size=0):
     for root, _, files in os.walk(get_result_filename(dataset, count)):
         for fn in files:
             if os.path.splitext(fn)[-1] != '.hdf5':
@@ -52,8 +52,10 @@ def load_all_results(dataset=None, count=None, batch_mode=False, batch_size=None
             try:
                 f = h5py.File(os.path.join(root, fn), 'r+')
                 properties = dict(f.attrs)
-                if batch_mode != properties['batch_mode']:
+                if batch_mode != properties['batch_mode'] and\
+                        batch_size != properties["batch_size"]:
                     continue
+
                 yield properties, f
                 f.close()
             except:
