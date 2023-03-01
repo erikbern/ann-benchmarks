@@ -19,7 +19,7 @@ from ann_benchmarks.results import store_results
 
 
 def run_individual_query(algo, X_train, X_test, distance, count, run_count,
-                         batch, batch_size=-1):
+                         batch, batch_size):
     prepared_queries = \
         (batch and hasattr(algo, "prepare_batch_query")) or \
         ((not batch) and hasattr(algo, "prepare_query"))
@@ -53,13 +53,12 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
 
         def batch_query(X, batch_size):
             # Chunk into bits of batch_size
-            batch_size = X.shape[0] if batch_size == -1 else min(batch_size, X.shape[0])
+            batch_size_active = X.shape[0] if batch_size <= 0 else min(batch_size, X.shape[0])
             n_batches = int(X.shape[0] / batch_size)
             batches = numpy.array_split(X, n_batches)
             global_results = []
-            print("Running {} batches with batch size {}".format(n_batches, batch_size))
+            print("Running {} batches with batch size {}".format(n_batches, batch_size_active))
             for X_batch in batches:
-                total = 0
                 if prepared_queries:
                     algo.prepare_batch_query(X_batch, count)
                     start = time.time()
@@ -92,6 +91,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
     verbose = hasattr(algo, "query_verbose")
     attrs = {
         "batch_mode": batch,
+        "batch_size": batch_size,
         "best_search_time": best_search_time,
         "candidates": avg_candidates,
         "expect_extra": verbose,
@@ -106,7 +106,7 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count,
     return (attrs, results)
 
 
-def run(definition, dataset, count, run_count, batch, batch_size=-1):
+def run(definition, dataset, count, run_count, batch, batch_size=0):
     algo = instantiate_algorithm(definition)
     assert not definition.query_argument_groups \
            or hasattr(algo, "set_query_arguments"), """\
@@ -154,7 +154,7 @@ function""" % (definition.module, definition.constructor, definition.arguments)
             descriptor["algo"] = definition.algorithm
             descriptor["dataset"] = dataset
             store_results(dataset, count, definition,
-                          query_arguments, descriptor, results, batch)
+                          query_arguments, descriptor, results, batch, batch_size)
     except:
         traceback.print_exc()
     finally:
@@ -212,7 +212,7 @@ def run_from_cmdline():
         help='Number of vectors in each batch. only works in batch mode. default (-1) is a single batch',
         required=False,
         type=int,
-        default=[-1])
+        default=[0])
     args = parser.parse_args()
     algo_args = json.loads(args.build)
     print(algo_args)
@@ -233,7 +233,7 @@ def run_from_cmdline():
 
 
 def run_docker(definition, dataset, count, runs, timeout, batch, cpu_limit,
-               mem_limit=None, batch_size=-1):
+               mem_limit=None, batch_size=0):
     cmd = ['--dataset', dataset,
            '--algorithm', definition.algorithm,
            '--module', definition.module,

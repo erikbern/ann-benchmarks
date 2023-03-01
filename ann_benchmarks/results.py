@@ -8,14 +8,16 @@ import traceback
 
 
 def get_result_filename(dataset=None, count=None, definition=None,
-                        query_arguments=None, batch_mode=False):
+                        query_arguments=None, batch_mode=False,
+                        batch_size=None):
     d = ['results']
     if dataset:
         d.append(dataset)
     if count:
         d.append(str(count))
     if definition:
-        d.append(definition.algorithm + ('-batch' if batch_mode else ''))
+        d.append(definition.algorithm + ('-batch-%s' % batch_size if batch_mode else ''))
+
         data = definition.arguments + query_arguments
         d.append(re.sub(r'\W+', '_', json.dumps(data, sort_keys=True))
                  .strip('_') + ".hdf5")
@@ -23,9 +25,9 @@ def get_result_filename(dataset=None, count=None, definition=None,
 
 
 def store_results(dataset, count, definition, query_arguments, attrs, results,
-                  batch):
+                  batch, batch_size):
     fn = get_result_filename(
-        dataset, count, definition, query_arguments, batch)
+        dataset, count, definition, query_arguments, batch, batch_size)
     head, tail = os.path.split(fn)
     if not os.path.isdir(head):
         os.makedirs(head)
@@ -42,7 +44,7 @@ def store_results(dataset, count, definition, query_arguments, attrs, results,
     f.close()
 
 
-def load_all_results(dataset=None, count=None, batch_mode=False):
+def load_all_results(dataset=None, count=None, batch_mode=False, batch_size=None):
     for root, _, files in os.walk(get_result_filename(dataset, count)):
         for fn in files:
             if os.path.splitext(fn)[-1] != '.hdf5':

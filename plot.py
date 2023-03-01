@@ -138,10 +138,17 @@ if __name__ == "__main__":
         '--recompute',
         help='Clears the cache and recomputes the metrics',
         action='store_true')
+    parser.add_argument(
+        '--batch-size',
+        help='Number of vectors in each batch. only works in batch mode. default (-1) is a single batch',
+        required=False,
+        type=int,
+        default=[0])
+
     args = parser.parse_args()
 
     if not args.output:
-        args.output = 'results/%s.png' % (args.dataset + ('-batch' if args.batch else ''))
+        args.output = 'results/%s.png' % (args.dataset + ('-batch-%s' % args.batch_size if args.batch else ''))
         print('writing output to %s' % args.output)
 
     dataset, _ = get_dataset(args.dataset)
