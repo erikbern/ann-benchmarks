@@ -44,7 +44,7 @@ class RAFTIVFPQ(BaseANN):
         self._metric = "sqeuclidean"
         self._mr = mr
 
-        rmm.mr.set_current_device_resource(pool)
+        rmm.mr.set_current_device_resource(mr)
         cupy.cuda.set_allocator(rmm.rmm_cupy_allocator)
 
     def fit(self, X):
