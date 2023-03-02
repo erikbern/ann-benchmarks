@@ -63,7 +63,7 @@ class RAFTIVFPQ(BaseANN):
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes,
                                             lut_dtype=self._lut_dtype)
 
-        refine_ratio = self._refine_ratio*k if self._refine_ratio > 1.0 else k
+        refine_ratio = int(self._refine_ratio*k) if self._refine_ratio > 1.0 else k
         D, L = ivf_pq.search(search_params, self._index, v, refine_ratio,
                              memory_resource=self._mr)
 
@@ -77,8 +77,9 @@ class RAFTIVFPQ(BaseANN):
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes,
                                             lut_dtype=self._lut_dtype)
 
-        refine_ratio = self._refine_ratio*k if self._refine_ratio > 1.0 else k
-        D, L = ivf_pq.search(search_params, self._index, X, refine_ratio)
+        refine_ratio = int(self._refine_ratio*k) if self._refine_ratio > 1.0 else k
+        D, L = ivf_pq.search(search_params, self._index, X, refine_ratio,
+                             memory_resource=self._mr)
 
         self.res = (D, L)
 
