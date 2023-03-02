@@ -52,12 +52,13 @@ def load_all_results(dataset=None, count=None, batch_mode=False, batch_size=0):
             try:
                 f = h5py.File(os.path.join(root, fn), 'r+')
                 properties = dict(f.attrs)
-                if batch_mode != properties['batch_mode'] and\
-                        batch_size != properties["batch_size"]:
+                if batch_mode != properties['batch_mode'] or\
+                    (batch_size > 0 and
+                        batch_size != properties["batch_size"]):
+                    f.close()
                     continue
 
                 yield properties, f
-                f.close()
             except:
                 print('Was unable to read', fn)
                 traceback.print_exc()
@@ -66,6 +67,6 @@ def load_all_results(dataset=None, count=None, batch_mode=False, batch_size=0):
 def get_unique_algorithms():
     algorithms = set()
     for batch_mode in [False, True]:
-        for properties, _ in load_all_results(batch_mode=batch_mode):
+        for properties, f in load_all_results(batch_mode=batch_mode):
             algorithms.add(properties['algo'])
     return algorithms

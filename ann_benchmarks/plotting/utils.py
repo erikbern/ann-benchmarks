@@ -133,8 +133,12 @@ def generate_n_colors(n):
 def create_linestyles(unique_algorithms):
     colors = dict(
         zip(unique_algorithms, generate_n_colors(len(unique_algorithms))))
+
+    print(str(unique_algorithms))
     linestyles = dict((algo, ['--', '-.', '-', ':'][i % 4])
                       for i, algo in enumerate(unique_algorithms))
+
+    print(str(linestyles))
     markerstyles = dict((algo, ['+', '<', 'o', '*', 'x'][i % 5])
                         for i, algo in enumerate(unique_algorithms))
     faded = dict((algo, (r, g, b, 0.3))
