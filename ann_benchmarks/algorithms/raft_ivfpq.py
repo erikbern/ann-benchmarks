@@ -37,7 +37,7 @@ class RAFTIVFPQ(BaseANN):
         self._n_list = n_list
         self._index = None
         self._dataset = None
-        self._k_refine = None
+        self._refine_ratio = 1.0
         self._pq_bits = pq_bits
         self._pq_dim = pq_dim
         self._dt = get_dtype(dtype)
@@ -63,11 +63,11 @@ class RAFTIVFPQ(BaseANN):
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes,
                                             lut_dtype=self._lut_dtype)
 
-        k_refine = self._k_refine if self._k_refine is not None else k
-        D, L = ivf_pq.search(search_params, self._index, v, k_refine,
+        refine_ratio = self._refine_ratio*k if self._refine_ratio > 1.0 else k
+        D, L = ivf_pq.search(search_params, self._index, v, refine_ratio,
                              memory_resource=self._mr)
 
-        if self._k_refine is not None:
+        if self._refine_ratio > 1.0:
             D, L = refine(self._dataset, v, cupy.asarray(L), k=k,
                           metric=self._metric)
         return cupy.asarray(L).flatten().get()
@@ -77,12 +77,12 @@ class RAFTIVFPQ(BaseANN):
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes,
                                             lut_dtype=self._lut_dtype)
 
-        k_refine = self._k_refine+k if self._k_refine is not None else k
-        D, L = ivf_pq.search(search_params, self._index, X, k_refine)
+        refine_ratio = self._refine_ratio*k if self._refine_ratio > 1.0 else k
+        D, L = ivf_pq.search(search_params, self._index, X, refine_ratio)
 
         self.res = (D, L)
 
-        if self._k_refine is not None:
+        if self._refine_ratio is not None:
             self.res = refine(self._dataset, X, cupy.asarray(L), k=k,
                               metric=self._metric)
 
@@ -90,9 +90,9 @@ class RAFTIVFPQ(BaseANN):
         _, L = self.res
         return L
 
-    def set_query_arguments(self, n_probe, k_refine, lut_dtype):
+    def set_query_arguments(self, n_probe, refine_ratio, lut_dtype):
         self._n_probes = min(n_probe, self._n_list)
         self._lut_dtype = get_dtype(lut_dtype)
-        if k_refine > 0:
-            self._k_refine = k_refine
+        if refine_ratio > 0:
+            self._refine_ratio = refine_ratio
 
