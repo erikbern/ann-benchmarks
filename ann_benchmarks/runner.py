@@ -149,10 +149,14 @@ function""" % (definition.module, definition.constructor, definition.arguments)
                 algo.set_query_arguments(*query_arguments)
             descriptor, results = run_individual_query(
                 algo, X_train, X_test, distance, count, run_count, batch, batch_size)
+
+            
             descriptor["build_time"] = build_time
             descriptor["index_size"] = index_size
             descriptor["algo"] = definition.algorithm
             descriptor["dataset"] = dataset
+
+            print(str(descriptor))
             store_results(dataset, count, definition,
                           query_arguments, descriptor, results, batch, batch_size)
     except:
