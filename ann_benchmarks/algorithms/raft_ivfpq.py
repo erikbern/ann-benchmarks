@@ -7,6 +7,7 @@ import ctypes
 import cupy
 import rmm
 import pylibraft
+from pylibraft.common import Handle
 from pylibraft.neighbors import ivf_pq, refine
 from ann_benchmarks.algorithms.base import BaseANN
 
@@ -44,19 +45,20 @@ class RAFTIVFPQ(BaseANN):
         self._dist_dtype = None
         self._metric = "euclidean"
         self._mr = mr
+        self._handle = Handle()
 
         rmm.mr.set_current_device_resource(mr)
         cupy.cuda.set_allocator(rmm.rmm_cupy_allocator)
 
     def fit(self, X):
-        X = cupy.asarray(X)#.astype(self._dt)
+        X = cupy.asarray(X)
         index_params = ivf_pq.IndexParams(n_lists=self._n_list,
                                           pq_bits=self._pq_bits,
                                           pq_dim=self._pq_dim,
                                           add_data_on_build=True,
                                           metric=self._metric)
 
-        self._index = ivf_pq.build(index_params, X)
+        self._index = ivf_pq.build(index_params, X, handle=self._handle)
         self._dataset = X
 
     def query(self, v, k):
@@ -67,28 +69,28 @@ class RAFTIVFPQ(BaseANN):
 
         refine_ratio = int(self._refine_ratio*k) if self._refine_ratio > 1.0 else k
         D, L = ivf_pq.search(search_params, self._index, v, refine_ratio,
-                             memory_resource=self._mr)
+                             memory_resource=self._mr, handle=self._handle)
 
         if self._refine_ratio > 1.0:
             D, L = refine(self._dataset, v, cupy.asarray(L), k=k,
-                          metric=self._metric)
+                          metric=self._metric, handle=self._handle)
         return cupy.asarray(L).flatten().get()
 
     def batch_query(self, X, k):
-        X = cupy.asarray(X)#.astype(self._dt)
+        X = cupy.asarray(X)
         search_params = ivf_pq.SearchParams(n_probes=self._n_probes,
                                             lut_dtype=self._lut_dtype,
                                             internal_distance_dtype=self._dist_dtype)
 
         refine_ratio = int(self._refine_ratio*k) if self._refine_ratio > 1.0 else k
         D, L = ivf_pq.search(search_params, self._index, X, refine_ratio,
-                             memory_resource=self._mr)
+                             memory_resource=self._mr, handle=self._handle)
 
         self.res = (D, L)
 
         if self._refine_ratio > 1.0:
             self.res = refine(self._dataset, X, L, k=k,
-                              metric=self._metric)
+                              metric=self._metric, handle=self._handle)
 
     def get_batch_results(self):
         _, L = self.res
