@@ -42,7 +42,7 @@ class RAFTIVFPQ(BaseANN):
         self._pq_bits = pq_bits
         self._pq_dim = pq_dim
         self._dist_dtype = None
-        self._metric = "sqeuclidean"
+        self._metric = "euclidean"
         self._mr = mr
 
         rmm.mr.set_current_device_resource(mr)
