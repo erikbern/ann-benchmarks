@@ -207,7 +207,7 @@ float:
           # This run group produces 3 algorithm instances -- Annoy("angular",
           # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
           # which will be used to run 12 different queries.
-    Milvus(Konwhere):
+    Milvus(Knowhere):
       docker-tag: ann-benchmarks-milvus
       module: ann_benchmarks.algorithms.milvus
       constructor: Milvus
