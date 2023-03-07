@@ -268,7 +268,7 @@ float:
         M-96:
           arg-groups:
             - {"M": 96,  "efConstruction": 500}
-          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]] 
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
 
     bruteforce:
       disabled: true
@@ -424,7 +424,7 @@ float:
       run-groups:
         exact:
           args: []
-    vald(NGT-panng):
+    vald(NGT-anng):
       docker-tag: ann-benchmarks-vald
       module: ann_benchmarks.algorithms.vald
       constructor: Vald
