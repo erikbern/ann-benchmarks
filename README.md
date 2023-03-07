@@ -37,7 +37,7 @@ Evaluated
 * [vald](https://github.com/vdaas/vald)
 * [Qdrant](https://github.com/qdrant/qdrant)
 * [qsgngtlib](https://gitee.com/WPJIANG-gitee/hwtl_sdu-anns-qsgngtlib)
-* [Milvus](https://github.com/milvus-io/milvus): [Konwhere](https://github.com/milvus-io/knowhere)
+* [Milvus](https://github.com/milvus-io/milvus): [Knowhere](https://github.com/milvus-io/knowhere)
 
 
 Data sets
