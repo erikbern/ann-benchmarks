@@ -323,6 +323,7 @@ float:
         ball:
           args: *treeargs
     ckdtree:
+      disable: true
       docker-tag: ann-benchmarks-scipy
       module: ann_benchmarks.algorithms.ckdtree
       constructor: CKDTree
@@ -877,6 +878,7 @@ float:
            args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1, 'chunks': 42}]
            query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
     puffinn:
+      disable: true
       docker-tag: ann-benchmarks-puffinn
       module: ann_benchmarks.algorithms.puffinn
       constructor: Puffinn
@@ -948,6 +950,7 @@ float:
             - False
           query-args: [[120, 80, 60, 40, 20, 10, 8, 4, 2]]
     rpforest:
+      disable: true
       docker-tag: ann-benchmarks-rpforest
       module: ann_benchmarks.algorithms.rpforest
       constructor: RPForest
@@ -1312,6 +1315,7 @@ bit:
             - False
           query-args: [[120, 80, 60, 40, 20, 10, 8, 4, 2]]
     BallTree(nmslib):
+      disable: true
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
