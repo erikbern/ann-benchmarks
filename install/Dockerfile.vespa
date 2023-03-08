@@ -4,7 +4,7 @@ RUN dnf -y install epel-release && \
     dnf -y install gcc make git python3-devel && \
     python3 -m pip install --upgrade pip setuptools wheel && \
     dnf -y copr enable @vespa/vespa centos-stream-8 && \
-    dnf -y install vespa-ann-benchmark
+    dnf -y install --enablerepo=powertools vespa-ann-benchmark
 
 WORKDIR /home/app
 

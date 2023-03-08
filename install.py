@@ -1,4 +1,4 @@
-import json
+import sys
 import os
 import argparse
 import subprocess
@@ -68,3 +68,9 @@ if __name__ == "__main__":
         pool.join()
 
     print('\n\nInstall Status:\n' + '\n'.join(str(algo) for algo in install_status))
+
+    # Exit 1 if any of the installations fail.
+    for x in install_status:
+        for (k,v) in x.items():
+            if v == 'fail':
+                sys.exit(1)

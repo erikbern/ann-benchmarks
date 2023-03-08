@@ -17,8 +17,8 @@ from vald.v1.payload import payload_pb2
 default_server_config = {
     'version': 'v0.0.0',
     'logging': {
-        'logger': 'glg',
-        'level': 'info',
+        'logger': 'nop',
+        'level': 'fatal',
         'format': 'raw'
     },
     'server_config': {
