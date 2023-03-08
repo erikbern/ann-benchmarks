@@ -1,7 +1,7 @@
 FROM ann-benchmarks
 
 RUN apt-get update
-RUN apt-get install -y wget git cmake g++ libaio-dev libgoogle-perftools-dev clang-format-4.0 libboost-dev python3 python3-setuptools python3-pip
+RUN apt-get install -y wget git cmake g++ libaio-dev libgoogle-perftools-dev clang-format libboost-dev python3 python3-setuptools python3-pip
 RUN pip3 install pybind11 numpy
 
 RUN cd /tmp && wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB
