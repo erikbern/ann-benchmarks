@@ -1,4 +1,5 @@
 FROM ann-benchmarks
 
-RUN pip3 install vearch
+RUN pip3 install numpy==1.24.1 && \
+    pip3 install vearch
 RUN python3 -c 'import vearch'
