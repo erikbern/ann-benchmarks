@@ -1,8 +1,8 @@
 FROM milvusdb/knowhere-env:pyknowhere1.3-20230303
 
 WORKDIR /home/app
-COPY requirements_py38.txt run_algorithm.py ./
-#RUN pip3 install -r requirements_py38.txt
+# COPY requirements_py38.txt run_algorithm.py ./
+# RUN pip3 install -r requirements_py38.txt
 
 # update python packages
 RUN pip3 install docker==6.0.1 && \
