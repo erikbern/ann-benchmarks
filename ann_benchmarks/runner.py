@@ -156,7 +156,6 @@ function""" % (definition.module, definition.constructor, definition.arguments)
             descriptor["algo"] = definition.algorithm
             descriptor["dataset"] = dataset
 
-            print(str(descriptor))
             store_results(dataset, count, definition,
                           query_arguments, descriptor, results, batch, batch_size)
     except:
@@ -216,7 +215,7 @@ def run_from_cmdline():
         help='Number of vectors in each batch. only works in batch mode. default (-1) is a single batch',
         required=False,
         type=int,
-        default=[0])
+        default=0)
     args = parser.parse_args()
     algo_args = json.loads(args.build)
     print(algo_args)

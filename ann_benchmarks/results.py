@@ -9,7 +9,7 @@ import traceback
 
 def get_result_filename(dataset=None, count=None, definition=None,
                         query_arguments=None, batch_mode=False,
-                        batch_size=None):
+                        batch_size=0):
     d = ['results']
     if dataset:
         d.append(dataset)
@@ -53,7 +53,7 @@ def load_all_results(dataset=None, count=None, batch_mode=False, batch_size=0):
                 f = h5py.File(os.path.join(root, fn), 'r+')
                 properties = dict(f.attrs)
                 if batch_mode != properties['batch_mode'] or\
-                    (batch_size > 0 and
+                    (properties['batch_mode'] and batch_size > 0 and
                         batch_size != properties["batch_size"]):
                     f.close()
                     continue

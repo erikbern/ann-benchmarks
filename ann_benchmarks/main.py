@@ -128,7 +128,7 @@ def main():
         help='Number of vectors in each batch. only works in batch mode. default (-1) is a single batch',
         required=False,
         type=int,
-        default=-1)
+        default=0)
 
     args = parser.parse_args()
     if args.timeout == -1:
