@@ -37,6 +37,8 @@ Evaluated
 * [vald](https://github.com/vdaas/vald)
 * [Qdrant](https://github.com/qdrant/qdrant)
 * [qsgngtlib](https://gitee.com/WPJIANG-gitee/hwtl_sdu-anns-qsgngtlib)
+* [Milvus](https://github.com/milvus-io/milvus): [Knowhere](https://github.com/milvus-io/knowhere)
+
 
 Data sets
 =========
@@ -97,7 +99,7 @@ glove-25-angular
 Install
 =======
 
-The only prerequisite is Python (tested with 3.6) and Docker.
+The only prerequisite is Python (tested with 3.10.6) and Docker.
 
 1. Clone the repo.
 2. Run `pip install -r requirements.txt`.
