@@ -17,6 +17,7 @@ class Milvus(BaseANN):
     Needs `__AVX512F__` flag to run, otherwise the results are incorrect.
     Support HNSW index type
     """
+
     def __init__(self, metric, dim, index_param):
         self._metric = metric
         self._dim = dim
@@ -28,10 +29,8 @@ class Milvus(BaseANN):
         self.client = None
 
     def fit(self, X):
-        if self._metric == 'angular':
-            X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
-
-        self.client = pyknowhere.Index(self._metric_type, self._dim, len(X), self._index_m, self._index_ef)
+        self.client = pyknowhere.Index(
+            self._metric_type, self._dim, len(X), self._index_m, self._index_ef)
         self.client.add(X, numpy.arange(len(X)))
 
     def set_query_arguments(self, ef):
@@ -39,9 +38,6 @@ class Milvus(BaseANN):
         self.client.set_param(ef)
 
     def query(self, v, n):
-        if self._metric == 'angular':
-            v /= numpy.linalg.norm(v)
-
         return self.client.search(v, k=n)
 
     def __str__(self):

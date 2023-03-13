@@ -30,19 +30,13 @@ jobs:
             dataset: random-xs-20-angular
           - library: n2
             dataset: random-xs-20-angular
-          - library: nearpy
-            dataset: random-xs-20-angular
           - library: ngt
             dataset: random-xs-20-angular
           - library: nmslib
             dataset: random-xs-20-angular
           - library: hnswlib
             dataset: random-xs-20-angular
-          - library: puffinn
-            dataset: random-xs-20-angular
           - library: pynndescent
-            dataset: random-xs-20-angular
-          - library: rpforest
             dataset: random-xs-20-angular
           - library: sklearn
             dataset: random-xs-20-angular
@@ -64,8 +58,6 @@ jobs:
             dataset: random-xs-20-angular
           - library: diskann
             dataset: random-xs-20-angular
-          - library: puffinn
-            dataset: random-s-jaccard
           - library: pynndescent
             dataset: random-s-jaccard
           - library: vespa
