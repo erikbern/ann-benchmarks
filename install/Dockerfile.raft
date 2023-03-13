@@ -2,10 +2,8 @@ FROM nvcr.io/nvidia/rapidsai/rapidsai-core:23.02-cuda11.8-runtime-ubuntu22.04-py
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt install -y apt-utils
-
-RUN pip install -y h5py psutil pyyaml matplotlib
-RUN pip install -y docker ansicolors
+RUN pip install h5py psutil pyyaml matplotlib
+RUN pip install docker ansicolors
 
 RUN python3 -c 'from pylibraft.neighbors import ivf_pq;'
 
