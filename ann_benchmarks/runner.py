@@ -300,7 +300,7 @@ def _handle_container_return_value(return_value, container, logger):
     if type(return_value) is dict:
         exit_code = return_value['StatusCode']
         if 'Error' in return_value:
-            error_msg = 'Error' in return_value['Error']
+            error_msg = return_value['Error']
             msg = base_msg + 'returned exit code %d with message %s' %(exit_code, error_msg)
     else: 
         exit_code = return_value
