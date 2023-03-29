@@ -1,6 +1,7 @@
 FROM quay.io/centos/centos:stream8
 
 RUN dnf -y install epel-release && \
+    dnf -y install dnf-plugins-core && \
     dnf -y install \
         gcc \
         make \
