@@ -25,8 +25,7 @@ def get_dtype(dt_str):
 
 class RAFTIVFFlat(BaseANN):
     def __init__(self, metric, n_list):
-        self.name = 'RAFTIVFFlat(n_list={})'.format(
-        n_list)
+        self.name = 'RAFTIVFFlat(n_list={})'.format(n_list)
 
         # Will use 8GB of memory by default. Raise this if more is needed.
         mr = rmm.mr.PoolMemoryResource(rmm.mr.CudaMemoryResource(),
@@ -36,7 +35,6 @@ class RAFTIVFFlat(BaseANN):
         self._n_list = n_list
         self._index = None
         self._dataset = None
-        self._dist_dtype = None
         self._metric = "euclidean"
         self._mr = mr
         self._handle = Handle()
@@ -55,27 +53,22 @@ class RAFTIVFFlat(BaseANN):
 
     def query(self, v, k):
         v = cupy.asarray(v.reshape(1, -1))
-        search_params = ivf_flat.SearchParams(n_probes=self._n_probes,
-                                            internal_distance_dtype=self._dist_dtype)
+        search_params = ivf_flat.SearchParams(n_probes=self._n_probes)
 
-        D, L = ivf_flat.search(search_params, self._index, v, k,
-                               memory_resource=self._mr, handle=self._handle)
+        D, L = ivf_flat.search(search_params, self._index, v, k, handle=self._handle)
 
         return cupy.asarray(L).flatten().get()
 
     def batch_query(self, X, k):
         X = cupy.asarray(X)
-        search_params = ivf_flat.SearchParams(n_probes=self._n_probes,
-                                            internal_distance_dtype=self._dist_dtype)
+        search_params = ivf_flat.SearchParams(n_probes=self._n_probes)
 
-        self.res = ivf_flat.search(search_params, self._index, X, k,
-                             memory_resource=self._mr, handle=self._handle)
+        self.res = ivf_flat.search(search_params, self._index, X, k, handle=self._handle)
 
     def get_batch_results(self):
         _, L = self.res
         return L.copy_to_host()
 
-    def set_query_arguments(self, n_probe, dist_dtype):
+    def set_query_arguments(self, n_probe):
         self._n_probes = min(n_probe, self._n_list)
-        self._dist_dtype=get_dtype(dist_dtype)
 
