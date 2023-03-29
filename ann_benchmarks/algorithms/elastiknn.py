@@ -26,11 +26,11 @@ logging.getLogger("elasticsearch").setLevel(logging.WARN)
 def es_wait():
     print("Waiting for elasticsearch health endpoint...")
     req = Request("http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=1s")
-    for i in range(30):
+    for i in range(60):
         try:
             res = urlopen(req)
             if res.getcode() == 200:
-                print("Elasticsearch is ready")
+                print(f"Elasticsearch is ready: {res.read().decode()}")
                 return
         except URLError:
             pass
