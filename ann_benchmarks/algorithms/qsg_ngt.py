@@ -4,6 +4,8 @@ import os
 import ngtpy
 import numpy as np
 import subprocess
+import struct
+from sklearn import preprocessing
 import time
 from ann_benchmarks.algorithms.base import BaseANN
 from ann_benchmarks.constants import INDEX_DIR
@@ -16,16 +18,19 @@ class QSG(BaseANN):
         self._outdegree = int(param['outdegree'])
         self._indegree = int(param['indegree'])
         self._max_edge_size = int(param['max_edge']) if 'max_edge' in param.keys() else 128
-        self._range = int(param['range'])
-        self._threshold = int(param['threshold'])
-        self._rangeMax = int(param['rangeMax'])
-        self._searchA = int(param['searchA'])
         self._metric = metrics[metric]
         self._object_type = object_type
         self._edge_size_for_search = int(param['search_edge']) if 'search_edge' in param.keys() else -2
         self._tree_disabled = (param['tree'] == False) if 'tree' in param.keys() else False
         self._build_time_limit = 4
         self._epsilon = epsilon
+        self._paramE = param['paramE']
+        self._paramS = param['paramS']
+        self._range =  int(param['range'])
+        self._threshold =  int(param['threshold'])
+        self._rangeMax =  int(param['rangeMax'])
+        self._searchA =  int(param['searchA'])
+        self._ifES =  int(param['ifES'])
         print('QSG: edge_size=' + str(self._edge_size))
         print('QSG: outdegree=' + str(self._outdegree))
         print('QSG: indegree=' + str(self._indegree))
@@ -33,8 +38,8 @@ class QSG(BaseANN):
         print('QSG: epsilon=' + str(self._epsilon))
         print('QSG: metric=' + metric)
         print('QSG: object_type=' + object_type)
-        print('QSG: range=' + str(self._range))
-        print('QSG: threshold=' + str(self._threshold))
+        print('QG: range=' +str(self._range))
+        print('QG: threshold=' + str(self._threshold))
 
     def fit(self, X):
         print('QSG: start indexing...')
@@ -57,13 +62,56 @@ class QSG(BaseANN):
                     '-D' + self._metric, '-d' + str(dim),
                     '-E' + str(self._edge_size), '-S40',
                     '-e' + str(self._epsilon), '-P0', '-B30',
-                    '-T' + str(self._build_time_limit), '-R' + str(self._range), '-t' + str(self._threshold), '-M' + str(self._rangeMax), '-A' + str(self._searchA), anngIndex]
+                    '-T' + str(self._build_time_limit),'-R' + str(self._range), '-t' + str(self._threshold),'-M' + str(self._rangeMax),'-A' + str(self._searchA),'-H' + str(self._ifES), anngIndex]
             subprocess.call(args)
             idx = ngtpy.Index(path=anngIndex)
             idx.batch_insert(X, num_threads=24, debug=False)
             idx.save()
             idx.close()
             print('QSG: ANNG construction time(sec)=' + str(time.time() - t))
+        if self._ifES == 1:
+            if self._metric == 'E':
+                X_normalized = preprocessing.normalize(X, norm='l2')
+                fvecs_dir = 'fvecs'
+                if not os.path.exists(fvecs_dir):
+                    os.makedirs(fvecs_dir)
+                fvecs = os.path.join(fvecs_dir, 'base.fvecs')
+                with open(fvecs, 'wb') as fp:
+                    for y in X_normalized:
+                        d = struct.pack('I', y.size)
+                        fp.write(d)
+                        for x in y:
+                            a = struct.pack('f', x)
+                            fp.write(a)
+            else:
+                fvecs_dir = 'fvecs'
+                if not os.path.exists(fvecs_dir):
+                    os.makedirs(fvecs_dir)
+                fvecs = os.path.join(fvecs_dir, 'base.fvecs')
+                with open(fvecs, 'wb') as fp:
+                    for y in X:
+                        d = struct.pack('I', y.size)
+                        fp.write(d)
+                        for x in y:
+                            a = struct.pack('f', x)
+                            fp.write(a)
+            parmEfanna = self._paramE
+            parmSSG = self._paramS
+            graph_dir = 'graph'
+            if not os.path.exists(graph_dir):
+                os.makedirs(graph_dir)
+            KNNG = os.path.join(graph_dir, 'KNNG-' + str(parmEfanna[0]) + '-' + str(parmEfanna[1]) + '-' + str(
+                parmEfanna[2]) + '-' + str(parmEfanna[3]) + '-' + str(parmEfanna[4]) + '.graph')
+            SG = os.path.join(anngIndex, 'grp')
+            cmds = '/home/app/hwtl_sdu-anns-qsgngtlib/qsgngt-knng ' + str(fvecs) + ' ' + str(KNNG) + ' ' + str(
+                parmEfanna[0]) + ' ' + str(parmEfanna[1]) + ' ' + str(parmEfanna[2]) + ' ' + str(
+                parmEfanna[3]) + ' ' + str(
+                parmEfanna[4]) + \
+                   '&& /home/app/hwtl_sdu-anns-qsgngtlib/qsgngt-SpaceGraph ' + str(fvecs) + ' ' + str(KNNG) + ' ' + str(
+                parmSSG[0]) + ' ' + str(parmSSG[1]) + ' ' + str(parmSSG[2]) + ' ' + str(SG)
+            os.system(cmds)
+
+
         if not os.path.exists(index):
             print('QSG: degree adjustment')
             t = time.time()
