@@ -145,6 +145,7 @@ class QSG(BaseANN):
         else:
             print('QSG: something wrong.')
         print('QSG: end of fit')
+        print('QSG:Successfully Build Index')
 
     def set_query_arguments(self, parameters):
         result_expansion, epsilon = parameters
