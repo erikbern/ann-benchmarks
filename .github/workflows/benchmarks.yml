@@ -1,6 +1,10 @@
 name: ANN benchmarks
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 # Cancel the workflow for the previous commit when the new commit is pushed.
 concurrency:
