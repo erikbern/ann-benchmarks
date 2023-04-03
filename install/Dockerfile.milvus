@@ -1,20 +1,11 @@
 FROM milvusdb/knowhere-env:pyknowhere1.3-20230303
 
 WORKDIR /home/app
-COPY requirements_py38.txt run_algorithm.py ./
-#RUN pip3 install -r requirements_py38.txt
+COPY run_algorithm.py requirements.txt ./
 
 # update python packages
-RUN pip3 install docker==6.0.1 && \
-    pip3 install h5py==3.8.0 && \
-    pip3 install matplotlib==3.6.3 && \
-    pip3 install numpy==1.24.1 && \
-    pip3 install pyyaml==6.0 && \
-    pip3 install psutil==5.9.4 && \
-    pip3 install scipy==1.10.0 && \
-    pip3 install scikit-learn==1.2.1 && \
-    pip3 install jinja2==3.1.2 && \
-    pip3 install ansicolors==1.1.8
+RUN pip3 install -r requirements.txt
+RUN python3 -c 'import pyknowhere'
 
 ENTRYPOINT ["python3", "-u", "run_algorithm.py"]
 
