@@ -19,7 +19,7 @@ class Vearch(BaseANN):
         dists, ids = self.res
         res = []
         for single_ids in ids:
-            res.expand(single_ids.tolist())
+            res.append(single_ids.tolist())
         return res
 
 class VearchIndex(Vearch):
