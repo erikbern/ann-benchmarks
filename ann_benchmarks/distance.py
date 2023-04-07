@@ -19,7 +19,7 @@ def euclidean(a, b):
 
 metrics = {
     'hamming': {
-        'distance': lambda a, b: np.sum(np.abs(a - b)),
+        'distance': lambda a, b: np.sum(a ^ b),
         'distance_valid': lambda a: True,
     },
     # return 1 - jaccard similarity, because smaller distances are better.
