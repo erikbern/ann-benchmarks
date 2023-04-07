@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     strategy:
+      fail-fast: false
       matrix:
         dataset: [random-xs-20-angular]
         library:
@@ -53,7 +54,6 @@ jobs:
             dataset: random-s-jaccard
           - library: pynndescent
             dataset: random-s-jaccard
-      fail-fast: false
 
     env:
       LIBRARY: ${{ matrix.library }}
@@ -73,8 +73,8 @@ jobs:
     
     - name: Run the benchmark
       run: |
-        python3 run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --timeout 300
-        python3 run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 5 --dataset $DATASET --run-disabled --batch --timeout 300
+        python3 run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 3 --runs 2 --dataset $DATASET --run-disabled --timeout 300
+        python3 run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 3 --runs 2 --dataset $DATASET --run-disabled --batch --timeout 300
         sudo chmod -R 777 results/
         python3 plot.py --dataset $DATASET --output plot.png
         python3 plot.py --dataset $DATASET --output plot-batch.png --batch
