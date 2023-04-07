@@ -1,23 +1,16 @@
 import matplotlib as mpl
-mpl.use('Agg')  # noqa
+
+mpl.use("Agg")  # noqa
 import argparse
 import os
-import json
-import pickle
-import yaml
-import numpy
 import hashlib
 from jinja2 import Environment, FileSystemLoader
 
 from ann_benchmarks import results
 from ann_benchmarks.datasets import get_dataset
-from ann_benchmarks.plotting.plot_variants import (all_plot_variants
-                                                   as plot_variants)
+from ann_benchmarks.plotting.plot_variants import all_plot_variants as plot_variants
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
-from ann_benchmarks.plotting.utils import (get_plot_label, compute_metrics,
-                                           compute_all_metrics,
-                                           create_pointset,
-                                           create_linestyles)
+from ann_benchmarks.plotting.utils import get_plot_label, compute_all_metrics, create_pointset, create_linestyles
 import plot
 
 colors = [
@@ -29,7 +22,7 @@ colors = [
     "rgba(227,26,28,1)",
     "rgba(253,191,111,1)",
     "rgba(255,127,0,1)",
-    "rgba(202,178,214,1)"
+    "rgba(202,178,214,1)",
 ]
 
 point_styles = {
@@ -43,17 +36,19 @@ point_styles = {
 
 def convert_color(color):
     r, g, b, a = color
-    return "rgba(%(r)d, %(g)d, %(b)d, %(a)d)" % {
-        "r": r * 255, "g": g * 255, "b": b * 255, "a": a}
+    return "rgba(%(r)d, %(g)d, %(b)d, %(a)d)" % {"r": r * 255, "g": g * 255, "b": b * 255, "a": a}
 
 
 def convert_linestyle(ls):
     new_ls = {}
     for algo in ls.keys():
         algostyle = ls[algo]
-        new_ls[algo] = (convert_color(algostyle[0]),
-                        convert_color(algostyle[1]),
-                        algostyle[2], point_styles[algostyle[3]])
+        new_ls[algo] = (
+            convert_color(algostyle[0]),
+            convert_color(algostyle[1]),
+            algostyle[2],
+            point_styles[algostyle[3]],
+        )
     return new_ls
 
 
@@ -74,8 +69,7 @@ def get_distance_from_desc(desc):
 
 
 def get_dataset_label(desc):
-    return "{} (k = {})".format(get_dataset_from_desc(desc),
-                                get_count_from_desc(desc))
+    return "{} (k = {})".format(get_dataset_from_desc(desc), get_count_from_desc(desc))
 
 
 def directory_path(s):
@@ -94,132 +88,115 @@ def prepare_data(data, xn, yn):
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    '--plottype',
-    help='Generate only the plots specified',
-    nargs='*',
+    "--plottype",
+    help="Generate only the plots specified",
+    nargs="*",
     choices=plot_variants.keys(),
-    default=plot_variants.keys())
-parser.add_argument(
-    '--outputdir',
-    help='Select output directory',
-    default='.',
-    type=directory_path,
-    action='store')
-parser.add_argument(
-    '--latex',
-    help='generates latex code for each plot',
-    action='store_true')
-parser.add_argument(
-    '--scatter',
-    help='create scatterplot for data',
-    action='store_true')
-parser.add_argument(
-    '--recompute',
-    help='Clears the cache and recomputes the metrics',
-    action='store_true')
+    default=plot_variants.keys(),
+)
+parser.add_argument("--outputdir", help="Select output directory", default=".", type=directory_path, action="store")
+parser.add_argument("--latex", help="generates latex code for each plot", action="store_true")
+parser.add_argument("--scatter", help="create scatterplot for data", action="store_true")
+parser.add_argument("--recompute", help="Clears the cache and recomputes the metrics", action="store_true")
 args = parser.parse_args()
 
 
 def get_lines(all_data, xn, yn, render_all_points):
-    """ For each algorithm run on a dataset, obtain its performance
+    """For each algorithm run on a dataset, obtain its performance
     curve coords."""
     plot_data = []
     for algo in sorted(all_data.keys(), key=lambda x: x.lower()):
-        xs, ys, ls, axs, ays, als = \
-            create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
+        xs, ys, ls, axs, ays, als = create_pointset(prepare_data(all_data[algo], xn, yn), xn, yn)
         if render_all_points:
             xs, ys, ls = axs, ays, als
-        plot_data.append({"name": algo, "coords": zip(xs, ys), "labels": ls,
-                          "scatter": render_all_points})
+        plot_data.append({"name": algo, "coords": zip(xs, ys), "labels": ls, "scatter": render_all_points})
     return plot_data
 
 
-def create_plot(all_data, xn, yn, linestyle, j2_env, additional_label="",
-                plottype="line"):
+def create_plot(all_data, xn, yn, linestyle, j2_env, additional_label="", plottype="line"):
     xm, ym = (metrics[xn], metrics[yn])
     render_all_points = plottype == "bubble"
     plot_data = get_lines(all_data, xn, yn, render_all_points)
-    latex_code = j2_env.get_template("latex.template").\
-        render(plot_data=plot_data, caption=get_plot_label(xm, ym),
-               xlabel=xm["description"], ylabel=ym["description"])
+    latex_code = j2_env.get_template("latex.template").render(
+        plot_data=plot_data, caption=get_plot_label(xm, ym), xlabel=xm["description"], ylabel=ym["description"]
+    )
     plot_data = get_lines(all_data, xn, yn, render_all_points)
-    button_label = hashlib.sha224((get_plot_label(xm, ym) + additional_label)
-                                  .encode("utf-8")).hexdigest()
-    return j2_env.get_template("chartjs.template").\
-        render(args=args, latex_code=latex_code, button_label=button_label,
-               data_points=plot_data,
-               xlabel=xm["description"], ylabel=ym["description"],
-               plottype=plottype, plot_label=get_plot_label(xm, ym),
-               label=additional_label, linestyle=linestyle,
-               render_all_points=render_all_points)
+    button_label = hashlib.sha224((get_plot_label(xm, ym) + additional_label).encode("utf-8")).hexdigest()
+    return j2_env.get_template("chartjs.template").render(
+        args=args,
+        latex_code=latex_code,
+        button_label=button_label,
+        data_points=plot_data,
+        xlabel=xm["description"],
+        ylabel=ym["description"],
+        plottype=plottype,
+        plot_label=get_plot_label(xm, ym),
+        label=additional_label,
+        linestyle=linestyle,
+        render_all_points=render_all_points,
+    )
 
 
 def build_detail_site(data, label_func, j2_env, linestyles, batch=False):
     for (name, runs) in data.items():
         print("Building '%s'" % name)
-        all_runs = runs.keys()
+        runs.keys()
         label = label_func(name)
         data = {"normal": [], "scatter": []}
 
         for plottype in args.plottype:
             xn, yn = plot_variants[plottype]
-            data["normal"].append(create_plot(
-                runs, xn, yn, convert_linestyle(linestyles), j2_env))
+            data["normal"].append(create_plot(runs, xn, yn, convert_linestyle(linestyles), j2_env))
             if args.scatter:
                 data["scatter"].append(
-                    create_plot(runs, xn, yn, convert_linestyle(linestyles),
-                                j2_env, "Scatterplot ", "bubble"))
+                    create_plot(runs, xn, yn, convert_linestyle(linestyles), j2_env, "Scatterplot ", "bubble")
+                )
 
         # create png plot for summary page
         data_for_plot = {}
         for k in runs.keys():
-            data_for_plot[k] = prepare_data(runs[k], 'k-nn', 'qps')
+            data_for_plot[k] = prepare_data(runs[k], "k-nn", "qps")
         plot.create_plot(
-            data_for_plot, False,
-            'linear', 'log', 'k-nn', 'qps',
-            args.outputdir + name + '.png',
-            linestyles, batch)
-        output_path = \
-            args.outputdir + name + '.html'
+            data_for_plot, False, "linear", "log", "k-nn", "qps", args.outputdir + name + ".png", linestyles, batch
+        )
+        output_path = args.outputdir + name + ".html"
         with open(output_path, "w") as text_file:
-            text_file.write(j2_env.get_template("detail_page.html").
-                            render(title=label, plot_data=data,
-                                   args=args, batch=batch))
+            text_file.write(
+                j2_env.get_template("detail_page.html").render(title=label, plot_data=data, args=args, batch=batch)
+            )
 
 
 def build_index_site(datasets, algorithms, j2_env, file_name):
-    dataset_data = {'batch': [], 'non-batch': []}
-    for mode in ['batch', 'non-batch']:
-        distance_measures = sorted(
-            set([get_distance_from_desc(e) for e in datasets[mode].keys()]))
-        sorted_datasets = sorted(
-            set([get_dataset_from_desc(e) for e in datasets[mode].keys()]))
+    dataset_data = {"batch": [], "non-batch": []}
+    for mode in ["batch", "non-batch"]:
+        distance_measures = sorted(set([get_distance_from_desc(e) for e in datasets[mode].keys()]))
+        sorted_datasets = sorted(set([get_dataset_from_desc(e) for e in datasets[mode].keys()]))
 
         for dm in distance_measures:
             d = {"name": dm.capitalize(), "entries": []}
             for ds in sorted_datasets:
-                matching_datasets = [e for e in datasets[mode].keys()
-                                     if get_dataset_from_desc(e) == ds and  # noqa
-                                     get_distance_from_desc(e) == dm]
-                sorted_matches = sorted(
-                    matching_datasets,
-                    key=lambda e: int(get_count_from_desc(e)))
+                matching_datasets = [
+                    e
+                    for e in datasets[mode].keys()
+                    if get_dataset_from_desc(e) == ds and get_distance_from_desc(e) == dm  # noqa
+                ]
+                sorted_matches = sorted(matching_datasets, key=lambda e: int(get_count_from_desc(e)))
                 for idd in sorted_matches:
-                    d["entries"].append(
-                        {"name": idd, "desc": get_dataset_label(idd)})
+                    d["entries"].append({"name": idd, "desc": get_dataset_label(idd)})
             dataset_data[mode].append(d)
 
     with open(args.outputdir + "index.html", "w") as text_file:
-        text_file.write(j2_env.get_template("summary.html").
-                        render(title="ANN-Benchmarks",
-                               dataset_with_distances=dataset_data,
-                               algorithms=algorithms))
+        text_file.write(
+            j2_env.get_template("summary.html").render(
+                title="ANN-Benchmarks", dataset_with_distances=dataset_data, algorithms=algorithms
+            )
+        )
 
 
 def load_all_results():
     """Read all result files and compute all metrics"""
-    all_runs_by_dataset = {'batch': {}, 'non-batch': {}}
-    all_runs_by_algorithm = {'batch': {}, 'non-batch': {}}
+    all_runs_by_dataset = {"batch": {}, "non-batch": {}}
+    all_runs_by_algorithm = {"batch": {}, "non-batch": {}}
     cached_true_dist = []
     old_sdn = None
     for mode in ["non-batch", "batch"]:
@@ -230,15 +207,12 @@ def load_all_results():
                 cached_true_dist = list(dataset["distances"])
                 old_sdn = sdn
             algo_ds = get_dataset_label(sdn)
-            desc_suffix = ("-batch" if mode == "batch" else "")
+            desc_suffix = "-batch" if mode == "batch" else ""
             algo = properties["algo"] + desc_suffix
             sdn += desc_suffix
-            ms = compute_all_metrics(
-                cached_true_dist, f, properties, args.recompute)
-            all_runs_by_algorithm[mode].setdefault(
-                algo, {}).setdefault(algo_ds, []).append(ms)
-            all_runs_by_dataset[mode].setdefault(
-                sdn, {}).setdefault(algo, []).append(ms)
+            ms = compute_all_metrics(cached_true_dist, f, properties, args.recompute)
+            all_runs_by_algorithm[mode].setdefault(algo, {}).setdefault(algo_ds, []).append(ms)
+            all_runs_by_dataset[mode].setdefault(sdn, {}).setdefault(algo, []).append(ms)
 
     return (all_runs_by_dataset, all_runs_by_algorithm)
 
@@ -246,27 +220,17 @@ def load_all_results():
 j2_env = Environment(loader=FileSystemLoader("./templates/"), trim_blocks=True)
 j2_env.globals.update(zip=zip, len=len)
 runs_by_ds, runs_by_algo = load_all_results()
-dataset_names = [get_dataset_label(x) for x in list(
-    runs_by_ds['batch'].keys()) + list(runs_by_ds['non-batch'].keys())]
-algorithm_names = list(runs_by_algo['batch'].keys(
-)) + list(runs_by_algo['non-batch'].keys())
+dataset_names = [get_dataset_label(x) for x in list(runs_by_ds["batch"].keys()) + list(runs_by_ds["non-batch"].keys())]
+algorithm_names = list(runs_by_algo["batch"].keys()) + list(runs_by_algo["non-batch"].keys())
 
-linestyles = {**create_linestyles(dataset_names),
-              **create_linestyles(algorithm_names)}
+linestyles = {**create_linestyles(dataset_names), **create_linestyles(algorithm_names)}
 
-build_detail_site(
-    runs_by_ds['non-batch'],
-    lambda label: get_dataset_label(label), j2_env, linestyles, False)
+build_detail_site(runs_by_ds["non-batch"], lambda label: get_dataset_label(label), j2_env, linestyles, False)
 
-build_detail_site(
-    runs_by_ds['batch'],
-    lambda label: get_dataset_label(label), j2_env, linestyles, True)
+build_detail_site(runs_by_ds["batch"], lambda label: get_dataset_label(label), j2_env, linestyles, True)
 
-build_detail_site(
-    runs_by_algo['non-batch'],
-    lambda x: x, j2_env, linestyles, False)
+build_detail_site(runs_by_algo["non-batch"], lambda x: x, j2_env, linestyles, False)
 
-build_detail_site(
-    runs_by_algo['batch'], lambda x: x, j2_env, linestyles, True)
+build_detail_site(runs_by_algo["batch"], lambda x: x, j2_env, linestyles, True)
 
 build_index_site(runs_by_ds, runs_by_algo, j2_env, "index.html")

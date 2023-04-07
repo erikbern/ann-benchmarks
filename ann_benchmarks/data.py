@@ -19,9 +19,7 @@ def int_unparse_entry(entry):
 
 
 def bit_parse_entry(line):
-    return [bool(int(x)) for x in list(line.strip()
-                                       .replace(" ", "")
-                                       .replace("\t", ""))]
+    return [bool(int(x)) for x in list(line.strip().replace(" ", "").replace("\t", ""))]
 
 
 def bit_unparse_entry(entry):
@@ -33,13 +31,9 @@ type_info = {
         "type": numpy.float,
         "parse_entry": float_parse_entry,
         "unparse_entry": float_unparse_entry,
-        "finish_entries": numpy.vstack
+        "finish_entries": numpy.vstack,
     },
-    "bit": {
-        "type": numpy.bool_,
-        "parse_entry": bit_parse_entry,
-        "unparse_entry": bit_unparse_entry
-    },
+    "bit": {"type": numpy.bool_, "parse_entry": bit_parse_entry, "unparse_entry": bit_unparse_entry},
     "int": {
         "type": numpy.object,
         "parse_entry": int_parse_entry,

@@ -39,15 +39,15 @@ def es_wait():
 
 def dealias_metric(metric: str) -> str:
     mlower = metric.lower()
-    if mlower == 'euclidean':
-        return 'l2'
-    elif mlower == 'angular':
-        return 'cosine'
+    if mlower == "euclidean":
+        return "l2"
+    elif mlower == "angular":
+        return "cosine"
     else:
         return mlower
 
-class Exact(BaseANN):
 
+class Exact(BaseANN):
     def __init__(self, metric: str, dimension: int):
         self.name = f"eknn-exact-metric={metric}_dimension={dimension}"
         self.metric = metric
@@ -61,19 +61,19 @@ class Exact(BaseANN):
         return [Vec.SparseBool(x, self.dimension) for x in X]
 
     def fit(self, X):
-        if self.metric in {'jaccard', 'hamming'}:
+        if self.metric in {"jaccard", "hamming"}:
             return self.model.fit(self._handle_sparse(X), shards=1)[0]
         else:
             return self.model.fit(X, shards=1)
 
     def query(self, q, n):
-        if self.metric in {'jaccard', 'hamming'}:
+        if self.metric in {"jaccard", "hamming"}:
             return self.model.kneighbors(self._handle_sparse([q]), n)[0]
         else:
             return self.model.kneighbors(np.expand_dims(q, 0), n)[0]
 
     def batch_query(self, X, n):
-        if self.metric in {'jaccard', 'hamming'}:
+        if self.metric in {"jaccard", "hamming"}:
             self.batch_res = self.model.kneighbors(self._handle_sparse(X), n)
         else:
             self.batch_res = self.model.kneighbors(X, n)
@@ -83,7 +83,6 @@ class Exact(BaseANN):
 
 
 class L2Lsh(BaseANN):
-
     def __init__(self, L: int, k: int, w: int):
         self.name_prefix = f"eknn-l2lsh-L={L}-k={k}-w={w}"
         self.name = None  # set based on query args.
@@ -112,7 +111,7 @@ class L2Lsh(BaseANN):
         self.sum_query_dur = 0
 
     def query(self, q, n):
-    
+
         t0 = perf_counter()
         res = self.model.kneighbors(np.expand_dims(q, 0), n, return_similarity=False)[0]
         dur = perf_counter() - t0
@@ -121,7 +120,9 @@ class L2Lsh(BaseANN):
         self.sum_query_dur += dur
         self.num_queries += 1
         if self.num_queries > 500 and self.num_queries / self.sum_query_dur < 50:
-            raise Exception("Throughput after 500 queries is less than 50 q/s. Giving up to avoid wasteful computation.")
+            raise Exception(
+                "Throughput after 500 queries is less than 50 q/s. Giving up to avoid wasteful computation."
+            )
         elif res[-2:].sum() < 0:
             raise Exception(f"Model returned fewer than {n} neighbors. Giving up to avoid wasteful computation.")
         else:

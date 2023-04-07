@@ -6,18 +6,18 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class HnswLib(BaseANN):
     def __init__(self, metric, method_param):
-        self.metric = {'angular': 'cosine', 'euclidean': 'l2'}[metric]
+        self.metric = {"angular": "cosine", "euclidean": "l2"}[metric]
         self.method_param = method_param
         # print(self.method_param,save_index,query_param)
         # self.ef=query_param['ef']
-        self.name = 'hnswlib (%s)' % (self.method_param)
+        self.name = "hnswlib (%s)" % (self.method_param)
 
     def fit(self, X):
         # Only l2 is supported currently
         self.p = hnswlib.Index(space=self.metric, dim=len(X[0]))
-        self.p.init_index(max_elements=len(X),
-                          ef_construction=self.method_param["efConstruction"],
-                          M=self.method_param["M"])
+        self.p.init_index(
+            max_elements=len(X), ef_construction=self.method_param["efConstruction"], M=self.method_param["M"]
+        )
         data_labels = np.arange(len(X))
         self.p.add_items(np.asarray(X), data_labels)
         self.p.set_num_threads(1)

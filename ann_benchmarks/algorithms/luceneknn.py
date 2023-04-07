@@ -21,6 +21,7 @@ class Codec(PyLucene94Codec):
     """
     Custom codec so that the appropriate Lucene94 codec can be returned with the configured M and efConstruction
     """
+
     def __init__(self, M, efConstruction):
         super(Codec, self).__init__()
         self.M = M
@@ -37,15 +38,16 @@ class PyLuceneKNN(BaseANN):
 
     def __init__(self, metric: str, dimension: int, param):
         try:
-            lucene.initVM(vmargs=['-Djava.awt.headless=true -Xmx6g -Xms6g'])
+            lucene.initVM(vmargs=["-Djava.awt.headless=true -Xmx6g -Xms6g"])
         except ValueError:
-            print('VM already initialized')
+            print("VM already initialized")
         self.metric = metric
         self.dimension = dimension
         self.param = param
         self.short_name = f"luceneknn-{param['M']}-{param['efConstruction']}"
-        self.simFunc = VectorSimilarityFunction.DOT_PRODUCT if self.metric == "angular" \
-            else VectorSimilarityFunction.EUCLIDEAN
+        self.simFunc = (
+            VectorSimilarityFunction.DOT_PRODUCT if self.metric == "angular" else VectorSimilarityFunction.EUCLIDEAN
+        )
         if self.metric not in ("euclidean", "angular"):
             raise NotImplementedError(f"Not implemented for metric {self.metric}")
 
@@ -56,10 +58,10 @@ class PyLuceneKNN(BaseANN):
     def fit(self, X):
         if self.dimension != X.shape[1]:
             raise Exception(f"Configured dimension {self.dimension} but data has shape {X.shape}")
-        if self.metric == 'angular':
-            X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
+        if self.metric == "angular":
+            X = sklearn.preprocessing.normalize(X, axis=1, norm="l2")
         iwc = IndexWriterConfig().setOpenMode(IndexWriterConfig.OpenMode.CREATE)
-        codec = Codec(self.param['M'], self.param['efConstruction'])
+        codec = Codec(self.param["M"], self.param["efConstruction"])
         iwc.setCodec(codec)
         iwc.setRAMBufferSizeMB(1994.0)
         self.dir = FSDirectory.open(Paths.get(self.short_name + ".index"))
@@ -70,7 +72,7 @@ class PyLuceneKNN(BaseANN):
         X = X.tolist()
         for x in X:
             doc = Document()
-            doc.add(KnnVectorField("knn", JArray('float')(x), fieldType))
+            doc.add(KnnVectorField("knn", JArray("float")(x), fieldType))
             doc.add(StoredField("id", id))
             iw.addDocument(doc)
             id += 1
@@ -95,9 +97,9 @@ class PyLuceneKNN(BaseANN):
         return [int(self.searcher.doc(d.doc).get("id")) for d in topdocs.scoreDocs]
 
     def prepare_query(self, q, n):
-        if self.metric == 'angular':
+        if self.metric == "angular":
             q = q / np.linalg.norm(q)
-        self.q = JArray('float')(q.tolist())
+        self.q = JArray("float")(q.tolist())
         self.n = n
 
     def get_prepared_query_results(self):
@@ -107,9 +109,9 @@ class PyLuceneKNN(BaseANN):
         self.res = self.run_knn_query_inner(self.ef, self.n, self.q)
 
     def prepare_batch_query(self, X, n):
-        if self.metric == 'angular':
-            X = sklearn.preprocessing.normalize(X, axis=1, norm='l2')
-        self.queries = [JArray('float')(q) for q in X.tolist()]
+        if self.metric == "angular":
+            X = sklearn.preprocessing.normalize(X, axis=1, norm="l2")
+        self.queries = [JArray("float")(q) for q in X.tolist()]
         self.n = n
 
     def run_batch_query(self):

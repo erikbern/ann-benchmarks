@@ -1,4 +1,3 @@
-
 all_plot_variants = {
     "recall/time": ("k-nn", "qps"),
     "recall/buildtime": ("k-nn", "build"),

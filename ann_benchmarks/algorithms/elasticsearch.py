@@ -20,6 +20,7 @@ logging.getLogger("elasticsearch").setLevel(logging.WARN)
 # logging.basicConfig(level=logging.INFO)
 # logging.getLogger("elasticsearch").setLevel(logging.INFO)
 
+
 def es_wait():
     print("Waiting for elasticsearch health endpoint...")
     req = Request("http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=1s")
@@ -50,9 +51,9 @@ class ElasticsearchScriptScoreQuery(BaseANN):
         self.es = Elasticsearch(["http://localhost:9200"])
         self.batch_res = []
         if self.metric == "euclidean":
-            self.script = "1 / (1 + l2norm(params.query_vec, \"vec\"))"
+            self.script = '1 / (1 + l2norm(params.query_vec, "vec"))'
         elif self.metric == "angular":
-            self.script = "1.0 + cosineSimilarity(params.query_vec, \"vec\")"
+            self.script = '1.0 + cosineSimilarity(params.query_vec, "vec")'
         else:
             raise NotImplementedError(f"Not implemented for metric {self.metric}")
         es_wait()
@@ -60,17 +61,14 @@ class ElasticsearchScriptScoreQuery(BaseANN):
     def fit(self, X):
         body = dict(settings=dict(number_of_shards=1, number_of_replicas=0))
         mapping = dict(
-            properties=dict(
-                id=dict(type="keyword", store=True),
-                vec=dict(type="dense_vector", dims=self.dimension)
-            )
+            properties=dict(id=dict(type="keyword", store=True), vec=dict(type="dense_vector", dims=self.dimension))
         )
         self.es.indices.create(self.index, body=body)
         self.es.indices.put_mapping(mapping, self.index)
 
         def gen():
             for i, vec in enumerate(X):
-                yield { "_op_type": "index", "_index": self.index, "vec": vec.tolist(), 'id': str(i + 1) }
+                yield {"_op_type": "index", "_index": self.index, "vec": vec.tolist(), "id": str(i + 1)}
 
         (_, errors) = bulk(self.es, gen(), chunk_size=500, max_retries=9)
         assert len(errors) == 0, errors
@@ -82,21 +80,23 @@ class ElasticsearchScriptScoreQuery(BaseANN):
         body = dict(
             query=dict(
                 script_score=dict(
-                    query=dict(match_all=dict()),
-                    script=dict(
-                        source=self.script,
-                        params=dict(query_vec=q.tolist())
-                    )
+                    query=dict(match_all=dict()), script=dict(source=self.script, params=dict(query_vec=q.tolist()))
                 )
             )
         )
-        res = self.es.search(index=self.index, body=body, size=n, _source=False, docvalue_fields=['id'],
-                             stored_fields="_none_", filter_path=["hits.hits.fields.id"])
-        return [int(h['fields']['id'][0]) - 1 for h in res['hits']['hits']]
+        res = self.es.search(
+            index=self.index,
+            body=body,
+            size=n,
+            _source=False,
+            docvalue_fields=["id"],
+            stored_fields="_none_",
+            filter_path=["hits.hits.fields.id"],
+        )
+        return [int(h["fields"]["id"][0]) - 1 for h in res["hits"]["hits"]]
 
     def batch_query(self, X, n):
         self.batch_res = [self.query(q, n) for q in X]
 
     def get_batch_results(self):
         return self.batch_res
-

@@ -6,6 +6,7 @@ import pgvector.psycopg
 
 from ann_benchmarks.algorithms.base import BaseANN
 
+
 class PGVector(BaseANN):
     def __init__(self, metric, lists):
         self._metric = metric
@@ -24,9 +25,11 @@ class PGVector(BaseANN):
                 copy.write_row((i, embedding))
         print("creating index...")
         if self._metric == "angular":
-            cur.execute('CREATE INDEX ON items USING ivfflat (embedding vector_cosine_ops) WITH (lists = %d)' % self._lists)
+            cur.execute(
+                "CREATE INDEX ON items USING ivfflat (embedding vector_cosine_ops) WITH (lists = %d)" % self._lists
+            )
         elif self._metric == "euclidean":
-            cur.execute('CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = %d)' % self._lists)
+            cur.execute("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = %d)" % self._lists)
         else:
             raise RuntimeError(f"unknown metric {self._metric}")
         print("done!")

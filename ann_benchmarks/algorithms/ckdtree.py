@@ -7,7 +7,7 @@ class CKDTree(BaseANN):
     def __init__(self, metric, leaf_size=20):
         self._leaf_size = leaf_size
         self._metric = metric
-        self.name = 'CKDTree(leaf_size=%d)' % self._leaf_size
+        self.name = "CKDTree(leaf_size=%d)" % self._leaf_size
 
     def fit(self, X):
         self._tree = cKDTree(X, leafsize=self._leaf_size)
