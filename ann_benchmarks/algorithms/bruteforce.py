@@ -37,7 +37,7 @@ class BruteForceBLAS(BaseANN):
         if metric not in ('angular', 'euclidean', 'hamming', 'jaccard'):
             raise NotImplementedError(
                 "BruteForceBLAS doesn't support metric %s" % metric)
-        elif metric == 'hamming' and precision != numpy.bool:
+        elif metric == 'hamming' and precision != numpy.bool_:
             raise NotImplementedError(
                 "BruteForceBLAS doesn't support precision"
                 " %s with Hamming distances" % precision)
