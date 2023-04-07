@@ -1,0 +1,25 @@
+FROM ann-benchmarks
+
+# https://github.com/pgvector/pgvector/blob/master/Dockerfile
+
+RUN git clone https://github.com/pgvector/pgvector /tmp/pgvector
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
+RUN apt-get install -y --no-install-recommends build-essential postgresql postgresql-server-dev-all
+RUN cd /tmp/pgvector && \
+	make clean && \
+	make OPTFLAGS="" && \
+	make install
+
+RUN pip install psycopg2
+
+USER postgres
+
+RUN service postgresql start && \
+    psql -c "create user ann with encrypted password 'ann'" && \
+    psql -c "create database ann" && \
+    psql -c "grant all privileges on database ann to ann" && \
+    psql -d ann -c "CREATE EXTENSION vector"
+USER root
+
+RUN pip install pgvector

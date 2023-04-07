@@ -539,7 +539,14 @@ float:
                           [ 5, 1.00 ], [ 10, 1.00 ], [ 20, 1.00 ],
                           [ 1.2, 1.02 ], [ 1.5, 1.02 ], [ 2.0, 1.02 ], [ 3.0, 1.02 ],
                           [ 2, 1.04 ], [ 3, 1.04 ], [ 5, 1.04 ], [ 8, 1.04 ] ] ]
-
+    pgvector:
+      docker-tag: ann-benchmarks-pgvector
+      module: ann_benchmarks.algorithms.pgvector
+      constructor: PGVector
+      base-args: ["@metric"]
+      run-groups:
+        pgvector:
+          args: [[100, 200, 400, 1000, 2000, 4000, 10000]]
 
   euclidean:
     vamana(diskann):
