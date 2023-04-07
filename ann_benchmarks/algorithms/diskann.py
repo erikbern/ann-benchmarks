@@ -1,4 +1,3 @@
-import sys
 import os
 import vamanapy as vp
 import numpy as np

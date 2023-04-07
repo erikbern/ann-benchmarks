@@ -3,7 +3,6 @@ import sys
 # Assumes local installation of FAISS
 sys.path.append("faiss")  # noqa
 import numpy
-import ctypes
 import faiss
 from ann_benchmarks.algorithms.base import BaseANN
 

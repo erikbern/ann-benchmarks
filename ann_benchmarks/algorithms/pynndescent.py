@@ -27,7 +27,7 @@ class PyNNDescent(BaseANN):
         if "leaf_size" in index_param_dict:
             self._leaf_size = int(index_param_dict["leaf_size"])
         else:
-            leaf_size = 32
+            pass
 
         self._n_search_trees = int(n_search_trees)
 

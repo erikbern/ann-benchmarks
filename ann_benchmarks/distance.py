@@ -1,5 +1,4 @@
 from __future__ import absolute_import
-import itertools
 import numpy as np
 
 # Need own implementation of jaccard because scipy's

@@ -1,8 +1,6 @@
 from __future__ import absolute_import
-import os
 import hnswlib
 import numpy as np
-from ann_benchmarks.constants import INDEX_DIR
 from ann_benchmarks.algorithms.base import BaseANN
 
 

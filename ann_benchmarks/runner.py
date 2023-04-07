@@ -113,9 +113,8 @@ function""" % (definition.module, definition.constructor, definition.arguments)
     X_train, X_test = dataset_transform(D)
 
     try:
-        prepared_queries = False
         if hasattr(algo, "supports_prepared_queries"):
-            prepared_queries = algo.supports_prepared_queries()
+            algo.supports_prepared_queries()
 
         t0 = time.time()
         memory_usage_before = algo.get_memory_usage()
@@ -157,7 +156,7 @@ def run_from_cmdline():
     parser.add_argument(
         '--dataset',
         choices=DATASETS.keys(),
-        help=f'Dataset to benchmark on.',
+        help='Dataset to benchmark on.',
         required=True)
     parser.add_argument(
         '--algorithm',

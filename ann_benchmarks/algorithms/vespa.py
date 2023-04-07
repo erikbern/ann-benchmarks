@@ -1,6 +1,5 @@
 from ann_benchmarks.algorithms.base import BaseANN
 from vespa_ann_benchmark import DistanceMetric, HnswIndexParams, HnswIndex
-import time
 
 # Class using the Vespa implementation of an HNSW index for nearest neighbor
 # search over data points in a high dimensional vector space.

@@ -6,7 +6,6 @@ import random
 from urllib.request import urlopen
 from urllib.request import urlretrieve
 
-from ann_benchmarks.distance import dataset_transform
 
 
 def download(src, dst):
@@ -48,7 +47,6 @@ def get_dataset(which):
 
 def write_output(train, test, fn, distance, point_type='float', count=100):
     from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
-    n = 0
     f = h5py.File(fn, 'w')
     f.attrs['type'] = 'dense'
     f.attrs['distance'] = distance
@@ -115,7 +113,7 @@ def write_sparse_output(train, test, fn, distance, dimension, count=100):
 
 def train_test_split(X, test_size=10000, dimension=None):
     import sklearn.model_selection
-    if dimension == None:
+    if dimension is None:
         dimension = X.shape[1]
     print('Splitting %d*%d into train/test' % (X.shape[0], dimension))
     return sklearn.model_selection.train_test_split(
@@ -451,7 +449,7 @@ def movielens(fn, ratings_file, out_fn, separator='::', ignore_header=False):
             if rating < 3: # We only keep ratings >= 3
                 continue
 
-            if not userId in users:
+            if userId not in users:
                 users[userId] = len(users)
                 X.append([])
 

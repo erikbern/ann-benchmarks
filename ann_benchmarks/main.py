@@ -10,7 +10,6 @@ import psutil
 import random
 import shutil
 import sys
-import traceback
 
 from ann_benchmarks.datasets import get_dataset, DATASETS
 from ann_benchmarks.constants import INDEX_DIR

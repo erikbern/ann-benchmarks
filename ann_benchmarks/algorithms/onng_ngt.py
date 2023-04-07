@@ -1,12 +1,9 @@
 from __future__ import absolute_import
-import sys
 import os
 import ngtpy
-import numpy as np
 import subprocess
 import time
 from ann_benchmarks.algorithms.base import BaseANN
-from ann_benchmarks.constants import INDEX_DIR
 
 
 class ONNG(BaseANN):
@@ -18,8 +15,8 @@ class ONNG(BaseANN):
         self._metric = metrics[metric]
         self._object_type = object_type
         self._edge_size_for_search = int(param['search_edge']) if 'search_edge' in param.keys() else 0
-        self._tree_disabled = (param['tree'] == False) if 'tree' in param.keys() else False
-        self._refine_enabled = (param['refine'] == True) if 'refine' in param.keys() else False
+        self._tree_disabled = (param['tree'] is False) if 'tree' in param.keys() else False
+        self._refine_enabled = (param['refine'] is True) if 'refine' in param.keys() else False
         self._build_time_limit = 4
         self._epsilon = epsilon
         print('ONNG: edge_size=' + str(self._edge_size))

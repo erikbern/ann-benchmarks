@@ -1,10 +1,6 @@
 from __future__ import absolute_import
-from os import sep as pathsep
 import collections
 import importlib
-import os
-import sys
-import traceback
 import yaml
 from enum import Enum
 from itertools import product
