@@ -1,6 +1,8 @@
 import os
+
 import numpy
 import pykgraph
+
 from ..constants import INDEX_DIR
 from .base import BaseANN
 

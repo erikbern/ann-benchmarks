@@ -1,8 +1,9 @@
-import h5py
 import json
 import os
 import re
 import traceback
+
+import h5py
 
 
 def get_result_filename(dataset=None, count=None, definition=None, query_arguments=None, batch_mode=False):

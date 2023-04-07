@@ -1,9 +1,9 @@
 import collections
 import importlib
-import yaml
 from enum import Enum
 from itertools import product
 
+import yaml
 
 Definition = collections.namedtuple(
     "Definition", ["algorithm", "constructor", "module", "docker_tag", "arguments", "query_argument_groups", "disabled"]

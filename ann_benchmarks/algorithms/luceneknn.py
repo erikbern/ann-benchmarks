@@ -2,18 +2,20 @@
 ann-benchmarks interface for Apache Lucene.
 """
 
-import sklearn.preprocessing
-import numpy as np
-
 import lucene
-from lucene import JArray
+import numpy as np
+import sklearn.preprocessing
 from java.nio.file import Paths
-from org.apache.lucene.store import FSDirectory
-from org.apache.lucene.search import KnnVectorQuery, IndexSearcher
-from org.apache.lucene.index import IndexWriter, IndexWriterConfig, VectorSimilarityFunction, DirectoryReader
+from lucene import JArray
 from org.apache.lucene.codecs.lucene94 import Lucene94HnswVectorsFormat
 from org.apache.lucene.document import Document, KnnVectorField, StoredField
+from org.apache.lucene.index import (DirectoryReader, IndexWriter,
+                                     IndexWriterConfig,
+                                     VectorSimilarityFunction)
+from org.apache.lucene.search import IndexSearcher, KnnVectorQuery
+from org.apache.lucene.store import FSDirectory
 from org.apache.pylucene.codecs import PyLucene94Codec
+
 from .base import BaseANN
 
 

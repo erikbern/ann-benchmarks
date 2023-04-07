@@ -1,6 +1,8 @@
 import numpy
 import sklearn.neighbors
+
 from ann_benchmarks.distance import metrics as pd
+
 from .base import BaseANN
 
 

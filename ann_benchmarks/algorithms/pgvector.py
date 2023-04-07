@@ -1,8 +1,8 @@
 import subprocess
 import sys
 
-import psycopg
 import pgvector.psycopg
+import psycopg
 
 from .base import BaseANN
 

@@ -1,8 +1,12 @@
-from .base import BaseANN
-from qdrant_client import QdrantClient
-from qdrant_client.http.models import Distance, VectorParams, SearchRequest, SearchParams, CollectionStatus
-import numpy as np
 from time import sleep
+
+import numpy as np
+from qdrant_client import QdrantClient
+from qdrant_client.http.models import (CollectionStatus, Distance,
+                                       SearchParams, SearchRequest,
+                                       VectorParams)
+
+from .base import BaseANN
 
 
 class Qdrant(BaseANN):

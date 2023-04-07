@@ -1,4 +1,5 @@
 import SPTAG
+
 from .base import BaseANN
 
 

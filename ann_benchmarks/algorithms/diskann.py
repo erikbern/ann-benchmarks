@@ -1,8 +1,10 @@
 import os
-import vamanapy as vp
-import numpy as np
 import struct
 import time
+
+import numpy as np
+import vamanapy as vp
+
 from .base import BaseANN
 
 

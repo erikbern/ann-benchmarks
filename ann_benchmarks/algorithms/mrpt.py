@@ -1,6 +1,7 @@
+import mrpt
 import numpy
 import sklearn.preprocessing
-import mrpt
+
 from .base import BaseANN
 
 

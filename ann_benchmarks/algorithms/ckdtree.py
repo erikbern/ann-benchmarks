@@ -1,4 +1,5 @@
 from scipy.spatial import cKDTree
+
 from .base import BaseANN
 
 

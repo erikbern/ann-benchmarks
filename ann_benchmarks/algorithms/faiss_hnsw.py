@@ -1,5 +1,6 @@
 import faiss
 import numpy as np
+
 from .faiss import Faiss
 
 

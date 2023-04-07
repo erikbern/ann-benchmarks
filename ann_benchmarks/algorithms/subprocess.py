@@ -1,9 +1,11 @@
-from os.path import basename
 import shlex
-from types import MethodType
-import psutil
 import subprocess
-from ..data import bit_unparse_entry, int_unparse_entry, float_unparse_entry
+from os.path import basename
+from types import MethodType
+
+import psutil
+
+from ..data import bit_unparse_entry, float_unparse_entry, int_unparse_entry
 from .base import BaseANN
 
 

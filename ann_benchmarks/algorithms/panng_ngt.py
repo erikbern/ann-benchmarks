@@ -1,7 +1,9 @@
 import os
-import ngtpy
 import subprocess
 import time
+
+import ngtpy
+
 from .base import BaseANN
 
 

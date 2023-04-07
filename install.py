@@ -1,8 +1,9 @@
-import sys
-import os
 import argparse
+import os
 import subprocess
+import sys
 from multiprocessing import Pool
+
 from ann_benchmarks.main import positive_int
 
 

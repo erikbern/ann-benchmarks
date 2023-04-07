@@ -1,6 +1,7 @@
 import nearpy
-from nearpy.filters import NearestFilter
 import sklearn.preprocessing
+from nearpy.filters import NearestFilter
+
 from .base import BaseANN
 
 

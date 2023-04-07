@@ -1,6 +1,6 @@
 import numpy as np
+from datasketch import MinHash, MinHashLSHForest
 
-from datasketch import MinHashLSHForest, MinHash
 from .base import BaseANN
 
 

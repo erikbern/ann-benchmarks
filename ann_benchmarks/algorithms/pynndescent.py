@@ -1,7 +1,8 @@
-import pynndescent
-from .base import BaseANN
 import numpy as np
+import pynndescent
 import scipy.sparse
+
+from .base import BaseANN
 
 
 class PyNNDescent(BaseANN):

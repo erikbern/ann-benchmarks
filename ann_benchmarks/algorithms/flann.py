@@ -1,6 +1,7 @@
-import pyflann
 import numpy
+import pyflann
 import sklearn.preprocessing
+
 from .base import BaseANN
 
 

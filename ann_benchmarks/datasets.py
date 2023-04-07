@@ -1,10 +1,9 @@
-import h5py
-import numpy
 import os
 import random
+from urllib.request import urlopen, urlretrieve
 
-from urllib.request import urlopen
-from urllib.request import urlretrieve
+import h5py
+import numpy
 
 
 def download(src, dst):
@@ -266,9 +265,10 @@ def deep_image(out_fn):
 
 def transform_bag_of_words(filename, n_dimensions, out_fn):
     import gzip
+
     from scipy.sparse import lil_matrix
-    from sklearn.feature_extraction.text import TfidfTransformer
     from sklearn import random_projection
+    from sklearn.feature_extraction.text import TfidfTransformer
 
     with gzip.open(filename, "rb") as f:
         file_content = f.readlines()
@@ -404,9 +404,9 @@ def lastfm(out_fn, n_dimensions, test_size=50000):
     # This requires the implicit package to generate the factors
     # (on my desktop/gpu this only takes 4-5 seconds to train - but
     # could take 1-2 minutes on a laptop)
-    from implicit.datasets.lastfm import get_lastfm
-    from implicit.approximate_als import augment_inner_product_matrix
     import implicit
+    from implicit.approximate_als import augment_inner_product_matrix
+    from implicit.datasets.lastfm import get_lastfm
 
     # train an als model on the lastfm data
     _, _, play_counts = get_lastfm()

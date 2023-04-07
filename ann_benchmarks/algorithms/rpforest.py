@@ -1,5 +1,6 @@
-import rpforest
 import numpy
+import rpforest
+
 from .base import BaseANN
 
 

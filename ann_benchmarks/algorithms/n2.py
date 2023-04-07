@@ -1,4 +1,5 @@
 import n2
+
 from .base import BaseANN
 
 

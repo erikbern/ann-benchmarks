@@ -3,12 +3,10 @@ from urllib.request import Request, urlopen
 
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
+from tqdm import tqdm
 
 from .base import BaseANN
-
 from .elasticsearch import es_wait
-
-from tqdm import tqdm
 
 # Configure the logger.
 logging.getLogger("elasticsearch").setLevel(logging.WARN)
