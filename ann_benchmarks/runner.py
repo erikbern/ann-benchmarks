@@ -11,10 +11,10 @@ import docker
 import numpy
 import psutil
 
-from ann_benchmarks.algorithms.definitions import Definition, instantiate_algorithm
-from ann_benchmarks.datasets import get_dataset, DATASETS
-from ann_benchmarks.distance import metrics, dataset_transform
-from ann_benchmarks.results import store_results
+from .algorithms.definitions import Definition, instantiate_algorithm
+from .datasets import get_dataset, DATASETS
+from .distance import metrics, dataset_transform
+from .results import store_results
 
 
 def run_individual_query(algo, X_train, X_test, distance, count, run_count, batch):

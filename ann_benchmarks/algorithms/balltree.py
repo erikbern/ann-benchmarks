@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import sklearn.neighbors
 import sklearn.preprocessing
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class BallTree(BaseANN):

@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import numpy as np
 
 from datasketch import MinHashLSHForest, MinHash
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class DataSketch(BaseANN):

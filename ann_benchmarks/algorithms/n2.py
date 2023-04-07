@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 import n2
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class N2(BaseANN):

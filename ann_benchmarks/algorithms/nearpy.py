@@ -2,7 +2,7 @@ from __future__ import absolute_import
 import nearpy
 from nearpy.filters import NearestFilter
 import sklearn.preprocessing
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class NearPy(BaseANN):

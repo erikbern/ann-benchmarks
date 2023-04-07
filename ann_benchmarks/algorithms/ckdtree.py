@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from scipy.spatial import cKDTree
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class CKDTree(BaseANN):

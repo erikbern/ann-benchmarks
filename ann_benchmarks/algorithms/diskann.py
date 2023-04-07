@@ -3,7 +3,7 @@ import vamanapy as vp
 import numpy as np
 import struct
 import time
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class Vamana(BaseANN):

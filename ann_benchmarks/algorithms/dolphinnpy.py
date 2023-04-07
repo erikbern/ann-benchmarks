@@ -5,7 +5,7 @@ sys.path.append("install/lib-dolphinnpy")  # noqa
 import numpy
 from dolphinn import Dolphinn
 from utils import findmean, isotropize
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class DolphinnPy(BaseANN):

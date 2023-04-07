@@ -14,7 +14,7 @@ from org.apache.lucene.index import IndexWriter, IndexWriterConfig, VectorSimila
 from org.apache.lucene.codecs.lucene94 import Lucene94HnswVectorsFormat
 from org.apache.lucene.document import Document, KnnVectorField, StoredField
 from org.apache.pylucene.codecs import PyLucene94Codec
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class Codec(PyLucene94Codec):

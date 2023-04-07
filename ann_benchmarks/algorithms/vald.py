@@ -7,7 +7,7 @@ import urllib.request
 
 import grpc
 import yaml
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 from vald.v1.vald import insert_pb2_grpc, search_pb2_grpc
 from vald.v1.agent.core import agent_pb2_grpc

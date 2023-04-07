@@ -4,8 +4,8 @@ import shlex
 from types import MethodType
 import psutil
 import subprocess
-from ann_benchmarks.data import bit_unparse_entry, int_unparse_entry, float_unparse_entry
-from ann_benchmarks.algorithms.base import BaseANN
+from ..data import bit_unparse_entry, int_unparse_entry, float_unparse_entry
+from .base import BaseANN
 
 
 class SubprocessStoppedError(Exception):

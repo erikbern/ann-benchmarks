@@ -1,4 +1,4 @@
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 from qdrant_client import QdrantClient
 from qdrant_client.http.models import Distance, VectorParams, SearchRequest, SearchParams, CollectionStatus
 import numpy as np

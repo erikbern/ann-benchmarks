@@ -4,7 +4,7 @@ import sys
 import psycopg
 import pgvector.psycopg
 
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class PGVector(BaseANN):
