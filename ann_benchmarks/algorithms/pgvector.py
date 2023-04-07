@@ -23,7 +23,12 @@ class PGVector(BaseANN):
             for i, embedding in enumerate(X):
                 copy.write_row((i, embedding))
         print("creating index...")
-        cur.execute('CREATE INDEX ON items USING ivfflat (embedding vector_cosine_ops) WITH (lists = %d)' % self._lists)
+        if self._metric == "angular":
+            cur.execute('CREATE INDEX ON items USING ivfflat (embedding vector_cosine_ops) WITH (lists = %d)' % self._lists)
+        elif self._metric == "euclidean":
+            cur.execute('CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = %d)' % self._lists)
+        else:
+            raise RuntimeError(f"unknown metric {self._metric}")
         print("done!")
         self._cur = cur
 
@@ -37,3 +42,6 @@ class PGVector(BaseANN):
 
         self._cur.execute(q, (v, n))
         return [id for id, in self._cur.fetchall()]
+
+    def __str__(self):
+        return f"PGVector(lists={self._lists})"
