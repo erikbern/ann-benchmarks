@@ -305,9 +305,9 @@ def random_bitstring(out_fn, n_dims, n_samples, n_queries):
     Y, _ = sklearn.datasets.make_blobs(
         n_samples=n_samples, n_features=n_dims,
         centers=n_queries, random_state=1)
-    X = numpy.zeros((n_samples, n_dims), dtype=numpy.bool)
+    X = numpy.zeros((n_samples, n_dims), dtype=numpy.bool_)
     for i, vec in enumerate(Y):
-        X[i] = numpy.array([v > 0 for v in vec], dtype=numpy.bool)
+        X[i] = numpy.array([v > 0 for v in vec], dtype=numpy.bool_)
 
     X_train, X_test = train_test_split(X, test_size=n_queries)
     write_output(X_train, X_test, out_fn, 'hamming', 'bit')
@@ -323,10 +323,10 @@ def word2bits(out_fn, path, fn):
     with tarfile.open(local_fn, 'r:gz') as t:
         f = t.extractfile(fn)
         n_words, k = [int(z) for z in next(f).strip().split()]
-        X = numpy.zeros((n_words, k), dtype=numpy.bool)
+        X = numpy.zeros((n_words, k), dtype=numpy.bool_)
         for i in range(n_words):
             X[i] = numpy.array([float(z) > 0 for z in next(
-                f).strip().split()[1:]], dtype=numpy.bool)
+                f).strip().split()[1:]], dtype=numpy.bool_)
 
         X_train, X_test = train_test_split(X, test_size=1000)
         write_output(X_train, X_test, out_fn, 'hamming', 'bit')
@@ -341,10 +341,10 @@ def sift_hamming(out_fn, fn):
     with tarfile.open(local_fn, 'r:gz') as t:
         f = t.extractfile(fn)
         lines = f.readlines()
-        X = numpy.zeros((len(lines), 256), dtype=numpy.bool)
+        X = numpy.zeros((len(lines), 256), dtype=numpy.bool_)
         for i, line in enumerate(lines):
             X[i] = numpy.array(
-                [int(x) > 0 for x in line.decode().strip()], dtype=numpy.bool)
+                [int(x) > 0 for x in line.decode().strip()], dtype=numpy.bool_)
         X_train, X_test = train_test_split(X, test_size=1000)
         write_output(X_train, X_test, out_fn, 'hamming', 'bit')
 
