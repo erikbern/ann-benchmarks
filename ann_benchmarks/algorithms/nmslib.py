@@ -3,8 +3,8 @@ import os
 import nmslib
 import numpy as np
 import scipy.sparse
-from ann_benchmarks.constants import INDEX_DIR
-from ann_benchmarks.algorithms.base import BaseANN
+from ..constants import INDEX_DIR
+from .base import BaseANN
 
 
 def sparse_matrix_to_str(matrix):

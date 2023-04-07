@@ -10,7 +10,7 @@ import numpy as np
 from elastiknn.api import Vec
 from elastiknn.models import ElastiknnModel
 
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 from urllib.request import Request, urlopen
 from time import sleep, perf_counter

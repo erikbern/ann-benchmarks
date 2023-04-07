@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 import annoy
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class Annoy(BaseANN):

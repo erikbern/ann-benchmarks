@@ -10,7 +10,7 @@ from urllib.request import Request, urlopen
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 # Configure the elasticsearch logger.
 # By default, it writes an INFO statement for every request.

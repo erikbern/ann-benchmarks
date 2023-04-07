@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import numpy as np
 
 import puffinn
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 import numpy
 
 

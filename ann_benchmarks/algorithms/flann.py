@@ -2,7 +2,7 @@ from __future__ import absolute_import
 import pyflann
 import numpy
 import sklearn.preprocessing
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class FLANN(BaseANN):

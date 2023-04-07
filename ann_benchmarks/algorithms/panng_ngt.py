@@ -3,7 +3,7 @@ import os
 import ngtpy
 import subprocess
 import time
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class PANNG(BaseANN):

@@ -4,7 +4,7 @@ from urllib.request import Request, urlopen
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 from .elasticsearch import es_wait
 

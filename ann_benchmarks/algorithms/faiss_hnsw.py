@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import faiss
 import numpy as np
-from ann_benchmarks.algorithms.faiss import Faiss
+from .faiss import Faiss
 
 
 class FaissHNSW(Faiss):

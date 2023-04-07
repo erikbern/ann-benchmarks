@@ -5,7 +5,7 @@ import subprocess
 import struct
 from sklearn import preprocessing
 import time
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class QSG(BaseANN):

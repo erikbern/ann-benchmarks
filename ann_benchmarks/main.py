@@ -11,16 +11,16 @@ import random
 import shutil
 import sys
 
-from ann_benchmarks.datasets import get_dataset, DATASETS
-from ann_benchmarks.constants import INDEX_DIR
-from ann_benchmarks.algorithms.definitions import (
+from .datasets import get_dataset, DATASETS
+from .constants import INDEX_DIR
+from .algorithms.definitions import (
     get_definitions,
     list_algorithms,
     algorithm_status,
     InstantiationStatus,
 )
-from ann_benchmarks.results import get_result_filename
-from ann_benchmarks.runner import run, run_docker
+from .results import get_result_filename
+from .runner import run, run_docker
 
 
 def positive_int(s):

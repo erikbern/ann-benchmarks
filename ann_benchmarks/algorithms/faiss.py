@@ -5,7 +5,7 @@ sys.path.append("install/lib-faiss")  # noqa
 import numpy
 import sklearn.preprocessing
 import faiss
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class Faiss(BaseANN):

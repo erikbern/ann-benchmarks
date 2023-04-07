@@ -2,7 +2,7 @@ from __future__ import absolute_import
 import time
 import numpy as np
 import vearch
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class Vearch(BaseANN):

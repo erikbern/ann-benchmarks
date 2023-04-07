@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import numpy as np
 import scann
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 class Scann(BaseANN):

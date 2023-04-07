@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import numpy
 import pyknowhere
-from ann_benchmarks.algorithms.base import BaseANN
+from .base import BaseANN
 
 
 def metric_mapping(_metric: str):
