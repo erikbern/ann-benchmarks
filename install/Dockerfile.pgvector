@@ -11,15 +11,13 @@ RUN cd /tmp/pgvector && \
 	make OPTFLAGS="" && \
 	make install
 
-RUN pip install psycopg2
-
 USER postgres
-
 RUN service postgresql start && \
-    psql -c "create user ann with encrypted password 'ann'" && \
-    psql -c "create database ann" && \
-    psql -c "grant all privileges on database ann to ann" && \
-    psql -d ann -c "CREATE EXTENSION vector"
+    psql -c "CREATE USER ann WITH ENCRYPTED PASSWORD 'ann'" && \
+    psql -c "CREATE DATABASE ann" && \
+    psql -c "GRANT ALL PRIVILEGES ON DATABASE ann TO ann" && \
+    psql -d ann -c "CREATE EXTENSION vector" && \ 
+    psql -c "ALTER USER ann SET maintenance_work_mem = '16GB'"
 USER root
 
-RUN pip install pgvector
+RUN pip install psycopg[binary] pgvector
