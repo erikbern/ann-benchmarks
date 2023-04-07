@@ -28,7 +28,6 @@ jobs:
           - faiss
           - flann
           - hnswlib
-          - kgraph
           - luceneknn
           - milvus
           - mrpt
