@@ -6,9 +6,9 @@ from ann_benchmarks.plotting.metrics import all_metrics as metrics
 
 
 def get_or_create_metrics(run):
-    if 'metrics' not in run:
-        run.create_group('metrics')
-    return run['metrics']
+    if "metrics" not in run:
+        run.create_group("metrics")
+    return run["metrics"]
 
 
 def create_pointset(data, xn, yn):
@@ -21,8 +21,7 @@ def create_pointset(data, xn, yn):
     # Generate Pareto frontier
     xs, ys, ls = [], [], []
     last_x = xm["worst"]
-    comparator = ((lambda xv, lx: xv > lx)
-                  if last_x < 0 else (lambda xv, lx: xv < lx))
+    comparator = (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
     for algo, algo_name, xv, yv in data:
         if not xv or not yv:
             continue
@@ -37,32 +36,29 @@ def create_pointset(data, xn, yn):
     return xs, ys, ls, axs, ays, als
 
 
-def compute_metrics(true_nn_distances, res, metric_1, metric_2,
-                    recompute=False):
+def compute_metrics(true_nn_distances, res, metric_1, metric_2, recompute=False):
     all_results = {}
     for i, (properties, run) in enumerate(res):
-        algo = properties['algo']
-        algo_name = properties['name']
+        algo = properties["algo"]
+        algo_name = properties["name"]
         # cache distances to avoid access to hdf5 file
-        run_distances = np.array(run['distances'])
+        run_distances = np.array(run["distances"])
         # cache times to avoid access to hdf5 file
-        times = np.array(run['times'])
-        if recompute and 'metrics' in run:
-            del run['metrics']
+        times = np.array(run["times"])
+        if recompute and "metrics" in run:
+            del run["metrics"]
         metrics_cache = get_or_create_metrics(run)
 
-        metric_1_value = metrics[metric_1]['function'](
-            true_nn_distances,
-            run_distances, metrics_cache, times, properties)
-        metric_2_value = metrics[metric_2]['function'](
-            true_nn_distances,
-            run_distances, metrics_cache, times, properties)
+        metric_1_value = metrics[metric_1]["function"](
+            true_nn_distances, run_distances, metrics_cache, times, properties
+        )
+        metric_2_value = metrics[metric_2]["function"](
+            true_nn_distances, run_distances, metrics_cache, times, properties
+        )
 
-        print('%3d: %80s %12.3f %12.3f' %
-              (i, algo_name, metric_1_value, metric_2_value))
+        print("%3d: %80s %12.3f %12.3f" % (i, algo_name, metric_1_value, metric_2_value))
 
-        all_results.setdefault(algo, []).append(
-            (algo, algo_name, metric_1_value, metric_2_value))
+        all_results.setdefault(algo, []).append((algo, algo_name, metric_1_value, metric_2_value))
 
     return all_results
 
@@ -70,47 +66,43 @@ def compute_metrics(true_nn_distances, res, metric_1, metric_2,
 def compute_all_metrics(true_nn_distances, run, properties, recompute=False):
     algo = properties["algo"]
     algo_name = properties["name"]
-    print('--')
+    print("--")
     print(algo_name)
     results = {}
     # cache distances to avoid access to hdf5 file
     run_distances = np.array(run["distances"])
     # cache times to avoid access to hdf5 file
-    times = np.array(run['times'])
-    if recompute and 'metrics' in run:
-        del run['metrics']
+    times = np.array(run["times"])
+    if recompute and "metrics" in run:
+        del run["metrics"]
     metrics_cache = get_or_create_metrics(run)
 
     for name, metric in metrics.items():
-        v = metric["function"](
-            true_nn_distances, run_distances, metrics_cache, times, properties)
+        v = metric["function"](true_nn_distances, run_distances, metrics_cache, times, properties)
         results[name] = v
         if v:
-            print('%s: %g' % (name, v))
+            print("%s: %g" % (name, v))
     return (algo, algo_name, results)
 
+
 def compute_metrics_all_runs(dataset, res, recompute=False):
-    true_nn_distances=list(dataset['distances'])
+    true_nn_distances = list(dataset["distances"])
     for i, (properties, run) in enumerate(res):
-        algo = properties['algo']
-        algo_name = properties['name']
+        algo = properties["algo"]
+        algo_name = properties["name"]
         # cache distances to avoid access to hdf5 file
         # print('Load distances and times')
-        run_distances = np.array(run['distances'])
-        times = np.array(run['times'])
+        run_distances = np.array(run["distances"])
+        times = np.array(run["times"])
         # print('... done')
-        if recompute and 'metrics' in run:
-            print('Recomputing metrics, clearing cache')
-            del run['metrics']
+        if recompute and "metrics" in run:
+            print("Recomputing metrics, clearing cache")
+            del run["metrics"]
         metrics_cache = get_or_create_metrics(run)
-        
-        dataset = properties['dataset']
 
-        run_result = {
-            'algorithm': algo,
-            'parameters': algo_name,
-            'count': properties['count']
-        }
+        dataset = properties["dataset"]
+
+        run_result = {"algorithm": algo, "parameters": algo_name, "count": properties["count"]}
         for name, metric in metrics.items():
             v = metric["function"](true_nn_distances, run_distances, metrics_cache, times, properties)
             run_result[name] = v
@@ -119,29 +111,23 @@ def compute_metrics_all_runs(dataset, res, recompute=False):
 
 def generate_n_colors(n):
     vs = np.linspace(0.3, 0.9, 7)
-    colors = [(.9, .4, .4, 1.)]
+    colors = [(0.9, 0.4, 0.4, 1.0)]
 
     def euclidean(a, b):
-        return sum((x - y)**2 for x, y in zip(a, b))
+        return sum((x - y) ** 2 for x, y in zip(a, b))
+
     while len(colors) < n:
-        new_color = max(itertools.product(vs, vs, vs),
-                        key=lambda a: min(euclidean(a, b) for b in colors))
-        colors.append(new_color + (1.,))
+        new_color = max(itertools.product(vs, vs, vs), key=lambda a: min(euclidean(a, b) for b in colors))
+        colors.append(new_color + (1.0,))
     return colors
 
 
 def create_linestyles(unique_algorithms):
-    colors = dict(
-        zip(unique_algorithms, generate_n_colors(len(unique_algorithms))))
-    linestyles = dict((algo, ['--', '-.', '-', ':'][i % 4])
-                      for i, algo in enumerate(unique_algorithms))
-    markerstyles = dict((algo, ['+', '<', 'o', '*', 'x'][i % 5])
-                        for i, algo in enumerate(unique_algorithms))
-    faded = dict((algo, (r, g, b, 0.3))
-                 for algo, (r, g, b, a) in colors.items())
-    return dict((algo, (colors[algo], faded[algo],
-                        linestyles[algo], markerstyles[algo]))
-                for algo in unique_algorithms)
+    colors = dict(zip(unique_algorithms, generate_n_colors(len(unique_algorithms))))
+    linestyles = dict((algo, ["--", "-.", "-", ":"][i % 4]) for i, algo in enumerate(unique_algorithms))
+    markerstyles = dict((algo, ["+", "<", "o", "*", "x"][i % 5]) for i, algo in enumerate(unique_algorithms))
+    faded = dict((algo, (r, g, b, 0.3)) for algo, (r, g, b, a) in colors.items())
+    return dict((algo, (colors[algo], faded[algo], linestyles[algo], markerstyles[algo])) for algo in unique_algorithms)
 
 
 def get_up_down(metric):
@@ -157,9 +143,10 @@ def get_left_right(metric):
 
 
 def get_plot_label(xm, ym):
-    template = ("%(xlabel)s-%(ylabel)s tradeoff - %(updown)s and"
-                " to the %(leftright)s is better")
-    return template % {"xlabel": xm["description"],
-                       "ylabel": ym["description"],
-                       "updown": get_up_down(ym),
-                       "leftright": get_left_right(xm)}
+    template = "%(xlabel)s-%(ylabel)s tradeoff - %(updown)s and" " to the %(leftright)s is better"
+    return template % {
+        "xlabel": xm["description"],
+        "ylabel": ym["description"],
+        "updown": get_up_down(ym),
+        "leftright": get_left_right(xm),
+    }

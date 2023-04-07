@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 import sys
+
 sys.path.append("install/lib-dolphinnpy")  # noqa
 import numpy
 from dolphinn import Dolphinn
@@ -9,7 +10,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class DolphinnPy(BaseANN):
     def __init__(self, num_probes):
-        self.name = 'Dolphinn(num_probes={} )'.format(num_probes)
+        self.name = "Dolphinn(num_probes={} )".format(num_probes)
         self.num_probes = num_probes
         self.m = 1
         self._index = None

@@ -5,7 +5,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 
 def metric_mapping(_metric: str):
-    _metric_type = {'angular': 'cosine', 'euclidean': 'l2'}.get(_metric, None)
+    _metric_type = {"angular": "cosine", "euclidean": "l2"}.get(_metric, None)
     if _metric_type is None:
         raise Exception(f"[Milvus] Not support metric type: {_metric}!!!")
     return _metric_type
@@ -28,8 +28,7 @@ class Milvus(BaseANN):
         self.client = None
 
     def fit(self, X):
-        self.client = pyknowhere.Index(
-            self._metric_type, self._dim, len(X), self._index_m, self._index_ef)
+        self.client = pyknowhere.Index(self._metric_type, self._dim, len(X), self._index_m, self._index_ef)
         self.client.add(X, numpy.arange(len(X)))
 
     def set_query_arguments(self, ef):

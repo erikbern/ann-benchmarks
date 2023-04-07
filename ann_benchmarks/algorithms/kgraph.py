@@ -9,7 +9,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 class KGraph(BaseANN):
     def __init__(self, metric, index_params, save_index):
         metric = str(metric)
-        self.name = 'KGraph(%s)' % (metric)
+        self.name = "KGraph(%s)" % (metric)
         self._metric = metric
         self._index_params = index_params
         self._save_index = save_index
@@ -18,7 +18,7 @@ class KGraph(BaseANN):
         if X.dtype != numpy.float32:
             X = X.astype(numpy.float32)
         self._kgraph = pykgraph.KGraph(X, self._metric)
-        path = os.path.join(INDEX_DIR, 'kgraph-index-%s' % self._metric)
+        path = os.path.join(INDEX_DIR, "kgraph-index-%s" % self._metric)
         if os.path.exists(path):
             self._kgraph.load(path)
         else:
@@ -34,6 +34,5 @@ class KGraph(BaseANN):
     def query(self, v, n):
         if v.dtype != numpy.float32:
             v = v.astype(numpy.float32)
-        result = self._kgraph.search(
-            numpy.array([v]), K=n, threads=1, P=self._P)
+        result = self._kgraph.search(numpy.array([v]), K=n, threads=1, P=self._P)
         return result[0]

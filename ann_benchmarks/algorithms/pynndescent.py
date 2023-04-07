@@ -13,9 +13,7 @@ class PyNNDescent(BaseANN):
             self._n_neighbors = 30
 
         if "pruning_degree_multiplier" in index_param_dict:
-            self._pruning_degree_multiplier = float(
-                index_param_dict["pruning_degree_multiplier"]
-            )
+            self._pruning_degree_multiplier = float(index_param_dict["pruning_degree_multiplier"])
         else:
             self._pruning_degree_multiplier = 1.5
 
@@ -98,13 +96,13 @@ class PyNNDescent(BaseANN):
             self._query_matrix.data = np.ones(size, dtype=np.float32)
             ind, dist = self._index.query(self._query_matrix, k=n, epsilon=self._epsilon)
         else:
-            ind, dist = self._index.query(
-                v.reshape(1, -1).astype("float32"), k=n, epsilon=self._epsilon
-            )
+            ind, dist = self._index.query(v.reshape(1, -1).astype("float32"), k=n, epsilon=self._epsilon)
         return ind[0]
 
     def __str__(self):
-        str_template = "PyNNDescent(n_neighbors=%d, pruning_mult=%.2f, diversify_prob=%.3f, epsilon=%.3f, leaf_size=%02d)"
+        str_template = (
+            "PyNNDescent(n_neighbors=%d, pruning_mult=%.2f, diversify_prob=%.3f, epsilon=%.3f, leaf_size=%02d)"
+        )
         return str_template % (
             self._n_neighbors,
             self._pruning_degree_multiplier,

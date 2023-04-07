@@ -5,7 +5,7 @@ from ann_benchmarks.algorithms.base import BaseANN
 
 class DummyAlgoMt(BaseANN):
     def __init__(self, metric):
-        self.name = 'DummyAlgoMultiThread'
+        self.name = "DummyAlgoMultiThread"
 
     def fit(self, X):
         self.len = len(X) - 1
@@ -16,7 +16,7 @@ class DummyAlgoMt(BaseANN):
 
 class DummyAlgoSt(BaseANN):
     def __init__(self, metric):
-        self.name = 'DummyAlgoSingleThread'
+        self.name = "DummyAlgoSingleThread"
 
     def fit(self, X):
         self.len = len(X) - 1

@@ -21,8 +21,8 @@ class BaseANN(object):
 
     def batch_query(self, X, n):
         """Provide all queries at once and let algorithm figure out
-           how to handle it. Default implementation uses a ThreadPool
-           to parallelize query processing."""
+        how to handle it. Default implementation uses a ThreadPool
+        to parallelize query processing."""
         pool = ThreadPool()
         self.res = pool.map(lambda q: self.query(q, n), X)
 

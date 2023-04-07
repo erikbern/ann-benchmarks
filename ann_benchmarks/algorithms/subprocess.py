@@ -4,8 +4,7 @@ import shlex
 from types import MethodType
 import psutil
 import subprocess
-from ann_benchmarks.data import \
-    bit_unparse_entry, int_unparse_entry, float_unparse_entry
+from ann_benchmarks.data import bit_unparse_entry, int_unparse_entry, float_unparse_entry
 from ann_benchmarks.algorithms.base import BaseANN
 
 
@@ -17,12 +16,11 @@ class SubprocessStoppedError(Exception):
 
 class Subprocess(BaseANN):
     def _raw_line(self):
-        return shlex.split(
-            self._get_program_handle().stdout.readline().strip())
+        return shlex.split(self._get_program_handle().stdout.readline().strip())
 
     def _line(self):
         line = self._raw_line()
-#       print("<- %s" % (" ".join(line)))
+        #       print("<- %s" % (" ".join(line)))
         while len(line) < 1 or line[0] != "epbprtv0":
             line = self._raw_line()
         return line[1:]
@@ -50,23 +48,29 @@ class Subprocess(BaseANN):
                 bufsize=1,  # line buffering
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
-                universal_newlines=True)
+                universal_newlines=True,
+            )
 
             for key, value in iter(self._params.items()):
-                self._write("%s %s" %
-                            (Subprocess._quote(key), Subprocess._quote(value)))
-                assert self._line()[0] == "ok", """\
-assigning value '%s' to option '%s' failed""" % (value, key)
+                self._write("%s %s" % (Subprocess._quote(key), Subprocess._quote(value)))
+                assert (
+                    self._line()[0] == "ok"
+                ), """\
+assigning value '%s' to option '%s' failed""" % (
+                    value,
+                    key,
+                )
             self._configuration_hook()
 
             self._write("")
-            assert self._line()[0] == "ok", """\
+            assert (
+                self._line()[0] == "ok"
+            ), """\
 transitioning to training mode failed"""
         return self._program
 
     def __init__(self, args, encoder, params):
-        self.name = "Subprocess(program = %s, %s)" % \
-            (basename(args[0]), str(params))
+        self.name = "Subprocess(program = %s, %s)" % (basename(args[0]), str(params))
         self._program = None
         self._args = args
         self._encoder = encoder
@@ -81,10 +85,15 @@ transitioning to training mode failed"""
         for entry in X:
             d = Subprocess._quote(self._encoder(entry))
             self._write(d)
-            assert self._line()[0] == "ok", """\
-encoded training point '%s' was rejected""" % d
+            assert self._line()[0] == "ok", (
+                """\
+encoded training point '%s' was rejected"""
+                % d
+            )
         self._write("")
-        assert self._line()[0] == "ok", """\
+        assert (
+            self._line()[0] == "ok"
+        ), """\
 transitioning to query mode failed"""
 
     def query(self, v, n):
@@ -98,7 +107,9 @@ transitioning to query mode failed"""
             count = int(status[1])
             return self._collect_query_response_lines(count)
         else:
-            assert status[0] == "fail", """\
+            assert (
+                status[0] == "fail"
+            ), """\
 query neither succeeded nor failed"""
             return []
 
@@ -125,7 +136,9 @@ class PreparedSubprocess(Subprocess):
 
     def _configuration_hook(self):
         self._write("frontend prepared-queries 1")
-        assert self._line()[0] == "ok", """\
+        assert (
+            self._line()[0] == "ok"
+        ), """\
 enabling prepared queries mode failed"""
 
     def query(self, v, n):
@@ -136,8 +149,11 @@ enabling prepared queries mode failed"""
     def prepare_query(self, v, n):
         d = Subprocess._quote(self._encoder(v))
         self._write("%s %d" % (d, n))
-        assert self._line()[0] == "ok", """\
-preparing the query '%s' failed""" % d
+        assert self._line()[0] == "ok", (
+            """\
+preparing the query '%s' failed"""
+            % d
+        )
 
     def run_prepared_query(self):
         self._write("query")
@@ -145,7 +161,9 @@ preparing the query '%s' failed""" % d
         if status[0] == "ok":
             self._result_count = int(status[1])
         else:
-            assert status[0] == "fail", """\
+            assert (
+                status[0] == "fail"
+            ), """\
 query neither succeeded nor failed"""
             self._result_count = 0
 
@@ -166,7 +184,9 @@ class BatchSubprocess(Subprocess):
 
     def _configuration_hook(self):
         self._write("frontend batch-queries 1")
-        assert self._line()[0] == "ok", """\
+        assert (
+            self._line()[0] == "ok"
+        ), """\
 enabling batch queries mode failed"""
 
     def query(self, v, n):
@@ -178,13 +198,18 @@ enabling batch queries mode failed"""
         d = " ".join(map(lambda p: Subprocess._quote(self._encoder(p)), X))
         self._qp_count = len(X)
         self._write("%s %d" % (d, n))
-        assert self._line()[0] == "ok", """\
-preparing the batch query '%s' failed""" % d
+        assert self._line()[0] == "ok", (
+            """\
+preparing the batch query '%s' failed"""
+            % d
+        )
 
     def run_batch_query(self):
         self._write("query")
         status = self._line()
-        assert status[0] == "ok", """\
+        assert (
+            status[0] == "ok"
+        ), """\
 batch query failed completely"""
 
     def get_batch_results(self):
@@ -232,15 +257,20 @@ def QueryParamWrapper(constructor, args, params):
     def _do(self, original=r._configuration_hook):
         original()
         self._write("frontend query-parameters 1")
-        assert self._line()[0] == "ok", """\
+        assert (
+            self._line()[0] == "ok"
+        ), """\
 enabling query parameter support failed"""
+
     r._configuration_hook = MethodType(_do, r)
 
     def _sqa(self, *args):
-        self._write("query-params %s set" %
-                    (" ".join(map(Subprocess._quote, args))))
-        assert self._line()[0] == "ok", """\
+        self._write("query-params %s set" % (" ".join(map(Subprocess._quote, args))))
+        assert (
+            self._line()[0] == "ok"
+        ), """\
 reconfiguring query parameters failed"""
         print(args)
+
     r.set_query_arguments = MethodType(_sqa, r)
     return r
