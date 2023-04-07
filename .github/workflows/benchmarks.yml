@@ -17,65 +17,42 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
+        dataset: [random-xs-20-angular]
+        library:
+          - annoy
+          - diskann
+          - dolphinn
+          - elasticsearch
+          - elastiknn
+          - faiss
+          - flann
+          - hnswlib
+          - kgraph
+          - luceneknn
+          - milvus
+          - mrpt
+          - n2
+          - ngt
+          - nmslib
+          - opensearchknn
+          - pgvector
+          - pynndescent
+          - qdrant
+          - qsgngt
+          - scann
+          - scipy
+          - sklearn
+          - sptag
+          - vald
+          - vearch
+          - vespa
         include:
-          - library: annoy
-            dataset: random-xs-20-angular
-          - library: dolphinn
-            dataset: random-xs-20-angular
-          - library: faiss
-            dataset: random-xs-20-angular
-          - library: flann
-            dataset: random-xs-20-angular
-          - library: kgraph
-            dataset: random-xs-20-angular
-          - library: milvus
-            dataset: random-xs-20-angular
-          - library: mrpt
-            dataset: random-xs-20-angular
-          - library: n2
-            dataset: random-xs-20-angular
-          - library: ngt
-            dataset: random-xs-20-angular
-          - library: nmslib
-            dataset: random-xs-20-angular
-          - library: hnswlib
-            dataset: random-xs-20-angular
-          - library: pynndescent
-            dataset: random-xs-20-angular
-          - library: sklearn
-            dataset: random-xs-20-angular
-          - library: sptag
-            dataset: random-xs-20-angular
           - library: pynndescent 
             dataset: random-xs-16-hamming
           - library: datasketch
             dataset: random-s-jaccard
-          - library: scann
-            dataset: random-xs-20-angular
-          - library: elasticsearch
-            dataset: random-xs-20-angular
-          - library: elastiknn
-            dataset: random-xs-20-angular
-          - library: opensearchknn
-            dataset: random-xs-20-angular
-          - library: luceneknn
-            dataset: random-xs-20-angular
-          - library: diskann
-            dataset: random-xs-20-angular
           - library: pynndescent
             dataset: random-s-jaccard
-          - library: vespa
-            dataset: random-xs-20-angular
-          - library: scipy
-            dataset: random-xs-20-angular
-          - library: vald
-            dataset: random-xs-20-angular
-          - library: vearch
-            dataset: random-xs-20-angular
-          - library: qdrant
-            dataset: random-xs-20-angular
-          - library: qsgngt
-            dataset: random-xs-20-angular
       fail-fast: false
 
     env:
