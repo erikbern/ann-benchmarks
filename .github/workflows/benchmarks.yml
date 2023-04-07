@@ -12,7 +12,15 @@ concurrency:
   cancel-in-progress: True
 
 jobs:
-  build:
+  unit-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2 # Pull the repository
+      - run: sudo apt-get update && sudo apt-get install -y libhdf5-dev python3-numpy python3-scipy python3-matplotlib python3-sklearn
+      - run: pip3 install --quiet -r requirements.txt
+      - run: pytest
+
+  run-benchmarks:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     strategy:
@@ -79,11 +87,3 @@ jobs:
         python3 plot.py --dataset $DATASET --output plot-batch.png --batch
         python3 data_export.py --out test.csv
         python3 create_website.py --outputdir . --scatter --latex
-
-  test:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v2 # Pull the repository
-      - run: sudo apt-get update && sudo apt-get install -y libhdf5-dev python3-numpy python3-scipy python3-matplotlib python3-sklearn
-      - run: pip3 install --quiet -r requirements.txt
-      - run: pytest
