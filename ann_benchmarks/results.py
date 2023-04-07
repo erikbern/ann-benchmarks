@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import h5py
 import json
 import os

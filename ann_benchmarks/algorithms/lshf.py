@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 import sklearn.neighbors
 import sklearn.preprocessing
 from .base import BaseANN

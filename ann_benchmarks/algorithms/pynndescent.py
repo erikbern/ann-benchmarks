@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 import pynndescent
 from .base import BaseANN
 import numpy as np

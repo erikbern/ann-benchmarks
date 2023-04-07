@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 import rpforest
 import numpy
 from .base import BaseANN

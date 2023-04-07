@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 from scipy.spatial import cKDTree
 from .base import BaseANN
 

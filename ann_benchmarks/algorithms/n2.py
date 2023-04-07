@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 import n2
 from .base import BaseANN
 

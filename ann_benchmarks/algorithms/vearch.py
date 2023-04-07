@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 import time
 import numpy as np
 import vearch
