@@ -1,10 +1,6 @@
 from __future__ import absolute_import
-from scipy.spatial.distance import pdist as scipy_pdist
 import itertools
 import numpy as np
-
-def pdist(a, b, metric):
-    return scipy_pdist([a, b], metric=metric)[0]
 
 # Need own implementation of jaccard because scipy's
 # implementation is different
@@ -15,24 +11,29 @@ def jaccard(a, b):
     intersect = len(set(a) & set(b))
     return intersect / (float)(len(a) + len(b) - intersect)
 
+def norm(a):
+    return np.sum(a ** 2) ** 0.5
+
+def euclidean(a, b):
+    return norm(a - b)
+
 metrics = {
     'hamming': {
-        'distance': lambda a, b: pdist(a, b, "hamming"),
-        'distance_valid': lambda a: True
+        'distance': lambda a, b: np.sum(np.abs(a - b)),
+        'distance_valid': lambda a: True,
     },
     # return 1 - jaccard similarity, because smaller distances are better.
-    # modified to use pdist jaccard given new data format (boolean ndarray)
     'jaccard': {
-        'distance': lambda a, b: 1 - jaccard(a, b), #pdist(a, b, "jaccard"), 
-        'distance_valid': lambda a: a < 1 - 1e-5
+        'distance': lambda a, b: 1 - jaccard(a, b),
+        'distance_valid': lambda a: a < 1 - 1e-5,
     },
     'euclidean': {
-        'distance': lambda a, b: pdist(a, b, "euclidean"),
-        'distance_valid': lambda a: True
+        'distance': lambda a, b: euclidean(a, b),
+        'distance_valid': lambda a: True,
     },
     'angular': {
-        'distance': lambda a, b: pdist(a, b, "cosine"),
-        'distance_valid': lambda a: True
+        'distance': lambda a, b: euclidean(a, b) / (norm(a) * norm(b)),
+        'distance_valid': lambda a: True,
     }
 }
 
