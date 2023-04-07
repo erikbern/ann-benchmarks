@@ -15,3 +15,7 @@ class TestDistance(unittest.TestCase):
         q = numpy.array([1, 0, 0, 1], dtype=numpy.bool_)
         dist = metrics["hamming"]["distance"]
         self.assertAlmostEqual(dist(p, q), 2)
+
+        p = numpy.array([1, 1, 0, 0])
+        q = numpy.array([1, 0, 0, 1])
+        self.assertAlmostEqual(dist(p, q), 2)
