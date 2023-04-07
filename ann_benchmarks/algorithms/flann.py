@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 import pyflann
 import numpy
 import sklearn.preprocessing

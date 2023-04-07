@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 import hnswlib
 import numpy as np
 from .base import BaseANN

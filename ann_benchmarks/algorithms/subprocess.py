@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 from os.path import basename
 import shlex
 from types import MethodType

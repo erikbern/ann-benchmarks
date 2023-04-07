@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 import numpy
 import pyknowhere
 from .base import BaseANN
