@@ -2,7 +2,6 @@ from __future__ import absolute_import
 import sys
 sys.path.append("install/lib-dolphinnpy")  # noqa
 import numpy
-import ctypes
 from dolphinn import Dolphinn
 from utils import findmean, isotropize
 from ann_benchmarks.algorithms.base import BaseANN

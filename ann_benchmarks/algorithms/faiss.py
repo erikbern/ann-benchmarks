@@ -3,7 +3,6 @@ import sys
 sys.path.append("install/lib-faiss")  # noqa
 import numpy
 import sklearn.preprocessing
-import ctypes
 import faiss
 from ann_benchmarks.algorithms.base import BaseANN
 

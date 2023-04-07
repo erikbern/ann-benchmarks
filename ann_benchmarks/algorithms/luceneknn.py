@@ -12,7 +12,7 @@ from org.apache.lucene.store import FSDirectory
 from org.apache.lucene.search import KnnVectorQuery, IndexSearcher
 from org.apache.lucene.index import IndexWriter, IndexWriterConfig, VectorSimilarityFunction, DirectoryReader
 from org.apache.lucene.codecs.lucene94 import Lucene94HnswVectorsFormat
-from org.apache.lucene.document import Document, FieldType, KnnVectorField, StoredField
+from org.apache.lucene.document import Document, KnnVectorField, StoredField
 from org.apache.pylucene.codecs import PyLucene94Codec
 from ann_benchmarks.algorithms.base import BaseANN
 
@@ -39,7 +39,7 @@ class PyLuceneKNN(BaseANN):
         try:
             lucene.initVM(vmargs=['-Djava.awt.headless=true -Xmx6g -Xms6g'])
         except ValueError:
-            print(f'VM already initialized')
+            print('VM already initialized')
         self.metric = metric
         self.dimension = dimension
         self.param = param

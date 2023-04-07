@@ -4,7 +4,6 @@ Uses the elastiknn python client
 To install a local copy of the client, run `pip install --upgrade -e /path/to/elastiknn/client-python/`
 To monitor the Elasticsearch JVM using Visualvm, add `ports={ "8097": 8097 }` to the `containers.run` call in runner.py.
 """
-from sys import stderr
 from urllib.error import URLError
 
 import numpy as np

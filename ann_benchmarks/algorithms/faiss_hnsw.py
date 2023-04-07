@@ -1,9 +1,6 @@
 from __future__ import absolute_import
-import os
 import faiss
 import numpy as np
-from ann_benchmarks.constants import INDEX_DIR
-from ann_benchmarks.algorithms.base import BaseANN
 from ann_benchmarks.algorithms.faiss import Faiss
 
 

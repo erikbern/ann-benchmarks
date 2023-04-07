@@ -1,12 +1,9 @@
 from __future__ import absolute_import
-import sys
 import os
 import ngtpy
-import numpy as np
 import subprocess
 import time
 from ann_benchmarks.algorithms.base import BaseANN
-from ann_benchmarks.constants import INDEX_DIR
 
 
 class PANNG(BaseANN):

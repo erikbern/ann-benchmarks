@@ -1,6 +1,4 @@
 import logging
-from time import sleep
-from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 from elasticsearch import Elasticsearch
