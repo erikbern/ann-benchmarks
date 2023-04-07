@@ -2,16 +2,20 @@ import matplotlib as mpl
 
 mpl.use("Agg")  # noqa
 import argparse
-import os
 import hashlib
+import os
+
 from jinja2 import Environment, FileSystemLoader
 
+import plot
 from ann_benchmarks import results
 from ann_benchmarks.datasets import get_dataset
-from ann_benchmarks.plotting.plot_variants import all_plot_variants as plot_variants
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
-from ann_benchmarks.plotting.utils import get_plot_label, compute_all_metrics, create_pointset, create_linestyles
-import plot
+from ann_benchmarks.plotting.plot_variants import \
+    all_plot_variants as plot_variants
+from ann_benchmarks.plotting.utils import (compute_all_metrics,
+                                           create_linestyles, create_pointset,
+                                           get_plot_label)
 
 colors = [
     "rgba(166,206,227,1)",

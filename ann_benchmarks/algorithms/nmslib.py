@@ -1,7 +1,9 @@
 import os
+
 import nmslib
 import numpy as np
 import scipy.sparse
+
 from ..constants import INDEX_DIR
 from .base import BaseANN
 

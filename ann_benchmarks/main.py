@@ -1,23 +1,19 @@
 import argparse
 import logging
 import logging.config
-
-import docker
 import multiprocessing.pool
 import os
-import psutil
 import random
 import shutil
 import sys
 
-from .datasets import get_dataset, DATASETS
+import docker
+import psutil
+
+from .algorithms.definitions import (InstantiationStatus, algorithm_status,
+                                     get_definitions, list_algorithms)
 from .constants import INDEX_DIR
-from .algorithms.definitions import (
-    get_definitions,
-    list_algorithms,
-    algorithm_status,
-    InstantiationStatus,
-)
+from .datasets import DATASETS, get_dataset
 from .results import get_result_filename
 from .runner import run, run_docker
 

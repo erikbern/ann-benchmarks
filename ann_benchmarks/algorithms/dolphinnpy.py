@@ -4,6 +4,7 @@ sys.path.append("install/lib-dolphinnpy")  # noqa
 import numpy
 from dolphinn import Dolphinn
 from utils import findmean, isotropize
+
 from .base import BaseANN
 
 

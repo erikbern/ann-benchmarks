@@ -1,14 +1,16 @@
 import matplotlib as mpl
 
 mpl.use("Agg")  # noqa
+import argparse
+
 import matplotlib.pyplot as plt
 import numpy as np
-import argparse
 
 from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
-from ann_benchmarks.plotting.utils import get_plot_label, compute_metrics, create_linestyles, create_pointset
-from ann_benchmarks.results import load_all_results, get_unique_algorithms
+from ann_benchmarks.plotting.utils import (compute_metrics, create_linestyles,
+                                           create_pointset, get_plot_label)
+from ann_benchmarks.results import get_unique_algorithms, load_all_results
 
 
 def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles, batch):

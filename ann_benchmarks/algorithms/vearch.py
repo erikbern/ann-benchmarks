@@ -1,6 +1,8 @@
 import time
+
 import numpy as np
 import vearch
+
 from .base import BaseANN
 
 

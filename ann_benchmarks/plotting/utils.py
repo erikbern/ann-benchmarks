@@ -1,7 +1,9 @@
 from __future__ import absolute_import
 
 import itertools
+
 import numpy as np
+
 from ann_benchmarks.plotting.metrics import all_metrics as metrics
 
 

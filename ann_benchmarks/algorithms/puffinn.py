@@ -1,8 +1,8 @@
-import numpy as np
-
-import puffinn
-from .base import BaseANN
 import numpy
+import numpy as np
+import puffinn
+
+from .base import BaseANN
 
 
 class Puffinn(BaseANN):

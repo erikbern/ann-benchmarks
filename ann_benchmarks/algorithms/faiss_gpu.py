@@ -2,8 +2,9 @@ import sys
 
 # Assumes local installation of FAISS
 sys.path.append("faiss")  # noqa
-import numpy
 import faiss
+import numpy
+
 from .base import BaseANN
 
 # Implementation based on

@@ -4,18 +4,16 @@ Uses the elastiknn python client
 To install a local copy of the client, run `pip install --upgrade -e /path/to/elastiknn/client-python/`
 To monitor the Elasticsearch JVM using Visualvm, add `ports={ "8097": 8097 }` to the `containers.run` call in runner.py.
 """
+import logging
+from time import perf_counter, sleep
 from urllib.error import URLError
+from urllib.request import Request, urlopen
 
 import numpy as np
 from elastiknn.api import Vec
 from elastiknn.models import ElastiknnModel
 
 from .base import BaseANN
-
-from urllib.request import Request, urlopen
-from time import sleep, perf_counter
-
-import logging
 
 # Mute the elasticsearch logger.
 # By default, it writes an INFO statement for every request.

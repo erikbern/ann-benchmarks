@@ -1,9 +1,11 @@
 import os
-import ngtpy
-import subprocess
 import struct
-from sklearn import preprocessing
+import subprocess
 import time
+
+import ngtpy
+from sklearn import preprocessing
+
 from .base import BaseANN
 
 

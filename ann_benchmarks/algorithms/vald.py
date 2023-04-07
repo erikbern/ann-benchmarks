@@ -5,12 +5,11 @@ import urllib.request
 
 import grpc
 import yaml
-from .base import BaseANN
-
-from vald.v1.vald import insert_pb2_grpc, search_pb2_grpc
 from vald.v1.agent.core import agent_pb2_grpc
 from vald.v1.payload import payload_pb2
+from vald.v1.vald import insert_pb2_grpc, search_pb2_grpc
 
+from .base import BaseANN
 
 default_server_config = {
     "version": "v0.0.0",

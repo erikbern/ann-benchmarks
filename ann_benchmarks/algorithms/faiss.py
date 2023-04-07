@@ -1,9 +1,10 @@
 import sys
 
 sys.path.append("install/lib-faiss")  # noqa
+import faiss
 import numpy
 import sklearn.preprocessing
-import faiss
+
 from .base import BaseANN
 
 
