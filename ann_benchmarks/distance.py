@@ -34,7 +34,7 @@ metrics = {
         "distance_valid": lambda a: True,
     },
     "angular": {
-        "distance": lambda a, b: euclidean(a, b) / (norm(a) * norm(b)),
+        "distance": lambda a, b: euclidean(a / norm(a), b / norm(b)),
         "distance_valid": lambda a: True,
     },
 }
