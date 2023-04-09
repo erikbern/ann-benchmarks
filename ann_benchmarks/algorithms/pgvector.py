@@ -13,6 +13,13 @@ class PGVector(BaseANN):
         self._lists = lists
         self._cur = None
 
+        if metric == "angular":
+            self._query = "SELECT id FROM items ORDER BY embedding <=> %s LIMIT %s"
+        elif metric == "euclidean":
+            self._query = "SELECT id FROM items ORDER BY embedding <-> %s LIMIT %s"
+        else:
+            raise RuntimeError(f"unknown metric {metric}")
+
     def fit(self, X):
         subprocess.run("service postgresql start", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
         conn = psycopg.connect(user="ann", password="ann", dbname="ann")
@@ -44,14 +51,7 @@ class PGVector(BaseANN):
         self._cur.execute("SET max_parallel_workers_per_gather = 0")
 
     def query(self, v, n):
-        if self._metric == "angular":
-            q = "SELECT id FROM items ORDER BY embedding <=> %s LIMIT %s"
-        elif self._metric == "euclidean":
-            q = "SELECT id FROM items ORDER BY embedding <-> %s LIMIT %s"
-        else:
-            raise RuntimeError(f"unknown metric {self._metric}")
-
-        self._cur.execute(q, (v, n), binary=True, prepare=True)
+        self._cur.execute(self._query, (v, n), binary=True, prepare=True)
         return [id for id, in self._cur.fetchall()]
 
     def __str__(self):
