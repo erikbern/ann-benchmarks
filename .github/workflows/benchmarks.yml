@@ -67,7 +67,7 @@ jobs:
       DATASET: ${{ matrix.dataset }}
 
     steps:
-    - uses: actions/checkout@v2 # Pull the repository
+    - uses: actions/checkout@v3 # Pull the repository
 
     - name: Install OS Dependencies
       run: sudo apt-get update && sudo apt-get install -y libhdf5-dev python3-numpy python3-scipy python3-matplotlib python3-sklearn
