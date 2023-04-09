@@ -547,6 +547,7 @@ float:
       run-groups:
         pgvector:
           args: [[100, 200, 400, 1000, 2000, 4000, 10000]]
+          query-args: [[1, 2, 4, 10, 20, 40, 100]]
 
   euclidean:
     vamana(diskann):
