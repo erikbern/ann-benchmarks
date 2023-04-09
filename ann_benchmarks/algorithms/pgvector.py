@@ -15,7 +15,7 @@ class PGVector(BaseANN):
 
     def fit(self, X):
         subprocess.run("service postgresql start", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
-        conn = psycopg.connect(host="localhost", user="ann", password="ann", dbname="ann")
+        conn = psycopg.connect(user="ann", password="ann", dbname="ann")
         pgvector.psycopg.register_vector(conn)
         cur = conn.cursor()
         cur.execute("CREATE TABLE items (id int, embedding vector(%d))" % X.shape[1])
@@ -35,6 +35,14 @@ class PGVector(BaseANN):
         print("done!")
         self._cur = cur
 
+    def set_query_arguments(self, probes):
+        self._probes = probes
+        self._cur.execute("SET ivfflat.probes = '%d'" % probes)
+        # TODO set based on available memory
+        self._cur.execute("SET work_mem = '256MB'")
+        # disable parallel query execution
+        self._cur.execute("SET max_parallel_workers_per_gather = 0")
+
     def query(self, v, n):
         if self._metric == "angular":
             q = "SELECT id FROM items ORDER BY embedding <=> %s LIMIT %s"
@@ -43,8 +51,8 @@ class PGVector(BaseANN):
         else:
             raise RuntimeError(f"unknown metric {self._metric}")
 
-        self._cur.execute(q, (v, n))
+        self._cur.execute(q, (v, n), binary=True, prepare=True)
         return [id for id, in self._cur.fetchall()]
 
     def __str__(self):
-        return f"PGVector(lists={self._lists})"
+        return f"PGVector(lists={self._lists}, probes={self._probes})"
