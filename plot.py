@@ -33,12 +33,12 @@ def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles, bat
         max_x = max([max_x] + [x for x in xs if x < 1])
         color, faded, linestyle, marker = linestyles[algo]
         (handle,) = plt.plot(
-            xs, ys, "-", label=algo, color=color, ms=7, mew=3, lw=3, linestyle=linestyle, marker=marker
+            xs, ys, "-", label=algo, color=color, ms=7, mew=3, lw=3, marker=marker
         )
         handles.append(handle)
         if raw:
             (handle2,) = plt.plot(
-                axs, ays, "-", label=algo, color=faded, ms=5, mew=2, lw=2, linestyle=linestyle, marker=marker
+                axs, ays, "-", label=algo, color=faded, ms=5, mew=2, lw=2, marker=marker
             )
         labels.append(algo)
 
@@ -73,7 +73,7 @@ def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles, bat
     plt.gca().get_position()
     # plt.gca().set_position([box.x0, box.y0, box.width * 0.8, box.height])
     ax.legend(handles, labels, loc="center left", bbox_to_anchor=(1, 0.5), prop={"size": 9})
-    plt.grid(b=True, which="major", color="0.65", linestyle="-")
+    plt.grid(visible=True, which="major", color="0.65", linestyle="-")
     plt.setp(ax.get_xminorticklabels(), visible=True)
 
     # Logit scale has to be a subset of (0,1)
