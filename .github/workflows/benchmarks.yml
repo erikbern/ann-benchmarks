@@ -15,7 +15,7 @@ jobs:
   unit-tests:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2 # Pull the repository
+      - uses: actions/checkout@v3 # Pull the repository
       - run: sudo apt-get update && sudo apt-get install -y libhdf5-dev python3-numpy python3-scipy python3-matplotlib python3-sklearn
       - run: pip3 install --quiet -r requirements.txt
       - run: pytest
