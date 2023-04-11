@@ -27,9 +27,11 @@ def test_hamming():
 def test_angular():
     dist = metrics["angular"]["distance"]
 
+    # We use 1 - cos as the angular distance
+
     p = numpy.array([5, 0])
     q = numpy.array([0, 3])
-    assert dist(p, q) == pytest.approx(2**0.5)
+    assert dist(p, q) == pytest.approx(1)
 
     p = numpy.array([5, 0])
     q = numpy.array([1, 0])
