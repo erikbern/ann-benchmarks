@@ -1,6 +1,7 @@
 import pytest
 import numpy
 
+from ann_benchmarks.datasets import get_dataset
 from ann_benchmarks.distance import metrics
 
 
@@ -40,3 +41,18 @@ def test_angular():
     p = numpy.array([7, 0])
     q = numpy.array([-8, 0])
     assert dist(p, q) == pytest.approx(2)
+
+
+def test_angular_dataset():
+    # Make sure distances in the datasets are calculated consistent with the definitions
+    # This is to avoid issues like #367
+
+    dist_f = metrics["angular"]["distance"]
+
+    hdf5_f, n_dims = get_dataset("glove-25-angular")
+
+    n = 1000
+    for u, nns, dists in zip(hdf5_f["test"][:n], hdf5_f["neighbors"][:n], hdf5_f["distances"][:n]):
+        for j, dist in zip(nns, dists):
+            v = hdf5_f["train"][j]
+            assert dist_f(u, v) == pytest.approx(dist, rel=1e-4, abs=1e-4)
