@@ -1,11 +1,11 @@
 Benchmarking nearest neighbors
 ==============================
 
-[![Build Status](https://img.shields.io/github/workflow/status/erikbern/ann-benchmarks/ANN%20benchmarks?style=flat-square)](https://github.com/erikbern/ann-benchmarks/actions?query=workflow:benchmarks)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/erikbern/ann-benchmarks/benchmarks.yml?branch=main&style=flat-square)](https://github.com/erikbern/ann-benchmarks/actions/workflows/benchmarks.yml)
 
 Doing fast searching of nearest neighbors in high dimensional spaces is an increasingly important problem, but so far there has not been a lot of empirical attempts at comparing approaches in an objective way.
 
-This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics. We have pregenerated datasets (in HDF5) formats and we also have Docker containers for each algorithm. There's a [test suite](https://travis-ci.org/erikbern/ann-benchmarks) that makes sure every algorithm works.
+This project contains some tools to benchmark various implementations of approximate nearest neighbor (ANN) search for different metrics. We have pregenerated datasets (in HDF5) formats and we also have Docker containers for each algorithm. There's a [test suite](https://github.com/erikbern/ann-benchmarks/actions) that makes sure every algorithm works.
 
 Evaluated
 =========
@@ -38,6 +38,7 @@ Evaluated
 * [Qdrant](https://github.com/qdrant/qdrant) ![https://img.shields.io/github/stars/qdrant/qdrant?style=social](https://img.shields.io/github/stars/qdrant/qdrant?style=social)
 * [qsgngtlib](https://gitee.com/WPJIANG-gitee/hwtl_sdu-anns-qsgngtlib)
 * [Milvus](https://github.com/milvus-io/milvus) ![https://img.shields.io/github/stars/milvus-io/milvus?style=social](https://img.shields.io/github/stars/milvus-io/milvus?style=social): [Knowhere](https://github.com/milvus-io/knowhere)
+* [pgvector](https://github.com/pgvector/pgvector) ![https://img.shields.io/github/stars/pgvector/pgvector?style=social](https://img.shields.io/github/stars/pgvector/pgvector?style=social)
 
 
 Data sets
