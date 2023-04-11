@@ -3,21 +3,12 @@
 FROM ann-benchmarks
 
 RUN git clone --recursive https://github.com/microsoft/SPTAG
-RUN apt-get update && apt-get -y install wget build-essential libtbb-dev software-properties-common swig
+RUN apt-get update && apt-get -y install wget build-essential cmake libboost-all-dev libtbb-dev software-properties-common swig
 
-# cmake >= 3.12 is required
-RUN wget "https://github.com/Kitware/CMake/releases/download/v3.14.4/cmake-3.14.4-Linux-x86_64.tar.gz" -q -O - \
-        | tar -xz --strip-components=1 -C /usr/local
-
-# specific version of boost
-RUN wget "https://boostorg.jfrog.io/artifactory/main/release/1.67.0/source/boost_1_67_0.tar.gz" -q -O - \
-        | tar -xz && \
-        cd boost_1_67_0 && \
-        ./bootstrap.sh && \
-        ./b2 install && \
-        # update ld cache so it finds boost in /usr/local/lib
-        ldconfig && \
-        cd .. && rm -rf boost_1_67_0
+# Patch https://github.com/microsoft/SPTAG/issues/243
+RUN cd SPTAG && \
+        wget -qO- https://github.com/pabs3/SPTAG/commit/bd9c25d1409325ac45ebeb7f1e8fc87d03ec478c.patch | git apply && \
+        cd ..
 
 # SPTAG defaults to Python 2 if it's found on the system, so as a hack, we remove it. See https://github.com/microsoft/SPTAG/blob/master/Wrappers/CMakeLists.txt
 RUN apt-get -y remove libpython2.7
