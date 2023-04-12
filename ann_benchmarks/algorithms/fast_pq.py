@@ -11,7 +11,8 @@ class FastPQ(BaseANN):
 
     def fit(self, X):
         n = X.shape[0]
-        self._ivf = fast_pq.IVF(self._metric, cl=int(n**.5 + 1), pq=fast_pq.FastPQ(dims_per_block=2))
+        pq = fast_pq.FastPQ(2).fit(X)
+        self._ivf = fast_pq.IVF(self._metric, cl=int(n**.5 + 1), pq=pq)
         self._ivf.fit(X).build(X, n_probes=self._build_probes)
 
     def set_query_arguments(self, query_probes):
