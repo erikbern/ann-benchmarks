@@ -18,8 +18,9 @@ class QG(BaseANN):
         self._object_type = object_type
         self._edge_size_for_search = int(param["search_edge"]) if "search_edge" in param.keys() else -2
         self._tree_disabled = (param["tree"] is False) if "tree" in param.keys() else False
-        self._build_time_limit = 4
-        self._epsilon = epsilon
+        self._build_time_limit = float(param["timeout"]) if "timeout" in param.keys() else 4
+        self._epsilon = float(param["epsilon"]) if "epsilon" in param.keys() else epsilon
+        self._sample = int(param["sample"]) if "sample" in param.keys() else 20000
         print("QG: edge_size=" + str(self._edge_size))
         print("QG: outdegree=" + str(self._outdegree))
         print("QG: indegree=" + str(self._indegree))
@@ -92,7 +93,7 @@ class QG(BaseANN):
             args = [
                 "qbg",
                 "build-qg",
-                "-o20000",
+                "-o" + str(self._sample),
                 "-M6",
                 "-ib",
                 "-I400",
