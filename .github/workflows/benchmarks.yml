@@ -55,6 +55,7 @@ jobs:
           - vald
           - vearch
           - vespa
+          - weaviate
         include:
           - library: pynndescent 
             dataset: random-xs-16-hamming
