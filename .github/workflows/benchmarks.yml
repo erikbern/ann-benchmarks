@@ -63,6 +63,8 @@ jobs:
           - library: pynndescent
             dataset: random-s-jaccard
 
+    name: ${{ matrix.library }} (${{ matrix.dataset }})
+
     env:
       LIBRARY: ${{ matrix.library }}
       DATASET: ${{ matrix.dataset }}
