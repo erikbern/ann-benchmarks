@@ -1,5 +1,6 @@
 import subprocess
 import sys
+import time
 
 from redis import Redis
 
@@ -14,8 +15,11 @@ class Redisearch(BaseANN):
 
     def fit(self, X):
         # Start Redis in the background
-        subprocess.run("redis-server --loadmodule /usr/lib/redis/modules/redisearch.so", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
+        subprocess.run("redis-server --daemonize yes --loadmodule /usr/lib/redis/modules/redisearch.so", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
 
+        # Sleep a bit to make sure the server is running
+        time.sleep(3)
+        
         # Connect to Redis
         self.redis = Redis(host="localhost", port=6379, decode_responses=False)
 
