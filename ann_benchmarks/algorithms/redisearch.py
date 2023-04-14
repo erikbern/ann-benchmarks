@@ -15,18 +15,23 @@ class Redisearch(BaseANN):
 
     def fit(self, X):
         # Start Redis in the background
-        subprocess.run("redis-server --daemonize yes --loadmodule /usr/lib/redis/modules/redisearch.so", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
+        cmd = "redis-server --daemonize yes --loadmodule /usr/lib/redis/modules/redisearch.so"
+        print("Starting Redis:", cmd)
+        subprocess.run(cmd, shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
 
         # Sleep a bit to make sure the server is running
+        print("Sleeping 3s to wait for Redis server to start up...")
         time.sleep(3)
-        
+
         # Connect to Redis
+        print("Connecting to Redis...")
         self.redis = Redis(host="localhost", port=6379, decode_responses=False)
 
         # Create index
         args = [
             "FT.CREATE",
             "ann_benchmarks",
+            "SCHEMA",
             "vector",
             "VECTOR",
             "HNSW",
@@ -42,6 +47,7 @@ class Redisearch(BaseANN):
             "EF_CONSTRUCTION",
             self.ef_construction
         ]
+        print("Running Redis command:", args)
         self.redis.execute_command(*args, target_nodes='random')
 
         # Insert vectors
@@ -63,7 +69,7 @@ class Redisearch(BaseANN):
         q = [
             "FT.SEARCH",
             "ann_benchmarks",
-            f"*=>[KNN {n} @vector $BLOB EF_RUNTIME {self.ef}]"
+            f"*=>[KNN {n} @vector $BLOB EF_RUNTIME {self.ef}]",
             "NOCONTENT",
             "SORTBY",
             "__vector_score",
@@ -80,4 +86,4 @@ class Redisearch(BaseANN):
         return [int(doc) for doc in self.redis.execute_command(*q, target_nodes='random')[1:]]
 
     def __str__(self):
-        return f"Redisearch(M={self.m}, ef={self.ef})"
+        return f"Redisearch(M={self.M}, ef={self.ef})"
