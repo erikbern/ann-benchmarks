@@ -1,14 +1,2 @@
-# Build Weviate in the official golang image (which uses Debian)
-# See https://github.com/weaviate/weaviate/blob/master/Dockerfile
-FROM golang as weaviate-go
-RUN apt install -y git
-RUN git clone --depth=1 https://github.com/weaviate/weaviate
-WORKDIR weaviate
-RUN GOOS=linux \
-      go build -ldflags '-w -extldflags "-static"' \
-      -o /weaviate-server ./cmd/weaviate-server
-
-# Copy it into a new image & install the client
 FROM ann-benchmarks
-COPY --from=weaviate-go /weaviate-server /bin/weaviate
 RUN pip install weaviate-client
