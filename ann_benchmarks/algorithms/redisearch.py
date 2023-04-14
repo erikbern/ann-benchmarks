@@ -41,20 +41,20 @@ class Redisearch(BaseANN):
             "DIM",
             X.shape[0],
             "DISTANCE_METRIC",
-            {'angular': 'cosine', 'euclidean': 'l2'}[self.metric],
+            {"angular": "cosine", "euclidean": "l2"}[self.metric],
             "M",
             self.M,
             "EF_CONSTRUCTION",
-            self.ef_construction
+            self.ef_construction,
         ]
         print("Running Redis command:", args)
-        self.redis.execute_command(*args, target_nodes='random')
+        self.redis.execute_command(*args, target_nodes="random")
 
         # Insert vectors
         p = self.redis.pipeline(transaction=False)
         count = 0
         for i, v in enumerate(X):
-            p.execute_command('HSET', i, 'vector', v.tobytes())
+            p.execute_command("HSET", i, "vector", v.tobytes())
             count += 1
             if count == 1000:
                 p.execute()
@@ -81,9 +81,9 @@ class Redisearch(BaseANN):
             "BLOB",
             v.tobytes(),
             "DIALECT",
-            "2"
+            "2",
         ]
-        return [int(doc) for doc in self.redis.execute_command(*q, target_nodes='random')[1:]]
+        return [int(doc) for doc in self.redis.execute_command(*q, target_nodes="random")[1:]]
 
     def __str__(self):
         return f"Redisearch(M={self.M}, ef={self.ef})"
