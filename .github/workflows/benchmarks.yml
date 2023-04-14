@@ -45,6 +45,7 @@ jobs:
           - opensearchknn
           - pgvector
           - pynndescent
+          - redisearch
           - qdrant
           - qsgngt
           - scann
