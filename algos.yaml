@@ -595,6 +595,15 @@ float:
           arg-groups: [[4, 8, 12, 16, 24, 36, 48, 64, 96]]
           query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
 
+    weaviate:
+      docker-tag: ann-benchmarks-weaviate
+      module: ann_benchmarks.algorithms.weaviate
+      constructor: Weaviate
+      base-args: ["@metric"]
+      run-groups:
+        weaviate:
+          args: [[20, 40, 100, 200, 400, 1000]]
+
   euclidean:
     vamana(diskann):
       docker-tag: ann-benchmarks-diskann
