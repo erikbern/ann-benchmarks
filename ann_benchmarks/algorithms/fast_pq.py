@@ -1,6 +1,3 @@
-import sys, os
-sys.path.append(os.getcwd() + '/fast_pq')
-
 from fast_pq import FastPQ as PQ, IVF
 from .base import BaseANN
 
@@ -12,7 +9,7 @@ class FastPQ(BaseANN):
 
     def fit(self, X):
         n = X.shape[0]
-        self._ivf = IVF(self._metric, n_clusters=int(n**.5 + 1), pq=PQ(2).fit(X))
+        self._ivf = IVF(self._metric, n_clusters=int(n**.5 + 1), pq=PQ(2))
         self._ivf.fit(X).build(X, n_probes=self._build_probes)
 
     def set_query_arguments(self, query_probes):

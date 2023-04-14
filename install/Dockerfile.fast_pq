@@ -1,5 +1,5 @@
 FROM ann-benchmarks
 
 RUN git clone https://github.com/thomasahle/fast_pq.git
-RUN cd fast_pq && python3 -m pip install -r requirements.txt && python3 setup.py build_ext --inplace
+RUN cd fast_pq && python3 setup.py install
 RUN python3 -c 'import fast_pq'
