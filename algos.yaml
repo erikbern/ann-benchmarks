@@ -585,6 +585,16 @@ float:
           args: [[100, 200, 400, 1000, 2000, 4000, 10000]]
           query-args: [[1, 2, 4, 10, 20, 40, 100]]
 
+    redisearch:
+      docker-tag: ann-benchmarks-redisearch
+      module: ann_benchmarks.algorithms.redisearch
+      constructor: Redisearch
+      base-args: ["@metric"]
+      run-groups:
+        redisearch:
+          arg-groups: [[4, 8, 12, 16, 24, 36, 48, 64, 96]]
+          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+
   euclidean:
     vamana(diskann):
       docker-tag: ann-benchmarks-diskann
