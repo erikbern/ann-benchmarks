@@ -36,6 +36,7 @@ jobs:
           - faiss
           - fast_pq
           - flann
+          - glass
           - hnswlib
           - luceneknn
           - milvus
