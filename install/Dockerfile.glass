@@ -1,0 +1,9 @@
+FROM ann-benchmarks
+
+RUN apt update
+RUN apt install python3
+RUN pip3 install wheel pybind11 numpy
+RUN git clone https://github.com/hhy3/pyglass.git
+RUN pip3 install pyglass/glass-1.0.0-cp310-cp310-linux_x86_64.whl
+RUN python3 -c 'import glass'
+
