@@ -208,8 +208,10 @@ def main():
         raise Exception(
             f"Batch mode uses all available CPU resources, --parallelism should be set to 1. (Was: {args.parallelism})"
         )
-    workers = [multiprocessing.Process(target=run_worker, args=(i + 1, args, queue)) for i in range(args.parallelism)]
-    [worker.start() for worker in workers]
-    [worker.join() for worker in workers]
-
-    # TODO: need to figure out cleanup handling here
+    try:
+        workers = [multiprocessing.Process(target=run_worker, args=(i + 1, args, queue)) for i in range(args.parallelism)]
+        [worker.start() for worker in workers]
+        [worker.join() for worker in workers]
+    finally:
+        logger.info("Terminating %d workers" % len(workers))
+        [worker.terminate() for worker in workers]
