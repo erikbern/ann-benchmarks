@@ -12,6 +12,8 @@ class Redisearch(BaseANN):
         self.metric = metric
         self.ef_construction = 500
         self.M = M
+        self.index_name = "ann"
+        self.field_name = "vector"
 
     def fit(self, X):
         # Start Redis in the background
@@ -30,12 +32,12 @@ class Redisearch(BaseANN):
         # Create index
         args = [
             "FT.CREATE",
-            "ann_benchmarks",
+            self.index_name,
             "SCHEMA",
-            "vector",
+            self.field_name,
             "VECTOR",
             "HNSW",
-            "10",
+            "10",  # number of remaining arguments
             "TYPE",
             "FLOAT32",
             "DIM",
@@ -53,7 +55,7 @@ class Redisearch(BaseANN):
         # Insert vectors
         p = self.redis.pipeline(transaction=False)
         for i, v in enumerate(X):
-            p.execute_command("HSET", i, "vector", v.tobytes())
+            p.execute_command("HSET", i, self.field_name, v.tobytes())
             if i % 1000 == 999:
                 p.execute()
                 p.reset()
@@ -65,8 +67,8 @@ class Redisearch(BaseANN):
     def query(self, v, n):
         q = [
             "FT.SEARCH",
-            "ann_benchmarks",
-            f"*=>[KNN {n} @vector $BLOB EF_RUNTIME {self.ef}]",
+            self.index_name,
+            f"*=>[KNN {n} @{self.field_name} $BLOB EF_RUNTIME {self.ef}]",
             "NOCONTENT",
             "SORTBY",
             "__vector_score",
