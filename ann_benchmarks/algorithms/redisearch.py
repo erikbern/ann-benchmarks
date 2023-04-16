@@ -52,14 +52,11 @@ class Redisearch(BaseANN):
 
         # Insert vectors
         p = self.redis.pipeline(transaction=False)
-        count = 0
         for i, v in enumerate(X):
             p.execute_command("HSET", i, "vector", v.tobytes())
-            count += 1
-            if count == 1000:
+            if i % 1000 == 999:
                 p.execute()
                 p.reset()
-                count = 0
         p.execute()
 
     def set_query_arguments(self, ef):
