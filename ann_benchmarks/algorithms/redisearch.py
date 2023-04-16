@@ -39,7 +39,7 @@ class Redisearch(BaseANN):
             "TYPE",
             "FLOAT32",
             "DIM",
-            X.shape[0],
+            X.shape[1],
             "DISTANCE_METRIC",
             {"angular": "cosine", "euclidean": "l2"}[self.metric],
             "M",
