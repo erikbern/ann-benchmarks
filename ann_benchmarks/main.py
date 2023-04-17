@@ -88,12 +88,12 @@ def main():
     )
     parser.add_argument("--batch", action="store_true", help="If set, algorithms get all queries at once")
     parser.add_argument(
-    parser.add_argument(
         '--batch-size',
         help='Number of vectors in each batch. only works in batch mode. default (-1) is a single batch',
         required=False,
         type=int,
         default=0)
+    parser.add_argument(
         "--max-n-algorithms", type=int, help="Max number of algorithms to run (just used for testing)", default=-1
     )
     parser.add_argument("--run-disabled", help="run algorithms that are disabled in algos.yml", action="store_true")

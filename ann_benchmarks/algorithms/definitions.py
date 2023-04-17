@@ -148,12 +148,14 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
 
                 vs = {"@count": count, "@metric": distance_metric, "@dimension": dimension}
                 aargs = [_substitute_variables(arg, vs) for arg in aargs]
+
+                print("DOCKER RUNTIME: " + str(algo.get("docker-runtime", None)))
                 definitions.append(
                     Definition(
                         algorithm=name,
                         docker_tag=algo["docker-tag"],
                         docker_runtime=algo.get("docker-runtime", None),
-                        docker_env=algo.get"docker-env", []),
+                        docker_env=algo.get("docker-env", []),
                         module=algo["module"],
                         constructor=algo["constructor"],
                         arguments=aargs,

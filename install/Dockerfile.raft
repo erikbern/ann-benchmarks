@@ -1,10 +1,11 @@
-FROM nvcr.io/nvidia/rapidsai/rapidsai-core:23.02-cuda11.8-runtime-ubuntu22.04-py3.10
+FROM nvcr.io/nvidia/rapidsai/rapidsai-core:23.04-cuda11.8-runtime-ubuntu22.04-py3.10 as raft
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN pip install h5py psutil pyyaml matplotlib
-RUN pip install docker ansicolors
+FROM ann-benchmarks
+RUN python3 -m pip install -r requirements.txt
 
+FROM raft
 RUN python3 -c 'from pylibraft.neighbors import ivf_pq;'
 
 COPY --from=ann-benchmarks /home/app /home/app
