@@ -69,7 +69,7 @@ float:
       run-groups:
         base:
           args: [[100, 400, 1024, 4096, 8192, 16384], [4, 5, 8], [48, 64, 128]]
-          query-args: [[5, 10, 50, 100, 200], [0, 2.0, 4.0], ["uint8", "float32", "float16"], ["float32", "float16"]]
+          query-args: [[5, 10, 50, 100, 200], [0, 2.0, 4.0], ["uint8", "float16"], ["float32", "float16"]]
     raft-ivfflat:
       disabled: true
       docker-tag: ann-benchmarks-raft

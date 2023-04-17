@@ -148,8 +148,6 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
 
                 vs = {"@count": count, "@metric": distance_metric, "@dimension": dimension}
                 aargs = [_substitute_variables(arg, vs) for arg in aargs]
-
-                print("DOCKER RUNTIME: " + str(algo.get("docker-runtime", None)))
                 definitions.append(
                     Definition(
                         algorithm=name,
@@ -161,6 +159,7 @@ def get_definitions(definition_file, dimension, point_type="float", distance_met
                         arguments=aargs,
                         query_argument_groups=query_args,
                         disabled=algo.get("disabled", False)
-                ))
+                    )
+                )
 
     return definitions
