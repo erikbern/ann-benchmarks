@@ -1,5 +1,6 @@
 import subprocess
 import sys
+import uuid
 
 import weaviate
 from weaviate.embedded import EmbeddedOptions
@@ -9,7 +10,7 @@ from .base import BaseANN
 
 
 class Weaviate(BaseANN):
-    def __init__(self, metric, max_connections, ef_construction=512):
+    def __init__(self, metric, max_connections, ef_construction=128):
         self.class_name = "Vector"
         self.client = weaviate.Client(embedded_options=EmbeddedOptions(version="1.19.0-beta.0"))
         self.max_connections = max_connections
@@ -68,7 +69,7 @@ class Weaviate(BaseANN):
         )
         # {'data': {'Get': {'Vector': [{"_additional": {"id": "<uuid>" }}, ...]}}}
 
-    return [uuid.UUID(res["_additional"]["id"]).int for res in ret["data"]["Get"][self.class_name]]
+        return [uuid.UUID(res["_additional"]["id"]).int for res in ret["data"]["Get"][self.class_name]]
 
     def __str__(self):
         return f"Weaviate(ef={self.ef}, maxConnections={self.max_connections}, efConstruction={self.ef_construction})"
