@@ -11,7 +11,7 @@ from .base import BaseANN
 class Weaviate(BaseANN):
     def __init__(self, metric, max_connections, ef_construction=512):
         self.class_name = "Vector"
-        self.client = weaviate.Client(embedded_options=EmbeddedOptions())
+        self.client = weaviate.Client(embedded_options=EmbeddedOptions(version="1.19.0-beta.0"))
         self.max_connections = max_connections
         self.ef_construction = ef_construction
         self.distance = {
