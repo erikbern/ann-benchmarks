@@ -613,8 +613,8 @@ float:
       base-args: ["@metric"]
       run-groups:
         weaviate:
-          args: [[4, 8, 12, 16, 20, 24, 28, 32, 36, 40]]
-          query-args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+          args: [[4, 8, 16, 24, 32, 40, 48, 64, 72]]
+          query-args: [[8, 16, 32, 48, 64, 96, 128, 256, 512, 768]]
 
   euclidean:
     vamana(diskann):

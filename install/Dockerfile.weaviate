@@ -1,2 +1,2 @@
 FROM ann-benchmarks
-RUN pip install weaviate-client
+RUN pip install weaviate-client>=3.16.0
