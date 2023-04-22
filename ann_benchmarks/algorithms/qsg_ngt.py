@@ -20,8 +20,9 @@ class QSG(BaseANN):
         self._object_type = object_type
         self._edge_size_for_search = int(param["search_edge"]) if "search_edge" in param.keys() else -2
         self._tree_disabled = (param["tree"] is False) if "tree" in param.keys() else False
-        self._build_time_limit = 4
-        self._epsilon = epsilon
+        self._build_time_limit = float(param["timeout"]) if "timeout" in param.keys() else 4
+        self._epsilon = float(param["epsilon"]) if "epsilon" in param.keys() else epsilon
+        self._sample = int(param["sample"]) if "sample" in param.keys() else 20000
         self._paramE = param["paramE"]
         self._paramS = param["paramS"]
         self._range = int(param["range"])
@@ -36,8 +37,8 @@ class QSG(BaseANN):
         print("QSG: epsilon=" + str(self._epsilon))
         print("QSG: metric=" + metric)
         print("QSG: object_type=" + object_type)
-        print("QG: range=" + str(self._range))
-        print("QG: threshold=" + str(self._threshold))
+        print("QSG: range=" + str(self._range))
+        print("QSG: threshold=" + str(self._threshold))
 
     def fit(self, X):
         print("QSG: start indexing...")
@@ -129,7 +130,7 @@ class QSG(BaseANN):
             )
             SG = os.path.join(anngIndex, "grp")
             cmds = (
-                "/home/app/hwtl_sdu-anns-qsgngtlib/qsgngt-knng "
+                "/home/app/HWTL_SDU-ANNS/qsgngt-knng "
                 + str(fvecs)
                 + " "
                 + str(KNNG)
@@ -143,7 +144,7 @@ class QSG(BaseANN):
                 + str(parmEfanna[3])
                 + " "
                 + str(parmEfanna[4])
-                + "&& /home/app/hwtl_sdu-anns-qsgngtlib/qsgngt-SpaceGraph "
+                + "&& /home/app/HWTL_SDU-ANNS/qsgngt-SpaceGraph "
                 + str(fvecs)
                 + " "
                 + str(KNNG)
@@ -184,7 +185,7 @@ class QSG(BaseANN):
             args = [
                 "qbg",
                 "build-qg",
-                "-o20000",
+                "-o" + str(self._sample),
                 "-M6",
                 "-ib",
                 "-I400",
@@ -211,11 +212,16 @@ class QSG(BaseANN):
         result_expansion, epsilon = parameters
         print("QSG: result_expansion=" + str(result_expansion))
         print("QSG: epsilon=" + str(epsilon))
-        self.name = "QSG-NGT(%s, %s, %s, %s, %s, %1.3f)" % (
+        self.name = "QSG-NGT(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %1.3f)" % (
             self._edge_size,
             self._outdegree,
             self._indegree,
             self._max_edge_size,
+            str(self._range),
+            str(self._threshold),
+            str(self._rangeMax),
+            str(self._searchA),
+            str(self._ifES),
             epsilon,
             result_expansion,
         )
