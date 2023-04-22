@@ -543,7 +543,7 @@ float:
       base-args: ["@metric", "Float", 0.1]
       run-groups:
         cos-60-1:
-          args : [{'edge': 100, 'outdegree': 64, 'indegree': 120, 'max_edge': 96, 'sample': 20000, 'range': 175,'threshold': 60,'rangeMax': 175,'searchA': 400, 'ifES': 0, 'paramE': [400, 400, 12, 10, 250], 'paramS': [100, 100, 60]}]
+          args : [{'edge': 100, 'outdegree': 64, 'indegree': 120, 'max_edge': 96, 'sample': 20000, 'epsilon': 0.1, 'range': 175,'threshold': 60,'rangeMax': 175,'searchA': 400, 'ifES': 0, 'paramE': [400, 400, 12, 10, 250], 'paramS': [100, 100, 60]}]
           query-args : [[[0.0, 0.90], [0.0, 0.95], [0.0, 0.98], [0.0, 1.00],
                          [1.2, 0.90], [1.5, 0.90], [2.0, 0.90], [3.0, 0.90],
                          [1.2, 0.95], [1.5, 0.95], [2.0, 0.95], [3.0, 0.95],
