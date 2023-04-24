@@ -1,5 +1,0 @@
-FROM ann-benchmarks
-
-RUN git clone https://github.com/thomasahle/fast_pq.git
-RUN cd fast_pq && python3 -m pip install .
-RUN python3 -c 'import fast_pq'
