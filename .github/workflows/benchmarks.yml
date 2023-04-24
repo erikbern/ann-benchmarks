@@ -34,7 +34,7 @@ jobs:
           - elasticsearch
           - elastiknn
           - faiss
-          - fast_pq
+          - tinyknn
           - flann
           - glass
           - hnswlib
