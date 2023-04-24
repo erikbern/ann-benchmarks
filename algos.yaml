@@ -824,11 +824,13 @@ float:
     elasticsearch:
       docker-tag: ann-benchmarks-elasticsearch
       module: ann_benchmarks.algorithms.elasticsearch
-      constructor: ElasticsearchScriptScoreQuery
-      base-args: [ "@metric", "@dimension" ]
+      constructor: ElasticsearchKNN
+      base-args: ["@metric", "@dimension"]
       run-groups:
-        empty:
-          args: []
+        m-16-ef-100:
+          arg-groups:
+            - {"m": 16,  "ef_construction": 100} # index_options
+          query-args: [[10, 20, 40, 80, 160]] # num_candidates
     elastiknn-l2lsh:
       docker-tag: ann-benchmarks-elastiknn
       module: ann_benchmarks.algorithms.elastiknn
@@ -1143,11 +1145,13 @@ float:
     elasticsearch:
       docker-tag: ann-benchmarks-elasticsearch
       module: ann_benchmarks.algorithms.elasticsearch
-      constructor: ElasticsearchScriptScoreQuery
-      base-args: [ "@metric", "@dimension" ]
+      constructor: ElasticsearchKNN
+      base-args: ["@metric", "@dimension"]
       run-groups:
-        empty:
-          args: []
+        m-16-ef-100:
+          arg-groups:
+            - {"m": 16,  "ef_construction": 100} # index_options
+          query-args: [[10, 20, 40, 80, 160]] # num_candidates
     opensearchknn:
       docker-tag: ann-benchmarks-opensearchknn
       module: ann_benchmarks.algorithms.opensearchknn
