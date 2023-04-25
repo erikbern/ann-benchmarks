@@ -1,15 +1,11 @@
-import logging
+from time import sleep
 from urllib.request import Request, urlopen
 
-from elasticsearch import Elasticsearch
-from elasticsearch.helpers import bulk
+from opensearchpy import ConnectionError, OpenSearch
+from opensearchpy.helpers import bulk
 from tqdm import tqdm
 
 from .base import BaseANN
-from .elasticsearch import es_wait
-
-# Configure the logger.
-logging.getLogger("elasticsearch").setLevel(logging.WARN)
 
 
 class OpenSearchKNN(BaseANN):
@@ -19,8 +15,19 @@ class OpenSearchKNN(BaseANN):
         self.method_param = method_param
         self.param_string = "-".join(k + "-" + str(v) for k, v in self.method_param.items()).lower()
         self.name = f"os-{self.param_string}"
-        self.es = Elasticsearch(["http://localhost:9200"])
-        es_wait()
+        self.client = OpenSearch(["http://localhost:9200"])
+        self._wait_for_health_status()
+
+    def _wait_for_health_status(self, wait_seconds=30, status="yellow"):
+        for _ in range(wait_seconds):
+            try:
+                self.client.cluster.health(wait_for_status=status)
+                return
+            except ConnectionError as e:
+                pass
+            sleep(1)
+
+        raise RuntimeError("Failed to connect to OpenSearch")
 
     def fit(self, X):
         body = {
@@ -46,8 +53,8 @@ class OpenSearchKNN(BaseANN):
             }
         }
 
-        self.es.indices.create(self.name, body=body)
-        self.es.indices.put_mapping(mapping, self.name)
+        self.client.indices.create(self.name, body=body)
+        self.client.indices.put_mapping(mapping, self.name)
 
         print("Uploading data to the Index:", self.name)
 
@@ -55,14 +62,14 @@ class OpenSearchKNN(BaseANN):
             for i, vec in enumerate(tqdm(X)):
                 yield {"_op_type": "index", "_index": self.name, "vec": vec.tolist(), "id": str(i + 1)}
 
-        (_, errors) = bulk(self.es, gen(), chunk_size=500, max_retries=2, request_timeout=10)
+        (_, errors) = bulk(self.client, gen(), chunk_size=500, max_retries=2, request_timeout=10)
         assert len(errors) == 0, errors
 
         print("Force Merge...")
-        self.es.indices.forcemerge(self.name, max_num_segments=1, request_timeout=1000)
+        self.client.indices.forcemerge(self.name, max_num_segments=1, request_timeout=1000)
 
         print("Refreshing the Index...")
-        self.es.indices.refresh(self.name, request_timeout=1000)
+        self.client.indices.refresh(self.name, request_timeout=1000)
 
         print("Running Warmup API...")
         res = urlopen(Request("http://localhost:9200/_plugins/_knn/warmup/" + self.name + "?pretty"))
@@ -70,12 +77,12 @@ class OpenSearchKNN(BaseANN):
 
     def set_query_arguments(self, ef):
         body = {"settings": {"index": {"knn.algo_param.ef_search": ef}}}
-        self.es.indices.put_settings(body=body)
+        self.client.indices.put_settings(body=body)
 
     def query(self, q, n):
         body = {"query": {"knn": {"vec": {"vector": q.tolist(), "k": n}}}}
 
-        res = self.es.search(
+        res = self.client.search(
             index=self.name,
             body=body,
             size=n,
@@ -95,4 +102,4 @@ class OpenSearchKNN(BaseANN):
         return self.batch_res
 
     def freeIndex(self):
-        self.es.indices.delete(index=self.name)
+        self.client.indices.delete(index=self.name)
