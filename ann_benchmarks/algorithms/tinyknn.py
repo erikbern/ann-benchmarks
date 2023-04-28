@@ -1,8 +1,8 @@
-from fast_pq import FastPQ as PQ, IVF
+from tinyknn import IVF
 from .base import BaseANN
 
 
-class FastPQ(BaseANN):
+class TinyKNN(BaseANN):
     def __init__(self, metric, build_probes, skew_factor):
         self._build_probes = build_probes
         self._skew_factor = skew_factor
@@ -22,4 +22,4 @@ class FastPQ(BaseANN):
         return self._ivf.query(v, k=n, n_probes=self._query_probes)
 
     def __str__(self):
-        return f"FastPQ(metric={self._metric}, build_probes={self._build_probes}, skew_factor={self._skew_factor}, query_probes={self._query_probes})"
+        return f"TinyKNN(metric={self._metric}, build_probes={self._build_probes}, skew_factor={self._skew_factor}, query_probes={self._query_probes})"

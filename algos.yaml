@@ -207,10 +207,10 @@ float:
           # This run group produces 3 algorithm instances -- Annoy("angular",
           # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
           # which will be used to run 12 different queries.
-    fast_pq:
-      docker-tag: ann-benchmarks-fast_pq
-      module: ann_benchmarks.algorithms.fast_pq
-      constructor: FastPQ
+    tinyknn:
+      docker-tag: ann-benchmarks-tinyknn
+      module: ann_benchmarks.algorithms.tinyknn
+      constructor: TinyKNN
       base-args: ["@metric"]
       run-groups:
         # Arguments are "build_probes" and "skew_factor"
@@ -223,15 +223,15 @@ float:
         # 6 | 2443.1s
         # Choices below are based on the graph in
         # https://github.com/erikbern/ann-benchmarks/pull/391#issuecomment-1518093405
-        fast_pq_1:
+        tinyknn_1:
           args: [ 1, [1, 2, 3] ]
           query-args: [[1, 2, 3, 4, 6, 8, 10, 13, 16, 20, 24, 28, 33, 38, 44, 50, 57, 64, 72, 80,
                         88, 106, 126, 148, 172, 198, 256]]
-        fast_pq_2:
+        tinyknn_2:
           args: [ 2, [3, 4] ]
           query-args: [[1, 2, 3, 4, 6, 8, 10, 13, 16, 20, 24, 28, 33, 38, 44, 50, 57, 64, 72, 80,
                         88, 106, 126, 148, 172, 198, 256]]
-        fast_pq_3:
+        tinyknn_3:
           args: [ 3, [5] ]
           query-args: [[1, 2, 3, 4, 6, 8, 10, 13, 16, 20, 24, 28, 33, 38, 44, 50, 57, 64, 72, 80,
                         88, 106, 126, 148, 172, 198, 256]]
@@ -631,8 +631,11 @@ float:
       base-args: ["@metric"]
       run-groups:
         weaviate:
-          args: [[4, 8, 16, 24, 32, 40, 48, 64, 72]]
-          query-args: [[8, 16, 32, 48, 64, 96, 128, 256, 512, 768]]
+          args: [
+            [8, 16, 24, 32, 40, 48, 64, 72], #maxConnections
+            [64, 128, 256, 512], #efConstruction
+          ]
+          query-args: [[16, 32, 48, 64, 96, 128, 256, 512, 768]]
 
   euclidean:
     vamana(diskann):
@@ -821,11 +824,13 @@ float:
     elasticsearch:
       docker-tag: ann-benchmarks-elasticsearch
       module: ann_benchmarks.algorithms.elasticsearch
-      constructor: ElasticsearchScriptScoreQuery
-      base-args: [ "@metric", "@dimension" ]
+      constructor: ElasticsearchKNN
+      base-args: ["@metric", "@dimension"]
       run-groups:
-        empty:
-          args: []
+        m-16-ef-100:
+          arg-groups:
+            - {"m": 16,  "ef_construction": 100} # index_options
+          query-args: [[10, 20, 40, 80, 160]] # num_candidates
     elastiknn-l2lsh:
       docker-tag: ann-benchmarks-elastiknn
       module: ann_benchmarks.algorithms.elastiknn
@@ -1140,11 +1145,13 @@ float:
     elasticsearch:
       docker-tag: ann-benchmarks-elasticsearch
       module: ann_benchmarks.algorithms.elasticsearch
-      constructor: ElasticsearchScriptScoreQuery
-      base-args: [ "@metric", "@dimension" ]
+      constructor: ElasticsearchKNN
+      base-args: ["@metric", "@dimension"]
       run-groups:
-        empty:
-          args: []
+        m-16-ef-100:
+          arg-groups:
+            - {"m": 16,  "ef_construction": 100} # index_options
+          query-args: [[10, 20, 40, 80, 160]] # num_candidates
     opensearchknn:
       docker-tag: ann-benchmarks-opensearchknn
       module: ann_benchmarks.algorithms.opensearchknn
