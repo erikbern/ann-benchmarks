@@ -11,7 +11,7 @@ from .base import BaseANN
 
 class Chroma(BaseANN):
 
-    def __init__(self, metric, grpc):
+    def __init__(self, metric):
         self._metric = metric
         self._collection_name = "ann_benchmarks_test"
         self._collection = None
