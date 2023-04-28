@@ -1,13 +1,17 @@
 from time import sleep
+from typing import Iterable, List, Any
 
 import numpy as np
 from qdrant_client import QdrantClient
+from qdrant_client import grpc
 from qdrant_client.http.models import (CollectionStatus, Distance,
-                                       SearchParams, SearchRequest,
-                                       VectorParams, OptimizersConfigDiff, QuantizationConfig, ScalarQuantization,
+                                       VectorParams, OptimizersConfigDiff, ScalarQuantization,
                                        ScalarQuantizationConfig, ScalarType)
 
 from .base import BaseANN
+
+TIMEOUT = 30
+BATCH_SIZE = 128
 
 
 class Qdrant(BaseANN):
@@ -19,6 +23,7 @@ class Qdrant(BaseANN):
         self._quantization = quantization
         self._grpc = True
         self._search_params = {"hnsw_ef": None}
+        self.batch_results = []
 
         qdrant_client_params = {
             "host": "localhost",
@@ -49,6 +54,7 @@ class Qdrant(BaseANN):
             optimizers_config=OptimizersConfigDiff(
                 default_segment_number=2,
                 max_segment_size=100000000,
+                indexing_threshold=1000,
             ),
             quantization_config=quantization_config,
             # TODO: benchmark this as well
@@ -56,7 +62,7 @@ class Qdrant(BaseANN):
             #     ef_construct=100, #100 is qdrant default
             #     m=16 #16 is qdrant default
             # ),
-            timeout=30,
+            timeout=TIMEOUT,
         )
 
         self._client.upload_collection(
@@ -83,31 +89,58 @@ class Qdrant(BaseANN):
         self._search_params["hnsw_ef"] = hnsw_ef
 
     def query(self, q, n):
-        search_params = SearchParams.construct(hnsw_ef=self._search_params["hnsw_ef"])
-
-        search_result = self._client.search(
+        search_request = grpc.SearchPoints(
             collection_name=self._collection_name,
-            query_vector=q,
-            search_params=search_params,
-            with_payload=False,  # just in case
+            vector=q.tolist(),
             limit=n,
+            with_payload=False,
+            search_params=grpc.SearchParams(
+                hnsw_ef=self._search_params["hnsw_ef"],
+            )
         )
 
-        result_ids = [point.id for point in search_result]
+        search_result = self._client.grpc_points.Search(search_request, timeout=TIMEOUT)
+        result_ids = [point.id.num for point in search_result.result]
         return result_ids
 
     def batch_query(self, X, n):
+        def iter_batches(iterable, batch_size) -> Iterable[List[Any]]:
+            """Iterate over `iterable` in batches of size `batch_size`."""
+            batch = []
+            for item in iterable:
+                batch.append(item)
+                if len(batch) >= batch_size:
+                    yield batch
+                    batch = []
+            if batch:
+                yield batch
+
         search_queries = [
-            SearchRequest.construct(vector=q.tolist(), limit=n,
-                                    params=SearchParams(hnsw_ef=self._search_params["hnsw_ef"]))
-            for q in X
+            grpc.SearchPoints(
+                collection_name=self._collection_name,
+                vector=q.tolist(),
+                limit=n,
+                with_payload=False,
+                search_params=grpc.SearchParams(
+                    hnsw_ef=self._search_params["hnsw_ef"],
+                )
+            ) for q in X
         ]
 
-        batch_search_results = self._client.search_batch(collection_name=self._collection_name, requests=search_queries)
-
         self.batch_results = []
-        for search_result in batch_search_results:
-            self.batch_results.append([point.id for point in search_result])
+
+        for request_batch in iter_batches(search_queries, BATCH_SIZE):
+            grpc_res: grpc.SearchBatchResponse = self._client.grpc_points.SearchBatch(
+                grpc.SearchBatchPoints(
+                    collection_name=self._collection_name,
+                    search_points=request_batch,
+                    read_consistency=None,
+                ),
+                timeout=TIMEOUT,
+            )
+
+            for r in grpc_res.result:
+                self.batch_results.append([hit.id.num for hit in r.result])
 
     def get_batch_results(self):
         return self.batch_results
