@@ -94,7 +94,7 @@ class Qdrant(BaseANN):
             vector=q.tolist(),
             limit=n,
             with_payload=grpc.WithPayloadSelector(enable=False),
-            search_params=grpc.SearchParams(
+            params=grpc.SearchParams(
                 hnsw_ef=self._search_params["hnsw_ef"],
             )
         )
@@ -121,7 +121,7 @@ class Qdrant(BaseANN):
                 vector=q.tolist(),
                 limit=n,
                 with_payload=grpc.WithPayloadSelector(enable=False),
-                search_params=grpc.SearchParams(
+                params=grpc.SearchParams(
                     hnsw_ef=self._search_params["hnsw_ef"],
                 )
             ) for q in X
