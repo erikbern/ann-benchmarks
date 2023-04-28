@@ -1462,3 +1462,9 @@ bit:
                 - {"tuneK": 10, "desiredRecall": [0.99, 0.97, 0.95, 0.9, 0.85, 0.8,
                     0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]}
                 - False
+    chroma:
+      docker-tag: ann-benchmarks-chroma
+      module: ann_benchmarks.algorithms.chroma
+      constructor: chroma
+      base-args: []
+      run-groups:
