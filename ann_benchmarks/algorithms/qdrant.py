@@ -6,7 +6,7 @@ from qdrant_client import QdrantClient
 from qdrant_client import grpc
 from qdrant_client.http.models import (CollectionStatus, Distance,
                                        VectorParams, OptimizersConfigDiff, ScalarQuantization,
-                                       ScalarQuantizationConfig, ScalarType)
+                                       ScalarQuantizationConfig, ScalarType, HnswConfigDiff)
 
 from .base import BaseANN
 
@@ -17,12 +17,14 @@ BATCH_SIZE = 128
 class Qdrant(BaseANN):
     _distances_mapping = {"dot": Distance.DOT, "angular": Distance.COSINE, "euclidean": Distance.EUCLID}
 
-    def __init__(self, metric, quantization):
+    def __init__(self, metric, quantization, m, ef_construct):
+        self._ef_construct = ef_construct
+        self._m = m
         self._metric = metric
         self._collection_name = "ann_benchmarks_test"
         self._quantization = quantization
         self._grpc = True
-        self._search_params = {"hnsw_ef": None}
+        self._search_params = {"hnsw_ef": None, "rescore": True}
         self.batch_results = []
 
         qdrant_client_params = {
@@ -58,10 +60,10 @@ class Qdrant(BaseANN):
             ),
             quantization_config=quantization_config,
             # TODO: benchmark this as well
-            # hnsw_config=qdrant_models.HnswConfigDiff(
-            #     ef_construct=100, #100 is qdrant default
-            #     m=16 #16 is qdrant default
-            # ),
+            hnsw_config=HnswConfigDiff(
+                ef_construct=self._ef_construct,
+                m=self._m,
+            ),
             timeout=TIMEOUT,
         )
 
@@ -85,10 +87,16 @@ class Qdrant(BaseANN):
                 print(f"Collection status: {collection_info.indexed_vectors_count}")
                 break
 
-    def set_query_arguments(self, hnsw_ef):
+    def set_query_arguments(self, hnsw_ef, rescore):
         self._search_params["hnsw_ef"] = hnsw_ef
+        self._search_params["rescore"] = rescore
 
     def query(self, q, n):
+        quantization_search_params = grpc.QuantizationSearchParams(
+            ignore=False,
+            rescore=self._search_params["rescore"],
+        )
+
         search_request = grpc.SearchPoints(
             collection_name=self._collection_name,
             vector=q.tolist(),
@@ -96,6 +104,7 @@ class Qdrant(BaseANN):
             with_payload=grpc.WithPayloadSelector(enable=False),
             params=grpc.SearchParams(
                 hnsw_ef=self._search_params["hnsw_ef"],
+                quantization=quantization_search_params,
             )
         )
 
@@ -115,6 +124,11 @@ class Qdrant(BaseANN):
             if batch:
                 yield batch
 
+        quantization_search_params = grpc.QuantizationSearchParams(
+            ignore=False,
+            rescore=self._search_params["rescore"],
+        )
+
         search_queries = [
             grpc.SearchPoints(
                 collection_name=self._collection_name,
@@ -123,6 +137,7 @@ class Qdrant(BaseANN):
                 with_payload=grpc.WithPayloadSelector(enable=False),
                 params=grpc.SearchParams(
                     hnsw_ef=self._search_params["hnsw_ef"],
+                    quantization=quantization_search_params,
                 )
             ) for q in X
         ]
