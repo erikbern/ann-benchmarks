@@ -4,19 +4,20 @@ import numpy as np
 from qdrant_client import QdrantClient
 from qdrant_client.http.models import (CollectionStatus, Distance,
                                        SearchParams, SearchRequest,
-                                       VectorParams)
+                                       VectorParams, OptimizersConfigDiff, QuantizationConfig, ScalarQuantization,
+                                       ScalarQuantizationConfig, ScalarType)
 
 from .base import BaseANN
 
 
 class Qdrant(BaseANN):
-
     _distances_mapping = {"dot": Distance.DOT, "angular": Distance.COSINE, "euclidean": Distance.EUCLID}
 
-    def __init__(self, metric, grpc):
+    def __init__(self, metric, quantization):
         self._metric = metric
         self._collection_name = "ann_benchmarks_test"
-        self._grpc = grpc
+        self._quantization = quantization
+        self._grpc = True
         self._search_params = {"hnsw_ef": None}
 
         qdrant_client_params = {
@@ -32,9 +33,24 @@ class Qdrant(BaseANN):
         if X.dtype != np.float32:
             X = X.astype(np.float32)
 
+        quantization_config = None
+        if self._quantization:
+            quantization_config = ScalarQuantization(
+                scalar=ScalarQuantizationConfig(
+                    always_ram=True,
+                    quantile=0.99,
+                    type=ScalarType.INT8,
+                )
+            )
+
         self._client.recreate_collection(
             collection_name=self._collection_name,
             vectors_config=VectorParams(size=X.shape[1], distance=self._distances_mapping[self._metric]),
+            optimizers_config=OptimizersConfigDiff(
+                default_segment_number=2,
+                max_segment_size=100000000,
+            ),
+            quantization_config=quantization_config,
             # TODO: benchmark this as well
             # hnsw_config=qdrant_models.HnswConfigDiff(
             #     ef_construct=100, #100 is qdrant default
@@ -49,34 +65,25 @@ class Qdrant(BaseANN):
 
         # wait for vectors to be fully indexed
         SECONDS_WAITING_FOR_INDEXING_API_CALL = 5
+
         while True:
-            collection_info = self._client.http.collections_api.get_collection(self._collection_name).dict()["result"]
-
-            vectors_count = collection_info["vectors_count"]
-            indexed_vectors_count = collection_info["indexed_vectors_count"]
-            status = collection_info["status"]
-
-            print("Stored vectors: " + str(vectors_count))
-            print("Indexed vectors: " + str(indexed_vectors_count))
-            print("Collection status: " + str(status))
-
-            print(type(status), status)
-            if status == CollectionStatus.GREEN:
-                print("Vectors indexing finished.")
+            sleep(SECONDS_WAITING_FOR_INDEXING_API_CALL)
+            collection_info = self._client.get_collection(self._collection_name)
+            if collection_info.status != CollectionStatus.GREEN:
+                continue
+            sleep(SECONDS_WAITING_FOR_INDEXING_API_CALL)  # the flag is sometimes flacky, better double check
+            collection_info = self._client.get_collection(self._collection_name)
+            if collection_info.status == CollectionStatus.GREEN:
+                print(f"Stored vectors: {collection_info.vectors_count}")
+                print(f"Indexed vectors: {collection_info.indexed_vectors_count}")
+                print(f"Collection status: {collection_info.indexed_vectors_count}")
                 break
-            else:
-                print(
-                    "Waiting "
-                    + str(SECONDS_WAITING_FOR_INDEXING_API_CALL)
-                    + " seconds to query collection info again..."
-                )
-                sleep(SECONDS_WAITING_FOR_INDEXING_API_CALL)
 
     def set_query_arguments(self, hnsw_ef):
         self._search_params["hnsw_ef"] = hnsw_ef
 
     def query(self, q, n):
-        search_params = SearchParams(hnsw_ef=self._search_params["hnsw_ef"])
+        search_params = SearchParams.construct(hnsw_ef=self._search_params["hnsw_ef"])
 
         search_result = self._client.search(
             collection_name=self._collection_name,
@@ -91,7 +98,8 @@ class Qdrant(BaseANN):
 
     def batch_query(self, X, n):
         search_queries = [
-            SearchRequest(vector=q.tolist(), limit=n, params=SearchParams(hnsw_ef=self._search_params["hnsw_ef"]))
+            SearchRequest.construct(vector=q.tolist(), limit=n,
+                                    params=SearchParams(hnsw_ef=self._search_params["hnsw_ef"]))
             for q in X
         ]
 
@@ -105,4 +113,5 @@ class Qdrant(BaseANN):
         return self.batch_results
 
     def __str__(self):
-        return "Qdrant(grpc=%s, hnsw_ef=%s)" % (self._grpc, self._search_params["hnsw_ef"])
+        hnsw_ef = self._search_params["hnsw_ef"]
+        return f"Qdrant(quantization={self._quantization}, hnsw_ef={hnsw_ef})"

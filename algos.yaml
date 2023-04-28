@@ -552,7 +552,7 @@ float:
       base-args: ["@metric"]
       run-groups:
         default:
-          args: [[True, False]] #grpc
+          args: [[True, False]] #quantization
           query-args: [[null, 8, 16, 32, 64, 128, 256]] #hnsw_ef
     qsgngt:
       docker-tag: ann-benchmarks-qsgngt
