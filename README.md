@@ -66,7 +66,7 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 Results
 =======
 
-Interactive plots can be found at <http://ann-benchmarks.com>. These are all as of December 2021, running all benchmarks on a r5.4xlarge machine on AWS with `--parallelism 7`:
+These are all as of April 2023, running all benchmarks on a r6.16xlarge machine on AWS with `--parallelism 31` and hyperthreading disabled. All benchmarks are single-CPU.
 
 glove-100-angular
 -----------------
@@ -83,20 +83,22 @@ fashion-mnist-784-euclidean
 
 ![fashion-mnist-784-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/fashion-mnist-784-euclidean.png)
 
-lastfm-64-dot
-------------------
-
-![lastfm-64-dot](https://raw.github.com/erikbern/ann-benchmarks/master/results/lastfm-64-dot.png)
-
 nytimes-256-angular
 -------------------
 
 ![nytimes-256-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/nytimes-256-angular.png)
 
+gist-960-euclidean
+-------------------
+
+![gist-960-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/gist-960-euclidean.png)
+
 glove-25-angular
 ----------------
 
 ![glove-25-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-25-angular.png)
+
+TODO: update plots on <http://ann-benchmarks.com>.
 
 Install
 =======
