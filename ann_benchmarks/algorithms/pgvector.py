@@ -26,6 +26,7 @@ class PGVector(BaseANN):
         pgvector.psycopg.register_vector(conn)
         cur = conn.cursor()
         cur.execute("CREATE TABLE items (id int, embedding vector(%d))" % X.shape[1])
+        cur.execute("ALTER TABLE items ALTER COLUMN embedding SET STORAGE PLAIN")
         print("copying data...")
         with cur.copy("COPY items (id, embedding) FROM STDIN") as copy:
             for i, embedding in enumerate(X):
@@ -44,7 +45,7 @@ class PGVector(BaseANN):
 
     def set_query_arguments(self, probes):
         self._probes = probes
-        self._cur.execute("SET ivfflat.probes = '%d'" % probes)
+        self._cur.execute("SET ivfflat.probes = %d" % probes)
         # TODO set based on available memory
         self._cur.execute("SET work_mem = '256MB'")
         # disable parallel query execution
