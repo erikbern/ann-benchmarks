@@ -13,6 +13,7 @@ Evaluated
 * [Annoy](https://github.com/spotify/annoy) ![https://img.shields.io/github/stars/spotify/annoy?style=social](https://img.shields.io/github/stars/spotify/annoy?style=social)
 * [FLANN](http://www.cs.ubc.ca/research/flann/) ![https://img.shields.io/github/stars/flann-lib/flann?style=social](https://img.shields.io/github/stars/flann-lib/flann?style=social)
 * [scikit-learn](http://scikit-learn.org/stable/modules/neighbors.html): LSHForest, KDTree, BallTree
+* [Weaviate](https://github.com/weaviate/weaviate) ![https://img.shields.io/github/stars/weaviate/weaviate?style=social](https://img.shields.io/github/stars/weaviate/weaviate?style=social)
 * [PANNS](https://github.com/ryanrhymes/panns) ![https://img.shields.io/github/stars/ryanrhymes/panns?style=social](https://img.shields.io/github/stars/ryanrhymes/panns?style=social)
 * [NearPy](http://pixelogik.github.io/NearPy/) ![https://img.shields.io/github/stars/pixelogik/NearPy?style=social](https://img.shields.io/github/stars/pixelogik/NearPy?style=social)
 * [KGraph](https://github.com/aaalgo/kgraph) ![https://img.shields.io/github/stars/aaalgo/kgraph?style=social](https://img.shields.io/github/stars/aaalgo/kgraph?style=social)
