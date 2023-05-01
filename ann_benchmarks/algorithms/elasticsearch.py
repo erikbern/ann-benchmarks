@@ -19,7 +19,7 @@ class ElasticsearchKNN(BaseANN):
         self.num_candidates = 100
 
         index_options_str = "-".join(sorted(f"{k}-{v}" for k, v in self.index_options.items()))
-        self.name = f"es-{metric}-{dimension}-{index_options_str}"
+        self.index_name = f"{metric}-{dimension}-{index_options_str}"
         self.similarity_metric = self._vector_similarity_metric(metric)
 
         self.client = Elasticsearch(["http://localhost:9200"])
@@ -72,11 +72,11 @@ class ElasticsearchKNN(BaseANN):
                 },
             },
         }
-        self.client.indices.create(index=self.name, settings=settings, mappings=mappings)
+        self.client.indices.create(index=self.index_name, settings=settings, mappings=mappings)
 
         def gen():
             for i, vec in enumerate(X):
-                yield {"_op_type": "index", "_index": self.name, "id": str(i), "vec": vec.tolist()}
+                yield {"_op_type": "index", "_index": self.index_name, "id": str(i), "vec": vec.tolist()}
 
         print("Indexing ...")
         (_, errors) = bulk(self.client, gen(), chunk_size=500, request_timeout=90)
@@ -84,10 +84,10 @@ class ElasticsearchKNN(BaseANN):
             raise RuntimeError("Failed to index documents")
 
         print("Force merge index ...")
-        self.client.indices.forcemerge(index=self.name, max_num_segments=1, request_timeout=900)
+        self.client.indices.forcemerge(index=self.index_name, max_num_segments=1, request_timeout=900)
 
         print("Refreshing index ...")
-        self.client.indices.refresh(index=self.name, request_timeout=900)
+        self.client.indices.refresh(index=self.index_name, request_timeout=900)
 
     def set_query_arguments(self, num_candidates):
         self.num_candidates = num_candidates
@@ -105,7 +105,7 @@ class ElasticsearchKNN(BaseANN):
             }
         }
         res = self.client.search(
-            index=self.name,
+            index=self.index_name,
             body=body,
             size=n,
             _source=False,
@@ -121,3 +121,6 @@ class ElasticsearchKNN(BaseANN):
 
     def get_batch_results(self):
         return self.batch_res
+
+    def __str__(self):
+        return f"Elasticsearch(index_options: {self.index_options}, num_canditates: {self.num_candidates})"
