@@ -20,7 +20,7 @@ RUN set -eux ; \
     curl -OsS https://artifacts.opensearch.org/releases/bundle/opensearch/${OPENSEARCH_VERSION}/opensearch-${OPENSEARCH_VERSION}-linux-$ARCH.tar.gz; \
     tar -zxf opensearch-${OPENSEARCH_VERSION}-linux-$ARCH.tar.gz; \
     mv opensearch-${OPENSEARCH_VERSION} opensearch; \
-    rm -r opensearch-${OPENSEARCH_VERSION}-linux-$ARCH.tar.gz opensearch/plugins/opensearch-security;
+    rm -r opensearch-${OPENSEARCH_VERSION}-linux-$ARCH.tar.gz opensearch/plugins/opensearch-security opensearch/plugins/opensearch-alerting opensearch/plugins/opensearch-anomaly-detection opensearch/plugins/opensearch-asynchronous-search opensearch/plugins/opensearch-cross-cluster-replication opensearch/plugins/opensearch-geospatial opensearch/plugins/opensearch-index-management opensearch/plugins/opensearch-job-scheduler opensearch/plugins/opensearch-ml opensearch/plugins/opensearch-neural-search opensearch/plugins/opensearch-notifications opensearch/plugins/opensearch-notifications-core opensearch/plugins/opensearch-observability opensearch/plugins/opensearch-performance-analyzer opensearch/plugins/opensearch-reports-scheduler opensearch/plugins/opensearch-security-analytics opensearch/plugins/opensearch-sql;
 
 # Install OpenSearch in final image:
 #  - https://opensearch.org/docs/latest/install-and-configure/install-opensearch/tar/
@@ -49,8 +49,8 @@ thread_pool.search.queue_size: 1' > opensearch/config/opensearch.yml
 
 RUN echo '\
 -Xms3G\n\
--Xmx3G\n\
--XX:InitiatingHeapOccupancyPercent=30\n\
+-Xmx6G\n\
+-XX:InitiatingHeapOccupancyPercent=80\n\
 -XX:+HeapDumpOnOutOfMemoryError\n\
 -XX:HeapDumpPath=data\n\
 -XX:ErrorFile=logs/hs_err_pid%p.log\n\
