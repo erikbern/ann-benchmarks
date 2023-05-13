@@ -11,7 +11,7 @@ import docker
 import numpy
 import psutil
 
-from .algorithms.definitions import Definition, instantiate_algorithm
+from .definitions import Definition, instantiate_algorithm
 from .datasets import DATASETS, get_dataset
 from .distance import dataset_transform, metrics
 from .results import store_results
