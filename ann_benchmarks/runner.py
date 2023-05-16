@@ -123,13 +123,16 @@ function""" % (
         if hasattr(algo, "supports_prepared_queries"):
             algo.supports_prepared_queries()
 
+        
         t0 = time.time()
+        print(f"start sending doc to build index at time: {t0}")
         memory_usage_before = algo.get_memory_usage()
         algo.fit(X_train)
         build_time = time.time() - t0
         index_size = algo.get_memory_usage() - memory_usage_before
-        print("Built index in", build_time)
-        print("Index size: ", index_size)
+        print(f"Index built at time: {time.time()}")
+        print(f"Built index in {build_time} seconds")
+        print("local Index size mem: ", index_size)
 
         query_argument_groups = definition.query_argument_groups
         # Make sure that algorithms with no query argument groups still get run

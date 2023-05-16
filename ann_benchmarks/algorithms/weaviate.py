@@ -24,6 +24,7 @@ class Weaviate(BaseANN):
     def fit(self, X):
         try:
             self.client.schema.delete_class(self.class_name)
+            print(f"Index class {self.class_name} is deleted.")
         except:
             print(f"Index class {self.class_name} not exist.")
         
