@@ -12,7 +12,8 @@ from .base import BaseANN
 class Weaviate(BaseANN):
     def __init__(self, metric, max_connections, ef_construction=512):
         self.class_name = "Vector"
-        self.client = weaviate.Client(embedded_options=EmbeddedOptions(version="1.19.0-beta.1"))
+        # self.client = weaviate.Client(embedded_options=EmbeddedOptions(version="1.19.0-beta.1"))
+        self.client = weaviate.Client("http://a27a3e1c1db0446189e9142983687e03-9569627.us-west-2.elb.amazonaws.com")
         self.max_connections = max_connections
         self.ef_construction = ef_construction
         self.distance = {
@@ -21,6 +22,11 @@ class Weaviate(BaseANN):
         }[metric]
 
     def fit(self, X):
+        try:
+            self.client.schema.delete_class(self.class_name)
+        except:
+            print(f"Index class {self.class_name} not exist.")
+        
         self.client.schema.create(
             {
                 "classes": [
