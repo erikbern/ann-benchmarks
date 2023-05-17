@@ -1,23 +1,31 @@
 from time import sleep
+from typing import Iterable, List, Any
 
 import numpy as np
 from qdrant_client import QdrantClient
+from qdrant_client import grpc
 from qdrant_client.http.models import (CollectionStatus, Distance,
-                                       SearchParams, SearchRequest,
-                                       VectorParams)
+                                       VectorParams, OptimizersConfigDiff, ScalarQuantization,
+                                       ScalarQuantizationConfig, ScalarType, HnswConfigDiff)
 
-from ..base.module import BaseANN
+from ..base import BaseANN
+
+TIMEOUT = 30
+BATCH_SIZE = 128
 
 
 class Qdrant(BaseANN):
-
     _distances_mapping = {"dot": Distance.DOT, "angular": Distance.COSINE, "euclidean": Distance.EUCLID}
 
-    def __init__(self, metric, grpc):
+    def __init__(self, metric, quantization, m, ef_construct):
+        self._ef_construct = ef_construct
+        self._m = m
         self._metric = metric
         self._collection_name = "ann_benchmarks_test"
-        self._grpc = grpc
-        self._search_params = {"hnsw_ef": None}
+        self._quantization = quantization
+        self._grpc = True
+        self._search_params = {"hnsw_ef": None, "rescore": True}
+        self.batch_results = []
 
         qdrant_client_params = {
             "host": "localhost",
@@ -32,15 +40,31 @@ class Qdrant(BaseANN):
         if X.dtype != np.float32:
             X = X.astype(np.float32)
 
+        quantization_config = None
+        if self._quantization:
+            quantization_config = ScalarQuantization(
+                scalar=ScalarQuantizationConfig(
+                    always_ram=True,
+                    quantile=0.99,
+                    type=ScalarType.INT8,
+                )
+            )
+
         self._client.recreate_collection(
             collection_name=self._collection_name,
             vectors_config=VectorParams(size=X.shape[1], distance=self._distances_mapping[self._metric]),
+            optimizers_config=OptimizersConfigDiff(
+                default_segment_number=2,
+                max_segment_size=100000000,
+                indexing_threshold=1000,
+            ),
+            quantization_config=quantization_config,
             # TODO: benchmark this as well
-            # hnsw_config=qdrant_models.HnswConfigDiff(
-            #     ef_construct=100, #100 is qdrant default
-            #     m=16 #16 is qdrant default
-            # ),
-            timeout=30,
+            hnsw_config=HnswConfigDiff(
+                ef_construct=self._ef_construct,
+                m=self._m,
+            ),
+            timeout=TIMEOUT,
         )
 
         self._client.upload_collection(
@@ -49,60 +73,93 @@ class Qdrant(BaseANN):
 
         # wait for vectors to be fully indexed
         SECONDS_WAITING_FOR_INDEXING_API_CALL = 5
+
         while True:
-            collection_info = self._client.http.collections_api.get_collection(self._collection_name).dict()["result"]
-
-            vectors_count = collection_info["vectors_count"]
-            indexed_vectors_count = collection_info["indexed_vectors_count"]
-            status = collection_info["status"]
-
-            print("Stored vectors: " + str(vectors_count))
-            print("Indexed vectors: " + str(indexed_vectors_count))
-            print("Collection status: " + str(status))
-
-            print(type(status), status)
-            if status == CollectionStatus.GREEN:
-                print("Vectors indexing finished.")
+            sleep(SECONDS_WAITING_FOR_INDEXING_API_CALL)
+            collection_info = self._client.get_collection(self._collection_name)
+            if collection_info.status != CollectionStatus.GREEN:
+                continue
+            sleep(SECONDS_WAITING_FOR_INDEXING_API_CALL)  # the flag is sometimes flacky, better double check
+            collection_info = self._client.get_collection(self._collection_name)
+            if collection_info.status == CollectionStatus.GREEN:
+                print(f"Stored vectors: {collection_info.vectors_count}")
+                print(f"Indexed vectors: {collection_info.indexed_vectors_count}")
+                print(f"Collection status: {collection_info.indexed_vectors_count}")
                 break
-            else:
-                print(
-                    "Waiting "
-                    + str(SECONDS_WAITING_FOR_INDEXING_API_CALL)
-                    + " seconds to query collection info again..."
-                )
-                sleep(SECONDS_WAITING_FOR_INDEXING_API_CALL)
 
-    def set_query_arguments(self, hnsw_ef):
+    def set_query_arguments(self, hnsw_ef, rescore):
         self._search_params["hnsw_ef"] = hnsw_ef
+        self._search_params["rescore"] = rescore
 
     def query(self, q, n):
-        search_params = SearchParams(hnsw_ef=self._search_params["hnsw_ef"])
-
-        search_result = self._client.search(
-            collection_name=self._collection_name,
-            query_vector=q,
-            search_params=search_params,
-            with_payload=False,  # just in case
-            limit=n,
+        quantization_search_params = grpc.QuantizationSearchParams(
+            ignore=False,
+            rescore=self._search_params["rescore"],
         )
 
-        result_ids = [point.id for point in search_result]
+        search_request = grpc.SearchPoints(
+            collection_name=self._collection_name,
+            vector=q.tolist(),
+            limit=n,
+            with_payload=grpc.WithPayloadSelector(enable=False),
+            params=grpc.SearchParams(
+                hnsw_ef=self._search_params["hnsw_ef"],
+                quantization=quantization_search_params,
+            )
+        )
+
+        search_result = self._client.grpc_points.Search(search_request, timeout=TIMEOUT)
+        result_ids = [point.id.num for point in search_result.result]
         return result_ids
 
     def batch_query(self, X, n):
+        def iter_batches(iterable, batch_size) -> Iterable[List[Any]]:
+            """Iterate over `iterable` in batches of size `batch_size`."""
+            batch = []
+            for item in iterable:
+                batch.append(item)
+                if len(batch) >= batch_size:
+                    yield batch
+                    batch = []
+            if batch:
+                yield batch
+
+        quantization_search_params = grpc.QuantizationSearchParams(
+            ignore=False,
+            rescore=self._search_params["rescore"],
+        )
+
         search_queries = [
-            SearchRequest(vector=q.tolist(), limit=n, params=SearchParams(hnsw_ef=self._search_params["hnsw_ef"]))
-            for q in X
+            grpc.SearchPoints(
+                collection_name=self._collection_name,
+                vector=q.tolist(),
+                limit=n,
+                with_payload=grpc.WithPayloadSelector(enable=False),
+                params=grpc.SearchParams(
+                    hnsw_ef=self._search_params["hnsw_ef"],
+                    quantization=quantization_search_params,
+                )
+            ) for q in X
         ]
 
-        batch_search_results = self._client.search_batch(collection_name=self._collection_name, requests=search_queries)
-
         self.batch_results = []
-        for search_result in batch_search_results:
-            self.batch_results.append([point.id for point in search_result])
+
+        for request_batch in iter_batches(search_queries, BATCH_SIZE):
+            grpc_res: grpc.SearchBatchResponse = self._client.grpc_points.SearchBatch(
+                grpc.SearchBatchPoints(
+                    collection_name=self._collection_name,
+                    search_points=request_batch,
+                    read_consistency=None,
+                ),
+                timeout=TIMEOUT,
+            )
+
+            for r in grpc_res.result:
+                self.batch_results.append([hit.id.num for hit in r.result])
 
     def get_batch_results(self):
         return self.batch_results
 
     def __str__(self):
-        return "Qdrant(grpc=%s, hnsw_ef=%s)" % (self._grpc, self._search_params["hnsw_ef"])
+        hnsw_ef = self._search_params["hnsw_ef"]
+        return f"Qdrant(quantization={self._quantization}, hnsw_ef={hnsw_ef})"
