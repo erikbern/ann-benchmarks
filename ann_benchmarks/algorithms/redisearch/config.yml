@@ -1,0 +1,13 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: Redisearch
+    disabled: false
+    docker_tag: ann-benchmarks-redisearch
+    module: ann_benchmarks.algorithms.redisearch
+    name: redisearch
+    run_groups:
+      redisearch:
+        arg_groups: [[4, 8, 12, 16, 24, 36, 48, 64, 96]]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]

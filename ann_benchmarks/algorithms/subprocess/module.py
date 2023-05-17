@@ -6,7 +6,7 @@ from types import MethodType
 import psutil
 
 from ..data import bit_unparse_entry, float_unparse_entry, int_unparse_entry
-from .algorithms.base.module import BaseANN
+from ..base.module import BaseANN
 
 
 class SubprocessStoppedError(Exception):

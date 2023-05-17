@@ -360,7 +360,7 @@ float:
         ball:
           args: *treeargs
     ckdtree:
-      disable: true
+      disabled: true
       docker-tag: ann-benchmarks-scipy
       module: ann_benchmarks.algorithms.ckdtree
       constructor: CKDTree
@@ -719,7 +719,7 @@ float:
           args: [[100], [.nan], [4], ["squared_l2"]]
           query-args: [[[2, 20], [3, 20], [3, 30], [4, 30], [5, 40], [8, 80]]]
     kgraph:
-      disable: true
+      disabled: true
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
@@ -1008,7 +1008,7 @@ float:
            args : [{'l_build': 125, 'max_outdegree': 32, 'alpha': 1, 'chunks': 42}]
            query-args : [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]]
     puffinn:
-      disable: true
+      disabled: true
       docker-tag: ann-benchmarks-puffinn
       module: ann_benchmarks.algorithms.puffinn
       constructor: Puffinn
@@ -1021,7 +1021,7 @@ float:
             ]
             query-args: [[0.1, 0.2, 0.5, 0.7, 0.9, 0.95, 0.99]]
     kgraph:
-      disable: true
+      disabled: true
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
@@ -1081,7 +1081,7 @@ float:
             - False
           query-args: [[120, 80, 60, 40, 20, 10, 8, 4, 2]]
     rpforest:
-      disable: true
+      disabled: true
       docker-tag: ann-benchmarks-rpforest
       module: ann_benchmarks.algorithms.rpforest
       constructor: RPForest
@@ -1258,7 +1258,7 @@ bit:
           args: { "d" : "@dimension", "r" : [0, 2, 3],
             "chunk-factor" : [0.2, 0.5, 0.8] }
     kgraph:
-      disable: true
+      disabled: true
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
@@ -1449,7 +1449,7 @@ bit:
             - False
           query-args: [[120, 80, 60, 40, 20, 10, 8, 4, 2]]
     BallTree(nmslib):
-      disable: true
+      disabled: true
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
