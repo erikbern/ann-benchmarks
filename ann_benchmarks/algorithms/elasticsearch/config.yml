@@ -1,0 +1,25 @@
+float:
+  angular:
+  - base_args: ['@metric', '@dimension']
+    constructor: ElasticsearchKNN
+    disabled: false
+    docker_tag: ann-benchmarks-elasticsearch
+    module: ann_benchmarks.algorithms.elasticsearch
+    name: elasticsearch
+    run_groups:
+      m-16-ef-100:
+        arg_groups: [{ef_construction: 100, m: 16}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 160]]
+  euclidean:
+  - base_args: ['@metric', '@dimension']
+    constructor: ElasticsearchKNN
+    disabled: false
+    docker_tag: ann-benchmarks-elasticsearch
+    module: ann_benchmarks.algorithms.elasticsearch
+    name: elasticsearch
+    run_groups:
+      m-16-ef-100:
+        arg_groups: [{ef_construction: 100, m: 16}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 160]]

@@ -1,0 +1,50 @@
+float:
+  any:
+  - base_args: ['@metric', Float, 0.1]
+    constructor: ONNG
+    disabled: false
+    docker_tag: ann-benchmarks-ngt
+    module: ann_benchmarks.algorithms.onng_ngt
+    name: NGT-onng
+    run_groups:
+      e0.02:
+        arg_groups: []
+        args: [{edge: 100, epsilon: 0.02, indegree: 120, outdegree: 10}]
+        query_args: [[[0.6, -2], [0.9, -2], [1.0, -2], [1.02, -2], [1.03, -2], [1.04,
+              -2], [1.05, -2], [1.07, -2], [1.1, -2], [1.2, -2]]]
+      e0.03:
+        arg_groups: []
+        args: [{edge: 100, epsilon: 0.03, indegree: 120, outdegree: 10}]
+        query_args: [[[0.6, -2], [0.9, -2], [1.0, -2], [1.02, -2], [1.03, -2], [1.04,
+              -2], [1.05, -2], [1.07, -2], [1.1, -2], [1.2, -2]]]
+      e0.04:
+        arg_groups: []
+        args: [{edge: 100, epsilon: 0.04, indegree: 120, outdegree: 10}]
+        query_args: [[[0.6, -2], [0.9, -2], [1.0, -2], [1.02, -2], [1.03, -2], [1.04,
+              -2], [1.05, -2], [1.07, -2], [1.1, -2], [1.2, -2]]]
+      e0.06:
+        arg_groups: []
+        args: [{edge: 100, epsilon: 0.06, indegree: 120, outdegree: 10}]
+        query_args: [[[0.6, -2], [0.9, -2], [1.0, -2], [1.02, -2], [1.03, -2], [1.04,
+              -2], [1.05, -2], [1.07, -2], [1.1, -2], [1.2, -2]]]
+      e0.08:
+        arg_groups: []
+        args: [{edge: 100, epsilon: 0.08, indegree: 120, outdegree: 10}]
+        query_args: [[[0.6, -2], [0.9, -2], [1.0, -2], [1.02, -2], [1.03, -2], [1.04,
+              -2], [1.05, -2], [1.07, -2], [1.1, -2], [1.2, -2]]]
+      e0.08-with-refinement:
+        arg_groups: []
+        args: [{edge: 100, epsilon: 0.08, indegree: 120, outdegree: 10, refine: true,
+            tree: false}]
+        query_args: [[[0.995, 40], [0.998, 40], [1.0, 40], [1.005, 40], [1.01, 40],
+            [1.015, 40], [1.02, 40]]]
+      e0.1:
+        arg_groups: []
+        args: [{edge: 100, indegree: 120, outdegree: 10}]
+        query_args: [[[0.6, -2], [0.9, -2], [1.0, -2], [1.02, -2], [1.03, -2], [1.04,
+              -2], [1.05, -2], [1.07, -2], [1.1, -2], [1.2, -2]]]
+      e0.1-with-refinement:
+        arg_groups: []
+        args: [{edge: 100, indegree: 120, outdegree: 10, refine: true, tree: false}]
+        query_args: [[[0.995, 40], [0.998, 40], [1.0, 40], [1.005, 40], [1.01, 40],
+            [1.015, 40], [1.02, 40]]]

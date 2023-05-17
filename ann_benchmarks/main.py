@@ -10,7 +10,7 @@ import sys
 import docker
 import psutil
 
-from .algorithms.definitions import (InstantiationStatus, algorithm_status,
+from .definitions import (InstantiationStatus, algorithm_status,
                                      get_definitions, list_algorithms)
 from .constants import INDEX_DIR
 from .datasets import DATASETS, get_dataset
