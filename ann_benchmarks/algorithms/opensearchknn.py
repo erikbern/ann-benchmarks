@@ -24,6 +24,7 @@ class OpenSearchKNN(BaseANN):
             verify_certs = False,
             ssl_assert_hostname = False,
             ssl_show_warn = False,
+            timeout = 1000,
         )
         self._wait_for_health_status()
 
@@ -71,7 +72,7 @@ class OpenSearchKNN(BaseANN):
             for i, vec in enumerate(tqdm(X)):
                 yield {"_op_type": "index", "_index": self.name, "vec": vec.tolist(), "id": str(i + 1)}
 
-        (_, errors) = bulk(self.client, gen(), chunk_size=500, max_retries=2, request_timeout=10)
+        (_, errors) = bulk(self.client, gen(), chunk_size=500, max_retries=2, request_timeout=1000)
         assert len(errors) == 0, errors
 
         print("Force Merge...")
