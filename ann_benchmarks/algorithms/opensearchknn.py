@@ -4,7 +4,8 @@ from urllib.request import Request, urlopen
 from opensearchpy import ConnectionError, OpenSearch
 from opensearchpy.helpers import bulk
 from tqdm import tqdm
-
+import requests
+from requests.auth import HTTPBasicAuth
 from .base import BaseANN
 
 
@@ -15,7 +16,15 @@ class OpenSearchKNN(BaseANN):
         self.method_param = method_param
         self.param_string = "-".join(k + "-" + str(v) for k, v in self.method_param.items()).lower()
         self.name = f"os-{self.param_string}"
-        self.client = OpenSearch(["http://localhost:9200"])
+        self.host = 'https://a48bd3af4666e48a6aa34d2b065ff232-665731428.us-west-2.elb.amazonaws.com'
+        self.client = OpenSearch(
+            hosts = [self.host],
+            http_auth = ('admin', 'admin'),
+            use_ssl = True,
+            verify_certs = False,
+            ssl_assert_hostname = False,
+            ssl_show_warn = False,
+        )
         self._wait_for_health_status()
 
     def _wait_for_health_status(self, wait_seconds=30, status="yellow"):
@@ -52,7 +61,7 @@ class OpenSearchKNN(BaseANN):
                 },
             }
         }
-
+        self.freeIndex()
         self.client.indices.create(self.name, body=body)
         self.client.indices.put_mapping(mapping, self.name)
 
@@ -72,12 +81,20 @@ class OpenSearchKNN(BaseANN):
         self.client.indices.refresh(self.name, request_timeout=1000)
 
         print("Running Warmup API...")
-        res = urlopen(Request("http://localhost:9200/_plugins/_knn/warmup/" + self.name + "?pretty"))
-        print(res.read().decode("utf-8"))
+        # res = urlopen(Request("http://localhost:9200/_plugins/_knn/warmup/" + self.name + "?pretty"))
+        # print(res.read().decode("utf-8"))
+       
+        # Suppress only the single warning from urllib3 needed.
+        # requests.packages.urllib3.disable_warnings(category=requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
+        response = requests.get(self.host + "/_plugins/_knn/warmup/" + self.name + "?pretty", 
+                                verify=False, 
+                                auth=HTTPBasicAuth('admin', 'admin'))
+        print(response.text)
 
     def set_query_arguments(self, ef):
         body = {"settings": {"index": {"knn.algo_param.ef_search": ef}}}
-        self.client.indices.put_settings(body=body)
+        self.client.indices.put_settings(body=body, index=self.name)
 
     def query(self, q, n):
         body = {"query": {"knn": {"vec": {"vector": q.tolist(), "k": n}}}}
@@ -92,7 +109,7 @@ class OpenSearchKNN(BaseANN):
             filter_path=["hits.hits.fields.id"],
             request_timeout=10,
         )
-
+        # print(f"=finished one query :{res}")
         return [int(h["fields"]["id"][0]) - 1 for h in res["hits"]["hits"]]
 
     def batch_query(self, X, n):
@@ -102,4 +119,6 @@ class OpenSearchKNN(BaseANN):
         return self.batch_res
 
     def freeIndex(self):
-        self.client.indices.delete(index=self.name)
+        if (self.client.indices.exists(index=self.name)):
+            print(f"Removing old index: {self.name}")
+            self.client.indices.delete(index=self.name)
