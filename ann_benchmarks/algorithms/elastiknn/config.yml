@@ -8,9 +8,7 @@ float:
     name: elastiknn-exact
     run_groups:
       exact:
-        arg_groups: []
         args: []
-        query_args: []
   euclidean:
   - base_args: []
     constructor: L2Lsh
@@ -20,6 +18,5 @@ float:
     name: elastiknn-l2lsh
     run_groups:
       elastiknn-l2lsh:
-        arg_groups: []
         args: [[100], [4], [1024, 2048]]
         query_args: [[500, 1000], [0, 3]]

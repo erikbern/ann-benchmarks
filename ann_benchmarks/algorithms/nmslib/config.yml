@@ -81,7 +81,6 @@ bit:
         arg_groups: [{desiredRecall: [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6,
               0.5, 0.4, 0.3, 0.2, 0.1], tuneK: 10}, false]
         args: {}
-        query_args: []
 float:
   angular:
   - base_args: ['@metric', hnsw]
@@ -140,7 +139,6 @@ float:
         arg_groups: [{desiredRecall: [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6,
               0.5, 0.4, 0.3, 0.2, 0.1], tuneK: 10}, false]
         args: {}
-        query_args: []
   euclidean:
   - base_args: ['@metric', hnsw]
     constructor: NmslibReuseIndex

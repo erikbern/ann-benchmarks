@@ -8,6 +8,5 @@ float:
     name: pgvector
     run_groups:
       pgvector:
-        arg_groups: []
         args: [[100, 200, 400, 1000, 2000, 4000]]
         query_args: [[1, 2, 4, 10, 20, 40, 100]]

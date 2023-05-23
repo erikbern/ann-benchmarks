@@ -8,6 +8,4 @@ float:
     name: ball
     run_groups:
       ball:
-        arg_groups: []
         args: [[10, 20, 40, 100, 200, 400, 1000]]
-        query_args: []

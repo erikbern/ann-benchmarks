@@ -8,6 +8,4 @@ float:
     name: rpforest
     run_groups:
       base:
-        arg_groups: []
         args: [[3, 10, 40, 100, 400], [3, 10, 40, 100, 400]]
-        query_args: []

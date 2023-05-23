@@ -8,6 +8,5 @@ float:
     name: qdrant
     run_groups:
       default:
-        arg_groups: []
         args: [[true, false]]
         query_args: [[null, 8, 16, 32, 64, 128, 256]]

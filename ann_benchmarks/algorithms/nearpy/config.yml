@@ -8,10 +8,6 @@ float:
     name: nearpy
     run_groups:
       extra:
-        arg_groups: []
         args: [16, [5, 10, 15, 20, 25, 30, 40]]
-        query_args: []
       nearpy:
-        arg_groups: []
         args: [[10, 12, 14, 16], [5, 10, 20, 40]]
-        query_args: []

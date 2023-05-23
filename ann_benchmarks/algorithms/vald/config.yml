@@ -8,6 +8,5 @@ float:
     name: vald(NGT-anng)
     run_groups:
       vald:
-        arg_groups: []
         args: [{bulk: 100, edge: 20, searchedge: 60}]
         query_args: [[0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2]]

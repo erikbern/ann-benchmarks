@@ -8,6 +8,4 @@ bit:
     name: datasketch
     run_groups:
       base:
-        arg_groups: []
         args: [[128, 256, 512], [8, 16, 32, 64, 128]]
-        query_args: []

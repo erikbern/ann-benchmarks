@@ -8,7 +8,6 @@ float:
     name: glass
     run_groups:
       HNSW:
-        arg_groups: []
         args:
           L: 200
           R: [8, 16, 32, 48, 64, 96]

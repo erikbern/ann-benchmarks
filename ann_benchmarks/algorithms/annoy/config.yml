@@ -8,7 +8,6 @@ bit:
     name: annoy
     run_groups:
       annoy:
-        arg_groups: []
         args: [[100, 200, 400]]
         query_args: [[100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000, 100000,
             200000, 400000]]
@@ -22,7 +21,6 @@ float:
     name: annoy
     run_groups:
       annoy:
-        arg_groups: []
         args: [[100, 200, 400]]
         query_args: [[100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000, 100000,
             200000, 400000]]
