@@ -57,7 +57,7 @@ def main():
         "-k", "--count", default=10, type=positive_int, help="the number of near neighbours to search for"
     )
     parser.add_argument(
-        "--definitions", metavar="FILE", help="load algorithm definitions from FILE", default="algos.yaml"
+        "--definitions", metavar="FOLDER", help="base directory of algorithms. Algorithm definitions expected at 'FOLDER/*/config.yml'", default="ann_benchmarks/algorithms"
     )
     parser.add_argument("--algorithm", metavar="NAME", help="run only the named algorithm", default=None)
     parser.add_argument(
