@@ -8,7 +8,7 @@ from qdrant_client.http.models import (CollectionStatus, Distance,
                                        VectorParams, OptimizersConfigDiff, ScalarQuantization,
                                        ScalarQuantizationConfig, ScalarType, HnswConfigDiff)
 
-from ..base import BaseANN
+from ..base.module import BaseANN
 
 TIMEOUT = 30
 BATCH_SIZE = 128
