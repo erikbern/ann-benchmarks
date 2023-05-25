@@ -8,9 +8,7 @@ bit:
     name: bf
     run_groups:
       base:
-        arg_groups: []
         args: {}
-        query_args: []
 float:
   any:
   - base_args: ['@metric']
@@ -21,9 +19,7 @@ float:
     name: bruteforce
     run_groups:
       empty:
-        arg_groups: []
         args: []
-        query_args: []
   - base_args: ['@metric']
     constructor: BruteForceBLAS
     disabled: false
@@ -32,6 +28,4 @@ float:
     name: bruteforce-blas
     run_groups:
       empty:
-        arg_groups: []
         args: []
-        query_args: []

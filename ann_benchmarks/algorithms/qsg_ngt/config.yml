@@ -8,7 +8,6 @@ float:
     name: qsgngt
     run_groups:
       K-200-100:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.1, ifES: 1, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [200, 200, 15, 10, 100], paramS: [100, 100, 60], range: 200, rangeMax: 200,
             sample: 20000, searchA: 400, threshold: 60}]
@@ -19,7 +18,6 @@ float:
               1.0], [1.2, 1.02], [1.5, 1.02], [2.0, 1.02], [3.0, 1.02], [2, 1.04],
             [3, 1.04], [5, 1.04], [8, 1.04]]]
       cos-60-1:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.1, ifES: 0, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [400, 400, 12, 10, 250], paramS: [100, 100, 60], range: 175, rangeMax: 175,
             sample: 20000, searchA: 400, threshold: 60}]
@@ -30,7 +28,6 @@ float:
               1.0], [1.2, 1.02], [1.5, 1.02], [2.0, 1.02], [3.0, 1.02], [2, 1.04],
             [3, 1.04], [5, 1.04], [8, 1.04]]]
       cos-60-2:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.04, ifES: 0, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [400, 400, 12, 10, 250], paramS: [100, 100, 60], range: 175, rangeMax: 175,
             sample: 4000, searchA: 400, threshold: 60}]
@@ -41,7 +38,6 @@ float:
               1.0], [1.2, 1.02], [1.5, 1.02], [2.0, 1.02], [3.0, 1.02], [2, 1.04],
             [3, 1.04], [5, 1.04], [8, 1.04]]]
       cos-60-3:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.02, ifES: 0, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [400, 400, 12, 10, 250], paramS: [100, 100, 60], range: 175, rangeMax: 175,
             sample: 2000, searchA: 400, threshold: 60}]
@@ -52,7 +48,6 @@ float:
               1.0], [1.2, 1.02], [1.5, 1.02], [2.0, 1.02], [3.0, 1.02], [2, 1.04],
             [3, 1.04], [5, 1.04], [8, 1.04]]]
       cos-60-4:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.04, ifES: 0, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [400, 400, 12, 10, 250], paramS: [100, 100, 60], range: 100, rangeMax: 300,
             sample: 4000, searchA: 400, threshold: 60}]
@@ -63,7 +58,6 @@ float:
               1.0], [1.2, 1.02], [1.5, 1.02], [2.0, 1.02], [3.0, 1.02], [2, 1.04],
             [3, 1.04], [5, 1.04], [8, 1.04]]]
       cos-60-5:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.02, ifES: 0, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [400, 400, 12, 10, 250], paramS: [100, 100, 60], range: 100, rangeMax: 300,
             sample: 4000, searchA: 400, threshold: 60}]
@@ -74,7 +68,6 @@ float:
               1.0], [1.2, 1.02], [1.5, 1.02], [2.0, 1.02], [3.0, 1.02], [2, 1.04],
             [3, 1.04], [5, 1.04], [8, 1.04]]]
       cos-60-6:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.02, ifES: 0, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [400, 400, 12, 10, 250], paramS: [100, 100, 60], range: 175, rangeMax: 175,
             sample: 4000, searchA: 400, threshold: 60}]
@@ -85,7 +78,6 @@ float:
               1.0], [1.2, 1.02], [1.5, 1.02], [2.0, 1.02], [3.0, 1.02], [2, 1.04],
             [3, 1.04], [5, 1.04], [8, 1.04]]]
       cos-60-7:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.08, ifES: 0, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [400, 400, 12, 10, 250], paramS: [100, 100, 60], range: 200, rangeMax: 200,
             sample: 4000, searchA: 400, threshold: 60}]
@@ -96,7 +88,6 @@ float:
               1.0], [1.2, 1.02], [1.5, 1.02], [2.0, 1.02], [3.0, 1.02], [2, 1.04],
             [3, 1.04], [5, 1.04], [8, 1.04]]]
       cos-60-8:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.04, ifES: 0, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [400, 400, 12, 10, 250], paramS: [100, 100, 60], range: 200, rangeMax: 200,
             sample: 4000, searchA: 400, threshold: 60}]
@@ -107,7 +98,6 @@ float:
               1.0], [1.2, 1.02], [1.5, 1.02], [2.0, 1.02], [3.0, 1.02], [2, 1.04],
             [3, 1.04], [5, 1.04], [8, 1.04]]]
       cos-60-9:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.02, ifES: 0, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [400, 400, 12, 10, 250], paramS: [100, 100, 60], range: 200, rangeMax: 200,
             sample: 4000, searchA: 400, threshold: 60}]
@@ -118,7 +108,6 @@ float:
               1.0], [1.2, 1.02], [1.5, 1.02], [2.0, 1.02], [3.0, 1.02], [2, 1.04],
             [3, 1.04], [5, 1.04], [8, 1.04]]]
       cos-89:
-        arg_groups: []
         args: [{edge: 100, epsilon: 0.08, ifES: 0, indegree: 120, max_edge: 96, outdegree: 64,
             paramE: [400, 400, 12, 10, 250], paramS: [100, 100, 60], range: 200, rangeMax: 200,
             sample: 4000, searchA: 400, threshold: 89}]

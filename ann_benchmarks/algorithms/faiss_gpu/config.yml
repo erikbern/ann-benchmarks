@@ -8,6 +8,4 @@ float:
     name: faiss-gpu
     run_groups:
       base:
-        arg_groups: []
         args: [[400, 1024, 4096, 8192, 16384], [1, 10, 40, 100, 200]]
-        query_args: []

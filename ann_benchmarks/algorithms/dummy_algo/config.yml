@@ -8,9 +8,7 @@ float:
     name: dummy-algo-st
     run_groups:
       empty:
-        arg_groups: []
         args: []
-        query_args: []
   - base_args: ['@metric']
     constructor: DummyAlgoMt
     disabled: true
@@ -19,6 +17,4 @@ float:
     name: dummy-algo-mt
     run_groups:
       empty:
-        arg_groups: []
         args: []
-        query_args: []
