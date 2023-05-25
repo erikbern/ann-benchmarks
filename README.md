@@ -30,6 +30,7 @@ Evaluated
 * [PUFFINN](https://github.com/puffinn/puffinn) ![https://img.shields.io/github/stars/puffinn/puffinn?style=social](https://img.shields.io/github/stars/puffinn/puffinn?style=social)
 * [N2](https://github.com/kakao/n2) ![https://img.shields.io/github/stars/kakao/n2?style=social](https://img.shields.io/github/stars/kakao/n2?style=social)
 * [ScaNN](https://github.com/google-research/google-research/tree/master/scann)
+* [Vearch](https://github.com/vearch/vearch) ![https://img.shields.io/github/stars/vearch/vearch?style=social](https://img.shields.io/github/stars/vearch/vearch?style=social)
 * [Elasticsearch](https://github.com/elastic/elasticsearch) ![https://img.shields.io/github/stars/elastic/elasticsearch?style=social](https://img.shields.io/github/stars/elastic/elasticsearch?style=social): HNSW
 * [Elastiknn](https://github.com/alexklibisz/elastiknn) ![https://img.shields.io/github/stars/alexklibisz/elastiknn?style=social](https://img.shields.io/github/stars/alexklibisz/elastiknn?style=social)
 * [OpenSearch KNN](https://github.com/opensearch-project/k-NN) ![https://img.shields.io/github/stars/opensearch-project/k-NN?style=social](https://img.shields.io/github/stars/opensearch-project/k-NN?style=social)
@@ -39,9 +40,8 @@ Evaluated
 * [vald](https://github.com/vdaas/vald) ![https://img.shields.io/github/stars/vdaas/vald?style=social](https://img.shields.io/github/stars/vdaas/vald?style=social)
 * [Qdrant](https://github.com/qdrant/qdrant) ![https://img.shields.io/github/stars/qdrant/qdrant?style=social](https://img.shields.io/github/stars/qdrant/qdrant?style=social)
 * [qsgngtlib](https://gitee.com/WPJIANG-gitee/hwtl_sdu-anns-qsgngtlib)
-* [Milvus](https://github.com/milvus-io/milvus) ![https://img.shields.io/github/stars/milvus-io/milvus?style=social](https://img.shields.io/github/stars/milvus-io/milvus?style=social): [Knowhere](https://github.com/milvus-io/knowhere)
+* [Milvus](https://github.com/milvus-io/milvus) ![https://img.shields.io/github/stars/milvus-io/milvus?style=social](https://img.shields.io/github/stars/milvus-io/milvus?style=social): [Knowhere](https://github.com/milvus-io/knowhere) [Glass](https://github.com/hhy3/pyglass) 
 * [pgvector](https://github.com/pgvector/pgvector) ![https://img.shields.io/github/stars/pgvector/pgvector?style=social](https://img.shields.io/github/stars/pgvector/pgvector?style=social)
-* [Glass](https://github.com/hhy3/pyglass) 
 
 Data sets
 =========
