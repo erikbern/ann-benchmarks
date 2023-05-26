@@ -87,8 +87,6 @@ def load_configs(point_type: str, base_dir: str = "ann_benchmarks/algorithms") -
                 algorithm_name = os.path.basename(os.path.dirname(config_file))
                 if point_type in config_data:
                     configs[algorithm_name] = config_data[point_type]
-                else:
-                    print(f"'point_type' key does not exist in {config_file}")
             except yaml.YAMLError as e:
                 print(f"Error loading YAML from {config_file}: {e}")
     return configs
