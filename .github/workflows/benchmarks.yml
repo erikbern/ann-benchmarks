@@ -54,6 +54,7 @@ jobs:
           - sklearn
           - sptag
           - tinyknn
+          - usearch
           - vald
           - vearch
           - vespa
