@@ -46,7 +46,6 @@ jobs:
           - milvus
           - mrpt
           - n2
-          - ngt
           - nmslib
           - onng_ngt
           - opensearchknn
@@ -58,7 +57,6 @@ jobs:
           - qg_ngt
           - qsg_ngt
           - scann
-          - sklearn
           - sptag
           - tinyknn
           - vald
