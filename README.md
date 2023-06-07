@@ -68,7 +68,7 @@ We have a number of precomputed data sets for this. All data sets are pre-split 
 Results
 =======
 
-These are all as of April 2023, running all benchmarks on a r6.16xlarge machine on AWS with `--parallelism 31` and hyperthreading disabled. All benchmarks are single-CPU.
+These are all as of April 2023, running all benchmarks on a r6i.16xlarge machine on AWS with `--parallelism 31` and hyperthreading disabled. All benchmarks are single-CPU.
 
 glove-100-angular
 -----------------
