@@ -3,7 +3,7 @@ bit:
   - base_args: ['@metric']
     constructor: BruteForceBLAS
     disabled: false
-    docker_tag: ann-benchmarks-sklearn
+    docker_tag: ann-benchmarks-bruteforce
     module: ann_benchmarks.algorithms.bruteforce
     name: bf
     run_groups:
@@ -14,7 +14,7 @@ float:
   - base_args: ['@metric']
     constructor: BruteForce
     disabled: true
-    docker_tag: ann-benchmarks-sklearn
+    docker_tag: ann-benchmarks-bruteforce
     module: ann_benchmarks.algorithms.bruteforce
     name: bruteforce
     run_groups:
@@ -23,7 +23,7 @@ float:
   - base_args: ['@metric']
     constructor: BruteForceBLAS
     disabled: false
-    docker_tag: ann-benchmarks-sklearn
+    docker_tag: ann-benchmarks-bruteforce
     module: ann_benchmarks.algorithms.bruteforce
     name: bruteforce-blas
     run_groups:

@@ -3,7 +3,7 @@ float:
   - base_args: ['@metric']
     constructor: DummyAlgoSt
     disabled: true
-    docker_tag: ann-benchmarks-sklearn
+    docker_tag: ann-benchmarks-dummy_algo
     module: ann_benchmarks.algorithms.dummy_algo
     name: dummy-algo-st
     run_groups:
@@ -12,7 +12,7 @@ float:
   - base_args: ['@metric']
     constructor: DummyAlgoMt
     disabled: true
-    docker_tag: ann-benchmarks-sklearn
+    docker_tag: ann-benchmarks-dummy_algo
     module: ann_benchmarks.algorithms.dummy_algo
     name: dummy-algo-mt
     run_groups:

@@ -30,28 +30,34 @@ jobs:
         dataset: [random-xs-20-angular]
         library:
           - annoy
+          - balltree
+          - bruteforce
+          - ckdtree
           - diskann
-          - dolphinn
+          - dolphinnpy
           - elasticsearch
           - elastiknn
           - faiss
           - flann
           - glass
           - hnswlib
+          - kdtree
           - luceneknn
           - milvus
           - mrpt
           - n2
           - ngt
           - nmslib
+          - onng_ngt
           - opensearchknn
+          - panng_ngt
           - pgvector
           - pynndescent
           - redisearch
           - qdrant
-          - qsgngt
+          - qg_ngt
+          - qsg_ngt
           - scann
-          - scipy
           - sklearn
           - sptag
           - tinyknn
