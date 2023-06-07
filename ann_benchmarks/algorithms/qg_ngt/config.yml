@@ -3,7 +3,7 @@ float:
   - base_args: ['@metric', Float, 0.1]
     constructor: QG
     disabled: false
-    docker_tag: ann-benchmarks-ngt
+    docker_tag: ann-benchmarks-qg_ngt
     module: ann_benchmarks.algorithms.qg_ngt
     name: NGT-qg
     run_groups:

@@ -3,7 +3,7 @@ float:
   - base_args: ['@metric', Float]
     constructor: PANNG
     disabled: false
-    docker_tag: ann-benchmarks-ngt
+    docker_tag: ann-benchmarks-panng_ngt
     module: ann_benchmarks.algorithms.panng_ngt
     name: NGT-panng
     run_groups:

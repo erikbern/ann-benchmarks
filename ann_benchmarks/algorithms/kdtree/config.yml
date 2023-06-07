@@ -3,7 +3,7 @@ float:
   - base_args: ['@metric']
     constructor: KDTree
     disabled: false
-    docker_tag: ann-benchmarks-sklearn
+    docker_tag: ann-benchmarks-kdtree
     module: ann_benchmarks.algorithms.kdtree
     name: kd
     run_groups:

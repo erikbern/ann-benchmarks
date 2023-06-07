@@ -3,7 +3,7 @@ float:
   - base_args: {}
     constructor: DolphinnPy
     disabled: true
-    docker_tag: ann-benchmarks-dolphinn
+    docker_tag: ann-benchmarks-dolphinnpy
     module: ann_benchmarks.algorithms.dolphinnpy
     name: DolphinnPy
     run_groups:
