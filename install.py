@@ -36,7 +36,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print("Building base image...")
-    build("base", None)
+    subprocess.check_call(
+         "docker build \
+         --rm -t ann-benchmarks -f ann_benchmarks/algorithms/base/Dockerfile .",
+         shell=True,
+     )
     
     if args.algorithm:
         tags = [args.algorithm]
