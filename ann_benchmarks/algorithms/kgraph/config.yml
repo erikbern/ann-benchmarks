@@ -1,0 +1,35 @@
+bit:
+  hamming:
+  - base_args: [euclidean]
+    constructor: KGraph
+    disabled: true
+    docker_tag: ann-benchmarks-kgraph
+    module: ann_benchmarks.algorithms.kgraph
+    name: kgraph
+    run_groups:
+      kgraph:
+        args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100], {K: 200,
+            L: 300, S: 20, reverse: -1}, false]
+float:
+  angular:
+  - base_args: ['@metric']
+    constructor: KGraph
+    disabled: true
+    docker_tag: ann-benchmarks-kgraph
+    module: ann_benchmarks.algorithms.kgraph
+    name: kgraph
+    run_groups:
+      kgraph:
+        args: [{K: 200, L: 300, S: 20, reverse: -1}, false]
+        query_args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]]
+  euclidean:
+  - base_args: ['@metric']
+    constructor: KGraph
+    disabled: true
+    docker_tag: ann-benchmarks-kgraph
+    module: ann_benchmarks.algorithms.kgraph
+    name: kgraph
+    run_groups:
+      kgraph:
+        args: [{reverse: -1}, true]
+        query_args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]]

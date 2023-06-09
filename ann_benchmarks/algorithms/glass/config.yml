@@ -1,0 +1,15 @@
+float:
+  any:
+  - base_args: ['@metric', '@dimension']
+    constructor: Glass
+    disabled: false
+    docker_tag: ann-benchmarks-glass
+    module: ann_benchmarks.algorithms.glass
+    name: glass
+    run_groups:
+      HNSW:
+        args:
+          L: 200
+          R: [8, 16, 32, 48, 64, 96]
+          level: [1, 2, 3]
+        query_args: [[10, 20, 30, 40, 60, 80, 120, 200, 400, 600, 800]]

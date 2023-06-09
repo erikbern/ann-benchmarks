@@ -1,0 +1,22 @@
+float:
+  any:
+  - base_args: ['@metric', '@dimension']
+    constructor: Exact
+    disabled: true
+    docker_tag: ann-benchmarks-elastiknn
+    module: ann_benchmarks.algorithms.elastiknn
+    name: elastiknn-exact
+    run_groups:
+      exact:
+        args: []
+  euclidean:
+  - base_args: []
+    constructor: L2Lsh
+    disabled: false
+    docker_tag: ann-benchmarks-elastiknn
+    module: ann_benchmarks.algorithms.elastiknn
+    name: elastiknn-l2lsh
+    run_groups:
+      elastiknn-l2lsh:
+        args: [[100], [4], [1024, 2048]]
+        query_args: [[500, 1000], [0, 3]]

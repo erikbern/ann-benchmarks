@@ -1,0 +1,11 @@
+float:
+  any:
+  - base_args: {}
+    constructor: FaissGPU
+    disabled: true
+    docker_tag: ann-benchmarks-faiss
+    module: ann_benchmarks.algorithms.faiss_gpu
+    name: faiss-gpu
+    run_groups:
+      base:
+        args: [[400, 1024, 4096, 8192, 16384], [1, 10, 40, 100, 200]]

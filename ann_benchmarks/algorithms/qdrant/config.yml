@@ -1,0 +1,19 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: Qdrant
+    disabled: false
+    docker_tag: ann-benchmarks-qdrant
+    module: ann_benchmarks.algorithms.qdrant
+    name: qdrant
+    run_groups:
+      default:
+        args: [
+          [True, False], #quantization
+          [ 8, 16, 24, 32, 40, 48, 64, 72 ], #m
+          [ 64, 128, 256, 512 ], #ef_construct
+        ]
+        query-args: [
+          [null, 8, 16, 32, 64, 128, 256, 512, 768], #hnsw_ef
+          [True, False], # re-score
+        ]

@@ -1,0 +1,36 @@
+float:
+  angular:
+  - base_args: ['@metric']
+    constructor: VearchIndex
+    disabled: false
+    docker_tag: ann-benchmarks-vearch
+    module: ann_benchmarks.algorithms.vearch
+    name: vearch
+    run_groups:
+      vearch1:
+        args: [[2048], [0.2], [1, 2]]
+        query_args: [[1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 31, 34, 37,
+            40, 45, 50, 55, 60, 65, 75, 90, 115, 130, 150, 170, 200, 230, 250, 300,
+            400, 500, 800], [3, 5, 10]]
+  euclidean:
+  - base_args: ['@metric']
+    constructor: VearchIndex
+    disabled: false
+    docker_tag: ann-benchmarks-vearch
+    module: ann_benchmarks.algorithms.vearch
+    name: vearch
+    run_groups:
+      vearch1:
+        args: [[256], [-1], [2, 4]]
+        query_args: [[4, 6, 8, 10, 13, 16, 19, 22], [8, 10, 12]]
+      vearch2:
+        args: [[512], [-1], [2, 4]]
+        query_args: [[4, 5, 6, 7, 8, 10, 12, 14, 16, 20, 25, 35, 40, 50], [4, 5, 10]]
+      vearch3:
+        args: [[1024], [-1], [2, 4]]
+        query_args: [[6, 8, 10, 13, 16, 20, 25, 30, 35, 40, 50, 65, 80, 100, 130],
+          [5, 10]]
+      vearch4:
+        args: [[2048], [-1], [2, 4]]
+        query_args: [[10, 15, 25, 35, 40, 45, 50, 60, 70, 85, 100, 120, 150, 200,
+            300], [5, 10]]

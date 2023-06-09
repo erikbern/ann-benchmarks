@@ -1,0 +1,73 @@
+float:
+  angular:
+  - base_args: ['@metric', '@dimension']
+    constructor: OpenSearchKNN
+    disabled: false
+    docker_tag: ann-benchmarks-opensearchknn
+    module: ann_benchmarks.algorithms.opensearchknn
+    name: opensearchknn
+    run_groups:
+      M-12:
+        arg_groups: [{M: 12, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-16:
+        arg_groups: [{M: 16, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-24:
+        arg_groups: [{M: 24, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-36:
+        arg_groups: [{M: 36, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-4:
+        arg_groups: [{M: 4, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-48:
+        arg_groups: [{M: 48, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-8:
+        arg_groups: [{M: 8, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+  euclidean:
+  - base_args: ['@metric', '@dimension']
+    constructor: OpenSearchKNN
+    disabled: false
+    docker_tag: ann-benchmarks-opensearchknn
+    module: ann_benchmarks.algorithms.opensearchknn
+    name: opensearchknn
+    run_groups:
+      M-12:
+        arg_groups: [{M: 12, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-16:
+        arg_groups: [{M: 16, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-24:
+        arg_groups: [{M: 24, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-36:
+        arg_groups: [{M: 36, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-4:
+        arg_groups: [{M: 4, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-48:
+        arg_groups: [{M: 48, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-8:
+        arg_groups: [{M: 8, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]

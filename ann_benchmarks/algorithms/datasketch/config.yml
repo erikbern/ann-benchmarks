@@ -1,0 +1,11 @@
+bit:
+  jaccard:
+  - base_args: ['@metric']
+    constructor: DataSketch
+    disabled: false
+    docker_tag: ann-benchmarks-datasketch
+    module: ann_benchmarks.algorithms.datasketch
+    name: datasketch
+    run_groups:
+      base:
+        args: [[128, 256, 512], [8, 16, 32, 64, 128]]

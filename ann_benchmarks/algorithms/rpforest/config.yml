@@ -1,0 +1,11 @@
+float:
+  angular:
+  - base_args: {}
+    constructor: RPForest
+    disabled: true
+    docker_tag: ann-benchmarks-rpforest
+    module: ann_benchmarks.algorithms.rpforest
+    name: rpforest
+    run_groups:
+      base:
+        args: [[3, 10, 40, 100, 400], [3, 10, 40, 100, 400]]

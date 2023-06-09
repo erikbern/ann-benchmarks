@@ -44,7 +44,7 @@ def get_dataset(which):
 
 
 def write_output(train, test, fn, distance, point_type="float", count=100):
-    from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
+    from ann_benchmarks.algorithms.bruteforce.module import BruteForceBLAS
 
     f = h5py.File(fn, "w")
     f.attrs["type"] = "dense"
@@ -76,7 +76,7 @@ param: train and test are arrays of arrays of indices.
 
 
 def write_sparse_output(train, test, fn, distance, dimension, count=100):
-    from ann_benchmarks.algorithms.bruteforce import BruteForceBLAS
+    from ann_benchmarks.algorithms.bruteforce.module import BruteForceBLAS
 
     f = h5py.File(fn, "w")
     f.attrs["type"] = "sparse"

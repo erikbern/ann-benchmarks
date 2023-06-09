@@ -1,0 +1,12 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: Weaviate
+    disabled: false
+    docker_tag: ann-benchmarks-weaviate
+    module: ann_benchmarks.algorithms.weaviate
+    name: weaviate
+    run_groups:
+      weaviate:
+        args: [[8, 16, 24, 32, 40, 48, 64, 72], [64, 128, 256, 512]]
+        query_args: [[16, 32, 48, 64, 96, 128, 256, 512, 768]]

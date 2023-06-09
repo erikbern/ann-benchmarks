@@ -1,0 +1,11 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: FLANN
+    disabled: false
+    docker_tag: ann-benchmarks-flann
+    module: ann_benchmarks.algorithms.flann
+    name: flann
+    run_groups:
+      flann:
+        args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97]]

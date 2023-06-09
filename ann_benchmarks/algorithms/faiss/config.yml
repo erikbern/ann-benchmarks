@@ -1,0 +1,43 @@
+bit:
+  hamming:
+  - base_args: [euclidean]
+    constructor: FaissIVF
+    disabled: false
+    docker_tag: ann-benchmarks-faiss
+    module: ann_benchmarks.algorithms.faiss
+    name: faiss-ivf
+    run_groups:
+      base:
+        args: [[32, 64, 128, 256, 512, 1024, 2048, 4096, 8192]]
+        query_args: [[1, 5, 10, 50, 100, 200]]
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: FaissLSH
+    disabled: true
+    docker_tag: ann-benchmarks-faiss
+    module: ann_benchmarks.algorithms.faiss
+    name: faiss-lsh
+    run_groups:
+      base:
+        args: [[32, 64, 128, 256, 512, 1024, 2048, 4096]]
+  - base_args: ['@metric']
+    constructor: FaissIVF
+    disabled: false
+    docker_tag: ann-benchmarks-faiss
+    module: ann_benchmarks.algorithms.faiss
+    name: faiss-ivf
+    run_groups:
+      base:
+        args: [[32, 64, 128, 256, 512, 1024, 2048, 4096, 8192]]
+        query_args: [[1, 5, 10, 50, 100, 200]]
+  - base_args: ['@metric']
+    constructor: FaissIVFPQfs
+    disabled: false
+    docker_tag: ann-benchmarks-faiss
+    module: ann_benchmarks.algorithms.faiss
+    name: faiss-ivfpqfs
+    run_groups:
+      base:
+        args: [[512, 1204, 2048, 4096]]
+        query_args: [[1, 5, 10, 50, 100, 200], [0, 10, 100, 1000]]

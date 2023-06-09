@@ -1,0 +1,24 @@
+bit:
+  jaccard:
+  - base_args: ['@metric']
+    constructor: Puffinn
+    disabled: false
+    docker_tag: ann-benchmarks-puffinn
+    module: ann_benchmarks.algorithms.puffinn
+    name: puffinn
+    run_groups:
+      base:
+        args: [[16000000, 512000000], [1bit_minhash]]
+        query_args: [[0.1, 0.2, 0.5, 0.7, 0.9, 0.95, 0.99]]
+float:
+  angular:
+  - base_args: ['@metric']
+    constructor: Puffinn
+    disabled: true
+    docker_tag: ann-benchmarks-puffinn
+    module: ann_benchmarks.algorithms.puffinn
+    name: puffinn
+    run_groups:
+      base:
+        args: [[268435456, 536870912, 1073741824, 2147483648, 4294967296], [fht_crosspolytope]]
+        query_args: [[0.1, 0.2, 0.5, 0.7, 0.9, 0.95, 0.99]]

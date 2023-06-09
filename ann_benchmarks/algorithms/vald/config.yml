@@ -1,0 +1,12 @@
+float:
+  any:
+  - base_args: ['@metric', Float]
+    constructor: Vald
+    disabled: false
+    docker_tag: ann-benchmarks-vald
+    module: ann_benchmarks.algorithms.vald
+    name: vald(NGT-anng)
+    run_groups:
+      vald:
+        args: [{bulk: 100, edge: 20, searchedge: 60}]
+        query_args: [[0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2]]

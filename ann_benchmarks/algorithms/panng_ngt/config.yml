@@ -1,0 +1,12 @@
+float:
+  any:
+  - base_args: ['@metric', Float]
+    constructor: PANNG
+    disabled: false
+    docker_tag: ann-benchmarks-panng_ngt
+    module: ann_benchmarks.algorithms.panng_ngt
+    name: NGT-panng
+    run_groups:
+      panng:
+        args: [{edge: 20, pathadj: 40, searchedge: 60}]
+        query_args: [[0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2]]

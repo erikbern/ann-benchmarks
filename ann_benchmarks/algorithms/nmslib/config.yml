@@ -1,0 +1,193 @@
+bit:
+  hamming:
+  - base_args: [euclidean, hnsw]
+    constructor: NmslibReuseIndex
+    disabled: false
+    docker_tag: ann-benchmarks-nmslib
+    module: ann_benchmarks.algorithms.nmslib
+    name: hnsw(nmslib)
+    run_groups:
+      M-12:
+        arg_groups: [{M: 12, efConstruction: 800, post: 0}, false]
+        args: {}
+        query_args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
+      M-20:
+        arg_groups: [{M: 20, efConstruction: 800, post: 0}, false]
+        args: {}
+        query_args: [[2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
+      M-32:
+        arg_groups: [{M: 32, efConstruction: 800, post: 2}, false]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200,
+            300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]]
+      M-48:
+        arg_groups: [{M: 48, efConstruction: 800, post: 2}, false]
+        args: {}
+        query_args: [[50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000, 1400, 1600,
+            2000]]
+  jaccard:
+  - base_args: ['@metric', hnsw]
+    constructor: NmslibReuseIndex
+    disabled: false
+    docker_tag: ann-benchmarks-nmslib
+    module: ann_benchmarks.algorithms.nmslib
+    name: hnsw(nmslib)
+    run_groups:
+      M-12:
+        arg_groups: [{M: 12, efConstruction: 800, post: 0}, false]
+        args: {}
+        query_args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
+      M-20:
+        arg_groups: [{M: 20, efConstruction: 800, post: 0}, false]
+        args: {}
+        query_args: [[2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
+      M-32:
+        arg_groups: [{M: 32, efConstruction: 800, post: 2}, false]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200,
+            300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]]
+      M-48:
+        arg_groups: [{M: 48, efConstruction: 800, post: 2}, false]
+        args: {}
+        query_args: [[50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000, 1400, 1600,
+            2000]]
+  - base_args: ['@metric', sw-graph]
+    constructor: NmslibReuseIndex
+    disabled: false
+    docker_tag: ann-benchmarks-nmslib
+    module: ann_benchmarks.algorithms.nmslib
+    name: SW-graph(nmslib)
+    run_groups:
+      NN-15:
+        arg_groups: [{NN: 15}, false]
+        args: {}
+        query_args: [[80, 50, 30, 20]]
+      NN-3:
+        arg_groups: [{NN: 3}, false]
+        args: {}
+        query_args: [[120, 80, 60, 40, 20, 10, 8, 4, 2]]
+      NN-30:
+        arg_groups: [{NN: 30}, false]
+        args: {}
+        query_args: [[700, 650, 550, 450, 350, 275, 200, 150, 120, 80, 50, 30]]
+  - base_args: ['@metric', vptree]
+    constructor: NmslibReuseIndex
+    disabled: true
+    docker_tag: ann-benchmarks-nmslib
+    module: ann_benchmarks.algorithms.nmslib
+    name: BallTree(nmslib)
+    run_groups:
+      base:
+        arg_groups: [{desiredRecall: [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6,
+              0.5, 0.4, 0.3, 0.2, 0.1], tuneK: 10}, false]
+        args: {}
+float:
+  angular:
+  - base_args: ['@metric', hnsw]
+    constructor: NmslibReuseIndex
+    disabled: false
+    docker_tag: ann-benchmarks-nmslib
+    module: ann_benchmarks.algorithms.nmslib
+    name: hnsw(nmslib)
+    run_groups:
+      M-12:
+        arg_groups: [{M: 12, efConstruction: 800, post: 0}, false]
+        args: {}
+        query_args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
+      M-20:
+        arg_groups: [{M: 20, efConstruction: 800, post: 0}, false]
+        args: {}
+        query_args: [[2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
+      M-32:
+        arg_groups: [{M: 32, efConstruction: 800, post: 2}, false]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200,
+            300, 400, 600, 700, 800, 1000, 1200, 1400, 1600, 2000]]
+      M-48:
+        arg_groups: [{M: 48, efConstruction: 800, post: 2}, false]
+        args: {}
+        query_args: [[50, 70, 90, 120, 160, 200, 400, 600, 700, 800, 1000, 1400, 1600,
+            2000]]
+  - base_args: ['@metric', sw-graph]
+    constructor: NmslibReuseIndex
+    disabled: false
+    docker_tag: ann-benchmarks-nmslib
+    module: ann_benchmarks.algorithms.nmslib
+    name: SW-graph(nmslib)
+    run_groups:
+      NN-15:
+        arg_groups: [{NN: 15}, false]
+        args: {}
+        query_args: [[80, 50, 30, 20]]
+      NN-3:
+        arg_groups: [{NN: 3}, false]
+        args: {}
+        query_args: [[120, 80, 60, 40, 20, 10, 8, 4, 2]]
+      NN-30:
+        arg_groups: [{NN: 30}, false]
+        args: {}
+        query_args: [[700, 650, 550, 450, 350, 275, 200, 150, 120, 80, 50, 30]]
+  any:
+  - base_args: ['@metric', vptree]
+    constructor: NmslibReuseIndex
+    disabled: false
+    docker_tag: ann-benchmarks-nmslib
+    module: ann_benchmarks.algorithms.nmslib
+    name: BallTree(nmslib)
+    run_groups:
+      base:
+        arg_groups: [{desiredRecall: [0.99, 0.97, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6,
+              0.5, 0.4, 0.3, 0.2, 0.1], tuneK: 10}, false]
+        args: {}
+  euclidean:
+  - base_args: ['@metric', hnsw]
+    constructor: NmslibReuseIndex
+    disabled: false
+    docker_tag: ann-benchmarks-nmslib
+    module: ann_benchmarks.algorithms.nmslib
+    name: hnsw(nmslib)
+    run_groups:
+      M-12:
+        arg_groups: [{M: 12, efConstruction: 400, post: 0}, false]
+        args: {}
+        query_args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120]]
+      M-20:
+        arg_groups: [{M: 20, efConstruction: 400, post: 2}, false]
+        args: {}
+        query_args: [[2, 5, 10, 15, 20, 30, 40, 50, 70, 80, 120, 200, 400]]
+      M-32:
+        arg_groups: [{M: 32, efConstruction: 400, post: 2}, false]
+        args: {}
+        query_args: [[20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 200, 300,
+            400]]
+      M-4:
+        arg_groups: [{M: 4, efConstruction: 400, post: 0}, false]
+        args: {}
+        query_args: [[1, 2, 5, 10, 20, 30, 50, 70, 90, 120]]
+      M-8:
+        arg_groups: [{M: 8, efConstruction: 400, post: 0}, false]
+        args: {}
+        query_args: [[1, 2, 5, 10, 20, 30, 50, 70, 90, 120, 160]]
+  - base_args: ['@metric', sw-graph]
+    constructor: NmslibReuseIndex
+    disabled: false
+    docker_tag: ann-benchmarks-nmslib
+    module: ann_benchmarks.algorithms.nmslib
+    name: SW-graph(nmslib)
+    run_groups:
+      NN-10:
+        arg_groups: [{NN: 10}, false]
+        args: {}
+        query_args: [[800, 400, 200, 100, 50, 30, 20, 15, 10, 5, 1]]
+      NN-16:
+        arg_groups: [{NN: 16}, false]
+        args: {}
+        query_args: [[800, 400, 200, 100, 50, 30, 20, 15, 10, 5, 1]]
+      NN-24:
+        arg_groups: [{NN: 24}, false]
+        args: {}
+        query_args: [[800, 400, 200, 100, 50, 30, 20, 15, 10, 5, 1]]
+      NN-5:
+        arg_groups: [{NN: 5}, false]
+        args: {}
+        query_args: [[30, 25, 20, 15, 10, 5, 4, 3, 2, 1]]

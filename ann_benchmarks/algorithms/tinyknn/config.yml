@@ -1,0 +1,21 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: TinyKNN
+    disabled: false
+    docker_tag: ann-benchmarks-tinyknn
+    module: ann_benchmarks.algorithms.tinyknn
+    name: tinyknn
+    run_groups:
+      tinyknn_1:
+        args: [1, [1, 2, 3]]
+        query_args: [[1, 2, 3, 4, 6, 8, 10, 13, 16, 20, 24, 28, 33, 38, 44, 50, 57,
+            64, 72, 80, 88, 106, 126, 148, 172, 198, 256]]
+      tinyknn_2:
+        args: [2, [3, 4]]
+        query_args: [[1, 2, 3, 4, 6, 8, 10, 13, 16, 20, 24, 28, 33, 38, 44, 50, 57,
+            64, 72, 80, 88, 106, 126, 148, 172, 198, 256]]
+      tinyknn_3:
+        args: [3, [5]]
+        query_args: [[1, 2, 3, 4, 6, 8, 10, 13, 16, 20, 24, 28, 33, 38, 44, 50, 57,
+            64, 72, 80, 88, 106, 126, 148, 172, 198, 256]]

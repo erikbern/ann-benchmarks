@@ -1,0 +1,11 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: BallTree
+    disabled: true
+    docker_tag: ann-benchmarks-balltree
+    module: ann_benchmarks.algorithms.balltree
+    name: ball
+    run_groups:
+      ball:
+        args: [[10, 20, 40, 100, 200, 400, 1000]]

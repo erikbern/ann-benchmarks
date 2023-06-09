@@ -1,0 +1,11 @@
+float:
+  any:
+  - base_args: {}
+    constructor: DolphinnPy
+    disabled: true
+    docker_tag: ann-benchmarks-dolphinnpy
+    module: ann_benchmarks.algorithms.dolphinnpy
+    name: DolphinnPy
+    run_groups:
+      base:
+        args: [[10, 50, 100, 200, 1000, 2000]]

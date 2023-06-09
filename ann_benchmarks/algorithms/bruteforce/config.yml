@@ -1,0 +1,31 @@
+bit:
+  jaccard:
+  - base_args: ['@metric']
+    constructor: BruteForceBLAS
+    disabled: false
+    docker_tag: ann-benchmarks-bruteforce
+    module: ann_benchmarks.algorithms.bruteforce
+    name: bf
+    run_groups:
+      base:
+        args: {}
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: BruteForce
+    disabled: true
+    docker_tag: ann-benchmarks-bruteforce
+    module: ann_benchmarks.algorithms.bruteforce
+    name: bruteforce
+    run_groups:
+      empty:
+        args: []
+  - base_args: ['@metric']
+    constructor: BruteForceBLAS
+    disabled: false
+    docker_tag: ann-benchmarks-bruteforce
+    module: ann_benchmarks.algorithms.bruteforce
+    name: bruteforce-blas
+    run_groups:
+      empty:
+        args: []

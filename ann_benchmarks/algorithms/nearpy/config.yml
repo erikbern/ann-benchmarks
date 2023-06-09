@@ -1,0 +1,13 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: NearPy
+    disabled: true
+    docker_tag: ann-benchmarks-nearpy
+    module: ann_benchmarks.algorithms.nearpy
+    name: nearpy
+    run_groups:
+      extra:
+        args: [16, [5, 10, 15, 20, 25, 30, 40]]
+      nearpy:
+        args: [[10, 12, 14, 16], [5, 10, 20, 40]]
