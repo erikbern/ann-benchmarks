@@ -68,7 +68,7 @@ class OpenSearchKNN(BaseANN):
 
         def gen():
             for i, vec in enumerate(tqdm(X)):
-                yield {"_op_type": "index", "_index": self.index_name, "vec": vec.tolist(), "id": str(i + 1)}
+                yield {"_op_type": "index", "_index": self.index_name, "vec": vec.tolist(), "_id": str(i + 1)}
 
         (_, errors) = bulk(self.client, gen(), chunk_size=100, max_retries=4, request_timeout=20000)
         assert len(errors) == 0, errors
