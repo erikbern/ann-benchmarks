@@ -1,7 +1,7 @@
 import numpy
 import sklearn.neighbors
 
-from ...distance import metrics as pd
+from ...distance import compute_distance, metrics as pd
 from ..base.module import BaseANN
 
 class BruteForce(BaseANN):
@@ -87,17 +87,17 @@ class BruteForceBLAS(BaseANN):
             # Just compute hamming distance using euclidean distance
             dists = self.lengths - 2 * numpy.dot(self.index, v)
         elif self._metric == "jaccard":
-            dists = [pd[self._metric]["distance"](v, e) for e in self.index]
+            dists = [pd[self._metric].distance(v, e) for e in self.index]
         else:
             # shouldn't get past the constructor!
             assert False, "invalid metric"
         # partition-sort by distance, get `n` closest
         nearest_indices = numpy.argpartition(dists, n)[:n]
-        indices = [idx for idx in nearest_indices if pd[self._metric]["distance_valid"](dists[idx])]
+        indices = [idx for idx in nearest_indices if pd[self._metric].distance_valid(dists[idx])]
 
         def fix(index):
             ep = self.index[index]
             ev = v
-            return (index, pd[self._metric]["distance"](ep, ev))
+            return (index, pd[self._metric].distance(ep, ev))
 
         return map(fix, indices)
