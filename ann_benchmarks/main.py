@@ -48,7 +48,7 @@ def positive_int(input_str: str) -> int:
     return i
 
 
-def run_worker(cpu: int, args: argparse.Namespace, queue: multiprocessing.Queue[Definition]) -> None:
+def run_worker(cpu: int, args: argparse.Namespace, queue: multiprocessing.Queue) -> None:
     """
     Executes the algorithm based on the provided parameters.
 

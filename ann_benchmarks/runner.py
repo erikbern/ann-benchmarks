@@ -155,7 +155,8 @@ def load_and_transform_dataset(dataset_name: str) -> Tuple[
     print(f"Got a train set of size ({X_train.shape[0]} * {dimension})")
     print(f"Got {len(X_test)} queries")
 
-    return dataset_transform(D), distance
+    train, test = dataset_transform(D)
+    return train, test, distance
 
 
 def build_index(algo: BaseANN, X_train: numpy.ndarray) -> Tuple:
