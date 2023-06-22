@@ -33,8 +33,7 @@ class RAFTIVFPQ(BaseANN):
 
         # Will use 8GB of memory by default. Raise this if more is needed.
         mr = rmm.mr.PoolMemoryResource(rmm.mr.CudaMemoryResource(),
-                                       initial_pool_size=2**30,
-                                       maximum_pool_size=16e9)
+                                       initial_pool_size=2**30)
 
         self._n_list = n_list
         self._index = None
