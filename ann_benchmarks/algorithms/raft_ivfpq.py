@@ -11,9 +11,6 @@ from pylibraft.common import Handle
 from pylibraft.neighbors import ivf_pq, refine
 from ann_benchmarks.algorithms.base import BaseANN
 
-#pylibraft.config.set_output_as(
-#    lambda device_ndarray: device_ndarray.copy_to_host())
-
 
 def get_dtype(dt_str):
     if dt_str == "float32":
@@ -31,7 +28,7 @@ class RAFTIVFPQ(BaseANN):
         self.name = 'RAFTIVFPQ(n_list={}, pq_bits={}, pq_dim={})'.format(
         n_list, pq_bits, pq_dim)
 
-        # Will use 8GB of memory by default. Raise this if more is needed.
+        # Will use 4GB of memory by default and will increase as  more is needed.
         mr = rmm.mr.PoolMemoryResource(rmm.mr.CudaMemoryResource(),
                                        initial_pool_size=2**30)
 

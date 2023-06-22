@@ -27,7 +27,7 @@ class RAFTIVFFlat(BaseANN):
     def __init__(self, metric, n_list):
         self.name = 'RAFTIVFFlat(n_list={})'.format(n_list)
 
-        # Will use 8GB of memory by default. Raise this if more is needed.
+        # Will use 4GB of memory by default and will increase as  more is needed.
         mr = rmm.mr.PoolMemoryResource(rmm.mr.CudaMemoryResource(),
                                        initial_pool_size=2**30)
 
