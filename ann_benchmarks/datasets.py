@@ -71,8 +71,8 @@ def write_output(train: numpy.ndarray, test: numpy.ndarray, fn: str, distance: s
     brute-force approach.
     
     Args:
-        train (np.ndarray): The training data.
-        test (np.ndarray): The testing data.
+        train (numpy.ndarray): The training data.
+        test (numpy.ndarray): The testing data.
         filename (str): The name of the HDF5 file to which data should be written.
         distance_metric (str): The distance metric to use for computing nearest neighbors.
         point_type (str, optional): The type of the data points. Defaults to "float".
@@ -124,8 +124,8 @@ def write_sparse_output(train: numpy.ndarray, test: numpy.ndarray, fn: str, dist
     brute-force approach.
     
     Args:
-        train (np.ndarray): The sparse training data.
-        test (np.ndarray): The sparse testing data.
+        train (numpy.ndarray): The sparse training data.
+        test (numpy.ndarray): The sparse testing data.
         filename (str): The name of the HDF5 file to which data should be written.
         distance_metric (str): The distance metric to use for computing nearest neighbors.
         dimension (int): The dimensionality of the data.
@@ -143,8 +143,8 @@ def write_sparse_output(train: numpy.ndarray, test: numpy.ndarray, fn: str, dist
         print(f"test size:  {test.shape[0]} * {dimension}")
 
         # Ensure the sets are sorted
-        train = np.array([sorted(t) for t in train])
-        test = np.array([sorted(t) for t in test])
+        train = numpy.array([sorted(t) for t in train])
+        test = numpy.array([sorted(t) for t in test])
 
         # Flatten and write train and test sets
         flat_train = numpy.concatenate(train)
@@ -181,14 +181,14 @@ def train_test_split(X: numpy.ndarray, test_size: int = 10000, dimension: int = 
     Splits the provided dataset into a training set and a testing set.
     
     Args:
-        X (np.ndarray): The dataset to split.
+        X (numpy.ndarray): The dataset to split.
         test_size (int, optional): The number of samples to include in the test set. 
             Defaults to 10000.
         dimension (int, optional): The dimensionality of the data. If not provided, 
             it will be inferred from the second dimension of X. Defaults to None.
 
     Returns:
-        Tuple[np.ndarray, np.ndarray]: A tuple containing the training set and the testing set.
+        Tuple[numpy.ndarray, numpy.ndarray]: A tuple containing the training set and the testing set.
     """
     from sklearn.model_selection import train_test_split as sklearn_train_test_split
 
