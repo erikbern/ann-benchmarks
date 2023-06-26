@@ -63,7 +63,7 @@ def get_dataset(dataset_name: str) -> Tuple[h5py.File, int]:
 
     # here for backward compatibility, to ensure old datasets can still be used with newer versions
     # cast to integer because the json parser (later on) cannot interpret numpy integers
-    dimension = int(hdf5_file.attrs.get("dimension", len(hdf5_file["train"][0])))
+    dimension = int(hdf5_file.attrs["dimension"]) if "dimension" in hdf5_file.attrs else len(hdf5_file["train"][0])
     return hdf5_file, dimension
 
 
