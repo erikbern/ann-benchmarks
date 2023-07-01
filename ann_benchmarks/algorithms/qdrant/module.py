@@ -4,9 +4,16 @@ from typing import Iterable, List, Any
 import numpy as np
 from qdrant_client import QdrantClient
 from qdrant_client import grpc
-from qdrant_client.http.models import (CollectionStatus, Distance,
-                                       VectorParams, OptimizersConfigDiff, ScalarQuantization,
-                                       ScalarQuantizationConfig, ScalarType, HnswConfigDiff)
+from qdrant_client.http.models import (
+    CollectionStatus,
+    Distance,
+    VectorParams,
+    OptimizersConfigDiff,
+    ScalarQuantization,
+    ScalarQuantizationConfig,
+    ScalarType,
+    HnswConfigDiff,
+)
 
 from ..base.module import BaseANN
 
@@ -50,13 +57,18 @@ class Qdrant(BaseANN):
                 )
             )
 
+        # Disabling indexing during bulk upload
+        # https://qdrant.tech/documentation/tutorials/bulk-upload/#disable-indexing-during-upload
+        # Uploading to multiple shards
+        # https://qdrant.tech/documentation/tutorials/bulk-upload/#parallel-upload-into-multiple-shards
         self._client.recreate_collection(
             collection_name=self._collection_name,
+            shard_number=2,
             vectors_config=VectorParams(size=X.shape[1], distance=self._distances_mapping[self._metric]),
             optimizers_config=OptimizersConfigDiff(
                 default_segment_number=2,
-                max_segment_size=100000000,
-                indexing_threshold=1000,
+                memmap_threshold=20000,
+                indexing_threshold=0,
             ),
             quantization_config=quantization_config,
             # TODO: benchmark this as well
@@ -68,7 +80,20 @@ class Qdrant(BaseANN):
         )
 
         self._client.upload_collection(
-            collection_name=self._collection_name, vectors=X, ids=list(range(X.shape[0])), parallel=1
+            collection_name=self._collection_name,
+            vectors=X,
+            ids=list(range(X.shape[0])),
+            batch_size=BATCH_SIZE,
+            parallel=1,
+        )
+
+        # Re-enabling indexing
+        self._client.update_collection(
+            collection_name=self._collection_name,
+            optimizers_config=OptimizersConfigDiff(
+                indexing_threshold=20000,
+            ),
+            timeout=TIMEOUT,
         )
 
         # wait for vectors to be fully indexed
@@ -92,20 +117,19 @@ class Qdrant(BaseANN):
         self._search_params["rescore"] = rescore
 
     def query(self, q, n):
-        quantization_search_params = grpc.QuantizationSearchParams(
-            ignore=False,
-            rescore=self._search_params["rescore"],
-        )
-
         search_request = grpc.SearchPoints(
             collection_name=self._collection_name,
             vector=q.tolist(),
             limit=n,
             with_payload=grpc.WithPayloadSelector(enable=False),
+            with_vectors=grpc.WithVectorsSelector(enable=False),
             params=grpc.SearchParams(
                 hnsw_ef=self._search_params["hnsw_ef"],
-                quantization=quantization_search_params,
-            )
+                quantization=grpc.QuantizationSearchParams(
+                    ignore=False,
+                    rescore=self._search_params["rescore"],
+                ),
+            ),
         )
 
         search_result = self._client.grpc_points.Search(search_request, timeout=TIMEOUT)
@@ -135,11 +159,13 @@ class Qdrant(BaseANN):
                 vector=q.tolist(),
                 limit=n,
                 with_payload=grpc.WithPayloadSelector(enable=False),
+                with_vectors=grpc.WithVectorsSelector(enable=False),
                 params=grpc.SearchParams(
                     hnsw_ef=self._search_params["hnsw_ef"],
                     quantization=quantization_search_params,
-                )
-            ) for q in X
+                ),
+            )
+            for q in X
         ]
 
         self.batch_results = []
