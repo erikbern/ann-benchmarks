@@ -475,6 +475,22 @@ def movielens10m(out_fn):
 def movielens20m(out_fn):
     movielens("ml-20m.zip", "ml-20m/ratings.csv", out_fn, ",", True)
 
+def dbpedia_entities_openai_1M(out_fn):
+    from datasets import load_dataset
+    import numpy as np
+
+    data = load_dataset("KShivendu/dbpedia-entities-openai-1M", split="train")
+
+    embeddings = data.to_pandas()['openai'].to_numpy()
+    embeddings = np.vstack(embeddings).reshape((-1, 1536))
+
+    TEST_SIZE = 10_000
+
+    X_train = embeddings[TEST_SIZE:]
+    X_test = embeddings[:TEST_SIZE] # Take the first 10k as test set
+
+    write_output(X_train, X_test, out_fn, "angular")
+
 
 DATASETS = {
     "deep-image-96-angular": deep_image,
@@ -504,4 +520,5 @@ DATASETS = {
     "movielens1m-jaccard": movielens1m,
     "movielens10m-jaccard": movielens10m,
     "movielens20m-jaccard": movielens20m,
+    "openai-dbpedia1m-1536-angular": dbpedia_entities_openai_1M,
 }
