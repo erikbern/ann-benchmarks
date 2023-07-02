@@ -63,11 +63,15 @@ def run_individual_query(algo, X_train, X_test, distance, count, run_count, batc
                 algo.batch_query(X, count)
                 total = time.time() - start
             results = algo.get_batch_results()
+            if hasattr(algo, "get_batch_latencies"):
+                batch_latencies = algo.get_batch_latencies()
+            else:
+                batch_latencies = [total / float(len(X))] * len(X)
             candidates = [
                 [(int(idx), float(metrics[distance]["distance"](v, X_train[idx]))) for idx in single_results]  # noqa
                 for v, single_results in zip(X, results)
             ]
-            return [(total / float(len(X)), v) for v in candidates]
+            return [(latency, v) for latency, v in zip(batch_latencies, candidates)]
 
         if batch:
             results = batch_query(X_test)

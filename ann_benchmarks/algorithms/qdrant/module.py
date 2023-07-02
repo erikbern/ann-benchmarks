@@ -1,4 +1,4 @@
-from time import sleep
+from time import sleep, time
 from typing import Iterable, List, Any
 
 import numpy as np
@@ -26,6 +26,7 @@ class Qdrant(BaseANN):
         self._grpc = True
         self._search_params = {"hnsw_ef": None, "rescore": True}
         self.batch_results = []
+        self.batch_latencies = []
 
         qdrant_client_params = {
             "host": "localhost",
@@ -145,6 +146,7 @@ class Qdrant(BaseANN):
         self.batch_results = []
 
         for request_batch in iter_batches(search_queries, BATCH_SIZE):
+            start = time()
             grpc_res: grpc.SearchBatchResponse = self._client.grpc_points.SearchBatch(
                 grpc.SearchBatchPoints(
                     collection_name=self._collection_name,
@@ -153,12 +155,16 @@ class Qdrant(BaseANN):
                 ),
                 timeout=TIMEOUT,
             )
+            self.batch_latencies.extend([time() - start] * len(request_batch))
 
             for r in grpc_res.result:
                 self.batch_results.append([hit.id.num for hit in r.result])
 
     def get_batch_results(self):
         return self.batch_results
+
+    def get_batch_latencies(self):
+        return self.batch_latencies
 
     def __str__(self):
         hnsw_ef = self._search_params["hnsw_ef"]

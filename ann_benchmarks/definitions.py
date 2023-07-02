@@ -33,7 +33,7 @@ class InstantiationStatus(Enum):
 
 def algorithm_status(definition):
     try:
-        module = importlib.import_module(definition.module)
+        module = importlib.import_module(definition.module + '.module')
         if hasattr(module, definition.constructor):
             return InstantiationStatus.AVAILABLE
         else:
