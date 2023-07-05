@@ -475,16 +475,18 @@ def movielens10m(out_fn):
 def movielens20m(out_fn):
     movielens("ml-20m.zip", "ml-20m/ratings.csv", out_fn, ",", True)
 
-def dbpedia_entities_openai_1M(out_fn):
+def dbpedia_entities_openai_1M(out_fn, n = None):
     from sklearn.model_selection import train_test_split
     from datasets import load_dataset
     import numpy as np
 
     data = load_dataset("KShivendu/dbpedia-entities-openai-1M", split="train")
+    if n is not None and n >= 100_000:
+        data = data.select(range(n))
 
     embeddings = data.to_pandas()['openai'].to_numpy()
     embeddings = np.vstack(embeddings).reshape((-1, 1536))
-    
+
     X_train, X_test = train_test_split(embeddings, test_size=10_000, random_state=42)
 
     write_output(X_train, X_test, out_fn, "angular")
@@ -520,3 +522,8 @@ DATASETS = {
     "movielens20m-jaccard": movielens20m,
     "openai-dbpedia1m-1536-angular": dbpedia_entities_openai_1M,
 }
+
+DATASETS.update({
+    f"dbpedia-openai-{n//1000}k-angular": lambda out_fn: dbpedia_entities_openai_1M(out_fn, n)
+    for n in range(100_000, 1_100_000, 100_000)
+})
