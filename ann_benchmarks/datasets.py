@@ -520,7 +520,6 @@ DATASETS = {
     "movielens1m-jaccard": movielens1m,
     "movielens10m-jaccard": movielens10m,
     "movielens20m-jaccard": movielens20m,
-    "openai-dbpedia1m-1536-angular": dbpedia_entities_openai_1M,
 }
 
 DATASETS.update({
