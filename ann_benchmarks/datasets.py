@@ -476,6 +476,7 @@ def movielens20m(out_fn):
     movielens("ml-20m.zip", "ml-20m/ratings.csv", out_fn, ",", True)
 
 def dbpedia_entities_openai_1M(out_fn):
+    from sklearn.model_selection import train_test_split
     from datasets import load_dataset
     import numpy as np
 
@@ -483,11 +484,8 @@ def dbpedia_entities_openai_1M(out_fn):
 
     embeddings = data.to_pandas()['openai'].to_numpy()
     embeddings = np.vstack(embeddings).reshape((-1, 1536))
-
-    TEST_SIZE = 10_000
-
-    X_train = embeddings[TEST_SIZE:]
-    X_test = embeddings[:TEST_SIZE] # Take the first 10k as test set
+    
+    X_train, X_test = train_test_split(embeddings, test_size=10_000, random_state=42)
 
     write_output(X_train, X_test, out_fn, "angular")
 
