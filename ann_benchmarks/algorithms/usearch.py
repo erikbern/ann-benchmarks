@@ -1,4 +1,5 @@
-from usearch.index import Index, MetricKind
+from usearch.index import Index, MetricKind, ScalarKind
+from usearch.numba import jit
 import numpy as np
 
 from .base import BaseANN
@@ -11,9 +12,9 @@ class USearch(BaseANN):
         assert 'M' in method_param
         assert 'efConstruction' in method_param
 
-        self._metric = {'angular': MetricKind.Cos, 'euclidean': MetricKind.L2sq}[metric]
         self._method_param = method_param
-        self._accuracy = accuracy
+        self._accuracy = {'f64': ScalarKind.F64, 'f32': ScalarKind.F32, 'f8': ScalarKind.F8}[accuracy]
+        self._metric = {'angular': MetricKind.Cos, 'euclidean': MetricKind.L2sq}[metric]
 
     def __str__(self):
         connectivity = self._method_param['M']
@@ -23,15 +24,20 @@ class USearch(BaseANN):
     def fit(self, X):
         connectivity = self._method_param['M']
         expansion_add = self._method_param['efConstruction']
+        metric = jit(
+            X.shape[1],
+            self._metric,
+            self._accuracy
+        )
 
         self._index = Index(
             ndim=len(X[0]),
-            metric=self._metric,
+            metric=metric,
             dtype=self._accuracy,
             connectivity=connectivity,
-            expansion_add=expansion_add,
-            jit=True
+            expansion_add=expansion_add
         )
+
         labels = np.arange(len(X), dtype=np.longlong)
         self._index.add(labels, np.asarray(X))
 
