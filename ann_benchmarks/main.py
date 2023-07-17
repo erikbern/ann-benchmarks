@@ -1,4 +1,6 @@
 import argparse
+from dataclasses import replace
+import h5py
 import logging
 import logging.config
 import multiprocessing.pool
@@ -6,30 +8,62 @@ import os
 import random
 import shutil
 import sys
+from typing import List
 
 import docker
 import psutil
 
-from .definitions import (InstantiationStatus, algorithm_status,
+from .definitions import (Definition, InstantiationStatus, algorithm_status,
                                      get_definitions, list_algorithms)
 from .constants import INDEX_DIR
 from .datasets import DATASETS, get_dataset
-from .results import get_result_filename
+from .results import build_result_filepath
 from .runner import run, run_docker
 
 
-def positive_int(s):
-    i = None
+logging.config.fileConfig("logging.conf")
+logger = logging.getLogger("annb")
+
+
+def positive_int(input_str: str) -> int:
+    """
+    Validates if the input string can be converted to a positive integer.
+
+    Args:
+        input_str (str): The input string to validate and convert to a positive integer.
+
+    Returns:
+        int: The validated positive integer.
+
+    Raises:
+        argparse.ArgumentTypeError: If the input string cannot be converted to a positive integer.
+    """
     try:
-        i = int(s)
+        i = int(input_str)
+        if i < 1:
+            raise ValueError
     except ValueError:
-        pass
-    if not i or i < 1:
-        raise argparse.ArgumentTypeError("%r is not a positive integer" % s)
+        raise argparse.ArgumentTypeError(f"{input_str} is not a positive integer")
+
     return i
 
 
-def run_worker(cpu, args, queue):
+def run_worker(cpu: int, args: argparse.Namespace, queue: multiprocessing.Queue) -> None:
+    """
+    Executes the algorithm based on the provided parameters.
+
+    The algorithm is either executed directly or through a Docker container based on the `args.local`
+     argument. The function runs until the queue is emptied. When running in a docker container, it 
+    executes the algorithm in a Docker container.
+
+    Args:
+        cpu (int): The CPU number to be used in the execution.
+        args (argparse.Namespace): User provided arguments for running workers. 
+        queue (multiprocessing.Queue): The multiprocessing queue that contains the algorithm definitions.
+
+    Returns:
+        None
+    """
     while not queue.empty():
         definition = queue.get()
         if args.local:
@@ -37,14 +71,12 @@ def run_worker(cpu, args, queue):
         else:
             memory_margin = 500e6  # reserve some extra memory for misc stuff
             mem_limit = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
-            cpu_limit = str(cpu)
-            if args.batch:
-                cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
-
+            cpu_limit = str(cpu) if not args.batch else f"0-{multiprocessing.cpu_count() - 1}"
+            
             run_docker(definition, args.dataset, args.count, args.runs, args.timeout, args.batch, cpu_limit, mem_limit)
 
 
-def main():
+def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
         "--dataset",
@@ -95,123 +127,219 @@ def main():
     args = parser.parse_args()
     if args.timeout == -1:
         args.timeout = None
+    return args
+
+
+def filter_already_run_definitions(
+    definitions: List[Definition], 
+    dataset: h5py.File, 
+    count: int, 
+    batch: bool, 
+    force: bool
+) -> List[Definition]:
+    """Filters out the algorithm definitions based on whether they have already been run or not.
+
+    This function checks if there are existing results for each definition by constructing the 
+    result filename from the algorithm definition and the provided arguments. If there are no 
+    existing results or if the parameter `force=True`, the definition is kept. Otherwise, it is
+    discarded.
+
+    Args:
+        definitions (List[Definition]): A list of algorithm definitions to be filtered.
+        dataset (str): The name of the dataset to load training points from.
+        force (bool): If set, re-run algorithms even if their results already exist.
+
+        count (int): The number of near neighbours to search for (only used in file naming convention).
+        batch (bool): If set, algorithms get all queries at once (only used in file naming convention).
+
+    Returns:
+        List[Definition]: A list of algorithm definitions that either have not been run or are 
+                          forced to be re-run.
+    """
+    filtered_definitions = []
+
+    for definition in definitions:
+        not_yet_run = [
+            query_args 
+            for query_args in (definition.query_argument_groups or [[]])
+            if force or not os.path.exists(build_result_filepath(dataset.name, count, definition, query_args, batch))
+        ]
+
+        if not_yet_run:
+            definition = replace(definition, query_argument_groups=not_yet_run) if definition.query_argument_groups else definition
+            filtered_definitions.append(definition)
+            
+    return filtered_definitions
+
+
+def filter_by_available_docker_images(definitions: List[Definition]) -> List[Definition]:
+    """
+    Filters out the algorithm definitions that do not have an associated, available Docker images.
+
+    This function uses the Docker API to list all Docker images available in the system. It 
+    then checks the Docker tags associated with each algorithm definition against the list 
+    of available Docker images, filtering out those that are unavailable. 
+
+    Args:
+        definitions (List[Definition]): A list of algorithm definitions to be filtered.
+
+    Returns:
+        List[Definition]: A list of algorithm definitions that are associated with available Docker images.
+    """
+    docker_client = docker.from_env()
+    docker_tags = {tag.split(":")[0] for image in docker_client.images.list() for tag in image.tags}
+
+    missing_docker_images = set(d.docker_tag for d in definitions).difference(docker_tags)
+    if missing_docker_images:
+        logger.info(f"not all docker images available, only: {docker_tags}")
+        logger.info(f"missing docker images: {missing_docker_images}")
+        definitions = [d for d in definitions if d.docker_tag in docker_tags]
+    
+    return definitions
+
+
+def check_module_import_and_constructor(df: Definition) -> bool:
+    """
+    Verifies if the algorithm module can be imported and its constructor exists.
+
+    This function checks if the module specified in the definition can be imported. 
+    Additionally, it verifies if the constructor for the algorithm exists within the 
+    imported module.
+
+    Args:
+        df (Definition): A definition object containing the module and constructor 
+        for the algorithm.
+
+    Returns:
+        bool: True if the module can be imported and the constructor exists, False 
+        otherwise.
+    """
+    status = algorithm_status(df)
+    if status == InstantiationStatus.NO_CONSTRUCTOR:
+        raise Exception(
+            f"{df.module}.{df.constructor}({df.arguments}): error: the module '{df.module}' does not expose the named constructor"
+        )
+    if status == InstantiationStatus.NO_MODULE:
+        logging.warning(
+            f"{df.module}.{df.constructor}({df.arguments}): the module '{df.module}' could not be loaded; skipping"
+        )
+        return False
+    
+    return True
+
+def create_workers_and_execute(definitions: List[Definition], args: argparse.Namespace):
+    """
+    Manages the creation, execution, and termination of worker processes based on provided arguments.
+
+    Args:
+        definitions (List[Definition]): List of algorithm definitions to be processed.
+        args (argparse.Namespace): User provided arguments for running workers. 
+
+    Raises:
+        Exception: If the level of parallelism exceeds the available CPU count or if batch mode is on with more than 
+                   one worker.
+    """
+    cpu_count = multiprocessing.cpu_count()
+    if args.parallelism > cpu_count - 1:
+        raise Exception(f"Parallelism larger than {cpu_count - 1}! (CPU count minus one)")
+
+    if args.batch and args.parallelism > 1:
+        raise Exception(
+            f"Batch mode uses all available CPU resources, --parallelism should be set to 1. (Was: {args.parallelism})"
+        )
+
+    task_queue = multiprocessing.Queue()
+    for definition in definitions:
+        task_queue.put(definition)
+
+    try:
+        workers = [multiprocessing.Process(target=run_worker, args=(i + 1, args, task_queue)) for i in range(args.parallelism)]
+        [worker.start() for worker in workers]
+        [worker.join() for worker in workers]
+    finally:
+        logger.info("Terminating %d workers" % len(workers))
+        [worker.terminate() for worker in workers]
+
+
+def filter_disabled_algorithms(definitions: List[Definition]) -> List[Definition]:
+    """
+    Excludes disabled algorithms from the given list of definitions.
+
+    This function filters out the algorithm definitions that are marked as disabled in their `config.yml`.
+
+    Args:
+        definitions (List[Definition]): A list of algorithm definitions.
+
+    Returns:
+        List[Definition]: A list of algorithm definitions excluding any that are disabled.
+    """
+    disabled_algorithms = [d for d in definitions if d.disabled]
+    if disabled_algorithms:
+        logger.info(f"Not running disabled algorithms {disabled_algorithms}")
+
+    return [d for d in definitions if not d.disabled]
+
+
+def limit_algorithms(definitions: List[Definition], limit: int) -> List[Definition]:
+    """
+    Limits the number of algorithm definitions based on the given limit.
+
+    If the limit is negative, all definitions are returned. For valid 
+    sampling, `definitions` should be shuffled before `limit_algorithms`.
+
+    Args:
+        definitions (List[Definition]): A list of algorithm definitions.
+        limit (int): The maximum number of definitions to return.
+
+    Returns:
+        List[Definition]: A trimmed list of algorithm definitions.
+    """
+    return definitions if limit < 0 else definitions[:limit]
+
+
+def main():
+    args = parse_arguments()
 
     if args.list_algorithms:
         list_algorithms(args.definitions)
         sys.exit(0)
 
-    logging.config.fileConfig("logging.conf")
-    logger = logging.getLogger("annb")
-
-    # Nmslib specific code
-    # Remove old indices stored on disk
     if os.path.exists(INDEX_DIR):
         shutil.rmtree(INDEX_DIR)
 
     dataset, dimension = get_dataset(args.dataset)
-    point_type = dataset.attrs.get("point_type", "float")
-    distance = dataset.attrs["distance"]
-    definitions = get_definitions(args.definitions, dimension, point_type, distance, args.count)
-
-    # Filter out, from the loaded definitions, all those query argument groups
-    # that correspond to experiments that have already been run. (This might
-    # mean removing a definition altogether, so we can't just use a list
-    # comprehension.)
-    filtered_definitions = []
-    for definition in definitions:
-        query_argument_groups = definition.query_argument_groups
-        if not query_argument_groups:
-            query_argument_groups = [[]]
-        not_yet_run = []
-        for query_arguments in query_argument_groups:
-            fn = get_result_filename(args.dataset, args.count, definition, query_arguments, args.batch)
-            if args.force or not os.path.exists(fn):
-                not_yet_run.append(query_arguments)
-        if not_yet_run:
-            if definition.query_argument_groups:
-                definition = definition._replace(query_argument_groups=not_yet_run)
-            filtered_definitions.append(definition)
-    definitions = filtered_definitions
-
+    definitions: List[Definition] = get_definitions(
+        dimension=dimension,
+        point_type=dataset.attrs.get("point_type", "float"),
+        distance_metric=dataset.attrs["distance"],
+        count=args.count
+    )
     random.shuffle(definitions)
+
+    definitions = filter_already_run_definitions(definitions, 
+        dataset=dataset, 
+        count=args.count, 
+        batch=args.batch, 
+        force=args.force,
+    )
 
     if args.algorithm:
         logger.info(f"running only {args.algorithm}")
         definitions = [d for d in definitions if d.algorithm == args.algorithm]
 
     if not args.local:
-        # See which Docker images we have available
-        docker_client = docker.from_env()
-        docker_tags = set()
-        for image in docker_client.images.list():
-            for tag in image.tags:
-                tag = tag.split(":")[0]
-                docker_tags.add(tag)
-
-        if args.docker_tag:
-            logger.info(f"running only {args.docker_tag}")
-            definitions = [d for d in definitions if d.docker_tag == args.docker_tag]
-
-        if set(d.docker_tag for d in definitions).difference(docker_tags):
-            logger.info(f"not all docker images available, only: {set(docker_tags)}")
-            logger.info(
-                f"missing docker images: " f"{str(set(d.docker_tag for d in definitions).difference(docker_tags))}"
-            )
-            definitions = [d for d in definitions if d.docker_tag in docker_tags]
+        definitions = filter_by_available_docker_images(definitions)
     else:
+        definitions = list(filter(
+            check_module_import_and_constructor, definitions
+        ))
 
-        def _test(df):
-            status = algorithm_status(df)
-            # If the module was loaded but doesn't actually have a constructor
-            # of the right name, then the definition is broken
-            if status == InstantiationStatus.NO_CONSTRUCTOR:
-                raise Exception(
-                    "%s.%s(%s): error: the module '%s' does not"
-                    " expose the named constructor" % (df.module, df.constructor, df.arguments, df.module)
-                )
-
-            if status == InstantiationStatus.NO_MODULE:
-                # If the module couldn't be loaded (presumably because
-                # of a missing dependency), print a warning and remove
-                # this definition from the list of things to be run
-                logging.warning(
-                    "%s.%s(%s): the module '%s' could not be "
-                    "loaded; skipping" % (df.module, df.constructor, df.arguments, df.module)
-                )
-                return False
-            else:
-                return True
-
-        definitions = [d for d in definitions if _test(d)]
-
-    if not args.run_disabled:
-        if len([d for d in definitions if d.disabled]):
-            logger.info(f"Not running disabled algorithms {[d for d in definitions if d.disabled]}")
-        definitions = [d for d in definitions if not d.disabled]
-
-    if args.max_n_algorithms >= 0:
-        definitions = definitions[: args.max_n_algorithms]
+    definitions = filter_disabled_algorithms(definitions) if not args.run_disabled else definitions
+    definitions = limit_algorithms(definitions, args.max_n_algorithms)
 
     if len(definitions) == 0:
         raise Exception("Nothing to run")
     else:
         logger.info(f"Order: {definitions}")
 
-    if args.parallelism > multiprocessing.cpu_count() - 1:
-        raise Exception("Parallelism larger than %d! (CPU count minus one)" % (multiprocessing.cpu_count() - 1))
-
-    # Multiprocessing magic to farm this out to all CPUs
-    queue = multiprocessing.Queue()
-    for definition in definitions:
-        queue.put(definition)
-    if args.batch and args.parallelism > 1:
-        raise Exception(
-            f"Batch mode uses all available CPU resources, --parallelism should be set to 1. (Was: {args.parallelism})"
-        )
-    try:
-        workers = [multiprocessing.Process(target=run_worker, args=(i + 1, args, queue)) for i in range(args.parallelism)]
-        [worker.start() for worker in workers]
-        [worker.join() for worker in workers]
-    finally:
-        logger.info("Terminating %d workers" % len(workers))
-        [worker.terminate() for worker in workers]
+    create_workers_and_execute(definitions, args)

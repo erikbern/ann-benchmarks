@@ -6,7 +6,7 @@ from ann_benchmarks.distance import metrics
 
 
 def test_euclidean():
-    dist = metrics["euclidean"]["distance"]
+    dist = metrics["euclidean"].distance
 
     p = numpy.array([0, 1, 0])
     q = numpy.array([2, 0, 0])
@@ -14,7 +14,7 @@ def test_euclidean():
 
 
 def test_hamming():
-    dist = metrics["hamming"]["distance"]
+    dist = metrics["hamming"].distance
 
     p = numpy.array([1, 1, 0, 0], dtype=numpy.bool_)
     q = numpy.array([1, 0, 0, 1], dtype=numpy.bool_)
@@ -26,7 +26,7 @@ def test_hamming():
 
 
 def test_angular():
-    dist = metrics["angular"]["distance"]
+    dist = metrics["angular"].distance
 
     # We use 1 - cos as the angular distance
 
@@ -47,7 +47,7 @@ def test_angular_dataset():
     # Make sure distances in the datasets are calculated consistent with the definitions
     # This is to avoid issues like #367
 
-    dist_f = metrics["angular"]["distance"]
+    dist_f = metrics["angular"].distance
 
     hdf5_f, n_dims = get_dataset("glove-25-angular")
 

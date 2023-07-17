@@ -1,73 +1,118 @@
 import os
 import random
+import tarfile
 from urllib.request import urlopen, urlretrieve
 
 import h5py
 import numpy
+from typing import Any, Callable, Dict, Tuple
+
+def download(source_url: str, destination_path: str) -> None:
+    """
+    Downloads a file from the provided source URL to the specified destination path
+    only if the file doesn't already exist at the destination.
+    
+    Args:
+        source_url (str): The URL of the file to download.
+        destination_path (str): The local path where the file should be saved.
+    """
+    if not os.path.exists(destination_path):
+        print(f"downloading {source_url} -> {destination_path}...")
+        urlretrieve(source_url, destination_path)
 
 
-def download(src, dst):
-    if not os.path.exists(dst):
-        # TODO: should be atomic
-        print("downloading %s -> %s..." % (src, dst))
-        urlretrieve(src, dst)
-
-
-def get_dataset_fn(dataset):
+def get_dataset_fn(dataset_name: str) -> str:
+    """
+    Returns the full file path for a given dataset name in the data directory.
+    
+    Args:
+        dataset_name (str): The name of the dataset.
+    
+    Returns:
+        str: The full file path of the dataset.
+    """
     if not os.path.exists("data"):
         os.mkdir("data")
-    return os.path.join("data", "%s.hdf5" % dataset)
+    return os.path.join("data", f"{dataset_name}.hdf5")
 
 
-def get_dataset(which):
-    hdf5_fn = get_dataset_fn(which)
+def get_dataset(dataset_name: str) -> Tuple[h5py.File, int]:
+    """
+    Fetches a dataset by downloading it from a known URL or creating it locally
+    if it's not already present. The dataset file is then opened for reading, 
+    and the file handle and the dimension of the dataset are returned.
+    
+    Args:
+        dataset_name (str): The name of the dataset.
+    
+    Returns:
+        Tuple[h5py.File, int]: A tuple containing the opened HDF5 file object and
+            the dimension of the dataset.
+    """
+    hdf5_filename = get_dataset_fn(dataset_name)
     try:
-        url = "http://ann-benchmarks.com/%s.hdf5" % which
-        download(url, hdf5_fn)
+        dataset_url = f"http://ann-benchmarks.com/{dataset_name}.hdf5"
+        download(dataset_url, hdf5_filename)
     except:
-        print("Cannot download %s" % url)
-        if which in DATASETS:
+        print(f"Cannot download {dataset_url}")
+        if dataset_name in DATASETS:
             print("Creating dataset locally")
-            DATASETS[which](hdf5_fn)
-    hdf5_f = h5py.File(hdf5_fn, "r")
+            DATASETS[dataset_name](hdf5_filename)
+
+    hdf5_file = h5py.File(hdf5_filename, "r")
 
     # here for backward compatibility, to ensure old datasets can still be used with newer versions
     # cast to integer because the json parser (later on) cannot interpret numpy integers
-    dimension = int(hdf5_f.attrs["dimension"]) if "dimension" in hdf5_f.attrs else len(hdf5_f["train"][0])
-
-    return hdf5_f, dimension
-
-
-# Everything below this line is related to creating datasets
-# You probably never need to do this at home,
-# just rely on the prepared datasets at http://ann-benchmarks.com
+    dimension = int(hdf5_file.attrs["dimension"]) if "dimension" in hdf5_file.attrs else len(hdf5_file["train"][0])
+    return hdf5_file, dimension
 
 
-def write_output(train, test, fn, distance, point_type="float", count=100):
+def write_output(train: numpy.ndarray, test: numpy.ndarray, fn: str, distance: str, point_type: str = "float", count: int = 100) -> None:
+    """
+    Writes the provided training and testing data to an HDF5 file. It also computes 
+    and stores the nearest neighbors and their distances for the test set using a 
+    brute-force approach.
+    
+    Args:
+        train (numpy.ndarray): The training data.
+        test (numpy.ndarray): The testing data.
+        filename (str): The name of the HDF5 file to which data should be written.
+        distance_metric (str): The distance metric to use for computing nearest neighbors.
+        point_type (str, optional): The type of the data points. Defaults to "float".
+        neighbors_count (int, optional): The number of nearest neighbors to compute for 
+            each point in the test set. Defaults to 100.
+    """
     from ann_benchmarks.algorithms.bruteforce.module import BruteForceBLAS
 
-    f = h5py.File(fn, "w")
-    f.attrs["type"] = "dense"
-    f.attrs["distance"] = distance
-    f.attrs["dimension"] = len(train[0])
-    f.attrs["point_type"] = point_type
-    print("train size: %9d * %4d" % train.shape)
-    print("test size:  %9d * %4d" % test.shape)
-    f.create_dataset("train", (len(train), len(train[0])), dtype=train.dtype)[:] = train
-    f.create_dataset("test", (len(test), len(test[0])), dtype=test.dtype)[:] = test
-    neighbors = f.create_dataset("neighbors", (len(test), count), dtype="i")
-    distances = f.create_dataset("distances", (len(test), count), dtype="f")
-    bf = BruteForceBLAS(distance, precision=train.dtype)
+    with h5py.File(fn, "w") as f:
+        f.attrs["type"] = "dense"
+        f.attrs["distance"] = distance
+        f.attrs["dimension"] = len(train[0])
+        f.attrs["point_type"] = point_type
+        print(f"train size: {train.shape[0]} * {train.shape[1]}")
+        print(f"test size:  {test.shape[0]} * {test.shape[1]}")
+        f.create_dataset("train", data=train)
+        f.create_dataset("test", data=test)
 
-    bf.fit(train)
-    for i, x in enumerate(test):
-        if i % 1000 == 0:
-            print("%d/%d..." % (i, len(test)))
-        res = list(bf.query_with_distances(x, count))
-        res.sort(key=lambda t: t[-1])
-        neighbors[i] = [j for j, _ in res]
-        distances[i] = [d for _, d in res]
-    f.close()
+        # Create datasets for neighbors and distances
+        neighbors_ds = f.create_dataset("neighbors", (len(test), count), dtype=int)
+        distances_ds = f.create_dataset("distances", (len(test), count), dtype=float)
+
+        # Fit the brute-force k-NN model
+        bf = BruteForceBLAS(distance, precision=train.dtype)
+        bf.fit(train)
+
+        for i, x in enumerate(test):
+            if i % 1000 == 0:
+                print(f"{i}/{len(test)}...")
+
+            # Query the model and sort results by distance
+            res = list(bf.query_with_distances(x, count))
+            res.sort(key=lambda t: t[-1])
+
+            # Save neighbors indices and distances
+            neighbors_ds[i] = [idx for idx, _ in res]
+            distances_ds[i] = [dist for _, dist in res]
 
 
 """
@@ -75,54 +120,87 @@ param: train and test are arrays of arrays of indices.
 """
 
 
-def write_sparse_output(train, test, fn, distance, dimension, count=100):
+def write_sparse_output(train: numpy.ndarray, test: numpy.ndarray, fn: str, distance: str, dimension: int, count: int = 100) -> None:
+    """
+    Writes the provided sparse training and testing data to an HDF5 file. It also computes 
+    and stores the nearest neighbors and their distances for the test set using a 
+    brute-force approach.
+    
+    Args:
+        train (numpy.ndarray): The sparse training data.
+        test (numpy.ndarray): The sparse testing data.
+        filename (str): The name of the HDF5 file to which data should be written.
+        distance_metric (str): The distance metric to use for computing nearest neighbors.
+        dimension (int): The dimensionality of the data.
+        neighbors_count (int, optional): The number of nearest neighbors to compute for 
+            each point in the test set. Defaults to 100.
+    """
     from ann_benchmarks.algorithms.bruteforce.module import BruteForceBLAS
 
-    f = h5py.File(fn, "w")
-    f.attrs["type"] = "sparse"
-    f.attrs["distance"] = distance
-    f.attrs["dimension"] = dimension
-    f.attrs["point_type"] = "bit"
-    print("train size: %9d * %4d" % (train.shape[0], dimension))
-    print("test size:  %9d * %4d" % (test.shape[0], dimension))
+    with h5py.File(fn, "w") as f:
+        f.attrs["type"] = "sparse"
+        f.attrs["distance"] = distance
+        f.attrs["dimension"] = dimension
+        f.attrs["point_type"] = "bit"
+        print(f"train size: {train.shape[0]} * {dimension}")
+        print(f"test size:  {test.shape[0]} * {dimension}")
 
-    # We ensure the sets are sorted
-    train = numpy.array(list(map(sorted, train)))
-    test = numpy.array(list(map(sorted, test)))
+        # Ensure the sets are sorted
+        train = numpy.array([sorted(t) for t in train])
+        test = numpy.array([sorted(t) for t in test])
 
-    flat_train = numpy.hstack(train.flatten())
-    flat_test = numpy.hstack(test.flatten())
+        # Flatten and write train and test sets
+        flat_train = numpy.concatenate(train)
+        flat_test = numpy.concatenate(test)
+        f.create_dataset("train", data=flat_train)
+        f.create_dataset("test", data=flat_test)
 
-    f.create_dataset("train", (len(flat_train),), dtype=flat_train.dtype)[:] = flat_train
-    f.create_dataset("test", (len(flat_test),), dtype=flat_test.dtype)[:] = flat_test
-    neighbors = f.create_dataset("neighbors", (len(test), count), dtype="i")
-    distances = f.create_dataset("distances", (len(test), count), dtype="f")
+        # Create datasets for neighbors and distances
+        neighbors_ds = f.create_dataset("neighbors", (len(test), count), dtype=int)
+        distances_ds = f.create_dataset("distances", (len(test), count), dtype=float)
 
-    f.create_dataset("size_test", (len(test),), dtype="i")[:] = list(map(len, test))
-    f.create_dataset("size_train", (len(train),), dtype="i")[:] = list(map(len, train))
+        # Write sizes of train and test sets
+        f.create_dataset("size_train", data=[len(t) for t in train])
+        f.create_dataset("size_test", data=[len(t) for t in test])
 
-    bf = BruteForceBLAS(distance, precision=train.dtype)
-    bf.fit(train)
-    for i, x in enumerate(test):
-        if i % 1000 == 0:
-            print("%d/%d..." % (i, len(test)))
-        res = list(bf.query_with_distances(x, count))
-        res.sort(key=lambda t: t[-1])
-        neighbors[i] = [j for j, _ in res]
-        distances[i] = [d for _, d in res]
-    f.close()
+        # Fit the brute-force k-NN model
+        bf = BruteForceBLAS(distance, precision=flat_train.dtype)
+        bf.fit(train)
 
+        for i, x in enumerate(test):
+            if i % 1000 == 0:
+                print(f"{i}/{len(test)}...")
+            # Query the model and sort results by distance
+            res = list(bf.query_with_distances(x, count))
+            res.sort(key=lambda t: t[-1])
 
-def train_test_split(X, test_size=10000, dimension=None):
-    import sklearn.model_selection
-
-    if dimension is None:
-        dimension = X.shape[1]
-    print("Splitting %d*%d into train/test" % (X.shape[0], dimension))
-    return sklearn.model_selection.train_test_split(X, test_size=test_size, random_state=1)
+            # Save neighbors indices and distances
+            neighbors_ds[i] = [idx for idx, _ in res]
+            distances_ds[i] = [dist for _, dist in res]
 
 
-def glove(out_fn, d):
+def train_test_split(X: numpy.ndarray, test_size: int = 10000, dimension: int = None) -> Tuple[numpy.ndarray, numpy.ndarray]:
+    """
+    Splits the provided dataset into a training set and a testing set.
+    
+    Args:
+        X (numpy.ndarray): The dataset to split.
+        test_size (int, optional): The number of samples to include in the test set. 
+            Defaults to 10000.
+        dimension (int, optional): The dimensionality of the data. If not provided, 
+            it will be inferred from the second dimension of X. Defaults to None.
+
+    Returns:
+        Tuple[numpy.ndarray, numpy.ndarray]: A tuple containing the training set and the testing set.
+    """
+    from sklearn.model_selection import train_test_split as sklearn_train_test_split
+
+    dimension = dimension if not None else X.shape[1]
+    print(f"Splitting {X.shape[0]}*{dimension} into train/test")
+    return sklearn_train_test_split(X, test_size=test_size, random_state=1)
+
+
+def glove(out_fn: str, d: int) -> None:
     import zipfile
 
     url = "http://nlp.stanford.edu/data/glove.twitter.27B.zip"
@@ -139,7 +217,7 @@ def glove(out_fn, d):
         write_output(numpy.array(X_train), numpy.array(X_test), out_fn, "angular")
 
 
-def _load_texmex_vectors(f, n, k):
+def _load_texmex_vectors(f: Any, n: int, k: int) -> numpy.ndarray:
     import struct
 
     v = numpy.zeros((n, k))
@@ -150,7 +228,7 @@ def _load_texmex_vectors(f, n, k):
     return v
 
 
-def _get_irisa_matrix(t, fn):
+def _get_irisa_matrix(t: tarfile.TarFile, fn: str) -> numpy.ndarray:
     import struct
 
     m = t.getmember(fn)
@@ -161,7 +239,7 @@ def _get_irisa_matrix(t, fn):
     return _load_texmex_vectors(f, n, k)
 
 
-def sift(out_fn):
+def sift(out_fn: str) -> None:
     import tarfile
 
     url = "ftp://ftp.irisa.fr/local/texmex/corpus/sift.tar.gz"
@@ -173,7 +251,7 @@ def sift(out_fn):
         write_output(train, test, out_fn, "euclidean")
 
 
-def gist(out_fn):
+def gist(out_fn: str) -> None:
     import tarfile
 
     url = "ftp://ftp.irisa.fr/local/texmex/corpus/gist.tar.gz"
@@ -185,7 +263,7 @@ def gist(out_fn):
         write_output(train, test, out_fn, "euclidean")
 
 
-def _load_mnist_vectors(fn):
+def _load_mnist_vectors(fn: str) -> numpy.ndarray:
     import gzip
     import struct
 
@@ -215,7 +293,7 @@ def _load_mnist_vectors(fn):
     return numpy.array(vectors)
 
 
-def mnist(out_fn):
+def mnist(out_fn: str) -> None:
     download("http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz", "mnist-train.gz")  # noqa
     download("http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz", "mnist-test.gz")  # noqa
     train = _load_mnist_vectors("mnist-train.gz")
@@ -223,7 +301,7 @@ def mnist(out_fn):
     write_output(train, test, out_fn, "euclidean")
 
 
-def fashion_mnist(out_fn):
+def fashion_mnist(out_fn: str) -> None:
     download(
         "http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz",  # noqa
         "fashion-mnist-train.gz",
@@ -240,7 +318,7 @@ def fashion_mnist(out_fn):
 # Creates a 'deep image descriptor' dataset using the 'deep10M.fvecs' sample
 # from http://sites.skoltech.ru/compvision/noimi/. The download logic is adapted
 # from the script https://github.com/arbabenko/GNOIMI/blob/master/downloadDeep1B.py.
-def deep_image(out_fn):
+def deep_image(out_fn: str) -> None:
     yadisk_key = "https://yadi.sk/d/11eDCm7Dsn9GA"
     response = urlopen(
         "https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key="
@@ -263,7 +341,7 @@ def deep_image(out_fn):
     write_output(X_train, X_test, out_fn, "angular")
 
 
-def transform_bag_of_words(filename, n_dimensions, out_fn):
+def transform_bag_of_words(filename: str, n_dimensions: int, out_fn: str) -> None:
     import gzip
 
     from scipy.sparse import lil_matrix
@@ -288,7 +366,7 @@ def transform_bag_of_words(filename, n_dimensions, out_fn):
         write_output(numpy.array(X_train), numpy.array(X_test), out_fn, "angular")
 
 
-def nytimes(out_fn, n_dimensions):
+def nytimes(out_fn: str, n_dimensions: int) -> None:
     fn = "nytimes_%s.txt.gz" % n_dimensions
     download(
         "https://archive.ics.uci.edu/ml/machine-learning-databases/bag-of-words/docword.nytimes.txt.gz", fn
@@ -296,7 +374,7 @@ def nytimes(out_fn, n_dimensions):
     transform_bag_of_words(fn, n_dimensions, out_fn)
 
 
-def random_float(out_fn, n_dims, n_samples, centers, distance):
+def random_float(out_fn: str, n_dims: int, n_samples: int, centers: int, distance: str) -> None:
     import sklearn.datasets
 
     X, _ = sklearn.datasets.make_blobs(n_samples=n_samples, n_features=n_dims, centers=centers, random_state=1)
@@ -304,7 +382,7 @@ def random_float(out_fn, n_dims, n_samples, centers, distance):
     write_output(X_train, X_test, out_fn, distance)
 
 
-def random_bitstring(out_fn, n_dims, n_samples, n_queries):
+def random_bitstring(out_fn: str, n_dims: int, n_samples: int, n_queries: int) -> None:
     import sklearn.datasets
 
     Y, _ = sklearn.datasets.make_blobs(n_samples=n_samples, n_features=n_dims, centers=n_queries, random_state=1)
@@ -316,7 +394,7 @@ def random_bitstring(out_fn, n_dims, n_samples, n_queries):
     write_output(X_train, X_test, out_fn, "hamming", "bit")
 
 
-def word2bits(out_fn, path, fn):
+def sift_hamming(out_fn: str, fn: str) -> None:
     import tarfile
 
     local_fn = fn + ".tar.gz"
@@ -334,7 +412,7 @@ def word2bits(out_fn, path, fn):
         write_output(X_train, X_test, out_fn, "hamming", "bit")
 
 
-def sift_hamming(out_fn, fn):
+def sift_hamming(out_fn: str, fn: str) -> None:
     import tarfile
 
     local_fn = fn + ".tar.gz"
@@ -351,7 +429,7 @@ def sift_hamming(out_fn, fn):
         write_output(X_train, X_test, out_fn, "hamming", "bit")
 
 
-def kosarak(out_fn):
+def kosarak(out_fn: str) -> None:
     import gzip
 
     local_fn = "kosarak.dat.gz"
@@ -375,7 +453,7 @@ def kosarak(out_fn):
     write_sparse_output(X_train, X_test, out_fn, "jaccard", dimension)
 
 
-def random_jaccard(out_fn, n=10000, size=50, universe=80):
+def random_jaccard(out_fn: str, n: int = 10000, size: int = 50, universe: int = 80) -> None:
     random.seed(1)
     l = list(range(universe))
     X = []
@@ -386,7 +464,7 @@ def random_jaccard(out_fn, n=10000, size=50, universe=80):
     write_sparse_output(X_train, X_test, out_fn, "jaccard", universe)
 
 
-def lastfm(out_fn, n_dimensions, test_size=50000):
+def lastfm(out_fn: str, n_dimensions: int, test_size: int = 50000) -> None:
     # This tests out ANN methods for retrieval on simple matrix factorization
     # based recommendation algorithms. The idea being that the query/test
     # vectors are user factors and the train set are item factors from
@@ -427,7 +505,7 @@ def lastfm(out_fn, n_dimensions, test_size=50000):
     write_output(item_factors, user_factors, out_fn, "angular")
 
 
-def movielens(fn, ratings_file, out_fn, separator="::", ignore_header=False):
+def movielens(fn: str, ratings_file: str, out_fn: str, separator: str = "::", ignore_header: bool = False) -> None:
     import zipfile
 
     url = "http://files.grouplens.org/datasets/movielens/%s" % fn
@@ -464,15 +542,15 @@ def movielens(fn, ratings_file, out_fn, separator="::", ignore_header=False):
         write_sparse_output(X_train, X_test, out_fn, "jaccard", dimension)
 
 
-def movielens1m(out_fn):
+def movielens1m(out_fn: str) -> None:
     movielens("ml-1m.zip", "ml-1m/ratings.dat", out_fn)
 
 
-def movielens10m(out_fn):
+def movielens10m(out_fn: str) -> None:
     movielens("ml-10m.zip", "ml-10M100K/ratings.dat", out_fn)
 
 
-def movielens20m(out_fn):
+def movielens20m(out_fn: str) -> None:
     movielens("ml-20m.zip", "ml-20m/ratings.csv", out_fn, ",", True)
 
 def dbpedia_entities_openai_1M(out_fn, n = None):
@@ -492,7 +570,7 @@ def dbpedia_entities_openai_1M(out_fn, n = None):
     write_output(X_train, X_test, out_fn, "angular")
 
 
-DATASETS = {
+DATASETS: Dict[str, Callable[[str], None]] = {
     "deep-image-96-angular": deep_image,
     "fashion-mnist-784-euclidean": fashion_mnist,
     "gist-960-euclidean": gist,
