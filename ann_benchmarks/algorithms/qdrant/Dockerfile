@@ -1,22 +1,23 @@
-ARG QDRANT_VERSION=1.1.1
-ARG QDRANT_CLIENT_VERSION=1.1.6
+ARG QDRANT_VERSION=1.3.0
+ARG QDRANT_CLIENT_VERSION=1.3.1
 FROM qdrant/qdrant:v${QDRANT_VERSION}
 
-RUN apt-get update
-RUN apt-get install -y python3-pip build-essential python3-h5py
-RUN python3 -m pip install --upgrade pip setuptools wheel
-
+ARG QDRANT_CLIENT_VERSION
 WORKDIR /home/app
+COPY requirements.txt .
 
-COPY requirements.txt run_algorithm.py ./
+RUN apt-get update \
+ && apt-get install -y python3-pip build-essential python3-h5py \
+ && python3 -m pip install --break-system-packages --upgrade pip setuptools wheel \
+ && python3 -m pip install --break-system-packages -r requirements.txt \
+ && python3 -m pip install --break-system-packages qdrant-client==${QDRANT_CLIENT_VERSION}
 
-ARG QDRANT_VERSION
-RUN python3 -m pip install -r requirements.txt
-RUN python3 -m pip install qdrant-client==${QDRANT_VERSION}
+COPY run_algorithm.py .
 
-RUN echo '#!/bin/bash' >> entrypoint.sh
-RUN echo 'cd /qdrant && ./qdrant &' >> entrypoint.sh
-RUN echo 'sleep 5' >> entrypoint.sh
-RUN echo 'python3 -u run_algorithm.py "$@"' >> entrypoint.sh
-RUN chmod u+x entrypoint.sh
+RUN printf '#!/bin/bash\n\
+cd /qdrant && ./qdrant &\n\
+sleep 5\n\
+python3 -u run_algorithm.py "$@"' > entrypoint.sh \
+ && chmod u+x entrypoint.sh
+
 ENTRYPOINT ["/home/app/entrypoint.sh"]
