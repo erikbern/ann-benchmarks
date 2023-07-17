@@ -21,7 +21,7 @@ from ..base.module import BaseANN
 
 class Codec(PyLucene95Codec):
     """
-    Custom codec so that the appropriate Lucene94 codec can be returned with the configured M and efConstruction
+    Custom codec so that the appropriate Lucene95 codec can be returned with the configured M and efConstruction
     """
 
     def __init__(self, M, efConstruction):
