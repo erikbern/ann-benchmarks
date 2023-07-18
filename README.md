@@ -120,17 +120,21 @@ Running
 
 You can customize the algorithms and datasets if you want to:
 
-* Check that `algos.yaml` contains the parameter settings that you want to test
+* Check that `ann_benchmarks/algorithms/{YOUR_IMPLEMENTATION}/config.yml` contains the parameter settings that you want to test
 * To run experiments on SIFT, invoke `python run.py --dataset glove-100-angular`. See `python run.py --help` for more information on possible settings. Note that experiments can take a long time. 
 * To process the results, either use `python plot.py --dataset glove-100-angular` or `python create_website.py`. An example call: `python create_website.py --plottype recall/time --latex --scatter --outputdir website/`. 
 
 Including your algorithm
 ========================
 
-1. Add your algorithm into `ann_benchmarks/algorithms` by providing a small Python wrapper.
-2. Add a Dockerfile in `install/` for it
-3. Add it to `algos.yaml`
-4. Add it to `.github/workflows/benchmarks.yml`
+Add your algorithm in the folder `ann_benchmarks/algorithms/{YOUR_IMPLEMENTATION}/` by providing
+
+- [ ] A small Python wrapper in `module.py`
+- [ ] A Dockerfile named `Dockerfile` 
+- [ ] A set of hyper-parameters in `config.yml`
+- [ ] A CI test run by adding your implementation to `.github/workflows/benchmarks.yml`
+
+Check the [available implementations](./ann_benchmarks/algorithms/) for inspiration.
 
 Principles
 ==========
