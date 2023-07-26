@@ -10,4 +10,4 @@ if [ ! -f "$CONTAINER" ]; then
     echo "$CONTAINER does not exist"
     exit 1
 fi
-singularity run -B /run/shm:/run/shm $CONTAINER python3 -u run.py --dataset $ds --algorithm $algo --runs 1 --local --definition $definition
+singularity run -B /run/shm:/run/shm $CONTAINER python3 -u run.py --dataset $ds --algorithm $algo --runs 1 --local --definition $definition $additional

@@ -1,0 +1,14 @@
+# example slurm run using singularity
+# docker images must be converted to singularity containers
+# e.g., `docker save ann-benchmarks-$algo -o ann-benchmarks-$algo.tar, and
+# `singularity build ann-benchmarks-$algo.sif docker-archive://ann-benchmarks-$algo.tar` 
+
+# need to provide $algo, $container, $ds, $definition, $additional.
+
+CONTAINER=$container.sif
+if [ ! -f "$CONTAINER" ]; then
+    echo "$CONTAINER does not exist"
+    exit 1
+fi
+
+sbatch -J $algo-$ds -o log-$ds-$algo.log  --cpus-per-task=1 --time=01:59:59 --partition=red --wrap="singularity run $CONTAINER python3 -u run.py --dataset $ds --algorithm $algo --local --runs 1 --definition $definition $additional"

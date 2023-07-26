@@ -245,14 +245,8 @@ def run_custom(cmd_template: str, definition: str, algo: str, container_tag: str
         force (bool): If true, overwrite existing results.
     """
     template = Template(cmd_template)
-    cmd = template.safe_substitute(algo=re.escape(algo),
-        container=container_tag,
-        definition=definition,
-        ds=dataset_name,
-        )
 
     additional_cmd = [
-        cmd,
         "--runs",
         str(runs),
         "--count",
@@ -263,7 +257,17 @@ def run_custom(cmd_template: str, definition: str, algo: str, container_tag: str
     if force:
         additional_cmd += ["--force"]
 
-    os.system(" ".join(additional_cmd))
+    additional_cmd = " ".join(additional_cmd)
+
+    cmd = template.safe_substitute(
+        additional=additional_cmd,
+        algo=re.escape(algo),
+        container=container_tag,
+        definition=definition,
+        ds=dataset_name,
+        )
+
+    os.system(cmd)
 
 def run_from_cmdline():
     """Calls the function `run` using arguments from the command line. See `ArgumentParser` for
@@ -331,6 +335,9 @@ def run_docker(
     See `run_from_cmdline` for details on the args.
     """
     cmd = [
+        "python3",
+        "-u",
+        "run_algorithm.py",
         "--dataset",
         dataset,
         "--algorithm",
