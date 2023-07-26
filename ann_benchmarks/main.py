@@ -132,7 +132,7 @@ def parse_arguments() -> argparse.Namespace:
 
 def filter_already_run_definitions(
     definitions: List[Definition], 
-    dataset: h5py.File, 
+    dataset: str, 
     count: int, 
     batch: bool, 
     force: bool
@@ -162,7 +162,7 @@ def filter_already_run_definitions(
         not_yet_run = [
             query_args 
             for query_args in (definition.query_argument_groups or [[]])
-            if force or not os.path.exists(build_result_filepath(dataset.name, count, definition, query_args, batch))
+            if force or not os.path.exists(build_result_filepath(dataset, count, definition, query_args, batch))
         ]
 
         if not_yet_run:
@@ -317,7 +317,7 @@ def main():
     random.shuffle(definitions)
 
     definitions = filter_already_run_definitions(definitions, 
-        dataset=dataset, 
+        dataset=args.dataset, 
         count=args.count, 
         batch=args.batch, 
         force=args.force,
