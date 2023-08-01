@@ -1,8 +1,8 @@
-import usearch
+from usearch.index import Index, MetricKind, ScalarKind
+from usearch.numba import jit
 import numpy as np
 
 from .base import BaseANN
-
 
 class USearch(BaseANN):
 
@@ -12,9 +12,9 @@ class USearch(BaseANN):
         assert 'M' in method_param
         assert 'efConstruction' in method_param
 
-        self._metric = {'angular': 'cos', 'euclidean': 'l2sq'}[metric]
         self._method_param = method_param
-        self._accuracy = accuracy
+        self._accuracy = {'f64': ScalarKind.F64, 'f32': ScalarKind.F32, 'f8': ScalarKind.F8}[accuracy]
+        self._metric = {'angular': MetricKind.Cos, 'euclidean': MetricKind.L2sq}[metric]
 
     def __str__(self):
         connectivity = self._method_param['M']
@@ -24,18 +24,27 @@ class USearch(BaseANN):
     def fit(self, X):
         connectivity = self._method_param['M']
         expansion_add = self._method_param['efConstruction']
-        self._index = usearch.Index(
-            ndim=len(X[0]),
-            capacity=len(X),
-            metric=self._metric,
-            accuracy=self._accuracy,
-            connectivity=connectivity,
-            expansion_add=expansion_add,
+        metric = jit(
+            X.shape[1],
+            self._metric,
+            self._accuracy
         )
+
+        self._index = Index(
+            ndim=len(X[0]),
+            metric=metric,
+            dtype=self._accuracy,
+            connectivity=connectivity,
+            expansion_add=expansion_add
+        )
+
         labels = np.arange(len(X), dtype=np.longlong)
         self._index.add(labels, np.asarray(X))
 
     def get_memory_usage(self) -> int:
+        if not hasattr(self, '_index'):
+            return 0
+
         return self._index.memory_usage / 1024
 
     def set_query_arguments(self, ef: int):
