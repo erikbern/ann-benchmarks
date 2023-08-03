@@ -55,5 +55,11 @@ class PGVector(BaseANN):
         self._cur.execute(self._query, (v, n), binary=True, prepare=True)
         return [id for id, in self._cur.fetchall()]
 
+    def get_memory_usage(self):
+        if self._cur is None:
+            return 0
+        self._cur.execute("SELECT pg_relation_size('items_embedding_idx')")
+        return self._cur.fetchone()[0] / 1024
+
     def __str__(self):
         return f"PGVector(lists={self._lists}, probes={self._probes})"
