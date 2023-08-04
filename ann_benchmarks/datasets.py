@@ -1,13 +1,15 @@
 import os
 import random
 import tarfile
-from urllib.request import urlopen, urlretrieve
+from urllib.request import urlopen
+import time
 
 import h5py
 import numpy
 from typing import Any, Callable, Dict, Tuple
 
-def download(source_url: str, destination_path: str) -> None:
+# adapted from https://github.com/harsha-simhadri/big-ann-benchmarks/blob/main/benchmark/dataset_io.py
+def download(source_url: str, destination_path: str, max_size:int = None) -> None:
     """
     Downloads a file from the provided source URL to the specified destination path
     only if the file doesn't already exist at the destination.
@@ -15,10 +17,44 @@ def download(source_url: str, destination_path: str) -> None:
     Args:
         source_url (str): The URL of the file to download.
         destination_path (str): The local path where the file should be saved.
+        max_size (int): Number of bytes to retrieve, None if all should be retrieved.
     """
-    if not os.path.exists(destination_path):
-        print(f"downloading {source_url} -> {destination_path}...")
-        urlretrieve(source_url, destination_path)
+    if os.path.exists(destination_path):
+        return
+    print(f"downloading {source_url} -> {destination_path}...")
+    if max_size is not None:
+        print("   stopping at %d bytes" % max_size)
+    t0 = time.time()
+    outf = open(destination_path, "wb")
+    inf = urlopen(source_url)
+    info = dict(inf.info())
+    content_size = int(info['Content-Length'])
+    bs = 1 << 20
+    totsz = 0
+    while True:
+        block = inf.read(bs)
+        elapsed = time.time() - t0
+        print(
+            "  [%.2f s] downloaded %.2f MiB / %.2f MiB at %.2f MiB/s   " % (
+                elapsed,
+                totsz / 2**20, content_size / 2**20,
+                totsz / 2**20 / elapsed),
+            flush=True, end="\r"
+        )
+        if not block:
+            break
+        if max_size is not None and totsz + len(block) >= max_size:
+            block = block[:max_size - totsz]
+            outf.write(block)
+            totsz += len(block)
+            break
+        outf.write(block)
+        totsz += len(block)
+    print()
+    print("download finished in %.2f s, total size %d bytes" % (
+        time.time() - t0, totsz
+    ))
+
 
 
 def get_dataset_fn(dataset_name: str) -> str:
@@ -428,6 +464,26 @@ def sift_hamming(out_fn: str, fn: str) -> None:
         X_train, X_test = train_test_split(X, test_size=1000)
         write_output(X_train, X_test, out_fn, "hamming", "bit")
 
+def text2image(out_fn: str) -> None:
+    data_fn = "text2image.data.fbin"
+    query_fn = "text2image.query.fbin"
+
+    d = 200
+    nb = 1_000_000
+    nq = 30_000
+    dtype = "float32"
+
+    base_url = "https://storage.yandexcloud.net/yandex-research/ann-datasets/T2I/"
+
+    file_size = 8 + d * nb * numpy.dtype(dtype).itemsize
+
+    download(base_url + "base.1B.fbin", data_fn, file_size)
+    download(base_url + "query.heldout.30K.fbin", query_fn)
+
+    X = numpy.fromfile(data_fn, dtype=dtype, offset=8).reshape(nb, d)
+    Y = numpy.fromfile(query_fn, dtype=dtype, offset=8).reshape(nq, d)
+
+    write_output(X, Y[:10_000], out_fn, "angular")
 
 def kosarak(out_fn: str) -> None:
     import gzip
@@ -574,6 +630,7 @@ DATASETS: Dict[str, Callable[[str], None]] = {
     "deep-image-96-angular": deep_image,
     "fashion-mnist-784-euclidean": fashion_mnist,
     "gist-960-euclidean": gist,
+    "text2image-200-angular": text2image,
     "glove-25-angular": lambda out_fn: glove(out_fn, 25),
     "glove-50-angular": lambda out_fn: glove(out_fn, 50),
     "glove-100-angular": lambda out_fn: glove(out_fn, 100),
