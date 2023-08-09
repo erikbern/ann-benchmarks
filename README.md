@@ -44,6 +44,7 @@ Evaluated
 * [Milvus](https://github.com/milvus-io/milvus) ![https://img.shields.io/github/stars/milvus-io/milvus?style=social](https://img.shields.io/github/stars/milvus-io/milvus?style=social): [Knowhere](https://github.com/milvus-io/knowhere)
 * [Zilliz(Glass)](https://github.com/hhy3/pyglass)
 * [pgvector](https://github.com/pgvector/pgvector) ![https://img.shields.io/github/stars/pgvector/pgvector?style=social](https://img.shields.io/github/stars/pgvector/pgvector?style=social)
+* * [pgvector](https://github.com/neondatabase/pg_embedding) ![https://img.shields.io/github/stars/pg_embedding/pg_embedding?style=social](https://img.shields.io/github/stars/pg_embedding/pg_embedding?style=social)
 
 Data sets
 =========
