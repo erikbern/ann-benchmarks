@@ -4,7 +4,7 @@ RUN git clone https://github.com/neondatabase/pg_embedding /tmp/pg_embedding
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
 RUN apt-get update && apt-get install -y --no-install-recommends build-essential postgresql postgresql-server-dev-all
-RUN sh -c 'echo "local all all trust" > /etc/postgresql/15/main/pg_hba.conf'
+RUN sh -c 'echo "local all all trust" > /etc/postgresql/14/main/pg_hba.conf'
 RUN cd /tmp/pg_embedding && \
 	make clean && \
 	make OPTFLAGS="-march=native -mprefer-vector-width=512" && \
