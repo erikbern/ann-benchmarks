@@ -11,7 +11,7 @@ RUN cd /tmp/pg_embedding && \
 	make install
 
 # Modify shared_buffers in postgresql.conf to 16GB
-RUN sed -i 's/#shared_buffers = 128MB/shared_buffers = 16GB/' /etc/postgresql/15/main/postgresql.conf
+RUN sed -i 's/#shared_buffers = 128MB/shared_buffers = 16GB/' /etc/postgresql/14/main/postgresql.conf
 
 USER postgres
 RUN service postgresql start && \
