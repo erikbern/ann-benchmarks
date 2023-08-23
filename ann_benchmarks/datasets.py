@@ -51,7 +51,7 @@ def get_dataset(dataset_name: str) -> Tuple[h5py.File, int]:
     """
     hdf5_filename = get_dataset_fn(dataset_name)
     try:
-        dataset_url = f"http://ann-benchmarks.com/{dataset_name}.hdf5"
+        dataset_url = f"https://ann-benchmarks.com/{dataset_name}.hdf5"
         download(dataset_url, hdf5_filename)
     except:
         print(f"Cannot download {dataset_url}")
