@@ -18,7 +18,8 @@ RUN service postgresql start && \
     psql -c "CREATE DATABASE ann" && \
     psql -c "GRANT ALL PRIVILEGES ON DATABASE ann TO ann" && \
     psql -d ann -c "CREATE EXTENSION vector" && \
-    psql -c "ALTER USER ann SET maintenance_work_mem = '16GB'"
+    psql -c "ALTER USER ann SET maintenance_work_mem = '4GB'" && \
+    psql -c "ALTER SYSTEM SET shared_buffers = '4GB'"
 USER root
 
 RUN pip install psycopg[binary] pgvector

@@ -7,6 +7,11 @@ float:
     module: ann_benchmarks.algorithms.pgvector
     name: pgvector
     run_groups:
-      pgvector:
-        args: [[100, 200, 400, 1000, 2000, 4000]]
-        query_args: [[1, 2, 4, 10, 20, 40, 100]]
+      M-16:
+        arg_groups: [{M: 16, efConstruction: 200}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      M-24:
+        arg_groups: [{M: 24, efConstruction: 200}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
