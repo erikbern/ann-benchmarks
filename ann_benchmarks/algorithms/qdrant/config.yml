@@ -9,7 +9,7 @@ float:
     run_groups:
       default:
         args: [
-          [True, False], #quantization
+          ['none', 'scalar', 'binary'], #quantization
           [ 8, 16, 24, 32, 40, 48, 64, 72 ], #m
           [ 64, 128, 256, 512 ], #ef_construct
         ]
