@@ -11,6 +11,8 @@ from qdrant_client.http.models import (
     OptimizersConfigDiff,
     ScalarQuantization,
     ScalarQuantizationConfig,
+    BinaryQuantization,
+    BinaryQuantizationConfig,
     ScalarType,
     HnswConfigDiff,
 )
@@ -29,7 +31,7 @@ class Qdrant(BaseANN):
         self._m = m
         self._metric = metric
         self._collection_name = "ann_benchmarks_test"
-        self._quantization = quantization
+        self._quantization_mode = quantization
         self._grpc = True
         self._search_params = {"hnsw_ef": None, "rescore": True}
         self.batch_results = []
@@ -48,13 +50,17 @@ class Qdrant(BaseANN):
             X = X.astype(np.float32)
 
         quantization_config = None
-        if self._quantization:
+        if self._quantization_mode == "scalar":
             quantization_config = ScalarQuantization(
                 scalar=ScalarQuantizationConfig(
                     always_ram=True,
                     quantile=0.99,
                     type=ScalarType.INT8,
                 )
+            )
+        elif self._quantization_mode == "binary":
+            quantization_config = BinaryQuantization(
+                binary=BinaryQuantizationConfig(always_ram=True)
             )
 
         # Disabling indexing during bulk upload
@@ -188,4 +194,4 @@ class Qdrant(BaseANN):
 
     def __str__(self):
         hnsw_ef = self._search_params["hnsw_ef"]
-        return f"Qdrant(quantization={self._quantization}, hnsw_ef={hnsw_ef})"
+        return f"Qdrant(quantization={self._quantization_mode}, hnsw_ef={hnsw_ef})"
