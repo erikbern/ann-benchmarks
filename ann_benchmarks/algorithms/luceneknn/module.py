@@ -7,21 +7,21 @@ import numpy as np
 import sklearn.preprocessing
 from java.nio.file import Paths
 from lucene import JArray
-from org.apache.lucene.codecs.lucene94 import Lucene94HnswVectorsFormat
+from org.apache.lucene.codecs.lucene95 import Lucene95HnswVectorsFormat
 from org.apache.lucene.document import Document, KnnVectorField, StoredField
 from org.apache.lucene.index import (DirectoryReader, IndexWriter,
                                      IndexWriterConfig,
                                      VectorSimilarityFunction)
 from org.apache.lucene.search import IndexSearcher, KnnVectorQuery
 from org.apache.lucene.store import FSDirectory
-from org.apache.pylucene.codecs import PyLucene94Codec
+from org.apache.pylucene.codecs import PyLucene95Codec
 
 from ..base.module import BaseANN
 
 
-class Codec(PyLucene94Codec):
+class Codec(PyLucene95Codec):
     """
-    Custom codec so that the appropriate Lucene94 codec can be returned with the configured M and efConstruction
+    Custom codec so that the appropriate Lucene95 codec can be returned with the configured M and efConstruction
     """
 
     def __init__(self, M, efConstruction):
@@ -30,7 +30,7 @@ class Codec(PyLucene94Codec):
         self.efConstruction = efConstruction
 
     def getKnnVectorsFormatForField(self, field):
-        return Lucene94HnswVectorsFormat(self.M, self.efConstruction)
+        return Lucene95HnswVectorsFormat(self.M, self.efConstruction)
 
 
 class PyLuceneKNN(BaseANN):
@@ -40,9 +40,13 @@ class PyLuceneKNN(BaseANN):
 
     def __init__(self, metric: str, dimension: int, param):
         try:
-            lucene.initVM(vmargs=["-Djava.awt.headless=true -Xmx6g -Xms6g"])
-        except ValueError:
-            print("VM already initialized")
+            lucene.initVM(
+                initialheap="6g",
+                maxheap="6g",
+                vmargs=["--add-modules=jdk.incubator.vector"]
+            )
+        except ValueError as e:
+            print(f"VM already initialized: {e}")
         self.metric = metric
         self.dimension = dimension
         self.param = param
@@ -78,7 +82,7 @@ class PyLuceneKNN(BaseANN):
             doc.add(StoredField("id", id))
             iw.addDocument(doc)
             id += 1
-            if id + 1 % 1000 == 0:
+            if (id + 1) % 1000 == 0:
                 print(f"LuceneKNN: written {id} docs")
         # Force merge so only one HNSW graph is searched.
         iw.forceMerge(1)
