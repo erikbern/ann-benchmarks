@@ -5,7 +5,7 @@ Benchmarking nearest neighbors
 
 Doing fast searching of nearest neighbors in high dimensional spaces is an increasingly important problem with notably few empirical attempts at comparing approaches in an objective way, despite a clear need for such to drive optimization forward.
 
-This project contains tools to benchmark various implementations of approximate nearest neighbor (ANN) search for selected metrics. We have pre-generated datasets (in HDF5 formats) and prepared Docker containers for each algorithm, as well as a [test suite](https://github.com/erikbern/ann-benchmarks/actions) to verify function integrity.
+This project contains tools to benchmark various implementations of approximate nearest neighbor (ANN) search for selected metrics. We have pre-generated datasets (in HDF5 format) and prepared Docker containers for each algorithm, as well as a [test suite](https://github.com/erikbern/ann-benchmarks/actions) to verify function integrity.
 
 Evaluated
 =========
@@ -48,7 +48,7 @@ Evaluated
 Data sets
 =========
 
-We have a number of precomputed data sets in HDF5 format. All data sets have been pre-split into train/test and include ground truth data (as top 100 neighbors).
+We have a number of precomputed data sets in HDF5 format. All data sets have been pre-split into train/test and include ground truth data for the top-100 nearest neighbors.
 
 | Dataset                                                           | Dimensions | Train size | Test size | Neighbors | Distance  | Download                                                                   |
 | ----------------------------------------------------------------- | ---------: | ---------: | --------: | --------: | --------- | -------------------------------------------------------------------------- |
@@ -119,7 +119,7 @@ Running
 2. Run `python plot.py` or `python create_website.py` to plot results.
 3. Run `python data_export.py --out res.csv` to export all results into a csv file for additional post-processing.
 
-You can customize the algorithms and datasets:
+You can customize the algorithms and datasets as follows:
 
 * Check that `ann_benchmarks/algorithms/{YOUR_IMPLEMENTATION}/config.yml` contains the parameter settings that you want to test
 * To run experiments on SIFT, invoke `python run.py --dataset glove-100-angular`. See `python run.py --help` for more information on possible settings. Note that experiments can take a long time. 
@@ -162,10 +162,11 @@ Built by [Erik Bernhardsson](https://erikbern.com) with significant contribution
 Related Publication
 ==================
 
-Design principles behind the benchmarking framework: 
+Design principles behind the benchmarking framework are described in the following publications: 
 
 - M. Aumüller, E. Bernhardsson, A. Faithfull:
 [ANN-Benchmarks: A Benchmarking Tool for Approximate Nearest Neighbor Algorithms](https://arxiv.org/abs/1807.05614). Information Systems 2019. DOI: [10.1016/j.is.2019.02.006](https://doi.org/10.1016/j.is.2019.02.006)
+-   M. Aumüller, E. Bernhardsson, A. Faithfull: [Reproducibility protocol for ANN-Benchmarks: A benchmarking tool for approximate nearest neighbor search algorithms](https://itu.dk/people/maau/additional/2022-ann-benchmarks-reproducibility.pdf), [Artifacts](https://doi.org/10.5281/zenodo.4607761).
 
 Related Projects
 ================
