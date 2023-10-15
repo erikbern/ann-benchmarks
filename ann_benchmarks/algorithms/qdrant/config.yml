@@ -2,7 +2,7 @@ float:
   any:
   - base_args: ['@metric']
     constructor: Qdrant
-    disabled: false
+    disabled: true
     docker_tag: ann-benchmarks-qdrant
     module: ann_benchmarks.algorithms.qdrant
     name: qdrant
