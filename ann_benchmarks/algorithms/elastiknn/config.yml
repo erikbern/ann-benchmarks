@@ -12,7 +12,7 @@ float:
   euclidean:
   - base_args: []
     constructor: L2Lsh
-    disabled: false
+    disabled: true
     docker_tag: ann-benchmarks-elastiknn
     module: ann_benchmarks.algorithms.elastiknn
     name: elastiknn-l2lsh
