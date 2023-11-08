@@ -1,0 +1,17 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: SurrealMtree
+    disabled: false
+    docker_tag: ann-benchmarks-surreal_mtree
+    module: ann_benchmarks.algorithms.surreal_mtree
+    name: surreal_mtree
+    run_groups:
+      M-16:
+        arg_groups: [{M: 16, efConstruction: 200}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      M-24:
+        arg_groups: [{M: 24, efConstruction: 200}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
