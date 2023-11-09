@@ -8,6 +8,6 @@ float:
     name: surreal_mtree
     run_groups:
       memory:
-        args: ['memory', [10, 20, 40, 100, 200, 400, 1000]]
+        args: ['memory', [40]]
       file:
-        args: ['file://tmp/ann.db', [10, 20, 40, 100, 200, 400, 1000]]
+        args: ['file://tmp/ann.db', [40]]
