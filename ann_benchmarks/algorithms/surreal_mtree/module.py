@@ -12,20 +12,13 @@ from functools import partial
 class SurrealMtree(BaseANN):        
 
     def __init__(self, metric, path = 'memory', capacity = 40):
-        self.loop = asyncio.new_event_loop()
-        self.executor = ThreadPoolExecutor()
-        self.thread = threading.Thread(target=self.start_loop, args=(self.loop,), daemon=True)
-        self.thread.start()
+        self.loop = asyncio.get_event_loop()
         self.metric = metric
         self.path = path
         self.capacity = capacity
         subprocess.run(f"surreal start --allow-all -u ann -p ann -b 127.0.0.1:8000 {path}  &", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
         print("wait for the server to be up...")
         sleep(5)
-
-    def start_loop(self, loop):
-        asyncio.set_event_loop(loop)
-        loop.run_forever()
 
     async def async_connect(self, db):
         await db.connect()
@@ -50,9 +43,7 @@ class SurrealMtree(BaseANN):
             print("Index construction done")
 
     def fit(self, X):
-        coro = self.async_fit(X)
-        future = asyncio.run_coroutine_threadsafe(coro, self.loop)
-        future.result()
+        self.loop.run_until_complete(self.async_fit(X))
 
     async def async_query(self, v, n):
          async with Surreal("ws://localhost:8000/rpc") as db:
@@ -61,13 +52,7 @@ class SurrealMtree(BaseANN):
             return [item['i'] for item in res[0]['result']]
 
     def query(self, v, n):
-        coro = self.async_query(v, n)
-        future = asyncio.run_coroutine_threadsafe(coro, self.loop)
-        return future.result()
+        return self.loop.run_until_complete(self.async_query(v, n))
 
     def __str__(self):
         return f"SurrealMtree(path={self.path}, capacity={self.capacity})"
-
-    def close(self):
-        self.loop.call_soon_threadsafe(self.loop.stop)
-        self.thread.join()
