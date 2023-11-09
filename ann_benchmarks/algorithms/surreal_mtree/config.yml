@@ -7,5 +7,7 @@ float:
     module: ann_benchmarks.algorithms.surreal_mtree
     name: surreal_mtree
     run_groups:
-      default:
-        args: [[10, 20, 40, 100, 200, 400, 1000]]
+      memory:
+        args: ['memory', [10, 20, 40, 100, 200, 400, 1000]]
+      file:
+        args: ['file://tmp/ann.db', [10, 20, 40, 100, 200, 400, 1000]]
