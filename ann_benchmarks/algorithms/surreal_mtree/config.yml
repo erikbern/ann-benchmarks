@@ -1,13 +1,11 @@
 float:
   any:
-  - base_args: ['@metric']
-    constructor: SurrealMtree
-    disabled: false
-    docker_tag: ann-benchmarks-surreal_mtree
-    module: ann_benchmarks.algorithms.surreal_mtree
-    name: surreal_mtree
-    run_groups:
-      memory:
-        args: ['memory', [40]]
-      file:
-        args: ['file://tmp/ann.db', [40]]
+    - base_args: ['@metric']
+      constructor: SurrealMtree
+      disabled: false
+      docker_tag: ann-benchmarks-surreal_mtree
+      module: ann_benchmarks.algorithms.surreal_mtree
+      name: surreal_mtree
+      run_groups:
+        memory:
+          args: ['memory', [40]]

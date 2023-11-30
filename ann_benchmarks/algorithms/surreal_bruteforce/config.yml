@@ -1,0 +1,11 @@
+float:
+  any:
+    - base_args: ['@metric']
+      constructor: SurrealBruteForce
+      disabled: false
+      docker_tag: ann-benchmarks-surreal_bruteforce
+      module: ann_benchmarks.algorithms.surreal_bruteforce
+      name: surreal_bruteforce
+      run_groups:
+        memory:
+          args: ['memory', ['PARALLEL', '']]

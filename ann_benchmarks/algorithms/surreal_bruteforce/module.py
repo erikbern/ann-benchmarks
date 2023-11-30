@@ -5,12 +5,23 @@ import requests
 from ..base.module import BaseANN
 from time import sleep
 
-class SurrealMtree(BaseANN):        
+class SurrealBruteForce(BaseANN):        
 
-    def __init__(self, metric, path = 'memory', capacity = 40):
-        self._metric = metric
+    def __init__(self, metric, path = 'memory', parallel = ''):
+        if metric == "euclidean":
+            self._metric = 'EUCLIDEAN'
+        elif metric == 'manhattan':
+            self._metric = 'MANHATTAN'
+        elif metric == 'angular':
+            self._metric = 'COSINE'
+        elif metric == 'hamming':
+            self._metric = 'HAMMING'
+        elif metric == 'jaccard':
+            self._metric = 'JACCARD'
+        else:
+            raise RuntimeError(f"unknown metric {metric}")
         self._path = path
-        self._capacity = capacity
+        self._parallel = parallel
         subprocess.run(f"surreal start --allow-all -u ann -p ann -b 127.0.0.1:8000 {path}  &", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
         print("wait for the server to be up...")
         sleep(5)
@@ -28,17 +39,6 @@ class SurrealMtree(BaseANN):
         if r.status_code != 200:
             raise RuntimeError(f"{r.text}")
         return r
-
-    def _create_index(self, dim):
-        print(f"Creating index - capacity: {self._capacity} - dim: {dim}")
-        if self._metric == "euclidean":
-            dist = 'EUCLIDEAN'
-        elif self._metric == 'manhattan':
-            dist = 'MANHATTAN'
-        else:
-            raise RuntimeError(f"unknown metric {self.metric}")
-        self._checked_sql(f"DEFINE INDEX ix ON items FIELDS r MTREE DIMENSION {dim} DIST {dist} TYPE F64 CAPACITY {self._capacity} DOC_IDS_CACHE 0 MTREE_CACHE 0;")
-
 
     def _ingest(self, dim, X): 
         # Fit the database per batch
@@ -64,7 +64,6 @@ class SurrealMtree(BaseANN):
 
     def fit(self, X):
         dim = X.shape[1];
-        self._create_index(dim)
         self._ingest(dim, X)
         print("Index construction done")     
 
@@ -77,7 +76,7 @@ class SurrealMtree(BaseANN):
             
     def query(self, v, n):
         v = v.tolist();
-        j = self._checked_sql(f"SELECT id FROM items WHERE r <{n}> {v};")
+        j = self._checked_sql(f"SELECT id FROM items WHERE r <{n},{self._metric}> {v} {self._parallel};")
         c = 0
         items = []
         for item in j[0]['result']:
@@ -88,7 +87,7 @@ class SurrealMtree(BaseANN):
         return items
 
     def __str__(self):
-        return f"SurrealMtree(path={self._path}, capacity={self._capacity})"
+        return f"SurrealBruteForce(path={self._path}, parallel={self._parallel})"
 
     def done(self) -> None:
         self._session.close()
