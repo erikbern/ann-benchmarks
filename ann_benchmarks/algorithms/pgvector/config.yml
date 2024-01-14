@@ -2,7 +2,7 @@ float:
   any:
   - base_args: ['@metric']
     constructor: PGVector
-    disabled: false
+    disabled: true
     docker_tag: ann-benchmarks-pgvector
     module: ann_benchmarks.algorithms.pgvector
     name: pgvector
