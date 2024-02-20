@@ -43,7 +43,7 @@ class SurrealMtree(BaseANN):
     def _ingest(self, dim, X): 
         # Fit the database per batch
         print("Ingesting vectors...")
-        batch = max(50000 // dim, 1)
+        batch = max(20000 // dim, 1)
         q = ""
         l = 0
         t = 0
@@ -56,17 +56,17 @@ class SurrealMtree(BaseANN):
                 q = ''
                 t += l
                 l = 0
-                print(f"{t} vectors ingested")
+                print(f"\r{t} vectors ingested", end = '')
         if l > 0:
             self._checked_sql(q)
             t += l
-            print(f"{t} vectors ingested")
+            print(f"\r{t} vectors ingested", end = '')
 
     def fit(self, X):
         dim = X.shape[1]
         self._create_index(dim)
         self._ingest(dim, X)
-        print("Index construction done")     
+        print("\nIndex construction done")     
 
     def _checked_sql(self, q):
         res = self._sql(q).json()
@@ -77,11 +77,9 @@ class SurrealMtree(BaseANN):
             
     def query(self, v, n):
         v = v.tolist()
-        j = self._checked_sql(f"SELECT id,vector::distance::euclidean(r, {v}) as d FROM items WHERE r <{n}> {v};")
-        c = 0
+        j = self._checked_sql(f"SELECT id FROM items WHERE r <{n}> {v};")
         items = []
         for item in j[0]['result']:
-            c += 1
             id = item['id']
             items.append(int(id[6:]))
         return items

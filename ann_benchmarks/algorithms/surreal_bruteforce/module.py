@@ -7,7 +7,7 @@ from time import sleep
 
 class SurrealBruteForce(BaseANN):        
 
-    def __init__(self, metric, path = 'memory', parallel = ''):
+    def __init__(self, metric, method_param):
         if metric == "euclidean":
             self._metric = 'EUCLIDEAN'
         elif metric == 'manhattan':
@@ -20,9 +20,7 @@ class SurrealBruteForce(BaseANN):
             self._metric = 'JACCARD'
         else:
             raise RuntimeError(f"unknown metric {metric}")
-        self._path = path
-        self._parallel = parallel
-        subprocess.run(f"surreal start --allow-all -u ann -p ann -b 127.0.0.1:8000 {path}  &", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
+        subprocess.run(f"surreal start --allow-all -u ann -p ann -b 127.0.0.1:8000 memory &", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
         print("wait for the server to be up...")
         sleep(5)
         self._session = requests.Session()
@@ -48,24 +46,24 @@ class SurrealBruteForce(BaseANN):
         l = 0
         t = 0
         for i, embedding in enumerate(X):
-            v = embedding.tolist();
+            v = embedding.tolist()
             l += 1
-            q += f"CREATE items:{i} SET r={v};"
+            q += f"CREATE items:{i} SET r={v} RETURN NONE;"
             if l == batch:
                 self._checked_sql(q)
                 q = ''
                 t += l
                 l = 0
-                print(f"{t} vectors ingested")
+                print(f"\r{t} vectors ingested", end = '')
         if l > 0:
             self._checked_sql(q)
             t += l
-        print(f"{t} vectors ingested")
+            print(f"\r{t} vectors ingested", end = '')
 
     def fit(self, X):
-        dim = X.shape[1];
+        dim = X.shape[1]
         self._ingest(dim, X)
-        print("Index construction done")     
+        print("\nIndex construction done")     
 
     def _checked_sql(self, q):
         res = self._sql(q).json()
@@ -73,21 +71,22 @@ class SurrealBruteForce(BaseANN):
             if r['status'] != 'OK':
                 raise RuntimeError(f"Error: {r}")
         return res
+    
+    def set_query_arguments(self, parallel):
+        self._parallel = parallel
+        print("parallel = " + self._parallel)
             
     def query(self, v, n):
-        v = v.tolist();
+        v = v.tolist()
         j = self._checked_sql(f"SELECT id FROM items WHERE r <{n},{self._metric}> {v} {self._parallel};")
-        c = 0
         items = []
         for item in j[0]['result']:
-            c += 1
-            items.append(int(item['id'][6:]))
-        if c != n:
-            raise RuntimeError(f"Invalid items count: {c} => {j}")
+            id = item['id']
+            items.append(int(id[6:]))
         return items
 
     def __str__(self):
-        return f"SurrealBruteForce(path={self._path}, parallel={self._parallel})"
+        return f"SurrealBruteForce(parallel={self._parallel})"
 
     def done(self) -> None:
         self._session.close()
