@@ -7,5 +7,7 @@ float:
       module: ann_benchmarks.algorithms.surreal_bruteforce
       name: surreal_bruteforce
       run_groups:
-        memory:
-          args: ['memory', ['PARALLEL', '']]
+        SURREAL-BRUTEFORCE:
+          arg_groups: [{}]
+          args: {}
+          query_args: [['PARALLEL', '']]
