@@ -1,4 +1,4 @@
-FROM quay.io/centos/centos:stream8
+FROM almalinux:8
 
 RUN dnf -y install epel-release && \
     dnf -y install dnf-plugins-core && \
@@ -6,17 +6,17 @@ RUN dnf -y install epel-release && \
         gcc \
         make \
         git \
-        python39-devel \
-        python39-pip \
-        python39-setuptools && \
-    dnf -y copr enable @vespa/vespa centos-stream-8 && \
+        python3.11-devel \
+        python3.11-pip \
+        python3.11-setuptools && \
+    dnf -y copr enable @vespa/vespa epel-8-$(arch) && \
     dnf -y install --enablerepo=powertools vespa-ann-benchmark
 
 WORKDIR /home/app
 
 COPY requirements.txt run_algorithm.py ./
 
-RUN python3.9 -m pip install -r requirements.txt && \
-    python3.9 -m pip install /opt/vespa/libexec/vespa_ann_benchmark
+RUN python3.11 -m pip install -r requirements.txt && \
+    python3.11 -m pip install /opt/vespa/libexec/vespa_ann_benchmark
 
-ENTRYPOINT ["python3.9", "-u", "run_algorithm.py"]
+ENTRYPOINT ["python3.11", "-u", "run_algorithm.py"]

@@ -30,7 +30,8 @@ class PGVector(BaseANN):
         cur.execute("CREATE TABLE items (id int, embedding vector(%d))" % X.shape[1])
         cur.execute("ALTER TABLE items ALTER COLUMN embedding SET STORAGE PLAIN")
         print("copying data...")
-        with cur.copy("COPY items (id, embedding) FROM STDIN") as copy:
+        with cur.copy("COPY items (id, embedding) FROM STDIN WITH (FORMAT BINARY)") as copy:
+            copy.set_types(["int4", "vector"])
             for i, embedding in enumerate(X):
                 copy.write_row((i, embedding))
         print("creating index...")
