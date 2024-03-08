@@ -10,23 +10,23 @@ class fng(BaseANN):
         self.name = "01ai (%s)" % (self.method_param)
 
     def fit(self, X):
-        self.index = py01ai.FNGIndex(self.metric, len(X[0]))
-        self.index.init(len(X), 
-                        self.method_param["M"], 
-                        self.method_param["S"],
-                        self.method_param["L"])
+        self.index = py01ai.FNGIndex(metric=self.metric, dimension=len(X[0]))
+        self.index.init(count=len(X), 
+                        m=self.method_param["M"], 
+                        s=self.method_param["S"],
+                        l=self.method_param["L"])
         try: 
-            self.index.add_vector(np.asarray(X))
+            self.index.add_vector(input=np.asarray(X))
         except Exception as e:
             print(str(e))
 
     def set_query_arguments(self, ex, ef):
         self.search_ef = ef
         self.search_ex = ex
-        self.index.set_query_param(ef, ex)
+        self.index.set_query_param(ef=ef, ex=ex)
 
     def query(self, v, n):
-        return self.index.search(v, n)
+        return self.index.search(query=v, topk=n)
 
     def freeIndex(self):
         del self.index
