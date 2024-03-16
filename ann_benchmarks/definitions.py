@@ -138,6 +138,8 @@ def load_configs(point_type: str, base_dir: str = "ann_benchmarks/algorithms") -
         with open(config_file, 'r') as stream:
             try:
                 config_data = yaml.safe_load(stream)
+                if config_data is None:
+                    continue
                 algorithm_name = os.path.basename(os.path.dirname(config_file))
                 if point_type in config_data:
                     configs[algorithm_name] = config_data[point_type]
