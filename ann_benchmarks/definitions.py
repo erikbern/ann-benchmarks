@@ -166,8 +166,7 @@ def _get_algorithm_definitions(point_type: str, distance_metric: str) -> Dict[st
     metric. For example, `ann_benchmarks.algorithms.nmslib` has two definitions for euclidean float
     data: specifically `SW-graph(nmslib)` and `hnsw(nmslib)`, even though the module is named nmslib.
 
-    If an algorithm has an 'any' distance metric is found for the specific point type, it is used 
-    regardless (and takes precendence) over if the distance metric is present.
+    If an algorithm has an 'any' distance metric, it is also included.
 
     Returns: A mapping from the algorithm name (not the algorithm class), to the algorithm definitions, i.e.:
     ```
@@ -195,11 +194,10 @@ def _get_algorithm_definitions(point_type: str, distance_metric: str) -> Dict[st
     # param `_` is filename, not specific name
     for _, config in configs.items():
         c = []
-        if "any" in config: # "any" branch must come first
-            c = config["any"]
-        elif distance_metric in config:
-            c = config[distance_metric]
-
+        if "any" in config:
+            c.extend(config["any"])
+        if distance_metric in config:
+            c.extend(config[distance_metric])
         for cc in c:
             definitions[cc.pop("name")] = cc
 
