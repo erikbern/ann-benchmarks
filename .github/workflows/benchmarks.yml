@@ -33,6 +33,7 @@ jobs:
           - balltree
           - bruteforce
           - ckdtree
+          - descartes
           - diskann
           - dolphinnpy
           - elasticsearch
