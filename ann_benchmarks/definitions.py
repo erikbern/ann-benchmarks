@@ -127,7 +127,7 @@ def get_config_files(base_dir: str = "ann_benchmarks/algorithms") -> List[str]:
     """Get config files for all algorithms."""
     config_files = glob.glob(os.path.join(base_dir, "*", "config.yml"))
     return list(
-        set(config_files) - {f"{base_dir}/base/config.yml"}
+        set(config_files) - {os.path.join(base_dir, "base", "config.yml")}
     )
 
 def load_configs(point_type: str, base_dir: str = "ann_benchmarks/algorithms") -> Dict[str, Any]:
