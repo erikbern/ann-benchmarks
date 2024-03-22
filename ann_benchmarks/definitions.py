@@ -127,7 +127,7 @@ def get_config_files(base_dir: str = "ann_benchmarks/algorithms") -> List[str]:
     """Get config files for all algorithms."""
     config_files = glob.glob(os.path.join(base_dir, "*", "config.yml"))
     return list(
-        set(config_files) - {f"{base_dir}/base/config.yml"}
+        set(config_files) - {os.path.join(base_dir, "base", "config.yml")}
     )
 
 def load_configs(point_type: str, base_dir: str = "ann_benchmarks/algorithms") -> Dict[str, Any]:
@@ -138,8 +138,6 @@ def load_configs(point_type: str, base_dir: str = "ann_benchmarks/algorithms") -
         with open(config_file, 'r') as stream:
             try:
                 config_data = yaml.safe_load(stream)
-                if config_data is None:
-                    continue
                 algorithm_name = os.path.basename(os.path.dirname(config_file))
                 if point_type in config_data:
                     configs[algorithm_name] = config_data[point_type]
