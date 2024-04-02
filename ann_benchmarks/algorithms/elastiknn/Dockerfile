@@ -13,13 +13,13 @@ WORKDIR /home/elasticsearch
 USER elasticsearch
 
 # Install elasticsearch.
-RUN curl -o elasticsearch.tar.gz https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.6.2-linux-x86_64.tar.gz
+RUN curl -o elasticsearch.tar.gz https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.12.2-linux-x86_64.tar.gz
 RUN tar xzf elasticsearch.tar.gz
 RUN mv elasticsearch-* elasticsearch && rm elasticsearch.tar.gz
 
 # Install plugin.
 RUN /home/elasticsearch/elasticsearch/bin/elasticsearch-plugin install --batch \
-    https://github.com/alexklibisz/elastiknn/releases/download/8.6.2.0/elastiknn-8.6.2.0.zip
+    https://github.com/alexklibisz/elastiknn/releases/download/8.12.2.1/elastiknn-8.12.2.1.zip
 
 # Configuration
 # Backup the original configurations, which can be useful for comparing.
