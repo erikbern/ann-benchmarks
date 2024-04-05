@@ -29,6 +29,7 @@ jobs:
       matrix:
         dataset: [random-xs-20-angular]
         library:
+          - aerospike
           - annoy
           - balltree
           - bruteforce

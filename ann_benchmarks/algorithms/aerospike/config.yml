@@ -1,0 +1,26 @@
+float:
+  any:
+  - base_args: ['@metric',  '@dimension']
+    constructor: Aerospike
+    disabled: false
+    docker_tag: ann-benchmarks-aerospike
+    module: ann_benchmarks.algorithms.aerospike
+    name: aerospike
+    run_groups:
+      cosine:
+        args: [
+          [cosine], #Idx Type
+          [{m: 8, efConstruction: 64, ef: 8},
+            {m: 16, efConstruction: 128, ef: 8}],
+          #  {m: 24, efConstruction: 256, ef: 8},
+          #  {m: 32, efConstruction: 512, ef: 8}], #HnswParams for each run
+          [True], #Unique Index Name (optional, default True). The created index name is based on Idx Type, Dims, M, EF_const, and EF. If false, only Idx Type
+          [False] #True to Drop Idx and Re-Populate, optional default true
+          #[True] #enable host Ping test, optional default false          
+        ]      
+        query_args: [ #Query HnswSearchParams, e.g., [{ef: 3}], optional
+          [null, #Uses default
+            {ef: 16},
+            {ef: 24},
+            {ef: 32}]  
+        ]
