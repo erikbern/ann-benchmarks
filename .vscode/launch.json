@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: ann-benchmarks-aerospike",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/run.py",
+            "cwd": "${workspaceFolder}",
+            "args": ["--docker-tag", "ann-benchmarks-aerospike",
+                     "--max-n-algorithms", "4",
+                     "--runs", "1",
+                     "--dataset", "random-xs-20-angular",
+                     "--local",
+                     "--force",
+                     "--timeout", "300"],
+            "console": "integratedTerminal"
+        }
+    ]
+}
