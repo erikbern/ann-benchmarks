@@ -9,10 +9,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
 RUN /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
 RUN apt-get install -y --no-install-recommends postgresql-16 postgresql-server-dev-16
 RUN sh -c 'echo "local all all trust" > /etc/postgresql/16/main/pg_hba.conf'
-RUN cd /tmp/pgvector && \
-	make clean && \
-	make OPTFLAGS="-march=native -mprefer-vector-width=512" && \
-	make install
+
+# Dynamically set OPTFLAGS based on the architecture
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "aarch64" ]; then \
+        OPTFLAGS="-march=native -msve-vector-bits=512"; \
+    elif [ "$ARCH" = "x86_64" ]; then \
+        OPTFLAGS="-march=native -mprefer-vector-width=512"; \
+    else \
+        OPTFLAGS="-march=native"; \
+    fi && \
+    cd /tmp/pgvector && \
+    make clean && \
+    make OPTFLAGS="$OPTFLAGS" && \
+    make install
 
 USER postgres
 RUN service postgresql start && \
