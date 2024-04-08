@@ -27,7 +27,7 @@ class Metric(NamedTuple):
 
 metrics = {
     "hamming": Metric(
-        distance=lambda a, b: np.sum(a.astype(np.bool_) ^ b.astype(np.bool_)),
+        distance=lambda a, b: np.mean(a.astype(np.bool_) ^ b.astype(np.bool_)),
         distance_valid=lambda a: True
     ),
     "jaccard": Metric(
