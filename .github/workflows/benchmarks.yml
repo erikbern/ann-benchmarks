@@ -54,6 +54,7 @@ jobs:
           - panng_ngt
           - pg_embedding
           - pgvector
+          - pgvecto_rs
           - pynndescent
           - redisearch
           - qdrant
