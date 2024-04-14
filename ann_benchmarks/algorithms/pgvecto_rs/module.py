@@ -53,10 +53,10 @@ class PGVectoRS(BaseANN):
 
         if metric == "angular":
             self.query_sql = "SELECT id FROM items ORDER BY embedding <=> %s LIMIT %s"
-            self.index_sql = "CREATE INDEX ON items USING vectors (embedding vector_cos_ops)"
+            self.index_sql = f"CREATE INDEX ON items USING vectors (embedding vector_cos_ops) WITH (options = $$[indexing.hnsw]\nm = {self.m}\nef_construction = {self.ef_construction}$$)"
         elif metric == "euclidean":
             self.query_sql = "SELECT id FROM items ORDER BY embedding <-> %s LIMIT %s"
-            self.index_sql = "CREATE INDEX ON items USING vectors (embedding vector_l2_ops)"
+            self.index_sql = "CREATE INDEX ON items USING vectors (embedding vector_l2_ops) WITH (options = $$[indexing.hnsw]\nm = {self.m}\nef_construction = {self.ef_construction}$$)"
         else:
             raise RuntimeError(f"unknown metric {metric}")
 
