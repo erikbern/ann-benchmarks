@@ -1,0 +1,17 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: PGVectoRS
+    disabled: false
+    docker_tag: ann-benchmarks-pgvecto_rs
+    module: ann_benchmarks.algorithms.pgvecto_rs
+    name: pgvecto_rs
+    run_groups:
+      M-16:
+        arg_groups: [{M: 16, efConstruction: 200}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      M-24:
+        arg_groups: [{M: 24, efConstruction: 200}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
