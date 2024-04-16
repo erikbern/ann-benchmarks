@@ -5,7 +5,7 @@ float:
     disabled: false
     docker_tag: ann-benchmarks-pgvector
     module: ann_benchmarks.algorithms.pgvector
-    name: pgvector
+    name: pgvector_hnsw
     run_groups:
       M-16:
         arg_groups: [{M: 16, efConstruction: 200}]
@@ -15,3 +15,12 @@ float:
         arg_groups: [{M: 24, efConstruction: 200}]
         args: {}
         query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+  - base_args: ['@metric']
+    constructor: PGVectorIVF
+    disabled: false
+    docker_tag: ann-benchmarks-pgvector
+    module: ann_benchmarks.algorithms.pgvector
+    name: pgvector_ivf
+    run_groups:
+      base:
+        args: [[32, 64, 128, 256, 512, 1024]]
