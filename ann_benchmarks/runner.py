@@ -152,8 +152,8 @@ def load_and_transform_dataset(dataset_name: str) -> Tuple[
         Tuple: Transformed datasets.
     """
     D, dimension = get_dataset(dataset_name)
-    X_train = numpy.array(D["train"])
-    X_test = numpy.array(D["test"])
+    X_train = numpy.asarray(D["train"])
+    X_test = numpy.asarray(D["test"])
     distance = D.attrs["distance"]
 
     print(f"Got a train set of size ({X_train.shape[0]} * {dimension})")
