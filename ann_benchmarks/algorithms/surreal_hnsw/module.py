@@ -84,7 +84,7 @@ class SurrealHnsw(BaseANN):
        
     def query(self, v, n):
         v = v.tolist()
-        j = self._checked_sql(f"SELECT id FROM items WHERE r <{n},{self._efs}> {v};")
+        j = self._checked_sql(f"SELECT id FROM items WHERE r <|{n},{self._efs}|> {v};")
         items = []
         for item in j[0]['result']:
             id = item['id']

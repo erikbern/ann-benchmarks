@@ -78,7 +78,7 @@ class SurrealBruteForce(BaseANN):
             
     def query(self, v, n):
         v = v.tolist()
-        j = self._checked_sql(f"SELECT id FROM items WHERE r <{n},{self._metric}> {v} {self._parallel};")
+        j = self._checked_sql(f"SELECT id FROM items WHERE r <|{n},{self._metric}|> {v} {self._parallel};")
         items = []
         for item in j[0]['result']:
             id = item['id']
