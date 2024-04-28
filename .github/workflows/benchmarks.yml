@@ -38,6 +38,7 @@ jobs:
           - dolphinnpy
           - elasticsearch
           - elastiknn
+          - expann
           - faiss
           - flann
           - glass

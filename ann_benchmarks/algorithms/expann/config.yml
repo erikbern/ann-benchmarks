@@ -1,0 +1,129 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: ExpAnnWrapper
+    disabled: false
+    docker_tag: ann-benchmarks-expann
+    module: ann_benchmarks.algorithms.expann
+    name: expann
+    run_groups:
+      rg20_10:
+        arg_groups: [{M: 20, ef_construction: 500, ortho_count: 1, prune_overflow: 0, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg20_11:
+        arg_groups: [{M: 20, ef_construction: 500, ortho_count: 1, prune_overflow: 1, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg20_13:
+        arg_groups: [{M: 20, ef_construction: 500, ortho_count: 1, prune_overflow: 3, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg20_00:
+        arg_groups: [{M: 20, ef_construction: 500, ortho_count: 1, prune_overflow: 0, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg20_01:
+        arg_groups: [{M: 20, ef_construction: 500, ortho_count: 1, prune_overflow: 1, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg20_03:
+        arg_groups: [{M: 20, ef_construction: 500, ortho_count: 1, prune_overflow: 3, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg40_10:
+        arg_groups: [{M: 40, ef_construction: 500, ortho_count: 1, prune_overflow: 0, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg40_11:
+        arg_groups: [{M: 40, ef_construction: 500, ortho_count: 1, prune_overflow: 1, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg40_13:
+        arg_groups: [{M: 40, ef_construction: 500, ortho_count: 1, prune_overflow: 3, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg40_00:
+        arg_groups: [{M: 40, ef_construction: 500, ortho_count: 1, prune_overflow: 0, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg40_01:
+        arg_groups: [{M: 40, ef_construction: 500, ortho_count: 1, prune_overflow: 1, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg40_03:
+        arg_groups: [{M: 40, ef_construction: 500, ortho_count: 1, prune_overflow: 3, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg60_10:
+        arg_groups: [{M: 60, ef_construction: 500, ortho_count: 1, prune_overflow: 0, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg60_11:
+        arg_groups: [{M: 60, ef_construction: 500, ortho_count: 1, prune_overflow: 1, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg60_13:
+        arg_groups: [{M: 60, ef_construction: 500, ortho_count: 1, prune_overflow: 3, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg60_00:
+        arg_groups: [{M: 60, ef_construction: 500, ortho_count: 1, prune_overflow: 0, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg60_01:
+        arg_groups: [{M: 60, ef_construction: 500, ortho_count: 1, prune_overflow: 1, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg60_03:
+        arg_groups: [{M: 60, ef_construction: 500, ortho_count: 1, prune_overflow: 3, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg80_10:
+        arg_groups: [{M: 80, ef_construction: 500, ortho_count: 1, prune_overflow: 0, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg80_11:
+        arg_groups: [{M: 80, ef_construction: 500, ortho_count: 1, prune_overflow: 1, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg80_13:
+        arg_groups: [{M: 80, ef_construction: 500, ortho_count: 1, prune_overflow: 3, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg80_00:
+        arg_groups: [{M: 80, ef_construction: 500, ortho_count: 1, prune_overflow: 0, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg80_01:
+        arg_groups: [{M: 80, ef_construction: 500, ortho_count: 1, prune_overflow: 1, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg80_03:
+        arg_groups: [{M: 80, ef_construction: 500, ortho_count: 1, prune_overflow: 3, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg150_10:
+        arg_groups: [{M: 150, ef_construction: 500, ortho_count: 1, prune_overflow: 0, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg150_11:
+        arg_groups: [{M: 150, ef_construction: 500, ortho_count: 1, prune_overflow: 1, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg150_13:
+        arg_groups: [{M: 150, ef_construction: 500, ortho_count: 1, prune_overflow: 3, use_compression: True}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg150_00:
+        arg_groups: [{M: 150, ef_construction: 500, ortho_count: 1, prune_overflow: 0, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg150_01:
+        arg_groups: [{M: 150, ef_construction: 500, ortho_count: 1, prune_overflow: 1, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
+      rg150_03:
+        arg_groups: [{M: 150, ef_construction: 500, ortho_count: 1, prune_overflow: 3, use_compression: False}]
+        args: {}
+        query_args: [[10, 20, 30, 40, 50, 80, 120]]
