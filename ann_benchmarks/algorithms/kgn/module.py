@@ -159,8 +159,5 @@ class Kgn(BaseANN):
     def get_prepared_query_results(self):
         return self.res
 
-    def get_memory_usage(self):
-        return psutil.Process().memory_info().rss / 1024 / 1024
-
     def freeIndex(self):
         del self.searcher
