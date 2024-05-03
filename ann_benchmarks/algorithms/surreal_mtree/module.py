@@ -7,10 +7,12 @@ from time import sleep
 
 class SurrealMtree(BaseANN):        
 
-    def __init__(self, metric, path = 'memory', capacity = 40):
+    def __init__(self, metric, path = 'memory', capacity = 40, doc_ids_cache = 100, mtree_cache = 100):
         self._metric = metric
         self._path = path
         self._capacity = capacity
+        self._doc_ids_cache = doc_ids_cache
+        self._mtree_cache = mtree_cache
         subprocess.run(f"surreal start --allow-all -u ann -p ann -b 127.0.0.1:8000 {path}  &", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
         print("wait for the server to be up...")
         sleep(5)
@@ -30,14 +32,16 @@ class SurrealMtree(BaseANN):
         return r
 
     def _create_index(self, dim):
-        print(f"Creating index - capacity: {self._capacity} - dim: {dim}")
         if self._metric == "euclidean":
             dist = 'EUCLIDEAN'
         elif self._metric == 'manhattan':
             dist = 'MANHATTAN'
         else:
             raise RuntimeError(f"unknown metric {self.metric}")
-        self._checked_sql(f"DEFINE INDEX ix ON items FIELDS r MTREE DIMENSION {dim} DIST {dist} TYPE F32 CAPACITY {self._capacity} DOC_IDS_CACHE 0 MTREE_CACHE 0;")
+        sql = "REMOVE INDEX IF EXISTS ix ON items;\nREMOVE TABLE IF EXISTS items;\n"
+        sql += f"DEFINE INDEX ix ON items FIELDS r MTREE DIMENSION {dim} DIST {dist} TYPE F32 CAPACITY {self._capacity} DOC_IDS_CACHE {self._doc_ids_cache} MTREE_CACHE {self._mtree_cache};"
+        print(f"\r{sql}")
+        self._checked_sql(sql)
 
 
     def _ingest(self, dim, X): 
@@ -85,7 +89,7 @@ class SurrealMtree(BaseANN):
         return items
 
     def __str__(self):
-        return f"SurrealMtree(path={self._path}, capacity={self._capacity})"
+        return f"SurrealMtree(path={self._path}, capacity={self._capacity}, doc_ids_cache={self._doc_ids_cache}, mtree_cache={self._mtree_cache})"
 
     def done(self) -> None:
         self._session.close()

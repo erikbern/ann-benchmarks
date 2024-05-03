@@ -7,5 +7,15 @@ float:
       module: ann_benchmarks.algorithms.surreal_mtree
       name: surreal_mtree
       run_groups:
-        memory:
-          args: ['memory', [40]]
+        memory_large_cache:
+          args: ['memory', [20, 40, 80], 5000, 5000]
+        memory_full_cache:
+          args: ['memory', [20, 40, 80], 0, 0]
+        memory_small_cache:
+          args: ['memory', [20, 40, 80], 10, 10]
+        disk_large_cache:
+          args: ['file:mydata/ann.db', [40], 5000, 5000]
+        disk_full_cache:
+          args: ['file:mydata/ann.db', [40], 0, 0]
+        disk_small_cache:
+          args: ['file:mydata/ann.db', [40], 10, 10]
