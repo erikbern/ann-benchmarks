@@ -18,11 +18,11 @@ def test_hamming():
 
     p = numpy.array([1, 1, 0, 0], dtype=numpy.bool_)
     q = numpy.array([1, 0, 0, 1], dtype=numpy.bool_)
-    assert dist(p, q) == pytest.approx(2)
+    assert dist(p, q) == pytest.approx(0.5)
 
     p = numpy.array([1, 1, 0, 0])
     q = numpy.array([1, 0, 0, 1])
-    assert dist(p, q) == pytest.approx(2)
+    assert dist(p, q) == pytest.approx(0.5)
 
 
 def test_angular():
