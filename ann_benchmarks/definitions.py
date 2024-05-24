@@ -341,11 +341,11 @@ def create_definitions_from_algorithm(name: str, algo: Dict[str, Any], dimension
     return definitions
 
 def get_definitions(
-        dimension: int,
-        point_type: str = "float",
-        distance_metric: str = "euclidean",
-        count: int = 10,
-        base_dir: str = "ann_benchmarks/algorithms"
+    dimension: int,
+    point_type: str = "float",
+    distance_metric: str = "euclidean",
+    count: int = 10,
+    base_dir: str = "ann_benchmarks/algorithms"
 ) -> List[Definition]:
     algorithm_definitions = _get_algorithm_definitions(point_type=point_type,
                                                        distance_metric=distance_metric,
