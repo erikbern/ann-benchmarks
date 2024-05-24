@@ -159,7 +159,7 @@ def _get_definitions(base_dir: str = "ann_benchmarks/algorithms") -> Dict[str, D
                 print(f"Error loading YAML from {config_file}: {e}")
     return configs
 
-def _get_algorithm_definitions(point_type: str, distance_metric: str) -> Dict[str, Dict[str, Any]]:
+def _get_algorithm_definitions(point_type: str, distance_metric: str, base_dir: str = "ann_benchmarks/algorithms") -> Dict[str, Dict[str, Any]]:
     """Get algorithm definitions for a specific point type and distance metric.
     
     A specific algorithm folder can have multiple algorithm definitions for a given point type and 
@@ -188,7 +188,7 @@ def _get_algorithm_definitions(point_type: str, distance_metric: str) -> Dict[st
     }
     ```
     """
-    configs = load_configs(point_type)
+    configs = load_configs(point_type, base_dir)
     definitions = {}
 
     # param `_` is filename, not specific name
@@ -341,12 +341,16 @@ def create_definitions_from_algorithm(name: str, algo: Dict[str, Any], dimension
     return definitions
 
 def get_definitions(
-    dimension: int, 
-    point_type: str = "float", 
-    distance_metric: str = "euclidean", 
-    count: int = 10
+    dimension: int,
+    point_type: str = "float",
+    distance_metric: str = "euclidean",
+    count: int = 10,
+    base_dir: str = "ann_benchmarks/algorithms"
 ) -> List[Definition]:
-    algorithm_definitions = _get_algorithm_definitions(point_type=point_type,  distance_metric=distance_metric)
+    algorithm_definitions = _get_algorithm_definitions(point_type=point_type,
+                                                       distance_metric=distance_metric,
+                                                       base_dir=base_dir
+                                                       )
 
     definitions: List[Definition] = []
 
