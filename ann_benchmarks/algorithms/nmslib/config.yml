@@ -130,7 +130,7 @@ float:
   any:
   - base_args: ['@metric', vptree]
     constructor: NmslibReuseIndex
-    disabled: false
+    disabled: true
     docker_tag: ann-benchmarks-nmslib
     module: ann_benchmarks.algorithms.nmslib
     name: BallTree(nmslib)

@@ -33,6 +33,7 @@ jobs:
           - balltree
           - bruteforce
           - ckdtree
+          - descartes
           - diskann
           - dolphinnpy
           - elasticsearch
@@ -45,12 +46,15 @@ jobs:
           - luceneknn
           - milvus
           - mrpt
+          - nndescent
           - n2
           - nmslib
           - onng_ngt
           - opensearchknn
           - panng_ngt
+          - pg_embedding
           - pgvector
+          - pgvecto_rs
           - pynndescent
           - redisearch
           - qdrant
@@ -62,9 +66,10 @@ jobs:
           - vald
           - vearch
           - vespa
+          - voyager
           - weaviate
         include:
-          - library: pynndescent 
+          - library: pynndescent
             dataset: random-xs-16-hamming
           - library: datasketch
             dataset: random-s-jaccard
@@ -88,7 +93,7 @@ jobs:
 
     - name: Build Library Docker Image
       run: python3 install.py
-    
+
     - name: Run the benchmark
       run: |
         python3 run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 3 --runs 2 --dataset $DATASET --run-disabled --timeout 300

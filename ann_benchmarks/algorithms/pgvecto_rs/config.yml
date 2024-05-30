@@ -1,11 +1,11 @@
 float:
   any:
   - base_args: ['@metric']
-    constructor: PGVector
+    constructor: PGVectoRS
     disabled: false
-    docker_tag: ann-benchmarks-pgvector
-    module: ann_benchmarks.algorithms.pgvector
-    name: pgvector
+    docker_tag: ann-benchmarks-pgvecto_rs
+    module: ann_benchmarks.algorithms.pgvecto_rs
+    name: pgvecto_rs
     run_groups:
       M-16:
         arg_groups: [{M: 16, efConstruction: 200}]

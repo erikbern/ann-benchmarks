@@ -1,11 +1,11 @@
 float:
   any:
   - base_args: ['@metric']
-    constructor: FaissHNSW
+    constructor: PGEmbedding
     disabled: false
-    docker_tag: ann-benchmarks-faiss_hnsw
-    module: ann_benchmarks.algorithms.faiss_hnsw
-    name: hnsw(faiss)
+    docker_tag: ann-benchmarks-pg_embedding
+    module: ann_benchmarks.algorithms.pg_embedding
+    name: pg_embedding
     run_groups:
       M-12:
         arg_groups: [{M: 12, efConstruction: 500}]

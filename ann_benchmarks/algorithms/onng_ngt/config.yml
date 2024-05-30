@@ -2,7 +2,7 @@ float:
   any:
   - base_args: ['@metric', Float, 0.1]
     constructor: ONNG
-    disabled: false
+    disabled: true
     docker_tag: ann-benchmarks-onng_ngt
     module: ann_benchmarks.algorithms.onng_ngt
     name: NGT-onng
