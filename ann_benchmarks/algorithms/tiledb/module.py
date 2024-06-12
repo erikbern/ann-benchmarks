@@ -50,39 +50,17 @@ class TileDBIVFFlat(BaseANN):
         return self.res
 
     def fit(self, X):
-        source_uri = "/tmp/data"
         array_uri = "/tmp/array"
-        if os.path.isfile(source_uri):
-            os.remove(source_uri)
         if os.path.isfile(array_uri):
             os.remove(array_uri)
-        f = open(source_uri, "wb")
-        np.array(X.shape, dtype="uint32").tofile(f)
-        X.tofile(f)
-        f.close()
 
-        # TODO: Next time we run this, just use the numpy arrays directly for ingestion.
-        if X.dtype == "uint8":
-            source_type = "U8BIN"
-        elif X.dtype == "float32":
-            source_type = "F32BIN"
-        maxtrain = min(50 * self._n_list, X.shape[0])
-        # TODO: Next time we run this, remove size, training_sample_size, partitions, and 
-        # input_vectors_per_work_item and use the defaults instead.
         self.index = ingest(
             index_type="IVF_FLAT",
             index_uri=array_uri,
-            source_uri=source_uri,
-            source_type=source_type,
-            size=X.shape[0],
-            training_sample_size=maxtrain,
+            input_vectors=X,
             partitions=self._n_list,
-            input_vectors_per_work_item=100000000,
-            mode=Mode.LOCAL
         )
-        # TODO: Next time we run this, remove dtype and memory_budget as these are the defaults.
-        # memory_budget=-1 will load the data into main memory.
-        self.index = IVFFlatIndex(uri=array_uri, dtype=X.dtype, memory_budget=-1)
+        self.index = IVFFlatIndex(uri=array_uri)
 
     def set_query_arguments(self, n_probe):
         self._n_probe = n_probe
