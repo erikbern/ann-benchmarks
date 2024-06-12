@@ -8,8 +8,8 @@ float:
     name: tiledb-ivf-flat
     run_groups:
       IVFFLAT:
-        args: 
-          nlist: [[512, 1024, 2048, 4096, 8192]]
+        # n_list:
+        args: [[512, 1024, 2048, 4096, 8192]]
         # n_probe:
         query_args: [[1, 5, 10, 50, 100, 200]]
 
