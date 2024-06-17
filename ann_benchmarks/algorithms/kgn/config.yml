@@ -1,0 +1,39 @@
+float:
+  euclidean:
+    - base_args: ['@metric','@dimension']
+      constructor: Kgn
+      disabled: false
+      docker_tag: ann-benchmarks-kgn
+      module: ann_benchmarks.algorithms.kgn
+      name: kgn
+      run_groups:
+        Kgn:
+            args: 
+              L: 100
+              R: 50
+              index_type : "KGN"
+              optimize : true
+              batch : false
+              kmeans_ep: 0
+              kmeans_type: 0
+              level: [1,2]
+            query_args: [[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115]]
+  angular:
+    - base_args: ['@metric','@dimension']
+      constructor: Kgn
+      disabled: false
+      docker_tag: ann-benchmarks-kgn
+      module: ann_benchmarks.algorithms.kgn
+      name: kgn
+      run_groups:
+        Kgn:
+            args: 
+              L: 500
+              R: 96
+              index_type : "NSG"
+              optimize : true
+              batch : false
+              kmeans_ep: 0
+              kmeans_type: 0
+              level: [1,2]
+            query_args: [[10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 200, 300, 400, 500]]
