@@ -1,0 +1,43 @@
+float:
+  euclidean:
+  - base_args: ['@metric']
+    constructor: ParlayANN
+    disabled: false
+    docker_tag: ann-benchmarks-parlayann
+    module: ann_benchmarks.algorithms.parlayann
+    name: parlayann
+    run_groups:
+      parlay_80:
+        args: [{alpha: 1.15, R: 80, L: 160, two_pass: True}]
+        query_args: [[{Q: 20}, {Q: 22}, {Q: 25}, {Q: 30}, {Q: 40}, {Q: 50}, {Q: 60}, {Q: 80}, {Q: 100}, {Q: 125}, {Q: 150}, {Q: 200}, {Q: 300}, {Q: 400}, {Q: 600}, {Q: 800}]]
+      parlay_64:
+        args: [{alpha: 1.1, R: 64, L: 128, two_pass: True}]
+        query_args: [[{limit: 10}, {limit: 11}, {limit: 12}, {limit: 13}, {limit: 14}, {limit: 15}, {limit: 16}, {limit: 18}, {limit: 20}, {limit: 22}, {Q: 10}, {Q: 11}, {Q: 12}, {Q: 14}, {Q: 16}, {Q: 18}, {Q: 20}, {Q: 22}, {Q: 25}, {Q: 30}, {Q: 40}, {Q: 50}, {Q: 60}, {Q: 80}, {Q: 100}, {Q: 125}, {Q: 150}, {Q: 200}, {Q: 300}, {Q: 400}, {Q: 600}, {Q: 800}]]
+      parlay_40:
+        args: [{alpha: 1.08, R: 40, L: 80, two_pass: True}]
+        query_args: [[{limit: 10}, {limit: 11}, {limit: 12}, {limit: 13}, {limit: 14}, {limit: 15}, {limit: 16}, {limit: 18}, {limit: 20}, {limit: 22}, {Q: 10}, {Q: 11}, {Q: 12}, {Q: 14}, {Q: 16}, {Q: 18}, {Q: 20}]]
+      parlay_32_05:  
+        args: [{alpha: 1.05, R: 32, L: 64, two_pass: True}]
+        query_args: [[{limit: 10}, {limit: 11}, {limit: 12}, {limit: 13}, {limit: 14}, {limit: 15}, {limit: 16}, {limit: 18}, {limit: 20}, {limit: 22}, {Q: 10}, {Q: 11}, {Q: 12}, {Q: 14}, {Q: 16}, {Q: 18}, {Q: 20}]]
+  angular:
+  - base_args: ['@metric']
+    constructor: ParlayANN
+    disabled: false
+    docker_tag: ann-benchmarks-parlayann
+    module: ann_benchmarks.algorithms.parlayann
+    name: parlayann
+    run_groups:
+      parlay_130:
+        args: [{alpha: .85, R: 130, L: 260, two_pass: True}]
+        query_args: [[{Q: 20}, {Q: 22}, {Q: 25}, {Q: 30}, {Q: 40}, {Q: 50}, {Q: 60}, {Q: 80}, {Q: 100}, {Q: 125}, {Q: 150}, {Q: 200}, {Q: 400}, {Q: 800}]]
+      parlay_100:
+        args: [{alpha: .85, R: 100, L: 200, two_pass: True}]
+        query_args: [[{limit: 10}, {limit: 11}, {limit: 12}, {limit: 13}, {limit: 14}, {limit: 15}, {limit: 16}, {limit: 18}, {limit: 20}, {limit: 22}, {limit: 25}, {limit: 30}, {Q: 10}, {Q: 11}, {Q: 12}, {Q: 13}, {Q: 14}, {Q: 15}, {Q: 16}, {Q: 17}, {Q: 18}, {Q: 20}, {Q: 22}, {Q: 25}, {Q: 30}, {Q: 40}, {Q: 50}, {Q: 60}, {Q: 80}, {Q: 100}, {Q: 125}, {Q: 150}, {Q: 200}, {Q: 400}, {Q: 800}]]
+      parlay_80:
+        args: [{alpha: .90, R: 80, L: 160, two_pass: True}]
+        query_args: [[{limit: 10}, {limit: 11}, {limit: 12}, {limit: 13}, {limit: 14}, {limit: 15}, {limit: 16}, {limit: 18}, {limit: 20}, {limit: 22}, {limit: 25}, {limit: 30}, {Q: 10}, {Q: 11}, {Q: 12}, {Q: 13}, {Q: 14}, {Q: 15}, {Q: 16}, {Q: 17}, {Q: 18}, {Q: 20}]]
+      parlay_50:
+        args: [{alpha: .95, R: 50, L: 100, two_pass: True}]
+        query_args: [[{limit: 10}, {limit: 11}, {limit: 12}, {limit: 13}, {limit: 14}, {limit: 15}, {limit: 16}, {limit: 18}, {limit: 20}, {limit: 22}, {limit: 25}, {limit: 30}, {Q: 10}, {Q: 11}, {Q: 12}, {Q: 14}, {Q: 16}, {Q: 18}, {Q: 20}]]
+
+

@@ -54,6 +54,7 @@ jobs:
           - onng_ngt
           - opensearchknn
           - panng_ngt
+          - parlayann
           - pg_embedding
           - pgvector
           - pgvecto_rs
