@@ -1,0 +1,95 @@
+float:
+  any:
+  - base_args: ['@metric', 1]
+    constructor: PGDiskANN
+    disabled: false
+    docker_tag: ann-benchmarks-pgvectorscale
+    module: ann_benchmarks.algorithms.pgvectorscale
+    name: pgvectorscale1
+    run_groups:
+      N-50:
+        arg_groups: [{num_neighbors: 50, search_list_size: 100, max_alpha: 1.2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      N-100:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1.2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-1.00:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-1.20:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1.2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-1.50:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1.5}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-2.00:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+  - base_args: ['@metric', 2]
+    constructor: PGDiskANN
+    disabled: false
+    docker_tag: ann-benchmarks-pgvectorscale
+    module: ann_benchmarks.algorithms.pgvectorscale
+    name: pgvectorscale2
+    run_groups:
+      N-50:
+        arg_groups: [{num_neighbors: 50, search_list_size: 100, max_alpha: 1.2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      N-100:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1.2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-1.00:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-1.20:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1.2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-1.50:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1.5}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-2.00:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+  - base_args: ['@metric', 4]
+    constructor: PGDiskANN
+    disabled: false
+    docker_tag: ann-benchmarks-pgvectorscale
+    module: ann_benchmarks.algorithms.pgvectorscale
+    name: pgvectorscale4
+    run_groups:
+      N-50:
+        arg_groups: [{num_neighbors: 50, search_list_size: 100, max_alpha: 1.2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      N-100:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1.2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-1.00:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-1.20:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1.2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-1.50:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 1.5}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
+      ALPHA-2.00:
+        arg_groups: [{num_neighbors: 100, search_list_size: 100, max_alpha: 2}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 800]]
