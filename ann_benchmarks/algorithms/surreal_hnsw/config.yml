@@ -1,0 +1,13 @@
+float:
+  euclidean:
+    - base_args: ['@metric']
+      constructor: SurrealHnsw
+      disabled: false
+      docker_tag: ann-benchmarks-surreal_hnsw
+      module: ann_benchmarks.algorithms.surreal_hnsw
+      name: surreal_hnsw
+      run_groups:
+        M-24-500:
+          arg_groups: [{M: 24, efConstruction: 150}]
+          args: {}
+          query_args: [[5, 10, 20, 40, 80]]
