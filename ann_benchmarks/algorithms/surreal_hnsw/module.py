@@ -26,8 +26,8 @@ class SurrealHnsw(BaseANN):
         self._session = requests.Session()
         self._session.auth = ('ann', 'ann')
         headers={
-            "NS": 'ann',
-            "DB": 'ann',
+            "surreal-ns": 'ann',
+            "surreal-db": 'ann',
             "Accept": "application/json",
         }
         self._session.headers.update(headers)
