@@ -18,5 +18,5 @@ float:
     name: elastiknn-l2lsh
     run_groups:
       elastiknn-l2lsh:
-        args: [[100], [4], [1024, 2048]]
-        query_args: [[500, 1000], [0, 3]]
+        args: [[175], [7], [3900]]
+        query_args: [[100,500,1000], [0]]
