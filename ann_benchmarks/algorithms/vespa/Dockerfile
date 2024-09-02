@@ -9,7 +9,7 @@ RUN dnf -y install epel-release && \
         python3.11-devel \
         python3.11-pip \
         python3.11-setuptools && \
-    dnf -y copr enable @vespa/vespa epel-8-$(arch) && \
+    dnf config-manager --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo && \
     dnf -y install --enablerepo=powertools vespa-ann-benchmark
 
 WORKDIR /home/app
