@@ -13,13 +13,13 @@ WORKDIR /home/elasticsearch
 USER elasticsearch
 
 # Install elasticsearch.
-RUN curl -o elasticsearch.tar.gz https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.12.2-linux-x86_64.tar.gz
+RUN curl -o elasticsearch.tar.gz https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.15.0-linux-x86_64.tar.gz
 RUN tar xzf elasticsearch.tar.gz
 RUN mv elasticsearch-* elasticsearch && rm elasticsearch.tar.gz
 
 # Install plugin.
 RUN /home/elasticsearch/elasticsearch/bin/elasticsearch-plugin install --batch \
-    https://github.com/alexklibisz/elastiknn/releases/download/8.12.2.1/elastiknn-8.12.2.1.zip
+    https://github.com/alexklibisz/elastiknn/releases/download/8.15.0.1/elastiknn-8.15.0.1.zip
 
 # Configuration
 # Backup the original configurations, which can be useful for comparing.
@@ -66,10 +66,7 @@ USER root
 WORKDIR /home/app
 
 # Install python client.
-# Using no-deps because scipy (1.7.0) is incompatible with the container version of Python (3.6).
-# Then we need to install the deps manually.
-RUN python3 -m pip install --no-deps elastiknn-client==8.6.2.0
-RUN python3 -m pip install elasticsearch==8.6.2 dataclasses-json==0.3.7 tqdm==4.61.1
+RUN python3 -m pip install elastiknn-client==8.15.0.1
 
 # Custom entrypoint that also starts the Elasticsearch server in the background
 RUN echo '\
