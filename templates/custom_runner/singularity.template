@@ -1,0 +1,13 @@
+# example singularity run
+# docker images must be converted to singularity containers
+# e.g., `docker save ann-benchmarks-$algo -o ann-benchmarks-$algo.tar, and
+# `singularity build ann-benchmarks-$algo.sif docker-archive://ann-benchmarks-$algo.tar` 
+
+# need to provide $algo, $container, $ds, $definition, nothing else is exposed.
+
+CONTAINER=$container.sif
+if [ ! -f "$CONTAINER" ]; then
+    echo "$CONTAINER does not exist"
+    exit 1
+fi
+singularity run -B /run/shm:/run/shm $CONTAINER python3 -u run.py --dataset $ds --algorithm $algo --runs 1 --local --definition $definition $additional

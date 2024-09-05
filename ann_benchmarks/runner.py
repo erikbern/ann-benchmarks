@@ -2,6 +2,8 @@ import argparse
 import json
 import logging
 import os
+import re
+from string import Template
 import threading
 import time
 from typing import Dict, Optional, Tuple, List, Union
@@ -19,7 +21,7 @@ from .distance import dataset_transform, metrics
 from .results import store_results
 
 
-def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.array, distance: str, count: int, 
+def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.array, distance: str, count: int,
                          run_count: int, batch: bool) -> Tuple[dict, list]:
     """Run a search query using the provided algorithm and report the results.
 
@@ -53,7 +55,7 @@ def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.arra
 
             Returns:
                 List[Tuple[float, List[Tuple[int, float]]]]: Tuple containing
-                    1. Total time taken for each query 
+                    1. Total time taken for each query
                     2. Result pairs consisting of (point index, distance to candidate data )
             """
             if prepared_queries:
@@ -91,7 +93,7 @@ def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.arra
 
             Returns:
                 List[Tuple[float, List[Tuple[int, float]]]]: List of tuples, each containing
-                    1. Total time taken for each query 
+                    1. Total time taken for each query
                     2. Result pairs consisting of (point index, distance to candidate data )
             """
             # TODO: consider using a dataclass to represent return value.
@@ -226,7 +228,7 @@ function"""
             print(f"Running query argument group {pos} of {len(query_argument_groups)}...")
             if query_arguments:
                 algo.set_query_arguments(*query_arguments)
-            
+
             descriptor, results = run_individual_query(algo, X_train, X_test, distance, count, run_count, batch)
 
             descriptor.update({
@@ -240,8 +242,48 @@ function"""
     finally:
         algo.done()
 
+def run_custom(cmd_template: str, definition: str, algo: str, container_tag: str,
+               dataset_name: str, count: int, runs: int, batch: bool, force: bool) -> None:
+    """Run the algorithm benchmarking with a custom runner specified by `cmd_template`.
+
+    Args:
+        cmd_template (str): A templated custom runner string.
+        definition (str): The algorithm definition.
+        algo (str): The name of the algorithm.
+        container_tag (str): A reference to the original docker container.
+        dataset_name (str): The name of the dataset.
+        count (int): The number of results to return.
+        runs (int): The number of runs.
+        batch (bool): If true, runs in batch mode.
+        force (bool): If true, overwrite existing results.
+    """
+    template = Template(cmd_template)
+
+    additional_cmd = [
+        "--runs",
+        str(runs),
+        "--count",
+        str(count),
+    ]
+    if batch:
+        additional_cmd += ["--batch"]
+    if force:
+        additional_cmd += ["--force"]
+
+    additional_cmd = " ".join(additional_cmd)
+
+    cmd = template.safe_substitute(
+        additional=additional_cmd,
+        algo=re.escape(algo),
+        container=container_tag,
+        definition=definition,
+        ds=dataset_name,
+        )
+
+    os.system(cmd)
+
 def run_from_cmdline():
-    """Calls the function `run` using arguments from the command line. See `ArgumentParser` for 
+    """Calls the function `run` using arguments from the command line. See `ArgumentParser` for
     arguments, all run it with `--help`.
     """
     parser = argparse.ArgumentParser(
@@ -306,6 +348,9 @@ def run_docker(
     See `run_from_cmdline` for details on the args.
     """
     cmd = [
+        "python3",
+        "-u",
+        "run_algorithm.py",
         "--dataset",
         dataset,
         "--algorithm",
