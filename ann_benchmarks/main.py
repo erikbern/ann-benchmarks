@@ -48,7 +48,7 @@ def positive_int(input_str: str) -> int:
     return i
 
 
-def run_worker(cpu: int, args: argparse.Namespace, queue: multiprocessing.Queue) -> None:
+def run_worker(cpu: int, mem_limit: int, args: argparse.Namespace, queue: multiprocessing.Queue) -> None:
     """
     Executes the algorithm based on the provided parameters.
 
@@ -58,6 +58,7 @@ def run_worker(cpu: int, args: argparse.Namespace, queue: multiprocessing.Queue)
 
     Args:
         cpu (int): The CPU number to be used in the execution.
+        mem_limit (int): The memory to be used in the execution.
         args (argparse.Namespace): User provided arguments for running workers. 
         queue (multiprocessing.Queue): The multiprocessing queue that contains the algorithm definitions.
 
@@ -69,8 +70,6 @@ def run_worker(cpu: int, args: argparse.Namespace, queue: multiprocessing.Queue)
         if args.local:
             run(definition, args.dataset, args.count, args.runs, args.batch)
         else:
-            memory_margin = 500e6  # reserve some extra memory for misc stuff
-            mem_limit = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
             cpu_limit = str(cpu) if not args.batch else f"0-{multiprocessing.cpu_count() - 1}"
             
             run_docker(definition, args.dataset, args.count, args.runs, args.timeout, args.batch, cpu_limit, mem_limit)
@@ -252,8 +251,11 @@ def create_workers_and_execute(definitions: List[Definition], args: argparse.Nam
     for definition in definitions:
         task_queue.put(definition)
 
+    memory_margin = 500e6  # reserve some extra memory for misc stuff
+    mem_limit = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
+
     try:
-        workers = [multiprocessing.Process(target=run_worker, args=(i + 1, args, task_queue)) for i in range(args.parallelism)]
+        workers = [multiprocessing.Process(target=run_worker, args=(i + 1, mem_limit, args, task_queue)) for i in range(args.parallelism)]
         [worker.start() for worker in workers]
         [worker.join() for worker in workers]
     finally:
