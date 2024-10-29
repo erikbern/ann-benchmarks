@@ -1,0 +1,16 @@
+float:
+  any:
+  - base_args: ['@metric', '@dimension']
+    constructor: Vsag
+    disabled: false
+    docker_tag: ann-benchmarks-vsag
+    module: ann_benchmarks.algorithms.vsag
+    name: vsag
+    run_groups:
+      HNSW:
+        args:
+          M: [8, 12, 16, 24, 32, 36, 48, 64]
+          ef_construction: 300
+          use_int8: [4, 8]
+          rs: [0, 0.3, 0.5, 1]
+        query_args: [[10, 20, 30, 40, 60, 80, 120, 200, 400, 600, 800]]
