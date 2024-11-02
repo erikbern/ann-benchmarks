@@ -1,0 +1,17 @@
+float:
+  euclidean:
+  - base_args: ['@metric']
+    constructor: MariaDB
+    disabled: false
+    docker_tag: ann-benchmarks-mariadb
+    module: ann_benchmarks.algorithms.mariadb
+    name: mariadb
+    run_groups:
+      myisam:
+        arg_groups: [{M: [3, 4, 5, 6, 8, 16, 32, 48], engine: 'MyISAM'}]
+        args: {}
+        query_args: [[1, 5, 10, 20, 40, 60, 100]]
+      innodb:
+        arg_groups: [{M: [3, 4, 5, 6, 8, 16, 32, 48], engine: 'InnoDB'}]
+        args: {}
+        query_args: [[1, 5, 10, 20, 40, 60, 100]]
