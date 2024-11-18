@@ -213,7 +213,7 @@ def glove(out_fn: str, d: int) -> None:
         for line in z.open(z_fn):
             v = [float(x) for x in line.strip().split()[1:]]
             X.append(numpy.array(v))
-        X_train, X_test = train_test_split(X)
+        X_train, X_test = train_test_split(numpy.array(X))
         write_output(numpy.array(X_train), numpy.array(X_test), out_fn, "angular")
 
 
