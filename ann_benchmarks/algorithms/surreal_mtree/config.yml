@@ -16,6 +16,6 @@ float:
         # disk_large_cache:
         #   args: ['file:mydata/ann.db', [40], 5000, 5000]
         disk_full_cache:
-          args: ['file:mydata/ann.db', [40], 0, 0]
+          args: ['rocksdb:mydata/ann.db', [40], 0, 0]
         # disk_small_cache:
-        #   args: ['file:mydata/ann.db', [40], 10, 10]
+        #   args: ['rocksdb:mydata/ann.db', [40], 10, 10]

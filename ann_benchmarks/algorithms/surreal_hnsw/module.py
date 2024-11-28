@@ -20,7 +20,7 @@ class SurrealHnsw(BaseANN):
             raise RuntimeError(f"unknown metric {metric}")
         self._m = method_param['M']
         self._efc = method_param['efConstruction']
-        subprocess.run(f"surreal start --allow-all -u ann -p ann -b 127.0.0.1:8000 memory  &", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
+        subprocess.run(f"surreal start --allow-all -u ann -p ann -b 127.0.0.1:8000 rocksdb:mydata/ann.db  &", shell=True, check=True, stdout=sys.stdout, stderr=sys.stderr)
         print("wait for the server to be up...")
         sleep(5)
         self._session = requests.Session()
