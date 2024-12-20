@@ -569,6 +569,11 @@ def dbpedia_entities_openai_1M(out_fn, n = None):
 
     write_output(X_train, X_test, out_fn, "angular")
 
+def coco(out_fn: str, kind: str):
+    assert kind in ('t2i', 'i2i')
+    url = "https://github.com/fabiocarrara/str-encoders/releases/download/v0.1.3/coco-%s-512-angular.hdf5" % kind
+    download(url, out_fn)
+
 
 DATASETS: Dict[str, Callable[[str], None]] = {
     "deep-image-96-angular": deep_image,
@@ -598,6 +603,8 @@ DATASETS: Dict[str, Callable[[str], None]] = {
     "movielens1m-jaccard": movielens1m,
     "movielens10m-jaccard": movielens10m,
     "movielens20m-jaccard": movielens20m,
+    "coco-i2i-512-angular": lambda out_fn: coco(out_fn, "i2i"),
+    "coco-t2i-512-angular": lambda out_fn: coco(out_fn, "t2i"),
 }
 
 DATASETS.update({
