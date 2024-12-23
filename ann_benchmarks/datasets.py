@@ -1,11 +1,18 @@
 import os
 import random
 import tarfile
-from urllib.request import urlopen, urlretrieve
+from urllib.request import build_opener, install_opener, urlopen, urlretrieve
+import traceback
 
 import h5py
 import numpy
 from typing import Any, Callable, Dict, Tuple
+
+# Needed for Cloudflare's firewall
+opener = build_opener()
+opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+install_opener(opener)
+
 
 def download(source_url: str, destination_path: str) -> None:
     """
@@ -54,6 +61,7 @@ def get_dataset(dataset_name: str) -> Tuple[h5py.File, int]:
         dataset_url = f"https://ann-benchmarks.com/{dataset_name}.hdf5"
         download(dataset_url, hdf5_filename)
     except:
+        traceback.print_exc()
         print(f"Cannot download {dataset_url}")
         if dataset_name in DATASETS:
             print("Creating dataset locally")
