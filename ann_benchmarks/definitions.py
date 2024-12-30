@@ -67,7 +67,8 @@ def algorithm_status(definition: Definition) -> InstantiationStatus:
             return InstantiationStatus.AVAILABLE
         else:
             return InstantiationStatus.NO_CONSTRUCTOR
-    except ImportError:
+    except ImportError as e:
+        print(f"\nFailed to import module {definition.module}.module: {e}\n")
         return InstantiationStatus.NO_MODULE
 
 
