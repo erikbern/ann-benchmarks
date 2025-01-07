@@ -1,0 +1,19 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: fng
+    disabled: false
+    docker_tag: ann-benchmarks-descartes
+    module: ann_benchmarks.algorithms.descartes
+    name: descartes(01AI)
+    run_groups:
+      FNG:
+        args:
+          M: [32, 64, 96, 128]
+          L: [128, 256, 320, 384, 448]
+          S: [1, 2, 3]
+        query_args: 
+          [
+            [0, 1, 2, 3],
+            [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 350, 400, 500, 600]
+          ]

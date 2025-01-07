@@ -66,6 +66,10 @@ def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.arra
                 start = time.time()
                 candidates = algo.query(v, count)
                 total = time.time() - start
+
+            # make sure all returned indices are unique
+            assert len(candidates) == len(set(candidates)), "Implementation returned duplicated candidates"
+
             candidates = [
                 (int(idx), float(metrics[distance].distance(v, X_train[idx]))) for idx in candidates  # noqa
             ]
@@ -101,11 +105,20 @@ def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.arra
                 algo.batch_query(X, count)
                 total = time.time() - start
             results = algo.get_batch_results()
+            if hasattr(algo, "get_batch_latencies"):
+                batch_latencies = algo.get_batch_latencies()
+            else:
+                batch_latencies = [total / float(len(X))] * len(X)
+
+            # make sure all returned indices are unique
+            for res in results:
+                assert len(res) == len(set(res)), "Implementation returned duplicated candidates"
+
             candidates = [
                 [(int(idx), float(metrics[distance].distance(v, X_train[idx]))) for idx in single_results]  # noqa
                 for v, single_results in zip(X, results)
             ]
-            return [(total / float(len(X)), v) for v in candidates]
+            return [(latency, v) for latency, v in zip(batch_latencies, candidates)]
 
         if batch:
             results = batch_query(X_test)
@@ -319,10 +332,12 @@ def run_docker(
         definition.docker_tag,
         cmd,
         volumes={
+            os.path.abspath("/var/run/docker.sock"): {"bind": "/var/run/docker.sock", "mode": "rw"},
             os.path.abspath("ann_benchmarks"): {"bind": "/home/app/ann_benchmarks", "mode": "ro"},
             os.path.abspath("data"): {"bind": "/home/app/data", "mode": "ro"},
             os.path.abspath("results"): {"bind": "/home/app/results", "mode": "rw"},
         },
+        network_mode="host",
         cpuset_cpus=cpu_limit,
         mem_limit=mem_limit,
         detach=True,
@@ -377,7 +392,8 @@ def _handle_container_return_value(
         msg = msg.format(exit_code)
 
     if exit_code not in [0, None]:
-        logger.error(colors.color(container.logs().decode(), fg="red"))
+        for line in container.logs(stream=True):
+            logger.error(colors.color(line.decode(), fg="red"))
         logger.error(msg)
     else:
         logger.info(msg)

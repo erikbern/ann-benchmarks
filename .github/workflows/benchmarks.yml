@@ -33,15 +33,18 @@ jobs:
           - balltree
           - bruteforce
           - ckdtree
+          - descartes
           - diskann
           - dolphinnpy
           - elasticsearch
           - elastiknn
+          - expann
           - faiss
           - flann
           - glass
           - hnswlib
           - kdtree
+          - kgn
           - luceneknn
           - milvus
           - mrpt
@@ -51,7 +54,10 @@ jobs:
           - onng_ngt
           - opensearchknn
           - panng_ngt
+          - parlayann
+          - pg_embedding
           - pgvector
+          - pgvecto_rs
           - pynndescent
           - redisearch
           - qdrant
@@ -63,6 +69,8 @@ jobs:
           - vald
           - vearch
           - vespa
+          - voyager
+          - vsag
           - weaviate
         include:
           - library: pynndescent

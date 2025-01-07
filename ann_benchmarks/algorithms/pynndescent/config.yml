@@ -90,24 +90,6 @@ float:
         arg_groups: [{diversify_prob: 1.0, leaf_size: 20, n_neighbors: 80, pruning_degree_multiplier: 2.0}]
         args: {}
         query_args: [[0.0, 0.02, 0.04, 0.08, 0.12, 0.16, 0.2, 0.24]]
-  any:
-  - base_args: ['@metric']
-    constructor: PyNNDescent
-    disabled: false
-    docker_tag: ann-benchmarks-pynndescent
-    module: ann_benchmarks.algorithms.pynndescent
-    name: pynndescent
-    run_groups:
-      NN-10-20:
-        arg_groups: [{diversify_prob: [1.0], leaf_size: 32, n_neighbors: [10, 20],
-            pruning_degree_multiplier: [1.5, 2.0]}]
-        args: {}
-        query_args: [[0.0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16]]
-      NN-40-80:
-        arg_groups: [{diversify_prob: [0.0, 1.0], leaf_size: 64, n_neighbors: [40,
-              80], pruning_degree_multiplier: [2.0, 2.5]}]
-        args: {}
-        query_args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32]]
   euclidean:
   - base_args: ['@metric']
     constructor: PyNNDescent

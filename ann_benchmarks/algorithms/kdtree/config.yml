@@ -2,7 +2,7 @@ float:
   any:
   - base_args: ['@metric']
     constructor: KDTree
-    disabled: false
+    disabled: true
     docker_tag: ann-benchmarks-kdtree
     module: ann_benchmarks.algorithms.kdtree
     name: kd
