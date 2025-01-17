@@ -9,8 +9,6 @@ class HnswLib(BaseANN):
         self.metric = {"angular": "cosine", "euclidean": "l2"}[metric]
         self.method_param = method_param
         # print(self.method_param,save_index,query_param)
-        # self.ef=query_param['ef']
-        # self.name = "hnswlib (%s)" % (self.method_param)
 
     def fit(self, X):
         # Only l2 is supported currently
