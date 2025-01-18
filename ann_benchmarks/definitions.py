@@ -26,7 +26,7 @@ class Definition:
 def instantiate_algorithm(definition: Definition) -> BaseANN:
     """
     Create a `BaseANN` from a definition.
-     
+
     Args:
         definition (Definition): An object containing information about the algorithm.
 
@@ -34,7 +34,7 @@ def instantiate_algorithm(definition: Definition) -> BaseANN:
         BaseANN: Instantiated algorithm
 
     Note:
-        The constructors for the algorithm definition are generally located at 
+        The constructors for the algorithm definition are generally located at
         ann_benchmarks/algorithms/*/module.py.
     """
     print(f"Trying to instantiate {definition.module}.{definition.constructor}({definition.arguments})")
@@ -54,7 +54,7 @@ def algorithm_status(definition: Definition) -> InstantiationStatus:
     """
     Determine the instantiation status of the algorithm based on its python module and constructor.
 
-    Attempts to find the Python class constructor based on the definition's module path and 
+    Attempts to find the Python class constructor based on the definition's module path and
     constructor name.
 
     Args:
@@ -107,7 +107,7 @@ def _generate_combinations(args: Union[List[Any], Dict[Any, Any]]) -> List[Union
 def _substitute_variables(arg: Any, vs: Dict[str, Any]) -> Any:
     """
     Substitutes any string variables present in the argument structure with provided values.
-    
+
     Support for nested substitution in the case `arg` is a List or Dict.
 
     Args:
@@ -164,8 +164,8 @@ def _get_definitions(base_dir: str = "ann_benchmarks/algorithms") -> List[Dict[s
 
 def _get_algorithm_definitions(point_type: str, distance_metric: str, base_dir: str = "ann_benchmarks/algorithms") -> Dict[str, Dict[str, Any]]:
     """Get algorithm definitions for a specific point type and distance metric.
-    
-    A specific algorithm folder can have multiple algorithm definitions for a given point type and 
+
+    A specific algorithm folder can have multiple algorithm definitions for a given point type and
     metric. For example, `ann_benchmarks.algorithms.nmslib` has two definitions for euclidean float
     data: specifically `SW-graph(nmslib)` and `hnsw(nmslib)`, even though the module is named nmslib.
 
@@ -180,7 +180,7 @@ def _get_algorithm_definitions(point_type: str, distance_metric: str, base_dir: 
             "disabled": false,
             "docker_tag": ann-benchmarks-nmslib,
             ...
-        }, 
+        },
         'SW-graph(nmslib)': {
             "base_args": ['@metric', sw-graph],
             "constructor": NmslibReuseIndex,
@@ -209,9 +209,9 @@ def _get_algorithm_definitions(point_type: str, distance_metric: str, base_dir: 
 def list_algorithms(base_dir: str = "ann_benchmarks/algorithms") -> None:
     """
     Output (to stdout), a list of all algorithms, with their supported point types and metrics.
-    
+
     Args:
-        base_dir (str, optional): The base directory where the algorithms are stored. 
+        base_dir (str, optional): The base directory where the algorithms are stored.
                                   Defaults to "ann_benchmarks/algorithms".
     """
     all_configs = _get_definitions(base_dir)
@@ -240,7 +240,7 @@ def list_algorithms(base_dir: str = "ann_benchmarks/algorithms") -> None:
 
 def generate_arg_combinations(run_group: Dict[str, Any], arg_type: str) -> List:
     """Generate combinations of arguments from a run group for a specific argument type.
-    
+
     Args:
         run_group (Dict[str, Any]): The run group containing argument definitions.
         arg_type (str): The type of argument group to generate combinations for.
@@ -266,10 +266,10 @@ def generate_arg_combinations(run_group: Dict[str, Any], arg_type: str) -> List:
 
 
 def prepare_args(run_group: Dict[str, Any]) -> List:
-    """For an Algorithm's run group, prepare arguments. 
-    
+    """For an Algorithm's run group, prepare arguments.
+
     An `arg_groups` is preferenced over an `args` key.
-    
+
     Args:
         run_group (Dict[str, Any]): The run group containing argument definitions.
 
@@ -287,7 +287,7 @@ def prepare_args(run_group: Dict[str, Any]) -> List:
 
 def prepare_query_args(run_group: Dict[str, Any]) -> List:
     """For an algorithm's run group, prepare query args/ query arg groups.
-    
+
     Args:
         run_group (Dict[str, Any]): The run group containing argument definitions.
 
@@ -303,18 +303,18 @@ def prepare_query_args(run_group: Dict[str, Any]) -> List:
 def create_definitions_from_algorithm(name: str, algo: Dict[str, Any], dimension: int, distance_metric: str = "euclidean", count: int = 10) -> List[Definition]:
     """
     Create definitions from an indvidual algorithm. An algorithm (e.g. annoy) can have multiple
-     definitions based on various run groups (see config.ymls for clear examples). 
-    
+     definitions based on various run groups (see config.ymls for clear examples).
+
     Args:
         name (str): Name of the algorithm.
         algo (Dict[str, Any]): Dictionary with algorithm parameters.
         dimension (int): Dimension of the algorithm.
         distance_metric (str, optional): Distance metric used by the algorithm. Defaults to "euclidean".
         count (int, optional): Count of the definitions to be created. Defaults to 10.
-    
+
     Raises:
         Exception: If the algorithm does not define "docker_tag", "module" or "constructor" properties.
-    
+
     Returns:
         List[Definition]: A list of definitions created from the algorithm.
     """
@@ -322,9 +322,9 @@ def create_definitions_from_algorithm(name: str, algo: Dict[str, Any], dimension
     missing_properties = [prop for prop in required_properties if prop not in algo]
     if missing_properties:
         raise ValueError(f"Algorithm {name} is missing the following properties: {', '.join(missing_properties)}")
-    
+
     base_args = algo.get("base_args", [])
-    
+
     definitions = []
     for run_group in algo["run_groups"].values():
         args = prepare_args(run_group)
@@ -340,7 +340,7 @@ def create_definitions_from_algorithm(name: str, algo: Dict[str, Any], dimension
 
             vs = {"@count": count, "@metric": distance_metric, "@dimension": dimension}
             current_args = [_substitute_variables(arg, vs) for arg in current_args]
-            
+
             definitions.append(
                 Definition(
                     algorithm=name,
@@ -373,6 +373,6 @@ def get_definitions(
         definitions.extend(
             create_definitions_from_algorithm(name, algo, dimension, distance_metric, count)
         )
-        
+
 
     return definitions

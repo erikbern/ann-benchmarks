@@ -57,7 +57,7 @@ class PGVector(BaseANN):
             else:
                 print("vector extension does not exist, creating")
                 cur.execute("CREATE EXTENSION vector")
-        
+
     def fit(self, X):
         psycopg_connect_kwargs: Dict[str, Any] = dict(
             autocommit=True,
@@ -72,7 +72,7 @@ class PGVector(BaseANN):
         pg_host: Optional[str] = get_pg_conn_param('host')
         if pg_host is not None:
             psycopg_connect_kwargs['host'] = pg_host
-        
+
         pg_port_str: Optional[str] = get_pg_conn_param('port')
         if pg_port_str is not None:
             psycopg_connect_kwargs['port'] = int(pg_port_str)
@@ -82,10 +82,10 @@ class PGVector(BaseANN):
             default_value=True)
         if should_start_service:
             subprocess.run(
-                "service postgresql start", 
-                shell=True, 
-                check=True, 
-                stdout=sys.stdout, 
+                "service postgresql start",
+                shell=True,
+                check=True,
+                stdout=sys.stdout,
                 stderr=sys.stderr)
         else:
             logging.info(
