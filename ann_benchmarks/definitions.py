@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import importlib
 import os
 import glob
+import logging
 from enum import Enum
 from itertools import product
 from typing import Any, Dict, List, Optional, Union
@@ -20,6 +21,7 @@ class Definition:
     arguments: List[Any]
     query_argument_groups: List[List[Any]]
     disabled: bool
+
 
 def instantiate_algorithm(definition: Definition) -> BaseANN:
     """
@@ -68,6 +70,8 @@ def algorithm_status(definition: Definition) -> InstantiationStatus:
         else:
             return InstantiationStatus.NO_CONSTRUCTOR
     except ImportError:
+        logging.exception("Could not import algorithm module for %s",
+                          definition.module)
         return InstantiationStatus.NO_MODULE
 
 
