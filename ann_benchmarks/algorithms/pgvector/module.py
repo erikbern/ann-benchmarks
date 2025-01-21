@@ -1,7 +1,30 @@
+"""
+This module supports connecting to a PostgreSQL instance and performing vector
+indexing and search using the pgvector extension. The default behavior uses
+the "ann" value of PostgreSQL user name, password, and database name, as well
+as the default host and port values of the psycopg driver.
+
+If PostgreSQL is managed externally, e.g. in a cloud DBaaS environment, the
+environment variable overrides listed below are available for setting PostgreSQL
+connection parameters:
+
+ANN_BENCHMARKS_PG_USER
+ANN_BENCHMARKS_PG_PASSWORD
+ANN_BENCHMARKS_PG_DBNAME
+ANN_BENCHMARKS_PG_HOST
+ANN_BENCHMARKS_PG_PORT
+
+This module starts the PostgreSQL service automatically using the "service"
+command. The environment variable ANN_BENCHMARKS_PG_START_SERVICE could be set
+to "false" (or e.g. "0" or "no") in order to disable this behavior.
+
+This module will also attempt to create the pgvector extension inside the
+target database, if it has not been already created.
+"""
+
 import subprocess
 import sys
 import os
-import logging
 
 import pgvector.psycopg
 import psycopg
@@ -10,7 +33,6 @@ from typing import Dict, Any, Optional
 
 from ..base.module import BaseANN
 from ...util import get_bool_env_var
-
 
 def get_pg_param_env_var_name(pg_param_name: str) -> str:
     return f'ANN_BENCHMARKS_PG_{pg_param_name.upper()}'
@@ -88,7 +110,7 @@ class PGVector(BaseANN):
                 stdout=sys.stdout,
                 stderr=sys.stderr)
         else:
-            logging.info(
+            print(
                 "Assuming that PostgreSQL service is managed externally. "
                 "Not attempting to start the service.")
 
