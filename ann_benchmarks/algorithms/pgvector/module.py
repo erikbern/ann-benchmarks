@@ -34,6 +34,7 @@ from typing import Dict, Any, Optional
 from ..base.module import BaseANN
 from ...util import get_bool_env_var
 
+
 def get_pg_param_env_var_name(pg_param_name: str) -> str:
     return f'ANN_BENCHMARKS_PG_{pg_param_name.upper()}'
 
