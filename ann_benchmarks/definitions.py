@@ -223,7 +223,7 @@ def list_algorithms(base_dir: str = "ann_benchmarks/algorithms") -> None:
                 data[algo_name][point_type].append(metric)
 
     print("The following algorithms are supported:", ", ".join(data))
-    print("Details of support metrics and data types: ")
+    print("Details of supported metrics and data types: ")
     for algorithm in data:
         print('\t... for the algorithm "%s"...' % algorithm)
 
