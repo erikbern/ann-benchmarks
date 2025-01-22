@@ -577,6 +577,25 @@ def dbpedia_entities_openai_1M(out_fn, n = None):
 
     write_output(X_train, X_test, out_fn, "angular")
 
+def coco(out_fn: str, kind: str):
+    assert kind in ('t2i', 'i2i')
+
+    local_fn = "coco-clip-b16-512-features.hdf5"
+    url = "https://github.com/fabiocarrara/str-encoders/releases/download/v0.1.3/%s" % local_fn
+    download(url, local_fn)
+
+    with h5py.File(local_fn, "r") as f:
+        img_X = f['img_feats'][:]
+
+        X_train, X_test = train_test_split(img_X, test_size=10_000)
+
+        if kind == 't2i':
+            # there are 5 captions per image, take the first one
+            txt_X = f['txt_feats'][::5]
+            _, X_test = train_test_split(txt_X, test_size=10_000)
+
+    write_output(X_train, X_test, out_fn, "angular")
+
 
 DATASETS: Dict[str, Callable[[str], None]] = {
     "deep-image-96-angular": deep_image,
@@ -606,6 +625,8 @@ DATASETS: Dict[str, Callable[[str], None]] = {
     "movielens1m-jaccard": movielens1m,
     "movielens10m-jaccard": movielens10m,
     "movielens20m-jaccard": movielens20m,
+    "coco-i2i-512-angular": lambda out_fn: coco(out_fn, "i2i"),
+    "coco-t2i-512-angular": lambda out_fn: coco(out_fn, "t2i"),
 }
 
 DATASETS.update({
