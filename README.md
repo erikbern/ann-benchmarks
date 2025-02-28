@@ -50,6 +50,7 @@ Evaluated
   * [pg_embedding](https://github.com/neondatabase/pg_embedding) ![https://img.shields.io/github/stars/pg_embedding/pg_embedding?style=social](https://img.shields.io/github/stars/neondatabase/pg_embedding?style=social)
 * [Descartes(01AI)](https://github.com/xiaoming-01ai/descartes)
 * [kgn](https://github.com/Henry-yan/kgn)
+* [vsag](https://github.com/antgroup/vsag)
 
 Data sets
 =========
