@@ -14,15 +14,15 @@ concurrency:
 
 jobs:
   unit-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3 # Pull the repository
-      - run: sudo apt-get update && sudo apt-get install -y libhdf5-dev python3-numpy python3-scipy python3-matplotlib python3-sklearn
-      - run: pip3 install --quiet -r requirements.txt
+      - run: sudo apt-get update && sudo apt-get install -y libhdf5-dev python-is-python3 python3-pip
+      - run: pip install --quiet -r requirements.txt
       - run: pytest
 
   run-benchmarks:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     strategy:
       fail-fast: false
@@ -90,20 +90,20 @@ jobs:
     - uses: actions/checkout@v3 # Pull the repository
 
     - name: Install OS Dependencies
-      run: sudo apt-get update && sudo apt-get install -y libhdf5-dev python3-numpy python3-scipy python3-matplotlib python3-sklearn
+      run: sudo apt-get update && sudo apt-get install -y libhdf5-dev python-is-python3 python3-pip
 
     - name: Install Project Dependencies
-      run: pip3 install --quiet -r requirements.txt
+      run: pip install --quiet -r requirements.txt
 
     - name: Build Library Docker Image
-      run: python3 install.py
+      run: python install.py
 
     - name: Run the benchmark
       run: |
-        python3 run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 3 --runs 2 --dataset $DATASET --run-disabled --timeout 300
-        python3 run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 3 --runs 2 --dataset $DATASET --run-disabled --batch --timeout 300
+        python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 3 --runs 2 --dataset $DATASET --run-disabled --timeout 300
+        python run.py --docker-tag ann-benchmarks-${LIBRARY} --max-n-algorithms 3 --runs 2 --dataset $DATASET --run-disabled --batch --timeout 300
         sudo chmod -R 777 results/
-        python3 plot.py --dataset $DATASET --output plot.png
-        python3 plot.py --dataset $DATASET --output plot-batch.png --batch
-        python3 data_export.py --out test.csv
-        python3 create_website.py --outputdir . --scatter --latex
+        python plot.py --dataset $DATASET --output plot.png
+        python plot.py --dataset $DATASET --output plot-batch.png --batch
+        python data_export.py --out test.csv
+        python create_website.py --outputdir . --scatter --latex
