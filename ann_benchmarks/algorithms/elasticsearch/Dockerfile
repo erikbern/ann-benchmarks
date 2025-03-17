@@ -24,8 +24,8 @@ RUN apt-get install -y curl
 WORKDIR /usr/share/elasticsearch
 
 # Create elasticsearch user and user group.
-RUN groupadd -g 1000 elasticsearch
-RUN adduser --uid 1000 --gid 1000 --home /usr/share/elasticsearch elasticsearch
+RUN groupadd -g 1100 elasticsearch
+RUN adduser --uid 1100 --gid 1100 --home /usr/share/elasticsearch elasticsearch
 
 COPY --from=builder --chown=elasticsearch:elasticsearch /usr/share/elasticsearch /usr/share/elasticsearch
 

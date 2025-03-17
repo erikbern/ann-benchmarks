@@ -66,7 +66,7 @@ USER root
 WORKDIR /home/app
 
 # Install python client.
-RUN python3 -m pip install elastiknn-client==8.15.0.1
+RUN python3 -m pip install elastiknn-client==8.15.3.0
 
 # Custom entrypoint that also starts the Elasticsearch server in the background
 RUN echo '\

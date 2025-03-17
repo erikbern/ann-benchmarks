@@ -1,12 +1,12 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN apt-get update
-RUN apt-get install -y python3-numpy python3-scipy python3-pip build-essential git
-RUN pip3 install -U pip
-RUN python3 --version | grep 'Python 3.10'
+RUN apt-get install -y python3-pip python-is-python3 build-essential git
+RUN python --version | grep 'Python 3.12'
 
 WORKDIR /home/app
 COPY requirements.txt run_algorithm.py ./
-RUN pip3 install -r requirements.txt
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
+RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python3", "-u", "run_algorithm.py"]
+ENTRYPOINT ["python", "-u", "run_algorithm.py"]
