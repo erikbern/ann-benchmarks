@@ -46,6 +46,7 @@ jobs:
           - kdtree
           - kgn
           - luceneknn
+          - mariadb
           - milvus
           - mrpt
           - nndescent
