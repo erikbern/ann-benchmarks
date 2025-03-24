@@ -71,6 +71,7 @@ jobs:
           - vearch
           - vespa
           - voyager
+          - vsag
           - weaviate
         include:
           - library: pynndescent
