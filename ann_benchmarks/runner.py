@@ -131,6 +131,7 @@ def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.arra
         avg_candidates = total_candidates / len(X_test)
         best_search_time = min(best_search_time, search_time)
 
+    algo.search_pool.close()
     verbose = hasattr(algo, "query_verbose")
     attrs = {
         "batch_mode": batch,
