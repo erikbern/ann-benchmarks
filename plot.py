@@ -88,7 +88,7 @@ def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles, bat
     # Workaround for bug https://github.com/matplotlib/matplotlib/issues/6789
     ax.spines["bottom"]._adjust_location()
 
-    plt.savefig(fn_out, bbox_inches="tight")
+    plt.savefig(fn_out, bbox_inches="tight", dpi=144)
     plt.close()
 
 
@@ -108,7 +108,7 @@ if __name__ == "__main__":
         "-y", "--y-axis", help="Which metric to use on the Y-axis", choices=metrics.keys(), default="qps"
     )
     parser.add_argument(
-        "-X", "--x-scale", help="Scale to use when drawing the X-axis. Typically linear, logit or a2", default="linear"
+        "-X", "--x-scale", help="Scale to use when drawing the X-axis. Typically linear, logit or a2", default="linear",
     )
     parser.add_argument(
         "-Y",

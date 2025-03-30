@@ -124,9 +124,9 @@ The only prerequisite is Python (tested with 3.10.6) and Docker.
 Running
 =======
 
-1. Run `python run.py` (this can take an extremely long time, potentially days)
-2. Run `python plot.py` or `python create_website.py` to plot results.
-3. Run `python data_export.py --out res.csv` to export all results into a csv file for additional post-processing.
+1. Run `python run.py` (this can take an extremely long time, potentially days).
+2. Run `python plot.py --x-scale logit --y-scale log` to plot results.
+3. Run `python create_website.py` to create a website with lots of plots.
 
 You can customize the algorithms and datasets as follows:
 
