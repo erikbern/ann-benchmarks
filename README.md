@@ -51,6 +51,7 @@ Evaluated
 * [Descartes(01AI)](https://github.com/xiaoming-01ai/descartes)
 * [kgn](https://github.com/Henry-yan/kgn)
 * [vsag](https://github.com/antgroup/vsag)
+* [PGVectorScale](https://github.com/timescale/pgvectorscale/tree/main)
 
 Data sets
 =========
