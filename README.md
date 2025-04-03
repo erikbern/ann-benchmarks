@@ -78,7 +78,7 @@ We have a number of precomputed data sets in HDF5 format. All data sets have bee
 Results
 =======
 
-These are all as of April 2023, running all benchmarks on a r6i.16xlarge machine on AWS with `--parallelism 31` and hyperthreading disabled. All benchmarks are single-CPU.
+These are all as of April 2025, running all benchmarks on a r6i.16xlarge machine on AWS with `--parallelism 31` and hyperthreading disabled. All benchmarks are single-CPU.
 
 glove-100-angular
 -----------------
