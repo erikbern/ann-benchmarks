@@ -1,7 +1,7 @@
 import os
 
 import numpy
-import pykgraph
+import kgraph
 
 from ...constants import INDEX_DIR
 from ..base.module import BaseANN
@@ -18,7 +18,7 @@ class KGraph(BaseANN):
     def fit(self, X):
         if X.dtype != numpy.float32:
             X = X.astype(numpy.float32)
-        self._kgraph = pykgraph.KGraph(X, self._metric)
+        self._kgraph = kgraph.KGraph(X, self._metric)
         path = os.path.join(INDEX_DIR, "kgraph-index-%s" % self._metric)
         if os.path.exists(path):
             self._kgraph.load(path)
