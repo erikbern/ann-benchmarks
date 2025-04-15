@@ -37,7 +37,7 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Install pgrx using cargo
-RUN cargo install --locked cargo-pgrx@0.11.4
+RUN cargo install --locked cargo-pgrx@0.12.9
 # Initialize pgrx with the PostgreSQL version
 RUN cargo pgrx init --pg16 pg_config
 RUN git clone https://github.com/timescale/pgvectorscale /tmp/pgvectorscale
