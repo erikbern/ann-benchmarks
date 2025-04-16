@@ -2,7 +2,7 @@ float:
   any:
   - base_args: ['@metric']
     constructor: fng
-    disabled: false
+    disabled: true
     docker_tag: ann-benchmarks-descartes
     module: ann_benchmarks.algorithms.descartes
     name: descartes(01AI)
