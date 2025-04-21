@@ -32,6 +32,7 @@ jobs:
           - annoy
           - balltree
           - bruteforce
+          - cassandra
           - ckdtree
           - descartes
           - diskann
