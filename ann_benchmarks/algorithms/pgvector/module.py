@@ -194,8 +194,7 @@ class IndexingProgressMonitor:
         self.indexing_time_sec = time.time() - self.indexing_start_time_sec
 
     def report_timings(self) -> None:
-        print("pgvector total indexing time: {:3f} sec".format(
-            self.indexing_time_sec))
+        print(f"pgvector total indexing time: {self.indexing_time_sec:3f} sec")
         if self.time_to_load_all_tuples_sec is not None:
             print("    Time to load all tuples into the index: {:.3f} sec".format(
                 self.time_to_load_all_tuples_sec
@@ -304,6 +303,7 @@ class PGVector(BaseANN):
             copy.set_types(["int4", "vector"])
             for i, embedding in enumerate(X):
                 copy.write_row((i, embedding))
+                num_rows += 1
         insert_elapsed_time_sec = time.time() - insert_start_time_sec
         print("inserted {} rows into table in {:.3f} seconds".format(
             num_rows, insert_elapsed_time_sec))
