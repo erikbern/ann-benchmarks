@@ -75,6 +75,11 @@ We have a number of precomputed data sets in HDF5 format. All data sets have bee
 | [Last.fm](https://github.com/erikbern/ann-benchmarks/pull/91)     |         65 |    292,385 |    50,000 |       100 | Angular   | [HDF5](http://ann-benchmarks.com/lastfm-64-dot.hdf5) (135MB)               |
 | [COCO-I2I](https://cocodataset.org/)                              |        512 |    113,287 |    10,000 |       100 | Angular   | [HDF5](https://github.com/fabiocarrara/str-encoders/releases/download/v0.1.3/coco-i2i-512-angular.hdf5) (136MB) |
 | [COCO-T2I](https://cocodataset.org/)                              |        512 |    113,287 |    10,000 |       100 | Angular   | [HDF5](https://github.com/fabiocarrara/str-encoders/releases/download/v0.1.3/coco-t2i-512-angular.hdf5) (136MB) |
+| Dataset | Dimensions | Train size | Test size | Neighbors | Distance | Download |
+|---------|-----------:|-----------:|----------:|----------:|----------|----------|
+| Wikipedia-1024 | 1024 | 1,000,000,000 | 10,000 | 100 | Angular | [HDF5](https://your-host.com/wikipedia-1024-angular.hdf5) |
+| Wikipedia-4096 | 4096 | 1,000,000,000 | 10,000 | 100 | Angular | [HDF5](https://your-host.com/wikipedia-4096-angular.hdf5) |
+| Wikipedia-8192 | 8192 | 1,000,000,000 | 10,000 | 100 | Angular | [HDF5](https://your-host.com/wikipedia-8192-angular.hdf5) |
 
 Results
 =======

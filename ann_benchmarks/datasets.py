@@ -598,6 +598,23 @@ def coco(out_fn: str, kind: str):
 
 
 DATASETS: Dict[str, Callable[[str], None]] = {
+
+    "wikipedia-1024-angular": {
+        'url': 'https://your-host.com/wikipedia-1024-angular.hdf5',
+        'constructor': Dataset,
+        'base': 'wikipedia-1024-angular.hdf5'
+    },
+    "wikipedia-4096-angular": {
+        'url': 'https://your-host.com/wikipedia-4096-angular.hdf5',
+        'constructor': Dataset,
+        'base': 'wikipedia-4096-angular.hdf5'
+    },
+    "wikipedia-8192-angular": {
+        'url': 'https://your-host.com/wikipedia-8192-angular.hdf5',
+        'constructor': Dataset,
+        'base': 'wikipedia-8192-angular.hdf5'
+    },
+
     "deep-image-96-angular": deep_image,
     "fashion-mnist-784-euclidean": fashion_mnist,
     "gist-960-euclidean": gist,
