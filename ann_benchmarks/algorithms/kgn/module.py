@@ -3,6 +3,7 @@ import os
 import multiprocessing
 from time import time
 
+import gc
 import numpy as np
 import faiss
 from faiss import Kmeans
@@ -79,10 +80,11 @@ class Kgn(BaseANN):
     def __init__(self, metric, dim, method_param):
         self.metric = metric_mapping(metric)
         self.name = 'kgn_(%s)' % (method_param)
-        self.dir = 'indices'
-        self.path = f'{metric}_{dim}.kgn'
         self.R = method_param['R']   # [128, 160]
         self.level = method_param['level']               # [1, 2]
+        self.dir = 'indices'
+        self.path = f'{metric}_{dim}_{self.R}_{self.level}.kgn'
+
 
     def build(self, X):
         Index = kgn.Index(nb=self.n, dim=self.d, base=X, topK=10, metric=self.metric, level=self.level, R=self.R)
@@ -107,6 +109,7 @@ class Kgn(BaseANN):
                 p = multiprocessing.Process(target=self.build, args=(X, ))
                 p.start()
                 p.join()
+                gc.collect()
                 self.Index.load(full_path)
 
 
