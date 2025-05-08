@@ -51,6 +51,7 @@ Evaluated
 * [Descartes(01AI)](https://github.com/xiaoming-01ai/descartes)
 * [kgn](https://github.com/Henry-yan/kgn)
 * [vsag](https://github.com/antgroup/vsag)
+* [PGVectorScale](https://github.com/timescale/pgvectorscale/tree/main)
 
 Data sets
 =========
@@ -78,7 +79,7 @@ We have a number of precomputed data sets in HDF5 format. All data sets have bee
 Results
 =======
 
-These are all as of April 2023, running all benchmarks on a r6i.16xlarge machine on AWS with `--parallelism 31` and hyperthreading disabled. All benchmarks are single-CPU.
+These are all as of April 2025, running all benchmarks on a r6i.16xlarge machine on AWS with `--parallelism 31` and hyperthreading disabled. All benchmarks are single-CPU.
 
 glove-100-angular
 -----------------
@@ -124,9 +125,9 @@ The only prerequisite is Python (tested with 3.10.6) and Docker.
 Running
 =======
 
-1. Run `python run.py` (this can take an extremely long time, potentially days)
-2. Run `python plot.py` or `python create_website.py` to plot results.
-3. Run `python data_export.py --out res.csv` to export all results into a csv file for additional post-processing.
+1. Run `python run.py` (this can take an extremely long time, potentially days).
+2. Run `python plot.py --x-scale logit --y-scale log` to plot results.
+3. Run `python create_website.py` to create a website with lots of plots.
 
 You can customize the algorithms and datasets as follows:
 

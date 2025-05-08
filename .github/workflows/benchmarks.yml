@@ -58,6 +58,7 @@ jobs:
           - parlayann
           - pg_embedding
           - pgvector
+          - pgvectorscale
           - pgvecto_rs
           - pynndescent
           - redisearch
