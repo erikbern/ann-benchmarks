@@ -9,15 +9,16 @@ class Cassandra(BaseANN):
         self.metric = metric
         self.dimension = dimension
         self.method_param = method_param
+        self.keyspace = "ann_benchmarks"
         self.param_string = "-".join(k + "-" + str(v) for k, v in self.method_param.items()).lower()
         self.index_name = f"os-{self.param_string}"
 
-        self.cluster = Cluster(self.config["host"])
+        self.cluster = Cluster(['localhost'])
         self.conn = self.cluster.connect()
         self._setup_keyspace()
 
     def _setup_keyspace(self):
-        self.session.execute(f"""
+        self.conn.execute(f"""
         CREATE KEYSPACE IF NOT EXISTS {self.keyspace}
         WITH replication = {{'class': 'SimpleStrategy', 'replication_factor': 1}};
         """)
@@ -29,6 +30,20 @@ class Cassandra(BaseANN):
                 id BIGINT PRIMARY KEY,
                 embedding VECTOR<FLOAT, {self.dimension}>,
             ) WITH compaction = {{ 'class': 'LeveledCompactionStrategy' }};
+        """)
+
+    def _create_index(self, ):
+        DISTANCE_MAPPING = {
+            "L2": "EUCLIDEAN",
+            "COSINE": "COSINE",
+            "DOT": "DOT_PRODUCT",
+        }
+
+        hnsw_distance_type = self.DISTANCE_MAPPING.get(self.metric, "EUCLIDEAN") 
+        self.conn.execute(f"""
+            CREATE INDEX IF NOT EXISTS {self.index_name}
+                ON {self.keyspace}.{self.table}(embedding) USING 'sai'
+                WITH OPTIONS = {{ 'similarity_function': '{hnsw_distance_type}' }};
         """)
         
     def fit(self, X, batch_size=1000):

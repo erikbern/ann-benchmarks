@@ -1,12 +1,22 @@
-FROM ann-benchmarks AS builder
+FROM cassandra:5.0.4
 
-RUN apt-get update
-RUN apt-get install -y openjdk-11-jre-headless
-
-RUN apt-get install -y curl sudo
-ENV CASSANDRA_VERSION 4.1.0
-ENV CASSANDRA_HOME /opt/cassandra
-
-RUN curl -L https://downloads.apache.org/cassandra/$CASSANDRA_VERSION/apache-cassandra-$CASSANDRA_VERSION-bin.tar.gz
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y --no-install-recommends \
+        python3 python3-pip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/app
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt \
+    && pip install --no-cache-dir cassandra-driver
+
+COPY run.py .
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+EXPOSE 9042
+
+ENTRYPOINT ["entrypoint.sh"]
