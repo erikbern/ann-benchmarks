@@ -91,8 +91,10 @@ def load_all_results(dataset: Optional[str] = None,
             try:
                 with h5py.File(os.path.join(root, filename), "r+") as f:
                     properties = dict(f.attrs)
-                    if batch_mode != properties["batch_mode"]:
-                        continue
+                    #if batch_mode != properties["batch_mode"]:
+                        #continue
+                    last_folder = os.path.basename(os.path.normpath(root))
+                    properties["algo"] = last_folder
                     yield properties, f
             except Exception:
                 print(f"Was unable to read {filename}")

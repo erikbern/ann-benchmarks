@@ -73,6 +73,7 @@ jobs:
           - voyager
           - vsag
           - weaviate
+          - openGauss
         include:
           - library: pynndescent
             dataset: random-xs-16-hamming
