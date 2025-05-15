@@ -3,9 +3,9 @@ float:
     - base_args: ['@metric','@dimension']
       constructor: Kgn
       disabled: false
-      docker_tag: ann-benchmarks-kgn_0513
-      module: ann_benchmarks.algorithms.kgn_0513
-      name: kgn_0513
+      docker_tag: ann-benchmarks-kgn
+      module: ann_benchmarks.algorithms.kgn
+      name: kgn
       run_groups:
         Kgn:
             args: 
@@ -20,9 +20,9 @@ float:
     - base_args: ['@metric','@dimension']
       constructor: Kgn
       disabled: false
-      docker_tag: ann-benchmarks-kgn_0513
-      module: ann_benchmarks.algorithms.kgn_0513
-      name: kgn_0513
+      docker_tag: ann-benchmarks-kgn
+      module: ann_benchmarks.algorithms.kgn
+      name: kgn
       run_groups:
         Kgn:
             args: 
