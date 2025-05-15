@@ -80,14 +80,15 @@ class Kgn(BaseANN):
     def __init__(self, metric, dim, method_param):
         self.metric = metric_mapping(metric)
         self.name = 'kgn_(%s)' % (method_param)
-        self.R = method_param['R']   # [128, 160]
-        self.level = method_param['level']               # [1, 2]
+        self.R = method_param['R']
+        self.R2 = method_param['R2']
+        self.level = method_param['level']
         self.dir = 'indices'
-        self.path = f'{metric}_{dim}_{self.R}_{self.level}.kgn'
+        self.path = f'{metric}_{dim}_{self.R}_{self.R2}_{self.level}.kgn'
 
 
     def build(self, X):
-        Index = kgn.Index(nb=self.n, dim=self.d, base=X, topK=10, metric=self.metric, level=self.level, R=self.R)
+        Index = kgn.Index(nb=self.n, dim=self.d, base=X, topK=10, metric=self.metric, level=self.level, R=self.R, R2 = self.R2)
         full_path = os.path.join(self.dir, self.path)
         Index.build(full_path)
 
@@ -100,12 +101,12 @@ class Kgn(BaseANN):
             os.mkdir(self.dir)
         if self.path not in os.listdir(self.dir):
             full_path = os.path.join(self.dir, self.path)
-            self.Index = kgn.Index(nb=self.n, dim=self.d, base=X, topK=10, metric=self.metric, level=self.level, R=self.R)
+            self.Index = kgn.Index(nb=self.n, dim=self.d, base=X, topK=10, metric=self.metric, level=self.level, R=self.R, R2 = self.R2)
             if os.path.exists(full_path) and os.path.isfile(full_path):
-                print("load Index")               
+                print(f"load Index in: '{full_path}'")               
                 self.Index.load(full_path)
             else:
-                print("build Index")
+                print(f"build Index in: '{full_path}'")
                 p = multiprocessing.Process(target=self.build, args=(X, ))
                 p.start()
                 p.join()
@@ -113,9 +114,12 @@ class Kgn(BaseANN):
                 self.Index.load(full_path)
 
 
-    def set_query_arguments(self, ef):
+    def set_query_arguments(self, reorder, prune, ef):
+        if self.level == 2 and reorder == 1.5 :
+            reorder = 1.2
+        self.reorder = reorder
+        self.prune = prune
         self.ef = ef
-
     def prepare_query(self, q, n):
         if self.metric == 'IP':
             q = q / np.linalg.norm(q)
@@ -123,7 +127,7 @@ class Kgn(BaseANN):
         self.n = n
 
     def run_prepared_query(self):
-        self.res = self.Index.search(self.ef, self.q)
+        self.res = self.Index.search(self.reorder, self.prune, self.ef, self.q)
 
     def get_prepared_query_results(self):
         return self.res

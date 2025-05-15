@@ -3,25 +3,33 @@ float:
     - base_args: ['@metric','@dimension']
       constructor: Kgn
       disabled: false
-      docker_tag: ann-benchmarks-kgn
-      module: ann_benchmarks.algorithms.kgn
-      name: kgn
+      docker_tag: ann-benchmarks-kgn_0513
+      module: ann_benchmarks.algorithms.kgn_0513
+      name: kgn_0513
       run_groups:
         Kgn:
             args: 
-              R: 160
-              level: 2
-            query_args: [[10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 120, 140, 150, 160, 180, 200, 300, 500]]
+              R: [128, 160]
+              R2: [128, 160]
+              level: [1, 2]
+            query_args: [
+            [1.0, 1.5],
+            [1, 15],
+            [10, 15, 20, 30, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 120, 140, 150, 160, 180, 200, 300, 400, 500, 600, 650, 700, 800]]
   angular:
     - base_args: ['@metric','@dimension']
       constructor: Kgn
       disabled: false
-      docker_tag: ann-benchmarks-kgn
-      module: ann_benchmarks.algorithms.kgn
-      name: kgn
+      docker_tag: ann-benchmarks-kgn_0513
+      module: ann_benchmarks.algorithms.kgn_0513
+      name: kgn_0513
       run_groups:
         Kgn:
             args: 
-              R: [128,160]
-              level: [1,2]
-            query_args: [[10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 200, 300, 400, 500]]
+              R: [128, 160]
+              R2: [128, 160]
+              level: [1, 2]
+            query_args: [
+            [1.0, 1.5],
+            [1, 15],
+            [10, 15, 20, 30, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 115, 120, 125, 150, 170, 180, 200, 250, 300, 340, 400, 450, 500, 505, 550, 600, 650, 670, 680, 684, 700]]
