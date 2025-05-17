@@ -12,6 +12,7 @@ class Cassandra(BaseANN):
         self.keyspace = "ann_benchmarks"
         self.param_string = "-".join(k + "-" + str(v) for k, v in self.method_param.items()).lower()
         self.index_name = f"os-{self.param_string}"
+        self.table_name = f"vector_items-{self.param_string}"
 
         self.cluster = Cluster(['localhost'])
         self.conn = self.cluster.connect()
@@ -22,11 +23,11 @@ class Cassandra(BaseANN):
         CREATE KEYSPACE IF NOT EXISTS {self.keyspace}
         WITH replication = {{'class': 'SimpleStrategy', 'replication_factor': 1}};
         """)
-        self.session.set_keyspace(self.keyspace)
+        self.conn.set_keyspace(self.keyspace)
 
     def _create_table(self):
         self.conn.execute(f"""
-            CREATE TABLE IF NOT EXISTS {self.table} (
+            CREATE TABLE IF NOT EXISTS {self.table_name} (
                 id BIGINT PRIMARY KEY,
                 embedding VECTOR<FLOAT, {self.dimension}>,
             ) WITH compaction = {{ 'class': 'LeveledCompactionStrategy' }};
@@ -42,34 +43,34 @@ class Cassandra(BaseANN):
         hnsw_distance_type = self.DISTANCE_MAPPING.get(self.metric, "EUCLIDEAN") 
         self.conn.execute(f"""
             CREATE INDEX IF NOT EXISTS {self.index_name}
-                ON {self.keyspace}.{self.table}(embedding) USING 'sai'
+                ON {self.keyspace}.{self.table_name}(embedding) USING 'sai'
                 WITH OPTIONS = {{ 'similarity_function': '{hnsw_distance_type}' }};
         """)
         
-    def fit(self, X, batch_size=1000):
+    def fit(self, X, batch_size=100):
         self.vector_dim = X.shape[1]
         self._create_table()
 
-        insert_query = f"INSERT INTO {self.table} (id, embedding) VALUES (?, ?)"
-        prepared = self.session.prepare(insert_query)
+        insert_query = f"INSERT INTO {self.table_name} (id, embedding) VALUES (?, ?)"
+        prepared = self.conn.prepare(insert_query)
         batch = BatchStatement()
 
         for i, vec in enumerate(X):
-            batch.add(prepared, (uuid.uuid4(), vec.tolist()))
+            batch.add(prepared, (i, vec.tolist()))
 
             if len(batch) >= batch_size:
-                self.session.execute(batch)
+                self.conn.execute(batch)
                 batch.clear()
         if batch:
-            self.session.execute(batch)
+            self.conn.execute(batch)
 
     def query(self, v, n):
         query = f"""
-        SELECT id FROM {self.table}
+        SELECT id FROM {self.table_name}
         ORDER BY embedding ANN OF %s
         LIMIT %s
         """
-        results = self.session.execute(query, (v.tolist(), n))
+        results = self.conn.execute(query, (v.tolist(), n))
         return [row.id for row in results]
    
     def batch_query(self, X, n): 
