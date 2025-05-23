@@ -1,6 +1,6 @@
 import uuid
 from cassandra.cluster import Cluster
-from cassandra.query import BatchStatement
+from cassandra.query import BatchStatement, BatchType
 
 from ann_benchmarks.algorithms.base.module import BaseANN
 
@@ -40,7 +40,7 @@ class Cassandra(BaseANN):
             "DOT": "DOT_PRODUCT",
         }
 
-        hnsw_distance_type = self.DISTANCE_MAPPING.get(self.metric, "EUCLIDEAN") 
+        hnsw_distance_type = DISTANCE_MAPPING.get(self.metric, "EUCLIDEAN") 
         self.conn.execute(f"""
             CREATE INDEX IF NOT EXISTS {self.index_name}
                 ON {self.keyspace}.{self.table_name}(embedding) USING 'sai'
@@ -50,10 +50,11 @@ class Cassandra(BaseANN):
     def fit(self, X, batch_size=100):
         self.vector_dim = X.shape[1]
         self._create_table()
+        self._create_index()
 
         insert_query = f"INSERT INTO {self.table_name} (id, embedding) VALUES (?, ?)"
         prepared = self.conn.prepare(insert_query)
-        batch = BatchStatement()
+        batch = BatchStatement(batch_type=BatchType.UNLOGGED)
 
         for i, vec in enumerate(X):
             batch.add(prepared, (i, vec.tolist()))
@@ -63,6 +64,9 @@ class Cassandra(BaseANN):
                 batch.clear()
         if batch:
             self.conn.execute(batch)
+
+    def set_query_arguments(self, params):
+        self._ef_search = params
 
     def query(self, v, n):
         query = f"""
