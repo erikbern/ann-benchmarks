@@ -1,0 +1,35 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: QuarkHNSW
+    disabled: false
+    docker_tag: quarkplatform/ann-benchmarks:v1.0.0
+    module: ann_benchmarks_module
+    name: quark-hnsw
+    run_groups:
+      base:
+        args: [[16, 32]]
+        query_args: [[50, 100, 200, 400]]
+      high:
+        args: [[32]]
+        query_args: [[100, 200, 400, 800]]
+  - base_args: ['@metric']
+    constructor: QuarkIVF
+    disabled: false
+    docker_tag: quarkplatform/ann-benchmarks:v1.0.0
+    module: ann_benchmarks_module
+    name: quark-ivf
+    run_groups:
+      base:
+        args: [[100, 256, 512]]
+        query_args: [[1, 2, 4, 8, 16, 32]]
+  - base_args: ['@metric']
+    constructor: QuarkBinary
+    disabled: false
+    docker_tag: quarkplatform/ann-benchmarks:v1.0.0
+    module: ann_benchmarks_module
+    name: quark-binary
+    run_groups:
+      fast:
+        args: [[100, 256]]
+        query_args: [[1, 5, 10, 20]]
