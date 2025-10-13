@@ -1,0 +1,13 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: DegLib
+    disabled: false
+    docker_tag: ann-benchmarks-deglib
+    module: ann_benchmarks.algorithms.deglib
+    name: deglib
+    run_groups:
+      DEG_30:
+        arg_groups: [{edges_per_vertex: 30, extend_k: 60, extend_eps: 0.1, optimization_target: 0, remove_edges: true}]
+        args: {}
+        query_args: [[{eps: 0.001}, {eps: 0.01}, {eps: 0.05}, {eps: 0.1}, {eps: 0.15}, {eps: 0.2}, {eps: 0.3}]]
