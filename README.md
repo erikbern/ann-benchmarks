@@ -52,6 +52,7 @@ Evaluated
 * [kgn](https://github.com/Henry-yan/kgn)
 * [vsag](https://github.com/antgroup/vsag)
 * [PGVectorScale](https://github.com/timescale/pgvectorscale/tree/main)
+* [AlayaLite](https://github.com/AlayaDB-AI/AlayaLite.git) ![https://img.shields.io/github/stars/AlayaDB-AI/AlayaLite?style=social](https://img.shields.io/github/stars/AlayaDB-AI/AlayaLite?style=social)
 
 Data sets
 =========

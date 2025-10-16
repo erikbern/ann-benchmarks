@@ -1,0 +1,20 @@
+float:
+  any:
+  - base_args: ['@metric', '@dimension']
+    constructor: AlayaLite
+    disabled: false
+    docker_tag: ann-benchmarks-alayalite
+    module: ann_benchmarks.algorithms.alayalite
+    name: AlayaLite
+    run_groups:
+      alayalite:
+        #### index_type HNSW FLAT
+        args: 
+          M: 32 
+          R: [32]
+          L: 200
+          index_type: NONE
+          quantization_type: RABITQ
+          fit_threads: 1 # only batch search
+          search_threads: 1 # only batch search
+        query_args: [[10, 20, 40, 60, 80, 120, 200, 400, 600, 800]]
