@@ -1,0 +1,13 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: QingMing
+    disabled: false
+    docker_tag: ann-benchmarks-qingming
+    # [CORRECTION] 指向包目录，而非文件
+    module: ann_benchmarks.algorithms.qingming
+    name: qingming
+    run_groups:
+      base:
+        args:
+          k: [100]
