@@ -63,6 +63,7 @@ jobs:
           - redisearch
           - qdrant
           - qg_ngt
+          - qingming
           - qsg_ngt
           - scann
           - sptag
