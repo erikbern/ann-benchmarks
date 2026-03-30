@@ -1,0 +1,12 @@
+float:
+  euclidean:
+  - base_args: ['@metric']
+    constructor: SereneDB
+    disabled: false
+    docker_tag: ann-benchmarks-serenedb
+    module: ann_benchmarks.algorithms.serenedb
+    name: serenedb
+    run_groups:
+      seg100k:
+        args: [[100000]]
+        query_args: [[16, 32, 64, 128]]
