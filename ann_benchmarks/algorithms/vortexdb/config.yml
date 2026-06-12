@@ -1,0 +1,27 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: VortexDBANN
+    disabled: false
+    docker_tag: ann-benchmarks-vortexdb
+    module: ann_benchmarks.algorithms.vortexdb
+    name: vortexdb
+    run_groups:
+      M-16-ef-50:
+        arg_groups: [{M: 16, efConstruction: 200, ef: 50}]
+        args: {}
+      M-16-ef-100:
+        arg_groups: [{M: 16, efConstruction: 200, ef: 100}]
+        args: {}
+      M-16-ef-200:
+        arg_groups: [{M: 16, efConstruction: 200, ef: 200}]
+        args: {}
+      M-32-ef-100:
+        arg_groups: [{M: 32, efConstruction: 400, ef: 100}]
+        args: {}
+      M-32-ef-200:
+        arg_groups: [{M: 32, efConstruction: 400, ef: 200}]
+        args: {}
+      M-48-ef-400:
+        arg_groups: [{M: 48, efConstruction: 500, ef: 400}]
+        args: {}
