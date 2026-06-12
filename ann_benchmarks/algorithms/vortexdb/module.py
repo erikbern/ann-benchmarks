@@ -30,7 +30,7 @@ class VortexDBANN(BaseANN):
         self._m = method_param["M"]
         self._m0 = method_param.get("M0", 2 * self._m)
         self._ef_construction = method_param["efConstruction"]
-        self._ef = method_param["ef"]
+        self._ef = method_param.get("ef", 100)
         self._max_layer = method_param.get("maxLayer", 16)
         self._batch_size = method_param.get("batchSize", 1000)
         self._server = None
@@ -66,6 +66,7 @@ class VortexDBANN(BaseANN):
             vector=DenseVector(np.asarray(v, dtype=np.float32).tolist()),
             similarity=self._similarity,
             limit=n,
+            ef=self._ef,
         )
         return [self._point_to_label[point_id] for point_id in point_ids]
 
@@ -78,7 +79,7 @@ class VortexDBANN(BaseANN):
             )
             for v in X
         ]
-        results = self._client.search_batch(queries=queries)
+        results = self._client.search_batch(queries=queries, ef=self._ef)
         self.res = [
             [self._point_to_label[point_id] for point_id in result]
             for result in results
@@ -129,7 +130,6 @@ class VortexDBANN(BaseANN):
                 "HNSW_M0": str(self._m0),
                 "HNSW_MAX_LAYER": str(self._max_layer),
                 "HNSW_EF_CONSTRUCTION": str(self._ef_construction),
-                "HNSW_EF": str(self._ef),
             }
         )
 
@@ -155,6 +155,10 @@ class VortexDBANN(BaseANN):
             time.sleep(0.2)
 
         raise RuntimeError("Timed out waiting for VortexDB gRPC server")
+
+    def set_query_arguments(self, ef):
+        self._ef = ef
+        self.name = str(self)
 
     def __str__(self):
         return (
