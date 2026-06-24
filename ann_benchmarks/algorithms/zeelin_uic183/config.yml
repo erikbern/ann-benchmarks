@@ -1,0 +1,20 @@
+float:
+  angular:
+  - base_args: ['@metric']
+    constructor: ZeelinLargecapPrefixbudgetM10BoundarytrimHnswgateIvf
+    disabled: false
+    docker_tag: ann-benchmarks-zeelin_uic183
+    module: ann_benchmarks.algorithms.zeelin_uic183
+    name: zeelin-uic183
+    run_groups:
+      uic183_angular_singlequery_submission:
+        args:
+          nlist: 16896
+          qefc: 48
+          ts: 1000000
+          threads: 1
+          mc: 64
+          cs: 2026
+          qm: 12
+          sef: 1
+        query_args: [[1], [1], [0], [7], [4]]
