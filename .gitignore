@@ -17,3 +17,14 @@ results/*
 venv
 
 .idea
+
+.codebuddy/
+remote_test.sh
+run_ray.py
+test_lancedb_api.py
+
+.codebuddy/
+remote_test.sh
+run_ray.py 
+test_lancedb_api.py
+

@@ -45,6 +45,7 @@ jobs:
           - hnswlib
           - kdtree
           - kgn
+          - lancedb
           - luceneknn
           - milvus
           - mrpt

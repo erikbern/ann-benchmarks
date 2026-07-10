@@ -55,6 +55,7 @@ Evaluated
 * [kgn](https://github.com/Henry-yan/kgn)
 * [vsag](https://github.com/antgroup/vsag)
 * [PGVectorScale](https://github.com/timescale/pgvectorscale/tree/main)
+* [LanceDB](https://github.com/lancedb/lancedb) ![https://img.shields.io/github/stars/lancedb/lancedb?style=social](https://img.shields.io/github/stars/lancedb/lancedb?style=social): IVF_FLAT, IVF_PQ, IVF_HNSW_SQ
 
 Data sets
 =========
@@ -113,6 +114,22 @@ glove-25-angular
 ----------------
 
 ![glove-25-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-25-angular.png)
+
+LanceDB (random-xs-20-euclidean)
+--------------------------------
+
+Recall/QPS frontier for LanceDB index types (IVF_FLAT, IVF_PQ, IVF_HNSW_SQ)
+on the euclidean dataset.
+
+![random-xs-20-euclidean](results/random-xs-20-euclidean.png)
+
+LanceDB (random-xs-20-angular)
+------------------------------
+
+Recall/QPS frontier for LanceDB index types (IVF_FLAT, IVF_PQ, IVF_HNSW_SQ)
+on the angular dataset.
+
+![random-xs-20-angular](results/random-xs-20-angular.png)
 
 TODO: update plots on <http://ann-benchmarks.com>.
 
