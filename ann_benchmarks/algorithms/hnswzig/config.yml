@@ -1,0 +1,29 @@
+float:
+  euclidean:
+  - base_args: ['@metric']
+    constructor: HnswZig
+    disabled: false
+    docker_tag: ann-benchmarks-hnswzig
+    module: ann_benchmarks.algorithms.hnswzig
+    name: hnsw-zig
+    run_groups:
+      M-16:
+        arg_groups: [{M: 16, efConstruction: 200}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-32:
+        arg_groups: [{M: 32, efConstruction: 400}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+  angular:
+  - base_args: ['@metric']
+    constructor: HnswZig
+    disabled: false
+    docker_tag: ann-benchmarks-hnswzig
+    module: ann_benchmarks.algorithms.hnswzig
+    name: hnsw-zig
+    run_groups:
+      M-16:
+        arg_groups: [{M: 16, efConstruction: 200}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
