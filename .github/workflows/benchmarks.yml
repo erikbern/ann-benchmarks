@@ -33,7 +33,6 @@ jobs:
           - balltree
           - bruteforce
           - ckdtree
-          - descartes
           - diskann
           - dolphinnpy
           - elasticsearch
@@ -44,7 +43,6 @@ jobs:
           - glass
           - hnswlib
           - kdtree
-          - kgn
           - luceneknn
           - milvus
           - mrpt
@@ -63,7 +61,6 @@ jobs:
           - redisearch
           - qdrant
           - qg_ngt
-          - qsg_ngt
           - scann
           - sptag
           - tinyknn

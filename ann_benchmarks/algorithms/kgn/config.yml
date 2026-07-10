@@ -2,7 +2,7 @@ float:
   euclidean:
     - base_args: ['@metric','@dimension']
       constructor: Kgn
-      disabled: false
+      disabled: true
       docker_tag: ann-benchmarks-kgn
       module: ann_benchmarks.algorithms.kgn
       name: kgn
@@ -21,7 +21,7 @@ float:
   angular:
     - base_args: ['@metric','@dimension']
       constructor: Kgn
-      disabled: false
+      disabled: true
       docker_tag: ann-benchmarks-kgn
       module: ann_benchmarks.algorithms.kgn
       name: kgn
