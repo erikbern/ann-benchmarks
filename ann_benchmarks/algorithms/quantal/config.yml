@@ -1,0 +1,33 @@
+float:
+  angular:
+  - base_args: ['@metric', '@dimension']
+    constructor: Quantal
+    disabled: false
+    docker_tag: ann-benchmarks-quantal
+    module: ann_benchmarks.algorithms.quantal
+    name: quantal
+    run_groups:
+      ef-200:
+        arg_groups: [{ef_construction: 200}]
+        args: {}
+        query_args: [[32, 64, 128, 256, 512, 1024]]
+      ef-400:
+        arg_groups: [{ef_construction: 400}]
+        args: {}
+        query_args: [[32, 64, 128, 256, 512, 1024]]
+  dot:
+  - base_args: ['@metric', '@dimension']
+    constructor: Quantal
+    disabled: false
+    docker_tag: ann-benchmarks-quantal
+    module: ann_benchmarks.algorithms.quantal
+    name: quantal
+    run_groups:
+      ef-200:
+        arg_groups: [{ef_construction: 200}]
+        args: {}
+        query_args: [[32, 64, 128, 256, 512, 1024]]
+      ef-400:
+        arg_groups: [{ef_construction: 400}]
+        args: {}
+        query_args: [[32, 64, 128, 256, 512, 1024]]

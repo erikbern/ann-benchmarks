@@ -62,6 +62,7 @@ jobs:
           - pynndescent
           - redisearch
           - qdrant
+          - quantal
           - qg_ngt
           - qsg_ngt
           - scann
