@@ -1,7 +1,7 @@
 ansicolors==1.1.8
 docker==7.1.0
 h5py==3.13.0
-matplotlib==3.10.1
+matplotlib==3.10.8
 numpy==2.2.4
 pyyaml==6.0.2
 psutil==7.0.0
