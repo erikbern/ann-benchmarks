@@ -69,6 +69,7 @@ jobs:
           - tinyknn
           - vald
           - vearch
+          - vecdbc
           - vespa
           - voyager
           - vsag
