@@ -19,7 +19,7 @@ from .distance import dataset_transform, metrics
 from .results import store_results
 
 
-def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.array, distance: str, count: int, 
+def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.array, distance: str, count: int,
                          run_count: int, batch: bool) -> Tuple[dict, list]:
     """Run a search query using the provided algorithm and report the results.
 
@@ -40,6 +40,7 @@ def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.arra
     )
 
     best_search_time = float("inf")
+    best_qps = 0
     for i in range(run_count):
         print("Run %d/%d..." % (i + 1, run_count))
         # a bit dumb but can't be a scalar since of Python's scoping rules
@@ -53,7 +54,7 @@ def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.arra
 
             Returns:
                 List[Tuple[float, List[Tuple[int, float]]]]: Tuple containing
-                    1. Total time taken for each query 
+                    1. Total time taken for each query
                     2. Result pairs consisting of (point index, distance to candidate data )
             """
             if prepared_queries:
@@ -91,7 +92,7 @@ def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.arra
 
             Returns:
                 List[Tuple[float, List[Tuple[int, float]]]]: List of tuples, each containing
-                    1. Total time taken for each query 
+                    1. Total time taken for each query
                     2. Result pairs consisting of (point index, distance to candidate data )
             """
             # TODO: consider using a dataclass to represent return value.
@@ -118,12 +119,21 @@ def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.arra
                 [(int(idx), float(metrics[distance].distance(v, X_train[idx]))) for idx in single_results]  # noqa
                 for v, single_results in zip(X, results)
             ]
-            return [(latency, v) for latency, v in zip(batch_latencies, candidates)]
+
+            # algorithm can measure wall time with higher accuracy
+            if hasattr(algo, "get_precise_time"):
+                precise_wall_time = algo.get_precise_time()
+                if precise_wall_time:
+                    total = precise_wall_time
+
+            return ([(latency, v) for latency, v in zip(batch_latencies, candidates)], total)
 
         if batch:
-            results = batch_query(X_test)
+            (results, wall_time) = batch_query(X_test)
         else:
+            start = time.time()
             results = [single_query(x) for x in X_test]
+            wall_time = time.time() - start
 
         total_time = sum(time for time, _ in results)
         total_candidates = sum(len(candidates) for _, candidates in results)
@@ -131,10 +141,14 @@ def run_individual_query(algo: BaseANN, X_train: numpy.array, X_test: numpy.arra
         avg_candidates = total_candidates / len(X_test)
         best_search_time = min(best_search_time, search_time)
 
+        qps = len(X_test) / wall_time
+        best_qps = max(best_qps, qps)
+
     verbose = hasattr(algo, "query_verbose")
     attrs = {
         "batch_mode": batch,
         "best_search_time": best_search_time,
+        "best_qps": best_qps,
         "candidates": avg_candidates,
         "expect_extra": verbose,
         "name": str(algo),
@@ -226,7 +240,7 @@ function"""
             print(f"Running query argument group {pos} of {len(query_argument_groups)}...")
             if query_arguments:
                 algo.set_query_arguments(*query_arguments)
-            
+
             descriptor, results = run_individual_query(algo, X_train, X_test, distance, count, run_count, batch)
 
             descriptor.update({
@@ -241,7 +255,7 @@ function"""
         algo.done()
 
 def run_from_cmdline():
-    """Calls the function `run` using arguments from the command line. See `ArgumentParser` for 
+    """Calls the function `run` using arguments from the command line. See `ArgumentParser` for
     arguments, all run it with `--help`.
     """
     parser = argparse.ArgumentParser(
