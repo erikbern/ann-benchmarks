@@ -1,0 +1,17 @@
+float:
+  any:
+    - base_args: ['@metric']
+      constructor: NSGLib
+      disabled: false
+      docker_tag: ann-benchmarks-nsg
+      module: ann_benchmarks.algorithms.nsg
+      name: nsg
+      run_groups:
+        1:
+          arg_groups: [{knn: 200, L: 40, R: 50, C: 500}]
+          args: {}
+          query_args: [[40, 100, 200, 400, 600, 800, 1000]]
+        2:
+          arg_groups: [{knn: 400, L: 60, R: 70, C: 500}]
+          args: {}
+          query_args: [[40, 100, 200, 400, 600, 800, 1000]]

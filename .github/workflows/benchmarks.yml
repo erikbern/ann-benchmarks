@@ -51,6 +51,7 @@ jobs:
           - nndescent
           - n2
           - nmslib
+          - nsg
           - onng_ngt
           - opensearchknn
           - panng_ngt
