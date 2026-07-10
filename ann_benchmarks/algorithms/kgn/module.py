@@ -1,14 +1,19 @@
-import psutil
+# import psutil
 import os
+import multiprocessing
 from time import time
-from sklearn import preprocessing
 
-import pykgn as kgn
+import gc
 import numpy as np
 import faiss
 from faiss import Kmeans
+from sklearn import preprocessing
+
+import pykgn as kgn
 
 from ..base.module import BaseANN
+
+
 
 
 class EPSearcher:
@@ -74,74 +79,47 @@ def metric_mapping(metric):
 class Kgn(BaseANN):
     def __init__(self, metric, dim, method_param):
         self.metric = metric_mapping(metric)
-        self.R = method_param['R']
-        self.L = method_param['L']
-        self.index_type = method_param['index_type']
-        self.optimize = method_param['optimize']
-        self.batch = method_param['batch']
-        self.kmeans_ep = method_param['kmeans_ep']
-        self.kmeans_type = method_param['kmeans_type']
-        self.level = method_param['level']
         self.name = 'kgn_(%s)' % (method_param)
+        self.R = method_param['R']
+        self.R2 = method_param['R2']
+        self.level = method_param['level']
         self.dir = 'indices'
-        self.path = f'{metric}_{dim}_{self.index_type}_R_{self.R}_L_{self.L}.kgn'
-        
+        self.path = f'{metric}_{dim}_{self.R}_{self.R2}_{self.level}.kgn'
+
+
+    def build(self, X):
+        Index = kgn.Index(nb=self.n, dim=self.d, base=X, topK=10, metric=self.metric, level=self.level, R=self.R, R2 = self.R2)
+        full_path = os.path.join(self.dir, self.path)
+        Index.build(full_path)
+
     def fit(self, X):
-        print(self.name, self.level, self.metric)
         if self.metric == "IP":
             X = preprocessing.normalize(X, "l2", axis=1)
         self.d = X.shape[1]
+        self.n = X.shape[0]
         if not os.path.exists(self.dir):
             os.mkdir(self.dir)
         if self.path not in os.listdir(self.dir):
-            print("build Index")
-            p = kgn.Index(self.index_type, dim=self.d,
-                            metric=self.metric, R=self.R, L=self.L) 
-            g = p.build(X,20)
-            g.save(os.path.join(self.dir, self.path))
-            del p
-            del g
-
-        # find kmeans centers -- RI
-        if(self.kmeans_type==0):
-            RI = np.array([])
-        elif(self.kmeans_type==2):
-            t = time()
-            kmeans_ep_searcher = EPSearcherKmeans_re(X, 0, self.kmeans_ep, self.metric)
-            T = time() - t
-            print("Time of bi_kmeans  = ", T, " k=", self.kmeans_ep)
-            RI = kmeans_ep_searcher.get_cent()
-        else:
-            print("Error: no such kmeans algorithm in main_opt.py")
-        print("kmeans_ep", self.kmeans_ep)
-        g = kgn.Graph()
-        g.load(os.path.join(self.dir, self.path))
-        if self.level == 1:
-            self.searcher = kgn.Searcher(g, X, self.metric, "SQ8U",20)
-        elif self.level == 2:
-            self.searcher = kgn.Searcher(g, X, self.metric, "SQ4U",20)
-        print("Make Searcher")
-
-        if self.optimize:
-            if self.batch:
-                if self.level <= 4:
-                    self.searcher.optimize()
-                else:
-                    print(self.level, "no needs optimized")
-                    pass
+            full_path = os.path.join(self.dir, self.path)
+            self.Index = kgn.Index(nb=self.n, dim=self.d, base=X, topK=10, metric=self.metric, level=self.level, R=self.R, R2 = self.R2)
+            if os.path.exists(full_path) and os.path.isfile(full_path):
+                print(f"load Index in: '{full_path}'")               
+                self.Index.load(full_path)
             else:
-                if self.level <= 4:
-                    self.searcher.optimize(1)
-                else:
-                    print(self.level, "no needs optimized")
-                    pass
-        print("Optimize Parameters")
-        
+                print(f"build Index in: '{full_path}'")
+                p = multiprocessing.Process(target=self.build, args=(X, ))
+                p.start()
+                p.join()
+                gc.collect()
+                self.Index.load(full_path)
 
-    def set_query_arguments(self, ef):
-        self.searcher.set_ef(ef)
+
+    def set_query_arguments(self, reorder, prune, ef):
+        if self.level == 2 and reorder == 1.5 :
+            reorder = 1.2
+        self.reorder = reorder
+        self.prune = prune
         self.ef = ef
-
     def prepare_query(self, q, n):
         if self.metric == 'IP':
             q = q / np.linalg.norm(q)
@@ -149,15 +127,10 @@ class Kgn(BaseANN):
         self.n = n
 
     def run_prepared_query(self):
-        if self.level <= 3:
-            self.res = self.searcher.search(
-                self.q, self.n)
-        else:
-            self.res = self.searcher.search(
-                self.q, self.n)
+        self.res = self.Index.search(self.reorder, self.prune, self.ef, self.q)
 
     def get_prepared_query_results(self):
         return self.res
 
     def freeIndex(self):
-        del self.searcher
+        del self.Index
