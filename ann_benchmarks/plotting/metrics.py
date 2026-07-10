@@ -31,8 +31,9 @@ def knn(dataset_distances, run_distances, count, metrics, epsilon=1e-3):
         knn_metrics.attrs["mean"] = mean
         knn_metrics.attrs["std"] = std
         knn_metrics["recalls"] = recalls
-    else:
-        print("Found cached result")
+    # else:
+    #     print("Found cached result")
+        
     return metrics["knn"]
 
 
@@ -70,6 +71,8 @@ def rel(dataset_distances, run_distances, metrics):
 def queries_per_second(queries, attrs):
     return 1.0 / attrs["best_search_time"]
 
+def delay_per_vector(queries, attrs):
+    return attrs["best_search_time"] * 1000.0
 
 def percentile_50(times):
     return np.percentile(times, 50.0) * 1000.0
@@ -143,6 +146,13 @@ all_metrics = {
     "qps": {
         "description": "Queries per second (1/s)",
         "function": lambda true_distances, run_distances, metrics, times, run_attrs: queries_per_second(
+            true_distances, run_attrs
+        ),  # noqa
+        "worst": float("-inf"),
+    },
+    "dpv": {
+        "description": "delay per vector (ms)",
+        "function": lambda true_distances, run_distances, metrics, times, run_attrs: delay_per_vector(
             true_distances, run_attrs
         ),  # noqa
         "worst": float("-inf"),

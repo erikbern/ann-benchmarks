@@ -13,28 +13,46 @@ def get_or_create_metrics(run):
     return run["metrics"]
 
 
-def create_pointset(data, xn, yn):
+def create_pointset(data, xn, yn, use_pareto_frontier=True):
     xm, ym = (metrics[xn], metrics[yn])
     rev_y = -1 if ym["worst"] < 0 else 1
     rev_x = -1 if xm["worst"] < 0 else 1
-    data.sort(key=lambda t: (rev_y * t[-1], rev_x * t[-2]))
 
     axs, ays, als = [], [], []
     # Generate Pareto frontier
     xs, ys, ls = [], [], []
-    last_x = xm["worst"]
-    comparator = (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
-    for algo, algo_name, xv, yv in data:
-        if not xv or not yv:
-            continue
-        axs.append(xv)
-        ays.append(yv)
-        als.append(algo_name)
-        if comparator(xv, last_x):
-            last_x = xv
+    
+    if use_pareto_frontier:
+        # Original version: Generate Pareto frontier (only keep points that improve in x-axis)
+        # Sort by y-value first, then x-value (for Pareto frontier selection)
+        data.sort(key=lambda t: (rev_y * t[-1], rev_x * t[-2]))
+        last_x = xm["worst"]
+        comparator = (lambda xv, lx: xv > lx) if last_x < 0 else (lambda xv, lx: xv < lx)
+        for algo, algo_name, xv, yv in data:
+            if not xv or not yv:
+                continue
+            axs.append(xv)
+            ays.append(yv)
+            als.append(algo_name)
+            if comparator(xv, last_x):
+                last_x = xv
+                xs.append(xv)
+                ys.append(yv)
+                ls.append(algo_name)
+    else:
+        # New version: Show all points without Pareto frontier filtering
+        # Sort by x-axis (recall) value to ensure proper line connection order
+        data.sort(key=lambda t: rev_x * t[-2])
+        for algo, algo_name, xv, yv in data:
+            if not xv or not yv:
+                continue
+            axs.append(xv)
+            ays.append(yv)
+            als.append(algo_name)
             xs.append(xv)
             ys.append(yv)
             ls.append(algo_name)
+    
     return xs, ys, ls, axs, ays, als
 
 
@@ -57,10 +75,14 @@ def compute_metrics(true_nn_distances, res, metric_1, metric_2, recompute=False)
         metric_2_value = metrics[metric_2]["function"](
             true_nn_distances, run_distances, metrics_cache, times, properties
         )
-
-        print("%3d: %80s %12.3f %12.3f" % (i, algo_name, metric_1_value, metric_2_value))
+        # metric_3_value = metrics[metric_3]["function"](
+        #     true_nn_distances, run_distances, metrics_cache, times, properties
+        # )
+        # print("%3d: %80s %12.3f %12.3f" % (i, algo_name, metric_1_value, metric_2_value))
+        print("%3d: %80s %12.3f %12.3f %12.3f" % (i, algo_name, metric_1_value, metric_2_value, 1000000.0 / metric_2_value))
 
         all_results.setdefault(algo, []).append((algo, algo_name, metric_1_value, metric_2_value))
+        # all_results.setdefault(algo, []).append((algo, algo_name, metric_1_value, metric_2_value, metric_3_value))
 
     return all_results
 

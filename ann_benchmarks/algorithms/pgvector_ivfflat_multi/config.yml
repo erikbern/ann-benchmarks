@@ -1,0 +1,14 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: PGVectorMulti
+    disabled: false
+    docker_tag: ann-benchmarks-pgvectormulti
+    module: ann_benchmarks.algorithms.pgvector_multi
+    name: pgvector_ivfflat_multi
+    run_groups:
+      # 固定配置：lists=100, workers=20, gpu=true
+      lists-100-workers-20-gpu:
+        arg_groups: [{lists: 100, num_workers: 20, use_gpu: true, batch_size: 5000, index_type: ivfflat, version: Ours}]
+        args: {}
+        query_args: [[1, 5, 10, 20, 40]]

@@ -22,10 +22,18 @@ def download(source_url: str, destination_path: str) -> None:
     Args:
         source_url (str): The URL of the file to download.
         destination_path (str): The local path where the file should be saved.
+    
+    Raises:
+        Exception: If download fails, raises a simple exception with error message.
     """
     if not os.path.exists(destination_path):
         print(f"downloading {source_url} -> {destination_path}...")
-        urlretrieve(source_url, destination_path)
+        try:
+            urlretrieve(source_url, destination_path)
+        except Exception as e:
+            # Extract simple error message
+            error_msg = str(e).split('\n')[0] if '\n' in str(e) else str(e)
+            raise Exception(f"Failed to download {source_url}: {error_msg}")
 
 
 def get_dataset_fn(dataset_name: str) -> str:
@@ -60,12 +68,18 @@ def get_dataset(dataset_name: str) -> Tuple[h5py.File, int]:
     try:
         dataset_url = f"https://ann-benchmarks.com/{dataset_name}.hdf5"
         download(dataset_url, hdf5_filename)
-    except:
-        traceback.print_exc()
-        print(f"Cannot download {dataset_url}")
+    except Exception as e:
+        # Extract concise error message (e.g., "Connection refused" from "[Errno 111] Connection refused")
+        error_msg = str(e)
+        if 'Connection refused' in error_msg:
+            error_msg = "Connection refused"
+        elif ':' in error_msg:
+            error_msg = error_msg.split(':')[-1].strip()
+        print(f"Download failed ({error_msg}), attempting to create dataset locally...")
         if dataset_name in DATASETS:
-            print("Creating dataset locally")
             DATASETS[dataset_name](hdf5_filename)
+        else:
+            raise FileNotFoundError(f"Cannot download {dataset_url} and no local generator available for {dataset_name}")
 
     hdf5_file = h5py.File(hdf5_filename, "r")
 
@@ -251,7 +265,7 @@ def sift(out_fn: str) -> None:
     import tarfile
 
     url = "ftp://ftp.irisa.fr/local/texmex/corpus/sift.tar.gz"
-    fn = os.path.join("data", "sift.tar.tz")
+    fn = os.path.join("data", "sift.tar.gz")
     download(url, fn)
     with tarfile.open(fn, "r:gz") as t:
         train = _get_irisa_matrix(t, "sift/sift_base.fvecs")
@@ -326,7 +340,7 @@ def fashion_mnist(out_fn: str) -> None:
 # Creates a 'deep image descriptor' dataset using the 'deep10M.fvecs' sample
 # from http://sites.skoltech.ru/compvision/noimi/. The download logic is adapted
 # from the script https://github.com/arbabenko/GNOIMI/blob/master/downloadDeep1B.py.
-def deep_image(out_fn: str) -> None:
+def deep_image(out_fn: str,n_wanted: int) -> None:
     yadisk_key = "https://yadi.sk/d/11eDCm7Dsn9GA"
     response = urlopen(
         "https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key="
@@ -336,7 +350,8 @@ def deep_image(out_fn: str) -> None:
     response_body = response.read().decode("utf-8")
 
     dataset_url = response_body.split(",")[0][9:-1]
-    filename = os.path.join("data", "deep-image.fvecs")
+    os.makedirs("raw-data", exist_ok=True)
+    filename = os.path.join("raw-data", "deep-image.fvecs")
     download(dataset_url, filename)
 
     # In the fvecs file format, each vector is stored by first writing its
@@ -344,9 +359,50 @@ def deep_image(out_fn: str) -> None:
     fv = numpy.fromfile(filename, dtype=numpy.float32)
     dim = fv.view(numpy.int32)[0]
     fv = fv.reshape(-1, dim + 1)[:, 1:]
+    fv = fv[:n_wanted]  
 
     X_train, X_test = train_test_split(fv)
     write_output(X_train, X_test, out_fn, "angular")
+
+def deep_bin(out_fn: str,
+             n_total: int = None,   # 默认不裁剪，使用全部数据
+             test_size: int = 10_000,
+             count: int = 100,
+             distance: str = "angular") -> None:
+    """
+    处理 .fbin 格式的 Deep 数据集，生成 ann-benchmarks HDF5。
+    原始文件若不存在，则自动调用 download() 下载。
+    
+    与 deep_image() 的区别：
+    - deep_image(): 处理 .fvecs 格式（从 Yandex Disk 下载）
+    - deep_bin(): 处理 .fbin 格式（从 Yandex Cloud 下载）
+    """
+    import os
+    import struct
+    import numpy as np
+
+    raw_fbin = os.path.join("raw-data", "DEEP.base.10M.fbin")  # 原始大文件
+    os.makedirs("raw-data", exist_ok=True)
+    os.makedirs("data", exist_ok=True)
+
+    # 1. 确保原始文件存在（不存在就下载）
+    download("https://storage.yandexcloud.net/yandex-research/ann-datasets/DEEP/base.10M.fbin",
+             raw_fbin)
+
+    # 2. 读取原始文件
+    with open(raw_fbin, "rb") as f:
+        num, dim = struct.unpack("II", f.read(8))
+        # 如果指定了 n_total，则裁剪；否则使用全部数据
+        n = min(n_total, num) if n_total is not None else num
+        vec = np.frombuffer(f.read(n * dim * 4), dtype=np.float32).reshape(n, dim)
+        print(f"=> 读取数据：{n}×{dim} ({os.path.getsize(raw_fbin)//1024//1024} MB)")
+
+    # 3. 划分 & 写 HDF5
+    train, test = train_test_split(vec, test_size=test_size, dimension=dim)
+    write_output(train, test, out_fn,
+                 distance=distance,
+                 point_type="float",
+                 count=count)
 
 
 def transform_bag_of_words(filename: str, n_dimensions: int, out_fn: str) -> None:
@@ -597,8 +653,89 @@ def coco(out_fn: str, kind: str):
     write_output(X_train, X_test, out_fn, "angular")
 
 
+def TEXT(out_fn: str,
+         n_total: int,
+         test_size: int,
+         count: int,
+         distance: str) -> None:
+    """
+    按需把原始 raw-data/TEXT.base.10M.fbin 截断成 TEXT_200k.fbin，再生成 ann-benchmarks HDF5。
+    """
+    import struct
+    import numpy as np
+
+    raw_fbin  = os.path.join("raw-data", "TEXT.base.10M.fbin")          # 原始大文件
+    crop_fbin = os.path.join("data", f"TEXT_{n_total//1000}k.fbin")  # 裁剪后文件
+
+    # 1. 若裁剪文件不存在，则现场制作
+    if not os.path.exists(crop_fbin):
+        if not os.path.exists(raw_fbin):
+            raise FileNotFoundError(f"请先把原始 TEXT.base.10M.fbin 放入 {raw_fbin}")
+        print(f"=> 首次运行，正在生成 {crop_fbin} （前 {n_total} 条）")
+        with open(raw_fbin, "rb") as f:
+            num, dim = struct.unpack("II", f.read(8))
+            n = min(n_total, num)
+            vec = np.frombuffer(f.read(n * dim * 4), dtype=np.float32).reshape(n, dim)
+        with open(crop_fbin, "wb") as g:
+            g.write(struct.pack("II", n, dim))
+            g.write(vec.astype(np.float32).tobytes())
+        print(f"<= 裁剪完成：{crop_fbin}  {n}×{dim}  {os.path.getsize(crop_fbin)//1024//1024} MB")
+
+    # 2. 读取裁剪后的文件
+    with open(crop_fbin, "rb") as f:
+        n_file, dim = struct.unpack("II", f.read(8))
+        X = np.frombuffer(f.read(n_file * dim * 4), dtype=np.float32).reshape(n_file, dim)
+
+    # 3. 划分 & 写 HDF5
+    train, test = train_test_split(X, test_size=test_size, dimension=dim)
+    write_output(train, test, out_fn,
+                 distance="angular",
+                 point_type="float",
+                 count=count)
+    # 4. 清理临时裁剪文件
+    os.remove(crop_fbin)
+    print(f"<= 已删除临时文件 {crop_fbin}")
+
+
+def text1M_200_angular(out_fn: str = "TEXT1M-200-angular.hdf5",
+                       test_size: int = 10_000,
+                       count: int = 100,
+                       distance: str = "angular") -> None:
+    """
+    自动下载 TEXT 1M 数据集,生成 ann-benchmarks HDF5.
+    最终 shape: 1000 000 × 200
+    """
+    import os
+    import struct
+    import urllib.request
+    import numpy as np
+    raw_bin   = os.path.join("raw-data", "TEXT1M-200-angular.fbin")  # 原始 1M 文件
+    url = "https://storage.yandexcloud.net/yandex-research/ann-datasets/T2I/base.1M.fbin"
+
+    os.makedirs("raw-data", exist_ok=True)
+    download(url, raw_bin)          
+    print(f"<= 本地已有 {raw_bin}  {os.path.getsize(raw_bin)//1024//1024} MB")    
+
+    with open(raw_bin, "rb") as f:
+        n_file, dim = struct.unpack("II", f.read(8))
+        X = np.frombuffer(f.read(n_file * dim * 4), dtype=np.float32).reshape(n_file, dim)
+
+    train, test = train_test_split(X, test_size=test_size, dimension=dim)
+    write_output(train, test, out_fn,
+                 distance=distance,
+                 point_type="float",
+                 count=count)
+
+    print(f"<= HDF5 已生成：{out_fn}")
+    os.remove(raw_bin)
+    print(f"<= 已删除临时文件 {raw_bin}")
+    
+
+
 DATASETS: Dict[str, Callable[[str], None]] = {
-    "deep-image-96-angular": deep_image,
+    "deep-image1M-96-angular": lambda out_fn: deep_bin(out_fn, n_total=1_000_000, test_size=10_000, count=100, distance="angular"),
+    "deep-image10M-96-angular": lambda out_fn: deep_bin(out_fn, n_total=None, test_size=10_000, count=100, distance="angular"),
+    #"deep-image-96-angular": lambda out_fn: deep_image(out_fn, n_wanted=1000_000),  # 使用 .fvecs 格式（旧版本）    
     "fashion-mnist-784-euclidean": fashion_mnist,
     "gist-960-euclidean": gist,
     "glove-25-angular": lambda out_fn: glove(out_fn, 25),
@@ -626,7 +763,10 @@ DATASETS: Dict[str, Callable[[str], None]] = {
     "movielens10m-jaccard": movielens10m,
     "movielens20m-jaccard": movielens20m,
     "coco-i2i-512-angular": lambda out_fn: coco(out_fn, "i2i"),
-    "coco-t2i-512-angular": lambda out_fn: coco(out_fn, "t2i"),
+    "coco-t2i-512-angular": lambda out_fn: coco(out_fn, "t2i"),    
+    #"TEXT1M-200-angular": lambda out_fn: TEXT(out_fn, n_total=1000_000, test_size=10_000, count=100, distance="angular"),
+    "text500k-200-angular": lambda out_fn: TEXT(out_fn, n_total=500_000, test_size=10_000, count=100, distance="angular"),
+    "text1M-200-angular": lambda out_fn: text1M_200_angular(out_fn, test_size=10_000, count=100, distance="angular"),
 }
 
 DATASETS.update({

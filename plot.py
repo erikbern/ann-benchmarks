@@ -13,7 +13,7 @@ from ann_benchmarks.plotting.utils import (compute_metrics, create_linestyles,
 from ann_benchmarks.results import get_unique_algorithms, load_all_results
 
 
-def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles, batch):
+def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles, batch, use_pareto_frontier=True):
     xm, ym = (metrics[xn], metrics[yn])
     # Now generate each plot
     handles = []
@@ -22,13 +22,13 @@ def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles, bat
 
     # Sorting by mean y-value helps aligning plots with labels
     def mean_y(algo):
-        xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
+        xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn, use_pareto_frontier)
         return -np.log(np.array(ys)).mean()
 
     # Find range for logit x-scale
     min_x, max_x = 1, 0
     for algo in sorted(all_data.keys(), key=mean_y):
-        xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn)
+        xs, ys, ls, axs, ays, als = create_pointset(all_data[algo], xn, yn, use_pareto_frontier)
         min_x = min([min_x] + [x for x in xs if x > 0])
         max_x = max([max_x] + [x for x in xs if x < 1])
         color, faded, linestyle, marker = linestyles[algo]
@@ -77,13 +77,16 @@ def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles, bat
     plt.setp(ax.get_xminorticklabels(), visible=True)
 
     # Logit scale has to be a subset of (0,1)
-    if "lim" in xm and x_scale != "logit":
-        x0, x1 = xm["lim"]
-        plt.xlim(max(x0, 0), min(x1, 1))
-    elif x_scale == "logit":
-        plt.xlim(min_x, max_x)
-    if "lim" in ym:
-        plt.ylim(ym["lim"])
+    # if "lim" in xm and x_scale != "logit":
+    #     x0, x1 = xm["lim"]
+    #     plt.xlim(max(x0, 0), min(x1, 1))
+    # elif x_scale == "logit":
+    #     plt.xlim(min_x, max_x)
+    # if "lim" in ym:
+    #     plt.ylim(ym["lim"])
+    # plt.xlim(0.2, 1-1e-5)
+    plt.xlim(0.2, 1)
+    plt.ylim(5,1e6)
 
     # Workaround for bug https://github.com/matplotlib/matplotlib/issues/6789
     ax.spines["bottom"]._adjust_location()
@@ -94,7 +97,9 @@ def create_plot(all_data, raw, x_scale, y_scale, xn, yn, fn_out, linestyles, bat
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", metavar="DATASET", default="glove-100-angular")
+    parser.add_argument("--dataset", metavar="DATASET", 
+                        default="deep-image-96-angular"
+                        )
     parser.add_argument("--count", default=10)
     parser.add_argument(
         "--definitions", metavar="FILE", help="load algorithm definitions from FILE", default="algos.yaml"
@@ -122,6 +127,9 @@ if __name__ == "__main__":
     )
     parser.add_argument("--batch", help="Plot runs in batch mode", action="store_true")
     parser.add_argument("--recompute", help="Clears the cache and recomputes the metrics", action="store_true")
+    parser.add_argument(
+        "--no-pareto-frontier", help="Show all points instead of filtering by Pareto frontier", action="store_true"
+    )
     args = parser.parse_args()
 
     if not args.output:
@@ -133,10 +141,13 @@ if __name__ == "__main__":
     unique_algorithms = get_unique_algorithms()
     results = load_all_results(args.dataset, count, args.batch)
     linestyles = create_linestyles(sorted(unique_algorithms))
+    print("%3s: %80s %12s %12s %12s" % ("res", "experience name", "recall", "qps", "dpv"))
+    
     runs = compute_metrics(np.array(dataset["distances"]), results, args.x_axis, args.y_axis, args.recompute)
     if not runs:
         raise Exception("Nothing to plot")
 
     create_plot(
-        runs, args.raw, args.x_scale, args.y_scale, args.x_axis, args.y_axis, args.output, linestyles, args.batch
+        runs, args.raw, args.x_scale, args.y_scale, args.x_axis, args.y_axis, args.output, linestyles, args.batch, 
+        use_pareto_frontier=not args.no_pareto_frontier
     )

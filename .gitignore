@@ -6,7 +6,15 @@ protocol/c/fr-*
 install/*.txt
 install/*.yaml
 install/lib-*/
-data/*
+
+data/
+data/**
+data
+
+raw-data/
+raw-data/**
+raw-data
+
 *.class
 
 *.log
@@ -17,3 +25,7 @@ results/*
 venv
 
 .idea
+
+annoy/
+
+tags

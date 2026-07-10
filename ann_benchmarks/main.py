@@ -81,7 +81,8 @@ def parse_arguments() -> argparse.Namespace:
         "--dataset",
         metavar="NAME",
         help="the dataset to load training points from",
-        default="glove-100-angular",
+        # default="glove-100-angular",
+        default="deep-image-96-angular",
         choices=DATASETS.keys(),
     )
     parser.add_argument(
@@ -185,6 +186,7 @@ def filter_by_available_docker_images(definitions: List[Definition]) -> List[Def
     Returns:
         List[Definition]: A list of algorithm definitions that are associated with available Docker images.
     """
+
     docker_client = docker.from_env()
     docker_tags = {tag.split(":")[0] for image in docker_client.images.list() for tag in image.tags}
 
@@ -310,6 +312,7 @@ def main():
         shutil.rmtree(INDEX_DIR)
 
     dataset, dimension = get_dataset(args.dataset)
+    print("point type:", dataset.attrs.get("point_type", "float"))
     definitions: List[Definition] = get_definitions(
         dimension=dimension,
         point_type=dataset.attrs.get("point_type", "float"),
@@ -318,6 +321,8 @@ def main():
         base_dir=args.definitions,
     )
     random.shuffle(definitions)
+    # print("definitions:", args.definitions)
+
 
     definitions = filter_already_run_definitions(definitions, 
         dataset=args.dataset, 
@@ -326,6 +331,7 @@ def main():
         force=args.force,
     )
 
+    # print(definitions)
     if args.algorithm:
         logger.info(f"running only {args.algorithm}")
         definitions = [d for d in definitions if d.algorithm == args.algorithm]

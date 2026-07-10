@@ -1,0 +1,18 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: PGVectorSingle
+    disabled: false
+    docker_tag: ann-benchmarks-pgvectorgpu
+    module: ann_benchmarks.algorithms.pgvector_parallel
+    name: pgvector_ivfflat_gpu
+    run_groups:
+      # 固定配置：lists=100, gpu=true
+      lists-100-gpu:
+        arg_groups: [{lists: 10, use_gpu: true, batch_size: 10, index_type: ivfflat, version: Ours}]
+        args: {}
+        query_args: [[1, 5, 10, 20, 40]]
+      # test-gpu:
+      #   arg_groups: [{lists: 100, use_gpu: true, batch_size: 10000, index_type: ivfflat, version: Ours}]
+      #   args: {}
+      #   query_args: [[1]]
