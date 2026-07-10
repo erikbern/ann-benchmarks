@@ -16,6 +16,7 @@ RUN echo \
 RUN apt-get update 
 RUN apt-get install -y wget docker-ce-cli docker-compose-plugin
 
+RUN pip3 install 'marshmallow<4.0.0'
 RUN pip3 install pymilvus==2.4.1
 RUN python3 -c "from pymilvus import Collection"
 
