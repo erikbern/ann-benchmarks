@@ -115,7 +115,7 @@ def dataset_transform(dataset: h5py.Dataset) -> Tuple[Union[np.ndarray, List[np.
         Tuple[Union[np.ndarray, List[np.ndarray]], Union[np.ndarray, List[np.ndarray]]]: Tuple of training and testing data in conventional format.
     """
     if dataset.attrs.get("type", "dense") != "sparse":
-        return np.array(dataset["train"]), np.array(dataset["test"])
+        return np.asarray(dataset["train"]), np.asarray(dataset["test"])
 
     # we store the dataset as a list of integers, accompanied by a list of lengths in hdf5
     # so we transform it back to the format expected by the algorithms here (array of array of ints)
