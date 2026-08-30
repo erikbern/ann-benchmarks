@@ -1,14 +1,20 @@
 FROM ann-benchmarks
 
-RUN apt update && apt install -y cmake ninja-build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    cmake \
+    git \
+    libomp-dev \
+    ninja-build
 
-RUN git clone https://github.com/Visual-Computing/DynamicExplorationGraph.git; cd DynamicExplorationGraph
+# Install Python build dependencies
+RUN pip install --no-cache-dir \
+    setuptools \
+    pybind11 \
+    wheel \
+    "numpy>=1.26.0"
 
-RUN python -m pip install pybind11 numpy setuptools>=77.0 build
-RUN cd DynamicExplorationGraph/python; python setup.py copy_build_files
-RUN cd DynamicExplorationGraph/python; python -m pip install .
-
-# RUN python -m pip install deglib==0.1.4
+# Install deglib
+RUN pip install --no-cache-dir "deglib>=0.2.5"
 
 RUN python -c 'import deglib'
-

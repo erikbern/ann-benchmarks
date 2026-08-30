@@ -1,13 +1,25 @@
 float:
   any:
   - base_args: ['@metric']
-    constructor: DegLib
+    constructor: DEG
     disabled: false
     docker_tag: ann-benchmarks-deglib
     module: ann_benchmarks.algorithms.deglib
-    name: deglib
+    name: deg
     run_groups:
-      DEG_30:
-        arg_groups: [{edges_per_vertex: 30, extend_k: 60, extend_eps: 0.1, optimization_target: 0, remove_edges: true}]
-        args: {}
-        query_args: [[{eps: 0.001}, {eps: 0.01}, {eps: 0.05}, {eps: 0.1}, {eps: 0.15}, {eps: 0.2}, {eps: 0.3}]]
+      fp32:
+        args:
+          dtype: ['float32']
+          k: [16, 24, 30, 40, 48]
+          opt_target: ['LowLID', 'StreamingData']
+          prune_non_rng: [false, true]
+        query_args: [[0.0, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.15, 0.2, 0.25, 0.3]]
+      int8_qg:
+        args:
+          dtype: ['int8']
+          k: [16, 24, 30, 40, 48]
+          opt_target: ['LowLID', 'StreamingData']
+          prune_non_rng: [false, true]
+        query_args:
+          - [1.0, 1.2, 1.5, 2.0]
+          - [0.0, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.15, 0.2, 0.25, 0.3]
