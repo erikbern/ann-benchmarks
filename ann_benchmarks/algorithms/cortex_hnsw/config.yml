@@ -1,0 +1,21 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: CortexHNSW
+    disabled: false
+    docker_tag: ann-benchmarks-cortex-hnsw
+    module: ann_benchmarks.algorithms.cortex_hnsw.module
+    name: cortex-hnsw
+    run_groups:
+      M-16:
+        arg_groups: [{M: 16, efConstruction: 200}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-32:
+        arg_groups: [{M: 32, efConstruction: 400}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-64:
+        arg_groups: [{M: 64, efConstruction: 500}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
