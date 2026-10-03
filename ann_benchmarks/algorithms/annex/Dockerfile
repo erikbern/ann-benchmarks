@@ -15,7 +15,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN pip install maturin
 
 ARG ANNEX_REPO=https://github.com/rosharma719/ANNex.git
-ARG ANNEX_REF=d963df612025f9cbc7a2811eb29595e3c55e8448
+ARG ANNEX_REF=53b15195f6882e9ad7f29c252e6cf3715df3e7c2
 
 RUN git init /annex \
     && cd /annex \
