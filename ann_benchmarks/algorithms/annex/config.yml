@@ -1,0 +1,21 @@
+float:
+  any:
+    - base_args: ['@metric']
+      constructor: Annex
+      disabled: false
+      docker_tag: ann-benchmarks-annex
+      module: ann_benchmarks.algorithms.annex
+      name: annex
+      run_groups:
+        M-16:
+          arg_groups: [{M: 16, efConstruction: 300}]
+          query_args: [[32, 64, 128, 256, 512]]
+        M-16-sq8:
+          arg_groups: [{M: 16, efConstruction: 300, sq8: true}]
+          query_args: [[32, 64, 128, 256, 512]]
+        M-32:
+          arg_groups: [{M: 32, efConstruction: 300}]
+          query_args: [[32, 64, 128, 256, 512]]
+        M-32-sq8:
+          arg_groups: [{M: 32, efConstruction: 300, sq8: true}]
+          query_args: [[32, 64, 128, 256, 512]]
