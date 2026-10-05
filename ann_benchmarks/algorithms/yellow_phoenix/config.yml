@@ -1,0 +1,32 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: YellowPhoenixHybrid
+    disabled: false
+    docker_tag: ann-benchmarks-yellow-phoenix
+    module: ann_benchmarks.algorithms.yellow_phoenix
+    name: yellow-phoenix-hybrid
+    run_groups:
+      m12:
+        arg_groups: [{m: 12, efC: 200}]
+        args: {}
+        query_args: [[16, 100], [16, 200], [32, 100], [32, 200], [64, 100], [64, 200], [128, 100], [128, 200], [128, 500], [256, 200], [256, 500], [512, 500], [1000, 1000]]
+      m16:
+        arg_groups: [{m: 16, efC: 300}]
+        args: {}
+        query_args: [[64, 100], [64, 200], [128, 200], [128, 500], [256, 500], [512, 500], [1000, 1000]]
+      m24:
+        arg_groups: [{m: 24, efC: 400}]
+        args: {}
+        query_args: [[64, 100], [64, 200], [128, 200], [128, 500], [256, 500], [512, 500], [1000, 1000]]
+  - base_args: ['@metric']
+    constructor: YellowPhoenixBinary
+    disabled: false
+    docker_tag: ann-benchmarks-yellow-phoenix
+    module: ann_benchmarks.algorithms.yellow_phoenix
+    name: yellow-phoenix-binary
+    run_groups:
+      m12:
+        arg_groups: [{m: 12, efC: 200}]
+        args: {}
+        query_args: [[16], [32], [64], [128], [256], [512], [1000]]
