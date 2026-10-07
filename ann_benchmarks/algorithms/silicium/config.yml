@@ -1,0 +1,25 @@
+float:
+  any:
+  - base_args: ['@metric']
+    constructor: SiliciumHNSW
+    disabled: false
+    docker_tag: ann-benchmarks-silicium
+    module: ann_benchmarks.algorithms.silicium
+    name: silicium
+    run_groups:
+      M-8:
+        arg_groups: [{M: 8, efConstruction: 100}]
+        args: {}
+        query_args: [[8, 12, 16, 24, 32, 48]]
+      M-16:
+        arg_groups: [{M: 16, efConstruction: 100}]
+        args: {}
+        query_args: [[8, 12, 16, 24, 32, 48, 64]]
+      M-32:
+        arg_groups: [{M: 32, efConstruction: 400}]
+        args: {}
+        query_args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
+      M-64:
+        arg_groups: [{M: 64, efConstruction: 500}]
+        args: {}
+        query_args: [[20, 50, 100, 200, 500, 1000]]
