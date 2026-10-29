@@ -45,7 +45,7 @@ path.logs: /usr/share/elasticsearch/logs\n\
 bootstrap.memory_lock: true\n\
 thread_pool.write.size: 1\n\
 thread_pool.search.size: 1\n\
-thread_pool.search.queue_size: 1\n\
+thread_pool.search.queue_size: 1000\n\
 xpack.security.enabled: false\n\
 ' > config/elasticsearch.yml
 

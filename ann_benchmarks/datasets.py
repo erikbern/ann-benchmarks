@@ -225,6 +225,39 @@ def glove(out_fn: str, d: int) -> None:
         write_output(numpy.array(X_train), numpy.array(X_test), out_fn, "angular")
 
 
+def glove_subset(out_fn: str, d: int, n_train: int, distance: str, random_state: int = 42) -> None:
+    """Generate a random subset dataset from GloVe vectors.
+
+    Reads all vectors of the specified dimension d from GloVe Twitter,
+    randomly samples n_train + 10000 vectors with a fixed seed, and writes
+    an HDF5 file with n_train training vectors and 10000 test vectors.
+    """
+    import zipfile
+    from sklearn.model_selection import train_test_split as sklearn_train_test_split
+
+    url = "http://nlp.stanford.edu/data/glove.twitter.27B.zip"
+    fn = os.path.join("data", "glove.twitter.27B.zip")
+    download(url, fn)
+    with zipfile.ZipFile(fn) as z:
+        print("preparing %s (subset: train=%d, test=10000)" % (out_fn, n_train))
+        z_fn = "glove.twitter.27B.%dd.txt" % d
+        X = []
+        for line in z.open(z_fn):
+            v = [float(x) for x in line.strip().split()[1:]]
+            X.append(numpy.array(v, dtype=numpy.float32))
+        X = numpy.array(X)
+
+    rng = numpy.random.RandomState(random_state)
+    n_total = n_train + 10000
+    if n_total > len(X):
+        raise ValueError(f"Requested {n_total} vectors but only {len(X)} available")
+    indices = rng.permutation(len(X))[:n_total]
+    X = X[indices]
+
+    X_train, X_test = sklearn_train_test_split(X, test_size=10000, random_state=random_state)
+    write_output(X_train, X_test, out_fn, distance)
+
+
 def _load_texmex_vectors(f: Any, n: int, k: int) -> numpy.ndarray:
     import struct
 
@@ -604,6 +637,7 @@ DATASETS: Dict[str, Callable[[str], None]] = {
     "glove-25-angular": lambda out_fn: glove(out_fn, 25),
     "glove-50-angular": lambda out_fn: glove(out_fn, 50),
     "glove-100-angular": lambda out_fn: glove(out_fn, 100),
+    "glove-100-angular-100k": lambda out_fn: glove_subset(out_fn, 100, 100000, "angular"),
     "glove-200-angular": lambda out_fn: glove(out_fn, 200),
     "mnist-784-euclidean": mnist,
     "random-xs-20-euclidean": lambda out_fn: random_float(out_fn, 20, 10000, 100, "euclidean"),

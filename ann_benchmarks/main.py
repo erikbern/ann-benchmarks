@@ -6,6 +6,7 @@ import logging.config
 import multiprocessing.pool
 import os
 import random
+import re
 import shutil
 import sys
 from typing import List
@@ -48,31 +49,61 @@ def positive_int(input_str: str) -> int:
     return i
 
 
+def memory_size(input_str: str) -> int:
+    """
+    Parses a human-readable memory size string into bytes.
+
+    Args:
+        input_str (str): A string like "4G", "512M", "1024", "2T".
+
+    Returns:
+        int: The size in bytes.
+
+    Raises:
+        argparse.ArgumentTypeError: If the input string is not a valid memory size.
+    """
+    m = re.match(r"^(\d+(?:\.\d+)?)\s*([KMGT]?)(?:B?)?$", input_str, re.IGNORECASE)
+    if not m:
+        raise argparse.ArgumentTypeError(f"{input_str} is not a valid memory size")
+    value, unit = float(m.group(1)), m.group(2).upper()
+    multipliers = {"": 1, "K": 1024, "M": 1024 ** 2, "G": 1024 ** 3, "T": 1024 ** 4}
+    return int(value * multipliers[unit])
+
+
 def run_worker(cpu: int, mem_limit: int, args: argparse.Namespace, queue: multiprocessing.Queue) -> None:
     """
     Executes the algorithm based on the provided parameters.
 
     The algorithm is either executed directly or through a Docker container based on the `args.local`
-     argument. The function runs until the queue is emptied. When running in a docker container, it 
+     argument. The function runs until the queue is emptied. When running in a docker container, it
     executes the algorithm in a Docker container.
 
     Args:
         cpu (int): The CPU number to be used in the execution.
         mem_limit (int): The memory to be used in the execution.
-        args (argparse.Namespace): User provided arguments for running workers. 
+        args (argparse.Namespace): User provided arguments for running workers.
         queue (multiprocessing.Queue): The multiprocessing queue that contains the algorithm definitions.
 
     Returns:
         None
     """
-    while not queue.empty():
-        definition = queue.get()
-        if args.local:
-            run(definition, args.dataset, args.count, args.runs, args.batch)
-        else:
-            cpu_limit = str(cpu) if not args.batch else f"0-{multiprocessing.cpu_count() - 1}"
-            
-            run_docker(definition, args.dataset, args.count, args.runs, args.timeout, args.batch, cpu_limit, mem_limit)
+    worker_logger = logging.getLogger(f"annb.worker{cpu}")
+    worker_logger.info(f"Worker {cpu} started (pid={os.getpid()})")
+    try:
+        while not queue.empty():
+            definition = queue.get()
+            worker_logger.info(f"Worker {cpu} got definition {definition}")
+            if args.local:
+                run(definition, args.dataset, args.count, args.runs, args.batch)
+            else:
+                cpu_limit = str(cpu) if not args.batch else f"0-{multiprocessing.cpu_count() - 1}"
+
+                run_docker(definition, args.dataset, args.count, args.runs, args.timeout, args.batch, cpu_limit, mem_limit)
+    except Exception as e:
+        worker_logger.exception(f"Worker {cpu} (pid={os.getpid()}) crashed: {e}")
+        raise
+    finally:
+        worker_logger.info(f"Worker {cpu} (pid={os.getpid()}) exiting")
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -121,7 +152,20 @@ def parse_arguments() -> argparse.Namespace:
         "--max-n-algorithms", type=int, help="Max number of algorithms to run (just used for testing)", default=-1
     )
     parser.add_argument("--run-disabled", help="run algorithms that are disabled in algos.yml", action="store_true")
-    parser.add_argument("--parallelism", type=positive_int, help="Number of Docker containers in parallel", default=1)
+    parser.add_argument(
+        "--parallelism",
+        type=positive_int,
+        help="Number of Docker containers in parallel (default: 1, or auto when --mem-limit is set)",
+        default=None,
+    )
+    parser.add_argument(
+        "--mem-limit",
+        type=memory_size,
+        metavar="SIZE",
+        help="Memory limit per Docker container, e.g. 4G, 512M. "
+             "If set, parallelism is derived from available memory.",
+        default=None,
+    )
 
     args = parser.parse_args()
     if args.timeout == -1:
@@ -239,28 +283,57 @@ def create_workers_and_execute(definitions: List[Definition], args: argparse.Nam
                    one worker.
     """
     cpu_count = multiprocessing.cpu_count()
-    if args.parallelism > cpu_count - 1:
-        raise Exception(f"Parallelism larger than {cpu_count - 1}! (CPU count minus one)")
+    available = psutil.virtual_memory().available
+    memory_margin = 500e6  # reserve some extra memory for misc stuff
 
-    if args.batch and args.parallelism > 1:
+    if args.mem_limit is not None:
+        if args.mem_limit < 1:
+            raise Exception("--mem-limit must be positive")
+        max_by_memory = int((available - memory_margin) // args.mem_limit)
+        max_by_cpu = cpu_count - 1
+        user_limit = args.parallelism if args.parallelism is not None else max_by_cpu
+        parallelism = min(max_by_memory, max_by_cpu, user_limit)
+        if parallelism < 1:
+            raise Exception(
+                f"--mem-limit {args.mem_limit} bytes is too large for available memory "
+                f"({available} bytes)"
+            )
+        mem_limit = args.mem_limit
+    else:
+        parallelism = args.parallelism if args.parallelism is not None else 1
+        if parallelism > cpu_count - 1:
+            raise Exception(f"Parallelism larger than {cpu_count - 1}! (CPU count minus one)")
+        mem_limit = int((available - memory_margin) / parallelism)
+
+    if args.batch and parallelism > 1:
         raise Exception(
-            f"Batch mode uses all available CPU resources, --parallelism should be set to 1. (Was: {args.parallelism})"
+            f"Batch mode uses all available CPU resources, --parallelism should be set to 1. (Was: {parallelism})"
         )
 
     task_queue = multiprocessing.Queue()
     for definition in definitions:
         task_queue.put(definition)
 
-    memory_margin = 500e6  # reserve some extra memory for misc stuff
-    mem_limit = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
-
+    logger.info(f"Creating {parallelism} workers with queue size {len(definitions)}")
+    workers = []
     try:
-        workers = [multiprocessing.Process(target=run_worker, args=(i + 1, mem_limit, args, task_queue)) for i in range(args.parallelism)]
-        [worker.start() for worker in workers]
-        [worker.join() for worker in workers]
+        for i in range(parallelism):
+            worker = multiprocessing.Process(target=run_worker, args=(i + 1, mem_limit, args, task_queue))
+            workers.append(worker)
+            logger.info(f"Created worker {i + 1} (pid will be {worker.pid})")
+
+        for i, worker in enumerate(workers, 1):
+            worker.start()
+            logger.info(f"Started worker {i} (pid={worker.pid})")
+
+        for i, worker in enumerate(workers, 1):
+            worker.join()
+            logger.info(f"Worker {i} (pid={worker.pid}) finished with exitcode={worker.exitcode}")
     finally:
         logger.info("Terminating %d workers" % len(workers))
-        [worker.terminate() for worker in workers]
+        for worker in workers:
+            if worker.is_alive():
+                worker.terminate()
 
 
 def filter_disabled_algorithms(definitions: List[Definition]) -> List[Definition]:
@@ -329,6 +402,10 @@ def main():
     if args.algorithm:
         logger.info(f"running only {args.algorithm}")
         definitions = [d for d in definitions if d.algorithm == args.algorithm]
+
+    if args.docker_tag:
+        logger.info(f"running only algorithms in docker image {args.docker_tag}")
+        definitions = [d for d in definitions if d.docker_tag == args.docker_tag]
 
     if not args.local:
         definitions = filter_by_available_docker_images(definitions)

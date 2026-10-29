@@ -1,0 +1,42 @@
+float:
+  angular:
+  - base_args: ['@metric']
+    constructor: Zeelin
+    disabled: false
+    docker_tag: ann-benchmarks-zeelin
+    module: ann_benchmarks.algorithms.zeelin
+    name: zeelin-scann
+    run_groups:
+      scann-2500:
+        arg_groups:
+        - num_leaves: [2500]
+          anisotropic_quantization_threshold: [0.2]
+          dims_per_block: [2]
+        query_args:
+        - [[60, 80], [80, 100], [100, 120], [120, 140], [128, 145],
+           [130, 146], [130, 150], [132, 150], [150, 180], [200, 300],
+           [300, 500], [500, 700], [800, 1000]]
+      scann-2600:
+        arg_groups:
+        - num_leaves: [2600]
+          anisotropic_quantization_threshold: [0.2]
+          dims_per_block: [2]
+        query_args:
+        - [[118, 138], [124, 142], [128, 145]]
+      scann-2000:
+        arg_groups:
+        - num_leaves: [2000]
+          anisotropic_quantization_threshold: [0.2]
+          dims_per_block: [2]
+        query_args:
+        - [[90, 110], [108, 125], [110, 120], [115, 130], [130, 150],
+           [170, 200], [250, 500], [400, 500], [800, 1000]]
+      scann-soar-high-recall:
+        arg_groups:
+        - num_leaves: [2500]
+          anisotropic_quantization_threshold: [0.2]
+          dims_per_block: [2]
+          soar_lambda: [1.5]
+          overretrieve_factor: [2.0]
+        query_args:
+        - [[180, 220], [220, 300], [260, 400], [320, 500], [400, 600]]

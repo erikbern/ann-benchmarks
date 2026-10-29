@@ -82,37 +82,100 @@ We have a number of precomputed data sets in HDF5 format. All data sets have bee
 Results
 =======
 
-These are all as of April 2025, running all benchmarks on a r6i.16xlarge machine on AWS with `--parallelism 31` and hyperthreading disabled. All benchmarks are single-CPU.
+All PRs that were still unmerged as of October 11, 2026 have been merged.
+Because there are too many algorithms to benchmark exhaustively, the evaluation was conducted in two stages — a preliminary round and a final round.
+The benchmarks were run on a virtual machine hosted on [Sakura Cloud](https://cloud.sakura.ad.jp/) provided by [SAKURA internet Inc](https://www.sakura.ad.jp/corporate/en/), with the following specifications:
+
+- CPU: Intel Xeon Gold 6230R @ 2.10 GHz
+- Memory: 24 GB
+
+### Preliminary round
+
+- Memory limit per Docker container: 4 GB
+- Timeout per algorithm configuration: 30 minutes
+- Parallelism: 3 workers
+- Dataset: `glove-100-angular-100k`, a subset of 100,000 vectors from `glove-100-angular`
+- Algorithms: 60 algorithms
+- Parameter selection: up to three configurations per algorithm were randomly selected
+
+The precision-recall plot is shown in the figure below.
+
+glove-100-angular-100k
+----------------------
+![glove-100-angular-100k](results/glove-100-angular-100k.png)
+
+Based on these results, the QPS at a recall of 0.9 was estimated.
+
+| Rank | Algorithm | QPS@0.9 |
+| ---: | :--- | ---: |
+| 1 | `qsgngt` | 26,540.8 |
+| 2 | `descartes(01AI)` | 22,084.9 |
+| 3 | `NGT-qg` | 19,657.0 |
+| 4 | `kgn` | 18,020.9 |
+| 5 | `parlayann` | 8,153.8 |
+| 6 | `scann` | 7,544.6 |
+| 7 | `NGT-onng` | 5,222.8 |
+| 8 | `zeelin-scann` | 4,983.3 |
+| 9 | `nndescent` | 4,046.8 |
+| 10 | `glass` | 4,039.7 |
+| 11 | `n2` | 3,953.8 |
+| 12 | `NGT-panng` | 3,928.2 |
+| 13 | `pynndescent` | 3,642.1 |
+| 14 | `kgraph` | 2,727.4 |
+| 15 | `voyager` | 2,507.0 |
+| 16 | `hnsw(faiss)` | 2,499.0 |
+| 17 | `hnswlib` | 2,384.3 |
+| 18 | `faiss-ivf` | 2,077.8 |
+| 19 | `redisearch` | 2,067.0 |
+| 20 | `mrpt` | 1,099.2 |
+| 21 | `vald(NGT-anng)` | 1,012.6 |
+| 22 | `pgvecto_rs` | 789.3 |
+| 23 | `puffinn` | 711.0 |
+| 24 | `annoy` | 661.4 |
+| 25 | `weaviate` | 511.5 |
+
+From this list, the top 10 algorithms by QPS were selected for the final round.
+
+### Final round
+
+- Memory limit per Docker container: 16 GB
+- Timeout per algorithm configuration: 120 minutes
+- Parallelism: 1 worker
+- Datasets: `glove-100-angular`, `sift-128-euclidean`, `fashion-mnist-784-euclidean`, `nytimes-256-angular`, `gist-960-euclidean`, `glove-25-angular`
+- Algorithms: 10 algorithms (`qsgngt`, `descartes(01AI)`, `NGT-qg`, `kgn`, `parlayann`, `scann`, `NGT-onng`, `zeelin-scann`, `nndescent`, `glass`)
+- Parameter selection: up to five configurations per algorithm were randomly selected
+
+The final results are shown below.
 
 glove-100-angular
 -----------------
 
-![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-100-angular.png)
+![glove-100-angular](results/glove-100-angular.png)
 
 sift-128-euclidean
 ------------------
 
-![glove-100-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/sift-128-euclidean.png)
+![sift-128-euclidean](results/sift-128-euclidean.png)
 
 fashion-mnist-784-euclidean
 ---------------------------
 
-![fashion-mnist-784-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/fashion-mnist-784-euclidean.png)
+![fashion-mnist-784-euclidean](results/fashion-mnist-784-euclidean.png)
 
 nytimes-256-angular
 -------------------
 
-![nytimes-256-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/nytimes-256-angular.png)
+![nytimes-256-angular](results/nytimes-256-angular.png)
 
 gist-960-euclidean
 -------------------
 
-![gist-960-euclidean](https://raw.github.com/erikbern/ann-benchmarks/master/results/gist-960-euclidean.png)
+![gist-960-euclidean](results/gist-960-euclidean.png)
 
 glove-25-angular
 ----------------
 
-![glove-25-angular](https://raw.github.com/erikbern/ann-benchmarks/master/results/glove-25-angular.png)
+![glove-25-angular](results/glove-25-angular.png)
 
 TODO: update plots on <http://ann-benchmarks.com>.
 
