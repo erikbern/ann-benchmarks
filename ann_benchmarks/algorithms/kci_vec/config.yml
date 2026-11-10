@@ -1,0 +1,35 @@
+float:
+  angular:
+    # kci_vec: int8 HNSW graph; qg: 1 = layer 0 searched as blocks of the neighbours' 4-bit codes (one block a hop,
+    # SIMD table lookups), rerank: 1 = the result set re-scored with the float vectors. query args: ef, eps (search
+    # radius around the ef-th best).
+    - base_args: ['@metric']
+      constructor: KciVec
+      disabled: false
+      docker_tag: ann-benchmarks-kci_vec
+      module: ann_benchmarks.algorithms.kci_vec
+      name: kci_vec
+      run_groups:
+        qg-M32:
+          arg_groups: [{M: 32, efConstruction: 400, rerank: 1, qg: 1}]
+          args: {}
+          query_args: [[20, 30, 50], [0.05, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.15, 0.18, 0.2]]
+    # kci_vec-ivf: partitioned lists + 4-bit table lookup, float re-rank of the best `rerank`.
+    # query args: nprobe, rerank, and (third) probe gap = probe only the lists whose centroid score is within
+    # `gap` of the nearest one's (adaptive number of lists per query; 0 = off).
+    # build arg train: 1 = centroids trained on all vectors with 30 k-means iterations (slower build, higher recall).
+    - base_args: ['@metric']
+      constructor: KciVecIvf
+      disabled: false
+      docker_tag: ann-benchmarks-kci_vec
+      module: ann_benchmarks.algorithms.kci_vec
+      name: kci_vec-ivf
+      run_groups:
+        ivf-2048:
+          arg_groups: [{nlist: 2048}]
+          args: {}
+          query_args: [[8, 16, 32, 64, 128, 256, 512], [50, 100, 200, 400]]
+        ivf-4096-train-gap:
+          arg_groups: [{nlist: 4096, train: 1}]
+          args: {}
+          query_args: [[128, 256, 512, 1024], [100, 200, 400], [0.2, 0.25, 0.3, 0.35]]
