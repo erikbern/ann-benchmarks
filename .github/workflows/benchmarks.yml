@@ -43,6 +43,7 @@ jobs:
           - flann
           - glass
           - hnswlib
+          - kci_vec
           - kdtree
           - kgn
           - luceneknn
