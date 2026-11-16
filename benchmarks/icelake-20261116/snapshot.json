@@ -1,0 +1,6 @@
+{
+  "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-v2.index",
+  "bytes": 3831255968,
+  "sha256": "37960eab0a61315f267fe4ebe9440dce662f660505a08dc0e5ae73d499e1d569",
+  "construction": "Original exploration local_builder from existing raw SIFT M32/efConstruction400 graph; native FP32 codec, rotation_views=2. Same snapshot used in all ABBA processes."
+}

@@ -1,0 +1,9 @@
+{
+  "baseline_tests": "........................                                                 [100%]\n24 passed in 0.97s",
+  "icelake_tests": "........................                                                 [100%]\n24 passed in 0.95s",
+  "final_tests": "........................                                                 [100%]\n24 passed in 0.97s",
+  "final_load": "[ WARN 2026-11-16 16:25:20 139799421952448 quantized_graph_pages.h:297] Quantized graph THP coverage incomplete or unknown (coverage_pct=-1.000000 min_coverage=1 target_coverage=1 coverage_floor=1 downgraded=0 coverage_known=0); continuing without verified THP coverage\nload passed",
+  "final_binary_sha256": "e64ced9da10d2ae5a4f260e20e02e898630355a89e428a889101ec89b4fbcb95",
+  "ab_measurement_note": "ABBA binaries precede the message-only change from ordinary-page fallback to unverified THP coverage. Algorithm and build flags unchanged. Final binary rebuilt and tested after message fix.",
+  "ann_adapter_lifetime_check": "Full SIFT snapshot load; native-list and legacy IDs equal; weakrefs confirm replacing query parameters and done() release old searcher."
+}

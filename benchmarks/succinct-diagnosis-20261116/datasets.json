@@ -1,0 +1,20 @@
+[
+  {
+    "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/gist-960-euclidean.hdf5",
+    "bytes": 3844648288,
+    "sha256": "8e95831936bfdbfa0a56086942e2cf98cd703517c67f985914183eb4cdbf026a",
+    "matches_prior": true
+  },
+  {
+    "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/glove-100-angular.hdf5",
+    "bytes": 485413888,
+    "sha256": "544af1d5e84e112cd4749571dcfd8ca109818a572f850af75a3a09e093a953c4",
+    "matches_prior": true
+  },
+  {
+    "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/sift-128-euclidean.hdf5",
+    "bytes": 525128288,
+    "sha256": "dd6f0a6ed6b7ebb8934680f861a33ed01ff33991eaee4fd60914d854a0ca5984",
+    "matches_prior": true
+  }
+]

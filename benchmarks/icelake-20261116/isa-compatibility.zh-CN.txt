@@ -1,0 +1,31 @@
+指令集兼容性补充核验，2026-11-16
+
+本机为 Intel Xeon Platinum 8369B，支持 AVX2、FMA、AVX-512
+F/BW/DQ/VL 和 AVX512_VNNI。当前 SymQG 使用的整数中心距离计算及
+路由打分所需指令可用。缺少 AVX512_FP16 和 AMX 不会禁用当前
+FP32/SymQG 路径。F16C 的半精度转换能力与 AVX512_FP16 运算不同。
+
+源码并非仅依赖全局 -march：QuantizedGraphIntegerRouter::score_impl
+声明 target(avx512f,avx512bw,avx512vnni,fma)，IntegerCenter::dot16
+声明 target(avx512f,avx512bw,avx512vnni)。建图和路由加载都有 VNNI
+能力检查。默认 -march=x86-64 不意味着这些函数没有 SIMD。
+
+对 exploration/succinct 的 portable/icelake 四套构建的
+hnsw_quantized_graph.cc.o 反汇编，均确认生成了 vpdpbusd、vpdpwssd。
+具体符号和指令示例见 object-isa-audit.json。静态出现次数不表示执行
+次数，也不能用来比较性能。最终 Python 共享库已 stripped，无法通过
+保留的函数名进行同样的归属检查，因此这里明确使用对应的目标文件。
+
+已有 SIFT exploration 试测中，减少 Python 输入转换和结果数组构造
+开销提升 6.12%～10.18%；同一快速入口显式指定 Ice Lake 编译反而
+下降 2.18%～3.66%。这是同机试测，不是全部数据集/两个版本的结论。
+原始数据和后台负载限制详见 analysis.zh-CN.txt。
+
+因此，目前不支持将性能差距主要解释为所需 SIMD 指令集不可用。
+相同指令集在不同 CPU 上仍可能有不同吞吐、频率和缓存行为，但缺少
+c7i 原始结果、CPU/编译记录、源提交及接口实现，尚不能做完整归因。
+
+完整测试活动位于 results/comprehensive-icelake-20261116，包含三套
+完整数据、两种 Zvec 实现、两种编译、两种接口，以及 Huawei/01AI
+历史候选优胜参数复测。本补充记录写入时，正式隔离查询尚未开始，
+不能把准备完成或兼容性测试通过当作完整性能测试已完成。

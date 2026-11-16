@@ -1,0 +1,53 @@
+{
+  "index_params": {
+    "index_type": "kHNSW",
+    "data_type": "DT_FP32",
+    "metric_type": "kL2sq",
+    "dimension": 128,
+    "m": 32,
+    "ef_construction": 400,
+    "use_id_map": true,
+    "use_quantized_graph": true,
+    "quantizer_param": {
+      "type": "kNone"
+    }
+  },
+  "queries": [
+    {
+      "target": 0.9,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.008,
+        "quantized_graph_max_expansions": 48,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      }
+    },
+    {
+      "target": 0.95,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.038,
+        "quantized_graph_max_expansions": 64,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      }
+    },
+    {
+      "target": 0.99,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 128,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      }
+    }
+  ]
+}

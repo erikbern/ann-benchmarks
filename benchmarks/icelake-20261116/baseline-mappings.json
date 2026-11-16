@@ -1,0 +1,23 @@
+[
+  {
+    "mapping": "7f5329000000-7f53dc4a7000 rw-p 00000000 00:00 0 ",
+    "Size": 2937500,
+    "Rss": 2937500,
+    "AnonHugePages": 2936832,
+    "THPeligible": 1
+  },
+  {
+    "mapping": "7f53e1842000-7f54c5e08000 r--p 00000000 fc:03 15994005                   /home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-v2.index",
+    "Size": 3741464,
+    "Rss": 799936,
+    "AnonHugePages": 0,
+    "THPeligible": 0
+  },
+  {
+    "mapping": "7f54e9400000-7f5569400000 rw-p 00000000 00:00 0 ",
+    "Size": 2097152,
+    "Rss": 0,
+    "AnonHugePages": 0,
+    "THPeligible": 0
+  }
+]

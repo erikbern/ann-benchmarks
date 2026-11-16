@@ -1,0 +1,236 @@
+[
+  {
+    "dataset": "sift-128-euclidean",
+    "target": 0.9,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 128,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "control_native_qps": 46381.06910300757,
+    "compact_native_qps": 48086.380432848455,
+    "gain_pct": 3.6767400209200884,
+    "control_repeat_qps": [
+      46345.809498571805,
+      46416.32870744334
+    ],
+    "compact_repeat_qps": [
+      48061.93191337175,
+      48110.828952325166
+    ],
+    "strict_id_recall": 0.90172,
+    "ids_identical": true
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "target": 0.95,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 128,
+      "quantized_graph_margin": 0.038,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "control_native_qps": 37324.98064423648,
+    "compact_native_qps": 38835.053544274415,
+    "gain_pct": 4.045743290348125,
+    "control_repeat_qps": [
+      37302.25510372905,
+      37347.70618474392
+    ],
+    "compact_repeat_qps": [
+      38826.029008673446,
+      38844.07807987538
+    ],
+    "strict_id_recall": 0.9509,
+    "ids_identical": true
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "target": 0.99,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 2048,
+      "quantized_graph_margin": 0.09,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "control_native_qps": 23822.19305055475,
+    "compact_native_qps": 25190.519064010423,
+    "gain_pct": 5.74391287381415,
+    "control_repeat_qps": [
+      23821.916367450096,
+      23822.469733659404
+    ],
+    "compact_repeat_qps": [
+      25201.082715124736,
+      25179.95541289611
+    ],
+    "strict_id_recall": 0.9899,
+    "ids_identical": true
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "target": 0.9,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 2048,
+      "quantized_graph_margin": 0.04,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "control_native_qps": 14011.980672052541,
+    "compact_native_qps": 14174.94332396243,
+    "gain_pct": 1.1630236704145869,
+    "control_repeat_qps": [
+      14032.841479900655,
+      13991.11986420443
+    ],
+    "compact_repeat_qps": [
+      14194.784322388761,
+      14155.1023255361
+    ],
+    "strict_id_recall": 0.8762,
+    "ids_identical": true
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "target": 0.95,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 2048,
+      "quantized_graph_margin": 0.06,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "control_native_qps": 9320.501009517773,
+    "compact_native_qps": 9491.660474761706,
+    "gain_pct": 1.8363762320196209,
+    "control_repeat_qps": [
+      9334.004498038099,
+      9306.997520997447
+    ],
+    "compact_repeat_qps": [
+      9498.562254873572,
+      9484.758694649841
+    ],
+    "strict_id_recall": 0.9378,
+    "ids_identical": true
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "target": 0.99,
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0,
+      "quantized_graph_margin": 0.12000000000000001
+    },
+    "control_native_qps": 3245.94476953073,
+    "compact_native_qps": 3372.2484026056436,
+    "gain_pct": 3.89112083053631,
+    "control_repeat_qps": [
+      3247.0390599868674,
+      3244.850479074592
+    ],
+    "compact_repeat_qps": [
+      3372.859787237037,
+      3371.6370179742507
+    ],
+    "strict_id_recall": 0.9909,
+    "ids_identical": true
+  },
+  {
+    "dataset": "glove-100-angular",
+    "target": 0.9,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 1024,
+      "quantized_graph_margin": 0.055,
+      "quantized_graph_max_expansions": 384,
+      "quantized_graph_bucket_width": 0.016,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "control_native_qps": 14512.93920337777,
+    "compact_native_qps": 14881.705819313804,
+    "gain_pct": 2.5409506011725425,
+    "control_repeat_qps": [
+      14486.001886656886,
+      14539.876520098653
+    ],
+    "compact_repeat_qps": [
+      14893.909062313056,
+      14869.502576314551
+    ],
+    "strict_id_recall": 0.89256,
+    "ids_identical": true
+  },
+  {
+    "dataset": "glove-100-angular",
+    "target": 0.95,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 2048,
+      "quantized_graph_margin": 0.09,
+      "quantized_graph_max_expansions": 768,
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "control_native_qps": 8718.794760642544,
+    "compact_native_qps": 9034.568127424947,
+    "gain_pct": 3.621754788951259,
+    "control_repeat_qps": [
+      8697.262770847135,
+      8740.326750437955
+    ],
+    "compact_repeat_qps": [
+      9037.47965088321,
+      9031.656603966683
+    ],
+    "strict_id_recall": 0.94322,
+    "ids_identical": true
+  },
+  {
+    "dataset": "glove-100-angular",
+    "target": 0.99,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 2048,
+      "quantized_graph_margin": 0.14,
+      "quantized_graph_max_expansions": 1536,
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "control_native_qps": 3050.385646671072,
+    "compact_native_qps": 3187.921200169294,
+    "gain_pct": 4.508792311172738,
+    "control_repeat_qps": [
+      3042.4474692168487,
+      3058.323824125296
+    ],
+    "compact_repeat_qps": [
+      3187.794100623863,
+      3188.048299714725
+    ],
+    "strict_id_recall": 0.98909,
+    "ids_identical": true
+  }
+]

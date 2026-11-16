@@ -1,0 +1,80 @@
+{
+  "source": "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec",
+  "cpu": 48,
+  "binaries": {
+    "portable": {
+      "path": "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec/build-ann/lib/_zvec.cpython-310-x86_64-linux-gnu.so",
+      "sha256": "de65b069308f81eac1f64e20c1e33ab0da7684dbb483ee3686a88a6e13e233de"
+    },
+    "icelake": {
+      "path": "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec/build-icelake/lib/_zvec.cpython-310-x86_64-linux-gnu.so",
+      "sha256": "4d5fdcb588365ff5ce4ccefdc60086691d29b4c3e482f8d1e8b8f71a6c063eb3"
+    }
+  },
+  "commands": [
+    [
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/.venv/bin/python",
+      "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec/py4bench/bench_icelake.py",
+      "--index",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-v2.index",
+      "--dataset",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/sift-128-euclidean.hdf5",
+      "--config",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-query-config.json",
+      "--output",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/ab-0-portable.json",
+      "--cpu",
+      "48",
+      "--rounds",
+      "1"
+    ],
+    [
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/.venv/bin/python",
+      "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec/py4bench/bench_icelake.py",
+      "--index",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-v2.index",
+      "--dataset",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/sift-128-euclidean.hdf5",
+      "--config",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-query-config.json",
+      "--output",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/ab-1-icelake.json",
+      "--cpu",
+      "48",
+      "--rounds",
+      "1"
+    ],
+    [
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/.venv/bin/python",
+      "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec/py4bench/bench_icelake.py",
+      "--index",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-v2.index",
+      "--dataset",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/sift-128-euclidean.hdf5",
+      "--config",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-query-config.json",
+      "--output",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/ab-2-icelake.json",
+      "--cpu",
+      "48",
+      "--rounds",
+      "1"
+    ],
+    [
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/.venv/bin/python",
+      "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec/py4bench/bench_icelake.py",
+      "--index",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-v2.index",
+      "--dataset",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/sift-128-euclidean.hdf5",
+      "--config",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-query-config.json",
+      "--output",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/ab-3-portable.json",
+      "--cpu",
+      "48",
+      "--rounds",
+      "1"
+    ]
+  ]
+}

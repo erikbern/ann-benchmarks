@@ -1,0 +1,162 @@
+[
+  {
+    "target": 0.9,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 1024,
+      "quantized_graph_margin": 0.055,
+      "quantized_graph_max_expansions": 384,
+      "quantized_graph_bucket_width": 0.016,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "cpu": 48,
+    "position": 0,
+    "native_seconds": [
+      0.674363502,
+      0.674217583,
+      0.673949936
+    ],
+    "native_qps": 14832.00713262917
+  },
+  {
+    "target": 0.9,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 1024,
+      "quantized_graph_margin": 0.055,
+      "quantized_graph_max_expansions": 384,
+      "quantized_graph_bucket_width": 0.016,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "cpu": 10,
+    "position": 1,
+    "native_seconds": [
+      0.673013624,
+      0.672927817,
+      0.672996772
+    ],
+    "native_qps": 14858.912280191444
+  },
+  {
+    "target": 0.9,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 1024,
+      "quantized_graph_margin": 0.055,
+      "quantized_graph_max_expansions": 384,
+      "quantized_graph_bucket_width": 0.016,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "cpu": 0,
+    "position": 2,
+    "native_seconds": [
+      0.680931387,
+      0.680623704,
+      0.682340256
+    ],
+    "native_qps": 14685.767451633126
+  },
+  {
+    "target": 0.9,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 1024,
+      "quantized_graph_margin": 0.055,
+      "quantized_graph_max_expansions": 384,
+      "quantized_graph_bucket_width": 0.016,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "cpu": 48,
+    "position": 3,
+    "native_seconds": [
+      0.672861697,
+      0.673240362,
+      0.672824457
+    ],
+    "native_qps": 14861.895162981762
+  },
+  {
+    "target": 0.99,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 2048,
+      "quantized_graph_margin": 0.14,
+      "quantized_graph_max_expansions": 1536,
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "cpu": 48,
+    "position": 0,
+    "native_seconds": [
+      3.141254789,
+      3.139106734,
+      3.137994188
+    ],
+    "native_qps": 3185.619619648142
+  },
+  {
+    "target": 0.99,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 2048,
+      "quantized_graph_margin": 0.14,
+      "quantized_graph_max_expansions": 1536,
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "cpu": 10,
+    "position": 1,
+    "native_seconds": [
+      3.137418325,
+      3.141980413,
+      3.142302719
+    ],
+    "native_qps": 3182.7060279003717
+  },
+  {
+    "target": 0.99,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 2048,
+      "quantized_graph_margin": 0.14,
+      "quantized_graph_max_expansions": 1536,
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "cpu": 0,
+    "position": 2,
+    "native_seconds": [
+      3.18048565,
+      3.176718894,
+      3.184392087
+    ],
+    "native_qps": 3144.173909415375
+  },
+  {
+    "target": 0.99,
+    "parameters": {
+      "index_type": "kHNSW",
+      "ef_search": 2048,
+      "quantized_graph_margin": 0.14,
+      "quantized_graph_max_expansions": 1536,
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "cpu": 48,
+    "position": 3,
+    "native_seconds": [
+      3.14074525,
+      3.141698993,
+      3.144316699
+    ],
+    "native_qps": 3182.99112113571
+  }
+]

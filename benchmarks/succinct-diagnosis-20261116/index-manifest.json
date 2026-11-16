@@ -1,0 +1,2078 @@
+[
+  {
+    "profile": "gist-exploration-v1",
+    "dataset": "gist-960-euclidean",
+    "sha256": "1efbe7f33cf6ac9404f47db6e67d8cc4e2026814cc0eafca3357f9365979c7d7",
+    "bytes": 10220097856,
+    "build": {
+      "build_seconds": 1983.1336658000946,
+      "index_bytes": 10220097856,
+      "dataset": "gist-960-euclidean",
+      "config": {
+        "BuilderCommon": {
+          "BuilderClass": "HnswStreamer",
+          "BuildFile": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/vectors/gist-960-euclidean.vecs",
+          "MetricName": "SquaredEuclidean",
+          "IndexPath": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/gist-exploration-v1/work.index",
+          "DumpPath": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/gist-exploration-v1/index",
+          "DumpFormat": "streamer",
+          "MaxDocs": 1000000,
+          "ThreadCount": 8,
+          "LogLevel": "info"
+        },
+        "BuilderParams": {
+          "proxima.hnsw.streamer.max_neighbor_count": 50,
+          "proxima.hnsw.streamer.efconstruction": 500,
+          "proxima.hnsw.streamer.get_vector_enable": true
+        },
+        "QuantizedGraphRouter": {
+          "Anchors": 8192,
+          "ProjectedDimension": 256,
+          "Seed": 202610261259
+        },
+        "QuantizedGraph": {
+          "Persist": true,
+          "RotationViews": 1,
+          "MaxNeighbors": 64,
+          "ThreadCount": 8,
+          "Codec": {
+            "Type": "low_rank",
+            "BlockDimension": 8,
+            "Codebook": "gaussian",
+            "Rank": 8,
+            "TrainingSamples": 1024,
+            "CenterWeight": 1.0,
+            "Seed": 20261031
+          }
+        }
+      }
+    },
+    "job": {
+      "id": "gist-exploration-v1",
+      "dataset": "gist-960-euclidean",
+      "views": 1,
+      "source": "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec",
+      "variant": "exploration",
+      "directory": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/gist-exploration-v1",
+      "campaign": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116",
+      "query_cpu": 48,
+      "cpus": [
+        50,
+        52,
+        54,
+        56,
+        58,
+        60,
+        62
+      ],
+      "queries": [
+        {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0,
+          "quantized_graph_margin": 0.046875
+        },
+        {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0,
+          "quantized_graph_margin": 0.046875
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.0475,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.065,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0,
+          "quantized_graph_margin": 0.0675
+        },
+        {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0,
+          "quantized_graph_margin": 0.065
+        },
+        {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0,
+          "quantized_graph_margin": 0.12000000000000001
+        },
+        {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0,
+          "quantized_graph_margin": 0.13
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.14,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.12,
+          "quantized_graph_max_expansions": 1024,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.09,
+          "quantized_graph_max_expansions": 1024,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.09,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.075,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.06,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.052,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.049,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.048,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.046,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.04,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.025,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.047,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.0485,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.075,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.12,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 10,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 12,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 16,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 24,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 96,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 192,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 192,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 256,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 384,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 384,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 512,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 768,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 768,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 1024,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 1024,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 4096,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 8192,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.01,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.02,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.04,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.08,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.16,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.32,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      ],
+      "vectors": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/vectors/gist-960-euclidean.vecs"
+    }
+  },
+  {
+    "profile": "sift-exploration-v2",
+    "dataset": "sift-128-euclidean",
+    "sha256": "5eb10b755843219b4dc29068ebb2bcdc6ba30dd63da84bd5272c78896bad3b7f",
+    "bytes": 3831255968,
+    "build": {
+      "build_seconds": 66.05233240127563,
+      "index_bytes": 3831255968,
+      "dataset": "sift-128-euclidean",
+      "config": {
+        "BuilderCommon": {
+          "BuilderClass": "HnswStreamer",
+          "DumpFormat": "streamer",
+          "DumpPath": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/sift-exploration-v2/index",
+          "InputIndex": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/three-datasets-20261113/.zvec-base-cache/df955fb4910b6bdee775dc9033553e1dde20de0f6ac1d3ae2eac9776594783ec/raw.index",
+          "LogLevel": "info",
+          "ThreadCount": 4
+        },
+        "QuantizedGraph": {
+          "Codec": {
+            "Type": "native"
+          },
+          "MaxNeighbors": 64,
+          "Persist": true,
+          "RotationViews": 2,
+          "ThreadCount": 4
+        },
+        "QuantizedGraphRouter": {
+          "Anchors": 65536,
+          "ProjectedDimension": 64,
+          "Seed": 202610261259
+        }
+      }
+    },
+    "job": {
+      "id": "sift-exploration-v2",
+      "dataset": "sift-128-euclidean",
+      "views": 2,
+      "source": "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec",
+      "variant": "exploration",
+      "directory": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/sift-exploration-v2",
+      "campaign": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116",
+      "query_cpu": 48,
+      "cpus": [
+        34,
+        36,
+        38,
+        40,
+        42,
+        44,
+        46
+      ],
+      "queries": [
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.002,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.004,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.016,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.024,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.032,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.048,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.064,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.096,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.128,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.2,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.3,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.002,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.004,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.016,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.024,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.032,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.048,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.064,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.096,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.128,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.2,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.3,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.002,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.004,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.016,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.024,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.032,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.048,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.064,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.096,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.128,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.2,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.3,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.002,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.004,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.016,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.024,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.032,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.048,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.064,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.096,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.128,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.2,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.3,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.004,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.006,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.012,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.004,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.006,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.012,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.004,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.006,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.012,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.004,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.006,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.012,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.004,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.006,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.012,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.006,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.012,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.004,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.006,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.012,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.006,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.012,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.038,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.04,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.042,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.044,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.038,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.04,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.042,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.044,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.084,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.088,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.09,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.092,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 10,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 12,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 16,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 24,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 96,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 192,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 192,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 256,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 384,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 384,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 512,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 768,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 768,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.01,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.02,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.04,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.08,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.16,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.32,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      ],
+      "vectors": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/vectors/sift-128-euclidean.vecs",
+      "raw_index": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/three-datasets-20261113/.zvec-base-cache/df955fb4910b6bdee775dc9033553e1dde20de0f6ac1d3ae2eac9776594783ec/raw.index"
+    }
+  },
+  {
+    "profile": "glove-exploration-v2",
+    "dataset": "glove-100-angular",
+    "sha256": "59ed7e66e97e7384987f2d029764dbab433f1c6b8ff2993cf79509dbb3cd623a",
+    "bytes": 4379056128,
+    "build": {
+      "build_seconds": 751.2022092342377,
+      "index_bytes": 4379056128,
+      "dataset": "glove-100-angular",
+      "config": {
+        "BuilderCommon": {
+          "BuilderClass": "HnswStreamer",
+          "BuildFile": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/vectors/glove-100-angular.vecs",
+          "MetricName": "Cosine",
+          "ConverterName": "CosineFp32Converter",
+          "IndexPath": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/glove-exploration-v2/work.index",
+          "DumpPath": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/glove-exploration-v2/index",
+          "DumpFormat": "streamer",
+          "MaxDocs": 1183514,
+          "ThreadCount": 8,
+          "LogLevel": "info"
+        },
+        "BuilderParams": {
+          "proxima.hnsw.streamer.max_neighbor_count": 32,
+          "proxima.hnsw.streamer.efconstruction": 400,
+          "proxima.hnsw.streamer.get_vector_enable": true
+        },
+        "QuantizedGraphRouter": {
+          "Anchors": 65536,
+          "ProjectedDimension": 64,
+          "Seed": 202610261259
+        },
+        "QuantizedGraph": {
+          "Persist": true,
+          "RotationViews": 2,
+          "MaxNeighbors": 64,
+          "ThreadCount": 8,
+          "Codec": {
+            "Type": "native"
+          }
+        }
+      }
+    },
+    "job": {
+      "id": "glove-exploration-v2",
+      "dataset": "glove-100-angular",
+      "views": 2,
+      "source": "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec",
+      "variant": "exploration",
+      "directory": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/glove-exploration-v2",
+      "campaign": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116",
+      "query_cpu": 48,
+      "cpus": [
+        50,
+        52,
+        54,
+        56,
+        58,
+        60,
+        62
+      ],
+      "queries": [
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.065,
+          "quantized_graph_bucket_width": 0.008,
+          "quantized_graph_max_expansions": 384,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.09,
+          "quantized_graph_max_expansions": 768,
+          "quantized_graph_bucket_width": 0.012,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.11,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_max_expansions": 1024,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 1024,
+          "quantized_graph_margin": 0.055,
+          "quantized_graph_max_expansions": 384,
+          "quantized_graph_bucket_width": 0.016,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.09,
+          "quantized_graph_max_expansions": 768,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.09,
+          "quantized_graph_max_expansions": 768,
+          "quantized_graph_bucket_width": 0.028,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.115,
+          "quantized_graph_max_expansions": 1024,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.14,
+          "quantized_graph_max_expansions": 1536,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.18,
+          "quantized_graph_max_expansions": 1536,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.24,
+          "quantized_graph_max_expansions": 1536,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.32,
+          "quantized_graph_max_expansions": 1536,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.14,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.18,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.24,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.32,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.075,
+          "quantized_graph_max_expansions": 768,
+          "quantized_graph_bucket_width": 0.008,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 10,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 12,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 16,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 24,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 96,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 192,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 192,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 256,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 384,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 384,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 512,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 768,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 768,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 1024,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 1024,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 4096,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 8192,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.01,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.02,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.04,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.08,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.16,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.32,
+          "quantized_graph_max_expansions": 2048,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      ],
+      "vectors": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/vectors/glove-100-angular.vecs"
+    }
+  }
+]

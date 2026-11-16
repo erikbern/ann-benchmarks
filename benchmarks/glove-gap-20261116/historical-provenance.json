@@ -1,0 +1,19 @@
+{
+  "cpu.json": {
+    "source_commit": "3354eb11",
+    "path": "tools/core/bench/results/20261103-three-datasets/cpu.json",
+    "sha256": "a52ae088cf9469d6cb992e7efe43d5633acec62d12d9f5fe776a4a415f6eeb18"
+  },
+  "manifest.json": {
+    "source_commit": "3354eb11",
+    "path": "tools/core/bench/results/20261103-three-datasets/manifest.json",
+    "sha256": "2f4e1ff61ea0b91b7627d00c0ef4a6afc0f6c40350c2092432d9ae57c9dd3f6c"
+  },
+  "datasets.json": {
+    "source_commit": "3354eb11",
+    "path": "tools/core/bench/results/20261103-three-datasets/datasets.json",
+    "sha256": "312ec74f7f7568620bb95df2962edd13d07e476c069929c257644665388c42e2"
+  },
+  "caveat": "2026-11-03 historical run, not proven to be the exact run behind the user-provided c9i table.",
+  "current_runner_sha256": "b82b0e379a590c2c6fb44e634e27d93b84a90a99cc153598d85f5485a032a5da"
+}

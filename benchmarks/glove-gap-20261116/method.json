@@ -1,0 +1,60 @@
+{
+  "binary": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-diagnosis-20261116/builds/compact/overlay/zvec/_zvec.cpython-310-x86_64-linux-gnu.so",
+  "binary_sha256": "a467c1d499bc63ac98984525e88511213d8048aa6600328e9bb4bfc4b4778bc9",
+  "index": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/glove-exploration-v2/index",
+  "index_params": {
+    "index_type": "kHNSW",
+    "data_type": "DT_FP32",
+    "metric_type": "kCosine",
+    "dimension": 100,
+    "m": 32,
+    "ef_construction": 400,
+    "use_id_map": true,
+    "use_quantized_graph": true,
+    "quantizer_param": {
+      "type": "kNone"
+    }
+  },
+  "cpu": 48,
+  "query_count": 10000,
+  "selected_parameters": [
+    {
+      "target": 0.9,
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 1024,
+        "quantized_graph_margin": 0.055,
+        "quantized_graph_max_expansions": 384,
+        "quantized_graph_bucket_width": 0.016,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      }
+    },
+    {
+      "target": 0.95,
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 768,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      }
+    },
+    {
+      "target": 0.99,
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.14,
+        "quantized_graph_max_expansions": 1536,
+        "quantized_graph_bucket_width": 0.004,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      }
+    }
+  ],
+  "source": "Validated compact candidate, equivalent to merged 2387e019",
+  "note": "Same full public query set for tuning and reporting; no claim of held-out generalization."
+}

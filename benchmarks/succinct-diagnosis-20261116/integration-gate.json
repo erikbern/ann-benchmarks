@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "minimum_official_gain_pct": 1.2873340652910903,
+  "maximum_official_gain_pct": 5.5780432189154405,
+  "all_ids_identical": true,
+  "files": [
+    "src/turbo/distance/avx512/symqg/symqg_kernels_avx512.cc",
+    "src/core/algorithm/quantized_graph/quantized_graph.h",
+    "tests/turbo/turbo_symqg_kernels_test.cc"
+  ]
+}

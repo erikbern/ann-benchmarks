@@ -1,0 +1,131 @@
+[
+  {
+    "profile": "sift-exploration-v2",
+    "dataset": "sift-128-euclidean",
+    "index": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/sift-exploration-v2/index",
+    "points": [
+      {
+        "target": 0.9,
+        "parameters": {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      },
+      {
+        "target": 0.95,
+        "parameters": {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.038,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      },
+      {
+        "target": 0.99,
+        "parameters": {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.09,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      }
+    ]
+  },
+  {
+    "profile": "gist-exploration-v1",
+    "dataset": "gist-960-euclidean",
+    "index": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/gist-exploration-v1/index",
+    "points": [
+      {
+        "target": 0.9,
+        "parameters": {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.04,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      },
+      {
+        "target": 0.95,
+        "parameters": {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.06,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      },
+      {
+        "target": 0.99,
+        "parameters": {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0,
+          "quantized_graph_margin": 0.12000000000000001
+        }
+      }
+    ]
+  },
+  {
+    "profile": "glove-exploration-v2",
+    "dataset": "glove-100-angular",
+    "index": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/glove-exploration-v2/index",
+    "points": [
+      {
+        "target": 0.9,
+        "parameters": {
+          "index_type": "kHNSW",
+          "ef_search": 1024,
+          "quantized_graph_margin": 0.055,
+          "quantized_graph_max_expansions": 384,
+          "quantized_graph_bucket_width": 0.016,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      },
+      {
+        "target": 0.95,
+        "parameters": {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.09,
+          "quantized_graph_max_expansions": 768,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      },
+      {
+        "target": 0.99,
+        "parameters": {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.14,
+          "quantized_graph_max_expansions": 1536,
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      }
+    ]
+  }
+]

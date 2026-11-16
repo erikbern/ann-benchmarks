@@ -1,0 +1,17 @@
+Running main() from /home/xingrui/workspace/zvec/quantized_graph_exploration_succinct/zvec/thirdparty/googletest/googletest-1.10.0/googletest/src/gtest_main.cc
+[==========] Running 4 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 4 tests from SymQGKernels
+[ RUN      ] SymQGKernels.ScanSpecializationsMatchIndependentAccumulator
+[       OK ] SymQGKernels.ScanSpecializationsMatchIndependentAccumulator (45 ms)
+[ RUN      ] SymQGKernels.ScanAcceptsUnalignedPackedFactors
+[       OK ] SymQGKernels.ScanAcceptsUnalignedPackedFactors (8 ms)
+[ RUN      ] SymQGKernels.HadamardMatchesScalarRounding
+[       OK ] SymQGKernels.HadamardMatchesScalarRounding (4 ms)
+[ RUN      ] SymQGKernels.PaleyTensorMatchesIndependentMatrix
+[       OK ] SymQGKernels.PaleyTensorMatchesIndependentMatrix (17 ms)
+[----------] 4 tests from SymQGKernels (74 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 1 test suite ran. (74 ms total)
+[  PASSED  ] 4 tests.

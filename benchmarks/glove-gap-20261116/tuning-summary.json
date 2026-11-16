@@ -1,0 +1,128 @@
+[
+  {
+    "target": 0.9,
+    "baseline": {
+      "parameters": {
+        "ef_search": 1024,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.016,
+        "quantized_graph_margin": 0.055,
+        "quantized_graph_max_expansions": 384,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps": 13984.968367470146,
+      "repeat_qps": [
+        13990.19089856279,
+        13979.745836377502
+      ],
+      "recall": 0.90762,
+      "strict_id_recall": 0.89256
+    },
+    "best": {
+      "parameters": {
+        "ef_search": 1024,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.016,
+        "quantized_graph_margin": 0.0515,
+        "quantized_graph_max_expansions": 384,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps": 14797.466403502189,
+      "repeat_qps": [
+        14794.978819739743,
+        14799.953987264633
+      ],
+      "recall": 0.90025,
+      "strict_id_recall": 0.88486
+    },
+    "gain_pct": 5.809795307953358,
+    "c9i_qps": 16345,
+    "vs_c9i_pct": -9.467932679705182
+  },
+  {
+    "target": 0.95,
+    "baseline": {
+      "parameters": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 768,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps": 8569.256664317007,
+      "repeat_qps": [
+        8574.864343375324,
+        8563.648985258687
+      ],
+      "recall": 0.95567,
+      "strict_id_recall": 0.94322
+    },
+    "best": {
+      "parameters": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.08625,
+        "quantized_graph_max_expansions": 768,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps": 9212.704191734738,
+      "repeat_qps": [
+        9197.28881647761,
+        9228.119566991865
+      ],
+      "recall": 0.95026,
+      "strict_id_recall": 0.9373
+    },
+    "gain_pct": 7.5087904660049665,
+    "c9i_qps": 9633,
+    "vs_c9i_pct": -4.363083237467691
+  },
+  {
+    "target": 0.99,
+    "baseline": {
+      "parameters": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.004,
+        "quantized_graph_margin": 0.14,
+        "quantized_graph_max_expansions": 1536,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps": 3055.332478533077,
+      "repeat_qps": [
+        3057.5424374574145,
+        3053.1225196087394
+      ],
+      "recall": 0.99327,
+      "strict_id_recall": 0.98909
+    },
+    "best": {
+      "parameters": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.004,
+        "quantized_graph_margin": 0.125625,
+        "quantized_graph_max_expansions": 1536,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps": 3758.9344812651275,
+      "repeat_qps": [
+        3759.32862575934,
+        3758.540336770915
+      ],
+      "recall": 0.99001,
+      "strict_id_recall": 0.98444
+    },
+    "gain_pct": 23.02865588853569,
+    "c9i_qps": 3182,
+    "vs_c9i_pct": 18.1311904860191
+  }
+]

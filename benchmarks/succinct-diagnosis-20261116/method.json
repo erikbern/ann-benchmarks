@@ -1,0 +1,9 @@
+{
+  "optimization_commit": "39c6ee311884106c6c8ccfa329a930d8ebf4d31c",
+  "succinct_base": "a3f77830e60a11f2bc2869a653c62fdc6549e9f4",
+  "exploration_algorithm_base": "611db8b90926cccac47a8383dbfa90c24e86f665",
+  "diagnosis": "Native-loop measurements use identical snapshots and parameters, all query vectors, CPU48, seven repetitions after warmup, median; two process observations in reverse order. Not ANN QPS.",
+  "changes": "fixed: add exploration dimension-specific scan only; prefetch: remove per-insertion prefetch and discard expanded queue heads; both: combine; control: rebuild unchanged succinct; compact: shared implementation, validated and merged.",
+  "official_measurement": "Official run_individual_query, full datasets, native-list for both builds, five runs per observation; median of two reversed-order observations. Same immutable snapshot and parameters.",
+  "merged_code_commit": "2387e019aa016e83219967c8dd74fb0a39395092"
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "target": 0.9,
+    "glove-exploration-v2": {
+      "native_qps": 14800.755646009253,
+      "repeat_qps": [
+        14789.756344399124,
+        14811.754947619384
+      ],
+      "recall": 0.90762,
+      "strict_id_recall": 0.89256
+    },
+    "glove-succinct-v2": {
+      "native_qps": 14867.9252983139,
+      "repeat_qps": [
+        14875.709114082632,
+        14860.141482545167
+      ],
+      "recall": 0.90617,
+      "strict_id_recall": 0.89125
+    }
+  },
+  {
+    "target": 0.95,
+    "glove-exploration-v2": {
+      "native_qps": 8995.960839470947,
+      "repeat_qps": [
+        8997.328620254284,
+        8994.593058687607
+      ],
+      "recall": 0.95567,
+      "strict_id_recall": 0.94322
+    },
+    "glove-succinct-v2": {
+      "native_qps": 9000.46718859575,
+      "repeat_qps": [
+        9000.658012005348,
+        9000.276365186153
+      ],
+      "recall": 0.9553,
+      "strict_id_recall": 0.94272
+    }
+  },
+  {
+    "target": 0.99,
+    "glove-exploration-v2": {
+      "native_qps": 3175.558208766126,
+      "repeat_qps": [
+        3174.5794489049567,
+        3176.5369686272957
+      ],
+      "recall": 0.99327,
+      "strict_id_recall": 0.98909
+    },
+    "glove-succinct-v2": {
+      "native_qps": 3177.033487034273,
+      "repeat_qps": [
+        3176.915798860691,
+        3177.1511752078545
+      ],
+      "recall": 0.9933,
+      "strict_id_recall": 0.98911
+    }
+  }
+]

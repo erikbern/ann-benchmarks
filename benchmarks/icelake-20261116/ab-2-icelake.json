@@ -1,0 +1,332 @@
+{
+  "module": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/overlay-icelake/zvec/__init__.py",
+  "cpu": 48,
+  "kernel": "5.15.0-198-generic",
+  "index": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-v2.index",
+  "dataset": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/sift-128-euclidean.hdf5",
+  "config": {
+    "index_params": {
+      "index_type": "kHNSW",
+      "data_type": "DT_FP32",
+      "metric_type": "kL2sq",
+      "dimension": 128,
+      "m": 32,
+      "ef_construction": 400,
+      "use_id_map": true,
+      "use_quantized_graph": true,
+      "quantizer_param": {
+        "type": "kNone"
+      }
+    },
+    "queries": [
+      {
+        "target": 0.9,
+        "params": {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      },
+      {
+        "target": 0.95,
+        "params": {
+          "index_type": "kHNSW",
+          "ef_search": 128,
+          "quantized_graph_margin": 0.038,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      },
+      {
+        "target": 0.99,
+        "params": {
+          "index_type": "kHNSW",
+          "ef_search": 2048,
+          "quantized_graph_margin": 0.09,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        }
+      }
+    ]
+  },
+  "runs": 5,
+  "rounds": 1,
+  "protocol": "Official ANN runner, full query set, k=10. Mode order reversed each round.",
+  "isolation": "Dedicated logical CPU; background full-algorithm scan may still share LLC/bandwidth.",
+  "measurements": [
+    {
+      "target": 0.9,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.008,
+        "quantized_graph_max_expansions": 48,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "round": 0,
+      "mode": "legacy_require_array",
+      "qps": 35288.74686912896,
+      "ann_recall": 0.9026,
+      "strict_id_recall": 0.9017200000000001,
+      "ids_sha256": "e60c91fe86ce4e935737dff244347b912a20a057271a39d05a9c47d9bd14f2f0",
+      "timestamp": 1794817277.0482888
+    },
+    {
+      "target": 0.9,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.008,
+        "quantized_graph_max_expansions": 48,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "round": 0,
+      "mode": "native_array",
+      "qps": 38779.020905314486,
+      "ann_recall": 0.9026,
+      "strict_id_recall": 0.9017200000000001,
+      "ids_sha256": "e60c91fe86ce4e935737dff244347b912a20a057271a39d05a9c47d9bd14f2f0",
+      "timestamp": 1794817281.5858893
+    },
+    {
+      "target": 0.9,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.008,
+        "quantized_graph_max_expansions": 48,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "round": 0,
+      "mode": "native_list",
+      "qps": 39064.385437137345,
+      "ann_recall": 0.9026,
+      "strict_id_recall": 0.9017200000000001,
+      "ids_sha256": "e60c91fe86ce4e935737dff244347b912a20a057271a39d05a9c47d9bd14f2f0",
+      "timestamp": 1794817285.940481
+    },
+    {
+      "target": 0.95,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.038,
+        "quantized_graph_max_expansions": 64,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "round": 0,
+      "mode": "legacy_require_array",
+      "qps": 30013.424201918315,
+      "ann_recall": 0.9517300000000001,
+      "strict_id_recall": 0.9509000000000002,
+      "ids_sha256": "1a9aa8a2628d061dbd072249b2d8d2bd1ee983061cbdb4e12a5a200db5707a53",
+      "timestamp": 1794817293.8103442
+    },
+    {
+      "target": 0.95,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.038,
+        "quantized_graph_max_expansions": 64,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "round": 0,
+      "mode": "native_array",
+      "qps": 32557.040551302733,
+      "ann_recall": 0.9517300000000001,
+      "strict_id_recall": 0.9509000000000002,
+      "ids_sha256": "1a9aa8a2628d061dbd072249b2d8d2bd1ee983061cbdb4e12a5a200db5707a53",
+      "timestamp": 1794817298.6044972
+    },
+    {
+      "target": 0.95,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.038,
+        "quantized_graph_max_expansions": 64,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "round": 0,
+      "mode": "native_list",
+      "qps": 32793.184140633,
+      "ann_recall": 0.9517300000000001,
+      "strict_id_recall": 0.9509000000000002,
+      "ids_sha256": "1a9aa8a2628d061dbd072249b2d8d2bd1ee983061cbdb4e12a5a200db5707a53",
+      "timestamp": 1794817303.1944914
+    },
+    {
+      "target": 0.99,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 128,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "round": 0,
+      "mode": "legacy_require_array",
+      "qps": 19888.54874380247,
+      "ann_recall": 0.9905799999999999,
+      "strict_id_recall": 0.9899,
+      "ids_sha256": "93dfcb73cfb2630e21163a9e06ae76bb613cf41c1e194a6122884a81eedc4bb6",
+      "timestamp": 1794817312.3002152
+    },
+    {
+      "target": 0.99,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 128,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "round": 0,
+      "mode": "native_array",
+      "qps": 20975.431918052716,
+      "ann_recall": 0.9905799999999999,
+      "strict_id_recall": 0.9899,
+      "ids_sha256": "93dfcb73cfb2630e21163a9e06ae76bb613cf41c1e194a6122884a81eedc4bb6",
+      "timestamp": 1794817317.9784095
+    },
+    {
+      "target": 0.99,
+      "params": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 128,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "round": 0,
+      "mode": "native_list",
+      "qps": 21092.145982876067,
+      "ann_recall": 0.9905799999999999,
+      "strict_id_recall": 0.9899,
+      "ids_sha256": "93dfcb73cfb2630e21163a9e06ae76bb613cf41c1e194a6122884a81eedc4bb6",
+      "timestamp": 1794817323.4310741
+    }
+  ],
+  "mappings_before": [
+    {
+      "mapping": "55becc090000-55bed1e9d000 rw-p 00000000 00:00 0                          [heap]",
+      "Size": 96308,
+      "Rss": 96104,
+      "AnonHugePages": 0,
+      "THPeligible": 0
+    },
+    {
+      "mapping": "7f5304800000-7f53b7ca7000 rw-p 00000000 00:00 0 ",
+      "Size": 2937500,
+      "Rss": 2937500,
+      "AnonHugePages": 2936832,
+      "THPeligible": 1
+    },
+    {
+      "mapping": "7f53b7ca7000-7f53bc32c000 rw-p 00000000 00:00 0 ",
+      "Size": 72212,
+      "Rss": 68868,
+      "AnonHugePages": 0,
+      "THPeligible": 0
+    },
+    {
+      "mapping": "7f53bc32c000-7f54a08f2000 r--p 00000000 fc:03 15994005                   /home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-v2.index",
+      "Size": 3741464,
+      "Rss": 799872,
+      "AnonHugePages": 0,
+      "THPeligible": 0
+    },
+    {
+      "mapping": "7f54a2e00000-7f55562a7000 rw-p 00000000 00:00 0 ",
+      "Size": 2937500,
+      "Rss": 2937500,
+      "AnonHugePages": 2936832,
+      "THPeligible": 1
+    },
+    {
+      "mapping": "7f555965d000-7f563dc23000 r--p 00000000 fc:03 15994005                   /home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-v2.index",
+      "Size": 3741464,
+      "Rss": 799872,
+      "AnonHugePages": 0,
+      "THPeligible": 0
+    },
+    {
+      "mapping": "7f563fe07000-7f565e64f000 rw-p 00000000 00:00 0 ",
+      "Size": 500000,
+      "Rss": 500000,
+      "AnonHugePages": 497664,
+      "THPeligible": 1
+    }
+  ],
+  "mappings_after": [
+    {
+      "mapping": "55becc090000-55bed1e9d000 rw-p 00000000 00:00 0                          [heap]",
+      "Size": 96308,
+      "Rss": 96104,
+      "AnonHugePages": 0,
+      "THPeligible": 0
+    },
+    {
+      "mapping": "7f54a2e00000-7f55562a7000 rw-p 00000000 00:00 0 ",
+      "Size": 2937500,
+      "Rss": 2937500,
+      "AnonHugePages": 2936832,
+      "THPeligible": 1
+    },
+    {
+      "mapping": "7f555965d000-7f563dc23000 r--p 00000000 fc:03 15994005                   /home/xingrui/workspace/annbenchmark/ann-benchmarks/results/icelake-investigation-20261116/sift-v2.index",
+      "Size": 3741464,
+      "Rss": 799872,
+      "AnonHugePages": 0,
+      "THPeligible": 0
+    },
+    {
+      "mapping": "7f563fe07000-7f565e64f000 rw-p 00000000 00:00 0 ",
+      "Size": 500000,
+      "Rss": 500000,
+      "AnonHugePages": 497664,
+      "THPeligible": 1
+    }
+  ],
+  "native_loop_diagnostics": [
+    {
+      "target": 0.9,
+      "qps": 43283.7853166147
+    },
+    {
+      "target": 0.95,
+      "qps": 35676.08541840936
+    },
+    {
+      "target": 0.99,
+      "qps": 22459.920905636656
+    }
+  ]
+}

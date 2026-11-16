@@ -1,0 +1,61 @@
+{
+  "provenance": "User supplied aggregate QPS table, labelled c7i. Source raw results, actual recall, commit, compiler and protocol are not supplied. Earlier plan files were labelled c9i; their relationship to these c7i results is unconfirmed.",
+  "data": {
+    "sift-128-euclidean": [
+      [
+        48491,
+        42637,
+        32144
+      ],
+      [
+        39618,
+        32355,
+        31903
+      ],
+      [
+        25220,
+        20304,
+        18251
+      ]
+    ],
+    "gist-960-euclidean": [
+      [
+        15617,
+        7079,
+        6484
+      ],
+      [
+        10437,
+        3968,
+        4319
+      ],
+      [
+        3507,
+        998,
+        1564
+      ]
+    ],
+    "glove-100-angular": [
+      [
+        16345,
+        16077,
+        15672
+      ],
+      [
+        9633,
+        9084,
+        8354
+      ],
+      [
+        3182,
+        3142,
+        2760
+      ]
+    ]
+  },
+  "algorithm_order": [
+    "zvec-symqg-succinct",
+    "qsgngt",
+    "descartes(01AI)"
+  ]
+}

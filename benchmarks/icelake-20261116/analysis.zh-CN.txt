@@ -1,0 +1,115 @@
+Ice Lake 上的 SymQG 性能差异分析与适配层优化
+日期：2026-11-16
+分支：feat/quantized-graph-performance-exploration-icelake
+基础：feat/quantized-graph-performance-exploration，611db8b90926cccac47a8383dbfa90c24e86f665
+
+结论
+
+确认存在可消除的 Python 适配层开销。原 ANN 集成每次查询都执行
+np.require(q, dtype=float32, requirements=['C', 'A'])，并构造 NumPy 结果数组。
+这三个公共数据集已经提供连续、对齐的 FP32 查询，可以直接绑定原生
+search_list。原生类型/维度/布局检查、查询和 Python 列表构造仍在计时范围内，
+没有把搜索工作移到计时区间之外，也没有放宽输入验证。
+
+同机完整 SIFT 实验测得适配层收益为 6.12%～10.18%。没有证据表明显式
+-march=icelake-server 能带来收益：本次在相同快速适配器下反而低 2.18%～3.66%。
+因此保留 portable Release 构建作为本轮推荐；Ice Lake preset 仅作为对照实验。
+
+这不是 c7i 与 r7 差异的完整归因。用户给出的 c7i 表是 succinct；本次 A/B
+使用用户指定的 exploration 基础分支。不能把 exploration 的适配层增益直接
+当成 succinct 的实测增益，更不能认定已消除 c7i 上的差距。
+
+同机 A/B 结果
+
+实验使用同一份 SIFT-1M、128 维、FP32、rotation_views=2 持久化索引；
+全部 10,000 条查询，Top-10。编译版本按 portable/ice/ice/portable 顺序执行。
+每个进程的每个配置运行官方 ANN-Benchmarks 查询计时五次，取最高 QPS；
+下表是两次进程观测的中位数，原始上下界见 ab-summary.csv。
+
+召回下限    原适配器QPS    快速适配器QPS    增益       实际ANN召回
+90%              36,613          40,340    +10.18%       90.260%
+95%              31,092          33,831     +8.81%       95.173%
+99%              20,893          22,172     +6.12%       99.058%
+
+所有编译版本、全部查询入口、两次进程观测返回的 ID 数组哈希一致。
+这些召回率采用 ANN-Benchmarks 第10邻居真实距离+0.001 的口径；
+严格 ID Recall 分别为 90.172%、95.090%、98.990%，不能把末行称作严格99%。
+
+本轮固定在 CPU48，后台全算法扫描仍在其他物理核运行，会共享缓存和内存带宽。
+本轮也有显式的结果等价性预检查。先前隔离评测固定 CPU0、没有额外预热，
+所以这些 QPS 只用于本轮成对比较，不替换先前三个数据集、四算法排行榜。
+GIST、GloVe 以及 succinct 的优化后全量 QPS 尚未重新测量。
+
+排查证据
+
+1. Release 与 SIMD 已启用。
+   build-ann 的 HNSW/SymQG 编译命令是 -O3 -march=x86-64，非 Debug。
+   SymQG 的目标函数显式声明 AVX-512/VNNI，当前 Xeon Platinum 8369B 支持这些
+   指令；成功加载和查询也验证了所需路径。ENABLE_NATIVE=OFF 不等于没有 SIMD。
+   新的 Ice Lake 对照构建确认为 -O3 -march=icelake-server，仍未见收益。
+
+2. 大页日志“未知”不等于大页未启用。
+   当前内核为 5.15.0-198-generic，THP 为 madvise。编译所用头文件没有
+   PAGEMAP_SCAN/MADV_COLLAPSE，代码返回 coverage=-1、errno=95。
+   直接检查 /proc/self/smaps：加载的 SIFT arena 大小 3,008,000,000 字节，
+   AnonHugePages=2,936,832 KiB，即 3,007,315,968 字节，等于完整2MiB区域总量。
+   所有完整大页区域已经使用 THP，余下部分不足2MiB。没有修改全局内核设置。
+   修正了将“未知”表述成 ordinary-page fallback 的日志，保留原有准入行为。
+
+3. 导入计划不是可核验的 c7i 最优点清单。
+   plan_succinct.json 与 plan_exploration.json 各141点，构建及查询参数相同。
+   每个版本有48个查询点匹配本机已有实测，93个未补测；两份文件不含源成绩、
+   实际召回率、选中点、源提交或 CampaignQG 实现。
+   用户此前将这两份计划标为 c9i，本次成绩表标为 c7i，两者对应关系未确认。
+
+4. 建图与测量协议仍可能造成差异。
+   导入计划为1线程建图，本机原评测 SIFT 为4线程，GIST/GloVe 为8线程。
+   图结构、随机性、查询网格、Recall定义、Python单次查询或原生循环计时、
+   绑核、背景任务和硬件配置均应对齐后再归因。
+   c7i 表中 succinct 比本机高11.65%～31.20%；Huawei变化为-17.16%～+4.12%，
+   01AI为-15.37%～+40.87%。这些差异不支持给所有算法套用一个CPU倍率。
+
+分支中的调整
+
+py4bench.adapters.ANNSearchAdapter.from_searcher(..., strict_fp32=True)：
+  显式启用原生列表查询入口。默认转换模式仍保留，列表、float64或非连续输入
+  在严格模式中被拒绝；一般数据库接口的输入转换行为未改变。
+
+ANN-Benchmarks 同名分支中的 ZvecSymQG：
+  在所支持的三个 FP32 数据集上默认使用 native-list；构造函数第四个参数
+  query_mode='legacy' 可复现旧路径。更换搜索参数或 done() 时清除绑定方法，
+  避免绑定方法持有旧 searcher 导致索引内存不释放。
+
+CMakePresets.json：
+  ann-portable 与 ann-icelake 分开构建；不覆盖原 build-ann 或 succinct 二进制。
+  后者是实验选项，不作为本轮性能推荐。
+
+py4bench/bench_icelake.py、run_icelake_ab.py、summarize_icelake.py：
+  固定索引、全量查询、返回值核对、ABBA顺序、映射记录、原始观测与汇总。
+  原生循环 time_native 仅作为诊断，未混入官方 ANN QPS。
+
+验证
+
+新旧构建均通过24项py4bench测试；增加了严格FP32入口的结果一致性及非法输入
+检查。完整SIFT上的4个进程、3个召回参数、3个查询入口均完成，每项5次计时，
+共180次全量查询遍历；输出ID完全一致。额外确认旧searcher在参数切换和done()
+后释放。日志措辞修正后的最终二进制另外重建、运行24项测试并加载完整SIFT。
+ABBA测量的二进制早于仅修改日志措辞的最后一次重建，哈希分别保留。
+
+复现
+
+需要原 ANN-Benchmarks 环境、FP32数据及一个固定的持久化SymQG快照。
+环境、源提交、编译命令、二进制哈希见 environment.json 与 ab-manifest.json；
+索引快照哈希见 snapshot.json；查询参数见 sift-query-config.json。
+大索引与数据集未提交到Git。
+
+在zvec根目录使用同一Python环境执行（pybind11_DIR指向该环境的CMake包目录）：
+  cmake --preset ann-portable -DPython_EXECUTABLE=/path/to/python -Dpybind11_DIR=/path/to/pybind11/cmake
+  cmake --build --preset ann-portable -j 12
+  cmake --preset ann-icelake -DPython_EXECUTABLE=/path/to/python -Dpybind11_DIR=/path/to/pybind11/cmake
+  cmake --build --preset ann-icelake -j 12
+  python py4bench/run_icelake_ab.py --ann-root /path/to/ann-benchmarks --output /path/to/new-results --index /path/to/sift-v2.index --dataset /path/to/sift-128-euclidean.hdf5 --config py4bench/results/icelake-20261116/sift-query-config.json --portable-build build-portable --cpu 48
+  python py4bench/summarize_icelake.py /path/to/new-results
+
+确认 c7i 原始结果、对应适配器、源提交、编译参数及计时口径后，才能进一步
+判断剩余差距来自查询配置、建图、计时方式还是硬件。当前结论仅承诺已测收益。

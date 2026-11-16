@@ -1,0 +1,91 @@
+Ice Lake full-dataset validation, 2026-11-16
+
+Scope
+  SIFT-128, GIST-960, GloVe-100, all training and query vectors, top 10.
+  Zvec exploration and succinct: each 323 query configurations, combining
+  the historical grid and the two imported plans. Eight immutable indexes:
+  SIFT views 1/2, GIST view 1, GloVe view 2, for each implementation.
+  Huawei QSGNGT and 01AI Descartes: rerun the previously measured winners
+  for 90/95/99% under both recall definitions. This is not a fresh exhaustive
+  parameter search for these two baselines.
+
+Reproduction on the current machine
+  .venv/bin/python scripts/comprehensive_icelake.py
+  The controller deliberately refuses to overwrite an existing campaign.
+  After a failure, with no active controller:
+  .venv/bin/python scripts/resume_comprehensive_icelake.py
+  To revalidate completed raw measurements and regenerate summaries:
+  .venv/bin/python scripts/summarize_comprehensive_icelake.py \
+    results/comprehensive-icelake-20261116
+
+  These scripts use local source trees, vendor libraries/caches, imported
+  plan_*.json, and historical result selections. They are a campaign runner,
+  not a self-contained installation package. Absolute paths and all final
+  parameter lists are preserved in plan.json and jobs/*.json.
+
+Timing protocol
+  Builds may run concurrently. Timed searches run serially on CPU48 with
+  OMP, OpenBLAS, and MKL threads set to 1. All existing vendor threads are
+  pinned too. Stop new background dispatch, let existing containers exit
+  under their existing two-hour job limit, then start query measurements.
+  Do not pause a container in the middle of a timed query.
+  The controller restores the exact dispatcher PID/create-time pairs on exit.
+
+  Each configuration uses the official run_individual_query, all queries,
+  five repetitions, best average query time. Python query calls and native
+  result construction remain inside the measured interval. Distance checks
+  are outside timing, matching ANN-Benchmarks. HDF5 times/answers contain the
+  last repetition; best_search_time contains the best of five, as returned
+  by the official runner. Do not equate the last-run times with best time.
+
+  After the portable/native-list sweep, select winners for both recall
+  definitions at 90/95/99%. For those configurations run portable, Ice Lake,
+  Ice Lake, portable in order, testing legacy and native-list in each process
+  with alternating mode order. The index file is identical across those
+  compiler and adapter comparisons. Final tables use the median of two
+  best-of-five observations; baseline winners are also measured twice.
+  Graphs across exploration and succinct are built separately. Therefore
+  cross-implementation differences include possible graph-quality variation.
+
+Recall and integrity
+  ANN Recall@10: fraction of returned distances <= ground-truth tenth
+  neighbor distance + 0.001. Strict ID recall: intersection with the ten
+  ground-truth IDs, divided by ten. Both use exact integer hit aggregation.
+  Select a point only if its measured recall meets the requested threshold.
+  Returned IDs, distances, last-run times, parameters and best time are
+  stored per observation. Validate shapes, ranges, duplicates, finite values,
+  hashes, and repeated-result stability. Adapter modes must return identical
+  IDs. Compiler differences are reported explicitly rather than hidden.
+
+Interpretation
+  Four builds each pass the 24 py4bench tests; this is 96 executions of
+  24 unique cases. ANN framework tests are a separate suite.
+  Explicit -march=icelake-server is an experimental control, not an assumed
+  improvement. Generic -march=x86-64 already uses function-targeted VNNI.
+  Static disassembly of the corresponding QuantizedGraph objects confirms
+  vpdpbusd and vpdpwssd in all four builds. Instruction counts are not a
+  measure of dynamic use or performance. Final shared libraries are stripped.
+  Missing AVX512-FP16/AMX does not disable the current FP32/SymQG kernels.
+
+  Process-tree peak RSS includes input arrays and other buffers; it is not
+  net index memory. Monitoring began after campaign launch. Concurrent build
+  times, cached vendor index loads and reused SIFT raw graphs cannot form a
+  fair end-to-end build-time comparison. Per-VMA smaps evidence is recorded;
+  do not attribute all process AnonHugePages to the graph.
+
+  The supplied c7i table lacks raw measurements, exact CPU/build/source
+  records and adapter implementation. Imported plans were described as c9i
+  plans. They do not establish the provenance of the c7i numbers. Local A/B
+  tests can identify local gains but cannot fully attribute the cross-host gap.
+
+Artifacts
+  progress.json and logs/ record live state. plan.json defines coverage.
+  all-measurements.csv includes sweep and repeated observations.
+  paired-and-baseline.csv aggregates the confirmed observations.
+  comparison-90-95-99.csv/json selects four algorithms under both metrics.
+  optimization-gains.csv separates adapter and compiler effects.
+  coverage.csv and validation.json report completeness and result checks.
+  Curves show best-of-five sweep/baseline observations, while final tables
+  use the median repeated observations described above.
+  Index snapshots and raw HDF5 files remain local, outside Git. Curated
+  summaries and provenance are archived on the requested Ice Lake branch.

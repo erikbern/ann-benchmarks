@@ -1,0 +1,81 @@
+{
+  "note": "Static disassembly of HNSW QuantizedGraph compilation units; proves emitted instructions, not dynamic instruction counts.",
+  "objects": [
+    {
+      "variant": "exploration",
+      "build": "portable",
+      "object": "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec/build-ann/src/core/algorithm/hnsw/CMakeFiles/core_knn_hnsw_objects.dir/hnsw_quantized_graph.cc.o",
+      "counts": {
+        "vpdpbusd": 160,
+        "vpdpwssd": 5
+      },
+      "examples": {
+        "vpdpbusd": {
+          "symbol": "0000000000000000 <void zvec::core::QuantizedGraphIntegerRouter::score_impl<0ul>(zvec::core::QuantizedGraphIntegerRouter::Group const&, zvec::core::QuantizedGraphIntegerRouter::Query const&, float*) const [clone .isra.0]>:",
+          "instruction": "177:\tvpdpbusd %zmm0,%zmm3,%zmm14"
+        },
+        "vpdpwssd": {
+          "symbol": "0000000000000000 <zvec::core::IntegerCenter::dot16(unsigned char const*, short const*, unsigned long)>:",
+          "instruction": "57:\tvpdpwssd -0x100(%rsi,%rax,2),%zmm0,%zmm2"
+        }
+      }
+    },
+    {
+      "variant": "exploration",
+      "build": "icelake",
+      "object": "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec/build-icelake/src/core/algorithm/hnsw/CMakeFiles/core_knn_hnsw_objects.dir/hnsw_quantized_graph.cc.o",
+      "counts": {
+        "vpdpbusd": 80,
+        "vpdpwssd": 20
+      },
+      "examples": {
+        "vpdpbusd": {
+          "symbol": "0000000000000000 <zvec::core::QuantizedGraphIntegerRouter::choose(zvec::core::QuantizedGraphIntegerRouter::Query const&, unsigned long) const>:",
+          "instruction": "2c2:\tvpdpbusd %zmm0,%zmm4,%zmm1"
+        },
+        "vpdpwssd": {
+          "symbol": "0000000000000000 <int zvec::core::SearchGraph<zvec::core::QuantizedGraph<zvec::turbo::SymQGBlockQuantizer>::search_impl<true, zvec::core::(anonymous namespace)::HnswGraphAdapter, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter>(unsigned int, zvec::core::(anonymous namespace)::HnswGraphAdapter const&, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter&) const::Scan, zvec::core::QuantizedGraph<zvec::turbo::SymQGBlockQuantizer>::search_impl<true, zvec::core::(anonymous namespace)::HnswGraphAdapter, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter>(unsigned int, zvec::core::(anonymous namespace)::HnswGraphAdapter const&, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter&) const::Frontier, zvec::core::QuantizedGraphVisitSet>(zvec::core::QuantizedGraph<zvec::turbo::SymQGBlockQuantizer>::search_impl<true, zvec::core::(anonymous namespace)::HnswGraphAdapter, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter>(unsigned int, zvec::core::(anonymous namespace)::HnswGraphAdapter const&, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter&) const::Scan&, zvec::core::QuantizedGraph<zvec::turbo::SymQGBlockQuantizer>::search_impl<true, zvec::core::(anonymous namespace)::HnswGraphAdapter, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter>(unsigned int, zvec::core::(anonymous namespace)::HnswGraphAdapter const&, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter&) const::Frontier&, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter&, zvec::core::GraphSearchScratch&) [clone .constprop.0]>:",
+          "instruction": "515:\tvpdpwssd -0x100(%rax,%rdi,2),%zmm1,%zmm0"
+        }
+      }
+    },
+    {
+      "variant": "succinct",
+      "build": "portable",
+      "object": "/home/xingrui/workspace/zvec/quantized_graph_exploration_succinct/zvec/build-ann/src/core/algorithm/hnsw/CMakeFiles/core_knn_hnsw_objects.dir/hnsw_quantized_graph.cc.o",
+      "counts": {
+        "vpdpbusd": 160,
+        "vpdpwssd": 5
+      },
+      "examples": {
+        "vpdpbusd": {
+          "symbol": "0000000000000000 <void zvec::core::QuantizedGraphIntegerRouter::score_impl<0ul>(zvec::core::QuantizedGraphIntegerRouter::Group const&, zvec::core::QuantizedGraphIntegerRouter::Query const&, float*) const [clone .isra.0]>:",
+          "instruction": "177:\tvpdpbusd %zmm0,%zmm3,%zmm14"
+        },
+        "vpdpwssd": {
+          "symbol": "0000000000000000 <zvec::core::IntegerCenter::dot16(unsigned char const*, short const*, unsigned long)>:",
+          "instruction": "57:\tvpdpwssd -0x100(%rsi,%rax,2),%zmm0,%zmm2"
+        }
+      }
+    },
+    {
+      "variant": "succinct",
+      "build": "icelake",
+      "object": "/home/xingrui/workspace/zvec/quantized_graph_exploration_succinct/zvec/build-icelake/src/core/algorithm/hnsw/CMakeFiles/core_knn_hnsw_objects.dir/hnsw_quantized_graph.cc.o",
+      "counts": {
+        "vpdpbusd": 80,
+        "vpdpwssd": 20
+      },
+      "examples": {
+        "vpdpbusd": {
+          "symbol": "0000000000000000 <zvec::core::QuantizedGraphIntegerRouter::choose(zvec::core::QuantizedGraphIntegerRouter::Query const&, unsigned long) const>:",
+          "instruction": "2c2:\tvpdpbusd %zmm0,%zmm4,%zmm1"
+        },
+        "vpdpwssd": {
+          "symbol": "0000000000000000 <zvec::core::QuantizedGraph<zvec::turbo::SymQGBlockQuantizer>::search_impl<true, zvec::core::(anonymous namespace)::HnswGraphAdapter, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter>(unsigned int, zvec::core::(anonymous namespace)::HnswGraphAdapter const&, zvec::core::(anonymous namespace)::HnswFp16QueryAdapter&) const::Scan::begin(unsigned int)>:",
+          "instruction": "3a6:\tvpdpwssd -0x100(%rcx,%rax,2),%zmm0,%zmm1"
+        }
+      }
+    }
+  ]
+}

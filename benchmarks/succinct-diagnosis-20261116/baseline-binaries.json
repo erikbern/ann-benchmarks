@@ -1,0 +1,36 @@
+{
+  "exploration": {
+    "source": "/home/xingrui/workspace/zvec/quantized_graph_exploration/zvec",
+    "commit": "67dbb1686a09acbbad56cd584e365e1519f11031",
+    "status": "",
+    "builds": {
+      "portable": {
+        "binary": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/overlays/exploration-portable/zvec/_zvec.cpython-310-x86_64-linux-gnu.so",
+        "sha256": "de65b069308f81eac1f64e20c1e33ab0da7684dbb483ee3686a88a6e13e233de",
+        "tests": "........................                                                 [100%]\n24 passed in 1.08s"
+      },
+      "icelake": {
+        "binary": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/overlays/exploration-icelake/zvec/_zvec.cpython-310-x86_64-linux-gnu.so",
+        "sha256": "e64ced9da10d2ae5a4f260e20e02e898630355a89e428a889101ec89b4fbcb95",
+        "tests": "........................                                                 [100%]\n24 passed in 2.95s"
+      }
+    }
+  },
+  "succinct": {
+    "source": "/home/xingrui/workspace/zvec/quantized_graph_exploration_succinct/zvec",
+    "commit": "a3f77830e60a11f2bc2869a653c62fdc6549e9f4",
+    "status": " M src/binding/python/CMakeLists.txt\n M src/binding/python/binding.cc\n?? py4bench/\n",
+    "builds": {
+      "portable": {
+        "binary": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/overlays/succinct-portable/zvec/_zvec.cpython-310-x86_64-linux-gnu.so",
+        "sha256": "cd44d755f7cece20f0ed9d74159c82cf2dd023e3fcfd5ed588f953c5f10ef1bd",
+        "tests": "........................                                                 [100%]\n24 passed in 2.62s"
+      },
+      "icelake": {
+        "binary": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/overlays/succinct-icelake/zvec/_zvec.cpython-310-x86_64-linux-gnu.so",
+        "sha256": "1e788a64a46c4e60a646299976ad97d0c4b02f673b8d92a544c91518cf05f744",
+        "tests": "........................                                                 [100%]\n24 passed in 2.63s"
+      }
+    }
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "scope": "Existing local full-dataset results with identical query parameters; local build presets, not an exact reproduction of c9i CampaignQG.",
+  "caveats": [
+    "No c9i measurements, selected winners, source commits or adapter code in plans.",
+    "Imported build_threads=1; local SIFT=4 and GIST/GloVe=8.",
+    "Imported CPU 10/12 overlap currently running full algorithm scan.",
+    "ANN distance-threshold recall and strict ID recall are separate metrics."
+  ],
+  "plans": {
+    "succinct": {
+      "sha256": "b3660a6a1edb3f254d7b3a6251a8c5f793855379c3d1fcc27d4721abb3192e7b",
+      "total_points": 141,
+      "matched": 48,
+      "profiles": [
+        {
+          "profile": "gist-zvec-v1",
+          "points": 38,
+          "matched": 13,
+          "build_arguments": [
+            "euclidean",
+            960,
+            {
+              "m": 50,
+              "ef_construction": 500
+            },
+            {
+              "anchors": 8192,
+              "projected": 256,
+              "router_seed": 202610261259,
+              "threads": 1,
+              "max_neighbors": 64,
+              "rotation_views": 1,
+              "codec": "low_rank",
+              "block_dimension": 8,
+              "codebook": "gaussian",
+              "rank": 8,
+              "training_samples": 1024,
+              "seed": 20261031,
+              "center_weight": 1.0
+            },
+            "gist-zvec-v1"
+          ],
+          "local_build_parameters_match_except_threads": true,
+          "local_build_threads": 8,
+          "local_codec_threads": 8,
+          "local_source_commit": "a3f77830e60a11f2bc2869a653c62fdc6549e9f4"
+        },
+        {
+          "profile": "sift-zvec-v1",
+          "points": 33,
+          "matched": 11,
+          "build_arguments": [
+            "euclidean",
+            128,
+            {
+              "m": 32,
+              "ef_construction": 400
+            },
+            {
+              "anchors": 65536,
+              "projected": 64,
+              "router_seed": 202610261259,
+              "threads": 1,
+              "max_neighbors": 64,
+              "rotation_views": 1,
+              "codec": "native"
+            },
+            "sift-zvec-v1"
+          ],
+          "local_build_parameters_match_except_threads": true,
+          "local_build_threads": 4,
+          "local_codec_threads": 4,
+          "local_source_commit": "a3f77830e60a11f2bc2869a653c62fdc6549e9f4"
+        },
+        {
+          "profile": "sift-zvec-v2",
+          "points": 34,
+          "matched": 13,
+          "build_arguments": [
+            "euclidean",
+            128,
+            {
+              "m": 32,
+              "ef_construction": 400
+            },
+            {
+              "anchors": 65536,
+              "projected": 64,
+              "router_seed": 202610261259,
+              "threads": 1,
+              "max_neighbors": 64,
+              "rotation_views": 2,
+              "codec": "native"
+            },
+            "sift-zvec-v2"
+          ],
+          "local_build_parameters_match_except_threads": true,
+          "local_build_threads": 4,
+          "local_codec_threads": 4,
+          "local_source_commit": "a3f77830e60a11f2bc2869a653c62fdc6549e9f4"
+        },
+        {
+          "profile": "glove-zvec-v2",
+          "points": 36,
+          "matched": 11,
+          "build_arguments": [
+            "angular",
+            100,
+            {
+              "m": 32,
+              "ef_construction": 400
+            },
+            {
+              "anchors": 65536,
+              "projected": 64,
+              "router_seed": 202610261259,
+              "threads": 1,
+              "max_neighbors": 64,
+              "rotation_views": 2,
+              "codec": "native"
+            },
+            "glove-zvec-v2"
+          ],
+          "local_build_parameters_match_except_threads": true,
+          "local_build_threads": 8,
+          "local_codec_threads": 8,
+          "local_source_commit": "a3f77830e60a11f2bc2869a653c62fdc6549e9f4"
+        }
+      ]
+    },
+    "exploration": {
+      "sha256": "1b90488fa72447e63b294d43d34c4550e390b32d711c9a1840c3c40ca5163cb8",
+      "total_points": 141,
+      "matched": 48,
+      "profiles": [
+        {
+          "profile": "gist-zvec-v1",
+          "points": 38,
+          "matched": 13,
+          "build_arguments": [
+            "euclidean",
+            960,
+            {
+              "m": 50,
+              "ef_construction": 500
+            },
+            {
+              "anchors": 8192,
+              "projected": 256,
+              "router_seed": 202610261259,
+              "threads": 1,
+              "max_neighbors": 64,
+              "rotation_views": 1,
+              "codec": "low_rank",
+              "block_dimension": 8,
+              "codebook": "gaussian",
+              "rank": 8,
+              "training_samples": 1024,
+              "seed": 20261031,
+              "center_weight": 1.0
+            },
+            "gist-zvec-v1"
+          ],
+          "local_build_parameters_match_except_threads": true,
+          "local_build_threads": 8,
+          "local_codec_threads": 8,
+          "local_source_commit": "611db8b90926cccac47a8383dbfa90c24e86f665"
+        },
+        {
+          "profile": "sift-zvec-v1",
+          "points": 33,
+          "matched": 11,
+          "build_arguments": [
+            "euclidean",
+            128,
+            {
+              "m": 32,
+              "ef_construction": 400
+            },
+            {
+              "anchors": 65536,
+              "projected": 64,
+              "router_seed": 202610261259,
+              "threads": 1,
+              "max_neighbors": 64,
+              "rotation_views": 1,
+              "codec": "native"
+            },
+            "sift-zvec-v1"
+          ],
+          "local_build_parameters_match_except_threads": true,
+          "local_build_threads": 4,
+          "local_codec_threads": 4,
+          "local_source_commit": "611db8b90926cccac47a8383dbfa90c24e86f665"
+        },
+        {
+          "profile": "sift-zvec-v2",
+          "points": 34,
+          "matched": 13,
+          "build_arguments": [
+            "euclidean",
+            128,
+            {
+              "m": 32,
+              "ef_construction": 400
+            },
+            {
+              "anchors": 65536,
+              "projected": 64,
+              "router_seed": 202610261259,
+              "threads": 1,
+              "max_neighbors": 64,
+              "rotation_views": 2,
+              "codec": "native"
+            },
+            "sift-zvec-v2"
+          ],
+          "local_build_parameters_match_except_threads": true,
+          "local_build_threads": 4,
+          "local_codec_threads": 4,
+          "local_source_commit": "611db8b90926cccac47a8383dbfa90c24e86f665"
+        },
+        {
+          "profile": "glove-zvec-v2",
+          "points": 36,
+          "matched": 11,
+          "build_arguments": [
+            "angular",
+            100,
+            {
+              "m": 32,
+              "ef_construction": 400
+            },
+            {
+              "anchors": 65536,
+              "projected": 64,
+              "router_seed": 202610261259,
+              "threads": 1,
+              "max_neighbors": 64,
+              "rotation_views": 2,
+              "codec": "native"
+            },
+            "glove-zvec-v2"
+          ],
+          "local_build_parameters_match_except_threads": true,
+          "local_build_threads": 8,
+          "local_codec_threads": 8,
+          "local_source_commit": "611db8b90926cccac47a8383dbfa90c24e86f665"
+        }
+      ]
+    }
+  },
+  "local_cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 57 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  64\nOn-line CPU(s) list:                     0-63\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) Platinum 8369B CPU @ 2.70GHz\nCPU family:                              6\nModel:                                   106\nThread(s) per core:                      2\nCore(s) per socket:                      32\nSocket(s):                               1\nStepping:                                6\nBogoMIPS:                                5399.99\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq monitor ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch cpuid_fault invpcid_single ibrs_enhanced fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves wbnoinvd arat avx512vbmi pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid fsrm arch_capabilities\nHypervisor vendor:                       KVM\nVirtualization type:                     full\nL1d cache:                               1.5 MiB (32 instances)\nL1i cache:                               1 MiB (32 instances)\nL2 cache:                                40 MiB (32 instances)\nL3 cache:                                48 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-63\nVulnerability Gather data sampling:      Unknown: Dependent on hypervisor status\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Vulnerable\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected\n",
+  "identical_build_and_query_parameters_between_plans": true
+}

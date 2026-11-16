@@ -1,0 +1,77 @@
+[
+  {
+    "target": 0.9,
+    "native_qps": 14837.245746593602,
+    "native_repeat_qps": [
+      14841.215908762379,
+      14833.275584424828
+    ],
+    "python_qps": 14473.448923950944,
+    "python_repeat_qps": [
+      14476.48053047589,
+      14470.417317425998
+    ],
+    "interleaved_qps": 13968.064001226878,
+    "interleaved_repeat_qps": [
+      13954.578709730866,
+      13981.549292722888
+    ],
+    "official_qps": 13959.282284290726,
+    "official_repeat_qps": [
+      13973.830784310197,
+      13944.733784271253
+    ],
+    "python_vs_native_pct": -2.4519161362962505,
+    "interleaved_vs_python_pct": -3.491807138571823
+  },
+  {
+    "target": 0.95,
+    "native_qps": 9006.560501994412,
+    "native_repeat_qps": [
+      9001.798114574465,
+      9011.322889414361
+    ],
+    "python_qps": 8823.489234447025,
+    "python_repeat_qps": [
+      8825.784404702536,
+      8821.194064191513
+    ],
+    "interleaved_qps": 8554.963280962238,
+    "interleaved_repeat_qps": [
+      8552.679176245421,
+      8557.247385679055
+    ],
+    "official_qps": 8559.222346218332,
+    "official_repeat_qps": [
+      8569.428074018637,
+      8549.016618418025
+    ],
+    "python_vs_native_pct": -2.0326435103261487,
+    "interleaved_vs_python_pct": -3.0433079969821586
+  },
+  {
+    "target": 0.99,
+    "native_qps": 3180.169844846165,
+    "native_repeat_qps": [
+      3180.9708491177626,
+      3179.368840574567
+    ],
+    "python_qps": 3141.870789564173,
+    "python_repeat_qps": [
+      3141.590368405292,
+      3142.1512107230537
+    ],
+    "interleaved_qps": 3050.541624304843,
+    "interleaved_repeat_qps": [
+      3049.0597705432597,
+      3052.0234780664264
+    ],
+    "official_qps": 3055.4656933687265,
+    "official_repeat_qps": [
+      3055.097538610422,
+      3055.833848127031
+    ],
+    "python_vs_native_pct": -1.2043084850974273,
+    "interleaved_vs_python_pct": -2.9068402673554483
+  }
+]

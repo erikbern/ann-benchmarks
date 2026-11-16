@@ -1,0 +1,902 @@
+{
+  "created": "2026-11-16T20:23:22.973911+08:00",
+  "machine": "ecs.r7.16xlarge / Xeon Platinum 8369B",
+  "status": "interim",
+  "succinct_code_commit": "2387e019aa016e83219967c8dd74fb0a39395092",
+  "metric": "ANN Recall@10: returned distance <= ground-truth tenth-neighbor distance + 0.001",
+  "qps": "Maximum eligible configuration QPS; each configuration is the median of two best-of-five observations, full query sets, CPU48, serial timing.",
+  "coverage": "Exploration portable/native-list selected points after full sweep; optimized succinct nine fixed-snapshot validation points; Huawei/01AI rerun prior winning candidates. Full optimized-succinct grid has not been swept.",
+  "results": [
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.9,
+      "algorithm": "exploration",
+      "qps": 43450.58732307429,
+      "recall": 0.9026,
+      "strict_id_recall": 0.90172,
+      "profile": "sift-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.008,
+        "quantized_graph_max_expansions": 48,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        43522.876908916776,
+        43378.29773723179
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/sift-exploration-v2/portable/3/native-list/1c97f7d01594619853dd.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/sift-exploration-v2/portable/0/native-list/1c97f7d01594619853dd.hdf5"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.9,
+      "algorithm": "succinct-optimized",
+      "qps": 42755.92831107642,
+      "recall": 0.9026,
+      "strict_id_recall": 0.90172,
+      "profile": "sift-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.008,
+        "quantized_graph_max_expansions": 48,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        42805.04805778773,
+        42706.80856436511
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-diagnosis-20261116/compact-official-summary.json"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.9,
+      "algorithm": "qsgngt",
+      "qps": 41700.86642404685,
+      "recall": 0.90111,
+      "strict_id_recall": 0.90025,
+      "profile": "sift-qsg-a1-0",
+      "parameters": [
+        [
+          1,
+          2,
+          1.0175,
+          4,
+          1,
+          0
+        ]
+      ],
+      "qps_observations": [
+        41687.66138634724,
+        41714.07146174647
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-qsg-a1-0/1/6083dd84ad7330b6d5b2.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-qsg-a1-0/0/6083dd84ad7330b6d5b2.hdf5"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.9,
+      "algorithm": "descartes(01AI)",
+      "qps": 37220.27441399754,
+      "recall": 0.90922,
+      "strict_id_recall": 0.90848,
+      "profile": "sift-descartes-m128-0",
+      "parameters": [
+        0,
+        15
+      ],
+      "qps_observations": [
+        37328.85728042406,
+        37111.69154757101
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-descartes-m128-0/1/969ecc95408e491a1532.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-descartes-m128-0/0/969ecc95408e491a1532.hdf5"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.95,
+      "algorithm": "exploration",
+      "qps": 36004.65071092974,
+      "recall": 0.95173,
+      "strict_id_recall": 0.9509,
+      "profile": "sift-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.038,
+        "quantized_graph_max_expansions": 64,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        36144.3947502219,
+        35864.90667163757
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/sift-exploration-v2/portable/3/native-list/25cfc61a584beec56d8b.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/sift-exploration-v2/portable/0/native-list/25cfc61a584beec56d8b.hdf5"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.95,
+      "algorithm": "succinct-optimized",
+      "qps": 35449.799527357805,
+      "recall": 0.95173,
+      "strict_id_recall": 0.9509,
+      "profile": "sift-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 128,
+        "quantized_graph_margin": 0.038,
+        "quantized_graph_max_expansions": 64,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        35546.48548369463,
+        35353.11357102098
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-diagnosis-20261116/compact-official-summary.json"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.95,
+      "algorithm": "qsgngt",
+      "qps": 31953.930515052773,
+      "recall": 0.95015,
+      "strict_id_recall": 0.94935,
+      "profile": "sift-qsg-a1-0",
+      "parameters": [
+        [
+          1,
+          2.5,
+          1.05,
+          0,
+          1,
+          0
+        ]
+      ],
+      "qps_observations": [
+        31978.45689587474,
+        31929.40413423081
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-qsg-a1-0/1/46643b38487a25c2793f.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-qsg-a1-0/0/46643b38487a25c2793f.hdf5"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.95,
+      "algorithm": "descartes(01AI)",
+      "qps": 29613.057433559574,
+      "recall": 0.95518,
+      "strict_id_recall": 0.95441,
+      "profile": "sift-descartes-m128-0",
+      "parameters": [
+        0,
+        21
+      ],
+      "qps_observations": [
+        29585.71016428966,
+        29640.404702829484
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-descartes-m128-0/1/4670ab104265373e6e91.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-descartes-m128-0/0/4670ab104265373e6e91.hdf5"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.99,
+      "algorithm": "exploration",
+      "qps": 23639.347981009007,
+      "recall": 0.99058,
+      "strict_id_recall": 0.9899,
+      "profile": "sift-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 128,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        23881.886042578873,
+        23396.80991943914
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/sift-exploration-v2/portable/3/native-list/15225da6018ef1062b4d.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/sift-exploration-v2/portable/0/native-list/15225da6018ef1062b4d.hdf5"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.99,
+      "algorithm": "succinct-optimized",
+      "qps": 23746.075319421703,
+      "recall": 0.99058,
+      "strict_id_recall": 0.9899,
+      "profile": "sift-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 128,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        23700.944465603345,
+        23791.206173240065
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-diagnosis-20261116/compact-official-summary.json"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.99,
+      "algorithm": "qsgngt",
+      "qps": 20918.84921371223,
+      "recall": 0.99032,
+      "strict_id_recall": 0.98962,
+      "profile": "sift-qsg-a1-0",
+      "parameters": [
+        [
+          1,
+          3,
+          1.115,
+          0,
+          1,
+          0
+        ]
+      ],
+      "qps_observations": [
+        20938.531343867737,
+        20899.167083556727
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-qsg-a1-0/1/72c12e2656bebab6adac.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-qsg-a1-0/0/72c12e2656bebab6adac.hdf5"
+      ]
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "target": 0.99,
+      "algorithm": "descartes(01AI)",
+      "qps": 18483.497997237464,
+      "recall": 0.99066,
+      "strict_id_recall": 0.98994,
+      "profile": "sift-descartes-m128-0",
+      "parameters": [
+        2,
+        29
+      ],
+      "qps_observations": [
+        18484.60168879017,
+        18482.394305684753
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-descartes-m128-0/1/4235216a8e8abe234e71.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/sift-descartes-m128-0/0/4235216a8e8abe234e71.hdf5"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.9,
+      "algorithm": "exploration",
+      "qps": 13327.459739067453,
+      "recall": 0.9026,
+      "strict_id_recall": 0.8762,
+      "profile": "gist-exploration-v1",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.04,
+        "quantized_graph_max_expansions": 256,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        13409.972024618337,
+        13244.947453516572
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/gist-exploration-v1/portable/3/native-list/878008c43c15f29c0c7f.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/gist-exploration-v1/portable/0/native-list/878008c43c15f29c0c7f.hdf5"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.9,
+      "algorithm": "succinct-optimized",
+      "qps": 13381.529293450669,
+      "recall": 0.9026,
+      "strict_id_recall": 0.8762,
+      "profile": "gist-exploration-v1",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.04,
+        "quantized_graph_max_expansions": 256,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        13391.94625729575,
+        13371.112329605588
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-diagnosis-20261116/compact-official-summary.json"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.9,
+      "algorithm": "qsgngt",
+      "qps": 7156.95673184283,
+      "recall": 0.9037,
+      "strict_id_recall": 0.8819,
+      "profile": "gist-qsg-a4-0",
+      "parameters": [
+        [
+          4,
+          8,
+          1.02,
+          0,
+          1,
+          3
+        ]
+      ],
+      "qps_observations": [
+        7171.013015966913,
+        7142.900447718746
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-qsg-a4-0/1/1baf4a05d416b2d446e5.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-qsg-a4-0/0/1baf4a05d416b2d446e5.hdf5"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.9,
+      "algorithm": "descartes(01AI)",
+      "qps": 4824.892010586652,
+      "recall": 0.9341,
+      "strict_id_recall": 0.9113,
+      "profile": "gist-descartes-m64-0",
+      "parameters": [
+        0,
+        70
+      ],
+      "qps_observations": [
+        4822.352755865678,
+        4827.431265307626
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-descartes-m64-0/1/26496bccd9f7342597ae.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-descartes-m64-0/0/26496bccd9f7342597ae.hdf5"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.95,
+      "algorithm": "exploration",
+      "qps": 9109.451949469189,
+      "recall": 0.9552,
+      "strict_id_recall": 0.9378,
+      "profile": "gist-exploration-v1",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.06,
+        "quantized_graph_max_expansions": 256,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        9177.526536095873,
+        9041.377362842502
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/gist-exploration-v1/portable/3/native-list/32cb6e201abc1cb34a9c.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/gist-exploration-v1/portable/0/native-list/32cb6e201abc1cb34a9c.hdf5"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.95,
+      "algorithm": "succinct-optimized",
+      "qps": 9115.377605869096,
+      "recall": 0.9552,
+      "strict_id_recall": 0.9378,
+      "profile": "gist-exploration-v1",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.06,
+        "quantized_graph_max_expansions": 256,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        9140.625544823739,
+        9090.129666914456
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-diagnosis-20261116/compact-official-summary.json"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.95,
+      "algorithm": "qsgngt",
+      "qps": 4023.6396538875124,
+      "recall": 0.9548,
+      "strict_id_recall": 0.9413,
+      "profile": "gist-qsg-a4-0",
+      "parameters": [
+        [
+          8,
+          14,
+          1.02,
+          0,
+          1,
+          3
+        ]
+      ],
+      "qps_observations": [
+        4024.7879798640847,
+        4022.49132791094
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-qsg-a4-0/1/7a0adce763df7468971e.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-qsg-a4-0/0/7a0adce763df7468971e.hdf5"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.95,
+      "algorithm": "descartes(01AI)",
+      "qps": 3151.354271671782,
+      "recall": 0.9687,
+      "strict_id_recall": 0.9539,
+      "profile": "gist-descartes-m64-0",
+      "parameters": [
+        1,
+        100
+      ],
+      "qps_observations": [
+        3157.543527881332,
+        3145.1650154622325
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-descartes-m64-0/1/d1d8b80da22ea71383a1.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-descartes-m64-0/0/d1d8b80da22ea71383a1.hdf5"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.99,
+      "algorithm": "exploration",
+      "qps": 3326.7953610917734,
+      "recall": 0.9946,
+      "strict_id_recall": 0.9909,
+      "profile": "gist-exploration-v1",
+      "parameters": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_max_expansions": 512,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0,
+        "quantized_graph_margin": 0.12000000000000001
+      },
+      "qps_observations": [
+        3356.1171083153495,
+        3297.4736138681974
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/gist-exploration-v1/portable/3/native-list/152e95405100cae44ec9.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/gist-exploration-v1/portable/0/native-list/152e95405100cae44ec9.hdf5"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.99,
+      "algorithm": "succinct-optimized",
+      "qps": 3312.371928961633,
+      "recall": 0.9946,
+      "strict_id_recall": 0.9909,
+      "profile": "gist-exploration-v1",
+      "parameters": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_max_expansions": 512,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0,
+        "quantized_graph_margin": 0.12000000000000001
+      },
+      "qps_observations": [
+        3307.2212681335973,
+        3317.522589789668
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-diagnosis-20261116/compact-official-summary.json"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.99,
+      "algorithm": "qsgngt",
+      "qps": 988.709029173815,
+      "recall": 0.99,
+      "strict_id_recall": 0.985,
+      "profile": "gist-qsg-a4-0",
+      "parameters": [
+        [
+          30,
+          150,
+          1.02,
+          0,
+          1,
+          3
+        ]
+      ],
+      "qps_observations": [
+        988.2500077164622,
+        989.168050631168
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-qsg-a4-0/1/f3188aa8a03f3ddc9f08.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-qsg-a4-0/0/f3188aa8a03f3ddc9f08.hdf5"
+      ]
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "target": 0.99,
+      "algorithm": "descartes(01AI)",
+      "qps": 1077.2931259135262,
+      "recall": 0.9948,
+      "strict_id_recall": 0.9899,
+      "profile": "gist-descartes-m64-0",
+      "parameters": [
+        0,
+        350
+      ],
+      "qps_observations": [
+        1076.2758422839001,
+        1078.3104095431524
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-descartes-m64-0/1/10c1166cac19712d5d71.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/gist-descartes-m64-0/0/10c1166cac19712d5d71.hdf5"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.9,
+      "algorithm": "exploration",
+      "qps": 14123.584392053566,
+      "recall": 0.90762,
+      "strict_id_recall": 0.89256,
+      "profile": "glove-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 1024,
+        "quantized_graph_margin": 0.055,
+        "quantized_graph_max_expansions": 384,
+        "quantized_graph_bucket_width": 0.016,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        14139.164602466792,
+        14108.004181640339
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/glove-exploration-v2/portable/3/native-list/3c994833047746e4f3f3.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/glove-exploration-v2/portable/0/native-list/3c994833047746e4f3f3.hdf5"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.9,
+      "algorithm": "succinct-optimized",
+      "qps": 13932.164923308928,
+      "recall": 0.90762,
+      "strict_id_recall": 0.89256,
+      "profile": "glove-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 1024,
+        "quantized_graph_margin": 0.055,
+        "quantized_graph_max_expansions": 384,
+        "quantized_graph_bucket_width": 0.016,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        14048.803493122146,
+        13815.52635349571
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-diagnosis-20261116/compact-official-summary.json"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.9,
+      "algorithm": "qsgngt",
+      "qps": 16128.172956464685,
+      "recall": 0.90169,
+      "strict_id_recall": 0.88601,
+      "profile": "glove-qsg-a2-q1-0",
+      "parameters": [
+        [
+          1,
+          3,
+          1.09,
+          0,
+          1,
+          1
+        ]
+      ],
+      "qps_observations": [
+        16135.01652622962,
+        16121.329386699752
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-qsg-a2-q1-0/1/13010113be47e426cedb.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-qsg-a2-q1-0/0/13010113be47e426cedb.hdf5"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.9,
+      "algorithm": "descartes(01AI)",
+      "qps": 15425.05323168834,
+      "recall": 0.90159,
+      "strict_id_recall": 0.88576,
+      "profile": "glove-descartes-m64-0",
+      "parameters": [
+        2,
+        20
+      ],
+      "qps_observations": [
+        15456.187978433658,
+        15393.918484943022
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-descartes-m64-0/1/430eb6b374946a04eae2.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-descartes-m64-0/0/430eb6b374946a04eae2.hdf5"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.95,
+      "algorithm": "exploration",
+      "qps": 8569.937952029977,
+      "recall": 0.95567,
+      "strict_id_recall": 0.94322,
+      "profile": "glove-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 768,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        8575.688356637724,
+        8564.187547422232
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/glove-exploration-v2/portable/3/native-list/868698ec6bb75c51799d.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/glove-exploration-v2/portable/0/native-list/868698ec6bb75c51799d.hdf5"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.95,
+      "algorithm": "succinct-optimized",
+      "qps": 8503.381113103296,
+      "recall": 0.95567,
+      "strict_id_recall": 0.94322,
+      "profile": "glove-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 768,
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        8574.880120865562,
+        8431.882105341032
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-diagnosis-20261116/compact-official-summary.json"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.95,
+      "algorithm": "qsgngt",
+      "qps": 9173.526219163085,
+      "recall": 0.95545,
+      "strict_id_recall": 0.94263,
+      "profile": "glove-qsg-a2-q1-0",
+      "parameters": [
+        [
+          1,
+          3,
+          1.13,
+          0,
+          1,
+          1
+        ]
+      ],
+      "qps_observations": [
+        9163.86752725911,
+        9183.18491106706
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-qsg-a2-q1-0/1/6c20db2ca4bb310b69f9.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-qsg-a2-q1-0/0/6c20db2ca4bb310b69f9.hdf5"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.95,
+      "algorithm": "descartes(01AI)",
+      "qps": 7572.966243291343,
+      "recall": 0.95999,
+      "strict_id_recall": 0.94788,
+      "profile": "glove-descartes-m128-0",
+      "parameters": [
+        3,
+        25
+      ],
+      "qps_observations": [
+        7576.932171862137,
+        7569.000314720549
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-descartes-m128-0/1/ddbcf6a4670cb220f79f.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-descartes-m128-0/0/ddbcf6a4670cb220f79f.hdf5"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.99,
+      "algorithm": "exploration",
+      "qps": 3063.381076773374,
+      "recall": 0.99327,
+      "strict_id_recall": 0.98909,
+      "profile": "glove-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.14,
+        "quantized_graph_max_expansions": 1536,
+        "quantized_graph_bucket_width": 0.004,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        3068.032380976067,
+        3058.729772570681
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/glove-exploration-v2/portable/3/native-list/623969e69b8af302ac08.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/paired/glove-exploration-v2/portable/0/native-list/623969e69b8af302ac08.hdf5"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.99,
+      "algorithm": "succinct-optimized",
+      "qps": 3032.0589478958545,
+      "recall": 0.99327,
+      "strict_id_recall": 0.98909,
+      "profile": "glove-exploration-v2",
+      "parameters": {
+        "index_type": "kHNSW",
+        "ef_search": 2048,
+        "quantized_graph_margin": 0.14,
+        "quantized_graph_max_expansions": 1536,
+        "quantized_graph_bucket_width": 0.004,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "qps_observations": [
+        3060.630981352228,
+        3003.4869144394806
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-diagnosis-20261116/compact-official-summary.json"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.99,
+      "algorithm": "qsgngt",
+      "qps": 3807.595648040394,
+      "recall": 0.99016,
+      "strict_id_recall": 0.98492,
+      "profile": "glove-qsg-a2-q1-0",
+      "parameters": [
+        [
+          1,
+          4.5,
+          1.18,
+          0,
+          1,
+          1
+        ]
+      ],
+      "qps_observations": [
+        3806.178466341038,
+        3809.01282973975
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-qsg-a2-q1-0/1/a539ab6817f703291fd7.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-qsg-a2-q1-0/0/a539ab6817f703291fd7.hdf5"
+      ]
+    },
+    {
+      "dataset": "glove-100-angular",
+      "target": 0.99,
+      "algorithm": "descartes(01AI)",
+      "qps": 2365.0358102393675,
+      "recall": 0.99273,
+      "strict_id_recall": 0.98875,
+      "profile": "glove-descartes-m64-0",
+      "parameters": [
+        3,
+        80
+      ],
+      "qps_observations": [
+        2364.6810141773044,
+        2365.390606301431
+      ],
+      "sources": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-descartes-m64-0/1/4a06e26723392d72d97d.hdf5",
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/measurements/baseline/glove-descartes-m64-0/0/4a06e26723392d72d97d.hdf5"
+      ]
+    }
+  ]
+}

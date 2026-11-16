@@ -1,0 +1,65 @@
+[
+  {
+    "dataset": "sift-128-euclidean",
+    "target": 0.9,
+    "queries": 10000,
+    "ids_sha256": "e60c91fe86ce4e935737dff244347b912a20a057271a39d05a9c47d9bd14f2f0",
+    "ids_identical": true
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "target": 0.95,
+    "queries": 10000,
+    "ids_sha256": "1a9aa8a2628d061dbd072249b2d8d2bd1ee983061cbdb4e12a5a200db5707a53",
+    "ids_identical": true
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "target": 0.99,
+    "queries": 10000,
+    "ids_sha256": "93dfcb73cfb2630e21163a9e06ae76bb613cf41c1e194a6122884a81eedc4bb6",
+    "ids_identical": true
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "target": 0.9,
+    "queries": 1000,
+    "ids_sha256": "cd6543754f9d7fa04c589b10cc14b5d8c02054b19d2adbc6298792c16a372415",
+    "ids_identical": true
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "target": 0.95,
+    "queries": 1000,
+    "ids_sha256": "15454d777de34709fbaf051470a0013bab23c031e9108dc20208b48b30b16e9b",
+    "ids_identical": true
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "target": 0.99,
+    "queries": 1000,
+    "ids_sha256": "c932e48f0719ad57f7ebbd82b90ed33fbee133195dbb4144666f7c0c3d2888c0",
+    "ids_identical": true
+  },
+  {
+    "dataset": "glove-100-angular",
+    "target": 0.9,
+    "queries": 10000,
+    "ids_sha256": "47f3af63b237e4a2ebf301b5dfd84aaf26f8bde55ec1d2bae1259d4e85cee2a5",
+    "ids_identical": true
+  },
+  {
+    "dataset": "glove-100-angular",
+    "target": 0.95,
+    "queries": 10000,
+    "ids_sha256": "a734582caf93155e90b637184fa8036637659e279a17863c8c0b1609ce3ca3bb",
+    "ids_identical": true
+  },
+  {
+    "dataset": "glove-100-angular",
+    "target": 0.99,
+    "queries": 10000,
+    "ids_sha256": "e570abda85f86d265b908127c6cf1b9d52cd282d0a6400241f045d39c1515b15",
+    "ids_identical": true
+  }
+]

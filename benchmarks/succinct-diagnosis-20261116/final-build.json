@@ -1,0 +1,8 @@
+{
+  "binary": "/home/xingrui/workspace/zvec/quantized_graph_exploration_succinct/zvec/build-ann/lib/_zvec.cpython-310-x86_64-linux-gnu.so",
+  "sha256": "e7d79cdaa639d89a8001325e25403bf84699465dc76c2fa5020f162fad67e366",
+  "binding_tests": "24 passed",
+  "kernel_tests": "4 passed",
+  "full_query_configurations": 9,
+  "all_ids_identical": true
+}

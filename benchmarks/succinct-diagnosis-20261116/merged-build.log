@@ -1,0 +1,12 @@
+[0/2] Re-checking globbed directories...
+[1/12] cd /home/xingrui/workspace/zvec/quantized_graph_exploration_succinct/zvec/build-ann/thirdparty/antlr/antlr4/runtime/Cpp/runtime && /home/xingrui/workspace/annbenchmark/ann-benchmarks/.venv/lib/python3.10/site-packages/cmake/data/bin/cmake -E make_directory /home/xingrui/workspace/zvec/quantized_graph_exploration_succinct/zvec/build-ann/external/usr/local/lib
+[2/12] Building CXX object src/turbo/CMakeFiles/zvec_turbo.dir/distance/avx512/symqg/symqg_kernels_avx512.cc.o
+[3/12] Linking CXX static library lib/libzvec_turbo.a
+[4/12] Linking CXX shared library lib/libcore_knn_cluster.so
+[5/12] Linking CXX shared library lib/libcore_knn_hnsw_rabitq.so
+[6/12] Building CXX object src/core/algorithm/hnsw/CMakeFiles/core_knn_hnsw_objects.dir/hnsw_quantized_graph.cc.o
+[7/12] Building CXX object src/core/CMakeFiles/zvec_core.dir/algorithm/hnsw/hnsw_quantized_graph.cc.o
+[8/12] Linking CXX static library lib/libcore_knn_hnsw.a
+[9/12] Linking CXX shared library lib/libcore_knn_hnsw.so
+[10/12] Linking CXX static library lib/libzvec_core.a
+[11/12] Linking CXX shared module lib/_zvec.cpython-310-x86_64-linux-gnu.so

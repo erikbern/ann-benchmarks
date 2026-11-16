@@ -1,0 +1,74 @@
+[
+  {
+    "dataset": "gist-960-euclidean",
+    "target": 0.9,
+    "exploration_qps": 12596.86933121899,
+    "succinct_qps": 12254.87354494881,
+    "slowdown_pct": 2.714926838389975,
+    "same_parameters": true
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "target": 0.95,
+    "exploration_qps": 8682.043713426385,
+    "succinct_qps": 8338.676008063714,
+    "slowdown_pct": 3.9549179513075683,
+    "same_parameters": true
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "target": 0.99,
+    "exploration_qps": 3252.2178068117937,
+    "succinct_qps": 3071.7667677087998,
+    "slowdown_pct": 5.548553320292326,
+    "same_parameters": true
+  },
+  {
+    "dataset": "glove-100-angular",
+    "target": 0.9,
+    "exploration_qps": 13277.181111175827,
+    "succinct_qps": 12823.896090554483,
+    "slowdown_pct": 3.4140154964053315,
+    "same_parameters": true
+  },
+  {
+    "dataset": "glove-100-angular",
+    "target": 0.95,
+    "exploration_qps": 8136.9705580967475,
+    "succinct_qps": 7852.90482122924,
+    "slowdown_pct": 3.4910503219757416,
+    "same_parameters": true
+  },
+  {
+    "dataset": "glove-100-angular",
+    "target": 0.99,
+    "exploration_qps": 2977.5395918752142,
+    "succinct_qps": 2849.9492903433948,
+    "slowdown_pct": 4.285091687108844,
+    "same_parameters": true
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "target": 0.9,
+    "exploration_qps": 38639.08879529216,
+    "succinct_qps": 36959.85379269263,
+    "slowdown_pct": 4.345948765759022,
+    "same_parameters": false
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "target": 0.95,
+    "exploration_qps": 32338.753575586547,
+    "succinct_qps": 31084.023051201173,
+    "slowdown_pct": 3.87995944696089,
+    "same_parameters": false
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "target": 0.99,
+    "exploration_qps": 21884.703002171616,
+    "succinct_qps": 20523.160768275862,
+    "slowdown_pct": 6.221433454046188,
+    "same_parameters": true
+  }
+]

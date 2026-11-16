@@ -1,0 +1,13 @@
+float:
+  any:
+    - name: zvec-symqg
+      module: ann_benchmarks.algorithms.zvec_symqg
+      constructor: ZvecSymQG
+      docker_tag: ann-benchmarks-zvec-symqg
+      disabled: false
+      base_args: ['@metric', '@dimension', 0]
+      run_groups:
+        best-practice:
+          args: []
+          # Historical ANN-recall presets; achieved recall is remeasured.
+          query_args: [[0.90, 0.95, 0.97, 0.98, 0.99]]

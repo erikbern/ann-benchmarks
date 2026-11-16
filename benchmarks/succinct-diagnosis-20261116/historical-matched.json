@@ -1,0 +1,3912 @@
+[
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.025,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 15956.721386315648,
+    "succinct_qps": 15690.903377377408,
+    "succinct_change_pct": -1.665868586050534,
+    "recall_change_pp": 0.0
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.046875,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 11066.122810813093,
+    "succinct_qps": 10710.520267820208,
+    "succinct_change_pct": -3.2134339106142384,
+    "recall_change_pp": 0.22999999999999687
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.046875,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 11028.413064856253,
+    "succinct_qps": 10651.226808469575,
+    "succinct_change_pct": -3.4201317466847514,
+    "recall_change_pp": 0.21999999999999797
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.046,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 11306.041581868516,
+    "succinct_qps": 10877.795759160132,
+    "succinct_change_pct": -3.787760902942028,
+    "recall_change_pp": 0.22999999999999687
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.0475,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 10932.802285452137,
+    "succinct_qps": 10531.572339677597,
+    "succinct_change_pct": -3.6699643449003116,
+    "recall_change_pp": 0.130000000000019
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.047,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 11080.037828956058,
+    "succinct_qps": 10692.799326968427,
+    "succinct_change_pct": -3.494920396170853,
+    "recall_change_pp": 0.22999999999999687
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.0485,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 10799.902153901612,
+    "succinct_qps": 10369.774076949323,
+    "succinct_change_pct": -3.9827034617799684,
+    "recall_change_pp": 0.22999999999999687
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.048,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 10849.938174838453,
+    "succinct_qps": 10456.299376506691,
+    "succinct_change_pct": -3.628028031022612,
+    "recall_change_pp": 0.08000000000000229
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.049,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 10679.159579993686,
+    "succinct_qps": 10279.627764257231,
+    "succinct_change_pct": -3.7412290053698283,
+    "recall_change_pp": 0.16000000000000458
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.04,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 12596.86933121899,
+    "succinct_qps": 12254.87354494881,
+    "succinct_change_pct": -2.714926838389975,
+    "recall_change_pp": 0.16000000000000458
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.052,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 10114.921683768825,
+    "succinct_qps": 9674.816851506708,
+    "succinct_change_pct": -4.351045376538531,
+    "recall_change_pp": 0.15999999999999348
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.065,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 7973.992296548656,
+    "succinct_qps": 7614.032476196528,
+    "succinct_change_pct": -4.514173164023849,
+    "recall_change_pp": 0.13999999999998458
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.065,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 7616.369103824977,
+    "succinct_qps": 7245.51247834191,
+    "succinct_change_pct": -4.869205003429011,
+    "recall_change_pp": 0.060000000000004494
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.0675,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 7656.480063379523,
+    "succinct_qps": 7320.9243873490195,
+    "succinct_change_pct": -4.382636319206856,
+    "recall_change_pp": 0.09000000000000119
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.06,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 8682.043713426385,
+    "succinct_qps": 8338.676008063714,
+    "succinct_change_pct": -3.9549179513075683,
+    "recall_change_pp": 0.10000000000000009
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.075,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 6820.98251457119,
+    "succinct_qps": 6559.247101801708,
+    "succinct_change_pct": -3.8372098478533734,
+    "recall_change_pp": 0.0
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.075,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 6164.014990080093,
+    "succinct_qps": 5866.134827406318,
+    "succinct_change_pct": -4.832567136081933,
+    "recall_change_pp": -0.13999999999999568
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.09,
+      "quantized_graph_max_expansions": 1024,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 4292.143409008345,
+    "succinct_qps": 4029.2575521488775,
+    "succinct_change_pct": -6.124815315064335,
+    "recall_change_pp": -0.16999999999999238
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.09,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 5798.034561743763,
+    "succinct_qps": 5539.770130731213,
+    "succinct_change_pct": -4.454344455216175,
+    "recall_change_pp": -0.11999999999999789
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.12000000000000001,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 3246.1919603364836,
+    "succinct_qps": 3068.584551520902,
+    "succinct_change_pct": -5.471254041217321,
+    "recall_change_pp": -0.060000000000004494
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.12,
+      "quantized_graph_max_expansions": 1024,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 2435.703878435014,
+    "succinct_qps": 2294.654018718074,
+    "succinct_change_pct": -5.790928074867918,
+    "recall_change_pp": -0.019999999999986695
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.12,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 3252.2178068117937,
+    "succinct_qps": 3071.7667677087998,
+    "succinct_change_pct": -5.548553320292326,
+    "recall_change_pp": -0.060000000000004494
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.13,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 3032.374066911273,
+    "succinct_qps": 2861.055157609248,
+    "succinct_change_pct": -5.6496627896744815,
+    "recall_change_pp": -0.030000000000007798
+  },
+  {
+    "dataset": "gist-960-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.14,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 2863.973834162396,
+    "succinct_qps": 2694.6952914994117,
+    "succinct_change_pct": -5.91061764055858,
+    "recall_change_pp": -0.0200000000000089
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 1024,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.016,
+      "quantized_graph_margin": 0.055,
+      "quantized_graph_max_expansions": 384,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 13277.181111175827,
+    "succinct_qps": 12823.896090554483,
+    "succinct_change_pct": -3.4140154964053315,
+    "recall_change_pp": 0.10700000000000154
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.09,
+      "quantized_graph_max_expansions": 768,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 8136.9705580967475,
+    "succinct_qps": 7852.90482122924,
+    "succinct_change_pct": -3.4910503219757416,
+    "recall_change_pp": 0.051999999999996493
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_margin": 0.115,
+      "quantized_graph_max_expansions": 1024,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 4761.21307006967,
+    "succinct_qps": 4462.274754707045,
+    "succinct_change_pct": -6.278616624864696,
+    "recall_change_pp": 0.03799999999998249
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_margin": 0.11,
+      "quantized_graph_max_expansions": 1024,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 5177.956835463149,
+    "succinct_qps": 4937.577254416304,
+    "succinct_change_pct": -4.642363555457186,
+    "recall_change_pp": 0.0200000000000089
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_margin": 0.14,
+      "quantized_graph_max_expansions": 1536,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 2977.5395918752142,
+    "succinct_qps": 2849.9492903433948,
+    "succinct_change_pct": -4.285091687108844,
+    "recall_change_pp": -0.0070000000000014495
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_margin": 0.14,
+      "quantized_graph_max_expansions": 2048,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 2710.589422578375,
+    "succinct_qps": 2596.040823342076,
+    "succinct_change_pct": -4.225966436751527,
+    "recall_change_pp": -0.007999999999996898
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_margin": 0.18,
+      "quantized_graph_max_expansions": 1536,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 2155.918788919956,
+    "succinct_qps": 2060.50873682775,
+    "succinct_change_pct": -4.425493788659985,
+    "recall_change_pp": -0.0070000000000014495
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_margin": 0.18,
+      "quantized_graph_max_expansions": 2048,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 1792.9256044091658,
+    "succinct_qps": 1706.9816553469645,
+    "succinct_change_pct": -4.7935033584688425,
+    "recall_change_pp": -0.003999999999992898
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_margin": 0.24,
+      "quantized_graph_max_expansions": 1536,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 1725.4599700086276,
+    "succinct_qps": 1643.6043189881714,
+    "succinct_change_pct": -4.743990150061084,
+    "recall_change_pp": -0.005999999999994898
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_margin": 0.24,
+      "quantized_graph_max_expansions": 2048,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 1363.974420536623,
+    "succinct_qps": 1298.2536009378443,
+    "succinct_change_pct": -4.818332265565683,
+    "recall_change_pp": -0.001999999999990898
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_margin": 0.32,
+      "quantized_graph_max_expansions": 1536,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 1473.5932710082052,
+    "succinct_qps": 1395.6723981364432,
+    "succinct_change_pct": -5.287814107514888,
+    "recall_change_pp": -0.0060000000000060005
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.004,
+      "quantized_graph_margin": 0.32,
+      "quantized_graph_max_expansions": 2048,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 1132.949190371451,
+    "succinct_qps": 1083.281607415535,
+    "succinct_change_pct": -4.383919718379592,
+    "recall_change_pp": -0.002000000000002
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.008,
+      "quantized_graph_margin": 0.065,
+      "quantized_graph_max_expansions": 384,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 12251.523004554409,
+    "succinct_qps": 11963.974900863659,
+    "succinct_change_pct": -2.3470396585294373,
+    "recall_change_pp": -0.000999999999995449
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.008,
+      "quantized_graph_margin": 0.075,
+      "quantized_graph_max_expansions": 768,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 10099.460678767484,
+    "succinct_qps": 9808.658495403783,
+    "succinct_change_pct": -2.879383291971882,
+    "recall_change_pp": 0.06900000000000794
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.012,
+      "quantized_graph_margin": 0.09,
+      "quantized_graph_max_expansions": 768,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 7143.232550206354,
+    "succinct_qps": 6916.281137499027,
+    "succinct_change_pct": -3.177152796191285,
+    "recall_change_pp": 0.008000000000019103
+  },
+  {
+    "dataset": "glove-100-angular",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.028,
+      "quantized_graph_margin": 0.09,
+      "quantized_graph_max_expansions": 768,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 5900.2787306851615,
+    "succinct_qps": 5760.988763452321,
+    "succinct_change_pct": -2.3607353752365112,
+    "recall_change_pp": -0.10499999999999954
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 16,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 52599.155514923965,
+    "succinct_qps": 50358.49915174771,
+    "succinct_change_pct": -4.2598713634109835,
+    "recall_change_pp": 0.11700000000001154
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 24,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 44743.82443428874,
+    "succinct_qps": 42536.423102276756,
+    "succinct_change_pct": -4.933421226104173,
+    "recall_change_pp": 0.3490000000000104
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39939.3620830191,
+    "succinct_qps": 37903.10016573497,
+    "succinct_change_pct": -5.098383677364449,
+    "recall_change_pp": 0.09099999999999664
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 40,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37138.44001522973,
+    "succinct_qps": 35269.7850498568,
+    "succinct_change_pct": -5.031592507942262,
+    "recall_change_pp": -0.055000000000005045
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 35451.42349040201,
+    "succinct_qps": 33665.58228647703,
+    "succinct_change_pct": -5.037431584118124,
+    "recall_change_pp": -0.07399999999999629
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 16,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 52571.07045943083,
+    "succinct_qps": 50251.10552805963,
+    "succinct_change_pct": -4.413006832648625,
+    "recall_change_pp": 0.11399999999999189
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 24,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 44639.298253829555,
+    "succinct_qps": 42457.067718872386,
+    "succinct_change_pct": -4.88858611205869,
+    "recall_change_pp": 0.3269999999999995
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39578.09076446043,
+    "succinct_qps": 37614.34371135371,
+    "succinct_change_pct": -4.9617023337317985,
+    "recall_change_pp": 0.07799999999998919
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 40,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 36400.073246149586,
+    "succinct_qps": 34579.47839392685,
+    "succinct_change_pct": -5.001624144850636,
+    "recall_change_pp": -0.04100000000001325
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 34387.91246721538,
+    "succinct_qps": 32734.72821764753,
+    "succinct_change_pct": -4.807457420231465,
+    "recall_change_pp": -0.06800000000000139
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.032,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0.15
+    },
+    "exploration_qps": 30114.100763639395,
+    "succinct_qps": 28405.512464267114,
+    "succinct_change_pct": -5.673715156838677,
+    "recall_change_pp": 0.10699999999999044
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 16,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 52603.575379197384,
+    "succinct_qps": 50311.684323660375,
+    "succinct_change_pct": -4.356911177644706,
+    "recall_change_pp": 0.11599999999999389
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 24,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 44945.536687323256,
+    "succinct_qps": 43008.930320123625,
+    "succinct_change_pct": -4.308784608963956,
+    "recall_change_pp": 0.34999999999999476
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 40389.84838052684,
+    "succinct_qps": 38387.37134206947,
+    "succinct_change_pct": -4.95787213557064,
+    "recall_change_pp": 0.06800000000000139
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0.15
+    },
+    "exploration_qps": 40361.28138261531,
+    "succinct_qps": 38351.88458327581,
+    "succinct_change_pct": -4.978525781406429,
+    "recall_change_pp": 0.06800000000000139
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 40,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37826.39358603213,
+    "succinct_qps": 36083.603969424934,
+    "succinct_change_pct": -4.607337500053776,
+    "recall_change_pp": -0.07399999999998519
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 36373.62036983237,
+    "succinct_qps": 34701.15240180923,
+    "succinct_change_pct": -4.598024477679585,
+    "recall_change_pp": -0.06399999999998629
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.002,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33713.12642872529,
+    "succinct_qps": 33204.53588268264,
+    "succinct_change_pct": -1.5085831541547745,
+    "recall_change_pp": 0.01100000000000545
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.002,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33694.84515874552,
+    "succinct_qps": 33156.29125461459,
+    "succinct_change_pct": -1.5983272859502962,
+    "recall_change_pp": 0.01100000000000545
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.002,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33842.41743540835,
+    "succinct_qps": 33147.827488890274,
+    "succinct_change_pct": -2.0524241444742297,
+    "recall_change_pp": 0.01100000000000545
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.002,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33971.603288381324,
+    "succinct_qps": 33437.45440949383,
+    "succinct_change_pct": -1.5723393280945852,
+    "recall_change_pp": 0.0260000000000149
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33518.875177212016,
+    "succinct_qps": 32805.623949967616,
+    "succinct_change_pct": -2.1279091958590124,
+    "recall_change_pp": -0.007999999999996898
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33314.43481161711,
+    "succinct_qps": 32754.284143514906,
+    "succinct_change_pct": -1.6814052865362528,
+    "recall_change_pp": -0.007999999999996898
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33412.94821209072,
+    "succinct_qps": 32851.18021490352,
+    "succinct_change_pct": -1.6812883245780674,
+    "recall_change_pp": -0.007999999999996898
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33705.35107999579,
+    "succinct_qps": 33175.645747117705,
+    "succinct_change_pct": -1.5715763696419804,
+    "recall_change_pp": 0.010000000000010001
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 32657.601996999205,
+    "succinct_qps": 31965.101577486126,
+    "succinct_change_pct": -2.120487657289438,
+    "recall_change_pp": -0.000999999999995449
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 16,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 50166.41987948493,
+    "succinct_qps": 49558.96427617727,
+    "succinct_change_pct": -1.210880913501411,
+    "recall_change_pp": 0.11700000000001154
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 24,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 42961.13292813084,
+    "succinct_qps": 42095.42544009313,
+    "succinct_change_pct": -2.015094642606241,
+    "recall_change_pp": 0.3490000000000104
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 32480.949607840706,
+    "succinct_qps": 31885.46997631189,
+    "succinct_change_pct": -1.8333196495741277,
+    "recall_change_pp": 0.002999999999997449
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38538.08461041592,
+    "succinct_qps": 37943.286406721825,
+    "succinct_change_pct": -1.5434036478640611,
+    "recall_change_pp": 0.09099999999999664
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 40,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 36010.08964952376,
+    "succinct_qps": 35364.64938078407,
+    "succinct_change_pct": -1.7923872865121537,
+    "recall_change_pp": -0.055000000000005045
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 34567.99321547222,
+    "succinct_qps": 33898.652476709496,
+    "succinct_change_pct": -1.9363019848752328,
+    "recall_change_pp": -0.07399999999999629
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 32523.111136613534,
+    "succinct_qps": 31891.094559290024,
+    "succinct_change_pct": -1.943284499040454,
+    "recall_change_pp": 0.002999999999997449
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33137.77092351607,
+    "succinct_qps": 32459.0306024529,
+    "succinct_change_pct": -2.0482377122762574,
+    "recall_change_pp": 0.014000000000002899
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 30866.95716103451,
+    "succinct_qps": 30034.46480729998,
+    "succinct_change_pct": -2.6970340788415648,
+    "recall_change_pp": 0.007999999999996898
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 16,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 50364.12278637265,
+    "succinct_qps": 49581.34344590186,
+    "succinct_change_pct": -1.554239996973783,
+    "recall_change_pp": 0.11399999999999189
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 24,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 42899.35236287317,
+    "succinct_qps": 41992.50717345033,
+    "succinct_change_pct": -2.1138901626115536,
+    "recall_change_pp": 0.3269999999999995
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 30729.550468199708,
+    "succinct_qps": 30169.639774427436,
+    "succinct_change_pct": -1.822059500517892,
+    "recall_change_pp": 0.009999999999998899
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38132.3589709555,
+    "succinct_qps": 37514.592422852016,
+    "succinct_change_pct": -1.620058566463256,
+    "recall_change_pp": 0.07799999999998919
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 40,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 35449.326097484496,
+    "succinct_qps": 34692.08252378601,
+    "succinct_change_pct": -2.136129673145515,
+    "recall_change_pp": -0.04100000000001325
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33752.68175153582,
+    "succinct_qps": 32996.137355937535,
+    "succinct_change_pct": -2.241434921134411,
+    "recall_change_pp": -0.06800000000000139
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 30804.5244262761,
+    "succinct_qps": 30110.27429663434,
+    "succinct_change_pct": -2.2537277967179747,
+    "recall_change_pp": 0.009999999999998899
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 31854.328274781008,
+    "succinct_qps": 31168.07918525977,
+    "succinct_change_pct": -2.154335459851908,
+    "recall_change_pp": 0.028000000000005798
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.024,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 29125.755954410455,
+    "succinct_qps": 28503.498119272448,
+    "succinct_change_pct": -2.1364521357385757,
+    "recall_change_pp": 0.008999999999992347
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.024,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 29098.558150925513,
+    "succinct_qps": 28426.149891325636,
+    "succinct_change_pct": -2.3107957999578432,
+    "recall_change_pp": 0.009999999999998899
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.024,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 29128.52708117756,
+    "succinct_qps": 28368.029910749312,
+    "succinct_change_pct": -2.6108329072350167,
+    "recall_change_pp": 0.009999999999998899
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.024,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 30865.866841908894,
+    "succinct_qps": 30066.134968093786,
+    "succinct_change_pct": -2.590991135649079,
+    "recall_change_pp": 0.06899999999999684
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.028,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 30337.05394599036,
+    "succinct_qps": 29476.84155413359,
+    "succinct_change_pct": -2.8355172304740717,
+    "recall_change_pp": 0.10999999999998789
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.031,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 29871.66229378367,
+    "succinct_qps": 29061.681963246636,
+    "succinct_change_pct": -2.7115341709844865,
+    "recall_change_pp": 0.10299999999998644
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.032,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 27461.009698389447,
+    "succinct_qps": 26770.86591155404,
+    "succinct_change_pct": -2.5131770259557595,
+    "recall_change_pp": 0.06300000000000194
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.032,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 27305.58226528764,
+    "succinct_qps": 26625.345568001117,
+    "succinct_change_pct": -2.491200116802772,
+    "recall_change_pp": 0.05499999999999394
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.032,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 27367.83448945462,
+    "succinct_qps": 26692.733789507984,
+    "succinct_change_pct": -2.466766963994782,
+    "recall_change_pp": 0.05599999999998939
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.032,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 29777.64935489986,
+    "succinct_qps": 29001.658796774234,
+    "succinct_change_pct": -2.605949680168207,
+    "recall_change_pp": 0.10699999999999044
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.034,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 29539.120299454546,
+    "succinct_qps": 28750.243338021875,
+    "succinct_change_pct": -2.6706176535908455,
+    "recall_change_pp": 0.12700000000001044
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.03,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 30054.824223550408,
+    "succinct_qps": 29203.140676664454,
+    "succinct_change_pct": -2.833766521311376,
+    "recall_change_pp": 0.10099999999999554
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.048,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 24443.897918864262,
+    "succinct_qps": 23587.84880801141,
+    "succinct_change_pct": -3.5020973892719742,
+    "recall_change_pp": 0.01100000000000545
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.048,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 23880.227193018418,
+    "succinct_qps": 23126.084818169587,
+    "succinct_change_pct": -3.158020100702019,
+    "recall_change_pp": -0.012999999999996348
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.048,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 23893.531668313,
+    "succinct_qps": 23064.800573223783,
+    "succinct_change_pct": -3.46843282355056,
+    "recall_change_pp": -0.012000000000012001
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.048,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 28058.341600600997,
+    "succinct_qps": 27329.97543477836,
+    "succinct_change_pct": -2.5958988460210164,
+    "recall_change_pp": 0.08900000000000574
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.064,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 21922.56470189773,
+    "succinct_qps": 21141.90259299696,
+    "succinct_change_pct": -3.560998083555389,
+    "recall_change_pp": 0.036999999999998145
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.064,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 20581.21778590804,
+    "succinct_qps": 19873.960649187946,
+    "succinct_change_pct": -3.4364202549975076,
+    "recall_change_pp": 0.014000000000002899
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.064,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 20479.470013715465,
+    "succinct_qps": 19726.696412908055,
+    "succinct_change_pct": -3.6757474695549464,
+    "recall_change_pp": 0.018999999999991246
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.064,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 27107.437589228644,
+    "succinct_qps": 26028.071542842677,
+    "succinct_change_pct": -3.9818077338850455,
+    "recall_change_pp": 0.0800000000000134
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.084,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 19558.305312208413,
+    "succinct_qps": 18702.887768065328,
+    "succinct_change_pct": -4.373679265601449,
+    "recall_change_pp": 0.018999999999991246
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.088,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 19206.64096808375,
+    "succinct_qps": 18403.85145298275,
+    "succinct_change_pct": -4.179749683638157,
+    "recall_change_pp": 0.017999999999995797
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.092,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 18859.933549857615,
+    "succinct_qps": 18019.40920040264,
+    "succinct_change_pct": -4.456666547806165,
+    "recall_change_pp": 0.01900000000000235
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.096,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 18654.724475813106,
+    "succinct_qps": 17745.675598376012,
+    "succinct_change_pct": -4.873022266374005,
+    "recall_change_pp": 0.022999999999995246
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.096,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 15479.387040034602,
+    "succinct_qps": 14797.515580541654,
+    "succinct_change_pct": -4.405028814961554,
+    "recall_change_pp": -0.004000000000015103
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.096,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 14812.879985167005,
+    "succinct_qps": 14085.608365855389,
+    "succinct_change_pct": -4.909724645307834,
+    "recall_change_pp": 0.0060000000000060005
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.096,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 25700.80160590794,
+    "succinct_qps": 24689.819101612375,
+    "succinct_change_pct": -3.9336613690024613,
+    "recall_change_pp": 0.10400000000000409
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.09,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 19090.27809069182,
+    "succinct_qps": 18215.86889346834,
+    "succinct_change_pct": -4.580390044971782,
+    "recall_change_pp": 0.021999999999977593
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.128,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 16880.88489028824,
+    "succinct_qps": 15968.968991073409,
+    "succinct_change_pct": -5.402062185374323,
+    "recall_change_pp": 0.033999999999989594
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.128,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 12491.278479331322,
+    "succinct_qps": 11726.345824965802,
+    "succinct_change_pct": -6.123733896664108,
+    "recall_change_pp": 0.0060000000000060005
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.128,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 10821.957641582821,
+    "succinct_qps": 10193.004178731606,
+    "succinct_change_pct": -5.811827061995645,
+    "recall_change_pp": 0.014999999999998348
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.128,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 25157.56225655495,
+    "succinct_qps": 24032.61414521087,
+    "succinct_change_pct": -4.471610165849693,
+    "recall_change_pp": 0.10400000000000409
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.2,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 15399.83617289304,
+    "succinct_qps": 14376.318976222525,
+    "succinct_change_pct": -6.646286266811852,
+    "recall_change_pp": 0.02700000000001035
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.2,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 9637.412324056446,
+    "succinct_qps": 8901.445180919265,
+    "succinct_change_pct": -7.636563824296438,
+    "recall_change_pp": 0.0
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.2,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 6723.863995420282,
+    "succinct_qps": 6171.787206197355,
+    "succinct_change_pct": -8.210707259976612,
+    "recall_change_pp": 0.004999999999988347
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.2,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 24409.77041696711,
+    "succinct_qps": 23248.269531786962,
+    "succinct_change_pct": -4.7583441603071925,
+    "recall_change_pp": 0.10300000000000864
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.3,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 14653.875326709871,
+    "succinct_qps": 13586.308429605899,
+    "succinct_change_pct": -7.285218915150038,
+    "recall_change_pp": 0.0260000000000149
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.3,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 8538.271953768832,
+    "succinct_qps": 7785.723606797108,
+    "succinct_change_pct": -8.813824987614094,
+    "recall_change_pp": 0.0
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.3,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 5090.6937114948605,
+    "succinct_qps": 4611.043164656948,
+    "succinct_change_pct": -9.422105787956847,
+    "recall_change_pp": 0.004999999999988347
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.3,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 23854.720833546613,
+    "succinct_qps": 22631.702483209563,
+    "succinct_change_pct": -5.1269447203806,
+    "recall_change_pp": 0.10300000000000864
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 34164.2780285203,
+    "succinct_qps": 33586.46004830206,
+    "succinct_change_pct": -1.6912928168301256,
+    "recall_change_pp": 0.017000000000022553
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 16,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 50687.06570472151,
+    "succinct_qps": 49592.30606427142,
+    "succinct_change_pct": -2.1598402377988046,
+    "recall_change_pp": 0.11599999999999389
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 24,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 43116.36565866937,
+    "succinct_qps": 42297.36502682975,
+    "succinct_change_pct": -1.8995122138151355,
+    "recall_change_pp": 0.34999999999999476
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 34273.769882289496,
+    "succinct_qps": 33608.93224452772,
+    "succinct_change_pct": -1.9397855562580557,
+    "recall_change_pp": 0.017000000000022553
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39012.716814620246,
+    "succinct_qps": 38318.10860761136,
+    "succinct_change_pct": -1.7804661241858977,
+    "recall_change_pp": 0.06800000000000139
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 40,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 36767.59636768789,
+    "succinct_qps": 35986.33064699488,
+    "succinct_change_pct": -2.1248757000052354,
+    "recall_change_pp": -0.07399999999998519
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 35540.82280277629,
+    "succinct_qps": 34839.39240649324,
+    "succinct_change_pct": -1.9735907639939376,
+    "recall_change_pp": -0.06399999999998629
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 34149.64668180519,
+    "succinct_qps": 33548.15178598566,
+    "succinct_change_pct": -1.7613502752284904,
+    "recall_change_pp": 0.017000000000022553
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "1",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 34280.969147729316,
+    "succinct_qps": 33814.12447597549,
+    "succinct_change_pct": -1.3618187681393112,
+    "recall_change_pp": 0.02700000000001035
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39262.068888048496,
+    "succinct_qps": 37427.521779828974,
+    "succinct_change_pct": -4.6725686143808005,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39873.90340453202,
+    "succinct_qps": 38180.747338055364,
+    "succinct_change_pct": -4.246276190467513,
+    "recall_change_pp": 0.036999999999998145
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39215.22869217248,
+    "succinct_qps": 37626.05249324054,
+    "succinct_change_pct": -4.0524465926400355,
+    "recall_change_pp": 0.028000000000005798
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39123.88986779621,
+    "succinct_qps": 37575.45678105416,
+    "succinct_change_pct": -3.957768749412116,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.006,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38851.04104721625,
+    "succinct_qps": 37237.52069710973,
+    "succinct_change_pct": -4.153094245648614,
+    "recall_change_pp": 0.024999999999997247
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.006,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39852.194609797,
+    "succinct_qps": 37998.49249144779,
+    "succinct_change_pct": -4.651443004580502,
+    "recall_change_pp": 0.030999999999992145
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.006,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38989.941807499956,
+    "succinct_qps": 37275.08153888539,
+    "succinct_change_pct": -4.398211921118344,
+    "recall_change_pp": 0.031000000000003247
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.006,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38889.729553310484,
+    "succinct_qps": 37183.743885162505,
+    "succinct_change_pct": -4.386725461305652,
+    "recall_change_pp": 0.02300000000000635
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38424.578221420925,
+    "succinct_qps": 36959.85379269263,
+    "succinct_change_pct": -3.811946666760657,
+    "recall_change_pp": 0.06700000000000594
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39378.181524578125,
+    "succinct_qps": 37725.312353559675,
+    "succinct_change_pct": -4.197423819550439,
+    "recall_change_pp": 0.06500000000001505
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38639.08879529216,
+    "succinct_qps": 36894.76605540499,
+    "succinct_change_pct": -4.5143992632137415,
+    "recall_change_pp": 0.07099999999999884
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38405.89543621961,
+    "succinct_qps": 36692.812264344066,
+    "succinct_change_pct": -4.460469291024472,
+    "recall_change_pp": 0.06500000000000394
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.012,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37672.35154001746,
+    "succinct_qps": 35996.80051631153,
+    "succinct_change_pct": -4.447694277661629,
+    "recall_change_pp": -0.008000000000008
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.012,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38785.97776764685,
+    "succinct_qps": 37154.39570904034,
+    "succinct_change_pct": -4.206628664567235,
+    "recall_change_pp": 0.040999999999991044
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.012,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37640.47071408507,
+    "succinct_qps": 36108.548514009344,
+    "succinct_change_pct": -4.0698805594439165,
+    "recall_change_pp": -0.004000000000004
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.012,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37640.09914584526,
+    "succinct_qps": 35910.22922147917,
+    "succinct_change_pct": -4.595816598844005,
+    "recall_change_pp": -0.008999999999992347
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.038,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 32338.753575586547,
+    "succinct_qps": 30790.526542975145,
+    "succinct_change_pct": -4.7875284648577265,
+    "recall_change_pp": -0.09600000000000719
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.042,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 31674.990125882723,
+    "succinct_qps": 29887.647975532953,
+    "succinct_change_pct": -5.64275519343973,
+    "recall_change_pp": -0.029999999999996696
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.044,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 31174.681512092877,
+    "succinct_qps": 29508.259462501763,
+    "succinct_change_pct": -5.3454340790769495,
+    "recall_change_pp": -0.032999999999994145
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.04,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 31965.19902114626,
+    "succinct_qps": 30335.254764401696,
+    "succinct_change_pct": -5.099121252666983,
+    "recall_change_pp": -0.053000000000003045
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39835.54071829843,
+    "succinct_qps": 38179.25289145462,
+    "succinct_change_pct": -4.15781434612984,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 40431.702943954966,
+    "succinct_qps": 38716.34257695169,
+    "succinct_change_pct": -4.24261221294846,
+    "recall_change_pp": 0.036999999999998145
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39940.27485754335,
+    "succinct_qps": 38281.77138476142,
+    "succinct_change_pct": -4.15245883684422,
+    "recall_change_pp": 0.023999999999990695
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 128,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39891.61376227501,
+    "succinct_qps": 38251.60692528253,
+    "succinct_change_pct": -4.111156913244285,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.002,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38856.11587436136,
+    "succinct_qps": 37820.15179263002,
+    "succinct_change_pct": -2.6661544995414954,
+    "recall_change_pp": -0.0060000000000060005
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.002,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39062.20256111758,
+    "succinct_qps": 37969.90691076451,
+    "succinct_change_pct": -2.7962981571355017,
+    "recall_change_pp": -0.0060000000000060005
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.002,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38771.8514944199,
+    "succinct_qps": 37707.16761841746,
+    "succinct_change_pct": -2.7460227844823715,
+    "recall_change_pp": -0.0060000000000060005
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.002,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38632.29127041657,
+    "succinct_qps": 37720.56251185989,
+    "succinct_change_pct": -2.360017303076334,
+    "recall_change_pp": -0.0060000000000060005
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38710.66108845308,
+    "succinct_qps": 37443.82717096412,
+    "succinct_change_pct": -3.2725711260633616,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38551.04886363532,
+    "succinct_qps": 37569.02830998203,
+    "succinct_change_pct": -2.5473251249970907,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39085.0620898649,
+    "succinct_qps": 38073.54906175565,
+    "succinct_change_pct": -2.5879785627142327,
+    "recall_change_pp": 0.036999999999998145
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38480.10033091955,
+    "succinct_qps": 37601.42864314761,
+    "succinct_change_pct": -2.283444378303545,
+    "recall_change_pp": 0.028000000000005798
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38615.68121263232,
+    "succinct_qps": 37447.069894345135,
+    "succinct_change_pct": -3.026261046263501,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.004,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38421.62154239629,
+    "succinct_qps": 37507.91642260864,
+    "succinct_change_pct": -2.378101399961541,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.006,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38217.86797294145,
+    "succinct_qps": 37091.83587742718,
+    "succinct_change_pct": -2.946349849529839,
+    "recall_change_pp": 0.024999999999997247
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.006,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39034.57389880039,
+    "succinct_qps": 37899.05882693114,
+    "succinct_change_pct": -2.908998250661432,
+    "recall_change_pp": 0.030999999999992145
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.006,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38254.08392487275,
+    "succinct_qps": 37234.479434190565,
+    "succinct_change_pct": -2.6653480780890915,
+    "recall_change_pp": 0.031000000000003247
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.006,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38206.93650675086,
+    "succinct_qps": 37121.90662136364,
+    "succinct_change_pct": -2.839876694106336,
+    "recall_change_pp": 0.02300000000000635
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37798.47501326996,
+    "succinct_qps": 36845.436952223,
+    "succinct_change_pct": -2.521366432673222,
+    "recall_change_pp": 0.06700000000000594
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37864.87894318242,
+    "succinct_qps": 36846.051942666985,
+    "succinct_change_pct": -2.6906912921713544,
+    "recall_change_pp": 0.06700000000000594
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38845.67972697004,
+    "succinct_qps": 37714.287769551294,
+    "succinct_change_pct": -2.9125296953762314,
+    "recall_change_pp": 0.06500000000001505
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37850.90315780354,
+    "succinct_qps": 36945.20368156846,
+    "succinct_change_pct": -2.3928080988164124,
+    "recall_change_pp": 0.07099999999999884
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37796.12478125073,
+    "succinct_qps": 36736.77738285636,
+    "succinct_change_pct": -2.8027936846051316,
+    "recall_change_pp": 0.06700000000000594
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.008,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37793.94511714913,
+    "succinct_qps": 36778.525843941985,
+    "succinct_change_pct": -2.686724738737045,
+    "recall_change_pp": 0.06500000000000394
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.012,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37091.01585229755,
+    "succinct_qps": 35948.60938504393,
+    "succinct_change_pct": -3.0800085708163616,
+    "recall_change_pp": -0.008000000000008
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.012,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 38237.41397433337,
+    "succinct_qps": 37135.48067217963,
+    "succinct_change_pct": -2.8818196306199306,
+    "recall_change_pp": 0.040999999999991044
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.012,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37065.94060158416,
+    "succinct_qps": 36128.423187012624,
+    "succinct_change_pct": -2.5293231450639775,
+    "recall_change_pp": -0.004000000000004
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.012,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 37136.26978421088,
+    "succinct_qps": 36027.287360784474,
+    "succinct_change_pct": -2.9862515267968903,
+    "recall_change_pp": -0.008999999999992347
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 36410.15313031703,
+    "succinct_qps": 35319.44348540757,
+    "succinct_change_pct": -2.9956194938418723,
+    "recall_change_pp": -0.031999999999998696
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 36419.57449321068,
+    "succinct_qps": 35227.395083472125,
+    "succinct_change_pct": -3.2734578213174936,
+    "recall_change_pp": -0.031999999999998696
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 36422.76874607598,
+    "succinct_qps": 35267.11600812582,
+    "succinct_change_pct": -3.172885471741249,
+    "recall_change_pp": -0.031999999999998696
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.016,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 36346.355489080415,
+    "succinct_qps": 35315.2206494027,
+    "succinct_change_pct": -2.8369690050148333,
+    "recall_change_pp": -0.031999999999998696
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.024,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 34886.74275096215,
+    "succinct_qps": 33853.15221514645,
+    "succinct_change_pct": -2.9627028903040586,
+    "recall_change_pp": -0.021999999999999797
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.024,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 34852.072235115615,
+    "succinct_qps": 33773.391652763195,
+    "succinct_change_pct": -3.09502567042651,
+    "recall_change_pp": -0.021999999999999797
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.024,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 34949.59174269499,
+    "succinct_qps": 33708.49329776812,
+    "succinct_change_pct": -3.5511099931125223,
+    "recall_change_pp": -0.021999999999999797
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.024,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 34894.8405303232,
+    "succinct_qps": 33789.879883024914,
+    "succinct_change_pct": -3.1665444819502397,
+    "recall_change_pp": -0.017999999999995797
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.032,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33390.39168373614,
+    "succinct_qps": 32286.94967403629,
+    "succinct_change_pct": -3.304669259801818,
+    "recall_change_pp": -0.05099999999998994
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.032,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33232.133476689676,
+    "succinct_qps": 32198.637529804997,
+    "succinct_change_pct": -3.109929573464232,
+    "recall_change_pp": -0.05099999999998994
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.032,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33317.16050971402,
+    "succinct_qps": 32176.900286456454,
+    "succinct_change_pct": -3.422441185902114,
+    "recall_change_pp": -0.05099999999998994
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.032,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 33468.64516870358,
+    "succinct_qps": 32365.429682827893,
+    "succinct_change_pct": -3.2962657445939847,
+    "recall_change_pp": -0.06199999999999539
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.038,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 32196.561343283807,
+    "succinct_qps": 31084.023051201173,
+    "succinct_change_pct": -3.4554568738586977,
+    "recall_change_pp": -0.09600000000000719
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.042,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 31535.33784500084,
+    "succinct_qps": 30278.820727577506,
+    "succinct_change_pct": -3.984473302931568,
+    "recall_change_pp": -0.029999999999996696
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.044,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 31150.023951250845,
+    "succinct_qps": 29853.186208742205,
+    "succinct_change_pct": -4.163199824623454,
+    "recall_change_pp": -0.032999999999994145
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.048,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 30019.481904445624,
+    "succinct_qps": 28810.436397706326,
+    "succinct_change_pct": -4.027536219938055,
+    "recall_change_pp": 0.0060000000000060005
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.048,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 30035.66924775196,
+    "succinct_qps": 28803.887487561453,
+    "succinct_change_pct": -4.101063139396177,
+    "recall_change_pp": 0.0070000000000014495
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.048,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 30101.868132656797,
+    "succinct_qps": 28851.082387463826,
+    "succinct_change_pct": -4.1551764816749825,
+    "recall_change_pp": 0.0070000000000014495
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.048,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 30523.764091838286,
+    "succinct_qps": 29294.517070118058,
+    "succinct_change_pct": -4.027180324227819,
+    "recall_change_pp": 0.0070000000000014495
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.04,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 31820.664028034145,
+    "succinct_qps": 30785.351227764993,
+    "succinct_change_pct": -3.2535864096268963,
+    "recall_change_pp": -0.053000000000003045
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.064,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 26835.748205001553,
+    "succinct_qps": 25470.13093637544,
+    "succinct_change_pct": -5.088798934145588,
+    "recall_change_pp": 0.059000000000009045
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.064,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 26721.35419155287,
+    "succinct_qps": 25414.664058731858,
+    "succinct_change_pct": -4.890059551076497,
+    "recall_change_pp": 0.05599999999998939
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.064,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 26655.701803165022,
+    "succinct_qps": 25389.12644490826,
+    "succinct_change_pct": -4.751611372342013,
+    "recall_change_pp": 0.05599999999998939
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.064,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 28049.072287666055,
+    "succinct_qps": 26708.286291567885,
+    "succinct_change_pct": -4.780143822039173,
+    "recall_change_pp": 0.0480000000000147
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.084,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 22898.022199754112,
+    "succinct_qps": 21541.65213626444,
+    "succinct_change_pct": -5.9235249737168765,
+    "recall_change_pp": 0.028000000000005798
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.088,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 22232.279205314582,
+    "succinct_qps": 20853.157478153997,
+    "succinct_change_pct": -6.20324040744733,
+    "recall_change_pp": -0.008999999999992347
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.092,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 21503.82570141277,
+    "succinct_qps": 20163.59499398357,
+    "succinct_change_pct": -6.232522184836853,
+    "recall_change_pp": 0.0050000000000105516
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.096,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 21009.13685954702,
+    "succinct_qps": 19572.817128753577,
+    "succinct_change_pct": -6.836643220498351,
+    "recall_change_pp": -0.0070000000000014495
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.096,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 20381.98137958616,
+    "succinct_qps": 18988.348409580773,
+    "succinct_change_pct": -6.837573560935528,
+    "recall_change_pp": -0.011999999999989797
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.096,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 20368.04536781956,
+    "succinct_qps": 18991.460801142483,
+    "succinct_change_pct": -6.758550179056488,
+    "recall_change_pp": -0.011999999999989797
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.096,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 24697.538904342542,
+    "succinct_qps": 23296.757741833535,
+    "succinct_change_pct": -5.671743925313589,
+    "recall_change_pp": -0.004000000000004
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.09,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 21884.703002171616,
+    "succinct_qps": 20523.160768275862,
+    "succinct_change_pct": -6.221433454046188,
+    "recall_change_pp": -0.001999999999990898
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.128,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 17173.42055084442,
+    "succinct_qps": 15853.466229726308,
+    "succinct_change_pct": -7.686030381718045,
+    "recall_change_pp": 0.019999999999986695
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.128,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 15193.621315025997,
+    "succinct_qps": 13991.054246597641,
+    "succinct_change_pct": -7.914946960268487,
+    "recall_change_pp": 0.0320000000000098
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.128,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 14925.307700957512,
+    "succinct_qps": 13719.770607930852,
+    "succinct_change_pct": -8.077133933723324,
+    "recall_change_pp": 0.029999999999996696
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.128,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 22989.44118988319,
+    "succinct_qps": 21620.38003543341,
+    "succinct_change_pct": -5.955173695358262,
+    "recall_change_pp": -0.01300000000000745
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.2,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 13765.469030760016,
+    "succinct_qps": 12551.76479565957,
+    "succinct_change_pct": -8.817020563471745,
+    "recall_change_pp": 0.0010000000000065512
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.2,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 9483.024942572396,
+    "succinct_qps": 8576.779102803876,
+    "succinct_change_pct": -9.55650591722148,
+    "recall_change_pp": 0.004999999999999449
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.2,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 7826.718487705442,
+    "succinct_qps": 6996.726756753421,
+    "succinct_change_pct": -10.604594150866797,
+    "recall_change_pp": 0.0060000000000060005
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.2,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 21558.515253317324,
+    "succinct_qps": 20196.373102152826,
+    "succinct_change_pct": -6.318348620760872,
+    "recall_change_pp": -0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.3,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 12421.836800030325,
+    "succinct_qps": 11418.568557218427,
+    "succinct_change_pct": -8.076649685249848,
+    "recall_change_pp": 0.0
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.3,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 7396.117125972102,
+    "succinct_qps": 6675.083388729539,
+    "succinct_change_pct": -9.748814478756573,
+    "recall_change_pp": 0.001999999999990898
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.3,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 4779.8962607487165,
+    "succinct_qps": 4244.5595854922285,
+    "succinct_change_pct": -11.199755100388597,
+    "recall_change_pp": -0.000999999999995449
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0.3,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 20743.117532845834,
+    "succinct_qps": 19513.718396604094,
+    "succinct_change_pct": -5.926780939726339,
+    "recall_change_pp": -0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 128,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39090.234673526065,
+    "succinct_qps": 38275.02913308871,
+    "succinct_change_pct": -2.085445501276184,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 256,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39204.562130614446,
+    "succinct_qps": 38275.48319979559,
+    "succinct_change_pct": -2.3698235111605737,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 32,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39581.45223391566,
+    "succinct_qps": 38663.66524154282,
+    "succinct_change_pct": -2.3187299620766044,
+    "recall_change_pp": 0.036999999999998145
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 48,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39176.98794325446,
+    "succinct_qps": 38225.91390587847,
+    "succinct_change_pct": -2.427634403016299,
+    "recall_change_pp": 0.023999999999990695
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 512,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39189.543485187256,
+    "succinct_qps": 38122.41188126011,
+    "succinct_change_pct": -2.72300085437458,
+    "recall_change_pp": 0.02100000000000435
+  },
+  {
+    "dataset": "sift-128-euclidean",
+    "views": "2",
+    "parameters": {
+      "ef_search": 2048,
+      "index_type": "kHNSW",
+      "quantized_graph_bucket_width": 0.002,
+      "quantized_graph_margin": 0,
+      "quantized_graph_max_expansions": 64,
+      "quantized_graph_route_beam": 1,
+      "quantized_graph_uncertainty_bonus": 0
+    },
+    "exploration_qps": 39090.526127429235,
+    "succinct_qps": 38060.627619087376,
+    "succinct_change_pct": -2.634649902087649,
+    "recall_change_pp": 0.02100000000000435
+  }
+]
