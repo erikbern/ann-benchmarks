@@ -1,0 +1,28 @@
+{
+  "dataset": "glove",
+  "large_capacity": 2048,
+  "small_capacity": 128,
+  "large_capacity_qps_each": [
+    3843.063832157701,
+    3831.4290248573975,
+    3839.020803752014
+  ],
+  "small_capacity_qps_each": [
+    330.9641664605822,
+    331.23999386831315,
+    331.1525398504105
+  ],
+  "large_capacity_median_qps": 3839.020803752014,
+  "small_capacity_median_qps": 331.1525398504105,
+  "speed_ratio": 11.59290762343599,
+  "all_15_round_pairs_identical": {
+    "ids": true,
+    "expanded": true,
+    "comparisons": true,
+    "scores": true
+  },
+  "visited_bitmap_min_capacity": 1156,
+  "capacity128_hash_slots": 1024,
+  "code_reference": "src/core/algorithm/quantized_graph/quantized_graph_visit_set.h",
+  "mechanism": "Below bitmap threshold, a saturated linear-probing table scans all slots before checking overflow. This changes cost even when results and expansion counts match."
+}

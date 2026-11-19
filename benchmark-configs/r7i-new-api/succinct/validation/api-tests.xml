@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="19" failures="0" disabled="0" errors="0" time="0.024" timestamp="2026-11-19T14:34:45" name="AllTests">
+  <testsuite name="QuantizedGraphQuery" tests="2" failures="0" disabled="0" errors="0" time="0" timestamp="2026-11-19T14:34:45">
+    <testcase name="InvalidOptionsClearPreviousResults" status="run" result="completed" time="0" timestamp="2026-11-19T14:34:45" classname="QuantizedGraphQuery" />
+    <testcase name="GeometryAndMetricDimensionsRemainDistinct" status="run" result="completed" time="0" timestamp="2026-11-19T14:34:45" classname="QuantizedGraphQuery" />
+  </testsuite>
+  <testsuite name="QuantizedGraphPages" tests="1" failures="0" disabled="0" errors="0" time="0.001" timestamp="2026-11-19T14:34:45">
+    <testcase name="IndependentParamsOverrideLegacyKeys" status="run" result="completed" time="0" timestamp="2026-11-19T14:34:45" classname="QuantizedGraphPages" />
+  </testsuite>
+  <testsuite name="StorageMetricCodec/IndependentQuantizedGraph" tests="16" failures="0" disabled="0" errors="0" time="0.023" timestamp="2026-11-19T14:34:45">
+    <testcase name="BuildQueryAndSnapshotWithoutHnsw/0" value_param="0" status="run" result="completed" time="0.001" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="BuildQueryAndSnapshotWithoutHnsw/1" value_param="1" status="run" result="completed" time="0.001" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="BuildQueryAndSnapshotWithoutHnsw/2" value_param="2" status="run" result="completed" time="0.001" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="BuildQueryAndSnapshotWithoutHnsw/3" value_param="3" status="run" result="completed" time="0.001" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="BuildQueryAndSnapshotWithoutHnsw/4" value_param="4" status="run" result="completed" time="0.003" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="BuildQueryAndSnapshotWithoutHnsw/5" value_param="5" status="run" result="completed" time="0.004" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="BuildQueryAndSnapshotWithoutHnsw/6" value_param="6" status="run" result="completed" time="0.004" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="BuildQueryAndSnapshotWithoutHnsw/7" value_param="7" status="run" result="completed" time="0.003" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="RouterTrainingWithoutHnsw/0" value_param="0" status="run" result="completed" time="0.001" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="RouterTrainingWithoutHnsw/1" value_param="1" status="run" result="completed" time="0" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="RouterTrainingWithoutHnsw/2" value_param="2" status="run" result="completed" time="0.001" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="RouterTrainingWithoutHnsw/3" value_param="3" status="run" result="completed" time="0.001" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="RouterTrainingWithoutHnsw/4" value_param="4" status="run" result="completed" time="0" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="RouterTrainingWithoutHnsw/5" value_param="5" status="run" result="completed" time="0.001" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="RouterTrainingWithoutHnsw/6" value_param="6" status="run" result="completed" time="0" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+    <testcase name="RouterTrainingWithoutHnsw/7" value_param="7" status="run" result="completed" time="0.001" timestamp="2026-11-19T14:34:45" classname="StorageMetricCodec/IndependentQuantizedGraph" />
+  </testsuite>
+</testsuites>

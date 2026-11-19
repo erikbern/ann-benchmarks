@@ -1,0 +1,414 @@
+{
+  "schema_version": 1,
+  "dataset": "sift-128-euclidean",
+  "shape": {
+    "train": [
+      1000000,
+      128
+    ],
+    "queries": [
+      10000,
+      128
+    ]
+  },
+  "index_params": {
+    "index_type": "kHNSW",
+    "data_type": "DT_FP32",
+    "metric_type": "kL2sq",
+    "dimension": 128,
+    "m": 32,
+    "ef_construction": 400,
+    "use_id_map": true,
+    "use_quantized_graph": true,
+    "quantizer_param": {
+      "type": "kNone"
+    }
+  },
+  "profiles": {
+    "n64": {
+      "build_configs": [
+        "sift_base_build.yaml",
+        "sift_n64_build.yaml"
+      ],
+      "query_config": "sift_n64_query.yaml",
+      "measured_index": {
+        "benchmark_relative_path": "results/comprehensive-icelake-20261116/indexes/sift-exploration-v2/index",
+        "bytes": 3831255968,
+        "sha256": "5eb10b755843219b4dc29068ebb2bcdc6ba30dd63da84bd5272c78896bad3b7f"
+      }
+    }
+  },
+  "presets": [
+    {
+      "target_ann_recall": 0.3,
+      "profile": "n64",
+      "query_config": "sift_n64_query.yaml",
+      "query_case_index": 0,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.004,
+        "quantized_graph_margin": 1.0,
+        "quantized_graph_max_expansions": 10,
+        "quantized_graph_route_beam": 0,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 73703.24031770577,
+        "mean_query_time_us": 13.567924499511719,
+        "ann_recall": 0.31954,
+        "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/3ecf1f611a7182aa965e.hdf5",
+        "result_sha256": "33092193d0f6b97cc094cbf9eb7407e3c0c66064aa171c582031b94f10f0214c",
+        "origin": "succinct_r7i_revalidation"
+      },
+      "revalidation": {
+        "qps_median": 70005.76230819855,
+        "qps_each": [
+          66308.28429869132,
+          73703.24031770577
+        ],
+        "ann_recall": 0.31954,
+        "strict_id_recall": 0.31936,
+        "ids_sha256": "75ad00c044460a83879436b3cecc934694b13bf5e43b82048af288ae28c2d308",
+        "results": [
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/3ecf1f611a7182aa965e.hdf5",
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/3ecf1f611a7182aa965e.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "sift_n64_query.yaml",
+        "query_case_index": 0,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 10,
+          "quantized_graph_route_beam": 0,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 70005.76230819855,
+        "ann_recall": 0.31954
+      }
+    },
+    {
+      "target_ann_recall": 0.5,
+      "profile": "n64",
+      "query_config": "sift_n64_query.yaml",
+      "query_case_index": 1,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 1.0,
+        "quantized_graph_max_expansions": 10,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 61135.30854768252,
+        "mean_query_time_us": 16.35715961456299,
+        "ann_recall": 0.51806,
+        "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/00e7dbaf39bcc2587006.hdf5",
+        "result_sha256": "ee4240e3e15990c509157695138e47de4a086d5f8aed8340c8398325b098c39a",
+        "origin": "succinct_r7i_revalidation"
+      },
+      "revalidation": {
+        "qps_median": 60049.28195785261,
+        "qps_each": [
+          58963.25536802269,
+          61135.30854768252
+        ],
+        "ann_recall": 0.51806,
+        "strict_id_recall": 0.51773,
+        "ids_sha256": "222a1eaf32b7e2e5112b433e9ab540572b9b92e7d56829e7b885ea85beb6f079",
+        "results": [
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/00e7dbaf39bcc2587006.hdf5",
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/00e7dbaf39bcc2587006.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "sift_n64_query.yaml",
+        "query_case_index": 1,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 10,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 60049.28195785261,
+        "ann_recall": 0.51806
+      }
+    },
+    {
+      "target_ann_recall": 0.7,
+      "profile": "n64",
+      "query_config": "sift_n64_query.yaml",
+      "query_case_index": 2,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.002,
+        "quantized_graph_max_expansions": 16,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 49273.33558888764,
+        "mean_query_time_us": 20.294952392578125,
+        "ann_recall": 0.73793,
+        "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/6692c13686149b2154d4.hdf5",
+        "result_sha256": "6d5cb8a068b0f0e4101b137f9a1b0f2934d83f43ad0dcf14cedf40fd4e807bef",
+        "origin": "succinct_r7i_revalidation"
+      },
+      "revalidation": {
+        "qps_median": 48641.31957480287,
+        "qps_each": [
+          48009.303560718094,
+          49273.33558888764
+        ],
+        "ann_recall": 0.73793,
+        "strict_id_recall": 0.73733,
+        "ids_sha256": "024d17b95be7ef9b8b54507bf4478ccec242acf82a3c567679f94ae245bb1f84",
+        "results": [
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/6692c13686149b2154d4.hdf5",
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/6692c13686149b2154d4.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "sift_n64_query.yaml",
+        "query_case_index": 2,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.002,
+          "quantized_graph_max_expansions": 16,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 48641.31957480287,
+        "ann_recall": 0.73793
+      }
+    },
+    {
+      "target_ann_recall": 0.85,
+      "profile": "n64",
+      "query_config": "sift_n64_query.yaml",
+      "query_case_index": 3,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.008,
+        "quantized_graph_max_expansions": 48,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 43727.42503333531,
+        "mean_query_time_us": 22.868943214416504,
+        "ann_recall": 0.9026,
+        "result": "results/succinct-alignment-20261117/official/sift/shared-scan/5/1c97f7d01594619853dd.hdf5",
+        "result_sha256": "d816016bf45a3998ce12b55b766fb7c8563aeb770323dbb8314fea8db16858ae",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 37908.741564397285,
+        "qps_each": [
+          37656.01559280584,
+          38161.46753598873
+        ],
+        "ann_recall": 0.9026,
+        "strict_id_recall": 0.90172,
+        "ids_sha256": "e60c91fe86ce4e935737dff244347b912a20a057271a39d05a9c47d9bd14f2f0",
+        "results": [
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/1c97f7d01594619853dd.hdf5",
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/1c97f7d01594619853dd.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "sift_n64_query.yaml",
+        "query_case_index": 3,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 37908.741564397285,
+        "ann_recall": 0.9026
+      }
+    },
+    {
+      "target_ann_recall": 0.9,
+      "profile": "n64",
+      "query_config": "sift_n64_query.yaml",
+      "query_case_index": 3,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.008,
+        "quantized_graph_max_expansions": 48,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 43727.42503333531,
+        "mean_query_time_us": 22.868943214416504,
+        "ann_recall": 0.9026,
+        "result": "results/succinct-alignment-20261117/official/sift/shared-scan/5/1c97f7d01594619853dd.hdf5",
+        "result_sha256": "d816016bf45a3998ce12b55b766fb7c8563aeb770323dbb8314fea8db16858ae",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 37908.741564397285,
+        "qps_each": [
+          37656.01559280584,
+          38161.46753598873
+        ],
+        "ann_recall": 0.9026,
+        "strict_id_recall": 0.90172,
+        "ids_sha256": "e60c91fe86ce4e935737dff244347b912a20a057271a39d05a9c47d9bd14f2f0",
+        "results": [
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/1c97f7d01594619853dd.hdf5",
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/1c97f7d01594619853dd.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "sift_n64_query.yaml",
+        "query_case_index": 3,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.008,
+          "quantized_graph_max_expansions": 48,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 37908.741564397285,
+        "ann_recall": 0.9026
+      }
+    },
+    {
+      "target_ann_recall": 0.95,
+      "profile": "n64",
+      "query_config": "sift_n64_query.yaml",
+      "query_case_index": 4,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.038,
+        "quantized_graph_max_expansions": 64,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 36072.61818860467,
+        "mean_query_time_us": 27.721858024597164,
+        "ann_recall": 0.95173,
+        "result": "results/succinct-alignment-20261117/official/sift/shared-scan/5/25cfc61a584beec56d8b.hdf5",
+        "result_sha256": "ec1956698130536c17584eb22b011c79acff984adb258b05381eca68dc43e290",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 31444.373857736475,
+        "qps_each": [
+          31547.719424660645,
+          31341.028290812304
+        ],
+        "ann_recall": 0.95173,
+        "strict_id_recall": 0.9509,
+        "ids_sha256": "1a9aa8a2628d061dbd072249b2d8d2bd1ee983061cbdb4e12a5a200db5707a53",
+        "results": [
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/25cfc61a584beec56d8b.hdf5",
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/25cfc61a584beec56d8b.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "sift_n64_query.yaml",
+        "query_case_index": 4,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.038,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 31444.373857736475,
+        "ann_recall": 0.95173
+      }
+    },
+    {
+      "target_ann_recall": 0.99,
+      "profile": "n64",
+      "query_config": "sift_n64_query.yaml",
+      "query_case_index": 5,
+      "query_params": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.09,
+        "quantized_graph_max_expansions": 128,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 23841.662815556552,
+        "mean_query_time_us": 41.94338321685791,
+        "ann_recall": 0.99058,
+        "result": "results/succinct-alignment-20261117/official/sift/shared-scan/5/15225da6018ef1062b4d.hdf5",
+        "result_sha256": "d4af80c2f96b9cb0c3785dbff64ee2d7105b0c6f838c82e5b32459449af89df3",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 21081.545056219846,
+        "qps_each": [
+          21247.665281835372,
+          20915.42483060432
+        ],
+        "ann_recall": 0.99058,
+        "strict_id_recall": 0.9899,
+        "ids_sha256": "93dfcb73cfb2630e21163a9e06ae76bb613cf41c1e194a6122884a81eedc4bb6",
+        "results": [
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/15225da6018ef1062b4d.hdf5",
+          "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/15225da6018ef1062b4d.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "sift_n64_query.yaml",
+        "query_case_index": 5,
+        "query_params": {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.09,
+          "quantized_graph_max_expansions": 128,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 21081.545056219846,
+        "ann_recall": 0.99058
+      }
+    }
+  ]
+}

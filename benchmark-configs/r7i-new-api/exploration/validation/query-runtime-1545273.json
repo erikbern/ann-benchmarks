@@ -1,0 +1,30 @@
+{
+  "time": 1795072853.4333882,
+  "cpu_affinity": [
+    54
+  ],
+  "name": "qg_bench",
+  "num_threads": 1,
+  "pid": 1545273,
+  "cmdline": [
+    "/home/xingrui/workspace/zvec/r7i-new-api-exploration/build-r7i/bin/qg_bench",
+    "query",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/tuning.json",
+    "n64",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/raw/tuning/0/n64"
+  ],
+  "numa_maps_sample": [
+    "55a76984b000 bind:0 file=/home/xingrui/workspace/zvec/r7i-new-api-exploration/build-r7i/bin/qg_bench mapped=47 N0=47 kernelpagesize_kB=4",
+    "55a76987a000 bind:0 file=/home/xingrui/workspace/zvec/r7i-new-api-exploration/build-r7i/bin/qg_bench mapped=267 N0=267 kernelpagesize_kB=4",
+    "55a769ad5000 bind:0 file=/home/xingrui/workspace/zvec/r7i-new-api-exploration/build-r7i/bin/qg_bench mapped=27 N0=27 kernelpagesize_kB=4",
+    "55a769b0f000 bind:0 file=/home/xingrui/workspace/zvec/r7i-new-api-exploration/build-r7i/bin/qg_bench anon=6 dirty=6 active=0 N0=6 kernelpagesize_kB=4",
+    "55a769b15000 bind:0 file=/home/xingrui/workspace/zvec/r7i-new-api-exploration/build-r7i/bin/qg_bench anon=1 dirty=1 active=0 N0=1 kernelpagesize_kB=4",
+    "55a769b16000 bind:0 anon=3 dirty=3 active=0 N0=3 kernelpagesize_kB=4",
+    "55a782480000 bind:0 heap anon=6120 dirty=6120 active=0 N0=6120 kernelpagesize_kB=4",
+    "7fc2daab5000 bind:0 anon=2 dirty=2 active=0 N0=2 kernelpagesize_kB=4",
+    "7fc2dac00000 bind:0 anon=869144 dirty=869144 active=0 N0=869144 kernelpagesize_kB=4",
+    "7fc3aef18000 bind:0 anon=4373 dirty=4373 active=0 N0=4373 kernelpagesize_kB=4",
+    "7fc3b01cb000 bind:0 file=/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/n64.qg mapped=2 N0=2 kernelpagesize_kB=4",
+    "7fc4844e3000 bind:0 anon=188040 dirty=188040 active=0 N0=188040 kernelpagesize_kB=4"
+  ]
+}

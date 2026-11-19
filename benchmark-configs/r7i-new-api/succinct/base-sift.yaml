@@ -1,0 +1,14 @@
+BuilderCommon:
+  BuildFile: /data/sift/sift-base.zvec.vecs
+  BuilderClass: HnswStreamer
+  DumpFormat: streamer
+  DumpPath: /data/sift/r7i/raw.index
+  IndexPath: /data/sift/r7i/raw_work.index
+  LogLevel: info
+  MaxDocs: 1000000
+  MetricName: SquaredEuclidean
+  ThreadCount: 4
+BuilderParams:
+  proxima.hnsw.streamer.efconstruction: 400
+  proxima.hnsw.streamer.get_vector_enable: true
+  proxima.hnsw.streamer.max_neighbor_count: 32

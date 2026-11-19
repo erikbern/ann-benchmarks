@@ -1,0 +1,18 @@
+{
+  "pid": 1545341,
+  "command": [
+    "/home/xingrui/workspace/zvec/r7i-new-api-exploration/build-r7i/bin/qg_bench",
+    "query",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/tuning.json",
+    "n64",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/raw/tuning/1/n64"
+  ],
+  "selected_environment": {
+    "QG_THP_POLICY": null,
+    "QG_THP_MIN_COVERAGE": null,
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "smaps_rollup": "55d44c318000-7ffdb29be000 ---p 00000000 00:00 0                          [rollup]\nRss:             4277800 kB\nPss:             4275035 kB\nPss_Anon:        4271024 kB\nPss_File:           4011 kB\nPss_Shmem:             0 kB\nShared_Clean:       3204 kB\nShared_Dirty:          0 kB\nPrivate_Clean:      3572 kB\nPrivate_Dirty:   4271024 kB\nReferenced:      4277800 kB\nAnonymous:       4271024 kB\nLazyFree:              0 kB\nAnonHugePages:   3475456 kB\nShmemPmdMapped:        0 kB\nFilePmdMapped:         0 kB\nShared_Hugetlb:        0 kB\nPrivate_Hugetlb:       0 kB\nSwap:                  0 kB\nSwapPss:               0 kB\nLocked:                0 kB\n"
+}

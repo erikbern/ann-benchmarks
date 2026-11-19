@@ -1,0 +1,57 @@
+{
+  "verified": true,
+  "contract": {
+    "provider_prefix": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/provider",
+    "provider_format": "csr-fp32-le-v1",
+    "dimension": 960,
+    "train_count": 1000000,
+    "metric": "l2sq",
+    "precision": "FP32",
+    "id_convention": "internal CSR row -> ids.u64 -> original HDF5 train row",
+    "dataset_file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/gist-960-euclidean.hdf5",
+    "queries_file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/queries.f32",
+    "query_count": 1000
+  },
+  "checked_vectors": 1000000,
+  "max_vector_error": 0.0,
+  "max_norm_error": 0.0,
+  "old_qg_snapshot_reused": false,
+  "base_graph_reused": true,
+  "files": [
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/gist-960-euclidean.hdf5",
+      "bytes": 3844648288,
+      "sha256": "8e95831936bfdbfa0a56086942e2cf98cd703517c67f985914183eb4cdbf026a"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/gist-exploration-v1/index",
+      "bytes": 10220097856,
+      "sha256": "1efbe7f33cf6ac9404f47db6e67d8cc4e2026814cc0eafca3357f9365979c7d7"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/queries.f32",
+      "bytes": 3840000,
+      "sha256": "5779751c3b63bee0a0c52a0017232ca2340af0527eb0f79270ae09c010423eea"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/provider.vectors",
+      "bytes": 3840000000,
+      "sha256": "7223bd18299420d00d124980c594011fb1a5cd40b25e73b5227d1714a7d9e6b2"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/provider.offsets",
+      "bytes": 8000008,
+      "sha256": "78723587d9f22f03c6763bbc943d21183e7c8c8d45edab7140b7a92c980eb55b"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/provider.edges",
+      "bytes": 96513280,
+      "sha256": "5eed46e3e77e08880c2b1c06f8deea944bb462418bfaf2e15791f4b9ce6bcefc"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/provider.ids",
+      "bytes": 8000000,
+      "sha256": "8af7881dd0581880fe3f1df7cc54ce86c20a8abc7c79ea04458c9b0905a7caef"
+    }
+  ]
+}

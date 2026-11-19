@@ -1,0 +1,502 @@
+{
+  "date": "2026-11-18T19:19:57.013822+08:00",
+  "source_commit": "98a265b0cc6edcad7c0bdeb60c2a73e4d9cefe3d",
+  "variant": "succinct",
+  "binary_sha256": "aff9925562760d14426647561795257e380785461ed28d4b5359198bc998677a",
+  "hardware": {
+    "directory_label": "r7i",
+    "guest_cpu_model": "Intel Xeon Platinum 8369B",
+    "query_cpus": [
+      50,
+      52,
+      54
+    ]
+  },
+  "protocol": {
+    "topk": 10,
+    "trials": 5,
+    "cycles": 2,
+    "recall": "distance <= ground truth tenth distance + 0.001",
+    "query_counts": {
+      "sift": 10000,
+      "gist": 1000,
+      "glove": 10000
+    },
+    "best_observed": "Maximum official QPS among historical succinct winners and this verification; reciprocal gives minimum measured mean query time.",
+    "revalidation": "Two current best-of-five observations; reverse order, full-query warmup, dedicated CPU per dataset; background jobs active.",
+    "scope": "Public queries used for calibration and reporting; graph rebuilds require recalibration. Native bench timing is not official ANN-Benchmarks QPS."
+  },
+  "historical_plot_snapshot_sha256": "06590200b8e066dd5986fe1f9dabd5b659da9ef54606bb1cd3a57e69fffed1e7",
+  "formal_observations": 52,
+  "benchmark_artifact_root": "results/succinct-r7i-presets-20261118",
+  "checks": [
+    {
+      "target": 0.3,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/3ecf1f611a7182aa965e.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.5,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/00e7dbaf39bcc2587006.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.7,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/6692c13686149b2154d4.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.9,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/1c97f7d01594619853dd.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.95,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/25cfc61a584beec56d8b.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.99,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/15225da6018ef1062b4d.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.99,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/15225da6018ef1062b4d.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.95,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/25cfc61a584beec56d8b.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.9,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/1c97f7d01594619853dd.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.7,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/6692c13686149b2154d4.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.5,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/00e7dbaf39bcc2587006.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.3,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/1/3ecf1f611a7182aa965e.hdf5",
+      "dataset": "sift-128-euclidean"
+    },
+    {
+      "target": 0.3,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/2f30c5c5b7029f809204.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.5,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/8efa18db3d84cfc1f213.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.7,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/b89d8de5603ebe827665.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.85,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/90279d769d85c938c044.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.9,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/878008c43c15f29c0c7f.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.95,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/32cb6e201abc1cb34a9c.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.99,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/152e95405100cae44ec9.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.99,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/152e95405100cae44ec9.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.95,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/32cb6e201abc1cb34a9c.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.9,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/878008c43c15f29c0c7f.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.85,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/90279d769d85c938c044.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.7,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/b89d8de5603ebe827665.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.5,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/8efa18db3d84cfc1f213.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.3,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/2f30c5c5b7029f809204.hdf5",
+      "dataset": "gist-960-euclidean"
+    },
+    {
+      "target": 0.3,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/7609d39cc825e8fd96a7.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.5,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/a1d4c05d60f2543183bb.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.7,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/26dbed8e377dbf019bd9.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.85,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/2fd995302e97cf5ef1b8.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.9,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/3806d4ab3ca3c0c045a4.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.95,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/4fede1747748f42c8316.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.99,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/a381c1ebc614d324c0cf.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.3,
+      "profile": "n32",
+      "cycle": 0,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/0/c9d65b8d02542dbd55cc.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.5,
+      "profile": "n32",
+      "cycle": 0,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/0/63edb301bd94e256411e.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.7,
+      "profile": "n32",
+      "cycle": 0,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/0/4c6f0e7c654a5e3d8d9f.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.85,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/850e223c48782a1cc4dd.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.9,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/7e5b041f387a1902bfd7.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.95,
+      "profile": "n64",
+      "cycle": 0,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/d507a3bb122b2fa6a82d.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.95,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/d507a3bb122b2fa6a82d.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.9,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/7e5b041f387a1902bfd7.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.85,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/850e223c48782a1cc4dd.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.7,
+      "profile": "n32",
+      "cycle": 1,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/1/4c6f0e7c654a5e3d8d9f.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.5,
+      "profile": "n32",
+      "cycle": 1,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/1/63edb301bd94e256411e.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.3,
+      "profile": "n32",
+      "cycle": 1,
+      "origin": "exploration-transfer",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/1/c9d65b8d02542dbd55cc.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.99,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/a381c1ebc614d324c0cf.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.95,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/4fede1747748f42c8316.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.9,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/3806d4ab3ca3c0c045a4.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.85,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/2fd995302e97cf5ef1b8.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.7,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/26dbed8e377dbf019bd9.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.5,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/a1d4c05d60f2543183bb.hdf5",
+      "dataset": "glove-100-angular"
+    },
+    {
+      "target": 0.3,
+      "profile": "n64",
+      "cycle": 1,
+      "origin": "succinct-history",
+      "same_ids_as_origin": true,
+      "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/7609d39cc825e8fd96a7.hdf5",
+      "dataset": "glove-100-angular"
+    }
+  ]
+}

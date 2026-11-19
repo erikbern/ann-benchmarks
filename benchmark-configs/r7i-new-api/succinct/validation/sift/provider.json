@@ -1,0 +1,57 @@
+{
+  "verified": true,
+  "checked_vectors": 1000000,
+  "max_vector_error": 0.0,
+  "max_norm_error": 0.0,
+  "old_qg_snapshot_reused": false,
+  "base_graph_reused": true,
+  "files": [
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/sift-128-euclidean.hdf5",
+      "bytes": 525128288,
+      "sha256": "dd6f0a6ed6b7ebb8934680f861a33ed01ff33991eaee4fd60914d854a0ca5984"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/sift-exploration-v2/index",
+      "bytes": 3831255968,
+      "sha256": "5eb10b755843219b4dc29068ebb2bcdc6ba30dd63da84bd5272c78896bad3b7f"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/sift/queries.f32",
+      "bytes": 5120000,
+      "sha256": "bf4c4c9db385017e63e7b0a9ccd8e3aab3744a02e053c135e000fa0b1dea2d6f"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/sift/provider.vectors",
+      "bytes": 512000000,
+      "sha256": "795a11ac35edce96d24d73d863c8c708d4c434a526602086e9f60eb62c93c773"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/sift/provider.offsets",
+      "bytes": 8000008,
+      "sha256": "8c6e5b2e7ea49ed4b7142f9d95af3b937dbe9689c5e33b409ca42e06102b5d50"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/sift/provider.edges",
+      "bytes": 134705460,
+      "sha256": "2bcf085cadc3b9e51c7457b4177e4cfbc973fa550e4d17d717b124a233865425"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/sift/provider.ids",
+      "bytes": 8000000,
+      "sha256": "a62c275f14652eb2c6b889dff531a8f54e41a57414828726d5ef548018e56ca0"
+    }
+  ],
+  "contract": {
+    "provider_prefix": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/sift/provider",
+    "provider_format": "csr-fp32-le-v1",
+    "dimension": 128,
+    "train_count": 1000000,
+    "metric": "l2sq",
+    "precision": "FP32",
+    "id_convention": "internal CSR row -> ids.u64 -> original HDF5 train row",
+    "dataset_file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/sift-128-euclidean.hdf5",
+    "queries_file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/sift/queries.f32",
+    "query_count": 10000
+  }
+}

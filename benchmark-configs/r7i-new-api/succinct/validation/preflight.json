@@ -1,0 +1,106 @@
+{
+  "binary": {
+    "path": "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/bin/qg_bench",
+    "bytes": 3359200,
+    "sha256": "980c97ac2eed2adb273c033019e6ab626a9fdee0e7f88b8a5267c54850679938"
+  },
+  "checks": [
+    {
+      "dataset": "sift",
+      "full_train_used": false,
+      "preflight_only": true,
+      "performance_eligible": false,
+      "brute_force_ids": true,
+      "exact_distances": true,
+      "nonidentity_id_mapping": true,
+      "capacities": [
+        10,
+        32,
+        128
+      ],
+      "repetitions_identical": true,
+      "negative_cases": [
+        {
+          "case": "legacy",
+          "returncode": 1,
+          "output": "qg_bench: legacy field rejected: use_quantized_graph\n"
+        },
+        {
+          "case": "codec",
+          "returncode": 1,
+          "output": "qg_bench: unknown codec\n"
+        },
+        {
+          "case": "views",
+          "returncode": 1,
+          "output": "qg_bench: rotation_views mismatch\n"
+        }
+      ]
+    },
+    {
+      "dataset": "gist",
+      "full_train_used": false,
+      "preflight_only": true,
+      "performance_eligible": false,
+      "brute_force_ids": true,
+      "exact_distances": true,
+      "nonidentity_id_mapping": true,
+      "capacities": [
+        10,
+        32,
+        128
+      ],
+      "repetitions_identical": true,
+      "negative_cases": [
+        {
+          "case": "legacy",
+          "returncode": 1,
+          "output": "qg_bench: legacy field rejected: use_quantized_graph\n"
+        },
+        {
+          "case": "codec",
+          "returncode": 1,
+          "output": "qg_bench: unknown codec\n"
+        },
+        {
+          "case": "views",
+          "returncode": 1,
+          "output": "qg_bench: rotation_views mismatch\n"
+        }
+      ]
+    },
+    {
+      "dataset": "glove",
+      "full_train_used": false,
+      "preflight_only": true,
+      "performance_eligible": false,
+      "brute_force_ids": true,
+      "exact_distances": true,
+      "nonidentity_id_mapping": true,
+      "capacities": [
+        10,
+        32,
+        128
+      ],
+      "repetitions_identical": true,
+      "negative_cases": [
+        {
+          "case": "legacy",
+          "returncode": 1,
+          "output": "qg_bench: legacy field rejected: use_quantized_graph\n"
+        },
+        {
+          "case": "codec",
+          "returncode": 1,
+          "output": "qg_bench: unknown codec\n"
+        },
+        {
+          "case": "views",
+          "returncode": 1,
+          "output": "qg_bench: rotation_views mismatch\n"
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

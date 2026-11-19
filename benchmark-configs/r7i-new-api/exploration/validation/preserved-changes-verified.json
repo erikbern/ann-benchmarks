@@ -1,0 +1,11 @@
+{
+  "succinct": {
+    "src/binding/python/CMakeLists.txt": true,
+    "src/binding/python/binding.cc": true
+  },
+  "exploration": {
+    "src/binding/python/CMakeLists.txt": true,
+    "src/binding/python/binding.cc": true
+  },
+  "ann_worktree_patch_unchanged": true
+}

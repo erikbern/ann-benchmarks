@@ -1,0 +1,289 @@
+{
+  "started_at": 1795070933.9479864,
+  "processes": [
+    {
+      "pid": 1548877,
+      "created": 1794902682.18,
+      "command": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/.venv/bin/python",
+        "-u",
+        "scripts/run_sift_all_20261117.py"
+      ]
+    },
+    {
+      "pid": 1553877,
+      "created": 1794903762.19,
+      "command": [
+        "/home/xingrui/workspace/annbenchmark/ann-benchmarks/.venv/bin/python",
+        "-u",
+        "scripts/run_sift_all_20261117.py"
+      ]
+    }
+  ],
+  "containers": [
+    {
+      "id": "f6459ea8e862deff7558f27f829033839fd08914f112c47a91c841d499b8fdc0",
+      "image": "ann-benchmarks-qdrant",
+      "command": [
+        "--dataset",
+        "sift-128-euclidean",
+        "--algorithm",
+        "qdrant",
+        "--module",
+        "ann_benchmarks.algorithms.qdrant",
+        "--constructor",
+        "Qdrant",
+        "--runs",
+        "5",
+        "--count",
+        "10",
+        "[\"euclidean\", \"none\", 40, 256]",
+        "[null, true]",
+        "[null, false]",
+        "[8, true]",
+        "[8, false]",
+        "[16, true]",
+        "[16, false]",
+        "[32, true]",
+        "[32, false]",
+        "[64, true]",
+        "[64, false]",
+        "[128, true]",
+        "[128, false]",
+        "[256, true]",
+        "[256, false]",
+        "[512, true]",
+        "[512, false]",
+        "[768, true]",
+        "[768, false]"
+      ]
+    },
+    {
+      "id": "8046d19d4a573b5fa9ae4dfd4a5cc1974541d721b08684ff9d630db379fdad2e",
+      "image": "ann-benchmarks-nmslib",
+      "command": [
+        "--dataset",
+        "glove-100-angular",
+        "--algorithm",
+        "BallTree(nmslib)",
+        "--module",
+        "ann_benchmarks.algorithms.nmslib",
+        "--constructor",
+        "NmslibReuseIndex",
+        "--runs",
+        "5",
+        "--count",
+        "10",
+        "[\"angular\", \"vptree\", {\"desiredRecall\": 0.85, \"tuneK\": 10}, false]"
+      ]
+    },
+    {
+      "id": "7af5acbb3012167dead961261dc113c0cb1b2ae2d462e6dbc16dd7ea36f1b383",
+      "image": "ann-benchmarks-nearpy",
+      "command": [
+        "--dataset",
+        "sift-128-euclidean",
+        "--algorithm",
+        "nearpy",
+        "--module",
+        "ann_benchmarks.algorithms.nearpy",
+        "--constructor",
+        "NearPy",
+        "--runs",
+        "5",
+        "--count",
+        "10",
+        "[\"euclidean\", 14, 40]"
+      ]
+    },
+    {
+      "id": "a9ba28fd47afec500bde4a4b25e8e7cfab850b9534b477749d82378874bf5031",
+      "image": "ann-benchmarks-expann",
+      "command": [
+        "--dataset",
+        "sift-128-euclidean",
+        "--algorithm",
+        "expann",
+        "--module",
+        "ann_benchmarks.algorithms.expann",
+        "--constructor",
+        "ExpAnnWrapper",
+        "--runs",
+        "5",
+        "--count",
+        "10",
+        "[\"euclidean\", {\"M\": 80, \"ef_construction\": 500, \"ortho_count\": 1, \"prune_overflow\": 0, \"use_compression\": true}]",
+        "[10]",
+        "[20]",
+        "[30]",
+        "[40]",
+        "[50]",
+        "[80]",
+        "[120]"
+      ]
+    },
+    {
+      "id": "c1edd58c6e3f6c7b36a9b5523a89e8267a025ee72c71faf5a44d50664d66243d",
+      "image": "ann-benchmarks-qdrant",
+      "command": [
+        "--dataset",
+        "glove-100-angular",
+        "--algorithm",
+        "qdrant",
+        "--module",
+        "ann_benchmarks.algorithms.qdrant",
+        "--constructor",
+        "Qdrant",
+        "--runs",
+        "5",
+        "--count",
+        "10",
+        "[\"angular\", \"none\", 8, 512]",
+        "[null, true]",
+        "[null, false]",
+        "[8, true]",
+        "[8, false]",
+        "[16, true]",
+        "[16, false]",
+        "[32, true]",
+        "[32, false]",
+        "[64, true]",
+        "[64, false]",
+        "[128, true]",
+        "[128, false]",
+        "[256, true]",
+        "[256, false]",
+        "[512, true]",
+        "[512, false]",
+        "[768, true]",
+        "[768, false]"
+      ]
+    },
+    {
+      "id": "0b2083872882c261261f3d178e5c7d979e52413e83353163f87ff440d2536765",
+      "image": "ann-benchmarks-pg_embedding",
+      "command": [
+        "--dataset",
+        "glove-100-angular",
+        "--algorithm",
+        "pg_embedding",
+        "--module",
+        "ann_benchmarks.algorithms.pg_embedding",
+        "--constructor",
+        "PGEmbedding",
+        "--runs",
+        "5",
+        "--count",
+        "10",
+        "[\"angular\", {\"M\": 36, \"efConstruction\": 500}]",
+        "[10]",
+        "[20]",
+        "[40]",
+        "[80]",
+        "[120]",
+        "[200]",
+        "[400]",
+        "[600]",
+        "[800]"
+      ]
+    },
+    {
+      "id": "7890b02c2fc3266c44fe3a217f6b74a97b0985d63ae3ec093bb032486feaca6c",
+      "image": "ann-benchmarks-nearpy",
+      "command": [
+        "--dataset",
+        "sift-128-euclidean",
+        "--algorithm",
+        "nearpy",
+        "--module",
+        "ann_benchmarks.algorithms.nearpy",
+        "--constructor",
+        "NearPy",
+        "--runs",
+        "5",
+        "--count",
+        "10",
+        "[\"euclidean\", 14, 20]"
+      ]
+    },
+    {
+      "id": "1129717ac715a3a54a04212195cd86e5a5e3d1ff0d194fee1f90555a75aa3365",
+      "image": "ann-benchmarks-expann",
+      "command": [
+        "--dataset",
+        "sift-128-euclidean",
+        "--algorithm",
+        "expann",
+        "--module",
+        "ann_benchmarks.algorithms.expann",
+        "--constructor",
+        "ExpAnnWrapper",
+        "--runs",
+        "5",
+        "--count",
+        "10",
+        "[\"euclidean\", {\"M\": 60, \"ef_construction\": 500, \"ortho_count\": 1, \"prune_overflow\": 3, \"use_compression\": false}]",
+        "[10]",
+        "[20]",
+        "[30]",
+        "[40]",
+        "[50]",
+        "[80]",
+        "[120]"
+      ]
+    },
+    {
+      "id": "95df936de1a091f39f2f45fadafc9b07121f142ef1b8511af4175efb074de0b1",
+      "image": "ann-benchmarks-nearpy",
+      "command": [
+        "--dataset",
+        "sift-128-euclidean",
+        "--algorithm",
+        "nearpy",
+        "--module",
+        "ann_benchmarks.algorithms.nearpy",
+        "--constructor",
+        "NearPy",
+        "--runs",
+        "5",
+        "--count",
+        "10",
+        "[\"euclidean\", 14, 10]"
+      ]
+    },
+    {
+      "id": "8136c21d9a5f6d0362b06c87585e33dde5def340aca7ec65acefa2b0777181a6",
+      "image": "ann-benchmarks-nearpy",
+      "command": [
+        "--dataset",
+        "sift-128-euclidean",
+        "--algorithm",
+        "nearpy",
+        "--module",
+        "ann_benchmarks.algorithms.nearpy",
+        "--constructor",
+        "NearPy",
+        "--runs",
+        "5",
+        "--count",
+        "10",
+        "[\"euclidean\", 12, 40]"
+      ]
+    }
+  ],
+  "command": [
+    ".venv/bin/python",
+    "/home/xingrui/workspace/annbenchmark/c7ibench/scripts/measure_native_qg_variants.py",
+    "--succinct",
+    "/home/xingrui/workspace/zvec/r7i-new-api-succinct",
+    "--exploration",
+    "/home/xingrui/workspace/zvec/r7i-new-api-exploration",
+    "--bench-root",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks",
+    "--artifacts",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119"
+  ],
+  "interrupted_background_timings_invalid": true,
+  "restored_at": 1795070934.6512809,
+  "restore_errors": []
+}

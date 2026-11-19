@@ -1,0 +1,886 @@
+[
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.3,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/3ecf1f611a7182aa965e.hdf5",
+      "bytes": 780387,
+      "sha256": "5f66cee9762aef30ee95c7b92264fb913c1e1bc031d136818d3b15c8f7eaf3a2"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/sift/raw/migration/0/n64/migration-0-round0.ids",
+      "bytes": 800000,
+      "sha256": "75ad00c044460a83879436b3cecc934694b13bf5e43b82048af288ae28c2d308"
+    },
+    "ordered_ids_identical_queries": 10000,
+    "same_id_set_queries": 10000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 3.050495035950007e-05,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.0517578125e-05,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.5,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/00e7dbaf39bcc2587006.hdf5",
+      "bytes": 844697,
+      "sha256": "3c6ffab1616f28d781d745c59ab77c6caa6fcd643028de056a2cfb76e71dc494"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/sift/raw/migration/0/n64/migration-1-round0.ids",
+      "bytes": 800000,
+      "sha256": "222a1eaf32b7e2e5112b433e9ab540572b9b92e7d56829e7b885ea85beb6f079"
+    },
+    "ordered_ids_identical_queries": 10000,
+    "same_id_set_queries": 10000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 1.5279833803560905e-05,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.0517578125e-05,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.7,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/6692c13686149b2154d4.hdf5",
+      "bytes": 841557,
+      "sha256": "afc17913899c9f0c2e87d8fa5fd28bc78c45fb6a4d558fd93acf013a9f051f5b"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/sift/raw/migration/0/n64/migration-2-round0.ids",
+      "bytes": 800000,
+      "sha256": "024d17b95be7ef9b8b54507bf4478ccec242acf82a3c567679f94ae245bb1f84"
+    },
+    "ordered_ids_identical_queries": 10000,
+    "same_id_set_queries": 10000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 1.5279833803560905e-05,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.0517578125e-05,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.85,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/1c97f7d01594619853dd.hdf5",
+      "bytes": 840398,
+      "sha256": "0fbdc7d720e1170fffcf35b3a772656da64dadccf5160d5797b67f904eec1825"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/sift/raw/migration/0/n64/migration-3-round0.ids",
+      "bytes": 800000,
+      "sha256": "e60c91fe86ce4e935737dff244347b912a20a057271a39d05a9c47d9bd14f2f0"
+    },
+    "ordered_ids_identical_queries": 10000,
+    "same_id_set_queries": 10000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 1.5279833803560905e-05,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.0517578125e-05,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.9,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/1c97f7d01594619853dd.hdf5",
+      "bytes": 840398,
+      "sha256": "0fbdc7d720e1170fffcf35b3a772656da64dadccf5160d5797b67f904eec1825"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/sift/raw/migration/0/n64/migration-4-round0.ids",
+      "bytes": 800000,
+      "sha256": "e60c91fe86ce4e935737dff244347b912a20a057271a39d05a9c47d9bd14f2f0"
+    },
+    "ordered_ids_identical_queries": 10000,
+    "same_id_set_queries": 10000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 1.5279833803560905e-05,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.0517578125e-05,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.95,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/25cfc61a584beec56d8b.hdf5",
+      "bytes": 840215,
+      "sha256": "ef832a7bc8d3408dd2cb1593a56d4e071dc1c8c30ceef8ad10739710b3d2d4ec"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/sift/raw/migration/0/n64/migration-5-round0.ids",
+      "bytes": 800000,
+      "sha256": "1a9aa8a2628d061dbd072249b2d8d2bd1ee983061cbdb4e12a5a200db5707a53"
+    },
+    "ordered_ids_identical_queries": 10000,
+    "same_id_set_queries": 10000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 1.5279833803560905e-05,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.0517578125e-05,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.99,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/sift-128-euclidean/official/n64/0/15225da6018ef1062b4d.hdf5",
+      "bytes": 840234,
+      "sha256": "a9261524332d67db76761b3a51a125a0e515116d0801f5b0d427add1072a7977"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/sift/raw/migration/0/n64/migration-6-round0.ids",
+      "bytes": 800000,
+      "sha256": "93dfcb73cfb2630e21163a9e06ae76bb613cf41c1e194a6122884a81eedc4bb6"
+    },
+    "ordered_ids_identical_queries": 10000,
+    "same_id_set_queries": 10000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 1.5279833803560905e-05,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.0517578125e-05,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.3,
+    "query_count": 1000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/2f30c5c5b7029f809204.hdf5",
+      "bytes": 95909,
+      "sha256": "f46c5dab8c2e790e686f459bab21b6c85cfd6b217a95165698e5e892ae90a456"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/gist/raw/migration/0/n64/migration-0-round0.ids",
+      "bytes": 80000,
+      "sha256": "57e65a32f71d62a3950b45385919ed1b5fdb05b24d9dcf387a3418793c18d84a"
+    },
+    "ordered_ids_identical_queries": 1000,
+    "same_id_set_queries": 1000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.2557920376087282e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 2.384185791015625e-07,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.5,
+    "query_count": 1000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/8efa18db3d84cfc1f213.hdf5",
+      "bytes": 94988,
+      "sha256": "39d9464bfd83a848b2dfcb36db831da19238404d7f45171a140cefa0056341a4"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/gist/raw/migration/0/n64/migration-1-round0.ids",
+      "bytes": 80000,
+      "sha256": "2251e1e602ee629ba90daf9513a56fead84521e209fcfb881c64febd652226cd"
+    },
+    "ordered_ids_identical_queries": 1000,
+    "same_id_set_queries": 1000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.2557920376087282e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 2.384185791015625e-07,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.7,
+    "query_count": 1000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/b89d8de5603ebe827665.hdf5",
+      "bytes": 94831,
+      "sha256": "35c4521ae424b75983a3a9d80b1a22ae98b88971a90943faa5a259f370ac91c2"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/gist/raw/migration/0/n64/migration-2-round0.ids",
+      "bytes": 80000,
+      "sha256": "a02fd17bc4cb47408122234eca67b97dc77b31941413c6691c378f2ae3fb96bb"
+    },
+    "ordered_ids_identical_queries": 1000,
+    "same_id_set_queries": 1000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.2557920376087282e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 2.384185791015625e-07,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.85,
+    "query_count": 1000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/90279d769d85c938c044.hdf5",
+      "bytes": 94724,
+      "sha256": "4dc8d01477aa74dfa46e1b114c68b518e433251a683b758e5d4e4cb68f92849d"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/gist/raw/migration/0/n64/migration-3-round0.ids",
+      "bytes": 80000,
+      "sha256": "1cf674213577ef65d75f2e01d89e590bf402b61259551815dde6a9d4edb4e6e6"
+    },
+    "ordered_ids_identical_queries": 1000,
+    "same_id_set_queries": 1000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.2557920376087282e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 2.384185791015625e-07,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.9,
+    "query_count": 1000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/878008c43c15f29c0c7f.hdf5",
+      "bytes": 94753,
+      "sha256": "c56a3ecdb00a89b77420b2fa439b23b52befacaa9505c70f7bc9428c134545f1"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/gist/raw/migration/0/n64/migration-4-round0.ids",
+      "bytes": 80000,
+      "sha256": "cd6543754f9d7fa04c589b10cc14b5d8c02054b19d2adbc6298792c16a372415"
+    },
+    "ordered_ids_identical_queries": 1000,
+    "same_id_set_queries": 1000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.2557920376087282e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 2.384185791015625e-07,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.95,
+    "query_count": 1000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/32cb6e201abc1cb34a9c.hdf5",
+      "bytes": 94773,
+      "sha256": "cd10756c90774ef071c85a766870e4ebe39daa6921b944c7f7e367e51ab294d9"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/gist/raw/migration/0/n64/migration-5-round0.ids",
+      "bytes": 80000,
+      "sha256": "15454d777de34709fbaf051470a0013bab23c031e9108dc20208b48b30b16e9b"
+    },
+    "ordered_ids_identical_queries": 1000,
+    "same_id_set_queries": 1000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.2557920376087282e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 2.384185791015625e-07,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.99,
+    "query_count": 1000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/152e95405100cae44ec9.hdf5",
+      "bytes": 94726,
+      "sha256": "585b26edf4507670b355d6d983b4fc28ddd15ebc5af1e0e726d56c1197bca3f6"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/gist/raw/migration/0/n64/migration-6-round0.ids",
+      "bytes": 80000,
+      "sha256": "c932e48f0719ad57f7ebbd82b90ed33fbee133195dbb4144666f7c0c3d2888c0"
+    },
+    "ordered_ids_identical_queries": 1000,
+    "same_id_set_queries": 1000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.2557920376087282e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 2.384185791015625e-07,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.3,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/0/c9d65b8d02542dbd55cc.hdf5",
+      "bytes": 845989,
+      "sha256": "6074208c2f9539a856e8895efde3ad068575e8b97ea20c4c559b344cf6f328fb"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/glove/raw/migration/0/n32/migration-0-round0.ids",
+      "bytes": 800000,
+      "sha256": "27fcf3cccc62b19fd5de65bffc717ff52366303cd7b21dd36c95d082e8f67c7f"
+    },
+    "ordered_ids_identical_queries": 9999,
+    "same_id_set_queries": 9999,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 1,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.74045146020363e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.5762786865234375e-07,
+    "differing_queries": [
+      {
+        "query_row": 900,
+        "old_ids": [
+          147765,
+          1095974,
+          340037,
+          130717,
+          284829,
+          59595,
+          765488,
+          90508,
+          475874,
+          547391
+        ],
+        "new_ids": [
+          147765,
+          1095974,
+          340037,
+          665382,
+          130717,
+          284829,
+          765488,
+          90508,
+          475874,
+          547391
+        ],
+        "old_independent_distances": [
+          0.3632967102193603,
+          0.3841398768387285,
+          0.4067318256689192,
+          0.426109714282612,
+          0.4322813759470012,
+          0.43564221080024035,
+          0.4402913945286393,
+          0.45348020969450964,
+          0.4616218569736604,
+          0.4684436830798777
+        ],
+        "new_independent_distances": [
+          0.3632967102193603,
+          0.3841398768387285,
+          0.4067318256689192,
+          0.4084105550840851,
+          0.426109714282612,
+          0.4322813759470012,
+          0.4402913945286393,
+          0.45348020969450964,
+          0.4616218569736604,
+          0.4684436830798777
+        ],
+        "equal_distances_within_tolerance": false
+      }
+    ],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.5,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/0/63edb301bd94e256411e.hdf5",
+      "bytes": 842518,
+      "sha256": "77641478d547dc07f0eab1d7cd0ac796ba136985634acdba437818565eb01326"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/glove/raw/migration/0/n32/migration-1-round0.ids",
+      "bytes": 800000,
+      "sha256": "94418a98bddcae5d32b1a7b69e0010fae4738599fa2668fc2b315d5df4fe247e"
+    },
+    "ordered_ids_identical_queries": 9999,
+    "same_id_set_queries": 9999,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 1,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.74045146020363e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.5762786865234375e-07,
+    "differing_queries": [
+      {
+        "query_row": 900,
+        "old_ids": [
+          147765,
+          1095974,
+          224247,
+          340037,
+          665382,
+          684416,
+          130717,
+          284829,
+          59595,
+          765488
+        ],
+        "new_ids": [
+          147765,
+          1095974,
+          224247,
+          340037,
+          665382,
+          684416,
+          130717,
+          284829,
+          765488,
+          395973
+        ],
+        "old_independent_distances": [
+          0.3632967102193603,
+          0.3841398768387285,
+          0.40155140375643406,
+          0.4067318256689192,
+          0.4084105550840851,
+          0.41301794002701087,
+          0.426109714282612,
+          0.4322813759470012,
+          0.43564221080024035,
+          0.4402913945286393
+        ],
+        "new_independent_distances": [
+          0.3632967102193603,
+          0.3841398768387285,
+          0.40155140375643406,
+          0.4067318256689192,
+          0.4084105550840851,
+          0.41301794002701087,
+          0.426109714282612,
+          0.4322813759470012,
+          0.4402913945286393,
+          0.4433307772307299
+        ],
+        "equal_distances_within_tolerance": false
+      }
+    ],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.7,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/0/4c6f0e7c654a5e3d8d9f.hdf5",
+      "bytes": 839627,
+      "sha256": "f48d3f0d16b114c0b998bf78c90ba8093cf9c54e4e5b043a6031dccbe5b30b44"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/glove/raw/migration/0/n32/migration-2-round0.ids",
+      "bytes": 800000,
+      "sha256": "8f8e1b3ac2197684f9d7ab2d95a1e56a20990cd4b178f1cf5aca5393f84cc4f8"
+    },
+    "ordered_ids_identical_queries": 9998,
+    "same_id_set_queries": 9998,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 2,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.74045146020363e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.5762786865234375e-07,
+    "differing_queries": [
+      {
+        "query_row": 2296,
+        "old_ids": [
+          1050853,
+          73464,
+          197901,
+          418608,
+          816909,
+          157419,
+          1064254,
+          1159767,
+          1011353,
+          821612
+        ],
+        "new_ids": [
+          1050853,
+          489417,
+          73464,
+          197901,
+          418608,
+          816909,
+          157419,
+          1064254,
+          1159767,
+          1011353
+        ],
+        "old_independent_distances": [
+          0.408922584066421,
+          0.42375819152110283,
+          0.4303796712903839,
+          0.436557638274764,
+          0.43897202802972335,
+          0.4401277398944007,
+          0.4406399141830142,
+          0.4421342177990958,
+          0.4451393478040232,
+          0.4463294482227642
+        ],
+        "new_independent_distances": [
+          0.408922584066421,
+          0.42092250072383297,
+          0.42375819152110283,
+          0.4303796712903839,
+          0.436557638274764,
+          0.43897202802972335,
+          0.4401277398944007,
+          0.4406399141830142,
+          0.4421342177990958,
+          0.4451393478040232
+        ],
+        "equal_distances_within_tolerance": false
+      },
+      {
+        "query_row": 7926,
+        "old_ids": [
+          305016,
+          247954,
+          712253,
+          145243,
+          69126,
+          125228,
+          727962,
+          701778,
+          933153,
+          704975
+        ],
+        "new_ids": [
+          305016,
+          247954,
+          712253,
+          145243,
+          69126,
+          125228,
+          727962,
+          701778,
+          933153,
+          1133864
+        ],
+        "old_independent_distances": [
+          0.48597101513797125,
+          0.5130099454584959,
+          0.5191100272706366,
+          0.5246648231296638,
+          0.524727469268115,
+          0.5256874127971936,
+          0.5285932072870331,
+          0.5310789476299379,
+          0.5352364343878168,
+          0.5354268610424511
+        ],
+        "new_independent_distances": [
+          0.48597101513797125,
+          0.5130099454584959,
+          0.5191100272706366,
+          0.5246648231296638,
+          0.524727469268115,
+          0.5256874127971936,
+          0.5285932072870331,
+          0.5310789476299379,
+          0.5352364343878168,
+          0.5392843188873009
+        ],
+        "equal_distances_within_tolerance": false
+      }
+    ],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.85,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/2fd995302e97cf5ef1b8.hdf5",
+      "bytes": 838083,
+      "sha256": "724683466bf7180dff6f247b40be44b13faa6e4a0878fdb669daf7e4ac2e6f7c"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/glove/raw/migration/0/n64/migration-3-round0.ids",
+      "bytes": 800000,
+      "sha256": "afbee9d52429a319268de3a4630f0888d16b23dfc348a5befdcda5f1e03202c4"
+    },
+    "ordered_ids_identical_queries": 9999,
+    "same_id_set_queries": 9999,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 1,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.74045146020363e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.5762786865234375e-07,
+    "differing_queries": [
+      {
+        "query_row": 8548,
+        "old_ids": [
+          721581,
+          1077274,
+          578094,
+          659935,
+          290836,
+          1040159,
+          374985,
+          991936,
+          188795,
+          811979
+        ],
+        "new_ids": [
+          721581,
+          1077274,
+          659935,
+          290836,
+          1040159,
+          374985,
+          991936,
+          188795,
+          811979,
+          913893
+        ],
+        "old_independent_distances": [
+          0.3987504054733718,
+          0.4106940013762024,
+          0.4222414528566384,
+          0.43180717278755043,
+          0.4337041606487527,
+          0.44017819431422744,
+          0.44197965212509027,
+          0.44627779130302814,
+          0.45275174167416166,
+          0.45783940969033143
+        ],
+        "new_independent_distances": [
+          0.3987504054733718,
+          0.4106940013762024,
+          0.43180717278755043,
+          0.4337041606487527,
+          0.44017819431422744,
+          0.44197965212509027,
+          0.44627779130302814,
+          0.45275174167416166,
+          0.45783940969033143,
+          0.46820795357317946
+        ],
+        "equal_distances_within_tolerance": false
+      }
+    ],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.9,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/3806d4ab3ca3c0c045a4.hdf5",
+      "bytes": 837697,
+      "sha256": "102a0f7088bfa53d3f5cbdd01bc3168750a7a88aa508a687c2fe6dccfc069e18"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/glove/raw/migration/0/n64/migration-4-round0.ids",
+      "bytes": 800000,
+      "sha256": "bddd7865d41ab4d026902ce3c8611094d4df45e7270fb51134d03a8980b80573"
+    },
+    "ordered_ids_identical_queries": 9999,
+    "same_id_set_queries": 9999,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 1,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.74045146020363e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.5762786865234375e-07,
+    "differing_queries": [
+      {
+        "query_row": 8548,
+        "old_ids": [
+          721581,
+          1077274,
+          578094,
+          659935,
+          290836,
+          1040159,
+          374985,
+          991936,
+          188795,
+          811979
+        ],
+        "new_ids": [
+          721581,
+          1077274,
+          659935,
+          290836,
+          1040159,
+          374985,
+          991936,
+          188795,
+          811979,
+          984030
+        ],
+        "old_independent_distances": [
+          0.3987504054733718,
+          0.4106940013762024,
+          0.4222414528566384,
+          0.43180717278755043,
+          0.4337041606487527,
+          0.44017819431422744,
+          0.44197965212509027,
+          0.44627779130302814,
+          0.45275174167416166,
+          0.45783940969033143
+        ],
+        "new_independent_distances": [
+          0.3987504054733718,
+          0.4106940013762024,
+          0.43180717278755043,
+          0.4337041606487527,
+          0.44017819431422744,
+          0.44197965212509027,
+          0.44627779130302814,
+          0.45275174167416166,
+          0.45783940969033143,
+          0.45890017758194634
+        ],
+        "equal_distances_within_tolerance": false
+      }
+    ],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.95,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/4fede1747748f42c8316.hdf5",
+      "bytes": 837265,
+      "sha256": "4f19358a4f4bcf25e8c8dc4d631fb79622fac6ae2a0a85e7d106ea73a0a95017"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/glove/raw/migration/0/n64/migration-5-round0.ids",
+      "bytes": 800000,
+      "sha256": "15311eb6b575727336f42511ef896b8fbdbb3b9d9c3e9eb4b1fe98a513910053"
+    },
+    "ordered_ids_identical_queries": 10000,
+    "same_id_set_queries": 10000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.74045146020363e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.5762786865234375e-07,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.99,
+    "query_count": 10000,
+    "old_source": {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/a381c1ebc614d324c0cf.hdf5",
+      "bytes": 836899,
+      "sha256": "998cdbb7619e67bc45a5928d8d57b8310ee26ef529634d3af497a00881afb262"
+    },
+    "new_ids": {
+      "path": "results/r7i-new-api-20261119/succinct/glove/raw/migration/0/n64/migration-6-round0.ids",
+      "bytes": 800000,
+      "sha256": "80225b0d369eaca2af281517d2345bcd255ecbefc8f3a1c06ea0bb65427795c5"
+    },
+    "ordered_ids_identical_queries": 10000,
+    "same_id_set_queries": 10000,
+    "different_ids_equal_distances_queries": 0,
+    "different_ids_different_distances_queries": 0,
+    "reordered_same_ids_queries": 0,
+    "tie_distance_absolute_tolerance": 1e-06,
+    "old_framework_distance_max_error": 2.74045146020363e-07,
+    "distance_sources": "old: ANN-Benchmarks recomputed HDF5 distances; new: native exact callback scores (sqrt for L2). Old native callback scores were not retained.",
+    "common_ids_max_distance_difference": 3.5762786865234375e-07,
+    "differing_queries": [],
+    "new_returned_distances_independently_validated": true
+  }
+]

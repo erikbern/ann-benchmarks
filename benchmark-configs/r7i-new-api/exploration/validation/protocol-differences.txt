@@ -1,0 +1,9 @@
+Comparison boundaries to retain in final report:
+- Native timer: reset, QG search including exact callback, sort, external-ID mapping, result buffer copy.
+- Excluded: Python calls, FP32 input conversion, cosine normalization, index loading, file IO, independent FP64 distances.
+- Provider changed from HNSW entity/chunk storage to verified owned contiguous FP32 arrays plus CSR adjacency; metadata/padding are omitted from exact metric inputs. Do not attribute all historical QPS differences to kernel changes.
+- Old r7i comparison uses archived same-session median of two best-of-five Python measurements with concurrent background jobs. New protocol uses median of three best-of-five native measurements with background benchmarks paused. Not directly comparable.
+- Per repetition the index is loaded in a fresh process, with a full-query warmup at every point. Reusing one immutable index does not test rebuild randomness.
+- Historical ef_search maps structurally to max(topk,ef) in HnswQueryAdapter; new capacity maps to max(1,topk,capacity). Controlled capacity perturbations and historical output-ID/distance comparisons supply empirical evidence, not an assumption.
+- GloVe visited-set bitmap threshold is ceil(1183514/1024)=1156; capacity 2048 selects bitmap, capacity 128 selects a 1024-slot linear-probing table. In the high-recall diagnostic 1676/10000 queries expand more than 1024 nodes; full-table misses scan all slots before consulting overflow. IDs, expansion counts and exact comparison counts are unchanged in the first paired full round. Final report must use all repetitions for QPS.
+- Small preflight results and the aborted isolation setup are not performance evidence. First isolation attempt encountered an already-exited zombie child; it restored all paused jobs without errors before retry. The actual campaign uses isolation-2.json.

@@ -1,0 +1,103 @@
+[
+  {
+    "path": "thirdparty/googletest/googletest-1.10.0",
+    "head": "703bd9caab50b139428cea1aaff9974ebee5742e",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/sparsehash/sparsehash-2.0.4",
+    "head": "f93c0c69e959c1c77611d0ba8d107aa971338811",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/gflags/gflags-2.2.2",
+    "head": "e171aa2d15ed9eb17054558e0b3a6a413bb01067",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/rocksdb/rocksdb-8.1.1",
+    "head": "6a436150417120a3f9732d65a2a5c2b8d19b60fc",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/yaml-cpp/yaml-cpp-0.6.3",
+    "head": "9a3624205e8774953ef18f57067b3426c1c5ada6",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/arrow/apache-arrow-21.0.0",
+    "head": "ee4d09ebef61c663c1efbfa4c18e518a03b798be",
+    "diff_sha256": "77f9f40a307ee83c48492529919a979b4a380113973bca0548f03ad8a5a974c6",
+    "diff_bytes": 7581
+  },
+  {
+    "path": "thirdparty/glog/glog-0.5.0",
+    "head": "8f9ccfe770add9e4c64e9b25c102658e3c763b73",
+    "diff_sha256": "7bea54668d24c10d662d591fc427dfa0951fedcc32d88762c6b7681ebd9b4b14",
+    "diff_bytes": 1963
+  },
+  {
+    "path": "thirdparty/lz4/lz4-1.9.4",
+    "head": "5ff839680134437dbf4678f3d0c7b371d84f4964",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/antlr/antlr4",
+    "head": "7a3f40bc341ddfb463d6e0aa1a6265064d020cb6",
+    "diff_sha256": "49bb794c6e80b6b1f7ed31405c4161d2b1b73362f7d9ab03484f114426e51a35",
+    "diff_bytes": 1704
+  },
+  {
+    "path": "thirdparty/magic_enum/magic_enum-0.9.7",
+    "head": "83ab7f4f578bd00e1026a7cd9f7baa4f1a62cbeb",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/RaBitQ-Library/RaBitQ-Library-0.7.0",
+    "head": "de793e8a978a51a7031efefe96573043e8251bb7",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/aio/libaio-0.3",
+    "present": false,
+    "linked_by_qg_bench": false
+  },
+  {
+    "path": "thirdparty/cppjieba/cppjieba-5.6.7",
+    "head": "b3602bef7d1f67521a61788a74fb5801a0e62cd3",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/FastPFOR/FastPFOR-0.4.0",
+    "head": "2be1f976935b8ff9296b029f574d7f964be9d35d",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/limonp/limonp-v1.0.2",
+    "head": "9d74077dfcdf8073536c97a00bb79d7a3c3fdaba",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/utf8proc/utf8proc-2.11.3",
+    "head": "e5e799221b45bbb90f5fdc5c69b6b8dfbf017e78",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  },
+  {
+    "path": "thirdparty/snowball/snowball-3.1.1",
+    "head": "cd195b51e948a902a4312f023f4a14392516a543",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_bytes": 0
+  }
+]

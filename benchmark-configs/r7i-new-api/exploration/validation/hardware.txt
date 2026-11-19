@@ -1,0 +1,153 @@
+lscpu.txt
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           46 bits physical, 57 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  64
+On-line CPU(s) list:                     0-63
+Vendor ID:                               GenuineIntel
+Model name:                              Intel(R) Xeon(R) Platinum 8369B CPU @ 2.70GHz
+CPU family:                              6
+Model:                                   106
+Thread(s) per core:                      2
+Core(s) per socket:                      32
+Socket(s):                               1
+Stepping:                                6
+BogoMIPS:                                5399.99
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq monitor ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch cpuid_fault invpcid_single ibrs_enhanced fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves wbnoinvd arat avx512vbmi pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid fsrm arch_capabilities
+Hypervisor vendor:                       KVM
+Virtualization type:                     full
+L1d cache:                               1.5 MiB (32 instances)
+L1i cache:                               1 MiB (32 instances)
+L2 cache:                                40 MiB (32 instances)
+L3 cache:                                48 MiB (1 instance)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-63
+Vulnerability Gather data sampling:      Unknown: Dependent on hypervisor status
+Vulnerability Indirect target selection: Mitigation; Aligned branch/return thunks
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Not affected
+Vulnerability Spec rstack overflow:      Not affected
+Vulnerability Spec store bypass:         Vulnerable
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Not affected
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Not affected
+
+
+topology.txt
+CPU NODE SOCKET CORE ONLINE MAXMHZ
+  0    0      0    0    yes      -
+  1    0      0    0    yes      -
+  2    0      0    1    yes      -
+  3    0      0    1    yes      -
+  4    0      0    2    yes      -
+  5    0      0    2    yes      -
+  6    0      0    3    yes      -
+  7    0      0    3    yes      -
+  8    0      0    4    yes      -
+  9    0      0    4    yes      -
+ 10    0      0    5    yes      -
+ 11    0      0    5    yes      -
+ 12    0      0    6    yes      -
+ 13    0      0    6    yes      -
+ 14    0      0    7    yes      -
+ 15    0      0    7    yes      -
+ 16    0      0    8    yes      -
+ 17    0      0    8    yes      -
+ 18    0      0    9    yes      -
+ 19    0      0    9    yes      -
+ 20    0      0   10    yes      -
+ 21    0      0   10    yes      -
+ 22    0      0   11    yes      -
+ 23    0      0   11    yes      -
+ 24    0      0   12    yes      -
+ 25    0      0   12    yes      -
+ 26    0      0   13    yes      -
+ 27    0      0   13    yes      -
+ 28    0      0   14    yes      -
+ 29    0      0   14    yes      -
+ 30    0      0   15    yes      -
+ 31    0      0   15    yes      -
+ 32    0      0   16    yes      -
+ 33    0      0   16    yes      -
+ 34    0      0   17    yes      -
+ 35    0      0   17    yes      -
+ 36    0      0   18    yes      -
+ 37    0      0   18    yes      -
+ 38    0      0   19    yes      -
+ 39    0      0   19    yes      -
+ 40    0      0   20    yes      -
+ 41    0      0   20    yes      -
+ 42    0      0   21    yes      -
+ 43    0      0   21    yes      -
+ 44    0      0   22    yes      -
+ 45    0      0   22    yes      -
+ 46    0      0   23    yes      -
+ 47    0      0   23    yes      -
+ 48    0      0   24    yes      -
+ 49    0      0   24    yes      -
+ 50    0      0   25    yes      -
+ 51    0      0   25    yes      -
+ 52    0      0   26    yes      -
+ 53    0      0   26    yes      -
+ 54    0      0   27    yes      -
+ 55    0      0   27    yes      -
+ 56    0      0   28    yes      -
+ 57    0      0   28    yes      -
+ 58    0      0   29    yes      -
+ 59    0      0   29    yes      -
+ 60    0      0   30    yes      -
+ 61    0      0   30    yes      -
+ 62    0      0   31    yes      -
+ 63    0      0   31    yes      -
+
+
+numa.txt
+available: 1 nodes (0)
+node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63
+node 0 size: 507417 MB
+node 0 free: 51719 MB
+node distances:
+node   0 
+  0:  10 
+
+
+uname.txt
+Linux iZ6wehke75elytet1k4gw8Z 5.15.0-198-generic #208-Ubuntu SMP Fri Sep 4 10:22:38 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+
+
+os-release.txt
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+
+
+compiler.txt
+c++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+cmake.txt
+cmake version 3.31.10
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).

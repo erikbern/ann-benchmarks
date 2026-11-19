@@ -1,0 +1,32 @@
+# GIST FP32, one rotation, low-rank codec; preserve unnormalized L2 vectors.
+BuilderCommon:
+  BuilderClass: HnswStreamer
+  BuildFile: /data/gist/gist_base.zvec.vecs
+  MetricName: SquaredEuclidean
+  IndexPath: /data/gist/r7i/work.index
+  DumpPath: /data/gist/r7i/n64.index
+  DumpFormat: streamer
+  MaxDocs: 1000000
+  ThreadCount: 8
+  LogLevel: info
+BuilderParams:
+  proxima.hnsw.streamer.max_neighbor_count: 50
+  proxima.hnsw.streamer.efconstruction: 500
+  proxima.hnsw.streamer.get_vector_enable: true
+QuantizedGraphRouter:
+  Anchors: 8192
+  ProjectedDimension: 256
+  Seed: 202610261259
+QuantizedGraph:
+  Persist: true
+  RotationViews: 1
+  MaxNeighbors: 64
+  ThreadCount: 8
+  Codec:
+    Type: low_rank
+    BlockDimension: 8
+    Codebook: gaussian
+    Rank: 8
+    TrainingSamples: 1024
+    CenterWeight: 1.0
+    Seed: 20261031

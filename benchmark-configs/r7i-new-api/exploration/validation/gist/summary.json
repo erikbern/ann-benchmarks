@@ -1,0 +1,828 @@
+{
+  "new_api_revalidated": true,
+  "dataset": "gist-960-euclidean",
+  "source": {
+    "commit": "35afef03b24c5e8fa452b1f1523142471a53afbe",
+    "binary": {
+      "path": "/home/xingrui/workspace/zvec/r7i-new-api-exploration/build-r7i/bin/qg_bench",
+      "bytes": 3363864,
+      "sha256": "cf5761b5a70b84bda538182514e63b1a44a398f08ac1fd6d9df3693bdeb4b841"
+    },
+    "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "dirty": false,
+    "timing": "native_reset_search_sort_map_copy"
+  },
+  "points": [
+    {
+      "point": {
+        "name": "migration-0",
+        "phase": "migration",
+        "target": 0.3,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.008,
+          "margin": 1.0,
+          "max_expansions": 10,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.3168,
+      "strict_id_recall": 0.3072,
+      "qps_each": [
+        46759.982133946025,
+        46812.05680100073,
+        46869.7432653569
+      ],
+      "qps": 46812.05680100073,
+      "mean_query_us": 21.362018000000003,
+      "ids_sha256": "57e65a32f71d62a3950b45385919ed1b5fdb05b24d9dcf387a3418793c18d84a",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "capacity-0",
+        "phase": "tuning",
+        "target": 0.3,
+        "profile": "n64",
+        "capacity": 32,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.008,
+          "margin": 1.0,
+          "max_expansions": 10,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.3168,
+      "strict_id_recall": 0.3072,
+      "qps_each": [
+        46834.24396276153,
+        46736.032597821904,
+        46692.18768261022
+      ],
+      "qps": 46736.032597821904,
+      "mean_query_us": 21.396767,
+      "ids_sha256": "57e65a32f71d62a3950b45385919ed1b5fdb05b24d9dcf387a3418793c18d84a",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "coverage-0",
+        "phase": "tuning",
+        "target": 0.3,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.008,
+          "margin": 1.255,
+          "max_expansions": 15,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.4689,
+      "strict_id_recall": 0.4534,
+      "qps_each": [
+        36000.7332629351,
+        36020.79826483492,
+        36040.394650971124
+      ],
+      "qps": 36020.79826483492,
+      "mean_query_us": 27.761739000000002,
+      "ids_sha256": "25534f47c62f0ced55d68fc1b3436f3b478615a4397e11ce4e89c4300dc78799",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "migration-1",
+        "phase": "migration",
+        "target": 0.5,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.002,
+          "max_expansions": 20,
+          "route_beam": 0,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.5191,
+      "strict_id_recall": 0.5006,
+      "qps_each": [
+        34429.36698303582,
+        34319.95658113653,
+        34365.27323158624
+      ],
+      "qps": 34365.27323158624,
+      "mean_query_us": 29.099142999999998,
+      "ids_sha256": "2251e1e602ee629ba90daf9513a56fead84521e209fcfb881c64febd652226cd",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "capacity-1",
+        "phase": "tuning",
+        "target": 0.5,
+        "profile": "n64",
+        "capacity": 32,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.002,
+          "max_expansions": 20,
+          "route_beam": 0,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.5191,
+      "strict_id_recall": 0.5006,
+      "qps_each": [
+        33606.621257175975,
+        33720.32918729522,
+        33653.94323252855
+      ],
+      "qps": 33653.94323252855,
+      "mean_query_us": 29.7142,
+      "ids_sha256": "2251e1e602ee629ba90daf9513a56fead84521e209fcfb881c64febd652226cd",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "coverage-1",
+        "phase": "tuning",
+        "target": 0.5,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.0075,
+          "max_expansions": 30,
+          "route_beam": 0,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.6668,
+      "strict_id_recall": 0.6414,
+      "qps_each": [
+        27621.765442928543,
+        27714.640746752146,
+        27655.96554110943
+      ],
+      "qps": 27655.96554110943,
+      "mean_query_us": 36.158564,
+      "ids_sha256": "42b41cbb9d4be7dc5fa6401d90285e3be65480c98bae7d61d79e5b22a8050a5f",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "migration-2",
+        "phase": "migration",
+        "target": 0.7,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.005,
+          "max_expansions": 32,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.7009,
+      "strict_id_recall": 0.6741,
+      "qps_each": [
+        26341.713185473607,
+        26340.51836823123,
+        26276.2596070275
+      ],
+      "qps": 26340.51836823123,
+      "mean_query_us": 37.964324999999995,
+      "ids_sha256": "a02fd17bc4cb47408122234eca67b97dc77b31941413c6691c378f2ae3fb96bb",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "capacity-2",
+        "phase": "tuning",
+        "target": 0.7,
+        "profile": "n64",
+        "capacity": 32,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.005,
+          "max_expansions": 32,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.7009,
+      "strict_id_recall": 0.6741,
+      "qps_each": [
+        25454.290356275556,
+        25552.221189429834,
+        25509.02754281129
+      ],
+      "qps": 25509.02754281129,
+      "mean_query_us": 39.201808,
+      "ids_sha256": "a02fd17bc4cb47408122234eca67b97dc77b31941413c6691c378f2ae3fb96bb",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "coverage-2",
+        "phase": "tuning",
+        "target": 0.7,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.01125,
+          "max_expansions": 48,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.7607,
+      "strict_id_recall": 0.731,
+      "qps_each": [
+        23310.128721794223,
+        23360.158348234974,
+        23332.570513828
+      ],
+      "qps": 23332.570513828,
+      "mean_query_us": 42.858544,
+      "ids_sha256": "bc1abbd9e8329b9013fd65f665767e312bafdb5f43972141bb084ffd49ca63d6",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "migration-3",
+        "phase": "migration",
+        "target": 0.85,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.03,
+          "max_expansions": 256,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.8663,
+      "strict_id_recall": 0.8376,
+      "qps_each": [
+        17351.546071339286,
+        17329.925368849697,
+        17321.47980589134
+      ],
+      "qps": 17329.925368849697,
+      "mean_query_us": 57.703653,
+      "ids_sha256": "1cf674213577ef65d75f2e01d89e590bf402b61259551815dde6a9d4edb4e6e6",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "capacity-3",
+        "phase": "tuning",
+        "target": 0.85,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.03,
+          "max_expansions": 256,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.8663,
+      "strict_id_recall": 0.8376,
+      "qps_each": [
+        16800.108528701094,
+        16850.292447778123,
+        16820.7964657219
+      ],
+      "qps": 16820.7964657219,
+      "mean_query_us": 59.450216999999995,
+      "ids_sha256": "1cf674213577ef65d75f2e01d89e590bf402b61259551815dde6a9d4edb4e6e6",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "coverage-3",
+        "phase": "tuning",
+        "target": 0.85,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.042499999999999996,
+          "max_expansions": 384,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9118,
+      "strict_id_recall": 0.8857,
+      "qps_each": [
+        13946.553043169255,
+        13973.378534045592,
+        13933.628220925366
+      ],
+      "qps": 13946.553043169255,
+      "mean_query_us": 71.702305,
+      "ids_sha256": "251f457e318208b720d2aea17635445b3fd43be30807c3bb0de356c3b16d08d5",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "migration-4",
+        "phase": "migration",
+        "target": 0.9,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.04,
+          "max_expansions": 256,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9026,
+      "strict_id_recall": 0.8762,
+      "qps_each": [
+        14522.48072028135,
+        14509.751902685532,
+        14501.997700940296
+      ],
+      "qps": 14509.751902685532,
+      "mean_query_us": 68.919166,
+      "ids_sha256": "cd6543754f9d7fa04c589b10cc14b5d8c02054b19d2adbc6298792c16a372415",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "capacity-4",
+        "phase": "tuning",
+        "target": 0.9,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.04,
+          "max_expansions": 256,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9026,
+      "strict_id_recall": 0.8762,
+      "qps_each": [
+        13852.495881064242,
+        13878.904366535091,
+        13870.575491009355
+      ],
+      "qps": 13870.575491009355,
+      "mean_query_us": 72.09506200000001,
+      "ids_sha256": "cd6543754f9d7fa04c589b10cc14b5d8c02054b19d2adbc6298792c16a372415",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "coverage-4",
+        "phase": "tuning",
+        "target": 0.9,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.055,
+          "max_expansions": 384,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9457,
+      "strict_id_recall": 0.9259,
+      "qps_each": [
+        10629.26921276284,
+        10672.189453560955,
+        10631.166960552873
+      ],
+      "qps": 10631.166960552873,
+      "mean_query_us": 94.06305100000002,
+      "ids_sha256": "bcfdb69cd30e7c910382e0315ea8108ff1d1650046b5d0b83fb85c43bbf3bbb7",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "migration-5",
+        "phase": "migration",
+        "target": 0.95,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.06,
+          "max_expansions": 256,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9552,
+      "strict_id_recall": 0.9378,
+      "qps_each": [
+        9717.928665875037,
+        9712.489053660618,
+        9697.980826083316
+      ],
+      "qps": 9712.489053660618,
+      "mean_query_us": 102.960219,
+      "ids_sha256": "15454d777de34709fbaf051470a0013bab23c031e9108dc20208b48b30b16e9b",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "capacity-5",
+        "phase": "tuning",
+        "target": 0.95,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.06,
+          "max_expansions": 256,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9552,
+      "strict_id_recall": 0.9378,
+      "qps_each": [
+        8924.698428192822,
+        8926.905205773868,
+        8918.454795300191
+      ],
+      "qps": 8924.698428192822,
+      "mean_query_us": 112.04860400000001,
+      "ids_sha256": "15454d777de34709fbaf051470a0013bab23c031e9108dc20208b48b30b16e9b",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "coverage-5",
+        "phase": "tuning",
+        "target": 0.95,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.08,
+          "max_expansions": 384,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9825,
+      "strict_id_recall": 0.9726,
+      "qps_each": [
+        6306.733681261956,
+        6351.38614493129,
+        6321.782017294044
+      ],
+      "qps": 6321.782017294044,
+      "mean_query_us": 158.183246,
+      "ids_sha256": "356c267a758324913181e8104800be72efb3c6e937fb70793042356e04f22fdb",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "migration-6",
+        "phase": "migration",
+        "target": 0.99,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.12000000000000001,
+          "max_expansions": 512,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9946,
+      "strict_id_recall": 0.9909,
+      "qps_each": [
+        3407.640524348096,
+        3410.024593199667,
+        3408.1743774152387
+      ],
+      "qps": 3408.1743774152387,
+      "mean_query_us": 293.412217,
+      "ids_sha256": "c932e48f0719ad57f7ebbd82b90ed33fbee133195dbb4144666f7c0c3d2888c0",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "capacity-6",
+        "phase": "tuning",
+        "target": 0.99,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.12000000000000001,
+          "max_expansions": 512,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9946,
+      "strict_id_recall": 0.9909,
+      "qps_each": [
+        2637.1502256344415,
+        2640.4746160177583,
+        2636.7519702423765
+      ],
+      "qps": 2637.1502256344415,
+      "mean_query_us": 379.197207,
+      "ids_sha256": "c932e48f0719ad57f7ebbd82b90ed33fbee133195dbb4144666f7c0c3d2888c0",
+      "full_query_count": 1000
+    },
+    {
+      "point": {
+        "name": "coverage-6",
+        "phase": "tuning",
+        "target": 0.99,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.15500000000000003,
+          "max_expansions": 768,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9976,
+      "strict_id_recall": 0.9956,
+      "qps_each": [
+        2117.071352900645,
+        2124.1578866335153,
+        2116.4148014533707
+      ],
+      "qps": 2117.071352900645,
+      "mean_query_us": 472.350636,
+      "ids_sha256": "175983b3b05b456fb04e9241fbe67a66cdfab2b7c361de44edac82fa09dd1066",
+      "full_query_count": 1000
+    }
+  ],
+  "winners": [
+    {
+      "target": 0.3,
+      "best": {
+        "point": {
+          "name": "migration-0",
+          "phase": "migration",
+          "target": 0.3,
+          "profile": "n64",
+          "capacity": 128,
+          "scan_limit": 0,
+          "search": {
+            "bucket_width": 0.008,
+            "margin": 1.0,
+            "max_expansions": 10,
+            "route_beam": 1,
+            "uncertainty_bonus": 0
+          }
+        },
+        "ann_recall": 0.3168,
+        "strict_id_recall": 0.3072,
+        "qps_each": [
+          46759.982133946025,
+          46812.05680100073,
+          46869.7432653569
+        ],
+        "qps": 46812.05680100073,
+        "mean_query_us": 21.362018000000003,
+        "ids_sha256": "57e65a32f71d62a3950b45385919ed1b5fdb05b24d9dcf387a3418793c18d84a",
+        "full_query_count": 1000
+      }
+    },
+    {
+      "target": 0.5,
+      "best": {
+        "point": {
+          "name": "migration-1",
+          "phase": "migration",
+          "target": 0.5,
+          "profile": "n64",
+          "capacity": 128,
+          "scan_limit": 0,
+          "search": {
+            "bucket_width": 0.002,
+            "margin": 0.002,
+            "max_expansions": 20,
+            "route_beam": 0,
+            "uncertainty_bonus": 0
+          }
+        },
+        "ann_recall": 0.5191,
+        "strict_id_recall": 0.5006,
+        "qps_each": [
+          34429.36698303582,
+          34319.95658113653,
+          34365.27323158624
+        ],
+        "qps": 34365.27323158624,
+        "mean_query_us": 29.099142999999998,
+        "ids_sha256": "2251e1e602ee629ba90daf9513a56fead84521e209fcfb881c64febd652226cd",
+        "full_query_count": 1000
+      }
+    },
+    {
+      "target": 0.7,
+      "best": {
+        "point": {
+          "name": "migration-2",
+          "phase": "migration",
+          "target": 0.7,
+          "profile": "n64",
+          "capacity": 128,
+          "scan_limit": 0,
+          "search": {
+            "bucket_width": 0.002,
+            "margin": 0.005,
+            "max_expansions": 32,
+            "route_beam": 1,
+            "uncertainty_bonus": 0
+          }
+        },
+        "ann_recall": 0.7009,
+        "strict_id_recall": 0.6741,
+        "qps_each": [
+          26341.713185473607,
+          26340.51836823123,
+          26276.2596070275
+        ],
+        "qps": 26340.51836823123,
+        "mean_query_us": 37.964324999999995,
+        "ids_sha256": "a02fd17bc4cb47408122234eca67b97dc77b31941413c6691c378f2ae3fb96bb",
+        "full_query_count": 1000
+      }
+    },
+    {
+      "target": 0.85,
+      "best": {
+        "point": {
+          "name": "migration-3",
+          "phase": "migration",
+          "target": 0.85,
+          "profile": "n64",
+          "capacity": 2048,
+          "scan_limit": 0,
+          "search": {
+            "bucket_width": 0.002,
+            "margin": 0.03,
+            "max_expansions": 256,
+            "route_beam": 1,
+            "uncertainty_bonus": 0
+          }
+        },
+        "ann_recall": 0.8663,
+        "strict_id_recall": 0.8376,
+        "qps_each": [
+          17351.546071339286,
+          17329.925368849697,
+          17321.47980589134
+        ],
+        "qps": 17329.925368849697,
+        "mean_query_us": 57.703653,
+        "ids_sha256": "1cf674213577ef65d75f2e01d89e590bf402b61259551815dde6a9d4edb4e6e6",
+        "full_query_count": 1000
+      }
+    },
+    {
+      "target": 0.9,
+      "best": {
+        "point": {
+          "name": "migration-4",
+          "phase": "migration",
+          "target": 0.9,
+          "profile": "n64",
+          "capacity": 2048,
+          "scan_limit": 0,
+          "search": {
+            "bucket_width": 0.002,
+            "margin": 0.04,
+            "max_expansions": 256,
+            "route_beam": 1,
+            "uncertainty_bonus": 0
+          }
+        },
+        "ann_recall": 0.9026,
+        "strict_id_recall": 0.8762,
+        "qps_each": [
+          14522.48072028135,
+          14509.751902685532,
+          14501.997700940296
+        ],
+        "qps": 14509.751902685532,
+        "mean_query_us": 68.919166,
+        "ids_sha256": "cd6543754f9d7fa04c589b10cc14b5d8c02054b19d2adbc6298792c16a372415",
+        "full_query_count": 1000
+      }
+    },
+    {
+      "target": 0.95,
+      "best": {
+        "point": {
+          "name": "migration-5",
+          "phase": "migration",
+          "target": 0.95,
+          "profile": "n64",
+          "capacity": 2048,
+          "scan_limit": 0,
+          "search": {
+            "bucket_width": 0.002,
+            "margin": 0.06,
+            "max_expansions": 256,
+            "route_beam": 1,
+            "uncertainty_bonus": 0
+          }
+        },
+        "ann_recall": 0.9552,
+        "strict_id_recall": 0.9378,
+        "qps_each": [
+          9717.928665875037,
+          9712.489053660618,
+          9697.980826083316
+        ],
+        "qps": 9712.489053660618,
+        "mean_query_us": 102.960219,
+        "ids_sha256": "15454d777de34709fbaf051470a0013bab23c031e9108dc20208b48b30b16e9b",
+        "full_query_count": 1000
+      }
+    },
+    {
+      "target": 0.99,
+      "best": {
+        "point": {
+          "name": "migration-6",
+          "phase": "migration",
+          "target": 0.99,
+          "profile": "n64",
+          "capacity": 2048,
+          "scan_limit": 0,
+          "search": {
+            "bucket_width": 0.002,
+            "margin": 0.12000000000000001,
+            "max_expansions": 512,
+            "route_beam": 1,
+            "uncertainty_bonus": 0
+          }
+        },
+        "ann_recall": 0.9946,
+        "strict_id_recall": 0.9909,
+        "qps_each": [
+          3407.640524348096,
+          3410.024593199667,
+          3408.1743774152387
+        ],
+        "qps": 3408.1743774152387,
+        "mean_query_us": 293.412217,
+        "ids_sha256": "c932e48f0719ad57f7ebbd82b90ed33fbee133195dbb4144666f7c0c3d2888c0",
+        "full_query_count": 1000
+      }
+    }
+  ],
+  "index_rebuild_randomness_tested": false,
+  "metric": "median of 3 independent process repetitions, each best of 5 full-query rounds",
+  "independent_distance_check_outside_timer": true,
+  "old_timing_directly_comparable": false
+}

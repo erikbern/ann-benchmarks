@@ -1,0 +1,51 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 62ebbcc..e17f67e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -17,7 +17,7 @@ set (CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+ set (CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+ set (CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+ 
+-option (BUILD_SHARED_LIBS "Build shared libraries" ON)
++option (BUILD_STATIC_LIBS "Build shared libraries" ON)
+ option (PRINT_UNSYMBOLIZED_STACK_TRACES
+   "Print file offsets in traces instead of symbolizing" OFF)
+ option (WITH_CUSTOM_PREFIX "Enable support for user-generated message prefixes" OFF)
+@@ -802,12 +802,12 @@ if (BUILD_TESTING)
+     FIXTURES_REQUIRED "cmake_package_config;cmake_package_config_working")
+ endif (BUILD_TESTING)
+ 
+-install (TARGETS glog
+-  EXPORT glog-targets
+-  RUNTIME DESTINATION ${_glog_CMake_BINDIR}
+-  PUBLIC_HEADER DESTINATION ${_glog_CMake_INCLUDE_DIR}/glog
+-  LIBRARY DESTINATION ${_glog_CMake_LIBDIR}
+-  ARCHIVE DESTINATION ${_glog_CMake_LIBDIR})
++#install (TARGETS glog
++#  EXPORT glog-targets
++#  RUNTIME DESTINATION ${_glog_CMake_BINDIR}
++#  PUBLIC_HEADER DESTINATION ${_glog_CMake_INCLUDE_DIR}/glog
++#  LIBRARY DESTINATION ${_glog_CMake_LIBDIR}
++#  ARCHIVE DESTINATION ${_glog_CMake_LIBDIR})
+ 
+ if (WITH_PKGCONFIG)
+   install (
+@@ -840,8 +840,8 @@ write_basic_package_version_file (
+   ${CMAKE_CURRENT_BINARY_DIR}/glog-config-version.cmake
+   COMPATIBILITY SameMajorVersion)
+ 
+-export (TARGETS glog NAMESPACE glog:: FILE glog-targets.cmake)
+-export (PACKAGE glog)
++#export (TARGETS glog NAMESPACE glog:: FILE glog-targets.cmake)
++#export (PACKAGE glog)
+ 
+ get_filename_component (_PREFIX "${CMAKE_INSTALL_PREFIX}" ABSOLUTE)
+ 
+@@ -885,5 +885,5 @@ install (DIRECTORY ${_glog_BINARY_CMake_DATADIR}
+   FILES_MATCHING PATTERN "*.cmake"
+ )
+ 
+-install (EXPORT glog-targets NAMESPACE glog:: DESTINATION
+-  ${_glog_CMake_INSTALLDIR})
++#install (EXPORT glog-targets NAMESPACE glog:: DESTINATION
++#  ${_glog_CMake_INSTALLDIR})

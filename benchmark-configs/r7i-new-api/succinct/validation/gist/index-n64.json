@@ -1,0 +1,52 @@
+{
+  "profile": {
+    "name": "n64",
+    "index_prefix": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/n64",
+    "encoding": {
+      "codec": "low_rank",
+      "max_neighbors": 64,
+      "threads": 8,
+      "rotation_views": 1,
+      "codebook": "gaussian",
+      "block_dimension": 8,
+      "rank": 8,
+      "training_samples": 1024,
+      "seed": 20261031,
+      "center_weight": 1.0
+    },
+    "router": {
+      "anchors": 8192,
+      "projected_dimension": 256,
+      "seed": 202610261259,
+      "rotation_views": 1
+    }
+  },
+  "source": {
+    "commit": "f22da492fa5ad62e726e8e716858150adfc138be",
+    "binary": {
+      "path": "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/bin/qg_bench",
+      "bytes": 3359200,
+      "sha256": "980c97ac2eed2adb273c033019e6ab626a9fdee0e7f88b8a5267c54850679938"
+    },
+    "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "dirty": false,
+    "timing": "native_reset_search_sort_map_copy"
+  },
+  "files": [
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/n64.qg",
+      "bytes": 5952037920,
+      "sha256": "a44ae6eb8839558bb50a79417ec49cceb33b5c2ff76583d76bee5f216d3e89ca"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/n64.router",
+      "bytes": 7217156,
+      "sha256": "4b4db3293b9747c22eca9e044128b69cf3ebf0ed48954296aa61e63e23e64542"
+    }
+  ],
+  "provider_manifest": {
+    "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct/gist/provider.json",
+    "bytes": 2537,
+    "sha256": "08f725f1db366ea60edcb5d526960291e93fc38abbc72b141974633665d59811"
+  }
+}

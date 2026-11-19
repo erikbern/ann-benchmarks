@@ -1,0 +1,413 @@
+{
+  "schema_version": 1,
+  "dataset": "gist-960-euclidean",
+  "shape": {
+    "train": [
+      1000000,
+      960
+    ],
+    "queries": [
+      1000,
+      960
+    ]
+  },
+  "index_params": {
+    "index_type": "kHNSW",
+    "data_type": "DT_FP32",
+    "metric_type": "kL2sq",
+    "dimension": 960,
+    "m": 50,
+    "ef_construction": 500,
+    "use_id_map": true,
+    "use_quantized_graph": true,
+    "quantizer_param": {
+      "type": "kNone"
+    }
+  },
+  "profiles": {
+    "n64": {
+      "build_configs": [
+        "gist_n64_build.yaml"
+      ],
+      "query_config": "gist_n64_query.yaml",
+      "measured_index": {
+        "benchmark_relative_path": "results/comprehensive-icelake-20261116/indexes/gist-exploration-v1/index",
+        "bytes": 10220097856,
+        "sha256": "1efbe7f33cf6ac9404f47db6e67d8cc4e2026814cc0eafca3357f9365979c7d7"
+      }
+    }
+  },
+  "presets": [
+    {
+      "target_ann_recall": 0.3,
+      "profile": "n64",
+      "query_config": "gist_n64_query.yaml",
+      "query_case_index": 0,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.008,
+        "quantized_graph_margin": 1.0,
+        "quantized_graph_max_expansions": 10,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 33510.19853792993,
+        "mean_query_time_us": 29.841661453247074,
+        "ann_recall": 0.3168,
+        "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/2f30c5c5b7029f809204.hdf5",
+        "result_sha256": "d2bcd7a27f04a4f763e40ae98b1fb8b386859dddba7e365afe30bcb22c0f7e12",
+        "origin": "succinct_r7i_revalidation"
+      },
+      "revalidation": {
+        "qps_median": 33287.63375851956,
+        "qps_each": [
+          33065.068979109186,
+          33510.19853792993
+        ],
+        "ann_recall": 0.3168,
+        "strict_id_recall": 0.3072,
+        "ids_sha256": "57e65a32f71d62a3950b45385919ed1b5fdb05b24d9dcf387a3418793c18d84a",
+        "results": [
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/2f30c5c5b7029f809204.hdf5",
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/2f30c5c5b7029f809204.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "gist_n64_query.yaml",
+        "query_case_index": 0,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.008,
+          "quantized_graph_margin": 1.0,
+          "quantized_graph_max_expansions": 10,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 33287.63375851956,
+        "ann_recall": 0.3168
+      }
+    },
+    {
+      "target_ann_recall": 0.5,
+      "profile": "n64",
+      "query_config": "gist_n64_query.yaml",
+      "query_case_index": 1,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.002,
+        "quantized_graph_max_expansions": 20,
+        "quantized_graph_route_beam": 0,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 27052.86988603015,
+        "mean_query_time_us": 36.96465492248535,
+        "ann_recall": 0.5191,
+        "result": "results/zvec-low-recall-diagnosis-20261118/gist-960-euclidean/official/0/8efa18db3d84cfc1f213.hdf5",
+        "result_sha256": "1c4f4e2ef63e88dbc341a77ec6aecaad4dfb52b16f1ba083d0f64dd9ef1f8f97",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 25999.39079006729,
+        "qps_each": [
+          25651.823447027382,
+          26346.958133107197
+        ],
+        "ann_recall": 0.5191,
+        "strict_id_recall": 0.5006,
+        "ids_sha256": "2251e1e602ee629ba90daf9513a56fead84521e209fcfb881c64febd652226cd",
+        "results": [
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/8efa18db3d84cfc1f213.hdf5",
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/8efa18db3d84cfc1f213.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "gist_n64_query.yaml",
+        "query_case_index": 1,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.002,
+          "quantized_graph_max_expansions": 20,
+          "quantized_graph_route_beam": 0,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 25999.39079006729,
+        "ann_recall": 0.5191
+      }
+    },
+    {
+      "target_ann_recall": 0.7,
+      "profile": "n64",
+      "query_config": "gist_n64_query.yaml",
+      "query_case_index": 2,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.005,
+        "quantized_graph_max_expansions": 32,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 20849.86106071075,
+        "mean_query_time_us": 47.96195030212403,
+        "ann_recall": 0.7009,
+        "result": "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/b89d8de5603ebe827665.hdf5",
+        "result_sha256": "30d7cae09c5e31aa9b1bd6336e8c9e25e3fc03b228bb7c165fd52c33cbd8ed20",
+        "origin": "succinct_r7i_revalidation"
+      },
+      "revalidation": {
+        "qps_median": 20230.38789817598,
+        "qps_each": [
+          19610.91473564121,
+          20849.86106071075
+        ],
+        "ann_recall": 0.7009,
+        "strict_id_recall": 0.6741,
+        "ids_sha256": "a02fd17bc4cb47408122234eca67b97dc77b31941413c6691c378f2ae3fb96bb",
+        "results": [
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/b89d8de5603ebe827665.hdf5",
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/b89d8de5603ebe827665.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "gist_n64_query.yaml",
+        "query_case_index": 2,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.005,
+          "quantized_graph_max_expansions": 32,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 20230.38789817598,
+        "ann_recall": 0.7009
+      }
+    },
+    {
+      "target_ann_recall": 0.85,
+      "profile": "n64",
+      "query_config": "gist_n64_query.yaml",
+      "query_case_index": 3,
+      "query_params": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.03,
+        "quantized_graph_max_expansions": 256,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 14101.344809037117,
+        "mean_query_time_us": 70.91522216796875,
+        "ann_recall": 0.8663,
+        "result": "results/zvec-low-recall-diagnosis-20261118/gist-960-euclidean/official/1/90279d769d85c938c044.hdf5",
+        "result_sha256": "b6423391f8048f9ae7419f04bcb1c9549b72e99a95a8c46acd356d464d290d93",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 13777.123364085333,
+        "qps_each": [
+          13948.745236020672,
+          13605.501492149995
+        ],
+        "ann_recall": 0.8663,
+        "strict_id_recall": 0.8376,
+        "ids_sha256": "1cf674213577ef65d75f2e01d89e590bf402b61259551815dde6a9d4edb4e6e6",
+        "results": [
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/90279d769d85c938c044.hdf5",
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/90279d769d85c938c044.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "gist_n64_query.yaml",
+        "query_case_index": 3,
+        "query_params": {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.03,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 13777.123364085333,
+        "ann_recall": 0.8663
+      }
+    },
+    {
+      "target_ann_recall": 0.9,
+      "profile": "n64",
+      "query_config": "gist_n64_query.yaml",
+      "query_case_index": 4,
+      "query_params": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.04,
+        "quantized_graph_max_expansions": 256,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 13543.643925499213,
+        "mean_query_time_us": 73.83537292480469,
+        "ann_recall": 0.9026,
+        "result": "results/succinct-alignment-20261117/official/gist/shared-scan/4/878008c43c15f29c0c7f.hdf5",
+        "result_sha256": "d742e94ae6dfe16b4f6929d9f1797049517acb577e20d7d01a590680e0aaf1c0",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 11652.122067807617,
+        "qps_each": [
+          11803.13770736306,
+          11501.106428252173
+        ],
+        "ann_recall": 0.9026,
+        "strict_id_recall": 0.8762,
+        "ids_sha256": "cd6543754f9d7fa04c589b10cc14b5d8c02054b19d2adbc6298792c16a372415",
+        "results": [
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/878008c43c15f29c0c7f.hdf5",
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/878008c43c15f29c0c7f.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "gist_n64_query.yaml",
+        "query_case_index": 4,
+        "query_params": {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.04,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 11652.122067807617,
+        "ann_recall": 0.9026
+      }
+    },
+    {
+      "target_ann_recall": 0.95,
+      "profile": "n64",
+      "query_config": "gist_n64_query.yaml",
+      "query_case_index": 5,
+      "query_params": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.06,
+        "quantized_graph_max_expansions": 256,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 9197.672021718441,
+        "mean_query_time_us": 108.72316360473633,
+        "ann_recall": 0.9552,
+        "result": "results/succinct-alignment-20261117/official/gist/shared-scan/5/32cb6e201abc1cb34a9c.hdf5",
+        "result_sha256": "13b7187574dac4f5638da13ae9934daf960a145eb4f81dd6eb42529880edb8c3",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 8003.08944545123,
+        "qps_each": [
+          7977.4198702099,
+          8028.75902069256
+        ],
+        "ann_recall": 0.9552,
+        "strict_id_recall": 0.9378,
+        "ids_sha256": "15454d777de34709fbaf051470a0013bab23c031e9108dc20208b48b30b16e9b",
+        "results": [
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/32cb6e201abc1cb34a9c.hdf5",
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/32cb6e201abc1cb34a9c.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "gist_n64_query.yaml",
+        "query_case_index": 5,
+        "query_params": {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.06,
+          "quantized_graph_max_expansions": 256,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 8003.08944545123,
+        "ann_recall": 0.9552
+      }
+    },
+    {
+      "target_ann_recall": 0.99,
+      "profile": "n64",
+      "query_config": "gist_n64_query.yaml",
+      "query_case_index": 6,
+      "query_params": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.12000000000000001,
+        "quantized_graph_max_expansions": 512,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 3360.4543094662763,
+        "mean_query_time_us": 297.5788116455078,
+        "ann_recall": 0.9946,
+        "result": "results/succinct-alignment-20261117/official/gist/shared-scan/5/152e95405100cae44ec9.hdf5",
+        "result_sha256": "9b4d59694b7a104773687efe68e52f1798fd6a70a2dbadbcdf3ef0c0f7f76836",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 2918.8772701944513,
+        "qps_each": [
+          2912.4279583929338,
+          2925.326581995969
+        ],
+        "ann_recall": 0.9946,
+        "strict_id_recall": 0.9909,
+        "ids_sha256": "c932e48f0719ad57f7ebbd82b90ed33fbee133195dbb4144666f7c0c3d2888c0",
+        "results": [
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/0/152e95405100cae44ec9.hdf5",
+          "results/succinct-r7i-presets-20261118/gist-960-euclidean/official/n64/1/152e95405100cae44ec9.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "gist_n64_query.yaml",
+        "query_case_index": 6,
+        "query_params": {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.12000000000000001,
+          "quantized_graph_max_expansions": 512,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 2918.8772701944513,
+        "ann_recall": 0.9946
+      }
+    }
+  ]
+}

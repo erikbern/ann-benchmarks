@@ -1,0 +1,52 @@
+{
+  "profile": {
+    "name": "n64",
+    "index_prefix": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/n64",
+    "encoding": {
+      "codec": "native",
+      "max_neighbors": 64,
+      "threads": 8,
+      "rotation_views": 2,
+      "codebook": "hadamard",
+      "block_dimension": 6,
+      "rank": 8,
+      "training_samples": 1024,
+      "seed": 20261031,
+      "center_weight": 1.0
+    },
+    "router": {
+      "anchors": 65536,
+      "projected_dimension": 64,
+      "seed": 202610261259,
+      "rotation_views": 2
+    }
+  },
+  "source": {
+    "commit": "787abc02eaf66ee576c963b33e85387288fbed10",
+    "binary": {
+      "path": "/home/xingrui/workspace/zvec/r7i-new-api-exploration/build-r7i/bin/qg_bench",
+      "bytes": 3363864,
+      "sha256": "cf5761b5a70b84bda538182514e63b1a44a398f08ac1fd6d9df3693bdeb4b841"
+    },
+    "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "dirty": false,
+    "timing": "native_reset_search_sort_map_copy"
+  },
+  "files": [
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/n64.qg",
+      "bytes": 3560010912,
+      "sha256": "e027eaf5740854c9f4d36edeacbf215ed44e8472bac91044d5a6088ea63d5edc"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/n64.router",
+      "bytes": 17908132,
+      "sha256": "ba6b6d75d6969ac5117aea97ef11e7de3f149bb580a2954fddc0341085958085"
+    }
+  ],
+  "provider_manifest": {
+    "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/provider.json",
+    "bytes": 2603,
+    "sha256": "bdbd82afdb18567c5d9deef0edaaf5a1bf18fbcbce154613d2673ba71ce5760c"
+  }
+}

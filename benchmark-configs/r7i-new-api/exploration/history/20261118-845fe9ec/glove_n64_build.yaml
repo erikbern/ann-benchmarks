@@ -1,0 +1,26 @@
+# Run after glove_base_build.yaml. MaxNeighbors is a build-time setting.
+BuilderCommon:
+  BuilderClass: HnswStreamer
+  MetricName: Cosine
+  ConverterName: CosineFp32Converter
+  DumpPath: /data/glove/r7i/n64.index
+  DumpFormat: streamer
+  MaxDocs: 1183514
+  ThreadCount: 8
+  LogLevel: info
+  InputIndex: /data/glove/r7i/raw.index
+BuilderParams:
+  proxima.hnsw.streamer.max_neighbor_count: 32
+  proxima.hnsw.streamer.efconstruction: 400
+  proxima.hnsw.streamer.get_vector_enable: true
+QuantizedGraphRouter:
+  Anchors: 65536
+  ProjectedDimension: 64
+  Seed: 202610261259
+QuantizedGraph:
+  Persist: true
+  RotationViews: 2
+  MaxNeighbors: 64
+  ThreadCount: 8
+  Codec:
+    Type: native

@@ -1,0 +1,65 @@
+{
+  "containers": [
+    {
+      "id": "b602194e0aa8c01e1814372ffbd80c0a3d4b6e959854ce51fc12703aee421b99",
+      "status": "running"
+    },
+    {
+      "id": "0fe4fc3a9840552870de4071a62850c3ff970d92adad5366488e87dfe677cb6d",
+      "status": "running"
+    },
+    {
+      "id": "f6459ea8e862deff7558f27f829033839fd08914f112c47a91c841d499b8fdc0",
+      "status": "removed after resume"
+    },
+    {
+      "id": "8046d19d4a573b5fa9ae4dfd4a5cc1974541d721b08684ff9d630db379fdad2e",
+      "status": "running"
+    },
+    {
+      "id": "7af5acbb3012167dead961261dc113c0cb1b2ae2d462e6dbc16dd7ea36f1b383",
+      "status": "running"
+    },
+    {
+      "id": "a9ba28fd47afec500bde4a4b25e8e7cfab850b9534b477749d82378874bf5031",
+      "status": "running"
+    },
+    {
+      "id": "c1edd58c6e3f6c7b36a9b5523a89e8267a025ee72c71faf5a44d50664d66243d",
+      "status": "removed after resume"
+    },
+    {
+      "id": "0b2083872882c261261f3d178e5c7d979e52413e83353163f87ff440d2536765",
+      "status": "running"
+    },
+    {
+      "id": "7890b02c2fc3266c44fe3a217f6b74a97b0985d63ae3ec093bb032486feaca6c",
+      "status": "running"
+    },
+    {
+      "id": "1129717ac715a3a54a04212195cd86e5a5e3d1ff0d194fee1f90555a75aa3365",
+      "status": "running"
+    },
+    {
+      "id": "95df936de1a091f39f2f45fadafc9b07121f142ef1b8511af4175efb074de0b1",
+      "status": "running"
+    },
+    {
+      "id": "8136c21d9a5f6d0362b06c87585e33dde5def340aca7ec65acefa2b0777181a6",
+      "status": "removed after resume"
+    }
+  ],
+  "processes": [
+    {
+      "pid": 1548877,
+      "same_identity": true,
+      "status": "sleeping"
+    },
+    {
+      "pid": 1553877,
+      "same_identity": true,
+      "status": "sleeping"
+    }
+  ],
+  "restore_errors": []
+}

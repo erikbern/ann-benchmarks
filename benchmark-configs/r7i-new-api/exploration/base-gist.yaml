@@ -1,0 +1,14 @@
+BuilderCommon:
+  BuilderClass: HnswStreamer
+  BuildFile: /data/gist/gist_base.zvec.vecs
+  MetricName: SquaredEuclidean
+  IndexPath: /data/gist/r7i/work.index
+  DumpPath: /data/gist/r7i/n64.index
+  DumpFormat: streamer
+  MaxDocs: 1000000
+  ThreadCount: 8
+  LogLevel: info
+BuilderParams:
+  proxima.hnsw.streamer.max_neighbor_count: 50
+  proxima.hnsw.streamer.efconstruction: 500
+  proxima.hnsw.streamer.get_vector_enable: true

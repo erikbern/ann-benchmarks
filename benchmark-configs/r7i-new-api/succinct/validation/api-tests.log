@@ -1,0 +1,62 @@
+Running main() from /home/xingrui/workspace/zvec/r7i-new-api-succinct/thirdparty/googletest/googletest-1.10.0/googletest/src/gtest_main.cc
+[==========] Running 19 tests from 3 test suites.
+[----------] Global test environment set-up.
+[----------] 2 tests from QuantizedGraphQuery
+[ RUN      ] QuantizedGraphQuery.InvalidOptionsClearPreviousResults
+[       OK ] QuantizedGraphQuery.InvalidOptionsClearPreviousResults (0 ms)
+[ RUN      ] QuantizedGraphQuery.GeometryAndMetricDimensionsRemainDistinct
+[       OK ] QuantizedGraphQuery.GeometryAndMetricDimensionsRemainDistinct (0 ms)
+[----------] 2 tests from QuantizedGraphQuery (0 ms total)
+
+[----------] 1 test from QuantizedGraphPages
+[ RUN      ] QuantizedGraphPages.IndependentParamsOverrideLegacyKeys
+[ERROR 2026-11-19 14:34:45 139726892087296 quantized_graph_pages.h:252] Invalid quantized graph THP minimum coverage (expected 0 < floor <= minimum <= 1)
+[       OK ] QuantizedGraphPages.IndependentParamsOverrideLegacyKeys (0 ms)
+[----------] 1 test from QuantizedGraphPages (1 ms total)
+
+[----------] 16 tests from StorageMetricCodec/IndependentQuantizedGraph
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/0
+[ERROR 2026-11-19 14:34:45 139726892087296 quantized_graph_pages.h:252] Invalid quantized graph THP minimum coverage (expected 0 < floor <= minimum <= 1)
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/0 (1 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/1
+[ERROR 2026-11-19 14:34:45 139726892087296 quantized_graph_pages.h:252] Invalid quantized graph THP minimum coverage (expected 0 < floor <= minimum <= 1)
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/1 (1 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/2
+[ERROR 2026-11-19 14:34:45 139726892087296 quantized_graph_pages.h:252] Invalid quantized graph THP minimum coverage (expected 0 < floor <= minimum <= 1)
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/2 (1 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/3
+[ERROR 2026-11-19 14:34:45 139726892087296 quantized_graph_pages.h:252] Invalid quantized graph THP minimum coverage (expected 0 < floor <= minimum <= 1)
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/3 (1 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/4
+[ERROR 2026-11-19 14:34:45 139726892087296 quantized_graph_pages.h:252] Invalid quantized graph THP minimum coverage (expected 0 < floor <= minimum <= 1)
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/4 (3 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/5
+[ERROR 2026-11-19 14:34:45 139726892087296 quantized_graph_pages.h:252] Invalid quantized graph THP minimum coverage (expected 0 < floor <= minimum <= 1)
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/5 (4 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/6
+[ERROR 2026-11-19 14:34:45 139726892087296 quantized_graph_pages.h:252] Invalid quantized graph THP minimum coverage (expected 0 < floor <= minimum <= 1)
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/6 (4 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/7
+[ERROR 2026-11-19 14:34:45 139726892087296 quantized_graph_pages.h:252] Invalid quantized graph THP minimum coverage (expected 0 < floor <= minimum <= 1)
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.BuildQueryAndSnapshotWithoutHnsw/7 (3 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/0
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/0 (1 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/1
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/1 (0 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/2
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/2 (1 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/3
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/3 (1 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/4
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/4 (0 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/5
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/5 (1 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/6
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/6 (0 ms)
+[ RUN      ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/7
+[       OK ] StorageMetricCodec/IndependentQuantizedGraph.RouterTrainingWithoutHnsw/7 (1 ms)
+[----------] 16 tests from StorageMetricCodec/IndependentQuantizedGraph (23 ms total)
+
+[----------] Global test environment tear-down
+[==========] 19 tests from 3 test suites ran. (24 ms total)
+[  PASSED  ] 19 tests.

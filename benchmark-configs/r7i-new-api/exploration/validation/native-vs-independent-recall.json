@@ -1,0 +1,506 @@
+[
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "migration-0",
+    "native_fp32_distance_tolerance_recall": 0.31954,
+    "independent_fp64_distance_tolerance_recall": 0.31954,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "capacity-0",
+    "native_fp32_distance_tolerance_recall": 0.31954,
+    "independent_fp64_distance_tolerance_recall": 0.31954,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "coverage-0",
+    "native_fp32_distance_tolerance_recall": 0.59625,
+    "independent_fp64_distance_tolerance_recall": 0.59625,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "migration-1",
+    "native_fp32_distance_tolerance_recall": 0.51806,
+    "independent_fp64_distance_tolerance_recall": 0.51806,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "capacity-1",
+    "native_fp32_distance_tolerance_recall": 0.51806,
+    "independent_fp64_distance_tolerance_recall": 0.51806,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "coverage-1",
+    "native_fp32_distance_tolerance_recall": 0.71322,
+    "independent_fp64_distance_tolerance_recall": 0.71322,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "migration-2",
+    "native_fp32_distance_tolerance_recall": 0.73793,
+    "independent_fp64_distance_tolerance_recall": 0.73793,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "capacity-2",
+    "native_fp32_distance_tolerance_recall": 0.73793,
+    "independent_fp64_distance_tolerance_recall": 0.73793,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "coverage-2",
+    "native_fp32_distance_tolerance_recall": 0.85474,
+    "independent_fp64_distance_tolerance_recall": 0.85474,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "migration-3",
+    "native_fp32_distance_tolerance_recall": 0.9026,
+    "independent_fp64_distance_tolerance_recall": 0.9026,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "capacity-3",
+    "native_fp32_distance_tolerance_recall": 0.9026,
+    "independent_fp64_distance_tolerance_recall": 0.9026,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "coverage-3",
+    "native_fp32_distance_tolerance_recall": 0.91723,
+    "independent_fp64_distance_tolerance_recall": 0.91723,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "migration-4",
+    "native_fp32_distance_tolerance_recall": 0.9026,
+    "independent_fp64_distance_tolerance_recall": 0.9026,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "capacity-4",
+    "native_fp32_distance_tolerance_recall": 0.9026,
+    "independent_fp64_distance_tolerance_recall": 0.9026,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "coverage-4",
+    "native_fp32_distance_tolerance_recall": 0.91723,
+    "independent_fp64_distance_tolerance_recall": 0.91723,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "migration-5",
+    "native_fp32_distance_tolerance_recall": 0.95173,
+    "independent_fp64_distance_tolerance_recall": 0.95173,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "capacity-5",
+    "native_fp32_distance_tolerance_recall": 0.95173,
+    "independent_fp64_distance_tolerance_recall": 0.95173,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "coverage-5",
+    "native_fp32_distance_tolerance_recall": 0.96742,
+    "independent_fp64_distance_tolerance_recall": 0.96742,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "migration-6",
+    "native_fp32_distance_tolerance_recall": 0.99058,
+    "independent_fp64_distance_tolerance_recall": 0.99058,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "capacity-6",
+    "native_fp32_distance_tolerance_recall": 0.99058,
+    "independent_fp64_distance_tolerance_recall": 0.99058,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "sift",
+    "point": "coverage-6",
+    "native_fp32_distance_tolerance_recall": 0.99662,
+    "independent_fp64_distance_tolerance_recall": 0.99662,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "migration-0",
+    "native_fp32_distance_tolerance_recall": 0.3168,
+    "independent_fp64_distance_tolerance_recall": 0.3168,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "capacity-0",
+    "native_fp32_distance_tolerance_recall": 0.3168,
+    "independent_fp64_distance_tolerance_recall": 0.3168,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "coverage-0",
+    "native_fp32_distance_tolerance_recall": 0.4689,
+    "independent_fp64_distance_tolerance_recall": 0.4689,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "migration-1",
+    "native_fp32_distance_tolerance_recall": 0.5191,
+    "independent_fp64_distance_tolerance_recall": 0.5191,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "capacity-1",
+    "native_fp32_distance_tolerance_recall": 0.5191,
+    "independent_fp64_distance_tolerance_recall": 0.5191,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "coverage-1",
+    "native_fp32_distance_tolerance_recall": 0.6668,
+    "independent_fp64_distance_tolerance_recall": 0.6668,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "migration-2",
+    "native_fp32_distance_tolerance_recall": 0.7009,
+    "independent_fp64_distance_tolerance_recall": 0.7009,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "capacity-2",
+    "native_fp32_distance_tolerance_recall": 0.7009,
+    "independent_fp64_distance_tolerance_recall": 0.7009,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "coverage-2",
+    "native_fp32_distance_tolerance_recall": 0.7607,
+    "independent_fp64_distance_tolerance_recall": 0.7607,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "migration-3",
+    "native_fp32_distance_tolerance_recall": 0.8663,
+    "independent_fp64_distance_tolerance_recall": 0.8663,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "capacity-3",
+    "native_fp32_distance_tolerance_recall": 0.8663,
+    "independent_fp64_distance_tolerance_recall": 0.8663,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "coverage-3",
+    "native_fp32_distance_tolerance_recall": 0.9118,
+    "independent_fp64_distance_tolerance_recall": 0.9118,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "migration-4",
+    "native_fp32_distance_tolerance_recall": 0.9026,
+    "independent_fp64_distance_tolerance_recall": 0.9026,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "capacity-4",
+    "native_fp32_distance_tolerance_recall": 0.9026,
+    "independent_fp64_distance_tolerance_recall": 0.9026,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "coverage-4",
+    "native_fp32_distance_tolerance_recall": 0.9457,
+    "independent_fp64_distance_tolerance_recall": 0.9457,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "migration-5",
+    "native_fp32_distance_tolerance_recall": 0.9552,
+    "independent_fp64_distance_tolerance_recall": 0.9552,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "capacity-5",
+    "native_fp32_distance_tolerance_recall": 0.9552,
+    "independent_fp64_distance_tolerance_recall": 0.9552,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "coverage-5",
+    "native_fp32_distance_tolerance_recall": 0.9825,
+    "independent_fp64_distance_tolerance_recall": 0.9825,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "migration-6",
+    "native_fp32_distance_tolerance_recall": 0.9946,
+    "independent_fp64_distance_tolerance_recall": 0.9946,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "capacity-6",
+    "native_fp32_distance_tolerance_recall": 0.9946,
+    "independent_fp64_distance_tolerance_recall": 0.9946,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "gist",
+    "point": "coverage-6",
+    "native_fp32_distance_tolerance_recall": 0.9976,
+    "independent_fp64_distance_tolerance_recall": 0.9976,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "migration-0",
+    "native_fp32_distance_tolerance_recall": 0.32275,
+    "independent_fp64_distance_tolerance_recall": 0.32275,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "capacity-0",
+    "native_fp32_distance_tolerance_recall": 0.32275,
+    "independent_fp64_distance_tolerance_recall": 0.32275,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "coverage-0",
+    "native_fp32_distance_tolerance_recall": 0.44075,
+    "independent_fp64_distance_tolerance_recall": 0.44075,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "migration-1",
+    "native_fp32_distance_tolerance_recall": 0.50089,
+    "independent_fp64_distance_tolerance_recall": 0.50089,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "capacity-1",
+    "native_fp32_distance_tolerance_recall": 0.50089,
+    "independent_fp64_distance_tolerance_recall": 0.50089,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "coverage-1",
+    "native_fp32_distance_tolerance_recall": 0.58356,
+    "independent_fp64_distance_tolerance_recall": 0.58356,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "migration-2",
+    "native_fp32_distance_tolerance_recall": 0.70266,
+    "independent_fp64_distance_tolerance_recall": 0.70266,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "capacity-2",
+    "native_fp32_distance_tolerance_recall": 0.70266,
+    "independent_fp64_distance_tolerance_recall": 0.70266,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "coverage-2",
+    "native_fp32_distance_tolerance_recall": 0.75843,
+    "independent_fp64_distance_tolerance_recall": 0.75843,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "migration-3",
+    "native_fp32_distance_tolerance_recall": 0.85265,
+    "independent_fp64_distance_tolerance_recall": 0.85265,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "capacity-3",
+    "native_fp32_distance_tolerance_recall": 0.85265,
+    "independent_fp64_distance_tolerance_recall": 0.85265,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "coverage-3",
+    "native_fp32_distance_tolerance_recall": 0.8904,
+    "independent_fp64_distance_tolerance_recall": 0.8904,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "migration-4",
+    "native_fp32_distance_tolerance_recall": 0.9001,
+    "independent_fp64_distance_tolerance_recall": 0.9001,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "capacity-4",
+    "native_fp32_distance_tolerance_recall": 0.9001,
+    "independent_fp64_distance_tolerance_recall": 0.9001,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "coverage-4",
+    "native_fp32_distance_tolerance_recall": 0.93881,
+    "independent_fp64_distance_tolerance_recall": 0.93881,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "migration-5",
+    "native_fp32_distance_tolerance_recall": 0.95026,
+    "independent_fp64_distance_tolerance_recall": 0.95026,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "capacity-5",
+    "native_fp32_distance_tolerance_recall": 0.95026,
+    "independent_fp64_distance_tolerance_recall": 0.95026,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "coverage-5",
+    "native_fp32_distance_tolerance_recall": 0.98121,
+    "independent_fp64_distance_tolerance_recall": 0.98121,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "migration-6",
+    "native_fp32_distance_tolerance_recall": 0.99001,
+    "independent_fp64_distance_tolerance_recall": 0.99001,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "capacity-6",
+    "native_fp32_distance_tolerance_recall": 0.99001,
+    "independent_fp64_distance_tolerance_recall": 0.99001,
+    "target_eligibility_changed": []
+  },
+  {
+    "variant": "exploration",
+    "dataset": "glove",
+    "point": "coverage-6",
+    "native_fp32_distance_tolerance_recall": 0.99723,
+    "independent_fp64_distance_tolerance_recall": 0.99723,
+    "target_eligibility_changed": []
+  }
+]

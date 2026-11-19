@@ -1,0 +1,737 @@
+[
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.3,
+    "old_qps_median_2": 70005.76230819855,
+    "old_actual_recall": 0.31954,
+    "migrated_qps": 102541.6475208593,
+    "migrated_actual_recall": 0.31954,
+    "new_qps": 102541.6475208593,
+    "new_actual_recall": 0.31954,
+    "new_strict_id_recall": 0.31936,
+    "qps_each": [
+      102783.51743779931,
+      102408.53612015635,
+      102541.6475208593
+    ],
+    "mean_query_us": 9.7521351,
+    "winner": {
+      "name": "migration-0",
+      "phase": "migration",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.5,
+    "old_qps_median_2": 60049.28195785261,
+    "old_actual_recall": 0.51806,
+    "migrated_qps": 84633.33879697957,
+    "migrated_actual_recall": 0.51806,
+    "new_qps": 84633.33879697957,
+    "new_actual_recall": 0.51806,
+    "new_strict_id_recall": 0.51773,
+    "qps_each": [
+      84793.80486964717,
+      84448.31285275961,
+      84633.33879697957
+    ],
+    "mean_query_us": 11.8156747,
+    "winner": {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.7,
+    "old_qps_median_2": 48641.31957480287,
+    "old_actual_recall": 0.73793,
+    "migrated_qps": 65176.847338017214,
+    "migrated_actual_recall": 0.73793,
+    "new_qps": 65176.847338017214,
+    "new_actual_recall": 0.73793,
+    "new_strict_id_recall": 0.73733,
+    "qps_each": [
+      65383.836663120725,
+      65170.77917962007,
+      65176.847338017214
+    ],
+    "mean_query_us": 15.3428716,
+    "winner": {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.002,
+        "max_expansions": 16,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.85,
+    "old_qps_median_2": 37908.741564397285,
+    "old_actual_recall": 0.9026,
+    "migrated_qps": 48464.626105587166,
+    "migrated_actual_recall": 0.9026,
+    "new_qps": 54488.501479518105,
+    "new_actual_recall": 0.85474,
+    "new_strict_id_recall": 0.85392,
+    "qps_each": [
+      54405.365970778694,
+      54659.68334552244,
+      54488.501479518105
+    ],
+    "mean_query_us": 18.3524959,
+    "winner": {
+      "name": "coverage-2",
+      "phase": "tuning",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0075,
+        "max_expansions": 24,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.9,
+    "old_qps_median_2": 37908.741564397285,
+    "old_actual_recall": 0.9026,
+    "migrated_qps": 48461.32248060755,
+    "migrated_actual_recall": 0.9026,
+    "new_qps": 48464.626105587166,
+    "new_actual_recall": 0.9026,
+    "new_strict_id_recall": 0.90172,
+    "qps_each": [
+      48604.372587394384,
+      48464.626105587166,
+      48441.74414015359
+    ],
+    "mean_query_us": 20.633606,
+    "winner": {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.008,
+        "max_expansions": 48,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.95,
+    "old_qps_median_2": 31444.373857736475,
+    "old_actual_recall": 0.95173,
+    "migrated_qps": 38945.87490414398,
+    "migrated_actual_recall": 0.95173,
+    "new_qps": 38945.87490414398,
+    "new_actual_recall": 0.95173,
+    "new_strict_id_recall": 0.9509,
+    "qps_each": [
+      39058.02922878714,
+      38941.16147045284,
+      38945.87490414398
+    ],
+    "mean_query_us": 25.676660299999998,
+    "winner": {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.038,
+        "max_expansions": 64,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "sift",
+    "variant": "succinct",
+    "target": 0.99,
+    "old_qps_median_2": 21081.545056219846,
+    "old_actual_recall": 0.99058,
+    "migrated_qps": 24596.0678777882,
+    "migrated_actual_recall": 0.99058,
+    "new_qps": 24596.0678777882,
+    "new_actual_recall": 0.99058,
+    "new_strict_id_recall": 0.9899,
+    "qps_each": [
+      24580.354479092908,
+      24620.355715194815,
+      24596.0678777882
+    ],
+    "mean_query_us": 40.656905200000004,
+    "winner": {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.09,
+        "max_expansions": 128,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.3,
+    "old_qps_median_2": 33287.63375851956,
+    "old_actual_recall": 0.3168,
+    "migrated_qps": 45484.211497762786,
+    "migrated_actual_recall": 0.3168,
+    "new_qps": 46348.449030262986,
+    "new_actual_recall": 0.3168,
+    "new_strict_id_recall": 0.3072,
+    "qps_each": [
+      46209.083069930006,
+      46348.449030262986,
+      46348.68103472689
+    ],
+    "mean_query_us": 21.575695,
+    "winner": {
+      "name": "capacity-0",
+      "phase": "tuning",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 32,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.5,
+    "old_qps_median_2": 25999.39079006729,
+    "old_actual_recall": 0.5191,
+    "migrated_qps": 33643.63304674117,
+    "migrated_actual_recall": 0.5191,
+    "new_qps": 33643.63304674117,
+    "new_actual_recall": 0.5191,
+    "new_strict_id_recall": 0.5006,
+    "qps_each": [
+      33643.63304674117,
+      33301.69672144796,
+      33742.505072595144
+    ],
+    "mean_query_us": 29.723305999999997,
+    "winner": {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.002,
+        "max_expansions": 20,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.7,
+    "old_qps_median_2": 20230.38789817598,
+    "old_actual_recall": 0.7009,
+    "migrated_qps": 25775.588090018355,
+    "migrated_actual_recall": 0.7009,
+    "new_qps": 25775.588090018355,
+    "new_actual_recall": 0.7009,
+    "new_strict_id_recall": 0.6741,
+    "qps_each": [
+      25775.588090018355,
+      25531.202192823894,
+      25794.124351255203
+    ],
+    "mean_query_us": 38.796399,
+    "winner": {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.005,
+        "max_expansions": 32,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.85,
+    "old_qps_median_2": 13777.123364085333,
+    "old_actual_recall": 0.8663,
+    "migrated_qps": 16814.78587345448,
+    "migrated_actual_recall": 0.8663,
+    "new_qps": 16814.78587345448,
+    "new_actual_recall": 0.8663,
+    "new_strict_id_recall": 0.8376,
+    "qps_each": [
+      16814.78587345448,
+      16675.47354009231,
+      16885.91707255205
+    ],
+    "mean_query_us": 59.471467999999994,
+    "winner": {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.03,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.9,
+    "old_qps_median_2": 11652.122067807617,
+    "old_actual_recall": 0.9026,
+    "migrated_qps": 14118.14062901992,
+    "migrated_actual_recall": 0.9026,
+    "new_qps": 14118.14062901992,
+    "new_actual_recall": 0.9026,
+    "new_strict_id_recall": 0.8762,
+    "qps_each": [
+      14118.14062901992,
+      13961.744568570715,
+      14144.78154240667
+    ],
+    "mean_query_us": 70.83085700000001,
+    "winner": {
+      "name": "migration-4",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.95,
+    "old_qps_median_2": 8003.08944545123,
+    "old_actual_recall": 0.9552,
+    "migrated_qps": 9422.279260094414,
+    "migrated_actual_recall": 0.9552,
+    "new_qps": 9422.279260094414,
+    "new_actual_recall": 0.9552,
+    "new_strict_id_recall": 0.9378,
+    "qps_each": [
+      9422.279260094414,
+      9323.781293442118,
+      9454.870550814474
+    ],
+    "mean_query_us": 106.13143300000002,
+    "winner": {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.06,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "gist",
+    "variant": "succinct",
+    "target": 0.99,
+    "old_qps_median_2": 2918.8772701944513,
+    "old_actual_recall": 0.9946,
+    "migrated_qps": 3314.193094898572,
+    "migrated_actual_recall": 0.9946,
+    "new_qps": 3314.193094898572,
+    "new_actual_recall": 0.9946,
+    "new_strict_id_recall": 0.9909,
+    "qps_each": [
+      3314.193094898572,
+      3277.6678265896085,
+      3322.128657126297
+    ],
+    "mean_query_us": 301.73257,
+    "winner": {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.12000000000000001,
+        "max_expansions": 512,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.3,
+    "old_qps_median_2": 60569.943270906864,
+    "old_actual_recall": 0.32274,
+    "migrated_qps": 101015.13442078886,
+    "migrated_actual_recall": 0.32275,
+    "new_qps": 101015.13442078886,
+    "new_actual_recall": 0.32275,
+    "new_strict_id_recall": 0.31541,
+    "qps_each": [
+      100492.51885955663,
+      101015.13442078886,
+      101203.8143110391
+    ],
+    "mean_query_us": 9.8995067,
+    "winner": {
+      "name": "migration-0",
+      "phase": "migration",
+      "target": 0.3,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0,
+        "max_expansions": 13,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.5,
+    "old_qps_median_2": 47845.109396618565,
+    "old_actual_recall": 0.50089,
+    "migrated_qps": 72753.62488388158,
+    "migrated_actual_recall": 0.50089,
+    "new_qps": 72753.62488388158,
+    "new_actual_recall": 0.50089,
+    "new_strict_id_recall": 0.48836,
+    "qps_each": [
+      72483.3049928443,
+      72753.62488388158,
+      72767.53037116607
+    ],
+    "mean_query_us": 13.7450196,
+    "winner": {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0,
+        "max_expansions": 24,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.7,
+    "old_qps_median_2": 31598.26658219682,
+    "old_actual_recall": 0.70265,
+    "migrated_qps": 43201.44330146674,
+    "migrated_actual_recall": 0.70266,
+    "new_qps": 43201.44330146674,
+    "new_actual_recall": 0.70266,
+    "new_strict_id_recall": 0.68487,
+    "qps_each": [
+      43137.281291826985,
+      43201.44330146674,
+      43247.39574129746
+    ],
+    "mean_query_us": 23.1473748,
+    "winner": {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 64,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.85,
+    "old_qps_median_2": 18155.28594783039,
+    "old_actual_recall": 0.85266,
+    "migrated_qps": 21740.565879275837,
+    "migrated_actual_recall": 0.85265,
+    "new_qps": 21740.565879275837,
+    "new_actual_recall": 0.85265,
+    "new_strict_id_recall": 0.83595,
+    "qps_each": [
+      21832.07832504365,
+      21740.565879275837,
+      21660.570981271972
+    ],
+    "mean_query_us": 45.9969628,
+    "winner": {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 1024,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 0.04,
+        "max_expansions": 1536,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.9,
+    "old_qps_median_2": 13374.327799112449,
+    "old_actual_recall": 0.90011,
+    "migrated_qps": 15809.893193072936,
+    "migrated_actual_recall": 0.9001,
+    "new_qps": 15809.893193072936,
+    "new_actual_recall": 0.9001,
+    "new_strict_id_recall": 0.88457,
+    "qps_each": [
+      15892.492854568341,
+      15809.893193072936,
+      15765.565038875755
+    ],
+    "mean_query_us": 63.2515342,
+    "winner": {
+      "name": "migration-4",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 1024,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 0.0565,
+        "max_expansions": 384,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.95,
+    "old_qps_median_2": 8121.725565777822,
+    "old_actual_recall": 0.95026,
+    "migrated_qps": 9509.542095159659,
+    "migrated_actual_recall": 0.95026,
+    "new_qps": 9509.542095159659,
+    "new_actual_recall": 0.95026,
+    "new_strict_id_recall": 0.9373,
+    "qps_each": [
+      9542.212015931624,
+      9509.542095159659,
+      9419.856650882251
+    ],
+    "mean_query_us": 105.15753440000002,
+    "winner": {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.08625,
+        "max_expansions": 768,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  },
+  {
+    "dataset": "glove",
+    "variant": "succinct",
+    "target": 0.99,
+    "old_qps_median_2": 3379.589734103487,
+    "old_actual_recall": 0.99001,
+    "migrated_qps": 3834.9425229610024,
+    "migrated_actual_recall": 0.99001,
+    "new_qps": 3834.9425229610024,
+    "new_actual_recall": 0.99001,
+    "new_strict_id_recall": 0.98444,
+    "qps_each": [
+      3850.386725854293,
+      3834.9425229610024,
+      3807.8941990792614
+    ],
+    "mean_query_us": 260.7601011,
+    "winner": {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 0.125625,
+        "max_expansions": 1536,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "source_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "timing_directly_comparable_to_history": false
+  }
+]

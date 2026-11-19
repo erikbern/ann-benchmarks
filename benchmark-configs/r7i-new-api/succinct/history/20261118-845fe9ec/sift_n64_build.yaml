@@ -1,0 +1,19 @@
+# Run after sift_base_build.yaml; query the DumpPath snapshot.
+BuilderCommon:
+  BuilderClass: HnswStreamer
+  DumpFormat: streamer
+  DumpPath: /data/sift/r7i/n64.index
+  InputIndex: /data/sift/r7i/raw.index
+  LogLevel: info
+  ThreadCount: 4
+QuantizedGraph:
+  Codec:
+    Type: native
+  MaxNeighbors: 64
+  Persist: true
+  RotationViews: 2
+  ThreadCount: 4
+QuantizedGraphRouter:
+  Anchors: 65536
+  ProjectedDimension: 64
+  Seed: 202610261259

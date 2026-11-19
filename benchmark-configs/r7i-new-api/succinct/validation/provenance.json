@@ -1,0 +1,87 @@
+{
+  "actual_cpu": "Intel Xeon Platinum 8369B (Ice Lake)",
+  "directory_label": "r7i",
+  "ann_branch": "c7ibench",
+  "ann_measurement_commit": "200f3c65be7e912a117d793bc1aff1359d2cab4f",
+  "zvec_measurement_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+  "application_patch": "none; fully committed source at measurement time",
+  "binary": {
+    "path": "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/bin/qg_bench",
+    "bytes": 3359200,
+    "sha256": "980c97ac2eed2adb273c033019e6ab626a9fdee0e7f88b8a5267c54850679938"
+  },
+  "compiler_commands": [
+    {
+      "directory": "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i",
+      "command": "/usr/bin/c++ -DDISKANN_SUPPORTED=1 -DEIGEN_MAX_ALIGN_BYTES=64 -DEIGEN_MAX_STATIC_ALIGN_BYTES=64 -DRABITQ_SUPPORTED=1 -DRABITQ_USE_OPENMP=0 -I/home/xingrui/workspace/zvec/r7i-new-api-succinct/src/include -I/home/xingrui/workspace/zvec/r7i-new-api-succinct/src -I/home/xingrui/workspace/zvec/r7i-new-api-succinct -I/home/xingrui/workspace/zvec/r7i-new-api-succinct/tests/core/utility -I/home/xingrui/workspace/zvec/r7i-new-api-succinct/src/core -I/home/xingrui/workspace/zvec/r7i-new-api-succinct/src/core/algorithm/quantized_graph -isystem /home/xingrui/workspace/zvec/r7i-new-api-succinct/thirdparty/RaBitQ-Library/RaBitQ-Library-0.7.0/include -isystem /home/xingrui/workspace/zvec/r7i-new-api-succinct/thirdparty/googletest/googletest-1.10.0/googletest/include -isystem /home/xingrui/workspace/zvec/r7i-new-api-succinct/thirdparty/googletest/googletest-1.10.0/googletest -march=icelake-server -O3 -DNDEBUG -std=c++17 -fPIE -fdiagnostics-color=always -Wall -o tests/core/utility/CMakeFiles/quantized_graph_index_test.dir/quantized_graph_index_test.cc.o -c /home/xingrui/workspace/zvec/r7i-new-api-succinct/tests/core/utility/quantized_graph_index_test.cc",
+      "file": "/home/xingrui/workspace/zvec/r7i-new-api-succinct/tests/core/utility/quantized_graph_index_test.cc",
+      "output": "tests/core/utility/CMakeFiles/quantized_graph_index_test.dir/quantized_graph_index_test.cc.o"
+    },
+    {
+      "directory": "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i",
+      "command": "/usr/bin/c++ -DDISKANN_SUPPORTED=1 -DEIGEN_MAX_ALIGN_BYTES=64 -DEIGEN_MAX_STATIC_ALIGN_BYTES=64 -DRABITQ_SUPPORTED=1 -DRABITQ_USE_OPENMP=0 -I/home/xingrui/workspace/zvec/r7i-new-api-succinct/src/include -I/home/xingrui/workspace/zvec/r7i-new-api-succinct/src -I/home/xingrui/workspace/zvec/r7i-new-api-succinct/src/core -isystem /home/xingrui/workspace/zvec/r7i-new-api-succinct/thirdparty/yaml-cpp/yaml-cpp-0.6.3/include -isystem /home/xingrui/workspace/zvec/r7i-new-api-succinct/thirdparty/RaBitQ-Library/RaBitQ-Library-0.7.0/include -isystem /home/xingrui/workspace/zvec/r7i-new-api-succinct/thirdparty/sparsehash/sparsehash-2.0.4/src -march=icelake-server -O3 -DNDEBUG -std=c++17 -fPIE -fdiagnostics-color=always -Wall -Wextra -Wshadow-local -Wno-misleading-indentation -o tools/core/CMakeFiles/qg_bench.dir/qg_bench.cc.o -c /home/xingrui/workspace/zvec/r7i-new-api-succinct/tools/core/qg_bench.cc",
+      "file": "/home/xingrui/workspace/zvec/r7i-new-api-succinct/tools/core/qg_bench.cc",
+      "output": "tools/core/CMakeFiles/qg_bench.dir/qg_bench.cc.o"
+    }
+  ],
+  "cmake_cache": {
+    "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/provenance-succinct/CMakeCache.txt",
+    "bytes": 43310,
+    "sha256": "853c20c592ea059eb8d5047fab543dc7c394457e408d3ecadc1827bcb4b98ff6"
+  },
+  "all_compile_commands": {
+    "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/provenance-succinct/compile-commands.json",
+    "bytes": 3058914,
+    "sha256": "72237851747eb67f5575e98622187c2b840aa015a57a1a1105e80012d3e189bf"
+  },
+  "cpu": 54,
+  "smt_sibling": 55,
+  "numa_memory_node": 0,
+  "single_query_threads": 1,
+  "preflight": {
+    "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/preflight-succinct/validation.json",
+    "bytes": 2599,
+    "sha256": "dbf00be1b9d0b556c117b93324ff9822e73af7137e5b496bba39abc04af7af9e"
+  },
+  "raw_artifact_root": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/succinct",
+  "background_jobs_restored": true,
+  "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+  "packages": {
+    "numpy": "2.2.6",
+    "h5py": "3.13.0",
+    "psutil": "7.0.0",
+    "docker": "7.1.0"
+  },
+  "query_timing": "native reset/search (includes exact callback)/sort/external-ID mapping/copy",
+  "excluded_from_query_timing": [
+    "Python call",
+    "input conversion",
+    "normalization",
+    "index load",
+    "independent exact verification",
+    "file IO"
+  ],
+  "historical_timing_directly_comparable": false,
+  "provider_layout_changed_from_history": true,
+  "index_rebuild_randomness_tested": false,
+  "old_qg_snapshots_reused": false,
+  "formal_parameter_slots": 63,
+  "formal_rounds": 945,
+  "formal_queries": 6615000,
+  "tuning_slots_per_dataset": 14,
+  "tuning_selection": "first occurrence for duplicate parameters; best eligible median-of-three QPS",
+  "distinct_configurations": {
+    "sift": {
+      "total_unique": 18,
+      "additional_unique": 12
+    },
+    "gist": {
+      "total_unique": 21,
+      "additional_unique": 14
+    },
+    "glove": {
+      "total_unique": 21,
+      "additional_unique": 14
+    }
+  }
+}

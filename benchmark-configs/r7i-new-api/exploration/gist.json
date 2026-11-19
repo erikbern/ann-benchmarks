@@ -1,0 +1,393 @@
+{
+  "schema_version": 2,
+  "engine": "QuantizedGraphIndex",
+  "dataset": "gist-960-euclidean",
+  "dimension": 960,
+  "train_count": 1000000,
+  "query_count": 1000,
+  "precision": "FP32",
+  "metric": "l2sq",
+  "dataset_file": "${BENCH_ROOT}/data/gist-960-euclidean.hdf5",
+  "output_dir": "${ARTIFACT_ROOT}/gist",
+  "provider_prefix": "${ARTIFACT_ROOT}/gist/provider",
+  "queries_file": "${ARTIFACT_ROOT}/gist/queries.f32",
+  "provider_format": "csr-fp32-le-v1",
+  "id_convention": "internal CSR row -> ids.u64 -> original HDF5 train row",
+  "base_graph": {
+    "m": 50,
+    "ef_construction": 500,
+    "source_index": "${BENCH_ROOT}/results/comprehensive-icelake-20261116/indexes/gist-exploration-v1/index",
+    "source_sha256": "1efbe7f33cf6ac9404f47db6e67d8cc4e2026814cc0eafca3357f9365979c7d7",
+    "rebuild_config": "base-gist.yaml"
+  },
+  "profiles": {
+    "n64": {
+      "name": "n64",
+      "index_prefix": "${ARTIFACT_ROOT}/gist/n64",
+      "encoding": {
+        "codec": "low_rank",
+        "max_neighbors": 64,
+        "threads": 8,
+        "rotation_views": 1,
+        "codebook": "gaussian",
+        "block_dimension": 8,
+        "rank": 8,
+        "training_samples": 1024,
+        "seed": 20261031,
+        "center_weight": 1.0
+      },
+      "router": {
+        "anchors": 8192,
+        "projected_dimension": 256,
+        "seed": 202610261259,
+        "rotation_views": 1
+      }
+    }
+  },
+  "points": [
+    {
+      "name": "migration-0",
+      "phase": "migration",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "capacity-0",
+      "phase": "tuning",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 32,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "coverage-0",
+      "phase": "tuning",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 1.255,
+        "max_expansions": 15,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.002,
+        "max_expansions": 20,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "capacity-1",
+      "phase": "tuning",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 32,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.002,
+        "max_expansions": 20,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "coverage-1",
+      "phase": "tuning",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0075,
+        "max_expansions": 30,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.005,
+        "max_expansions": 32,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "capacity-2",
+      "phase": "tuning",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 32,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.005,
+        "max_expansions": 32,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "coverage-2",
+      "phase": "tuning",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.01125,
+        "max_expansions": 48,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.03,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "capacity-3",
+      "phase": "tuning",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.03,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "coverage-3",
+      "phase": "tuning",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.042499999999999996,
+        "max_expansions": 384,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-4",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "capacity-4",
+      "phase": "tuning",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "coverage-4",
+      "phase": "tuning",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.055,
+        "max_expansions": 384,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.06,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "capacity-5",
+      "phase": "tuning",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.06,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "coverage-5",
+      "phase": "tuning",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.08,
+        "max_expansions": 384,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.12000000000000001,
+        "max_expansions": 512,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "capacity-6",
+      "phase": "tuning",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.12000000000000001,
+        "max_expansions": 512,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "coverage-6",
+      "phase": "tuning",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.15500000000000003,
+        "max_expansions": 768,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    }
+  ],
+  "targets": [
+    0.3,
+    0.5,
+    0.7,
+    0.85,
+    0.9,
+    0.95,
+    0.99
+  ],
+  "protocol": {
+    "cpu": 54,
+    "smt_sibling": 55,
+    "numa_node": 0,
+    "threads": 1,
+    "topk": 10,
+    "warmup_rounds": 1,
+    "rounds": 5,
+    "repetitions": 3,
+    "ann_distance_tolerance": 0.001,
+    "timing": "native reset + QG search (including internal exact callback) + sort + external ID mapping + result buffer copy; excludes Python, input conversion, independent distance verification, file IO",
+    "aggregation": "median of 3 best-of-5 repetition QPS",
+    "same_index_reused": true
+  },
+  "budget": {
+    "migration_points": 7,
+    "additional_points": 14,
+    "selection": "same-session median QPS among measured points meeting distance-tolerance recall",
+    "tuning_rule": "per target: one capacity perturbation (128->32, otherwise128), one margin*1.25+0.005 and max_expansions*1.5 perturbation; frozen before measurement"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "commit": "21c259867371586726e772145dcfa4b701af2d5f",
+  "binary": {
+    "path": "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/bin/qg_bench",
+    "bytes": 3359200,
+    "sha256": "980c97ac2eed2adb273c033019e6ab626a9fdee0e7f88b8a5267c54850679938"
+  },
+  "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dirty": false,
+  "timing": "native_reset_search_sort_map_copy"
+}

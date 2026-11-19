@@ -1,0 +1,56 @@
+# ANN distance-tolerance presets; native recall CLI reports strict ID recall. QueryParams overrides QueryParam. case 0: params in gist.json; case 1: params in gist.json; case 2: params in gist.json; case 3: params in gist.json; case 4: params in gist.json; case 5: params in gist.json; case 6: params in gist.json
+IndexCommon:
+  IndexConfig: "{\"index_type\":\"kHNSW\",\"data_type\":\"DT_FP32\",\n \"metric_type\"\
+    :\"kL2sq\",\"dimension\":960,\n \"m\":50,\"ef_construction\":500,\n \"use_id_map\"\
+    :true,\"use_quantized_graph\":true,\n \"quantizer_param\":{\"type\":\"kNone\"\
+    }}"
+  IndexPath: /data/gist/r7i/n64.index
+  TopK: 10
+  QueryFile: /data/gist/gist_queries.txt
+  QueryFirstSep: ;
+  QuerySecondSep: ' '
+  QueryType: float
+  RetrievalMode: dense
+  FilterMode: none
+  GroundTruthFile: /data/gist/gist_neighbors.txt
+  GroundTruthFirstSep: ;
+  GroundTruthSecondSep: ' '
+  CompareById: true
+  RecallThreadCount: 1
+  RecallBatchCount: 0
+  RecallGTCount: 10
+  RecallLogDir: /data/gist/r7i/n64_strict_id_logs
+  BenchThreadCount: 1
+  BenchThreadCounts:
+  - 1
+  BenchRounds: 5
+  BenchSecs: 6
+  BenchBatchCount: 1
+  BenchIterCount: 1000000000
+  LogLevel: info
+QueryConfig:
+  QueryParam: '{"ef_search": 128, "index_type": "kHNSW", "quantized_graph_bucket_width":
+    0.008, "quantized_graph_margin": 1.0, "quantized_graph_max_expansions": 10, "quantized_graph_route_beam":
+    1, "quantized_graph_uncertainty_bonus": 0}'
+  QueryParams:
+  - '{"ef_search": 128, "index_type": "kHNSW", "quantized_graph_bucket_width": 0.008,
+    "quantized_graph_margin": 1.0, "quantized_graph_max_expansions": 10, "quantized_graph_route_beam":
+    1, "quantized_graph_uncertainty_bonus": 0}'
+  - '{"ef_search": 128, "index_type": "kHNSW", "quantized_graph_bucket_width": 0.002,
+    "quantized_graph_margin": 0.002, "quantized_graph_max_expansions": 20, "quantized_graph_route_beam":
+    0, "quantized_graph_uncertainty_bonus": 0}'
+  - '{"ef_search": 128, "index_type": "kHNSW", "quantized_graph_bucket_width": 0.002,
+    "quantized_graph_margin": 0.005, "quantized_graph_max_expansions": 32, "quantized_graph_route_beam":
+    1, "quantized_graph_uncertainty_bonus": 0}'
+  - '{"ef_search": 2048, "index_type": "kHNSW", "quantized_graph_bucket_width": 0.002,
+    "quantized_graph_margin": 0.03, "quantized_graph_max_expansions": 256, "quantized_graph_route_beam":
+    1, "quantized_graph_uncertainty_bonus": 0}'
+  - '{"ef_search": 2048, "index_type": "kHNSW", "quantized_graph_bucket_width": 0.002,
+    "quantized_graph_margin": 0.04, "quantized_graph_max_expansions": 256, "quantized_graph_route_beam":
+    1, "quantized_graph_uncertainty_bonus": 0}'
+  - '{"ef_search": 2048, "index_type": "kHNSW", "quantized_graph_bucket_width": 0.002,
+    "quantized_graph_margin": 0.06, "quantized_graph_max_expansions": 256, "quantized_graph_route_beam":
+    1, "quantized_graph_uncertainty_bonus": 0}'
+  - '{"ef_search": 2048, "index_type": "kHNSW", "quantized_graph_bucket_width": 0.002,
+    "quantized_graph_margin": 0.12000000000000001, "quantized_graph_max_expansions":
+    512, "quantized_graph_route_beam": 1, "quantized_graph_uncertainty_bonus": 0}'

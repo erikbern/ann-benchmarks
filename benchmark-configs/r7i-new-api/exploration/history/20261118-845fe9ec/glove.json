@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "dataset": "glove-100-angular",
+  "shape": {
+    "train": [
+      1183514,
+      100
+    ],
+    "queries": [
+      10000,
+      100
+    ]
+  },
+  "index_params": {
+    "index_type": "kHNSW",
+    "data_type": "DT_FP32",
+    "metric_type": "kCosine",
+    "dimension": 100,
+    "m": 32,
+    "ef_construction": 400,
+    "use_id_map": true,
+    "use_quantized_graph": true,
+    "quantizer_param": {
+      "type": "kNone"
+    }
+  },
+  "profiles": {
+    "n32": {
+      "build_configs": [
+        "glove_base_build.yaml",
+        "glove_n32_build.yaml"
+      ],
+      "query_config": "glove_n32_query.yaml",
+      "measured_index": {
+        "benchmark_relative_path": "results/glove-traversal-20261117/neighbors32/index",
+        "bytes": 2712668416,
+        "sha256": "868c5ce828c39f910e7fe759f073f660986d1f52c9c8bbedf602c23c691d58a5"
+      }
+    },
+    "n64": {
+      "build_configs": [
+        "glove_base_build.yaml",
+        "glove_n64_build.yaml"
+      ],
+      "query_config": "glove_n64_query.yaml",
+      "measured_index": {
+        "benchmark_relative_path": "results/comprehensive-icelake-20261116/indexes/glove-exploration-v2/index",
+        "bytes": 4379056128,
+        "sha256": "59ed7e66e97e7384987f2d029764dbab433f1c6b8ff2993cf79509dbb3cd623a"
+      }
+    }
+  },
+  "presets": [
+    {
+      "target_ann_recall": 0.3,
+      "profile": "n32",
+      "query_config": "glove_n32_query.yaml",
+      "query_case_index": 0,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.0,
+        "quantized_graph_max_expansions": 13,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 60790.362367782574,
+        "mean_query_time_us": 16.449975967407227,
+        "ann_recall": 0.32274,
+        "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/1/c9d65b8d02542dbd55cc.hdf5",
+        "result_sha256": "ef187068e68906acdae030b49e1da7360c163f2a766f568e695188383d1f1324",
+        "origin": "succinct_r7i_revalidation"
+      },
+      "revalidation": {
+        "qps_median": 60569.943270906864,
+        "qps_each": [
+          60349.52417403115,
+          60790.362367782574
+        ],
+        "ann_recall": 0.32274,
+        "strict_id_recall": 0.3154,
+        "ids_sha256": "848d160e8eb13c25dd502a023cdee504d18d554669feb631c17abf2ce22a9bf1",
+        "results": [
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/0/c9d65b8d02542dbd55cc.hdf5",
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/1/c9d65b8d02542dbd55cc.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n32",
+        "query_config": "glove_n32_query.yaml",
+        "query_case_index": 0,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.0,
+          "quantized_graph_max_expansions": 13,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 60569.943270906864,
+        "ann_recall": 0.32274
+      }
+    },
+    {
+      "target_ann_recall": 0.5,
+      "profile": "n32",
+      "query_config": "glove_n32_query.yaml",
+      "query_case_index": 1,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.0,
+        "quantized_graph_max_expansions": 24,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 48041.96781398545,
+        "mean_query_time_us": 20.815134048461914,
+        "ann_recall": 0.50089,
+        "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/1/63edb301bd94e256411e.hdf5",
+        "result_sha256": "80b423d5770f7e675a5e43b845d53a44e2d9f485408402b7a7bacfece8de9c75",
+        "origin": "succinct_r7i_revalidation"
+      },
+      "revalidation": {
+        "qps_median": 47845.109396618565,
+        "qps_each": [
+          47648.25097925168,
+          48041.96781398545
+        ],
+        "ann_recall": 0.50089,
+        "strict_id_recall": 0.48836,
+        "ids_sha256": "4b9a6cb4b4c2757d4b75bc7c400c5c61d192c23b891526b874138d2a5a28bcf8",
+        "results": [
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/0/63edb301bd94e256411e.hdf5",
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/1/63edb301bd94e256411e.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n32",
+        "query_config": "glove_n32_query.yaml",
+        "query_case_index": 1,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.0,
+          "quantized_graph_max_expansions": 24,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 47845.109396618565,
+        "ann_recall": 0.50089
+      }
+    },
+    {
+      "target_ann_recall": 0.7,
+      "profile": "n32",
+      "query_config": "glove_n32_query.yaml",
+      "query_case_index": 2,
+      "query_params": {
+        "ef_search": 128,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.04,
+        "quantized_graph_max_expansions": 64,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 31696.365686372308,
+        "mean_query_time_us": 31.54935836791992,
+        "ann_recall": 0.70265,
+        "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/1/4c6f0e7c654a5e3d8d9f.hdf5",
+        "result_sha256": "71af586643bda659728e74b121fab06c728936231e2a8cf6046b8f374fb7a498",
+        "origin": "succinct_r7i_revalidation"
+      },
+      "revalidation": {
+        "qps_median": 31598.26658219682,
+        "qps_each": [
+          31500.167478021325,
+          31696.365686372308
+        ],
+        "ann_recall": 0.70265,
+        "strict_id_recall": 0.68486,
+        "ids_sha256": "519687b680ab57b670ce2a3abc9a93673f5e39f0ede7a8726b6492e1efa252e4",
+        "results": [
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/0/4c6f0e7c654a5e3d8d9f.hdf5",
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n32/1/4c6f0e7c654a5e3d8d9f.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n32",
+        "query_config": "glove_n32_query.yaml",
+        "query_case_index": 2,
+        "query_params": {
+          "ef_search": 128,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.04,
+          "quantized_graph_max_expansions": 64,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 31598.26658219682,
+        "ann_recall": 0.70265
+      }
+    },
+    {
+      "target_ann_recall": 0.85,
+      "profile": "n64",
+      "query_config": "glove_n64_query.yaml",
+      "query_case_index": 0,
+      "query_params": {
+        "ef_search": 1024,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.004,
+        "quantized_graph_margin": 0.04,
+        "quantized_graph_max_expansions": 1536,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 18585.75904073593,
+        "mean_query_time_us": 53.804636001586914,
+        "ann_recall": 0.85266,
+        "result": "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/2fd995302e97cf5ef1b8.hdf5",
+        "result_sha256": "8c2696d061106b23863a7b94da4e44013a3993147e6f3fb49ca955c44c13604b",
+        "origin": "succinct_r7i_revalidation"
+      },
+      "revalidation": {
+        "qps_median": 18155.28594783039,
+        "qps_each": [
+          17724.81285492485,
+          18585.75904073593
+        ],
+        "ann_recall": 0.85266,
+        "strict_id_recall": 0.83596,
+        "ids_sha256": "97836bd500eb8835c78f83a72a4553bda8b9db2a7f72323d00542fbc2413c5d8",
+        "results": [
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/2fd995302e97cf5ef1b8.hdf5",
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/2fd995302e97cf5ef1b8.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "glove_n64_query.yaml",
+        "query_case_index": 0,
+        "query_params": {
+          "ef_search": 1024,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_margin": 0.04,
+          "quantized_graph_max_expansions": 1536,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 18155.28594783039,
+        "ann_recall": 0.85266
+      }
+    },
+    {
+      "target_ann_recall": 0.9,
+      "profile": "n64",
+      "query_config": "glove_n64_query.yaml",
+      "query_case_index": 1,
+      "query_params": {
+        "ef_search": 1024,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.008,
+        "quantized_graph_margin": 0.0565,
+        "quantized_graph_max_expansions": 384,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 15313.211707879855,
+        "mean_query_time_us": 65.30308723449707,
+        "ann_recall": 0.90011,
+        "result": "results/succinct-alignment-20261117/official/glove/shared-scan/5/3806d4ab3ca3c0c045a4.hdf5",
+        "result_sha256": "bfbcd19cc2aeb9e941df9a0b724b0c4d1fe36d4f5d98a4a5e82184f4c74a0031",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 13374.327799112449,
+        "qps_each": [
+          12974.65176844926,
+          13774.003829775636
+        ],
+        "ann_recall": 0.90011,
+        "strict_id_recall": 0.88458,
+        "ids_sha256": "dcc32ce7ace92be855f31ea90c6c5aa9d652f346c7aa79a0083b1d4e25a0ba15",
+        "results": [
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/3806d4ab3ca3c0c045a4.hdf5",
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/3806d4ab3ca3c0c045a4.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "glove_n64_query.yaml",
+        "query_case_index": 1,
+        "query_params": {
+          "ef_search": 1024,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.008,
+          "quantized_graph_margin": 0.0565,
+          "quantized_graph_max_expansions": 384,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 13374.327799112449,
+        "ann_recall": 0.90011
+      }
+    },
+    {
+      "target_ann_recall": 0.95,
+      "profile": "n64",
+      "query_config": "glove_n64_query.yaml",
+      "query_case_index": 2,
+      "query_params": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.002,
+        "quantized_graph_margin": 0.08625,
+        "quantized_graph_max_expansions": 768,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 9328.909873337088,
+        "mean_query_time_us": 107.19366073608398,
+        "ann_recall": 0.95026,
+        "result": "results/succinct-alignment-20261117/official/glove/shared-scan/5/4fede1747748f42c8316.hdf5",
+        "result_sha256": "c307f0388b9ae69b7ca370df97f0456a45a211e5ac42c946d74f038c7687c030",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 8121.725565777822,
+        "qps_each": [
+          8042.824456698071,
+          8200.626674857574
+        ],
+        "ann_recall": 0.95026,
+        "strict_id_recall": 0.9373,
+        "ids_sha256": "15311eb6b575727336f42511ef896b8fbdbb3b9d9c3e9eb4b1fe98a513910053",
+        "results": [
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/4fede1747748f42c8316.hdf5",
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/4fede1747748f42c8316.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "glove_n64_query.yaml",
+        "query_case_index": 2,
+        "query_params": {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.002,
+          "quantized_graph_margin": 0.08625,
+          "quantized_graph_max_expansions": 768,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 8121.725565777822,
+        "ann_recall": 0.95026
+      }
+    },
+    {
+      "target_ann_recall": 0.99,
+      "profile": "n64",
+      "query_config": "glove_n64_query.yaml",
+      "query_case_index": 3,
+      "query_params": {
+        "ef_search": 2048,
+        "index_type": "kHNSW",
+        "quantized_graph_bucket_width": 0.004,
+        "quantized_graph_margin": 0.125625,
+        "quantized_graph_max_expansions": 1536,
+        "quantized_graph_route_beam": 1,
+        "quantized_graph_uncertainty_bonus": 0
+      },
+      "best_observed": {
+        "qps": 3814.5561607210498,
+        "mean_query_time_us": 262.153697013855,
+        "ann_recall": 0.99001,
+        "result": "results/succinct-alignment-20261117/official/glove/shared-scan/5/a381c1ebc614d324c0cf.hdf5",
+        "result_sha256": "6538f8ffb0c6365ad7e4ee6b28bd1898b4917fa94ce66df232e400ed7992db32",
+        "origin": "historical_succinct_peak"
+      },
+      "revalidation": {
+        "qps_median": 3379.589734103487,
+        "qps_each": [
+          3357.7952684296297,
+          3401.3841997773447
+        ],
+        "ann_recall": 0.99001,
+        "strict_id_recall": 0.98444,
+        "ids_sha256": "80225b0d369eaca2af281517d2345bcd255ecbefc8f3a1c06ea0bb65427795c5",
+        "results": [
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/0/a381c1ebc614d324c0cf.hdf5",
+          "results/succinct-r7i-presets-20261118/glove-100-angular/official/n64/1/a381c1ebc614d324c0cf.hdf5"
+        ]
+      },
+      "same_session_best": {
+        "profile": "n64",
+        "query_config": "glove_n64_query.yaml",
+        "query_case_index": 3,
+        "query_params": {
+          "ef_search": 2048,
+          "index_type": "kHNSW",
+          "quantized_graph_bucket_width": 0.004,
+          "quantized_graph_margin": 0.125625,
+          "quantized_graph_max_expansions": 1536,
+          "quantized_graph_route_beam": 1,
+          "quantized_graph_uncertainty_bonus": 0
+        },
+        "qps_median": 3379.589734103487,
+        "ann_recall": 0.99001
+      }
+    }
+  ]
+}

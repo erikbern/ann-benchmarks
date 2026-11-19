@@ -1,0 +1,57 @@
+{
+  "verified": true,
+  "contract": {
+    "provider_prefix": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/provider",
+    "provider_format": "csr-fp32-le-v1",
+    "dimension": 100,
+    "train_count": 1183514,
+    "metric": "cosine",
+    "precision": "FP32",
+    "id_convention": "internal CSR row -> ids.u64 -> original HDF5 train row",
+    "dataset_file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/glove-100-angular.hdf5",
+    "queries_file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/queries.f32",
+    "query_count": 10000
+  },
+  "checked_vectors": 1183514,
+  "max_vector_error": 1.5283206311611508e-07,
+  "max_norm_error": 1.7759164050445975e-07,
+  "old_qg_snapshot_reused": false,
+  "base_graph_reused": true,
+  "files": [
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data/glove-100-angular.hdf5",
+      "bytes": 485413888,
+      "sha256": "544af1d5e84e112cd4749571dcfd8ca109818a572f850af75a3a09e093a953c4"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/glove-exploration-v2/index",
+      "bytes": 4379056128,
+      "sha256": "59ed7e66e97e7384987f2d029764dbab433f1c6b8ff2993cf79509dbb3cd623a"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/queries.f32",
+      "bytes": 4000000,
+      "sha256": "97cde902cf5da3e533a87de30d83bf49a5eeb47299b3afa157054e070c7e26b7"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/provider.vectors",
+      "bytes": 473405600,
+      "sha256": "f57b0fb3b11d9b71f2f2ac82c2559678e5ac2e5ceb9751e259b54c7f08f3f11c"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/provider.offsets",
+      "bytes": 9468120,
+      "sha256": "14016b995e8a73a69ce55db6e3805fd4672876891791d4f9b3e4ad73b8608da6"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/provider.edges",
+      "bytes": 241947676,
+      "sha256": "d57e875367ac5276d81e02cb0e1e008e17ccd6db01ff1266c1dfcdbf6270c65d"
+    },
+    {
+      "path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-new-api-20261119/exploration/glove/provider.ids",
+      "bytes": 9468112,
+      "sha256": "175d109f4a6a2fed339b9c0ee898a0396e79ba9fafe4b8aa7e2f4d8ff27179b0"
+    }
+  ]
+}

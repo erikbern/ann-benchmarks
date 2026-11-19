@@ -1,0 +1,590 @@
+[
+  {
+    "dataset": "sift",
+    "target_ann_recall": 0.3,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-0",
+      "phase": "migration",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.31954,
+    "strict_id_recall": 0.31936,
+    "qps_repeat_1": 104659.5192448238,
+    "qps_repeat_2": 104574.23384994749,
+    "qps_repeat_3": 104664.57348683913,
+    "median_qps": 104659.5192448238,
+    "mean_query_us": 9.5547926,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "sift",
+    "target_ann_recall": 0.5,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.51806,
+    "strict_id_recall": 0.51773,
+    "qps_repeat_1": 86166.7302275552,
+    "qps_repeat_2": 86222.19058442643,
+    "qps_repeat_3": 86317.17790820591,
+    "median_qps": 86222.19058442643,
+    "mean_query_us": 11.597942399999999,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "sift",
+    "target_ann_recall": 0.7,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.002,
+        "max_expansions": 16,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.73793,
+    "strict_id_recall": 0.73733,
+    "qps_repeat_1": 66668.50760639003,
+    "qps_repeat_2": 66592.40858395593,
+    "qps_repeat_3": 66818.91802598341,
+    "median_qps": 66668.50760639003,
+    "mean_query_us": 14.9995858,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "sift",
+    "target_ann_recall": 0.85,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "coverage-2",
+      "phase": "tuning",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0075,
+        "max_expansions": 24,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.85474,
+    "strict_id_recall": 0.85392,
+    "qps_repeat_1": 55503.50991430891,
+    "qps_repeat_2": 55639.44035781101,
+    "qps_repeat_3": 55795.239194218324,
+    "median_qps": 55639.44035781101,
+    "mean_query_us": 17.9728623,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "sift",
+    "target_ann_recall": 0.9,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.008,
+        "max_expansions": 48,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.9026,
+    "strict_id_recall": 0.90172,
+    "qps_repeat_1": 49599.03200148392,
+    "qps_repeat_2": 49548.89300439793,
+    "qps_repeat_3": 49694.62849567919,
+    "median_qps": 49599.03200148392,
+    "mean_query_us": 20.1616838,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "sift",
+    "target_ann_recall": 0.95,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.038,
+        "max_expansions": 64,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.95173,
+    "strict_id_recall": 0.9509,
+    "qps_repeat_1": 39912.800270133026,
+    "qps_repeat_2": 39828.81130817062,
+    "qps_repeat_3": 39992.83968198334,
+    "median_qps": 39912.800270133026,
+    "mean_query_us": 25.0546189,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "sift",
+    "target_ann_recall": 0.99,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.09,
+        "max_expansions": 128,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.99058,
+    "strict_id_recall": 0.9899,
+    "qps_repeat_1": 25287.058114759948,
+    "qps_repeat_2": 25244.617885964755,
+    "qps_repeat_3": 25323.83653672184,
+    "median_qps": 25287.058114759948,
+    "mean_query_us": 39.5459209,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "gist",
+    "target_ann_recall": 0.3,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-0",
+      "phase": "migration",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.3168,
+    "strict_id_recall": 0.3072,
+    "qps_repeat_1": 46759.982133946025,
+    "qps_repeat_2": 46812.05680100073,
+    "qps_repeat_3": 46869.7432653569,
+    "median_qps": 46812.05680100073,
+    "mean_query_us": 21.362018000000003,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "gist",
+    "target_ann_recall": 0.5,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.002,
+        "max_expansions": 20,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.5191,
+    "strict_id_recall": 0.5006,
+    "qps_repeat_1": 34429.36698303582,
+    "qps_repeat_2": 34319.95658113653,
+    "qps_repeat_3": 34365.27323158624,
+    "median_qps": 34365.27323158624,
+    "mean_query_us": 29.099142999999998,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "gist",
+    "target_ann_recall": 0.7,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.005,
+        "max_expansions": 32,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.7009,
+    "strict_id_recall": 0.6741,
+    "qps_repeat_1": 26341.713185473607,
+    "qps_repeat_2": 26340.51836823123,
+    "qps_repeat_3": 26276.2596070275,
+    "median_qps": 26340.51836823123,
+    "mean_query_us": 37.964324999999995,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "gist",
+    "target_ann_recall": 0.85,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.03,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.8663,
+    "strict_id_recall": 0.8376,
+    "qps_repeat_1": 17351.546071339286,
+    "qps_repeat_2": 17329.925368849697,
+    "qps_repeat_3": 17321.47980589134,
+    "median_qps": 17329.925368849697,
+    "mean_query_us": 57.703653,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "gist",
+    "target_ann_recall": 0.9,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-4",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.9026,
+    "strict_id_recall": 0.8762,
+    "qps_repeat_1": 14522.48072028135,
+    "qps_repeat_2": 14509.751902685532,
+    "qps_repeat_3": 14501.997700940296,
+    "median_qps": 14509.751902685532,
+    "mean_query_us": 68.919166,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "gist",
+    "target_ann_recall": 0.95,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.06,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.9552,
+    "strict_id_recall": 0.9378,
+    "qps_repeat_1": 9717.928665875037,
+    "qps_repeat_2": 9712.489053660618,
+    "qps_repeat_3": 9697.980826083316,
+    "median_qps": 9712.489053660618,
+    "mean_query_us": 102.960219,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "gist",
+    "target_ann_recall": 0.99,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.12000000000000001,
+        "max_expansions": 512,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.9946,
+    "strict_id_recall": 0.9909,
+    "qps_repeat_1": 3407.640524348096,
+    "qps_repeat_2": 3410.024593199667,
+    "qps_repeat_3": 3408.1743774152387,
+    "median_qps": 3408.1743774152387,
+    "mean_query_us": 293.412217,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "glove",
+    "target_ann_recall": 0.3,
+    "profile": "n32",
+    "query_parameters": {
+      "name": "migration-0",
+      "phase": "migration",
+      "target": 0.3,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0,
+        "max_expansions": 13,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.32275,
+    "strict_id_recall": 0.31541,
+    "qps_repeat_1": 100122.0156968693,
+    "qps_repeat_2": 100081.38818650103,
+    "qps_repeat_3": 100503.64386011178,
+    "median_qps": 100122.0156968693,
+    "mean_query_us": 9.9878133,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "glove",
+    "target_ann_recall": 0.5,
+    "profile": "n32",
+    "query_parameters": {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0,
+        "max_expansions": 24,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.50089,
+    "strict_id_recall": 0.48836,
+    "qps_repeat_1": 72112.41396529297,
+    "qps_repeat_2": 72209.10074548026,
+    "qps_repeat_3": 72418.63923392608,
+    "median_qps": 72209.10074548026,
+    "mean_query_us": 13.848669899999999,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "glove",
+    "target_ann_recall": 0.7,
+    "profile": "n32",
+    "query_parameters": {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 64,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.70266,
+    "strict_id_recall": 0.68487,
+    "qps_repeat_1": 42809.14279999877,
+    "qps_repeat_2": 42862.81072907074,
+    "qps_repeat_3": 43063.90113623845,
+    "median_qps": 42862.81072907074,
+    "mean_query_us": 23.330247899999996,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "glove",
+    "target_ann_recall": 0.85,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 1024,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 0.04,
+        "max_expansions": 1536,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.85265,
+    "strict_id_recall": 0.83595,
+    "qps_repeat_1": 21768.501395999843,
+    "qps_repeat_2": 21711.712553774076,
+    "qps_repeat_3": 21707.261108145478,
+    "median_qps": 21711.712553774076,
+    "mean_query_us": 46.0580895,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "glove",
+    "target_ann_recall": 0.9,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-4",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 1024,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 0.0565,
+        "max_expansions": 384,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.9001,
+    "strict_id_recall": 0.88457,
+    "qps_repeat_1": 15828.212735041243,
+    "qps_repeat_2": 15813.818500146323,
+    "qps_repeat_3": 15795.692273674704,
+    "median_qps": 15813.818500146323,
+    "mean_query_us": 63.2358339,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "glove",
+    "target_ann_recall": 0.95,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.08625,
+        "max_expansions": 768,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.95026,
+    "strict_id_recall": 0.9373,
+    "qps_repeat_1": 9504.271818524368,
+    "qps_repeat_2": 9499.710702935035,
+    "qps_repeat_3": 9518.502097692251,
+    "median_qps": 9504.271818524368,
+    "mean_query_us": 105.21584600000001,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  },
+  {
+    "dataset": "glove",
+    "target_ann_recall": 0.99,
+    "profile": "n64",
+    "query_parameters": {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 0.125625,
+        "max_expansions": 1536,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "actual_ann_recall": 0.99001,
+    "strict_id_recall": 0.98444,
+    "qps_repeat_1": 3843.063832157701,
+    "qps_repeat_2": 3831.4290248573975,
+    "qps_repeat_3": 3839.020803752014,
+    "median_qps": 3839.020803752014,
+    "mean_query_us": 260.4830896,
+    "source_commit": "35afef03b24c5e8fa452b1f1523142471a53afbe"
+  }
+]

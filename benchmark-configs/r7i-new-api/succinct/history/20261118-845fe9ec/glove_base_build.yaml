@@ -1,0 +1,16 @@
+# Build one common raw cosine HNSW graph for both neighbor layouts.
+BuilderCommon:
+  BuilderClass: HnswStreamer
+  BuildFile: /data/glove/glove100_base.zvec.vecs
+  MetricName: Cosine
+  ConverterName: CosineFp32Converter
+  IndexPath: /data/glove/r7i/raw_work.index
+  DumpPath: /data/glove/r7i/raw.index
+  DumpFormat: streamer
+  MaxDocs: 1183514
+  ThreadCount: 8
+  LogLevel: info
+BuilderParams:
+  proxima.hnsw.streamer.max_neighbor_count: 32
+  proxima.hnsw.streamer.efconstruction: 400
+  proxima.hnsw.streamer.get_vector_enable: true
