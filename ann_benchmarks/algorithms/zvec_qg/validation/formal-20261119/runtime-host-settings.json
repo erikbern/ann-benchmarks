@@ -1,0 +1,7 @@
+{
+  "/sys/devices/system/cpu/cpu54/topology/thread_siblings_list": "54-55",
+  "/sys/devices/system/cpu/cpu54/cpufreq/scaling_governor": "unavailable",
+  "/sys/devices/system/cpu/cpu54/cpufreq/scaling_driver": "unavailable",
+  "/sys/kernel/mm/transparent_hugepage/enabled": "always [madvise] never",
+  "/sys/kernel/mm/transparent_hugepage/defrag": "always defer defer+madvise [madvise] never"
+}

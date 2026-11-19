@@ -1,0 +1,2206 @@
+[
+  {
+    "stage": "screen",
+    "measurements": [
+      {
+        "parameters": [
+          4,
+          8,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 6978.503640405169,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1568529": 0.22999999999999687,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/0/0.hdf5",
+            "sha256": "c780a54d40c5c3e0dcc26031d31efff05ad2a9cb71f8fec1e1416b94638dd0b9"
+          }
+        ],
+        "qps": 6978.503640405169,
+        "ann_recall": 0.9037
+      },
+      {
+        "parameters": [
+          8,
+          14,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 3924.821809722634,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1568529": 0.3500000000000014,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/1/0.hdf5",
+            "sha256": "89e960f166d59a2ed0219721cd4865c1582520738fc8419a8b1e3dd03cd7cb59"
+          }
+        ],
+        "qps": 3924.821809722634,
+        "ann_recall": 0.9548
+      },
+      {
+        "parameters": [
+          10,
+          18,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 3213.843812688016,
+            "ann_recall": 0.964,
+            "strict_id_recall": 0.9523,
+            "thread_cpu_seconds": {
+              "1568529": 0.4100000000000037,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.964,
+            "ids_sha256": "15f565c35d1b8db0d364d1a92332702ad87c1e5c1ceeeb521179f5fa98769392",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/2/0.hdf5",
+            "sha256": "253b44f6d15977a2709a96bd5302c408afc2ad536eec6e28855f54c829a2e9f2"
+          }
+        ],
+        "qps": 3213.843812688016,
+        "ann_recall": 0.964
+      },
+      {
+        "parameters": [
+          30,
+          150,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 964.4317416227676,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1568529": 1.1299999999999955,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/3/0.hdf5",
+            "sha256": "d99284aa4eb0714553d9c1f6fd3c8e5ea750a5e913e0a9dada7fb9605d08d27e"
+          }
+        ],
+        "qps": 964.4317416227676,
+        "ann_recall": 0.99
+      },
+      {
+        "parameters": [
+          35,
+          100,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 781.3968738938465,
+            "ann_recall": 0.9944,
+            "strict_id_recall": 0.9908,
+            "thread_cpu_seconds": {
+              "1568529": 1.3699999999999974,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9944,
+            "ids_sha256": "edf1a0dbb7972b599b7e5af651fee1eb80ba6baf48d199a349d656906be36e0e",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/4/0.hdf5",
+            "sha256": "89afb3ec56d9eaaeab4f83ca1da580331b5aa07a491a1f3ba1d589f97e0a0c74"
+          }
+        ],
+        "qps": 781.3968738938465,
+        "ann_recall": 0.9944
+      },
+      {
+        "parameters": [
+          5,
+          10,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 5800.215452567937,
+            "ann_recall": 0.9236,
+            "strict_id_recall": 0.9042,
+            "thread_cpu_seconds": {
+              "1568529": 0.269999999999996,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9236,
+            "ids_sha256": "7f2d38027f5a43dad24e4e4dac38318aecdf50483f5375e768ad10c2c0fafa02",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/5/0.hdf5",
+            "sha256": "d5af49d7a739ba4dc95c00cf5b7b0437386f1860d784c65b6c641fc74901d0be"
+          }
+        ],
+        "qps": 5800.215452567937,
+        "ann_recall": 0.9236
+      },
+      {
+        "parameters": [
+          3.2,
+          6.4,
+          1.01,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 9701.04265929003,
+            "ann_recall": 0.8509,
+            "strict_id_recall": 0.8246,
+            "thread_cpu_seconds": {
+              "1568529": 0.18999999999999773,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.8509,
+            "ids_sha256": "8aa1c3ac31852ae2d505436b7dd634bc1092094fe2461d0b4814e16632f9b1db",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/6/0.hdf5",
+            "sha256": "7516dfdf5e3647397419f5acf7db94cb473575811a00a3c5d4b7453a7206485b"
+          }
+        ],
+        "qps": 9701.04265929003,
+        "ann_recall": 0.8509
+      },
+      {
+        "parameters": [
+          3.2,
+          6.4,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 8428.982827744898,
+            "ann_recall": 0.8786,
+            "strict_id_recall": 0.8546,
+            "thread_cpu_seconds": {
+              "1568529": 0.21000000000000085,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.8786,
+            "ids_sha256": "324b64f0645bfd01c1093937fe5d3072838087dc4205c5c577671f5dfade7528",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/7/0.hdf5",
+            "sha256": "aff3b96e798ef8c71f0402e7248c789e67328ddece6a9e579668e4669676f0d0"
+          }
+        ],
+        "qps": 8428.982827744898,
+        "ann_recall": 0.8786
+      },
+      {
+        "parameters": [
+          3.2,
+          6.4,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 7221.796743711948,
+            "ann_recall": 0.8982,
+            "strict_id_recall": 0.8772,
+            "thread_cpu_seconds": {
+              "1568529": 0.22999999999998977,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.8982,
+            "ids_sha256": "666df4e0e7c72357d3cc3f84fe0c2e691f7666c7edbbac375a297282680f7db1",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/8/0.hdf5",
+            "sha256": "ec964f0d137676dde0abbdf5b09c004ee1a297fa7219091906f54753384ea897"
+          }
+        ],
+        "qps": 7221.796743711948,
+        "ann_recall": 0.8982
+      },
+      {
+        "parameters": [
+          4,
+          8,
+          1.01,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 8067.72240890809,
+            "ann_recall": 0.8798,
+            "strict_id_recall": 0.8565,
+            "thread_cpu_seconds": {
+              "1568529": 0.21000000000000085,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.8798,
+            "ids_sha256": "903080bc0349379caf820407c6c097d855d511cb7c29182bc7f05a26ca29d1a0",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/9/0.hdf5",
+            "sha256": "6c3043a907c4ce57ed9452b07a5ad9b4173c4c1fc10864793a82528a813f8c3d"
+          }
+        ],
+        "qps": 8067.72240890809,
+        "ann_recall": 0.8798
+      },
+      {
+        "parameters": [
+          4,
+          8,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 5971.908152615759,
+            "ann_recall": 0.9206,
+            "strict_id_recall": 0.9018,
+            "thread_cpu_seconds": {
+              "1568529": 0.28999999999999204,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9206,
+            "ids_sha256": "abdbde2b555b4c3ada5a4e9f72a1f3370f055032b8f0e37fc59c070fbf2ecb85",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/10/0.hdf5",
+            "sha256": "8f5845bdc729bca7565907accef38e8b6e3bccba866804a10805136ecf566e3d"
+          }
+        ],
+        "qps": 5971.908152615759,
+        "ann_recall": 0.9206
+      },
+      {
+        "parameters": [
+          4.8,
+          9.6,
+          1.01,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 6953.341058707873,
+            "ann_recall": 0.9007,
+            "strict_id_recall": 0.8788,
+            "thread_cpu_seconds": {
+              "1568529": 0.23999999999999488,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9007,
+            "ids_sha256": "71d2d20ae35a2da63d05f1bfe59ce0eb7acc2b24287bebfafde7836c7f9288b4",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/11/0.hdf5",
+            "sha256": "f2ab14a5423de5a47bb973e27f0414d2af9277a7df58419b15b305f154c8748a"
+          }
+        ],
+        "qps": 6953.341058707873,
+        "ann_recall": 0.9007
+      },
+      {
+        "parameters": [
+          4.8,
+          9.6,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 6025.978504016309,
+            "ann_recall": 0.9203,
+            "strict_id_recall": 0.9009,
+            "thread_cpu_seconds": {
+              "1568529": 0.2600000000000051,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9203,
+            "ids_sha256": "4b7ba6fbde0806d41ceacf8c77933f3421ee236addc576dae4d8b228008b11df",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/12/0.hdf5",
+            "sha256": "03faf8c862d764dbe21afdc70e0772bc7878bca35194fa84d750b37cfabbe3d0"
+          }
+        ],
+        "qps": 6025.978504016309,
+        "ann_recall": 0.9203
+      },
+      {
+        "parameters": [
+          4.8,
+          9.6,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 5113.5705838606245,
+            "ann_recall": 0.9375,
+            "strict_id_recall": 0.9211,
+            "thread_cpu_seconds": {
+              "1568529": 0.28999999999999915,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9375,
+            "ids_sha256": "4431d0066f361102922c8dd39f0d4c71571cfebd8db3e1a2b34a548b0b7bbc16",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/13/0.hdf5",
+            "sha256": "f5a5615fa3beba1c233344bc2bc77be7918e90bf4d83e22882d068fde7b4bad4"
+          }
+        ],
+        "qps": 5113.5705838606245,
+        "ann_recall": 0.9375
+      },
+      {
+        "parameters": [
+          6.4,
+          11.2,
+          1.01,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 5577.8434433838065,
+            "ann_recall": 0.9254,
+            "strict_id_recall": 0.9072,
+            "thread_cpu_seconds": {
+              "1568529": 0.269999999999996,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9254,
+            "ids_sha256": "fe2ac9443d3377d9e922023a8a44b0e6d0b5764d09aabb3df044e2d482c75321",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/14/0.hdf5",
+            "sha256": "71fe321181bb991481fc116d48245c23706dd4654140bfe3708ae01a618fd071"
+          }
+        ],
+        "qps": 5577.8434433838065,
+        "ann_recall": 0.9254
+      },
+      {
+        "parameters": [
+          6.4,
+          11.2,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 4786.231623583434,
+            "ann_recall": 0.9418,
+            "strict_id_recall": 0.9259,
+            "thread_cpu_seconds": {
+              "1568529": 0.29999999999999716,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9418,
+            "ids_sha256": "a2e73723f457acc461e98c7854107718a39840710ff6c9a88321f8d073c717d7",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/15/0.hdf5",
+            "sha256": "532ee118c819173cd25c562171e96fd95908aad8fc0c9d79fc10300a172befe5"
+          }
+        ],
+        "qps": 4786.231623583434,
+        "ann_recall": 0.9418
+      },
+      {
+        "parameters": [
+          6.4,
+          11.2,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 4049.5253690072527,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1568529": 0.3400000000000034,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/16/0.hdf5",
+            "sha256": "cc264641c3e1a1bd16c38ec4c243cea6a56bea432563eed1a39be7afe9fd3871"
+          }
+        ],
+        "qps": 4049.5253690072527,
+        "ann_recall": 0.9523
+      },
+      {
+        "parameters": [
+          8,
+          14,
+          1.01,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 4587.257666202214,
+            "ann_recall": 0.9439,
+            "strict_id_recall": 0.9286,
+            "thread_cpu_seconds": {
+              "1568529": 0.3199999999999932,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9439,
+            "ids_sha256": "c40b45ad4358a6da9bf955e38aa7ca2bde2ead5926f1814a6475f9b47ed02974",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/17/0.hdf5",
+            "sha256": "e9839df8c030d324bb614df8f7158cc5618b4ecb2f0e63a8de6fb96fbe41bc2a"
+          }
+        ],
+        "qps": 4587.257666202214,
+        "ann_recall": 0.9439
+      },
+      {
+        "parameters": [
+          8,
+          14,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 3324.3248598518985,
+            "ann_recall": 0.962,
+            "strict_id_recall": 0.9502,
+            "thread_cpu_seconds": {
+              "1568529": 0.4000000000000057,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.962,
+            "ids_sha256": "ded7b428e5ddd0cdae780486470a3b5c095009361ca29884550348f07c08039f",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/18/0.hdf5",
+            "sha256": "0d54605662f4243176a77b5860a2226dbbebe9912b44271cf484c9ad3ccfa17e"
+          }
+        ],
+        "qps": 3324.3248598518985,
+        "ann_recall": 0.962
+      },
+      {
+        "parameters": [
+          9.6,
+          16.8,
+          1.01,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 3908.335033904259,
+            "ann_recall": 0.9529,
+            "strict_id_recall": 0.9395,
+            "thread_cpu_seconds": {
+              "1568529": 0.3500000000000085,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9529,
+            "ids_sha256": "07193de8f284f14b08823b74d5970cc538f9a4908286e5e65e1bd04bf881de41",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/19/0.hdf5",
+            "sha256": "359c3cde513a4b864ae4316c94f8562bc9e2a67285421b8f038fb87a4dfe330d"
+          }
+        ],
+        "qps": 3908.335033904259,
+        "ann_recall": 0.9529
+      },
+      {
+        "parameters": [
+          9.6,
+          16.8,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 3336.621982719874,
+            "ann_recall": 0.9619,
+            "strict_id_recall": 0.9503,
+            "thread_cpu_seconds": {
+              "1568529": 0.4000000000000057,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9619,
+            "ids_sha256": "741f50d9367b9073c5abf1b276fad988b1e7390f9242a0fa3f16b5c50ef2dbcf",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/20/0.hdf5",
+            "sha256": "5738e27aa731c8c9460d97449493f93ee6cb6a001d61c5ca746dfc1e2db6b0c2"
+          }
+        ],
+        "qps": 3336.621982719874,
+        "ann_recall": 0.9619
+      },
+      {
+        "parameters": [
+          9.6,
+          16.8,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 2831.9781020369996,
+            "ann_recall": 0.9711,
+            "strict_id_recall": 0.9604,
+            "thread_cpu_seconds": {
+              "1568529": 0.46000000000000796,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9711,
+            "ids_sha256": "75207eb65bdc01c7dc6e52c9d8fc01435ae9a9519480f5a515455064592f2fc2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/21/0.hdf5",
+            "sha256": "8117708758aa2241540ebfe73dd7277fcf103f13418b1a075c9e243e251fc9d5"
+          }
+        ],
+        "qps": 2831.9781020369996,
+        "ann_recall": 0.9711
+      },
+      {
+        "parameters": [
+          24.0,
+          120.0,
+          1.01,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 1370.560379363484,
+            "ann_recall": 0.9836,
+            "strict_id_recall": 0.9764,
+            "thread_cpu_seconds": {
+              "1568529": 0.8299999999999983,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9836,
+            "ids_sha256": "84b7fd94cb0917b135faff64b414aa7f75a4122e04a0a5e6ac21d82a680715c0",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/22/0.hdf5",
+            "sha256": "afd3a7caae7bdb9adce9188f50364e5f28a3483d2d106f039d5b8a5067009d0c"
+          }
+        ],
+        "qps": 1370.560379363484,
+        "ann_recall": 0.9836
+      },
+      {
+        "parameters": [
+          24.0,
+          120.0,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 1184.2953600389428,
+            "ann_recall": 0.987,
+            "strict_id_recall": 0.9813,
+            "thread_cpu_seconds": {
+              "1568529": 0.9500000000000028,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.987,
+            "ids_sha256": "38e15cb0e73f94666189611af50885a5fe45754254f889603ff038fc6be547c7",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/23/0.hdf5",
+            "sha256": "9dda08fb209b3fa8d95b300683af27b19ec51e639bb9488fcf360e461d9739bf"
+          }
+        ],
+        "qps": 1184.2953600389428,
+        "ann_recall": 0.987
+      },
+      {
+        "parameters": [
+          24.0,
+          120.0,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 1009.3591178542302,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1568529": 1.0799999999999983,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/24/0.hdf5",
+            "sha256": "5c29b0d338458fae205a16e21039af60bf99d1d74960d2f72e7b719d7138f08e"
+          }
+        ],
+        "qps": 1009.3591178542302,
+        "ann_recall": 0.9904
+      },
+      {
+        "parameters": [
+          30,
+          150,
+          1.01,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 1143.8635513870863,
+            "ann_recall": 0.9867,
+            "strict_id_recall": 0.9806,
+            "thread_cpu_seconds": {
+              "1568529": 0.9699999999999989,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9867,
+            "ids_sha256": "44788ae0273d427a08ec103d4309abf279e50a1340eebcf3dae87194df23facb",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/25/0.hdf5",
+            "sha256": "4ebacaea4c90327e198a950d804b20038f9321cf7879ab9ceafdf8f36c6dccb7"
+          }
+        ],
+        "qps": 1143.8635513870863,
+        "ann_recall": 0.9867
+      },
+      {
+        "parameters": [
+          30,
+          150,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 818.127166836301,
+            "ann_recall": 0.9933,
+            "strict_id_recall": 0.9892,
+            "thread_cpu_seconds": {
+              "1568529": 1.3100000000000023,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9933,
+            "ids_sha256": "d3195212137e6ac38082740798014640852685461d40788b1bae4a72b693dd11",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/26/0.hdf5",
+            "sha256": "ddb8768a0f5c511d07f22a8fe8eab7ef4a9d683fb78646be40b7f79ca83ac9fe"
+          }
+        ],
+        "qps": 818.127166836301,
+        "ann_recall": 0.9933
+      },
+      {
+        "parameters": [
+          36.0,
+          180.0,
+          1.01,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 963.2897013559032,
+            "ann_recall": 0.9895,
+            "strict_id_recall": 0.9841,
+            "thread_cpu_seconds": {
+              "1568529": 1.1300000000000097,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9895,
+            "ids_sha256": "ea103033cc1ab5f3efbebf2f58aefe6e7b93f376417d5f35a6fe6027ce5ba149",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/27/0.hdf5",
+            "sha256": "605824c8b56e301edd6acf9f257048c0cc3c4e3107c421e09efb5d1355fa6e5d"
+          }
+        ],
+        "qps": 963.2897013559032,
+        "ann_recall": 0.9895
+      },
+      {
+        "parameters": [
+          36.0,
+          180.0,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 816.8027159350866,
+            "ann_recall": 0.9929,
+            "strict_id_recall": 0.9885,
+            "thread_cpu_seconds": {
+              "1568529": 1.3100000000000023,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9929,
+            "ids_sha256": "1c4c78eeb8ab8e6fc41192b9d2b6698d8b5aecd02cc3a281666ae1968261f6e6",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/28/0.hdf5",
+            "sha256": "bdca7845e6cda384f7cddde808612e34ddfa58f664e9908f984d3ed5e789f904"
+          }
+        ],
+        "qps": 816.8027159350866,
+        "ann_recall": 0.9929
+      },
+      {
+        "parameters": [
+          36.0,
+          180.0,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 694.2979656590751,
+            "ann_recall": 0.9949,
+            "strict_id_recall": 0.9914,
+            "thread_cpu_seconds": {
+              "1568529": 1.5499999999999972,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9949,
+            "ids_sha256": "b80d111831ba87c4897472a3abb151d7411ad9bb63c30455978208c061059d5e",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/29/0.hdf5",
+            "sha256": "ce58932b4379995b19d0f3c0ea9c784c13f4aeab9086ab300a56002bb83a06e5"
+          }
+        ],
+        "qps": 694.2979656590751,
+        "ann_recall": 0.9949
+      },
+      {
+        "parameters": [
+          4,
+          8,
+          1.02,
+          0,
+          1,
+          0
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 6904.545080415493,
+            "ann_recall": 0.9055,
+            "strict_id_recall": 0.8845,
+            "thread_cpu_seconds": {
+              "1568529": 0.2400000000000091,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9055,
+            "ids_sha256": "7667ea2960ba0626ce12ca212eff5ebc7d93046201720efbe31a638137e4ff51",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/30/0.hdf5",
+            "sha256": "b490a8c5f24f10d5d2144ebeee465c94bf2894ac3408591fd92464d657ecaacf"
+          }
+        ],
+        "qps": 6904.545080415493,
+        "ann_recall": 0.9055
+      },
+      {
+        "parameters": [
+          8,
+          14,
+          1.02,
+          0,
+          1,
+          0
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 3886.4864965038983,
+            "ann_recall": 0.9545,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1568529": 0.35999999999999943,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9545,
+            "ids_sha256": "e95ff2b0051cfbf5c0b5dd24581d45e5eece4d7f51e2e21052547ae285de5022",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/31/0.hdf5",
+            "sha256": "1f78b8aa92104d9d0235c01aeedb7fe15b796b26a9d85b5a17066ba3d0e0325d"
+          }
+        ],
+        "qps": 3886.4864965038983,
+        "ann_recall": 0.9545
+      },
+      {
+        "parameters": [
+          30,
+          150,
+          1.02,
+          0,
+          1,
+          0
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 953.8281919261589,
+            "ann_recall": 0.9896,
+            "strict_id_recall": 0.9846,
+            "thread_cpu_seconds": {
+              "1568529": 1.1400000000000006,
+              "1568541": 0
+            },
+            "independent_ann_recall": 0.9896,
+            "ids_sha256": "48fc2ce65ca88ad427fe84d7d550cb2903454cdda920ee75869a82ea54eb60ce",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/screen/32/0.hdf5",
+            "sha256": "6be6360930254cdcc56ede2f3ec82d93a47b84eee8892b36da5cdae08dbc09b7"
+          }
+        ],
+        "qps": 953.8281919261589,
+        "ann_recall": 0.9896
+      }
+    ]
+  },
+  {
+    "stage": "repeat-0",
+    "measurements": [
+      {
+        "parameters": [
+          4,
+          8,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 6985.290982732893,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569029": 0.21999999999999886,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/0/0.hdf5",
+            "sha256": "e6a3c8f83b6e5d77c315f13fcd991e22c5033dbe096254bfbebc061846644525"
+          },
+          {
+            "round": 1,
+            "qps": 6907.785930153084,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569029": 0.25,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/0/1.hdf5",
+            "sha256": "80008fc345aa124a15d12eb1c204f7e62e1cef5e30baffab83e930bf70fafeb0"
+          },
+          {
+            "round": 2,
+            "qps": 6946.661653861378,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569029": 0.22999999999999687,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/0/2.hdf5",
+            "sha256": "debc9136c635ca4dfb490912af099c9ddfc55419d56ea3c84527c5899705fc42"
+          },
+          {
+            "round": 3,
+            "qps": 6966.044241305947,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569029": 0.21999999999999886,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/0/3.hdf5",
+            "sha256": "87a9b4b1521b6c249c91a0626f784dadfe88c0c732de839f94f34dfc6589f83d"
+          },
+          {
+            "round": 4,
+            "qps": 6955.658815998514,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569029": 0.22999999999999687,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/0/4.hdf5",
+            "sha256": "82b8f2bacdf99c2073b79008cd28add5239047abe58c9eafa234549676190f2a"
+          }
+        ],
+        "qps": 6985.290982732893,
+        "ann_recall": 0.9037
+      },
+      {
+        "parameters": [
+          8,
+          14,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 3930.754755175025,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569029": 0.3400000000000034,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/1/0.hdf5",
+            "sha256": "e65c41350dec9c9b0549da4d463ca711748fa235fd7675c3eea6bad941b8829c"
+          },
+          {
+            "round": 1,
+            "qps": 3937.555681770176,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569029": 0.3399999999999963,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/1/1.hdf5",
+            "sha256": "d44646b346a443a23998471f760c3b4438734dcd431881031643bac99ad77a68"
+          },
+          {
+            "round": 2,
+            "qps": 3933.504766942199,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569029": 0.3399999999999963,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/1/2.hdf5",
+            "sha256": "4d9400fb253c3737f07b68f1eb4becbe4ad8a6ae57207bf72fdeb1ae2269de3e"
+          },
+          {
+            "round": 3,
+            "qps": 3925.413196069256,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569029": 0.3399999999999963,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/1/3.hdf5",
+            "sha256": "8d3b0e2cd252a9395e458e35fe56beec92fc3e2d6e9d0a8561d88e6f1054c115"
+          },
+          {
+            "round": 4,
+            "qps": 3923.969938992958,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569029": 0.3399999999999963,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/1/4.hdf5",
+            "sha256": "9bb952ec11fe6852064b60c8f9af25129face0991636a4bb3124fca879336004"
+          }
+        ],
+        "qps": 3937.555681770176,
+        "ann_recall": 0.9548
+      },
+      {
+        "parameters": [
+          30,
+          150,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 964.4625672390248,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569029": 1.1199999999999974,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/2/0.hdf5",
+            "sha256": "63f8018be4bb6c70859d15951d41231d8fc079fb66886fd8688871251da4eb85"
+          },
+          {
+            "round": 1,
+            "qps": 963.7494258477979,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569029": 1.1199999999999974,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/2/1.hdf5",
+            "sha256": "bc4aaa5e7b3cbefbf1ebd0433df775599f899cc14c330f651689c66c6dc586de"
+          },
+          {
+            "round": 2,
+            "qps": 964.2956002431486,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569029": 1.1200000000000045,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/2/2.hdf5",
+            "sha256": "0575794c833b659b853c50573e032fa69661b9708cb307399284d4e90a885671"
+          },
+          {
+            "round": 3,
+            "qps": 965.1052530456482,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569029": 1.1200000000000045,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/2/3.hdf5",
+            "sha256": "96fab6336b91097214b2a91db640b403a9abbb79d14a191bc84c997cb3139bce"
+          },
+          {
+            "round": 4,
+            "qps": 962.1227743921393,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569029": 1.1499999999999986,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/2/4.hdf5",
+            "sha256": "784aade04f5c6009a37783d3ba3fc9a043eb5aa648b44928deb85e3d6134de7b"
+          }
+        ],
+        "qps": 965.1052530456482,
+        "ann_recall": 0.99
+      },
+      {
+        "parameters": [
+          6.4,
+          11.2,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 4046.1931015189007,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569029": 0.3299999999999983,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/3/0.hdf5",
+            "sha256": "fab1cd6eca2bb6b1eaa63e715f54f4587e731ec3f13dc120603efb6da03d30a9"
+          },
+          {
+            "round": 1,
+            "qps": 4042.3675724229124,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569029": 0.3299999999999983,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/3/1.hdf5",
+            "sha256": "0f99212dcbfce73d237e6e0f1694f6cd7bf61f6373e9f5f4551ca51ed0e40a74"
+          },
+          {
+            "round": 2,
+            "qps": 4036.097067161407,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569029": 0.3300000000000054,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/3/2.hdf5",
+            "sha256": "4687d263eec43c5475e067866396f3157d9532b07efb18e063605aab9d04af92"
+          },
+          {
+            "round": 3,
+            "qps": 4050.960753729289,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569029": 0.3400000000000034,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/3/3.hdf5",
+            "sha256": "ca67f3ea35e1d48f49585197edc68a45f82e7029ed5ee48cf3787eebadd5edb2"
+          },
+          {
+            "round": 4,
+            "qps": 4044.967832588659,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569029": 0.3299999999999983,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/3/4.hdf5",
+            "sha256": "d04d7a3984b19ab6f48924e8c73d998af98723824e30168d65fd2b25fa06cd36"
+          }
+        ],
+        "qps": 4050.960753729289,
+        "ann_recall": 0.9523
+      },
+      {
+        "parameters": [
+          24.0,
+          120.0,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 1009.2000419627398,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569029": 1.0699999999999932,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/4/0.hdf5",
+            "sha256": "04aa293416bcb0292041693cb7ee91134600b763831ee08a675587746866c8d0"
+          },
+          {
+            "round": 1,
+            "qps": 1009.8784670221772,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569029": 1.0799999999999983,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/4/1.hdf5",
+            "sha256": "7f76a7eebb720d59653bb636eb78b6c969894e9f00fff159682ea6e3e25064dd"
+          },
+          {
+            "round": 2,
+            "qps": 1008.7990533273044,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569029": 1.0799999999999983,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/4/2.hdf5",
+            "sha256": "000b9c20c77c314c03010f170cfb2691fe3e1aa1063aff895c672a3a73bad498"
+          },
+          {
+            "round": 3,
+            "qps": 1010.2226447369023,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569029": 1.0700000000000074,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/4/3.hdf5",
+            "sha256": "fa0ce8512ed3b5011d8aeafda9f170b2d4689d87aedaabe93639c1bd00d23f48"
+          },
+          {
+            "round": 4,
+            "qps": 1009.5631969879936,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569029": 1.0799999999999983,
+              "1569041": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-0/4/4.hdf5",
+            "sha256": "f45926897b0fc47d8c5eeb08215104c9809db0b9cffbc6411ebd694c33e2a6b2"
+          }
+        ],
+        "qps": 1010.2226447369023,
+        "ann_recall": 0.9904
+      }
+    ]
+  },
+  {
+    "stage": "repeat-1",
+    "measurements": [
+      {
+        "parameters": [
+          4,
+          8,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 7021.847512731826,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569278": 0.22999999999998977,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/0/0.hdf5",
+            "sha256": "6ecfc3cb2c83c860e793f62755931570616232c0c9053111f30501bdc1a7206f"
+          },
+          {
+            "round": 1,
+            "qps": 6934.338524617267,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569278": 0.259999999999998,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/0/1.hdf5",
+            "sha256": "75c620e5d043e40f3488c55a988d6f82585d8f3ff6f146b5ddca5a01f5c8377f"
+          },
+          {
+            "round": 2,
+            "qps": 6990.063962615701,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569278": 0.23000000000000398,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/0/2.hdf5",
+            "sha256": "0986159d3511b7104c35e576ac795e0b6519c0789aae636dba1972d9da79eaae"
+          },
+          {
+            "round": 3,
+            "qps": 6986.66400146586,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569278": 0.23000000000000398,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/0/3.hdf5",
+            "sha256": "f760cff3020fb4bf0b01424b638cce12e8d68422e165365aadc8e01451d6733a"
+          },
+          {
+            "round": 4,
+            "qps": 6978.851983853631,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569278": 0.21999999999999886,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/0/4.hdf5",
+            "sha256": "b3b7a10a9339d4bbd1bbe099d88914fc3b95834781c54d4514c09af8bdd1d26d"
+          }
+        ],
+        "qps": 7021.847512731826,
+        "ann_recall": 0.9037
+      },
+      {
+        "parameters": [
+          8,
+          14,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 3931.071584555026,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569278": 0.3400000000000034,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/1/0.hdf5",
+            "sha256": "abb2d275cb586ecbd9eb6d1ee14150c5f4e5d846259c8cc281dc257961d6a97e"
+          },
+          {
+            "round": 1,
+            "qps": 3931.7791088988256,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569278": 0.3400000000000034,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/1/1.hdf5",
+            "sha256": "05a291dfd252733a99cf0624a70acd77557e293576dc9cd3fddf1d2398ead115"
+          },
+          {
+            "round": 2,
+            "qps": 3928.1410207181775,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569278": 0.3400000000000034,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/1/2.hdf5",
+            "sha256": "fa4e9622c22db9ae3ac5498121b2906fb064cdbb293427aad128c2e216e26093"
+          },
+          {
+            "round": 3,
+            "qps": 3926.2362909959597,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569278": 0.3399999999999963,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/1/3.hdf5",
+            "sha256": "212af662dc6f1c0b24d17e568da06654e269ce6234b04af63445e7638614a0b4"
+          },
+          {
+            "round": 4,
+            "qps": 3927.876160062932,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569278": 0.3399999999999963,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/1/4.hdf5",
+            "sha256": "0d4caefef57e07e090e93e71539cca519da423d139b39acfb0af7479d5fa9d1b"
+          }
+        ],
+        "qps": 3931.7791088988256,
+        "ann_recall": 0.9548
+      },
+      {
+        "parameters": [
+          30,
+          150,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 962.5312415592426,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569278": 1.1299999999999955,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/2/0.hdf5",
+            "sha256": "682d64ce835410724ae6d74de507a1961031ef930743966f34002a01bd24c409"
+          },
+          {
+            "round": 1,
+            "qps": 964.6145064378867,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569278": 1.1199999999999974,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/2/1.hdf5",
+            "sha256": "72bea314946a9cc50ddbed50204d868bee0f32ebfab7bd006504406d283ea912"
+          },
+          {
+            "round": 2,
+            "qps": 961.5173358592922,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569278": 1.1300000000000026,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/2/2.hdf5",
+            "sha256": "45c41f6c163427e07b2a9d6d87a3f7ad8f1c0c7fd39155866bc746fdff0d3a9a"
+          },
+          {
+            "round": 3,
+            "qps": 964.9114250667383,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569278": 1.1300000000000097,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/2/3.hdf5",
+            "sha256": "71ba78c93f9d24a07f2286b9b2a7b5334931db5c64adf960e39d612c649bf5b0"
+          },
+          {
+            "round": 4,
+            "qps": 962.923696468227,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569278": 1.1599999999999966,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/2/4.hdf5",
+            "sha256": "d4b05114ef369e2651cb69d363e77807a482cac968f381822a34623b6c6a6f7b"
+          }
+        ],
+        "qps": 964.9114250667383,
+        "ann_recall": 0.99
+      },
+      {
+        "parameters": [
+          6.4,
+          11.2,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 4056.0102737076636,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569278": 0.3299999999999983,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/3/0.hdf5",
+            "sha256": "675ab7db632aa29c0a90410d47c5caa5df410fa49930ebdb830e5ab55b606fdf"
+          },
+          {
+            "round": 1,
+            "qps": 4047.419112971164,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569278": 0.3299999999999983,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/3/1.hdf5",
+            "sha256": "76fb0c932cb86f6747d4597eaf5d0b9e6d850279971cf531caf8a976efd799dd"
+          },
+          {
+            "round": 2,
+            "qps": 4049.9672183067655,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569278": 0.3299999999999983,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/3/2.hdf5",
+            "sha256": "5f5333b1fc80fbe045c77a304f8ba107ca6beb12218e27c8118ea347a9b27bc2"
+          },
+          {
+            "round": 3,
+            "qps": 4056.3083886191757,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569278": 0.3399999999999963,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/3/3.hdf5",
+            "sha256": "ec9a6c16f4a51dba7ecd5d1a8b875cf5ed5dd62a07080c6c78df9b6d7feda5be"
+          },
+          {
+            "round": 4,
+            "qps": 4051.023354958474,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569278": 0.3299999999999983,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/3/4.hdf5",
+            "sha256": "acccc5bdd385dcd39600a0c2e38e3c9bc649137eedf7e3c1b2c6cdab69e1fe52"
+          }
+        ],
+        "qps": 4056.3083886191757,
+        "ann_recall": 0.9523
+      },
+      {
+        "parameters": [
+          24.0,
+          120.0,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 1010.4200142132713,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569278": 1.0700000000000074,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/4/0.hdf5",
+            "sha256": "ca89ed1e445dd14ed5e0083009be24a84d5ec5df3376c42918ba1eb00a188106"
+          },
+          {
+            "round": 1,
+            "qps": 1009.7379445690676,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569278": 1.0699999999999932,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/4/1.hdf5",
+            "sha256": "afe42a658e3b3e1c3788a4ac4047425ceac5a7f0195271817132e9b9114632cb"
+          },
+          {
+            "round": 2,
+            "qps": 1008.644762497487,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569278": 1.0800000000000125,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/4/2.hdf5",
+            "sha256": "ea8a75bf6aab389681e0b32337813c44370f142ea2c43d2a62f974fd9e262cc8"
+          },
+          {
+            "round": 3,
+            "qps": 1010.0148938706365,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569278": 1.0799999999999983,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/4/3.hdf5",
+            "sha256": "d8d9ef25ab97f19b9abd04ec4f8379ad2a46b3779e9d6f985f934d2437e32749"
+          },
+          {
+            "round": 4,
+            "qps": 1009.7583640885267,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569278": 1.0800000000000125,
+              "1569288": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-1/4/4.hdf5",
+            "sha256": "258f19616f96e8a4a85130597541f00fd6adef969281ef1f71c3614a0fcfd6a6"
+          }
+        ],
+        "qps": 1010.4200142132713,
+        "ann_recall": 0.9904
+      }
+    ]
+  },
+  {
+    "stage": "repeat-2",
+    "measurements": [
+      {
+        "parameters": [
+          4,
+          8,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 6998.555004922328,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569519": 0.21999999999999886,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/0/0.hdf5",
+            "sha256": "b0cf33e41eca36c456a0af0f419504e27f0632e5ce274f9b135f1878fdc59cc5"
+          },
+          {
+            "round": 1,
+            "qps": 6922.847371687375,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569519": 0.259999999999998,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/0/1.hdf5",
+            "sha256": "08141becea3d06e0f1831e8398431ccc03acc23a9fc028d32a88becb0fb9f2f4"
+          },
+          {
+            "round": 2,
+            "qps": 6958.116633736623,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569519": 0.22000000000000597,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/0/2.hdf5",
+            "sha256": "e0c64fc0abb7af57c15834ef4c03a0b3817adc99ea3c553b5479be1a2f7d9a9a"
+          },
+          {
+            "round": 3,
+            "qps": 6949.919138895517,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569519": 0.22999999999998977,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/0/3.hdf5",
+            "sha256": "8db85e25049be814f1026b017c9f12bd93d4a16bfd1dd1eec5e86e1d50503203"
+          },
+          {
+            "round": 4,
+            "qps": 6981.732955585813,
+            "ann_recall": 0.9037,
+            "strict_id_recall": 0.8819,
+            "thread_cpu_seconds": {
+              "1569519": 0.22999999999999687,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9037,
+            "ids_sha256": "7946b08def74dae9b1074a3baa75bc83a7129423fd507add479e95b208446644",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/0/4.hdf5",
+            "sha256": "161ec5dd1e6a1e6156e301917b56afaa6cdb4302bf6d9f26df2495764b7e09b5"
+          }
+        ],
+        "qps": 6998.555004922328,
+        "ann_recall": 0.9037
+      },
+      {
+        "parameters": [
+          8,
+          14,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 3942.1187775618155,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569519": 0.3400000000000034,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/1/0.hdf5",
+            "sha256": "97dc4d31a0d72e7a76c1708a2c65385b3a76ef37183dde4429e8dfc5b5952d71"
+          },
+          {
+            "round": 1,
+            "qps": 3936.454425750092,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569519": 0.3299999999999983,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/1/1.hdf5",
+            "sha256": "75a0410ca5e82803b4a88a63555d6d00fcb1ae23131b509b38b41cbba8a23010"
+          },
+          {
+            "round": 2,
+            "qps": 3934.416141756288,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569519": 0.3399999999999963,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/1/2.hdf5",
+            "sha256": "17e62b77167be64c14a4e541a0c85853ceb1f021ea8130fdad93f57907d2189c"
+          },
+          {
+            "round": 3,
+            "qps": 3934.4272136818845,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569519": 0.3399999999999963,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/1/3.hdf5",
+            "sha256": "1808cae67605d943406569366117f7037caf809143d0a355565760e5b9c5977d"
+          },
+          {
+            "round": 4,
+            "qps": 3936.554178601864,
+            "ann_recall": 0.9548,
+            "strict_id_recall": 0.9413,
+            "thread_cpu_seconds": {
+              "1569519": 0.3399999999999963,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9548,
+            "ids_sha256": "14e316963984655e14ebe7d326f94f788bcced831cd366a4656ad50f99165850",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/1/4.hdf5",
+            "sha256": "130d45cb99cd2ba820eedb15c100c70192ea3f488026623c83b7a87ce10d30b1"
+          }
+        ],
+        "qps": 3942.1187775618155,
+        "ann_recall": 0.9548
+      },
+      {
+        "parameters": [
+          30,
+          150,
+          1.02,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 965.9006958402496,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569519": 1.1099999999999994,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/2/0.hdf5",
+            "sha256": "ab7446ab0d14e6ccb857746b99f07350ad7e3fb404cb361bf00b071ae4c88b57"
+          },
+          {
+            "round": 1,
+            "qps": 966.4660139231067,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569519": 1.1199999999999974,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/2/1.hdf5",
+            "sha256": "07a9b832f0b98e686f559089a91e17b23612088aa683eddc3472db8d20c49faf"
+          },
+          {
+            "round": 2,
+            "qps": 965.8955798396231,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569519": 1.1199999999999974,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/2/2.hdf5",
+            "sha256": "67f028af603fda9fbdadc6c2a0edf98d1359a1b46e404a7c18bfa944a0cd4e8a"
+          },
+          {
+            "round": 3,
+            "qps": 965.0548458394057,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569519": 1.1199999999999974,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/2/3.hdf5",
+            "sha256": "d0a04745572059c6060b5c67bfcf31c083e2c625ce67b87c6ec5590503b2076e"
+          },
+          {
+            "round": 4,
+            "qps": 962.9572998191543,
+            "ann_recall": 0.99,
+            "strict_id_recall": 0.985,
+            "thread_cpu_seconds": {
+              "1569519": 1.1499999999999986,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.99,
+            "ids_sha256": "e3401aef468848b1715deb7c76e0055a4873fe55a487f64578d92a843ed3087c",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/2/4.hdf5",
+            "sha256": "07e0aff7c2388a953c16e4f5baa12459238e65e1cd5778189c2e41a1d25cd495"
+          }
+        ],
+        "qps": 966.4660139231067,
+        "ann_recall": 0.99
+      },
+      {
+        "parameters": [
+          6.4,
+          11.2,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 4059.6180518923675,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569519": 0.3299999999999983,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/3/0.hdf5",
+            "sha256": "90a6d102ec4b47c912ff8ed7d2d971964d11ef5611b57adce8bda73b3dcb2de9"
+          },
+          {
+            "round": 1,
+            "qps": 4052.745647285949,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569519": 0.3300000000000054,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/3/1.hdf5",
+            "sha256": "b3c52a579bcbf22d35f8ef33205493da47c47e9ca3cc3fce1e840cbc2d1178c0"
+          },
+          {
+            "round": 2,
+            "qps": 4044.9366252397713,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569519": 0.3299999999999983,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/3/2.hdf5",
+            "sha256": "eb816e9c732b8e11f9b06e049adaa68f66557dce2e0f5e87313ce52893f89004"
+          },
+          {
+            "round": 3,
+            "qps": 4048.630235496597,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569519": 0.3299999999999912,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/3/3.hdf5",
+            "sha256": "79d47905508dc7b2f8c5c0806570d95b3bc16bb2e88fcf6d56fe962c59bfa2d8"
+          },
+          {
+            "round": 4,
+            "qps": 4048.665407945389,
+            "ann_recall": 0.9523,
+            "strict_id_recall": 0.9387,
+            "thread_cpu_seconds": {
+              "1569519": 0.3400000000000034,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9523,
+            "ids_sha256": "63165a16814b05a4846a089f247ab065ea8fb014f05d88473ce493bd1e06c1ec",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/3/4.hdf5",
+            "sha256": "55653a2085f7d9aea3c31385feb25abb922eb1edfd8ce2b4e0eaa2ef61e53a16"
+          }
+        ],
+        "qps": 4059.6180518923675,
+        "ann_recall": 0.9523
+      },
+      {
+        "parameters": [
+          24.0,
+          120.0,
+          1.03,
+          0,
+          1,
+          3
+        ],
+        "rounds": [
+          {
+            "round": 0,
+            "qps": 1010.3540535651182,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569519": 1.0699999999999932,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/4/0.hdf5",
+            "sha256": "eb74448e5eb0a9355a148122f00fa15f706c6b9f53bb5fa837c1c6bd1e664a4d"
+          },
+          {
+            "round": 1,
+            "qps": 1009.9421769346311,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569519": 1.0800000000000125,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/4/1.hdf5",
+            "sha256": "5b2618f395d62c0ec534576f4dd91571066ea70656fccd06c9dafbf61c4d960a"
+          },
+          {
+            "round": 2,
+            "qps": 1010.2788543295043,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569519": 1.0700000000000074,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/4/2.hdf5",
+            "sha256": "5300df71e2f6e9de0f9ae0c07baf4c1c84dd33b4fc859c51f5273413cd3e2235"
+          },
+          {
+            "round": 3,
+            "qps": 1010.199286745985,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569519": 1.0800000000000125,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/4/3.hdf5",
+            "sha256": "2cc60609fc65731f0d7f154d27e008f3b8d67c4cbcfd83ea6cf78f12e89e6fc9"
+          },
+          {
+            "round": 4,
+            "qps": 1011.9419311924537,
+            "ann_recall": 0.9904,
+            "strict_id_recall": 0.9856,
+            "thread_cpu_seconds": {
+              "1569519": 1.0700000000000074,
+              "1569535": 0
+            },
+            "independent_ann_recall": 0.9904,
+            "ids_sha256": "13ad2f94e011d506fa390dfb7fb6b1c935d7d529670a1a18d90b01faa2fd40c2",
+            "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/huawei-gist-revalidation-20261119-v2/repeat-2/4/4.hdf5",
+            "sha256": "af478f91b13ba4aacd6a6ffb9f2798fee4c16645d7e7e5d8d7f388814b248ee2"
+          }
+        ],
+        "qps": 1011.9419311924537,
+        "ann_recall": 0.9904
+      }
+    ]
+  }
+]

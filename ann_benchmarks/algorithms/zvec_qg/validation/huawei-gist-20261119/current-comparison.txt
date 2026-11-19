@@ -1,0 +1,20 @@
+Corrected comparison: Zvec new Python measurements; Huawei GIST new confirmation; other vendor cells historical best-of-five.
+Different actual recalls at the same floor are preserved in current-comparison.json.
+
+SIFT
+Floor | Zvec QG | Huawei QSGNGT | 01AI Descartes
+90% | 39,277 | 41,714 | 37,329
+95% | 33,005 | 31,978 | 29,640
+99% | 22,452 | 20,939 | 18,485
+
+GIST
+Floor | Zvec QG | Huawei QSGNGT | 01AI Descartes
+90% | 12,664 | 6,999 | 5,584
+95% | 8,688 | 4,056 | 3,697
+99% | 3,211 | 1,010 | 1,424
+
+GLOVE
+Floor | Zvec QG | Huawei QSGNGT | 01AI Descartes
+90% | 12,685 | 16,135 | 15,456
+95% | 8,108 | 9,183 | 7,948
+99% | 3,469 | 3,809 | 2,592

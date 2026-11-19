@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "screen_points": 33,
+  "formal_settings": 5,
+  "formal_rounds": 75,
+  "all_checked_rounds": 108,
+  "timed_queries": 108000,
+  "nonmain_cpu_seconds": 0,
+  "source_fingerprint_matches": true,
+  "raw_files_verified": true,
+  "qps_recomputed": true,
+  "restored": [
+    {
+      "id": "4449cecc953596fcf54fbeb9e70796a5d28f90402f6469c3be30b09508902426",
+      "state": "running"
+    },
+    {
+      "id": "8d202f534c4af1ae9429e503a0284191ca2d7207f71e83c88abf49a51457fbca",
+      "state": "running"
+    },
+    {
+      "id": "1d331c6767f86a8407ea6b193f6fba6f813725fccffe2244e0b4c281cc3d24e4",
+      "state": "running"
+    },
+    {
+      "id": "d4331c1153bbed585fe896945c6a4ac6160ee4036254b96e0ad53551d6924f42",
+      "state": "running"
+    },
+    {
+      "id": "b18870fbcc815ba129f534d180220673e7d59786595066bab8b293e243c9eb36",
+      "state": "running"
+    },
+    {
+      "id": "b4dc444de9300d27203805b8f788aa4f1c3a4f7eec8b6cf1c4b7a4dc95c0f6f6",
+      "state": "running"
+    },
+    {
+      "id": "1e19b46e54e6322f37cac162b0bd9d732ac3f01c23fe7d7514dca4ddaf52c142",
+      "state": "running"
+    },
+    {
+      "id": "0fe4fc3a9840552870de4071a62850c3ff970d92adad5366488e87dfe677cb6d",
+      "state": "running"
+    },
+    {
+      "id": "7af5acbb3012167dead961261dc113c0cb1b2ae2d462e6dbc16dd7ea36f1b383",
+      "state": "running"
+    },
+    {
+      "id": "0b2083872882c261261f3d178e5c7d979e52413e83353163f87ff440d2536765",
+      "state": "running"
+    },
+    {
+      "id": "7890b02c2fc3266c44fe3a217f6b74a97b0985d63ae3ec093bb032486feaca6c",
+      "state": "running"
+    },
+    {
+      "id": "1129717ac715a3a54a04212195cd86e5a5e3d1ff0d194fee1f90555a75aa3365",
+      "state": "running"
+    },
+    {
+      "pid": 1548877,
+      "state": "sleeping"
+    },
+    {
+      "pid": 1553877,
+      "state": "sleeping"
+    }
+  ]
+}

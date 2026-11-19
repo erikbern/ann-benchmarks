@@ -1,0 +1,33 @@
+Zvec QG succinct: formal Python entry, median of 3 best-of-5 repetitions.
+Competitors: existing pre-campaign best-of-5 results; historical measurements, not rerun.
+Zvec first repetition best-of-5 is provided separately for matching aggregation.
+
+SIFT
+Floor | actual Zvec recall | Zvec median QPS | Zvec repeat-0 best5 | Huawei historical best5 | 01AI historical best5
+30% | 31.95400% | 67,544 | 67,544 | 51,752 | 43,019
+50% | 51.80600% | 58,865 | 58,865 | 51,752 | 43,019
+70% | 73.79300% | 49,299 | 49,299 | 45,470 | 43,019
+85% | 85.47400% | 42,571 | 42,571 | 35,938 | 27,461
+90% | 90.26000% | 39,277 | 39,277 | 33,406 | 27,461
+95% | 95.17300% | 33,005 | 33,005 | 25,444 | 26,789
+99% | 99.05800% | 22,452 | 22,452 | 15,463 | 16,357
+
+GIST
+Floor | actual Zvec recall | Zvec median QPS | Zvec repeat-0 best5 | Huawei historical best5 | 01AI historical best5
+30% | 31.68000% | 35,097 | 34,770 | 13,769 | 21,518
+50% | 51.91000% | 28,012 | 27,489 | 12,903 | 16,333
+70% | 70.09000% | 22,384 | 22,038 | 7,230 | 11,611
+85% | 86.63000% | 14,977 | 14,977 | 3,878 | 7,365
+90% | 90.26000% | 12,664 | 12,664 | 1,315 | 5,584
+95% | 95.52000% | 8,688 | 8,688 | 274 | 3,697
+99% | 99.46000% | 3,211 | 3,211 | not reached | 1,424
+
+GLOVE
+Floor | actual Zvec recall | Zvec median QPS | Zvec repeat-0 best5 | Huawei historical best5 | 01AI historical best5
+30% | 32.27500% | 41,914 | 41,914 | 64,393 | 43,539
+50% | 50.08900% | 35,923 | 35,923 | 47,141 | 43,539
+70% | 70.26600% | 26,750 | 26,750 | 33,191 | 30,721
+85% | 85.26500% | 16,438 | 16,492 | 18,312 | 18,268
+90% | 90.01000% | 12,685 | 12,690 | 13,810 | 14,688
+95% | 95.02600% | 8,108 | 8,153 | 7,878 | 7,948
+99% | 99.00100% | 3,469 | 3,491 | 2,720 | 2,592

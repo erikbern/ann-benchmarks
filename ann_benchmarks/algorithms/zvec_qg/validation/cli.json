@@ -1,0 +1,242 @@
+{
+  "purpose": "ANN CLI integration correctness only; background workloads active; no formal QPS",
+  "runs": 1,
+  "algorithm": "zvec_qg",
+  "variant": "succinct",
+  "passed": true,
+  "groups": 21,
+  "full_query_count": 147000,
+  "measurements": [
+    {
+      "dataset": "sift-128-euclidean",
+      "setting": 0,
+      "target": 0.3,
+      "ann_runner_distance_recall": 0.31954,
+      "strict_id_recall": 0.31936,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/sift-128-euclidean/10/zvec_qg/euclidean_128_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_0.hdf5",
+      "sha256": "99e457fce91bf058ffcb9f468e90bfbe1d121bdc86619937374ceafb46dda011"
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "setting": 1,
+      "target": 0.5,
+      "ann_runner_distance_recall": 0.51806,
+      "strict_id_recall": 0.51773,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/sift-128-euclidean/10/zvec_qg/euclidean_128_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_1.hdf5",
+      "sha256": "e5f181000a20eee7da66fc0ec93f0fea3335ac039defee3e42fc5b169ee97978"
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "setting": 2,
+      "target": 0.7,
+      "ann_runner_distance_recall": 0.73793,
+      "strict_id_recall": 0.73733,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/sift-128-euclidean/10/zvec_qg/euclidean_128_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_2.hdf5",
+      "sha256": "fc70ed8c0dc65c16d6d72674bb96ec0aedf9b4465a840b858e9da3aa173ecee0"
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "setting": 3,
+      "target": 0.85,
+      "ann_runner_distance_recall": 0.85474,
+      "strict_id_recall": 0.85392,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/sift-128-euclidean/10/zvec_qg/euclidean_128_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_3.hdf5",
+      "sha256": "64b913d24b6b515443c29054f6e797bacb7a6b405c2dbb69807f070435503700"
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "setting": 4,
+      "target": 0.9,
+      "ann_runner_distance_recall": 0.9026,
+      "strict_id_recall": 0.90172,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/sift-128-euclidean/10/zvec_qg/euclidean_128_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_4.hdf5",
+      "sha256": "2e7fd8e145417aa3b68ec04883de2d7c9564de85e650b9e0c9cecfd09dbdc2dc"
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "setting": 5,
+      "target": 0.95,
+      "ann_runner_distance_recall": 0.95173,
+      "strict_id_recall": 0.9509,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/sift-128-euclidean/10/zvec_qg/euclidean_128_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_5.hdf5",
+      "sha256": "419429db669276b8906c08a6b01b508eca563e1096778583b2fa8e276f73b830"
+    },
+    {
+      "dataset": "sift-128-euclidean",
+      "setting": 6,
+      "target": 0.99,
+      "ann_runner_distance_recall": 0.99058,
+      "strict_id_recall": 0.9899,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/sift-128-euclidean/10/zvec_qg/euclidean_128_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_6.hdf5",
+      "sha256": "c3aae42aeb4db793a6736b86fdb3808364ec5b546b07e8a7adb618b120444fd5"
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "setting": 0,
+      "target": 0.3,
+      "ann_runner_distance_recall": 0.3168,
+      "strict_id_recall": 0.3072,
+      "query_count": 1000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/gist-960-euclidean/10/zvec_qg/euclidean_960_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_0.hdf5",
+      "sha256": "a31f190f89f5dbfeccbb936754ea4649a03511b1776be5ed8f599aeb3621bed5"
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "setting": 1,
+      "target": 0.5,
+      "ann_runner_distance_recall": 0.5191,
+      "strict_id_recall": 0.5006,
+      "query_count": 1000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/gist-960-euclidean/10/zvec_qg/euclidean_960_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_1.hdf5",
+      "sha256": "78afca9951af075c46d3ab874b118a912d02677ef40381885e069924a9b4ada9"
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "setting": 2,
+      "target": 0.7,
+      "ann_runner_distance_recall": 0.7009,
+      "strict_id_recall": 0.6741,
+      "query_count": 1000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/gist-960-euclidean/10/zvec_qg/euclidean_960_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_2.hdf5",
+      "sha256": "6831f20a5219d67a71459382cd95aa5dcb7a3de270aba44d85572ecca4a68008"
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "setting": 3,
+      "target": 0.85,
+      "ann_runner_distance_recall": 0.8663,
+      "strict_id_recall": 0.8376,
+      "query_count": 1000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/gist-960-euclidean/10/zvec_qg/euclidean_960_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_3.hdf5",
+      "sha256": "d0d5eb9f0bedf05b09eae6e17a0239ab05992943518057bf43cf1fb1c7b0551a"
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "setting": 4,
+      "target": 0.9,
+      "ann_runner_distance_recall": 0.9026,
+      "strict_id_recall": 0.8762,
+      "query_count": 1000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/gist-960-euclidean/10/zvec_qg/euclidean_960_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_4.hdf5",
+      "sha256": "f4d57485744db62a34bf3f4d4a92e4833c6d9c9e61bb2b834ffbbfe0cbcc4969"
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "setting": 5,
+      "target": 0.95,
+      "ann_runner_distance_recall": 0.9552,
+      "strict_id_recall": 0.9378,
+      "query_count": 1000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/gist-960-euclidean/10/zvec_qg/euclidean_960_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_5.hdf5",
+      "sha256": "6d84e6c4f7c58ef7bbb8d7a6d49ad6027057fa559e2ae6553175e6c0474c3cb2"
+    },
+    {
+      "dataset": "gist-960-euclidean",
+      "setting": 6,
+      "target": 0.99,
+      "ann_runner_distance_recall": 0.9946,
+      "strict_id_recall": 0.9909,
+      "query_count": 1000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/gist-960-euclidean/10/zvec_qg/euclidean_960_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_6.hdf5",
+      "sha256": "ece22984fde960b542fa7a71115a368327868f54acfff4f94b3316bb026cd416"
+    },
+    {
+      "dataset": "glove-100-angular",
+      "setting": 0,
+      "target": 0.3,
+      "ann_runner_distance_recall": 0.32275,
+      "strict_id_recall": 0.31541,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/glove-100-angular/10/zvec_qg/angular_100_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_0.hdf5",
+      "sha256": "976ac0ba1917e90c18605628440db88ea07cddbb9edec6e75c078f27e9cd6bd6"
+    },
+    {
+      "dataset": "glove-100-angular",
+      "setting": 1,
+      "target": 0.5,
+      "ann_runner_distance_recall": 0.50089,
+      "strict_id_recall": 0.48836,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/glove-100-angular/10/zvec_qg/angular_100_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_1.hdf5",
+      "sha256": "65c342af18640975b04e09dff83cf07a8b3be7247b1481b5b3498763d2af894d"
+    },
+    {
+      "dataset": "glove-100-angular",
+      "setting": 2,
+      "target": 0.7,
+      "ann_runner_distance_recall": 0.70266,
+      "strict_id_recall": 0.68487,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/glove-100-angular/10/zvec_qg/angular_100_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_2.hdf5",
+      "sha256": "84225c5124c7903fbf99d36a9a94c6cc3315dfd3626e23aa3c5177e7bf75000c"
+    },
+    {
+      "dataset": "glove-100-angular",
+      "setting": 3,
+      "target": 0.85,
+      "ann_runner_distance_recall": 0.85265,
+      "strict_id_recall": 0.83595,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/glove-100-angular/10/zvec_qg/angular_100_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_3.hdf5",
+      "sha256": "ccbbbe2f1252c6fc40453a79aa709339b10a89f54b346b8fb7f7017c265fbf91"
+    },
+    {
+      "dataset": "glove-100-angular",
+      "setting": 4,
+      "target": 0.9,
+      "ann_runner_distance_recall": 0.9001,
+      "strict_id_recall": 0.88457,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/glove-100-angular/10/zvec_qg/angular_100_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_4.hdf5",
+      "sha256": "6036d182491dc67248634285d69806d754f63d7e846d3d3fd15c31f4e42881ff"
+    },
+    {
+      "dataset": "glove-100-angular",
+      "setting": 5,
+      "target": 0.95,
+      "ann_runner_distance_recall": 0.95026,
+      "strict_id_recall": 0.9373,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/glove-100-angular/10/zvec_qg/angular_100_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_5.hdf5",
+      "sha256": "504f46ba99db844a2ffefdeb1492ffee677cf0f0e572c63d5015d3a0a3e186b1"
+    },
+    {
+      "dataset": "glove-100-angular",
+      "setting": 6,
+      "target": 0.99,
+      "ann_runner_distance_recall": 0.99001,
+      "strict_id_recall": 0.98444,
+      "query_count": 10000,
+      "native_ids_bitwise_equal": true,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/cli-validation/results/glove-100-angular/10/zvec_qg/angular_100_home_xingrui_workspace_annbenchmark_ann_benchmarks_results_r7i_ann_adapter_20261119_succinct_profiles_ZVEC_QG_ARTIFACT_6.hdf5",
+      "sha256": "77cd68bd7877c06243e8deb63a0e3b0f3a00184f8fbd67d802d6077ca3f5446c"
+    }
+  ]
+}

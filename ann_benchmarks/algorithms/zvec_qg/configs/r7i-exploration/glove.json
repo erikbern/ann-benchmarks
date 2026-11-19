@@ -1,0 +1,225 @@
+{
+  "schema_version": 2,
+  "engine": "QuantizedGraphIndex",
+  "dataset": "glove-100-angular",
+  "dimension": 100,
+  "train_count": 1183514,
+  "query_count": 10000,
+  "precision": "FP32",
+  "metric": "cosine",
+  "provider_format": "csr-fp32-le-v1",
+  "id_convention": "internal CSR row -> ids.u64 -> original HDF5 train row",
+  "profiles": {
+    "n32": {
+      "name": "n32",
+      "index_prefix": "${ZVEC_QG_INDEX_ROOT}/glove/n32",
+      "encoding": {
+        "codec": "native",
+        "max_neighbors": 32,
+        "threads": 8,
+        "rotation_views": 2,
+        "codebook": "hadamard",
+        "block_dimension": 6,
+        "rank": 8,
+        "training_samples": 1024,
+        "seed": 20261031,
+        "center_weight": 1.0
+      },
+      "router": {
+        "anchors": 65536,
+        "projected_dimension": 64,
+        "seed": 202610261259,
+        "rotation_views": 2
+      }
+    },
+    "n64": {
+      "name": "n64",
+      "index_prefix": "${ZVEC_QG_INDEX_ROOT}/glove/n64",
+      "encoding": {
+        "codec": "native",
+        "max_neighbors": 64,
+        "threads": 8,
+        "rotation_views": 2,
+        "codebook": "hadamard",
+        "block_dimension": 6,
+        "rank": 8,
+        "training_samples": 1024,
+        "seed": 20261031,
+        "center_weight": 1.0
+      },
+      "router": {
+        "anchors": 65536,
+        "projected_dimension": 64,
+        "seed": 202610261259,
+        "rotation_views": 2
+      }
+    }
+  },
+  "variant": "exploration",
+  "ann_metric": "angular",
+  "train_shape": [
+    1183514,
+    100
+  ],
+  "train_sha256": "3cccad7d66dd35ffd7215e37503f2e1fa31b3aab917a45aa0a6eb4ef590ebcef",
+  "provider_prefix": "${ZVEC_QG_INDEX_ROOT}/glove/provider",
+  "construction_provenance": {
+    "base_graph": {
+      "m": 32,
+      "ef_construction": 400,
+      "source_index": "index",
+      "source_sha256": "59ed7e66e97e7384987f2d029764dbab433f1c6b8ff2993cf79509dbb3cd623a",
+      "rebuild_config": "base-glove.yaml"
+    },
+    "native_best_config": "benchmark-configs/r7i-new-api/exploration/best-glove.json"
+  },
+  "points": [
+    {
+      "name": "migration-0",
+      "phase": "migration",
+      "target": 0.3,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0,
+        "max_expansions": 13,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0,
+        "max_expansions": 24,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 64,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 1024,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 0.04,
+        "max_expansions": 1536,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-4",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 1024,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 0.0565,
+        "max_expansions": 384,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.08625,
+        "max_expansions": 768,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 0.125625,
+        "max_expansions": 1536,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/glove/provider.vectors",
+      "sha256": "f57b0fb3b11d9b71f2f2ac82c2559678e5ac2e5ceb9751e259b54c7f08f3f11c",
+      "bytes": 473405600
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/glove/provider.offsets",
+      "sha256": "14016b995e8a73a69ce55db6e3805fd4672876891791d4f9b3e4ad73b8608da6",
+      "bytes": 9468120
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/glove/provider.edges",
+      "sha256": "d57e875367ac5276d81e02cb0e1e008e17ccd6db01ff1266c1dfcdbf6270c65d",
+      "bytes": 241947676
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/glove/provider.ids",
+      "sha256": "175d109f4a6a2fed339b9c0ee898a0396e79ba9fafe4b8aa7e2f4d8ff27179b0",
+      "bytes": 9468112
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/glove/n32.qg",
+      "sha256": "a9042cbe059ab19f6240b4caa7960479bdddf4162efdc014f18275bb67bb7f2b",
+      "bytes": 1893623200
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/glove/n32.router",
+      "sha256": "ba6b6d75d6969ac5117aea97ef11e7de3f149bb580a2954fddc0341085958085",
+      "bytes": 17908132
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/glove/n64.qg",
+      "sha256": "e027eaf5740854c9f4d36edeacbf215ed44e8472bac91044d5a6088ea63d5edc",
+      "bytes": 3560010912
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/glove/n64.router",
+      "sha256": "ba6b6d75d6969ac5117aea97ef11e7de3f149bb580a2954fddc0341085958085",
+      "bytes": 17908132
+    }
+  ]
+}

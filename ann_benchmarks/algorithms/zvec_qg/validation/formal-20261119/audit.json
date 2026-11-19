@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "raw_files": 315,
+  "timed_queries": 2205000,
+  "all_round_qps_recomputed": true,
+  "all_raw_hashes_checked": true,
+  "competing_algorithms_rerun": false
+}

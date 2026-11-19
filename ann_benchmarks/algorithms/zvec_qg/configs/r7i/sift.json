@@ -1,0 +1,193 @@
+{
+  "schema_version": 2,
+  "engine": "QuantizedGraphIndex",
+  "dataset": "sift-128-euclidean",
+  "dimension": 128,
+  "train_count": 1000000,
+  "query_count": 10000,
+  "precision": "FP32",
+  "metric": "l2sq",
+  "provider_format": "csr-fp32-le-v1",
+  "id_convention": "internal CSR row -> ids.u64 -> original HDF5 train row",
+  "profiles": {
+    "n64": {
+      "name": "n64",
+      "index_prefix": "${ZVEC_QG_INDEX_ROOT}/sift/n64",
+      "encoding": {
+        "codec": "native",
+        "max_neighbors": 64,
+        "threads": 8,
+        "rotation_views": 2,
+        "codebook": "hadamard",
+        "block_dimension": 6,
+        "rank": 8,
+        "training_samples": 1024,
+        "seed": 20261031,
+        "center_weight": 1.0
+      },
+      "router": {
+        "anchors": 65536,
+        "projected_dimension": 64,
+        "seed": 202610261259,
+        "rotation_views": 2
+      }
+    }
+  },
+  "variant": "succinct",
+  "ann_metric": "euclidean",
+  "train_shape": [
+    1000000,
+    128
+  ],
+  "train_sha256": "ac8e11ed111b09e882bcf0ef1a77ebdd36c89f495bce8fd596603f69c35148e6",
+  "provider_prefix": "${ZVEC_QG_INDEX_ROOT}/sift/provider",
+  "construction_provenance": {
+    "base_graph": {
+      "m": 32,
+      "ef_construction": 400,
+      "source_index": "index",
+      "source_sha256": "5eb10b755843219b4dc29068ebb2bcdc6ba30dd63da84bd5272c78896bad3b7f",
+      "rebuild_config": "base-sift.yaml"
+    },
+    "native_best_config": "benchmark-configs/r7i-new-api/succinct/best-sift.json"
+  },
+  "points": [
+    {
+      "name": "migration-0",
+      "phase": "migration",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.002,
+        "max_expansions": 16,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "coverage-2",
+      "phase": "tuning",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0075,
+        "max_expansions": 24,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.008,
+        "max_expansions": 48,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.038,
+        "max_expansions": 64,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.09,
+        "max_expansions": 128,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/sift/provider.vectors",
+      "sha256": "795a11ac35edce96d24d73d863c8c708d4c434a526602086e9f60eb62c93c773",
+      "bytes": 512000000
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/sift/provider.offsets",
+      "sha256": "8c6e5b2e7ea49ed4b7142f9d95af3b937dbe9689c5e33b409ca42e06102b5d50",
+      "bytes": 8000008
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/sift/provider.edges",
+      "sha256": "2bcf085cadc3b9e51c7457b4177e4cfbc973fa550e4d17d717b124a233865425",
+      "bytes": 134705460
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/sift/provider.ids",
+      "sha256": "a62c275f14652eb2c6b889dff531a8f54e41a57414828726d5ef548018e56ca0",
+      "bytes": 8000000
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/sift/n64.qg",
+      "sha256": "36db76ac98a784873b85831984cb5a154b374f5c93b440a19cca82a0719865f6",
+      "bytes": 3008000800
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/sift/n64.router",
+      "sha256": "39438946fa8d6def801e2cab64baeebcbea9759d6221efcfbf456fbf3bbf7aa1",
+      "bytes": 18480908
+    }
+  ]
+}

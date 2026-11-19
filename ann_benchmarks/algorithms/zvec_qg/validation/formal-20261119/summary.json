@@ -1,0 +1,632 @@
+[
+  {
+    "dataset": "sift",
+    "setting": 0,
+    "point": {
+      "name": "migration-0",
+      "phase": "migration",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.31954,
+    "strict_id_recall": 0.31936,
+    "repeat_best5_qps": [
+      67544.39022819138,
+      67942.1059878348,
+      67078.38358250012
+    ],
+    "qps": 67544.39022819138,
+    "mean_query_us": 14.805078506469727,
+    "first_repeat_best5_qps": 67544.39022819138,
+    "repeat_spread": 0.012876315128738769
+  },
+  {
+    "dataset": "sift",
+    "setting": 1,
+    "point": {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.51806,
+    "strict_id_recall": 0.51773,
+    "repeat_best5_qps": [
+      58864.698196434416,
+      59116.91870110065,
+      58367.79622571142
+    ],
+    "qps": 58864.698196434416,
+    "mean_query_us": 16.988110542297363,
+    "first_repeat_best5_qps": 58864.698196434416,
+    "repeat_spread": 0.012834517042451532
+  },
+  {
+    "dataset": "sift",
+    "setting": 2,
+    "point": {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.002,
+        "max_expansions": 16,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.73793,
+    "strict_id_recall": 0.73733,
+    "repeat_best5_qps": [
+      49298.818042482766,
+      49363.33678561341,
+      48896.34469774247
+    ],
+    "qps": 49298.818042482766,
+    "mean_query_us": 20.284461975097656,
+    "first_repeat_best5_qps": 49298.818042482766,
+    "repeat_spread": 0.009550654363995825
+  },
+  {
+    "dataset": "sift",
+    "setting": 3,
+    "point": {
+      "name": "coverage-2",
+      "phase": "tuning",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0075,
+        "max_expansions": 24,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.85474,
+    "strict_id_recall": 0.85392,
+    "repeat_best5_qps": [
+      42571.220936133584,
+      42739.79526329841,
+      42378.39323368969
+    ],
+    "qps": 42571.220936133584,
+    "mean_query_us": 23.490047454833984,
+    "first_repeat_best5_qps": 42571.220936133584,
+    "repeat_spread": 0.008527978576625461
+  },
+  {
+    "dataset": "sift",
+    "setting": 4,
+    "point": {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.008,
+        "max_expansions": 48,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.9026,
+    "strict_id_recall": 0.90172,
+    "repeat_best5_qps": [
+      39276.5914809498,
+      39477.54865391693,
+      39159.101964068475
+    ],
+    "qps": 39276.5914809498,
+    "mean_query_us": 25.460457801818848,
+    "first_repeat_best5_qps": 39276.5914809498,
+    "repeat_spread": 0.008132124432798538
+  },
+  {
+    "dataset": "sift",
+    "setting": 5,
+    "point": {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.038,
+        "max_expansions": 64,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.95173,
+    "strict_id_recall": 0.9509,
+    "repeat_best5_qps": [
+      33004.91339395599,
+      33228.079098327864,
+      32924.85607213114
+    ],
+    "qps": 33004.91339395599,
+    "mean_query_us": 30.298519134521484,
+    "first_repeat_best5_qps": 33004.91339395599,
+    "repeat_spread": 0.009209547508193472
+  },
+  {
+    "dataset": "sift",
+    "setting": 6,
+    "point": {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.09,
+        "max_expansions": 128,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.99058,
+    "strict_id_recall": 0.9899,
+    "repeat_best5_qps": [
+      22452.02926153487,
+      22547.269768689523,
+      22384.52047015827
+    ],
+    "qps": 22452.02926153487,
+    "mean_query_us": 44.53940391540527,
+    "first_repeat_best5_qps": 22452.02926153487,
+    "repeat_spread": 0.007270618048227595
+  },
+  {
+    "dataset": "gist",
+    "setting": 0,
+    "point": {
+      "name": "capacity-0",
+      "phase": "tuning",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 32,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.3168,
+    "strict_id_recall": 0.3072,
+    "repeat_best5_qps": [
+      34769.990881207,
+      35096.72236772741,
+      35256.62169545665
+    ],
+    "qps": 35096.72236772741,
+    "mean_query_us": 28.492689132690433,
+    "first_repeat_best5_qps": 34769.990881207,
+    "repeat_spread": 0.013995713024839151
+  },
+  {
+    "dataset": "gist",
+    "setting": 1,
+    "point": {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.002,
+        "max_expansions": 20,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.5191,
+    "strict_id_recall": 0.5006,
+    "repeat_best5_qps": [
+      27489.392380340676,
+      28075.82735353968,
+      28011.513674157675
+    ],
+    "qps": 28011.513674157675,
+    "mean_query_us": 35.69960594177247,
+    "first_repeat_best5_qps": 27489.392380340676,
+    "repeat_spread": 0.02133313698189987
+  },
+  {
+    "dataset": "gist",
+    "setting": 2,
+    "point": {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.005,
+        "max_expansions": 32,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.7009,
+    "strict_id_recall": 0.6741,
+    "repeat_best5_qps": [
+      22038.398890278375,
+      22384.305437700463,
+      22393.14906862143
+    ],
+    "qps": 22384.305437700463,
+    "mean_query_us": 44.674158096313484,
+    "first_repeat_best5_qps": 22038.398890278375,
+    "repeat_spread": 0.016096912489388826
+  },
+  {
+    "dataset": "gist",
+    "setting": 3,
+    "point": {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.03,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.8663,
+    "strict_id_recall": 0.8376,
+    "repeat_best5_qps": [
+      14977.196603415154,
+      14844.57154182652,
+      15330.562774360267
+    ],
+    "qps": 14977.196603415154,
+    "mean_query_us": 66.76816940307617,
+    "first_repeat_best5_qps": 14977.196603415154,
+    "repeat_spread": 0.032738650028692584
+  },
+  {
+    "dataset": "gist",
+    "setting": 4,
+    "point": {
+      "name": "migration-4",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.9026,
+    "strict_id_recall": 0.8762,
+    "repeat_best5_qps": [
+      12663.73193722336,
+      12582.924582924581,
+      12963.868231861481
+    ],
+    "qps": 12663.73193722336,
+    "mean_query_us": 78.96566390991211,
+    "first_repeat_best5_qps": 12663.73193722336,
+    "repeat_spread": 0.030274650891085608
+  },
+  {
+    "dataset": "gist",
+    "setting": 5,
+    "point": {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.06,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.9552,
+    "strict_id_recall": 0.9378,
+    "repeat_best5_qps": [
+      8688.464279203883,
+      8616.213906555573,
+      8932.679652259843
+    ],
+    "qps": 8688.464279203883,
+    "mean_query_us": 115.0951385498047,
+    "first_repeat_best5_qps": 8688.464279203883,
+    "repeat_spread": 0.03672909576484518
+  },
+  {
+    "dataset": "gist",
+    "setting": 6,
+    "point": {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.12000000000000001,
+        "max_expansions": 512,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.9946,
+    "strict_id_recall": 0.9909,
+    "repeat_best5_qps": [
+      3210.837359985792,
+      3180.9152848813574,
+      3319.912171970701
+    ],
+    "qps": 3210.837359985792,
+    "mean_query_us": 311.4452362060547,
+    "first_repeat_best5_qps": 3210.837359985792,
+    "repeat_spread": 0.0436971357740914
+  },
+  {
+    "dataset": "glove",
+    "setting": 0,
+    "point": {
+      "name": "migration-0",
+      "phase": "migration",
+      "target": 0.3,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0,
+        "max_expansions": 13,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.32275,
+    "strict_id_recall": 0.31541,
+    "repeat_best5_qps": [
+      41913.61664111794,
+      41808.041832921495,
+      42035.05473481451
+    ],
+    "qps": 41913.61664111794,
+    "mean_query_us": 23.85859489440918,
+    "first_repeat_best5_qps": 41913.61664111794,
+    "repeat_spread": 0.005429886020498875
+  },
+  {
+    "dataset": "glove",
+    "setting": 1,
+    "point": {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0,
+        "max_expansions": 24,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.50089,
+    "strict_id_recall": 0.48836,
+    "repeat_best5_qps": [
+      35922.68532158493,
+      35864.2933305287,
+      36138.10406743912
+    ],
+    "qps": 35922.68532158493,
+    "mean_query_us": 27.83756256103516,
+    "first_repeat_best5_qps": 35922.68532158493,
+    "repeat_spread": 0.007634633544482572
+  },
+  {
+    "dataset": "glove",
+    "setting": 2,
+    "point": {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 64,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.70266,
+    "strict_id_recall": 0.68487,
+    "repeat_best5_qps": [
+      26749.507172544778,
+      26623.40201343134,
+      26770.370398737276
+    ],
+    "qps": 26749.507172544778,
+    "mean_query_us": 37.38386631011963,
+    "first_repeat_best5_qps": 26749.507172544778,
+    "repeat_spread": 0.005520270671336203
+  },
+  {
+    "dataset": "glove",
+    "setting": 3,
+    "point": {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 1024,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 0.04,
+        "max_expansions": 1536,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.85265,
+    "strict_id_recall": 0.83595,
+    "repeat_best5_qps": [
+      16492.12001964441,
+      16353.044198365125,
+      16437.943422928132
+    ],
+    "qps": 16437.943422928132,
+    "mean_query_us": 60.83486080169678,
+    "first_repeat_best5_qps": 16492.12001964441,
+    "repeat_spread": 0.00850458297502743
+  },
+  {
+    "dataset": "glove",
+    "setting": 4,
+    "point": {
+      "name": "migration-4",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 1024,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 0.0565,
+        "max_expansions": 384,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.9001,
+    "strict_id_recall": 0.88457,
+    "repeat_best5_qps": [
+      12689.6279642913,
+      12616.337725169064,
+      12685.429296862596
+    ],
+    "qps": 12685.429296862596,
+    "mean_query_us": 78.83059978485107,
+    "first_repeat_best5_qps": 12689.6279642913,
+    "repeat_spread": 0.005809153235968312
+  },
+  {
+    "dataset": "glove",
+    "setting": 5,
+    "point": {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.08625,
+        "max_expansions": 768,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.95026,
+    "strict_id_recall": 0.9373,
+    "repeat_best5_qps": [
+      8153.11505536388,
+      8058.005751623539,
+      8107.708336957761
+    ],
+    "qps": 8107.708336957761,
+    "mean_query_us": 123.33941459655762,
+    "first_repeat_best5_qps": 8153.11505536388,
+    "repeat_spread": 0.01180308213619452
+  },
+  {
+    "dataset": "glove",
+    "setting": 6,
+    "point": {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.004,
+        "margin": 0.125625,
+        "max_expansions": 1536,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    "ann_recall": 0.99001,
+    "strict_id_recall": 0.98444,
+    "repeat_best5_qps": [
+      3490.7610148040317,
+      3447.9404077300937,
+      3469.386455269458
+    ],
+    "qps": 3469.386455269458,
+    "mean_query_us": 288.23540210723877,
+    "first_repeat_best5_qps": 3490.7610148040317,
+    "repeat_spread": 0.012419184211518441
+  }
+]

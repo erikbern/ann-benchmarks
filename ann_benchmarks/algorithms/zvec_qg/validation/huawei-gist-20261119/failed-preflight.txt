@@ -1,0 +1,23 @@
+QSG: edge_size=40
+QSG: outdegree=48
+QSG: indegree=40
+QSG: edge_size_for_search=-2
+QSG: epsilon=0.001
+QSG: metric=euclidean
+QSG: object_type=Float
+QSG: range=175
+QSG: threshold=60
+QSG: Q=3
+QSG: era=1
+Traceback (most recent call last):
+  File "/home/xingrui/workspace/annbenchmark/c7ibench/scripts/diagnose_huawei_gist.py", line 156, in <module>
+    if __name__=='__main__':main()
+  File "/home/xingrui/workspace/annbenchmark/c7ibench/scripts/diagnose_huawei_gist.py", line 121, in main
+    if a.worker:return worker(a)
+  File "/home/xingrui/workspace/annbenchmark/c7ibench/scripts/diagnose_huawei_gist.py", line 99, in worker
+    guard(a)
+  File "/home/xingrui/workspace/annbenchmark/c7ibench/scripts/diagnose_huawei_gist.py", line 41, in guard
+    require(psutil.Process().num_threads()==1,'One query thread required')
+  File "/home/xingrui/workspace/annbenchmark/c7ibench/scripts/diagnose_huawei_gist.py", line 28, in require
+    raise ValueError(msg)
+ValueError: One query thread required

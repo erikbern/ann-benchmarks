@@ -1,0 +1,193 @@
+{
+  "schema_version": 2,
+  "engine": "QuantizedGraphIndex",
+  "dataset": "gist-960-euclidean",
+  "dimension": 960,
+  "train_count": 1000000,
+  "query_count": 1000,
+  "precision": "FP32",
+  "metric": "l2sq",
+  "provider_format": "csr-fp32-le-v1",
+  "id_convention": "internal CSR row -> ids.u64 -> original HDF5 train row",
+  "profiles": {
+    "n64": {
+      "name": "n64",
+      "index_prefix": "${ZVEC_QG_INDEX_ROOT}/gist/n64",
+      "encoding": {
+        "codec": "low_rank",
+        "max_neighbors": 64,
+        "threads": 8,
+        "rotation_views": 1,
+        "codebook": "gaussian",
+        "block_dimension": 8,
+        "rank": 8,
+        "training_samples": 1024,
+        "seed": 20261031,
+        "center_weight": 1.0
+      },
+      "router": {
+        "anchors": 8192,
+        "projected_dimension": 256,
+        "seed": 202610261259,
+        "rotation_views": 1
+      }
+    }
+  },
+  "variant": "succinct",
+  "ann_metric": "euclidean",
+  "train_shape": [
+    1000000,
+    960
+  ],
+  "train_sha256": "1d9dfa933a86b1b78ef3de82eb286f85899866c428d373e42613783a13811038",
+  "provider_prefix": "${ZVEC_QG_INDEX_ROOT}/gist/provider",
+  "construction_provenance": {
+    "base_graph": {
+      "m": 50,
+      "ef_construction": 500,
+      "source_index": "index",
+      "source_sha256": "1efbe7f33cf6ac9404f47db6e67d8cc4e2026814cc0eafca3357f9365979c7d7",
+      "rebuild_config": "base-gist.yaml"
+    },
+    "native_best_config": "benchmark-configs/r7i-new-api/succinct/best-gist.json"
+  },
+  "points": [
+    {
+      "name": "capacity-0",
+      "phase": "tuning",
+      "target": 0.3,
+      "profile": "n64",
+      "capacity": 32,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.008,
+        "margin": 1.0,
+        "max_expansions": 10,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-1",
+      "phase": "migration",
+      "target": 0.5,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.002,
+        "max_expansions": 20,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-2",
+      "phase": "migration",
+      "target": 0.7,
+      "profile": "n64",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.005,
+        "max_expansions": 32,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-3",
+      "phase": "migration",
+      "target": 0.85,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.03,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-4",
+      "phase": "migration",
+      "target": 0.9,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-5",
+      "phase": "migration",
+      "target": 0.95,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.06,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "name": "migration-6",
+      "phase": "migration",
+      "target": 0.99,
+      "profile": "n64",
+      "capacity": 2048,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.12000000000000001,
+        "max_expansions": 512,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/gist/provider.vectors",
+      "sha256": "7223bd18299420d00d124980c594011fb1a5cd40b25e73b5227d1714a7d9e6b2",
+      "bytes": 3840000000
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/gist/provider.offsets",
+      "sha256": "78723587d9f22f03c6763bbc943d21183e7c8c8d45edab7140b7a92c980eb55b",
+      "bytes": 8000008
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/gist/provider.edges",
+      "sha256": "5eed46e3e77e08880c2b1c06f8deea944bb462418bfaf2e15791f4b9ce6bcefc",
+      "bytes": 96513280
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/gist/provider.ids",
+      "sha256": "8af7881dd0581880fe3f1df7cc54ce86c20a8abc7c79ea04458c9b0905a7caef",
+      "bytes": 8000000
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/gist/n64.qg",
+      "sha256": "a44ae6eb8839558bb50a79417ec49cceb33b5c2ff76583d76bee5f216d3e89ca",
+      "bytes": 5952037920
+    },
+    {
+      "path": "${ZVEC_QG_INDEX_ROOT}/gist/n64.router",
+      "sha256": "4b4db3293b9747c22eca9e044128b69cf3ebf0ed48954296aa61e63e23e64542",
+      "bytes": 7217156
+    }
+  ]
+}

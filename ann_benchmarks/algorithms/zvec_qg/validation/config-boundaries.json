@@ -1,0 +1,26 @@
+[
+  {
+    "case": "legacy",
+    "passed": true
+  },
+  {
+    "case": "rotation",
+    "passed": true
+  },
+  {
+    "case": "capacity",
+    "passed": true
+  },
+  {
+    "case": "nonfinite_margin",
+    "passed": true
+  },
+  {
+    "case": "metric_dimension",
+    "passed": true
+  },
+  {
+    "case": "missing_environment",
+    "passed": true
+  }
+]

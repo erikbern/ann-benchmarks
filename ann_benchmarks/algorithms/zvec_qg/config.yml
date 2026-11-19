@@ -1,0 +1,12 @@
+float:
+  any:
+  - base_args: ['@metric', '@dimension', 'r7i', '${ZVEC_QG_ARTIFACT}']
+    constructor: ZvecQuantizedGraph
+    disabled: false
+    docker_tag: ann-benchmarks-zvec_qg
+    module: ann_benchmarks.algorithms.zvec_qg
+    name: zvec_qg
+    run_groups:
+      frozen-index:
+        args: []
+        query_args: [[0, 1, 2, 3, 4, 5, 6]]

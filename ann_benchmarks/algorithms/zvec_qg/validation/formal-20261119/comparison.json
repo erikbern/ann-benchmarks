@@ -1,0 +1,1209 @@
+[
+  {
+    "dataset": "sift",
+    "target": 0.3,
+    "zvec": {
+      "dataset": "sift",
+      "setting": 0,
+      "point": {
+        "name": "migration-0",
+        "phase": "migration",
+        "target": 0.3,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.004,
+          "margin": 1.0,
+          "max_expansions": 10,
+          "route_beam": 0,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.31954,
+      "strict_id_recall": 0.31936,
+      "repeat_best5_qps": [
+        67544.39022819138,
+        67942.1059878348,
+        67078.38358250012
+      ],
+      "qps": 67544.39022819138,
+      "mean_query_us": 14.805078506469727,
+      "first_repeat_best5_qps": 67544.39022819138,
+      "repeat_spread": 0.012876315128738769
+    },
+    "huawei": {
+      "dataset": "sift",
+      "algorithm": "qsgngt",
+      "qps": 51751.62992246455,
+      "ann_recall": 0.50756,
+      "strict_id_recall": 0.50709,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/qsgngt/euclidean_Float_0_1_Q_2_edge_120_epsilon_0_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_175_rangeMax_175_sample_5000_searchA_400_threshold_60_0_0_0_9_4_0_1.hdf5",
+      "mtime": 1794940383.8923268,
+      "sha256": "250d3ae27a7cc7087d0acfb59fedd8d56fd3fb9639ab8e54da6fe4f20a4d698c",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.50756
+    },
+    "ai01": {
+      "dataset": "sift",
+      "algorithm": "descartes(01AI)",
+      "qps": 43019.208520344946,
+      "ann_recall": 0.79062,
+      "strict_id_recall": 0.78999,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/descartes(01AI)/euclidean_L_128_M_64_S_3_0_10.hdf5",
+      "mtime": 1795065549.889199,
+      "sha256": "ee7bfb0244c905ed0962427d4544088c126b24898375165bd54f6a8b24d751dd",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.79062
+    }
+  },
+  {
+    "dataset": "sift",
+    "target": 0.5,
+    "zvec": {
+      "dataset": "sift",
+      "setting": 1,
+      "point": {
+        "name": "migration-1",
+        "phase": "migration",
+        "target": 0.5,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 1.0,
+          "max_expansions": 10,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.51806,
+      "strict_id_recall": 0.51773,
+      "repeat_best5_qps": [
+        58864.698196434416,
+        59116.91870110065,
+        58367.79622571142
+      ],
+      "qps": 58864.698196434416,
+      "mean_query_us": 16.988110542297363,
+      "first_repeat_best5_qps": 58864.698196434416,
+      "repeat_spread": 0.012834517042451532
+    },
+    "huawei": {
+      "dataset": "sift",
+      "algorithm": "qsgngt",
+      "qps": 51751.62992246455,
+      "ann_recall": 0.50756,
+      "strict_id_recall": 0.50709,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/qsgngt/euclidean_Float_0_1_Q_2_edge_120_epsilon_0_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_175_rangeMax_175_sample_5000_searchA_400_threshold_60_0_0_0_9_4_0_1.hdf5",
+      "mtime": 1794940383.8923268,
+      "sha256": "250d3ae27a7cc7087d0acfb59fedd8d56fd3fb9639ab8e54da6fe4f20a4d698c",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.50756
+    },
+    "ai01": {
+      "dataset": "sift",
+      "algorithm": "descartes(01AI)",
+      "qps": 43019.208520344946,
+      "ann_recall": 0.79062,
+      "strict_id_recall": 0.78999,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/descartes(01AI)/euclidean_L_128_M_64_S_3_0_10.hdf5",
+      "mtime": 1795065549.889199,
+      "sha256": "ee7bfb0244c905ed0962427d4544088c126b24898375165bd54f6a8b24d751dd",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.79062
+    }
+  },
+  {
+    "dataset": "sift",
+    "target": 0.7,
+    "zvec": {
+      "dataset": "sift",
+      "setting": 2,
+      "point": {
+        "name": "migration-2",
+        "phase": "migration",
+        "target": 0.7,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.002,
+          "max_expansions": 16,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.73793,
+      "strict_id_recall": 0.73733,
+      "repeat_best5_qps": [
+        49298.818042482766,
+        49363.33678561341,
+        48896.34469774247
+      ],
+      "qps": 49298.818042482766,
+      "mean_query_us": 20.284461975097656,
+      "first_repeat_best5_qps": 49298.818042482766,
+      "repeat_spread": 0.009550654363995825
+    },
+    "huawei": {
+      "dataset": "sift",
+      "algorithm": "qsgngt",
+      "qps": 45470.30821951222,
+      "ann_recall": 0.71698,
+      "strict_id_recall": 0.71636,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_01_ifES_0_indegree_100_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_200_rangeMax_200_sample_5000_searchA_400_threshold_60_0_0_0_0_0_95_4_0_0.hdf5",
+      "mtime": 1794996441.4578164,
+      "sha256": "d138ef9030763e7373c726f305bf3075ba60ef7273a7e65bea9e912d82b55115",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.71698
+    },
+    "ai01": {
+      "dataset": "sift",
+      "algorithm": "descartes(01AI)",
+      "qps": 43019.208520344946,
+      "ann_recall": 0.79062,
+      "strict_id_recall": 0.78999,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/descartes(01AI)/euclidean_L_128_M_64_S_3_0_10.hdf5",
+      "mtime": 1795065549.889199,
+      "sha256": "ee7bfb0244c905ed0962427d4544088c126b24898375165bd54f6a8b24d751dd",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.79062
+    }
+  },
+  {
+    "dataset": "sift",
+    "target": 0.85,
+    "zvec": {
+      "dataset": "sift",
+      "setting": 3,
+      "point": {
+        "name": "coverage-2",
+        "phase": "tuning",
+        "target": 0.85,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.0075,
+          "max_expansions": 24,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.85474,
+      "strict_id_recall": 0.85392,
+      "repeat_best5_qps": [
+        42571.220936133584,
+        42739.79526329841,
+        42378.39323368969
+      ],
+      "qps": 42571.220936133584,
+      "mean_query_us": 23.490047454833984,
+      "first_repeat_best5_qps": 42571.220936133584,
+      "repeat_spread": 0.008527978576625461
+    },
+    "huawei": {
+      "dataset": "sift",
+      "algorithm": "qsgngt",
+      "qps": 35938.19831923557,
+      "ann_recall": 0.87092,
+      "strict_id_recall": 0.87003,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_01_ifES_0_indegree_100_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_200_rangeMax_200_sample_5000_searchA_400_threshold_60_1_2_1_005_5_1_0.hdf5",
+      "mtime": 1794995985.311398,
+      "sha256": "3503b1e6b5d3c5bdc7d5a3310f7dcc3f0db0ceba0ff0a09b0854a631a0da555a",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.87092
+    },
+    "ai01": {
+      "dataset": "sift",
+      "algorithm": "descartes(01AI)",
+      "qps": 27461.06363643506,
+      "ann_recall": 0.94941,
+      "strict_id_recall": 0.94861,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/descartes(01AI)/euclidean_L_128_M_64_S_3_0_20.hdf5",
+      "mtime": 1795065556.193284,
+      "sha256": "1c9774fe9a0ab48fa20d9b6003a961b5a5088c428d4426ae3ce7a0053567ced3",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.94941
+    }
+  },
+  {
+    "dataset": "sift",
+    "target": 0.9,
+    "zvec": {
+      "dataset": "sift",
+      "setting": 4,
+      "point": {
+        "name": "migration-3",
+        "phase": "migration",
+        "target": 0.9,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.008,
+          "max_expansions": 48,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9026,
+      "strict_id_recall": 0.90172,
+      "repeat_best5_qps": [
+        39276.5914809498,
+        39477.54865391693,
+        39159.101964068475
+      ],
+      "qps": 39276.5914809498,
+      "mean_query_us": 25.460457801818848,
+      "first_repeat_best5_qps": 39276.5914809498,
+      "repeat_spread": 0.008132124432798538
+    },
+    "huawei": {
+      "dataset": "sift",
+      "algorithm": "qsgngt",
+      "qps": 33405.94923683213,
+      "ann_recall": 0.90244,
+      "strict_id_recall": 0.90159,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_01_ifES_0_indegree_100_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_200_rangeMax_200_sample_5000_searchA_400_threshold_60_1_2_1_02_4_1_0.hdf5",
+      "mtime": 1794995957.6910093,
+      "sha256": "6164e923a229cd4cad46caaf4e3ea68c34a41d2cb699139dfa25dab5779ac5fd",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.90244
+    },
+    "ai01": {
+      "dataset": "sift",
+      "algorithm": "descartes(01AI)",
+      "qps": 27461.06363643506,
+      "ann_recall": 0.94941,
+      "strict_id_recall": 0.94861,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/descartes(01AI)/euclidean_L_128_M_64_S_3_0_20.hdf5",
+      "mtime": 1795065556.193284,
+      "sha256": "1c9774fe9a0ab48fa20d9b6003a961b5a5088c428d4426ae3ce7a0053567ced3",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.94941
+    }
+  },
+  {
+    "dataset": "sift",
+    "target": 0.95,
+    "zvec": {
+      "dataset": "sift",
+      "setting": 5,
+      "point": {
+        "name": "migration-5",
+        "phase": "migration",
+        "target": 0.95,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.038,
+          "max_expansions": 64,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.95173,
+      "strict_id_recall": 0.9509,
+      "repeat_best5_qps": [
+        33004.91339395599,
+        33228.079098327864,
+        32924.85607213114
+      ],
+      "qps": 33004.91339395599,
+      "mean_query_us": 30.298519134521484,
+      "first_repeat_best5_qps": 33004.91339395599,
+      "repeat_spread": 0.009209547508193472
+    },
+    "huawei": {
+      "dataset": "sift",
+      "algorithm": "qsgngt",
+      "qps": 25444.095899211316,
+      "ann_recall": 0.95259,
+      "strict_id_recall": 0.95175,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_01_ifES_0_indegree_100_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_200_rangeMax_200_sample_5000_searchA_400_threshold_60_1_3_1_055_0_1_0.hdf5",
+      "mtime": 1794996069.2245786,
+      "sha256": "6761e70f4e34347c0fe29e6db0c9c87c329754225967c0c0d33e4c83cbc16172",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.95259
+    },
+    "ai01": {
+      "dataset": "sift",
+      "algorithm": "descartes(01AI)",
+      "qps": 26788.682378488855,
+      "ann_recall": 0.9507,
+      "strict_id_recall": 0.94988,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/descartes(01AI)/euclidean_L_384_M_32_S_3_0_20.hdf5",
+      "mtime": 1795032546.627072,
+      "sha256": "b67649b79b97ca72227add755993380297d4ef98bc5aea5eddc728f84e910495",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.9507
+    }
+  },
+  {
+    "dataset": "sift",
+    "target": 0.99,
+    "zvec": {
+      "dataset": "sift",
+      "setting": 6,
+      "point": {
+        "name": "migration-6",
+        "phase": "migration",
+        "target": 0.99,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.09,
+          "max_expansions": 128,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.99058,
+      "strict_id_recall": 0.9899,
+      "repeat_best5_qps": [
+        22452.02926153487,
+        22547.269768689523,
+        22384.52047015827
+      ],
+      "qps": 22452.02926153487,
+      "mean_query_us": 44.53940391540527,
+      "first_repeat_best5_qps": 22452.02926153487,
+      "repeat_spread": 0.007270618048227595
+    },
+    "huawei": {
+      "dataset": "sift",
+      "algorithm": "qsgngt",
+      "qps": 15462.524160746983,
+      "ann_recall": 0.99129,
+      "strict_id_recall": 0.99059,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_1_4_5_1_12_0_1_0.hdf5",
+      "mtime": 1794978264.1728199,
+      "sha256": "a7cbe14683b9b027e63b8828efddf9f71196dfad402ab8a41b26d5bf87e83c80",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.99129
+    },
+    "ai01": {
+      "dataset": "sift",
+      "algorithm": "descartes(01AI)",
+      "qps": 16357.349022354592,
+      "ann_recall": 0.99089,
+      "strict_id_recall": 0.9903,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/sift-128-euclidean/10/descartes(01AI)/euclidean_L_128_M_64_S_3_2_30.hdf5",
+      "mtime": 1795066241.3545368,
+      "sha256": "6edba69e0dc282ee6acc84b8d0b5f9543bdafd7d740bde1f35ec881dec36bbdf",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.99089
+    }
+  },
+  {
+    "dataset": "gist",
+    "target": 0.3,
+    "zvec": {
+      "dataset": "gist",
+      "setting": 0,
+      "point": {
+        "name": "capacity-0",
+        "phase": "tuning",
+        "target": 0.3,
+        "profile": "n64",
+        "capacity": 32,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.008,
+          "margin": 1.0,
+          "max_expansions": 10,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.3168,
+      "strict_id_recall": 0.3072,
+      "repeat_best5_qps": [
+        34769.990881207,
+        35096.72236772741,
+        35256.62169545665
+      ],
+      "qps": 35096.72236772741,
+      "mean_query_us": 28.492689132690433,
+      "first_repeat_best5_qps": 34769.990881207,
+      "repeat_spread": 0.013995713024839151
+    },
+    "huawei": {
+      "dataset": "gist",
+      "algorithm": "qsgngt",
+      "qps": 13769.468400474052,
+      "ann_recall": 0.4614,
+      "strict_id_recall": 0.4471,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_1_1_0_98_4_1_0.hdf5",
+      "mtime": 1794856932.8348796,
+      "sha256": "de1a60d251721d0e0876a6235873a0493263212d77a418c6586a2f43f03e5fc8",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.4614
+    },
+    "ai01": {
+      "dataset": "gist",
+      "algorithm": "descartes(01AI)",
+      "qps": 21517.96881813658,
+      "ann_recall": 0.4146,
+      "strict_id_recall": 0.4028,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/descartes(01AI)/euclidean_L_448_M_64_S_1_3_10.hdf5",
+      "mtime": 1794843072.9309611,
+      "sha256": "ea49f2f495bd81f0d24ac4da9b6bd5366cf77cd7241b3b45db34a2988e90550b",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.4146
+    }
+  },
+  {
+    "dataset": "gist",
+    "target": 0.5,
+    "zvec": {
+      "dataset": "gist",
+      "setting": 1,
+      "point": {
+        "name": "migration-1",
+        "phase": "migration",
+        "target": 0.5,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.002,
+          "max_expansions": 20,
+          "route_beam": 0,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.5191,
+      "strict_id_recall": 0.5006,
+      "repeat_best5_qps": [
+        27489.392380340676,
+        28075.82735353968,
+        28011.513674157675
+      ],
+      "qps": 28011.513674157675,
+      "mean_query_us": 35.69960594177247,
+      "first_repeat_best5_qps": 27489.392380340676,
+      "repeat_spread": 0.02133313698189987
+    },
+    "huawei": {
+      "dataset": "gist",
+      "algorithm": "qsgngt",
+      "qps": 12902.73201854364,
+      "ann_recall": 0.5009,
+      "strict_id_recall": 0.4851,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_1_2_0_995_4_1_0.hdf5",
+      "mtime": 1794856938.8709629,
+      "sha256": "5aeedc343f0a9ba2a784a455495d33f56ed4efb3af9bc553da925e3583ed5c29",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.5009
+    },
+    "ai01": {
+      "dataset": "gist",
+      "algorithm": "descartes(01AI)",
+      "qps": 16332.959501557632,
+      "ann_recall": 0.5061,
+      "strict_id_recall": 0.4915,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/descartes(01AI)/euclidean_L_256_M_32_S_3_0_10.hdf5",
+      "mtime": 1794877224.3622954,
+      "sha256": "5e60e9e255a7f8b64ffa67cacab5fd1e6fb929bbacbd679441538533e0d0c4c6",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.5061
+    }
+  },
+  {
+    "dataset": "gist",
+    "target": 0.7,
+    "zvec": {
+      "dataset": "gist",
+      "setting": 2,
+      "point": {
+        "name": "migration-2",
+        "phase": "migration",
+        "target": 0.7,
+        "profile": "n64",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.005,
+          "max_expansions": 32,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.7009,
+      "strict_id_recall": 0.6741,
+      "repeat_best5_qps": [
+        22038.398890278375,
+        22384.305437700463,
+        22393.14906862143
+      ],
+      "qps": 22384.305437700463,
+      "mean_query_us": 44.674158096313484,
+      "first_repeat_best5_qps": 22038.398890278375,
+      "repeat_spread": 0.016096912489388826
+    },
+    "huawei": {
+      "dataset": "gist",
+      "algorithm": "qsgngt",
+      "qps": 7230.374335238193,
+      "ann_recall": 0.7105,
+      "strict_id_recall": 0.6864,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_1_2_1_045_0_1_0.hdf5",
+      "mtime": 1794856949.4951096,
+      "sha256": "c07a45fd6e783a85c7773540336f229fe9dd608c7f5e5f5ab0a3063c7723b36d",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.7105
+    },
+    "ai01": {
+      "dataset": "gist",
+      "algorithm": "descartes(01AI)",
+      "qps": 11611.14079356423,
+      "ann_recall": 0.7011,
+      "strict_id_recall": 0.676,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/descartes(01AI)/euclidean_L_448_M_64_S_1_3_30.hdf5",
+      "mtime": 1794843074.6629863,
+      "sha256": "9d90c71807daa9316725bf3cc67b231cbeecc5b973d1ac97e98ea62836d8d913",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.7011
+    }
+  },
+  {
+    "dataset": "gist",
+    "target": 0.85,
+    "zvec": {
+      "dataset": "gist",
+      "setting": 3,
+      "point": {
+        "name": "migration-3",
+        "phase": "migration",
+        "target": 0.85,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.03,
+          "max_expansions": 256,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.8663,
+      "strict_id_recall": 0.8376,
+      "repeat_best5_qps": [
+        14977.196603415154,
+        14844.57154182652,
+        15330.562774360267
+      ],
+      "qps": 14977.196603415154,
+      "mean_query_us": 66.76816940307617,
+      "first_repeat_best5_qps": 14977.196603415154,
+      "repeat_spread": 0.032738650028692584
+    },
+    "huawei": {
+      "dataset": "gist",
+      "algorithm": "qsgngt",
+      "qps": 3878.4830072062055,
+      "ann_recall": 0.8521,
+      "strict_id_recall": 0.8275,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_1_4_5_1_095_0_1_0.hdf5",
+      "mtime": 1794856988.4436471,
+      "sha256": "52e498e537157962dd18c47b436f7529cc210cf71d06972ca29053509d08cd53",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.8521
+    },
+    "ai01": {
+      "dataset": "gist",
+      "algorithm": "descartes(01AI)",
+      "qps": 7365.354087352316,
+      "ann_recall": 0.8515,
+      "strict_id_recall": 0.8233,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/descartes(01AI)/euclidean_L_256_M_32_S_3_2_40.hdf5",
+      "mtime": 1794877362.6204293,
+      "sha256": "1bfaf03e79dd48d295565a14ece067ac8d2f1ccd359a27175f99cbc03e973a52",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.8515
+    }
+  },
+  {
+    "dataset": "gist",
+    "target": 0.9,
+    "zvec": {
+      "dataset": "gist",
+      "setting": 4,
+      "point": {
+        "name": "migration-4",
+        "phase": "migration",
+        "target": 0.9,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.04,
+          "max_expansions": 256,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9026,
+      "strict_id_recall": 0.8762,
+      "repeat_best5_qps": [
+        12663.73193722336,
+        12582.924582924581,
+        12963.868231861481
+      ],
+      "qps": 12663.73193722336,
+      "mean_query_us": 78.96566390991211,
+      "first_repeat_best5_qps": 12663.73193722336,
+      "repeat_spread": 0.030274650891085608
+    },
+    "huawei": {
+      "dataset": "gist",
+      "algorithm": "qsgngt",
+      "qps": 1315.3483821195834,
+      "ann_recall": 0.9022,
+      "strict_id_recall": 0.8867,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_1_4_5_1_17_0_1_0.hdf5",
+      "mtime": 1794857034.132278,
+      "sha256": "260908ac5b5757a5659de6cddc944c483f1809642df19369d1263370648f9bab",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.9022
+    },
+    "ai01": {
+      "dataset": "gist",
+      "algorithm": "descartes(01AI)",
+      "qps": 5583.776537324322,
+      "ann_recall": 0.9017,
+      "strict_id_recall": 0.8773,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/descartes(01AI)/euclidean_L_320_M_96_S_2_2_60.hdf5",
+      "mtime": 1794799338.711203,
+      "sha256": "1430c37491d48e0508ad0265fec8c17e76472bb0a241d528167b11eaa64cacd1",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.9017
+    }
+  },
+  {
+    "dataset": "gist",
+    "target": 0.95,
+    "zvec": {
+      "dataset": "gist",
+      "setting": 5,
+      "point": {
+        "name": "migration-5",
+        "phase": "migration",
+        "target": 0.95,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.06,
+          "max_expansions": 256,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9552,
+      "strict_id_recall": 0.9378,
+      "repeat_best5_qps": [
+        8688.464279203883,
+        8616.213906555573,
+        8932.679652259843
+      ],
+      "qps": 8688.464279203883,
+      "mean_query_us": 115.0951385498047,
+      "first_repeat_best5_qps": 8688.464279203883,
+      "repeat_spread": 0.03672909576484518
+    },
+    "huawei": {
+      "dataset": "gist",
+      "algorithm": "qsgngt",
+      "qps": 273.9371841076483,
+      "ann_recall": 0.9612,
+      "strict_id_recall": 0.9546,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/qsgngt/euclidean_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_8_8_1_16_0_1_0.hdf5",
+      "mtime": 1794857142.357772,
+      "sha256": "640859dedbc4d663d227ed47b96b0529b95da15aad33bbd3850c5b75f2a1d93f",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.9612
+    },
+    "ai01": {
+      "dataset": "gist",
+      "algorithm": "descartes(01AI)",
+      "qps": 3696.6205783020396,
+      "ann_recall": 0.95,
+      "strict_id_recall": 0.9305,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/descartes(01AI)/euclidean_L_256_M_32_S_3_2_90.hdf5",
+      "mtime": 1794877370.6765537,
+      "sha256": "e2789f8ca7e7742005395eebd6c87dedea7129bba9e5c7b7e06c1d0cc23c06f6",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.95
+    }
+  },
+  {
+    "dataset": "gist",
+    "target": 0.99,
+    "zvec": {
+      "dataset": "gist",
+      "setting": 6,
+      "point": {
+        "name": "migration-6",
+        "phase": "migration",
+        "target": 0.99,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.12000000000000001,
+          "max_expansions": 512,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9946,
+      "strict_id_recall": 0.9909,
+      "repeat_best5_qps": [
+        3210.837359985792,
+        3180.9152848813574,
+        3319.912171970701
+      ],
+      "qps": 3210.837359985792,
+      "mean_query_us": 311.4452362060547,
+      "first_repeat_best5_qps": 3210.837359985792,
+      "repeat_spread": 0.0436971357740914
+    },
+    "huawei": null,
+    "ai01": {
+      "dataset": "gist",
+      "algorithm": "descartes(01AI)",
+      "qps": 1424.4546948240413,
+      "ann_recall": 0.99,
+      "strict_id_recall": 0.9829,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/gist-960-euclidean/10/descartes(01AI)/euclidean_L_448_M_32_S_3_2_250.hdf5",
+      "mtime": 1794846217.0545673,
+      "sha256": "9ada158a6de14c916e8f1840230731c91e48e40a03e9034244e0eab05c4a39f3",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.99
+    }
+  },
+  {
+    "dataset": "glove",
+    "target": 0.3,
+    "zvec": {
+      "dataset": "glove",
+      "setting": 0,
+      "point": {
+        "name": "migration-0",
+        "phase": "migration",
+        "target": 0.3,
+        "profile": "n32",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.0,
+          "max_expansions": 13,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.32275,
+      "strict_id_recall": 0.31541,
+      "repeat_best5_qps": [
+        41913.61664111794,
+        41808.041832921495,
+        42035.05473481451
+      ],
+      "qps": 41913.61664111794,
+      "mean_query_us": 23.85859489440918,
+      "first_repeat_best5_qps": 41913.61664111794,
+      "repeat_spread": 0.005429886020498875
+    },
+    "huawei": {
+      "dataset": "glove",
+      "algorithm": "qsgngt",
+      "qps": 64393.02382706952,
+      "ann_recall": 0.36376,
+      "strict_id_recall": 0.3555,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/qsgngt/angular_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_0_0_0_9_4_0_0.hdf5",
+      "mtime": 1794673063.6286387,
+      "sha256": "67ab0c4b4e12f2a2f9120c9ba0e4f0a489551ae857456d08ec67d568b060d01c",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.36376
+    },
+    "ai01": {
+      "dataset": "glove",
+      "algorithm": "descartes(01AI)",
+      "qps": 43538.73462396845,
+      "ann_recall": 0.641,
+      "strict_id_recall": 0.62599,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/descartes(01AI)/angular_L_128_M_32_S_1_0_10.hdf5",
+      "mtime": 1794789573.6863976,
+      "sha256": "599034d6ba7ab5efc6f97f84c582b368e2554ecf2273d0d9b261803c0b473035",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.641
+    }
+  },
+  {
+    "dataset": "glove",
+    "target": 0.5,
+    "zvec": {
+      "dataset": "glove",
+      "setting": 1,
+      "point": {
+        "name": "migration-1",
+        "phase": "migration",
+        "target": 0.5,
+        "profile": "n32",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.0,
+          "max_expansions": 24,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.50089,
+      "strict_id_recall": 0.48836,
+      "repeat_best5_qps": [
+        35922.68532158493,
+        35864.2933305287,
+        36138.10406743912
+      ],
+      "qps": 35922.68532158493,
+      "mean_query_us": 27.83756256103516,
+      "first_repeat_best5_qps": 35922.68532158493,
+      "repeat_spread": 0.007634633544482572
+    },
+    "huawei": {
+      "dataset": "glove",
+      "algorithm": "qsgngt",
+      "qps": 47140.994632115595,
+      "ann_recall": 0.56452,
+      "strict_id_recall": 0.55041,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/qsgngt/angular_Float_0_1_Q_1_edge_100_epsilon_0_01_ifES_0_indegree_100_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_200_rangeMax_200_sample_5000_searchA_400_threshold_60_1_1_0_98_4_1_0.hdf5",
+      "mtime": 1794689612.502736,
+      "sha256": "8529067bd394bdb234d3af5c03b3ad8f0a5d08c0717daa553b8fd16b9b4474e1",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.56452
+    },
+    "ai01": {
+      "dataset": "glove",
+      "algorithm": "descartes(01AI)",
+      "qps": 43538.73462396845,
+      "ann_recall": 0.641,
+      "strict_id_recall": 0.62599,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/descartes(01AI)/angular_L_128_M_32_S_1_0_10.hdf5",
+      "mtime": 1794789573.6863976,
+      "sha256": "599034d6ba7ab5efc6f97f84c582b368e2554ecf2273d0d9b261803c0b473035",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.641
+    }
+  },
+  {
+    "dataset": "glove",
+    "target": 0.7,
+    "zvec": {
+      "dataset": "glove",
+      "setting": 2,
+      "point": {
+        "name": "migration-2",
+        "phase": "migration",
+        "target": 0.7,
+        "profile": "n32",
+        "capacity": 128,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.04,
+          "max_expansions": 64,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.70266,
+      "strict_id_recall": 0.68487,
+      "repeat_best5_qps": [
+        26749.507172544778,
+        26623.40201343134,
+        26770.370398737276
+      ],
+      "qps": 26749.507172544778,
+      "mean_query_us": 37.38386631011963,
+      "first_repeat_best5_qps": 26749.507172544778,
+      "repeat_spread": 0.005520270671336203
+    },
+    "huawei": {
+      "dataset": "glove",
+      "algorithm": "qsgngt",
+      "qps": 33190.84619444754,
+      "ann_recall": 0.7023,
+      "strict_id_recall": 0.6846,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/qsgngt/angular_Float_0_1_Q_1_edge_100_epsilon_0_01_ifES_0_indegree_100_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_200_rangeMax_200_sample_5000_searchA_400_threshold_60_1_2_1_01_5_1_0.hdf5",
+      "mtime": 1794689747.940738,
+      "sha256": "e3d805f227a1094d111d20413fefc5e0e2da7df0e10bd9d71d1571dd3fd767af",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.7023
+    },
+    "ai01": {
+      "dataset": "glove",
+      "algorithm": "descartes(01AI)",
+      "qps": 30721.245050458583,
+      "ann_recall": 0.72381,
+      "strict_id_recall": 0.70714,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/descartes(01AI)/angular_L_384_M_96_S_3_1_10.hdf5",
+      "mtime": 1794715971.5085692,
+      "sha256": "910a6bdc556c9b625cb29eae89b548a4494892a3ad36be99517f1fc0a89314ca",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.72381
+    }
+  },
+  {
+    "dataset": "glove",
+    "target": 0.85,
+    "zvec": {
+      "dataset": "glove",
+      "setting": 3,
+      "point": {
+        "name": "migration-3",
+        "phase": "migration",
+        "target": 0.85,
+        "profile": "n64",
+        "capacity": 1024,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.004,
+          "margin": 0.04,
+          "max_expansions": 1536,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.85265,
+      "strict_id_recall": 0.83595,
+      "repeat_best5_qps": [
+        16492.12001964441,
+        16353.044198365125,
+        16437.943422928132
+      ],
+      "qps": 16437.943422928132,
+      "mean_query_us": 60.83486080169678,
+      "first_repeat_best5_qps": 16492.12001964441,
+      "repeat_spread": 0.00850458297502743
+    },
+    "huawei": {
+      "dataset": "glove",
+      "algorithm": "qsgngt",
+      "qps": 18311.851720551884,
+      "ann_recall": 0.85338,
+      "strict_id_recall": 0.83733,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/qsgngt/angular_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_1_4_1_065_0_1_0.hdf5",
+      "mtime": 1794673281.1359136,
+      "sha256": "21237a2646b868eb7249bff4db1dba482e85d56fbabc0ff758a9133a8b745e92",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.85338
+    },
+    "ai01": {
+      "dataset": "glove",
+      "algorithm": "descartes(01AI)",
+      "qps": 18268.216695695955,
+      "ann_recall": 0.87391,
+      "strict_id_recall": 0.85801,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/descartes(01AI)/angular_L_384_M_96_S_3_1_20.hdf5",
+      "mtime": 1794715980.3927028,
+      "sha256": "a8e847bea31b303a167e6640f6b2f8de964e32cf15e9073cb619ac81067264c7",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.87391
+    }
+  },
+  {
+    "dataset": "glove",
+    "target": 0.9,
+    "zvec": {
+      "dataset": "glove",
+      "setting": 4,
+      "point": {
+        "name": "migration-4",
+        "phase": "migration",
+        "target": 0.9,
+        "profile": "n64",
+        "capacity": 1024,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.008,
+          "margin": 0.0565,
+          "max_expansions": 384,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.9001,
+      "strict_id_recall": 0.88457,
+      "repeat_best5_qps": [
+        12689.6279642913,
+        12616.337725169064,
+        12685.429296862596
+      ],
+      "qps": 12685.429296862596,
+      "mean_query_us": 78.83059978485107,
+      "first_repeat_best5_qps": 12689.6279642913,
+      "repeat_spread": 0.005809153235968312
+    },
+    "huawei": {
+      "dataset": "glove",
+      "algorithm": "qsgngt",
+      "qps": 13809.999506115932,
+      "ann_recall": 0.90016,
+      "strict_id_recall": 0.88524,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/qsgngt/angular_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_1_4_5_1_09_0_1_0.hdf5",
+      "mtime": 1794673466.974712,
+      "sha256": "6973be6c16ceb921f0c0eadb9f8dbb581dc0184cf9f76ce71191d69cf1a7ba8c",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.90016
+    },
+    "ai01": {
+      "dataset": "glove",
+      "algorithm": "descartes(01AI)",
+      "qps": 14688.190976067059,
+      "ann_recall": 0.90185,
+      "strict_id_recall": 0.88607,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/descartes(01AI)/angular_L_128_M_32_S_1_2_20.hdf5",
+      "mtime": 1794790427.3391383,
+      "sha256": "85d4795e16598d98edd9f7716fdc1fee75cdd4a78ccef6f181c0c8c68f6232fe",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.90185
+    }
+  },
+  {
+    "dataset": "glove",
+    "target": 0.95,
+    "zvec": {
+      "dataset": "glove",
+      "setting": 5,
+      "point": {
+        "name": "migration-5",
+        "phase": "migration",
+        "target": 0.95,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.002,
+          "margin": 0.08625,
+          "max_expansions": 768,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.95026,
+      "strict_id_recall": 0.9373,
+      "repeat_best5_qps": [
+        8153.11505536388,
+        8058.005751623539,
+        8107.708336957761
+      ],
+      "qps": 8107.708336957761,
+      "mean_query_us": 123.33941459655762,
+      "first_repeat_best5_qps": 8153.11505536388,
+      "repeat_spread": 0.01180308213619452
+    },
+    "huawei": {
+      "dataset": "glove",
+      "algorithm": "qsgngt",
+      "qps": 7878.331612773317,
+      "ann_recall": 0.95271,
+      "strict_id_recall": 0.94066,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/qsgngt/angular_Float_0_1_Q_1_edge_100_epsilon_0_02_era_1_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_100_rangeMax_300_sample_5000_searchA_400_threshold_60_1_4_1_13_0_1_0.hdf5",
+      "mtime": 1794673517.527473,
+      "sha256": "7ddfa0715364d1ca156beffd6ae2c6bcabbf833fcf2d11e626d68e41efd66fd6",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.95271
+    },
+    "ai01": {
+      "dataset": "glove",
+      "algorithm": "descartes(01AI)",
+      "qps": 7948.091393015245,
+      "ann_recall": 0.95015,
+      "strict_id_recall": 0.93863,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/descartes(01AI)/angular_L_128_M_32_S_1_2_40.hdf5",
+      "mtime": 1794790451.059492,
+      "sha256": "5a2905808aa736fe287b937efa99f4a6d59f9a837ac8f39df8d8790be6421a14",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.95015
+    }
+  },
+  {
+    "dataset": "glove",
+    "target": 0.99,
+    "zvec": {
+      "dataset": "glove",
+      "setting": 6,
+      "point": {
+        "name": "migration-6",
+        "phase": "migration",
+        "target": 0.99,
+        "profile": "n64",
+        "capacity": 2048,
+        "scan_limit": 0,
+        "search": {
+          "bucket_width": 0.004,
+          "margin": 0.125625,
+          "max_expansions": 1536,
+          "route_beam": 1,
+          "uncertainty_bonus": 0
+        }
+      },
+      "ann_recall": 0.99001,
+      "strict_id_recall": 0.98444,
+      "repeat_best5_qps": [
+        3490.7610148040317,
+        3447.9404077300937,
+        3469.386455269458
+      ],
+      "qps": 3469.386455269458,
+      "mean_query_us": 288.23540210723877,
+      "first_repeat_best5_qps": 3490.7610148040317,
+      "repeat_spread": 0.012419184211518441
+    },
+    "huawei": {
+      "dataset": "glove",
+      "algorithm": "qsgngt",
+      "qps": 2720.3528808582823,
+      "ann_recall": 0.99167,
+      "strict_id_recall": 0.98717,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/qsgngt/angular_Float_0_1_Q_1_edge_100_epsilon_0_08_ifES_0_indegree_120_max_edge_96_outdegree_64_paramE_400_400_12_10_250_paramS_100_100_60_range_200_rangeMax_200_sample_5000_searchA_400_threshold_89_1_4_1_19_0_1_0.hdf5",
+      "mtime": 1795038812.205083,
+      "sha256": "5402089cdefd578e98e1e55b5ca631bcf3e8ee80d276a3760a3acf0bbd4f6069",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.99167
+    },
+    "ai01": {
+      "dataset": "glove",
+      "algorithm": "descartes(01AI)",
+      "qps": 2591.672535199301,
+      "ann_recall": 0.99122,
+      "strict_id_recall": 0.98662,
+      "file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/glove-100-angular/10/descartes(01AI)/angular_L_128_M_128_S_3_3_70.hdf5",
+      "mtime": 1794794156.9715996,
+      "sha256": "1e99c55ee05fabbaf646428104c61ee4c7db79e992445b1352242ff6bed052ed",
+      "independent_distance_validated": true,
+      "independent_ann_recall": 0.99122
+    }
+  }
+]

@@ -1,0 +1,63 @@
+{
+  "containers": [
+    {
+      "id": "1d331c6767f86a8407ea6b193f6fba6f813725fccffe2244e0b4c281cc3d24e4",
+      "state": "running"
+    },
+    {
+      "id": "5c571b0fa48b4da226d4195ce3d9df8860fbaf704dae298163017d307d4499dd",
+      "state": "running"
+    },
+    {
+      "id": "d4331c1153bbed585fe896945c6a4ac6160ee4036254b96e0ad53551d6924f42",
+      "state": "running"
+    },
+    {
+      "id": "6b6db1aa4a63231db3dd4c973fa0711c00ec572f5299c966218d5fb2aaa2f8d5",
+      "state": "completed/removed"
+    },
+    {
+      "id": "b18870fbcc815ba129f534d180220673e7d59786595066bab8b293e243c9eb36",
+      "state": "running"
+    },
+    {
+      "id": "b4dc444de9300d27203805b8f788aa4f1c3a4f7eec8b6cf1c4b7a4dc95c0f6f6",
+      "state": "running"
+    },
+    {
+      "id": "1e19b46e54e6322f37cac162b0bd9d732ac3f01c23fe7d7514dca4ddaf52c142",
+      "state": "running"
+    },
+    {
+      "id": "0fe4fc3a9840552870de4071a62850c3ff970d92adad5366488e87dfe677cb6d",
+      "state": "running"
+    },
+    {
+      "id": "7af5acbb3012167dead961261dc113c0cb1b2ae2d462e6dbc16dd7ea36f1b383",
+      "state": "running"
+    },
+    {
+      "id": "0b2083872882c261261f3d178e5c7d979e52413e83353163f87ff440d2536765",
+      "state": "running"
+    },
+    {
+      "id": "7890b02c2fc3266c44fe3a217f6b74a97b0985d63ae3ec093bb032486feaca6c",
+      "state": "running"
+    },
+    {
+      "id": "1129717ac715a3a54a04212195cd86e5a5e3d1ff0d194fee1f90555a75aa3365",
+      "state": "running"
+    }
+  ],
+  "processes": [
+    {
+      "pid": 1548877,
+      "state": "sleeping"
+    },
+    {
+      "pid": 1553877,
+      "state": "sleeping"
+    }
+  ],
+  "passed": true
+}

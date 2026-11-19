@@ -1,0 +1,56 @@
+{
+  "started_at": "2026-11-19T16:43:49.912678+08:00",
+  "ann_commit": "fca371990a1544602b18429b39fa4f03f167ab16",
+  "code_sha256": {
+    "scripts/measure_zvec_qg.py": "cf0400001c40ccf4d4e2e6c238f957f35412bf62b13987637f205d1ced9c620c",
+    "ann_benchmarks/runner.py": "b82b0e379a590c2c6fb44e634e27d93b84a90a99cc153598d85f5485a032a5da",
+    "ann_benchmarks/distance.py": "e316c0fd4c938d364ecf46a6161954af462b308fb3a8379435b73bcbf7d8b6f8",
+    "ann_benchmarks/algorithms/zvec_qg/module.py": "571ec18fdf68a1925f213245d41e3ae23453e74bf14848195588967cce539fc4",
+    "ann_benchmarks/algorithms/zvec_qg/core.cpp": "01f31183cf8251b0dd2aacb504f82623b715fa4ea862667943dd81936cc7e3a2",
+    "ann_benchmarks/algorithms/zvec_qg/configs/r7i/gist.json": "55f0d854a1466292201b411fdcb05c51cc55282c573b9b443307921efbc940bb",
+    "ann_benchmarks/algorithms/zvec_qg/configs/r7i/glove.json": "680534875f8bb723b1ce22b5aa3647765c48c5c0767efd5f3fdd7513b960e4f3",
+    "ann_benchmarks/algorithms/zvec_qg/configs/r7i/sift.json": "2d94279b2328fa5cae126b8af83e98e7b92b5216b1797a7f73f74c213ea8fde6"
+  },
+  "artifact": {
+    "source_commit": "898e87b08591940dd2896191342e6481730fc6da",
+    "validated_core_commit": "21c259867371586726e772145dcfa4b701af2d5f",
+    "source_tree": "5c28617b41b98ba315f9ef5933024cb3d8bbb1ee",
+    "variant": "succinct",
+    "extension": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/succinct-runtime-v2/_zvec_qg_core.cpython-310-x86_64-linux-gnu.so",
+    "python": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/.venv/bin/python",
+    "python_version": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "bridge_sha256": "01f31183cf8251b0dd2aacb504f82623b715fa4ea862667943dd81936cc7e3a2",
+    "native_binary_sha256": "980c97ac2eed2adb273c033019e6ab626a9fdee0e7f88b8a5267c54850679938",
+    "runtime_sha256": {
+      "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/external/usr/local/lib/libyaml-cpp.a": "e9165349e4d467c35dc0f429c2fa76d6347d20dc2bfee9b2440183b791112a43",
+      "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/lib/libcore_framework.a": "9c66907451a5ed0b4309baf865ac8c399130b4e0c4a98d2cd64ab46ea060cb48",
+      "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/lib/libcore_knn_hnsw.so": "d0e1bdffeddad4342403ca624178bad0ecca708b1a5b9fa310eb0e8ee8fb3b57",
+      "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/lib/libcore_metric.so": "f6332d81bb4cf0965fd9b2a020c350db7ab1c939e8527b1f9e649012c4059e7b",
+      "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/lib/libcore_utility.so": "fc78f9c15e21139fa61476efd216aee03a299aed70cf327337c2e017180c2c76",
+      "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/lib/librabitq_core.a": "89becf34e6f751b82fc189d3362303306e422f638213fe2ee638b93e59a0db82",
+      "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/lib/librabitq_fastscan.a": "7cf75276dc9e7d2a12e72ad6bff34059164397d9a446e554e39f4fb736097120",
+      "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/lib/libzvec_ailego.a": "1fdafa82e89391388fe427a31152ed3bfa5792c8f0f02d2331e0b83fdbcec46c",
+      "/home/xingrui/workspace/zvec/r7i-new-api-succinct/build-r7i/lib/libzvec_turbo.a": "55ec6b823a8ba2b766b834027590dc08ffb9af6ab45f6dc57fdd122665f04a22",
+      "/usr/lib/x86_64-linux-gnu/librt.a": "f0a17a43c74d2fe5474fa2fd29c8f14799e777d7d75a2cc4d11c20a6e7b161c5",
+      "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/succinct-runtime-v2/_zvec_qg_core.cpython-310-x86_64-linux-gnu.so": "46d2e83540b9f2347a2d20cfc885ebf1d1d14dba2a38f06412daab0ed68a65ad"
+    }
+  },
+  "argv": [
+    "scripts/measure_zvec_qg.py",
+    "--artifact",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-adapter-20261119/succinct-runtime-v2/artifact.json",
+    "--data",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/data",
+    "--source",
+    "/home/xingrui/workspace/zvec/r7i-new-api-succinct",
+    "--output",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-formal-20261119/measurements"
+  ],
+  "isolation_manifest": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/r7i-ann-formal-20261119/isolation.json",
+  "protocol": "full-query warmup; 3 fresh-process repetitions x 5 rounds; median of best5",
+  "timer": "unmodified ANN run_individual_query: time.time around algo.query",
+  "cpu": 54,
+  "smt_sibling": 55,
+  "memory_node": 0,
+  "index_rebuild_randomness_tested": false
+}

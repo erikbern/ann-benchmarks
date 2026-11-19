@@ -1,5 +1,10 @@
 Independent QG API benchmark — r7i local campaign, 2026-11-19
 
+For the standard ANN-Benchmarks Python adapter and colocated executable presets,
+see ../../C7I_BENCHMARK.md and ../../ann_benchmarks/algorithms/zvec_qg/README.md.
+This directory preserves the native campaign and its original timing boundary;
+the new Python adapter does not relabel these QPS measurements.
+
 Actual hardware: Intel Xeon Platinum 8369B (Ice Lake), 64 logical CPUs,
 32 physical cores, one NUMA node. The ann-benchmarks branch is named c7ibench;
 that name is not a hardware identification. Query CPU 54, SMT sibling 55,
