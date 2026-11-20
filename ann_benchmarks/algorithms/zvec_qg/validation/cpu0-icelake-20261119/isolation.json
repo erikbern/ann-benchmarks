@@ -1,0 +1,82 @@
+{
+  "archive-check-isolation.json": {
+    "started_at": 1795085593.6190066,
+    "restored_at": 1795085690.9951913,
+    "processes": 3,
+    "containers": 12,
+    "errors": [],
+    "sha256": "0a22fb9b97c899d4dc0ac7d56ef5ddbd867ba98747384b6576092c583a737a2f"
+  },
+  "block8-isolation.json": {
+    "started_at": 1795084780.4788828,
+    "restored_at": 1795085243.7215273,
+    "processes": 4,
+    "containers": 12,
+    "errors": [],
+    "sha256": "156f90b817e6a765bc04233645247141ee7769719bc0072d01536e6301d6487a"
+  },
+  "final-isolation.json": {
+    "started_at": 1795083078.442375,
+    "restored_at": 1795083191.3174036,
+    "processes": 4,
+    "containers": 12,
+    "errors": [],
+    "sha256": "af54feb5c97d5cd03715bb5e01b81ee82d53fbf637addf3eda13718e0788df93"
+  },
+  "frozen-isolation.json": {
+    "started_at": 1795085251.2484002,
+    "restored_at": 1795085563.7560532,
+    "processes": 4,
+    "containers": 12,
+    "errors": [],
+    "sha256": "ac3afe110ccfb213c9dd40a412cd2f258b237bf4ea75ef85abec12fac676dc92"
+  },
+  "isolation.json": {
+    "started_at": 1795081986.433704,
+    "restored_at": 1795082178.5075293,
+    "processes": 2,
+    "containers": 12,
+    "errors": [],
+    "sha256": "5b819819abdd82fbfe068e246fe8a797febb6d20c859a8d0b98aee333b32aafa"
+  },
+  "lowrank-isolation.json": {
+    "started_at": 1795082363.03049,
+    "restored_at": 1795082528.3995395,
+    "processes": 2,
+    "containers": 12,
+    "errors": [],
+    "sha256": "1a8c682204f0d234bff716c54b076471990bd221c46d007a42f4df747940df74"
+  },
+  "nominal-isolation.json": {
+    "started_at": 1795084460.9997568,
+    "restored_at": 1795084616.692425,
+    "processes": 4,
+    "containers": 12,
+    "errors": [],
+    "sha256": "837f40e9447eaba60c441331549796ac086da3537837ca8c9b2a56e110670fdf"
+  },
+  "remaining-isolation.json": {
+    "started_at": 1795082529.3963265,
+    "restored_at": 1795083074.9293892,
+    "processes": 2,
+    "containers": 12,
+    "errors": [],
+    "sha256": "4fba0f3365de3d956e21df327955e04cd4a33e470a867a477a9f2a37dc7bdd38"
+  },
+  "resume-isolation.json": {
+    "started_at": 1795083231.3135219,
+    "restored_at": 1795084432.8004372,
+    "processes": 4,
+    "containers": 12,
+    "errors": [],
+    "sha256": "4975367d1d65d94d7d1ad5bff15e5226ca65231a697ef6bd710a0aee1674f6d2"
+  },
+  "substrate-isolation.json": {
+    "started_at": 1795084618.8397439,
+    "restored_at": 1795084778.7932992,
+    "processes": 4,
+    "containers": 12,
+    "errors": [],
+    "sha256": "dc26635c3dc042dd7746fdfb519629f304c0d3d06f63dd1019c95bbfa0d4e4a4"
+  }
+}

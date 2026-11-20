@@ -1,0 +1,9 @@
+{
+  "selected": "block4",
+  "reason": "compare confirmed throughput at the three reference actual-recall minima",
+  "ratios": [
+    0.7284978075426244,
+    0.7458078582844687,
+    0.7490970544535068
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "source_commit": "dc0f73ef",
+  "extension": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/cached-router/_direct_core.cpython-310-x86_64-linux-gnu.so",
+  "runtime_sha256": {
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/cached-router/_direct_core.cpython-310-x86_64-linux-gnu.so": "9353adce0ca7ed3a2acc1dd2e8bec9e4aac0faa05ef8c7bad525dac4ba26f419",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_knn_cluster.so": "f1e5f38ded105d318fdadac7313237b71b36b7ef1b0d91dfb31516778dac974b",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_knn_diskann.so": "dd5ddadd3eed8379bfdd50e2adb7d6f202c5f884d287e779a1c3c1b463a88347",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_knn_flat.so": "77c89f7891463c0de9fa71f771d90925e2cd8ba8135e1234caa585a79360641a",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_knn_flat_sparse.so": "1255407b8c1a09dcda3e6d45f0b534865636641de4fc5094a4b24eab2de53aba",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_knn_hnsw.so": "0553dce4a1b05ccd6c2d06c0e5be9eccb308a4b417ecc4f465c8999b50b2c179",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_knn_hnsw_rabitq.so": "c54e4c7278271c969ea2bdc144d1357d4f9df328d96151150174c2b241a82d91",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_knn_hnsw_sparse.so": "177e36f0d105636006bc1e69dc0b7a04071ae755a6f243c582ea0a777caae2f0",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_knn_ivf.so": "1a39dfe37e7296be8ba2bcd7dca47d94fb213dddf72573309f696388a6e2c46d",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_knn_ivf_rabitq.so": "eec3f2158efad31c2eac20fb99976f8c788bce90770a48818acc23cf6205512b",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_knn_vamana.so": "a99df827f90810fe18be50bf00375dc130b3bc8e09d139f14de17af17f446445",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_metric.so": "6c660fc5e66136b3fc78531507885717d0a21da86e16a01fd37f75d26fbe2bc7",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_quantizer.so": "78451081a8a491758aaef51d2b085105ce4fcf8667b07a25e2c90604c0256e82",
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/lib/libcore_utility.so": "bd54730233ba20785e192a4e9730bd5e5e06118e0d49260aaa4daa47a05b8261"
+  }
+}

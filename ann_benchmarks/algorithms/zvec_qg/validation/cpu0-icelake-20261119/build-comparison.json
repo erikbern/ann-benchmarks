@@ -1,0 +1,626 @@
+[
+  {
+    "layout": "cpu0-reference-alignment",
+    "dataset": "glove",
+    "target_recall": 0.90721,
+    "target_qps": 22578,
+    "actual": 0.93331,
+    "strict": 0.91949,
+    "qps": 10879.337343066985,
+    "rss": 4.711761474609375,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.077,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      10977.390674395823,
+      10844.417417240391,
+      10855.037521441933,
+      10875.98490022772,
+      10882.689785906252,
+      10885.550906765033
+    ]
+  },
+  {
+    "layout": "cpu0-reference-alignment",
+    "dataset": "glove",
+    "target_recall": 0.96034,
+    "target_qps": 13330,
+    "actual": 0.96038,
+    "strict": 0.94819,
+    "qps": 7734.431224900392,
+    "rss": 4.7130279541015625,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.093,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      7717.720452924121,
+      7728.759016001646,
+      7716.035165203903,
+      7740.103433799139,
+      7747.077186437427,
+      7769.541787713492
+    ]
+  },
+  {
+    "layout": "cpu0-reference-alignment",
+    "dataset": "glove",
+    "target_recall": 0.99189,
+    "target_qps": 6008,
+    "actual": 0.99248,
+    "strict": 0.98787,
+    "qps": 3231.4715673226233,
+    "rss": 4.713981628417969,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.135,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      3224.886383662006,
+      3225.166346621199,
+      3226.6748663707995,
+      3236.900647626468,
+      3236.268268274447,
+      3236.9933274458385
+    ]
+  },
+  {
+    "layout": "l2",
+    "dataset": "sift",
+    "target_recall": 0.90007,
+    "target_qps": 58407,
+    "actual": 0.9053,
+    "strict": 0.90436,
+    "qps": 43453.088276508555,
+    "rss": 4.207599639892578,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 128,
+      "margin": 0.009,
+      "max_expansions": 48,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      42996.18864466236,
+      42870.85095639837,
+      42776.5845260751,
+      44343.39216107093,
+      43909.98790835475,
+      44106.74024968874
+    ]
+  },
+  {
+    "layout": "l2",
+    "dataset": "sift",
+    "target_recall": 0.95158,
+    "target_qps": 47393,
+    "actual": 0.95447,
+    "strict": 0.95355,
+    "qps": 35312.491186486644,
+    "rss": 4.208961486816406,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 128,
+      "margin": 0.041,
+      "max_expansions": 64,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      34819.86963004287,
+      34723.79036430845,
+      34765.95603594045,
+      35920.470272270104,
+      35805.11274293041,
+      35812.572256062675
+    ]
+  },
+  {
+    "layout": "l2",
+    "dataset": "sift",
+    "target_recall": 0.99019,
+    "target_qps": 31750,
+    "actual": 0.99082,
+    "strict": 0.99011,
+    "qps": 23449.951518254522,
+    "rss": 4.210338592529297,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.091,
+      "max_expansions": 128,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      22978.4082168426,
+      22923.677447775077,
+      22972.920865831216,
+      23993.940739147445,
+      23921.494819666448,
+      23930.44811850932
+    ]
+  },
+  {
+    "layout": "l2",
+    "dataset": "gist",
+    "target_recall": 0.9025,
+    "target_qps": 17775,
+    "actual": 0.9083,
+    "strict": 0.8823,
+    "qps": 13091.54329974451,
+    "rss": 13.221122741699219,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.04,
+      "max_expansions": 256,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      12877.181348168342,
+      12838.710467351511,
+      12918.787557712982,
+      13300.76773544997,
+      13270.552203530333,
+      13264.299041776036
+    ]
+  },
+  {
+    "layout": "l2",
+    "dataset": "gist",
+    "target_recall": 0.9574,
+    "target_qps": 12041,
+    "actual": 0.9599,
+    "strict": 0.941,
+    "qps": 8944.448604927638,
+    "rss": 13.221122741699219,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.06,
+      "max_expansions": 256,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      8800.894713760841,
+      8773.0427325399,
+      8750.219574120087,
+      9121.800043931094,
+      9088.002496094436,
+      9128.311602387901
+    ]
+  },
+  {
+    "layout": "l2",
+    "dataset": "gist",
+    "target_recall": 0.9943,
+    "target_qps": 4231,
+    "actual": 0.9944,
+    "strict": 0.9906,
+    "qps": 2721.127048387218,
+    "rss": 13.221122741699219,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.15,
+      "max_expansions": 512,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      2668.5991506147707,
+      2660.7104228979597,
+      2671.4614459112854,
+      2773.698724349775,
+      2770.792650863151,
+      2770.9519056015547
+    ]
+  },
+  {
+    "layout": "m32-lowrank",
+    "dataset": "glove",
+    "target_recall": 0.90721,
+    "target_qps": 22578,
+    "actual": 0.90949,
+    "strict": 0.89464,
+    "qps": 14778.737507027861,
+    "rss": 4.782733917236328,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.077,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      14583.481249554514,
+      14497.556436652447,
+      14527.881535340995,
+      14992.74366625726,
+      15009.091042469357,
+      14973.99376450121
+    ]
+  },
+  {
+    "layout": "m32-lowrank",
+    "dataset": "glove",
+    "target_recall": 0.96034,
+    "target_qps": 13330,
+    "actual": 0.96392,
+    "strict": 0.95229,
+    "qps": 8066.060768103033,
+    "rss": 4.784324645996094,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.109,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      7894.728025250758,
+      7903.1700079666625,
+      7897.391808960988,
+      8259.114987927285,
+      8229.938085683261,
+      8228.951528239404
+    ]
+  },
+  {
+    "layout": "m32-lowrank",
+    "dataset": "glove",
+    "target_recall": 0.99189,
+    "target_qps": 6008,
+    "actual": 0.99208,
+    "strict": 0.98747,
+    "qps": 3648.5179412417483,
+    "rss": 4.7848968505859375,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.149,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      3554.909755146851,
+      3553.2338183702263,
+      3558.248867809776,
+      3738.7870146737205,
+      3738.8603364106425,
+      3742.8784271983486
+    ]
+  },
+  {
+    "layout": "m64-lowrank",
+    "dataset": "glove",
+    "target_recall": 0.90721,
+    "target_qps": 22578,
+    "actual": 0.90802,
+    "strict": 0.89184,
+    "qps": 15833.70582099714,
+    "rss": 5.0494842529296875,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.077,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      15444.896023319587,
+      15445.35671253539,
+      15445.936878791696,
+      16263.005778105546,
+      16228.108730507562,
+      16221.474763202583
+    ]
+  },
+  {
+    "layout": "m64-lowrank",
+    "dataset": "glove",
+    "target_recall": 0.96034,
+    "target_qps": 13330,
+    "actual": 0.96039,
+    "strict": 0.94786,
+    "qps": 9349.776851750501,
+    "rss": 5.0527801513671875,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.105,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      9102.785220006012,
+      9145.552452505011,
+      9124.808499510724,
+      9554.00125099599,
+      9571.820994817579,
+      9583.456050106372
+    ]
+  },
+  {
+    "layout": "m64-lowrank",
+    "dataset": "glove",
+    "target_recall": 0.99189,
+    "target_qps": 6008,
+    "actual": 0.99322,
+    "strict": 0.98897,
+    "qps": 4025.027279694162,
+    "rss": 5.053447723388672,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.145,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      3964.0303081739303,
+      3960.242575130573,
+      3965.228393931353,
+      4084.8261654569715,
+      4089.5816731377936,
+      4086.5426866612797
+    ]
+  },
+  {
+    "layout": "other-substrate",
+    "dataset": "sift",
+    "target_recall": 0.90007,
+    "target_qps": 58407,
+    "actual": 0.90433,
+    "strict": 0.90345,
+    "qps": 42815.39856009451,
+    "rss": 4.208698272705078,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 128,
+      "margin": 0.009,
+      "max_expansions": 48,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      42715.07221521785,
+      42643.45881097019,
+      42592.36053637707,
+      43055.59661657223,
+      42915.72490497117,
+      43018.32607866224
+    ]
+  },
+  {
+    "layout": "other-substrate",
+    "dataset": "sift",
+    "target_recall": 0.95158,
+    "target_qps": 47393,
+    "actual": 0.95173,
+    "strict": 0.9509,
+    "qps": 35347.874450641655,
+    "rss": 4.210613250732422,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 128,
+      "margin": 0.038,
+      "max_expansions": 64,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      35277.853943112066,
+      35192.01499537687,
+      35218.63950364966,
+      35481.293306838495,
+      35490.96078423077,
+      35417.89495817124
+    ]
+  },
+  {
+    "layout": "other-substrate",
+    "dataset": "sift",
+    "target_recall": 0.99019,
+    "target_qps": 31750,
+    "actual": 0.99087,
+    "strict": 0.99019,
+    "qps": 22680.000615876233,
+    "rss": 4.211788177490234,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.091,
+      "max_expansions": 128,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      22569.800416494025,
+      22543.92494932822,
+      22494.66769138523,
+      22940.729258850464,
+      22823.734528164103,
+      22790.20081525844
+    ]
+  },
+  {
+    "layout": "other-substrate",
+    "dataset": "gist",
+    "target_recall": 0.9025,
+    "target_qps": 17775,
+    "actual": 0.9026,
+    "strict": 0.8762,
+    "qps": 13281.792857586248,
+    "rss": 13.220733642578125,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.04,
+      "max_expansions": 256,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      13434.282804147222,
+      13432.17467606915,
+      13488.546500596554,
+      12482.713260656708,
+      13033.762892204237,
+      13131.411039103346
+    ]
+  },
+  {
+    "layout": "other-substrate",
+    "dataset": "gist",
+    "target_recall": 0.9574,
+    "target_qps": 12041,
+    "actual": 0.9607,
+    "strict": 0.9441,
+    "qps": 8525.296662774801,
+    "rss": 13.220733642578125,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.063,
+      "max_expansions": 256,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      8674.520185307743,
+      8655.99157990321,
+      8672.134774311335,
+      8394.601745646392,
+      8376.846906942652,
+      8393.526606591462
+    ]
+  },
+  {
+    "layout": "other-substrate",
+    "dataset": "gist",
+    "target_recall": 0.9943,
+    "target_qps": 4231,
+    "actual": 0.9946,
+    "strict": 0.9909,
+    "qps": 3254.7283662938726,
+    "rss": 13.220733642578125,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.12,
+      "max_expansions": 512,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      3309.838915486856,
+      3306.19413220665,
+      3306.3400821716523,
+      3197.338641008499,
+      3200.3296237939544,
+      3203.262600381095
+    ]
+  },
+  {
+    "layout": "block8-results",
+    "dataset": "glove",
+    "target_recall": 0.90721,
+    "target_qps": 22578,
+    "actual": 0.9112,
+    "strict": 0.89451,
+    "qps": 11534.819975871305,
+    "rss": 3.9402389526367188,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.044,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      11312.20723626721,
+      11370.236483235267,
+      11253.8643784931,
+      11739.464356486633,
+      11699.403468507342,
+      11723.061761300098
+    ]
+  },
+  {
+    "layout": "block8-results",
+    "dataset": "glove",
+    "target_recall": 0.96034,
+    "target_qps": 13330,
+    "actual": 0.96069,
+    "strict": 0.94763,
+    "qps": 6973.137049241744,
+    "rss": 3.942310333251953,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.0668,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      6838.044487108025,
+      6830.710171369347,
+      6830.085044191225,
+      7113.113024838126,
+      7110.907365019957,
+      7108.229611375462
+    ]
+  },
+  {
+    "layout": "block8-results",
+    "dataset": "glove",
+    "target_recall": 0.99189,
+    "target_qps": 6008,
+    "actual": 0.9919,
+    "strict": 0.9874,
+    "qps": 3015.1360793139083,
+    "rss": 3.9432754516601562,
+    "options": {
+      "bucket_width": 0.002,
+      "capacity": 2048,
+      "margin": 0.116,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    },
+    "runs": [
+      2965.8817502242455,
+      2979.382660397299,
+      2975.96546370646,
+      3058.582782885458,
+      3051.924432144171,
+      3050.889498230518
+    ]
+  }
+]

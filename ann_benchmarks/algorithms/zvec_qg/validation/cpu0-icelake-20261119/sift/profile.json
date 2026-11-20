@@ -1,0 +1,82 @@
+{
+  "dataset": "sift-128-euclidean",
+  "metric": "euclidean",
+  "dimension": 128,
+  "train_shape": [
+    1000000,
+    128
+  ],
+  "train_sha256": "ac8e11ed111b09e882bcf0ef1a77ebdd36c89f495bce8fd596603f69c35148e6",
+  "index_path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/sift-succinct-v2/index",
+  "index_sha256": "6c47074c744ab7df7aeca1480a802c588f3fc76a073fcf9e02f64aa2c2b431b4",
+  "storage": {
+    "index_type": "kHNSW",
+    "data_type": "DT_FP32",
+    "metric_type": "kL2sq",
+    "dimension": 128,
+    "m": 32,
+    "ef_construction": 400,
+    "use_id_map": true,
+    "params": {
+      "proxima.quantized_graph.thp_policy": "hint"
+    }
+  },
+  "settings": [
+    {
+      "target": 0.90007,
+      "options": {
+        "capacity": 128,
+        "margin": 0.00645,
+        "bucket_width": 0.002,
+        "max_expansions": 48,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "target": 0.95158,
+      "options": {
+        "capacity": 2048,
+        "margin": 0.03719,
+        "bucket_width": 0.004,
+        "max_expansions": 64,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "target": 0.99019,
+      "options": {
+        "capacity": 2048,
+        "margin": 0.08492,
+        "bucket_width": 0.008,
+        "max_expansions": 128,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    }
+  ],
+  "configuration_source": "g9i_native_validation_20261119/deployment_profiles/sift.json",
+  "reference_construction_provenance": {
+    "index_bytes": 3831125568,
+    "graph": {
+      "m": 32,
+      "ef_construction": 400,
+      "data_type": "DT_FP32",
+      "dimension": 128
+    },
+    "quantized_graph": {
+      "Persist": true,
+      "MaxNeighbors": 64,
+      "RotationViews": 2,
+      "Codec": {
+        "Type": "native"
+      }
+    },
+    "router": {
+      "Anchors": 65536,
+      "ProjectedDimension": 64,
+      "Seed": 202610261259
+    }
+  }
+}

@@ -50,4 +50,4 @@ done
     --bench-root "$BENCH_ROOT" --artifacts "$ARTIFACT_ROOT"
 "$QG_PYTHON" scripts/report_native_qg.py --artifacts "$ARTIFACT_ROOT" \
   --bench-root "$BENCH_ROOT" \
-  --history "$SUCCINCT_SOURCE/tools/core/bench/config/r7i/history/20261118-845fe9ec"
+  --history "benchmark-configs/r7i-new-api/succinct/history/20261118-845fe9ec"

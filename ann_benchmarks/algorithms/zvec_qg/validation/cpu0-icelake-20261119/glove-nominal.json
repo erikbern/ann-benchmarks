@@ -1,0 +1,86 @@
+[
+  {
+    "dataset": "glove",
+    "target_actual_recall": 0.9,
+    "reference_qps": 22578,
+    "actual_ann_recall": 0.90007,
+    "strict_id_recall": 0.88372,
+    "pooled_median_qps": 17327.731904801054,
+    "fraction_of_reference": null,
+    "median_of_three_best_of_five": 17331.455137552774,
+    "primary_latency_us": 57.69855976104736,
+    "median_query_rss_gib": 5.047931671142578,
+    "reference_rss_gib": 5.107,
+    "max_distance_error": 2.740451462424076e-07,
+    "repeat_best_qps": [
+      16847.14513000563,
+      17577.32898444012,
+      17331.455137552774
+    ],
+    "ordered_ids_sha256": "dec18495520460a8ce71e63ed71ed20d3ee6449a9aaf943989a49c14e652ffa2",
+    "options": {
+      "capacity": 2048,
+      "margin": 0.06939,
+      "bucket_width": 0.008,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    }
+  },
+  {
+    "dataset": "glove",
+    "target_actual_recall": 0.95,
+    "reference_qps": 13330,
+    "actual_ann_recall": 0.95013,
+    "strict_id_recall": 0.93651,
+    "pooled_median_qps": 10884.463334162021,
+    "fraction_of_reference": null,
+    "median_of_three_best_of_five": 10901.117088588679,
+    "primary_latency_us": 91.733717918396,
+    "median_query_rss_gib": 5.047931671142578,
+    "reference_rss_gib": 5.107,
+    "max_distance_error": 2.740451462424076e-07,
+    "repeat_best_qps": [
+      10532.51647375612,
+      10994.304293680254,
+      10901.117088588679
+    ],
+    "ordered_ids_sha256": "676a441a557b26f628d6a4ce86e247dc401bdfb90cf6253560626c4b91125bec",
+    "options": {
+      "capacity": 2048,
+      "margin": 0.09863,
+      "bucket_width": 0.002,
+      "max_expansions": 1536,
+      "route_beam": 1,
+      "uncertainty_bonus": 0
+    }
+  },
+  {
+    "dataset": "glove",
+    "target_actual_recall": 0.99,
+    "reference_qps": 6008,
+    "actual_ann_recall": 0.99011,
+    "strict_id_recall": 0.98426,
+    "pooled_median_qps": 4832.1663932784995,
+    "fraction_of_reference": null,
+    "median_of_three_best_of_five": 4848.203508994187,
+    "primary_latency_us": 206.2619686126709,
+    "median_query_rss_gib": 5.047931671142578,
+    "reference_rss_gib": 5.107,
+    "max_distance_error": 2.740451462424076e-07,
+    "repeat_best_qps": [
+      4660.603950047814,
+      4851.663112624109,
+      4848.203508994187
+    ],
+    "ordered_ids_sha256": "4cc7a5668386e510f79efae398e0644d05cbbcfcb81b3316cc65a0c6a0b6c211",
+    "options": {
+      "capacity": 2048,
+      "margin": 0.1365,
+      "bucket_width": 0.002,
+      "max_expansions": 1536,
+      "route_beam": 0,
+      "uncertainty_bonus": 0
+    }
+  }
+]

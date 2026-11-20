@@ -1,0 +1,50 @@
+{
+  "zvec_commit": "dc0f73ef9873d5a5b30d80a333cad02af252abdd",
+  "source_tree": "e407e192a36716d1da0481691ca207582ac84a00",
+  "compiler": "c++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "kernel": "Linux iZ6wehke75elytet1k4gw8Z 5.15.0-198-generic #208-Ubuntu SMP Fri Sep 4 10:22:38 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+  "os": "PRETTY_NAME=\"Ubuntu 22.04.5 LTS\"",
+  "instance": "ecs.r7.16xlarge",
+  "files": {
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/build/bin/local_builder": {
+      "bytes": 3068640,
+      "sha256": "cabae483a2275936981c6067833cee0cdf7cffb6266a4281650727ddad82a749"
+    },
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/vectors/glove-100-angular.vecs": {
+      "bytes": 482878007,
+      "sha256": "8c38d5b3f783ff6af7169f0a39532fd67c32cbd8025ebd386046a799797b3ea6"
+    },
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/thirdparty/arrow/arrow.patch": {
+      "bytes": 1395,
+      "sha256": "2b090bf7ebcec651d3ae7a3b2dfa6d4b6239f06b7df2f716708265427a953de2"
+    },
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/thirdparty/glog/glog.patch": {
+      "bytes": 1963,
+      "sha256": "7bea54668d24c10d662d591fc427dfa0951fedcc32d88762c6b7681ebd9b4b14"
+    },
+    "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/core/thirdparty/antlr/antlr4.patch": {
+      "bytes": 1704,
+      "sha256": "49bb794c6e80b6b1f7ed31405c4161d2b1b73362f7d9ab03484f114426e51a35"
+    }
+  },
+  "replay_validation": {
+    "sift": {
+      "rounds": 15,
+      "all_ordered_ids_match": true,
+      "all_recalls_match": true,
+      "rounds_sha256": "a7a435e43551e09fdae4d0d6ca4ae77ac7943e0cb1c10106f677263b0604d5fb"
+    },
+    "gist": {
+      "rounds": 15,
+      "all_ordered_ids_match": true,
+      "all_recalls_match": true,
+      "rounds_sha256": "c202a52ca6271cf366b580894b9c1486c93c71a4b0c62699b2f32fcec4f62c73"
+    },
+    "glove": {
+      "rounds": 15,
+      "all_ordered_ids_match": true,
+      "all_recalls_match": true,
+      "rounds_sha256": "b3c71fdad25b878de35af6a925f55b0c75fbc3863a2e80b49fc2ce557c4ea7de"
+    }
+  }
+}

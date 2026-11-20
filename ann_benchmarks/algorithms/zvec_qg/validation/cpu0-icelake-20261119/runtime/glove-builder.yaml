@@ -1,0 +1,15 @@
+BuilderCommon:
+  BuildFile: /home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/vectors/glove-100-angular.vecs
+  BuilderClass: HnswStreamer
+  ConverterName: CosineFp32Converter
+  DumpFormat: streamer
+  DumpPath: /home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/m64-800/base.index
+  IndexPath: /home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/m64-800/build.index
+  LogLevel: info
+  MaxDocs: 1183514
+  MetricName: Cosine
+  ThreadCount: 20
+BuilderParams:
+  proxima.hnsw.streamer.efconstruction: 800
+  proxima.hnsw.streamer.get_vector_enable: true
+  proxima.hnsw.streamer.max_neighbor_count: 64

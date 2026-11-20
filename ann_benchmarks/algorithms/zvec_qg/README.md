@@ -19,6 +19,14 @@ rotation views agree, and every corpus/provider/snapshot is fingerprint checked.
 All search keys use the new names, including explicit capacity and scan_limit.
 The consistency checker ties presets to archived winning parameters and artifacts.
 
+## Ice Lake CPU0 GloVe settings
+
+For the succinct M64/800 provider with the block4 low-rank snapshot, use the
+[recommended CPU0 GloVe query preset](configs/r7i-cpu0/glove.json) and the
+[CPU0 replay commands](validation/cpu0-icelake-20261119/README.md#glove-query-presets).
+The seven recommended settings cover 30% through 99% recall. The default r7i CLI
+preset above uses its own CSR provider and snapshot family.
+
 ## Build the adapter
 
 Use Python with numpy, h5py, pybind11, PyYAML and the ANN-Benchmarks dependencies.
@@ -145,3 +153,5 @@ tree and the dedicated `comprehensive-icelake-20261116/measurements/baseline`
 archive, validating the latter's JSONL provenance and ID hashes. It does not rerun these algorithms.
 Their historical best-of-five values and background conditions remain distinct
 from the new isolated median-of-three results.
+
+The [CPU0 Ice Lake comparison](validation/cpu0-icelake-20261119/README.md) uses the November 19 succinct source and a rebuilt GloVe M64/800 low-rank graph. It records local results at the supplied reference's actual recall values and includes frozen configurations, raw-run fingerprints and a replay entry point.

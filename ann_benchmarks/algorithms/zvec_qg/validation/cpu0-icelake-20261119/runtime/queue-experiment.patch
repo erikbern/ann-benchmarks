@@ -1,0 +1,18 @@
+--- a/src/core/algorithm/quantized_graph/quantized_graph.h
++++ b/src/core/algorithm/quantized_graph/quantized_graph.h
+@@ -840,3 +840,14 @@
+       beam.locate_batch(distances, bins.data(), count);
+-      uint32_t accepted = visited->unvisited_batch(ids, distances, count);
++      // Visited queue heads are already removed in prefetch_next(), and
++      // set_visited() guards every expansion. Defer membership checks until
++      // those two points, avoiding random gathers for pruned neighbors.
++      uint32_t accepted = 0;
++      for (size_t offset = 0; offset < count; offset += 16) {
++        const size_t lanes = std::min(size_t{16}, count - offset);
++        const auto live = __mmask16((uint32_t{1} << lanes) - 1);
++        const auto scores = _mm512_maskz_loadu_epi32(live, distances + offset);
++        const auto bits = _mm512_and_si512(scores, _mm512_set1_epi32(0x7fffffff));
++        const auto finite = _mm512_cmplt_epi32_mask(bits, _mm512_set1_epi32(0x7f800000));
++        accepted |= uint32_t(live & finite) << offset;
++      }
+       beam.reserve_insertions(count);

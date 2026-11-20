@@ -1,0 +1,89 @@
+{
+  "dataset": "gist-960-euclidean",
+  "metric": "euclidean",
+  "dimension": 960,
+  "train_shape": [
+    1000000,
+    960
+  ],
+  "train_sha256": "1d9dfa933a86b1b78ef3de82eb286f85899866c428d373e42613783a13811038",
+  "index_path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/comprehensive-icelake-20261116/indexes/gist-exploration-v1/index",
+  "index_sha256": "1efbe7f33cf6ac9404f47db6e67d8cc4e2026814cc0eafca3357f9365979c7d7",
+  "storage": {
+    "index_type": "kHNSW",
+    "data_type": "DT_FP32",
+    "metric_type": "kL2sq",
+    "dimension": 960,
+    "m": 50,
+    "ef_construction": 500,
+    "use_id_map": true,
+    "params": {
+      "proxima.quantized_graph.thp_policy": "hint"
+    }
+  },
+  "settings": [
+    {
+      "target": 0.9025,
+      "options": {
+        "capacity": 2048,
+        "margin": 0.04,
+        "bucket_width": 0.002,
+        "max_expansions": 256,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "target": 0.9574,
+      "options": {
+        "capacity": 2048,
+        "margin": 0.06037,
+        "bucket_width": 0.002,
+        "max_expansions": 256,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "target": 0.9943,
+      "options": {
+        "capacity": 2048,
+        "margin": 0.12,
+        "bucket_width": 0.002,
+        "max_expansions": 512,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    }
+  ],
+  "configuration_source": "g9i_native_validation_20261119/deployment_profiles/gist.json",
+  "reference_construction_provenance": {
+    "index_bytes": 10219882656,
+    "graph": {
+      "m": 50,
+      "ef_construction": 500,
+      "data_type": "DT_FP32",
+      "dimension": 960
+    },
+    "quantized_graph": {
+      "Persist": true,
+      "MaxNeighbors": 64,
+      "ThreadCount": 8,
+      "Codec": {
+        "Type": "low_rank",
+        "BlockDimension": 8,
+        "Codebook": "gaussian",
+        "Rank": 8,
+        "TrainingSamples": 1024,
+        "CenterWeight": 1.0,
+        "Seed": 20261031
+      },
+      "RotationViews": 1
+    },
+    "router": {
+      "Anchors": 8192,
+      "ProjectedDimension": 256,
+      "Seed": 202610261259
+    }
+  }
+}

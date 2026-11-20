@@ -1,0 +1,16 @@
+{
+  "sift": {
+    "dataset_sha256": "dd6f0a6ed6b7ebb8934680f861a33ed01ff33991eaee4fd60914d854a0ca5984",
+    "index_sha256": "6c47074c744ab7df7aeca1480a802c588f3fc76a073fcf9e02f64aa2c2b431b4"
+  },
+  "gist": {
+    "dataset_sha256": "8e95831936bfdbfa0a56086942e2cf98cd703517c67f985914183eb4cdbf026a",
+    "index_sha256": "1efbe7f33cf6ac9404f47db6e67d8cc4e2026814cc0eafca3357f9365979c7d7"
+  },
+  "glove": {
+    "dataset_sha256": "544af1d5e84e112cd4749571dcfd8ca109818a572f850af75a3a09e093a953c4",
+    "index_sha256": "ac8a03ef328a57126fd056dd42142121326d7091768a0651b01818fdbc35ecc2",
+    "sidecar_sha256": "d55339eb6346c793efd3e8324d73756d5fa3b2d8f9d8e36f99473f800c9462ef",
+    "router_sha256": "d076148d6de876d94449dbd3a92d26d570e4f4f1a2466a76f7b3226bbf5b0d10"
+  }
+}

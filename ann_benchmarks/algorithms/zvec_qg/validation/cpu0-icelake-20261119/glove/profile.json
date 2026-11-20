@@ -1,0 +1,91 @@
+{
+  "dataset": "glove-100-angular",
+  "metric": "angular",
+  "dimension": 100,
+  "train_shape": [
+    1183514,
+    100
+  ],
+  "train_sha256": "3cccad7d66dd35ffd7215e37503f2e1fa31b3aab917a45aa0a6eb4ef590ebcef",
+  "index_path": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/m64-800/build.index",
+  "index_sha256": "ac8a03ef328a57126fd056dd42142121326d7091768a0651b01818fdbc35ecc2",
+  "storage": {
+    "index_type": "kHNSW",
+    "data_type": "DT_FP32",
+    "metric_type": "kCosine",
+    "dimension": 100,
+    "m": 64,
+    "ef_construction": 800,
+    "use_id_map": true,
+    "params": {
+      "proxima.quantized_graph.thp_policy": "hint"
+    },
+    "local_qg_file": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/m64-800/lowrank.qg"
+  },
+  "settings": [
+    {
+      "target": 0.90721,
+      "options": {
+        "capacity": 2048,
+        "margin": 0.07541,
+        "bucket_width": 0.004,
+        "max_expansions": 768,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "target": 0.96034,
+      "options": {
+        "capacity": 2048,
+        "margin": 0.10387,
+        "bucket_width": 0.004,
+        "max_expansions": 768,
+        "route_beam": 1,
+        "uncertainty_bonus": 0
+      }
+    },
+    {
+      "target": 0.99189,
+      "options": {
+        "capacity": 2048,
+        "margin": 0.14126,
+        "bucket_width": 0.002,
+        "max_expansions": 1536,
+        "route_beam": 0,
+        "uncertainty_bonus": 0
+      }
+    }
+  ],
+  "configuration_source": "g9i_native_validation_20261119/deployment_profiles/glove.json",
+  "reference_construction_provenance": {
+    "index_bytes": 4757163616,
+    "graph": {
+      "m": 64,
+      "ef_construction": 800,
+      "data_type": "DT_FP32",
+      "dimension": 100
+    },
+    "quantized_graph": {
+      "Persist": true,
+      "MaxNeighbors": 64,
+      "ThreadCount": 4,
+      "RotationViews": 2,
+      "Codec": {
+        "Type": "low_rank",
+        "Rank": 8,
+        "BlockDimension": 4,
+        "Codebook": "gaussian",
+        "TrainingSamples": 1024,
+        "Seed": 20261026,
+        "CenterWeight": 0.5
+      }
+    },
+    "router": {
+      "Anchors": 65536,
+      "ProjectedDimension": 64,
+      "Seed": 202610261259,
+      "provenance": "Inherited unchanged from M64/800 substrate; not re-created by re-encoding."
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "params": {
+    "proxima.quantized_graph.thp_policy": "require",
+    "proxima.quantized_graph.thp_min_coverage": 0.95,
+    "proxima.quantized_graph.thp_min_coverage_floor": 0.8
+  },
+  "result": "zvec error -12",
+  "index_sha256": "4fbd421f4fe0e9bad2e3260a1a21d1d61fd342d7cb2445c04452a4481a2b489f",
+  "extension": "/home/xingrui/workspace/annbenchmark/ann-benchmarks/results/cpu0-reference-alignment/_direct_core.cpython-310-x86_64-linux-gnu.so"
+}

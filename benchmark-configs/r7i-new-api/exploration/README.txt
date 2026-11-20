@@ -15,8 +15,9 @@ Entry points
   ann-benchmarks c7ibench/scripts/run_native_qg.py: runs the configurations
     committed on c7ibench through the selected Zvec source checkout.
 
-Build from this checkout (CMake >=3.26, Ninja, GCC 11; Python numpy/h5py,
+Build from the frozen Zvec checkout (CMake >=3.26, Ninja, GCC 11; Python numpy/h5py,
 psutil/docker required; numactl for CPU and memory binding):
+  export ANN_BENCHMARKS=/path/to/ann-benchmarks-c7ibench
   git submodule update --init --recursive
   cmake -S . -B build-r7i -G Ninja -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_PYTHON_BINDINGS=OFF -DBUILD_TESTING=ON -DBUILD_TOOLS=ON \
@@ -25,7 +26,7 @@ psutil/docker required; numactl for CPU and memory binding):
   cmake --build build-r7i --target qg_bench quantized_graph_index_test -j 12
   build-r7i/bin/quantized_graph_index_test
   python tools/core/bench/qg_preflight.py --binary "$PWD/build-r7i/bin/qg_bench" \
-    --config-dir tools/core/bench/config/r7i --output /new/path/preflight
+    --config-dir "$ANN_BENCHMARKS/benchmark-configs/r7i-new-api" --output /new/path/preflight
 
 Run from ann-benchmarks c7ibench (set each path explicitly):
   export BENCH_ROOT=/path/to/ann-benchmarks-with-data-and-historical-indexes
@@ -125,9 +126,9 @@ Validated deliverables
     historical timings are explicitly NOT directly comparable.
 
 Consistency checks (no external large files needed for metadata checks):
-  python tools/core/bench/config/r7i/check_configs.py
+  python "$ANN_BENCHMARKS/benchmark-configs/r7i-new-api/exploration/check_configs.py"
 Full audit on this machine, including every raw file hash and latency-derived QPS:
-  python tools/core/bench/config/r7i/check_configs.py --raw
+  python "$ANN_BENCHMARKS/benchmark-configs/r7i-new-api/exploration/check_configs.py" --raw
 
 GloVe capacity caveat: ceil(1183514/1024)=1156 is the visited-bitmap threshold.
 capacity=2048 uses the bitmap. capacity=128 uses a 1024-slot probing table,

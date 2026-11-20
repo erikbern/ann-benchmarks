@@ -1,0 +1,26 @@
+[
+  {
+    "capacity": 2048,
+    "margin": 0.04,
+    "bucket_width": 0.002,
+    "max_expansions": 256,
+    "route_beam": 1,
+    "uncertainty_bonus": 0
+  },
+  {
+    "capacity": 2048,
+    "margin": 0.06037,
+    "bucket_width": 0.002,
+    "max_expansions": 256,
+    "route_beam": 0,
+    "uncertainty_bonus": 0
+  },
+  {
+    "capacity": 2048,
+    "margin": 0.12,
+    "bucket_width": 0.002,
+    "max_expansions": 512,
+    "route_beam": 1,
+    "uncertainty_bonus": 0
+  }
+]

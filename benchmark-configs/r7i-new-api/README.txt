@@ -20,8 +20,9 @@ Entry points
   ann-benchmarks c7ibench/scripts/run_native_qg.py: runs the configurations
     committed on c7ibench through the selected Zvec source checkout.
 
-Build from this checkout (CMake >=3.26, Ninja, GCC 11; Python numpy/h5py,
+Build from the frozen Zvec checkout (CMake >=3.26, Ninja, GCC 11; Python numpy/h5py,
 psutil/docker required; numactl for CPU and memory binding):
+  export ANN_BENCHMARKS=/path/to/ann-benchmarks-c7ibench
   git submodule update --init --recursive
   cmake -S . -B build-r7i -G Ninja -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_PYTHON_BINDINGS=OFF -DBUILD_TESTING=ON -DBUILD_TOOLS=ON \
@@ -30,7 +31,7 @@ psutil/docker required; numactl for CPU and memory binding):
   cmake --build build-r7i --target qg_bench quantized_graph_index_test -j 12
   build-r7i/bin/quantized_graph_index_test
   python tools/core/bench/qg_preflight.py --binary "$PWD/build-r7i/bin/qg_bench" \
-    --config-dir tools/core/bench/config/r7i --output /new/path/preflight
+    --config-dir "$ANN_BENCHMARKS/benchmark-configs/r7i-new-api" --output /new/path/preflight
 
 Run from ann-benchmarks c7ibench (set each path explicitly):
   export BENCH_ROOT=/path/to/ann-benchmarks-with-data-and-historical-indexes
@@ -120,6 +121,8 @@ One-command full reproduction from the c7ibench checkout (fresh output directory
   bash benchmark-configs/r7i-new-api/reproduce.sh
 
 The root sift/gist/glove JSON files are the actual frozen campaign inputs.
+They retain the measured codec spelling "native"; current Zvec also accepts
+this spelling as an alias for "rabitq".
 Variant subdirectories contain the full validation archive and selected runnable
 best-sift.json, best-gist.json, best-glove.json configurations. The test entry
 commit was 200f3c65be7e912a117d793bc1aff1359d2cab4f. Raw large artifacts remain
