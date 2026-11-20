@@ -7,27 +7,20 @@
   "query_count": 10000,
   "precision": "FP32",
   "metric": "l2sq",
-  "dataset_file": "${BENCH_ROOT}/data/sift-128-euclidean.hdf5",
-  "output_dir": "${ARTIFACT_ROOT}/sift",
-  "provider_prefix": "${ARTIFACT_ROOT}/sift/provider",
-  "queries_file": "${ARTIFACT_ROOT}/sift/queries.f32",
+  "dataset_file": "data/sift-128-euclidean.hdf5",
+  "output_dir": "results/qg-builder-r7i-20261120/runs/succinct/sift/n64",
+  "provider_prefix": "results/qg-builder-r7i-20261120/runs/succinct/sift/n64/provider",
+  "queries_file": "results/qg-builder-r7i-20261120/input/sift/queries.f32",
   "provider_format": "csr-fp32-le-v1",
-  "id_convention": "internal CSR row -> ids.u64 -> original HDF5 train row",
-  "base_graph": {
-    "m": 32,
-    "ef_construction": 400,
-    "source_index": "${BENCH_ROOT}/results/comprehensive-icelake-20261116/indexes/sift-exploration-v2/index",
-    "source_sha256": "5eb10b755843219b4dc29068ebb2bcdc6ba30dd63da84bd5272c78896bad3b7f",
-    "rebuild_config": "base-sift.yaml"
-  },
+  "id_convention": "internal row equals original HDF5 training row",
   "profiles": {
     "n64": {
       "name": "n64",
-      "index_prefix": "${ARTIFACT_ROOT}/sift/n64",
+      "index_prefix": "results/qg-builder-r7i-20261120/runs/succinct/sift/n64/n64",
       "encoding": {
         "codec": "native",
         "max_neighbors": 64,
-        "threads": 8,
+        "threads": 32,
         "rotation_views": 2,
         "codebook": "hadamard",
         "block_dimension": 6,
@@ -46,8 +39,8 @@
   },
   "points": [
     {
-      "name": "migration-0",
-      "phase": "migration",
+      "name": "recall-30",
+      "phase": "recommended",
       "target": 0.3,
       "profile": "n64",
       "capacity": 128,
@@ -61,11 +54,11 @@
       }
     },
     {
-      "name": "migration-1",
-      "phase": "migration",
+      "name": "recall-50",
+      "phase": "recommended",
       "target": 0.5,
       "profile": "n64",
-      "capacity": 128,
+      "capacity": 32,
       "scan_limit": 0,
       "search": {
         "bucket_width": 0.002,
@@ -76,8 +69,8 @@
       }
     },
     {
-      "name": "migration-2",
-      "phase": "migration",
+      "name": "recall-70",
+      "phase": "recommended",
       "target": 0.7,
       "profile": "n64",
       "capacity": 128,
@@ -91,9 +84,9 @@
       }
     },
     {
-      "name": "coverage-2",
-      "phase": "tuning",
-      "target": 0.7,
+      "name": "recall-85",
+      "phase": "recommended",
+      "target": 0.85,
       "profile": "n64",
       "capacity": 128,
       "scan_limit": 0,
@@ -106,9 +99,9 @@
       }
     },
     {
-      "name": "migration-3",
-      "phase": "migration",
-      "target": 0.85,
+      "name": "recall-90",
+      "phase": "recommended",
+      "target": 0.9,
       "profile": "n64",
       "capacity": 128,
       "scan_limit": 0,
@@ -121,8 +114,8 @@
       }
     },
     {
-      "name": "migration-5",
-      "phase": "migration",
+      "name": "recall-95",
+      "phase": "recommended",
       "target": 0.95,
       "profile": "n64",
       "capacity": 128,
@@ -136,8 +129,8 @@
       }
     },
     {
-      "name": "migration-6",
-      "phase": "migration",
+      "name": "recall-99",
+      "phase": "recommended",
       "target": 0.99,
       "profile": "n64",
       "capacity": 2048,
@@ -174,22 +167,50 @@
     "aggregation": "median of 3 best-of-5 repetition QPS",
     "same_index_reused": true
   },
-  "budget": {
-    "mode": "replay measured winners",
-    "original_campaign_budget": {
-      "migration_points": 7,
-      "additional_points": 14,
-      "selection": "same-session median QPS among measured points meeting distance-tolerance recall",
-      "tuning_rule": "per target: one capacity perturbation (128->32, otherwise128), one margin*1.25+0.005 and max_expansions*1.5 perturbation; frozen before measurement"
-    }
+  "training_file": "results/qg-builder-r7i-20261120/input/sift/train.f32",
+  "topology": {
+    "search_list_size": 400,
+    "passes": 2,
+    "seed": 20261120
   },
-  "recommended_points": {
-    "0.3": "migration-0",
-    "0.5": "migration-1",
-    "0.7": "migration-2",
-    "0.85": "coverage-2",
-    "0.9": "migration-3",
-    "0.95": "migration-5",
-    "0.99": "migration-6"
-  }
+  "variant": "succinct",
+  "source_commit": "1551e0137f5d6594d4c33778492a818322453c0e",
+  "ann_metric": "euclidean",
+  "train_shape": [
+    1000000,
+    128
+  ],
+  "train_sha256": "ac8e11ed111b09e882bcf0ef1a77ebdd36c89f495bce8fd596603f69c35148e6",
+  "files": [
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/sift/n64/provider.vectors",
+      "bytes": 512000000,
+      "sha256": "ac8e11ed111b09e882bcf0ef1a77ebdd36c89f495bce8fd596603f69c35148e6"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/sift/n64/provider.ids",
+      "bytes": 8000000,
+      "sha256": "6f8f1531c1170336132e3a5cf9fde98aa28840393edd4387ab4d7c7e743586fb"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/sift/n64/provider.edges",
+      "bytes": 235405472,
+      "sha256": "62acab2872df6479fce67cbd0c89964f88e4d8cfd5f798f534281ae5192ea5e1"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/sift/n64/provider.offsets",
+      "bytes": 8000008,
+      "sha256": "3311569db4c64af32d2f88b87aac8f216daf3e1aa0d7a060199a83faa5c75913"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/sift/n64/n64.qg",
+      "bytes": 3008000800,
+      "sha256": "2bf1fee061ebe38c7789ef5894117ea858d9344a00a41b0cd7543d8d3de39d2f"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/sift/n64/n64.router",
+      "bytes": 18378188,
+      "sha256": "9e3b998a07d91feb5ab62686466e8e16bb9c48a527f7f6db05d9b19db1d352da"
+    }
+  ]
 }

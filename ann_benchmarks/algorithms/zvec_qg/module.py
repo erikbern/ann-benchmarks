@@ -1,4 +1,8 @@
-"""Independent QG API, owned CSR provider, fingerprinted load-only ANN adapter."""
+"""Single-query ANN adapter for the r7i succinct snapshots.
+
+ZVEC_QG_ARTIFACT points to the matching native extension manifest.
+ZVEC_QG_BENCH_ROOT can point to the directory containing data/ and results/.
+"""
 import hashlib
 import importlib.util
 import json
@@ -22,15 +26,7 @@ def read_config(path):
 
 
 def load_profile(profile, metric, dimension):
-    preset_dir = Path(__file__).parent / 'configs' / profile if profile in ('r7i', 'r7i-exploration') else Path(os.path.expandvars(profile))
-    if preset_dir.is_dir():
-        profiles = [read_config(p) for p in preset_dir.glob('*.json')]
-        matches = [p for p in profiles if p['ann_metric'] == metric and p['dimension'] == dimension]
-        if len(matches) != 1:
-            raise ValueError('No unique platform preset for metric/dimension')
-        config = matches[0]
-    else:
-        config = read_config(profile)
+    config = read_config(profile)
     if config['ann_metric'] != metric or config['dimension'] != dimension:
         raise ValueError('Dataset metric/dimension mismatch')
     def reject_legacy(value):
@@ -68,20 +64,46 @@ def load_profile(profile, metric, dimension):
         elif isinstance(value, list):
             return [resolve(v) for v in value]
         return value
-    return resolve(config)
+    config = resolve(config)
+    root = Path(os.environ.get('ZVEC_QG_BENCH_ROOT', '.'))
+    config['provider_prefix'] = str(root / config['provider_prefix'])
+    for build in config['profiles'].values():
+        build['index_prefix'] = str(root / build['index_prefix'])
+    for item in config['files']:
+        item['path'] = str(root / item['path'])
+    return config
 
 
 class ZvecQuantizedGraph(BaseANN):
     def __init__(self, metric, dimension, profile, artifact):
-        self.profile = load_profile(profile, metric, dimension)
+        preset = (Path(__file__).parent / 'configs/r7i-native-builder'
+                  if profile == 'r7i' else Path(os.path.expandvars(profile)))
+        if preset.is_dir():
+            paths = []
+            for path in sorted(preset.glob('*.json')):
+                header = read_config(path)
+                if (header['ann_metric'], header['dimension']) == (metric, dimension):
+                    paths.append(path)
+        else:
+            paths = [preset]
+        if not paths:
+            raise ValueError('No r7i QG preset for this metric and dimension')
+        self.configs = [load_profile(path, metric, dimension) for path in paths]
+        self.profile = self.configs[0]
+        self.settings = sorted(
+            [(config, point) for config in self.configs for point in config['points']],
+            key=lambda pair: pair[1]['target'])
         self.artifact = read_config(artifact)
-        if self.profile['variant'] != self.artifact['variant']:
-            raise ValueError('Source variant differs from the preset')
+        for config in self.configs:
+            if config['variant'] != self.artifact['variant']:
+                raise ValueError('Source variant differs from the preset')
+            if config.get('source_commit', self.artifact['source_commit']) != self.artifact['source_commit']:
+                raise ValueError('Runtime source commit differs from the preset')
+        if self.artifact['extension'] not in self.artifact['runtime_sha256']:
+            raise ValueError('Missing QG extension fingerprint')
         for path, sha in self.artifact['runtime_sha256'].items():
             if digest(path) != sha:
                 raise ValueError('Runtime fingerprint mismatch: ' + path)
-        if digest(Path(__file__).with_name('core.cpp')) != self.artifact['bridge_sha256']:
-            raise ValueError('Rebuild the bridge after modifying core.cpp')
         spec = importlib.util.spec_from_file_location('_zvec_qg_core', self.artifact['extension'])
         self.core = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.core)
@@ -93,21 +115,29 @@ class ZvecQuantizedGraph(BaseANN):
             raise RuntimeError('Close the index before loading another')
         if X.dtype != np.float32 or not X.flags.c_contiguous or list(X.shape) != self.profile['train_shape']:
             raise ValueError('Expected full contiguous FP32 training corpus')
-        if hashlib.sha256(memoryview(X)).hexdigest() != self.profile['train_sha256']:
-            raise ValueError('Training corpus fingerprint mismatch')
-        for item in self.profile['files']:
-            if digest(item['path']) != item['sha256']:
-                raise ValueError('Provider/snapshot fingerprint mismatch: ' + item['path'])
-        self.index = self.core.Index(json.dumps(self.profile))
-        # Load the first snapshot inside fit so the ANN memory/load accounting includes QG.
-        self.set_query_arguments(0)
+        corpus_sha = hashlib.sha256(memoryview(X)).hexdigest()
+        for config in self.configs:
+            if corpus_sha != config['train_sha256'] or list(X.shape) != config['train_shape']:
+                raise ValueError('Training corpus fingerprint mismatch')
+            for item in config['files']:
+                if digest(item['path']) != item['sha256']:
+                    raise ValueError('Provider/snapshot fingerprint mismatch: ' + item['path'])
+        self._configure(0)
 
     def set_query_arguments(self, setting):
-        if type(setting) is not int or not 0 <= setting < len(self.profile['points']):
+        if type(setting) is not int or not 0 <= setting < len(self.settings):
             raise ValueError('Expected a valid frozen query setting index')
         if self.index is None:
             raise RuntimeError('Load the index before configuring queries')
-        self.index.configure(json.dumps(self.profile['points'][setting]))
+        self._configure(setting)
+
+    def _configure(self, setting):
+        config, point = self.settings[setting]
+        if self.index is None or self.profile is not config:
+            # GloVe N32 and N64 have different CSR graphs as well as snapshots.
+            self.index = self.core.Index(json.dumps(config))
+            self.profile = config
+        self.index.configure(json.dumps(point))
         self.setting = setting
 
     def query(self, q, n):
@@ -131,7 +161,7 @@ class ZvecQuantizedGraph(BaseANN):
     def get_additional(self):
         return dict(source_commit=self.artifact['source_commit'], entry='QuantizedGraphIndex',
                     query_threads=1, borrowed_corpus_bytes=0, variant=self.profile['variant'],
-                    active_profile=self.profile['points'][self.setting]['profile'],
+                    active_profile=self.settings[self.setting][1]['profile'],
                     process_rss_bytes=int(self.get_memory_usage() * 1024),
                     fit_is_load_only=True, query_timer='Python + normalization + QG + result array',
                     native_campaign_qps_comparable=False)

@@ -7,27 +7,20 @@
   "query_count": 1000,
   "precision": "FP32",
   "metric": "l2sq",
-  "dataset_file": "${BENCH_ROOT}/data/gist-960-euclidean.hdf5",
-  "output_dir": "${ARTIFACT_ROOT}/gist",
-  "provider_prefix": "${ARTIFACT_ROOT}/gist/provider",
-  "queries_file": "${ARTIFACT_ROOT}/gist/queries.f32",
+  "dataset_file": "data/gist-960-euclidean.hdf5",
+  "output_dir": "results/qg-builder-r7i-20261120/runs/succinct/gist/n64",
+  "provider_prefix": "results/qg-builder-r7i-20261120/runs/succinct/gist/n64/provider",
+  "queries_file": "results/qg-builder-r7i-20261120/input/gist/queries.f32",
   "provider_format": "csr-fp32-le-v1",
-  "id_convention": "internal CSR row -> ids.u64 -> original HDF5 train row",
-  "base_graph": {
-    "m": 50,
-    "ef_construction": 500,
-    "source_index": "${BENCH_ROOT}/results/comprehensive-icelake-20261116/indexes/gist-exploration-v1/index",
-    "source_sha256": "1efbe7f33cf6ac9404f47db6e67d8cc4e2026814cc0eafca3357f9365979c7d7",
-    "rebuild_config": "base-gist.yaml"
-  },
+  "id_convention": "internal row equals original HDF5 training row",
   "profiles": {
     "n64": {
       "name": "n64",
-      "index_prefix": "${ARTIFACT_ROOT}/gist/n64",
+      "index_prefix": "results/qg-builder-r7i-20261120/runs/succinct/gist/n64/n64",
       "encoding": {
         "codec": "low_rank",
         "max_neighbors": 64,
-        "threads": 8,
+        "threads": 32,
         "rotation_views": 1,
         "codebook": "gaussian",
         "block_dimension": 8,
@@ -46,8 +39,8 @@
   },
   "points": [
     {
-      "name": "migration-0",
-      "phase": "migration",
+      "name": "recall-30",
+      "phase": "recommended",
       "target": 0.3,
       "profile": "n64",
       "capacity": 128,
@@ -61,8 +54,8 @@
       }
     },
     {
-      "name": "migration-1",
-      "phase": "migration",
+      "name": "recall-50",
+      "phase": "recommended",
       "target": 0.5,
       "profile": "n64",
       "capacity": 128,
@@ -76,23 +69,23 @@
       }
     },
     {
-      "name": "migration-2",
-      "phase": "migration",
+      "name": "recall-70",
+      "phase": "recommended",
       "target": 0.7,
       "profile": "n64",
       "capacity": 128,
       "scan_limit": 0,
       "search": {
         "bucket_width": 0.002,
-        "margin": 0.005,
-        "max_expansions": 32,
-        "route_beam": 1,
+        "margin": 0.0075,
+        "max_expansions": 30,
+        "route_beam": 0,
         "uncertainty_bonus": 0
       }
     },
     {
-      "name": "migration-3",
-      "phase": "migration",
+      "name": "recall-85",
+      "phase": "recommended",
       "target": 0.85,
       "profile": "n64",
       "capacity": 2048,
@@ -106,46 +99,46 @@
       }
     },
     {
-      "name": "migration-4",
-      "phase": "migration",
+      "name": "recall-90",
+      "phase": "recommended",
       "target": 0.9,
       "profile": "n64",
       "capacity": 2048,
       "scan_limit": 0,
       "search": {
         "bucket_width": 0.002,
-        "margin": 0.04,
+        "margin": 0.03,
         "max_expansions": 256,
         "route_beam": 1,
         "uncertainty_bonus": 0
       }
     },
     {
-      "name": "migration-5",
-      "phase": "migration",
+      "name": "recall-95",
+      "phase": "recommended",
       "target": 0.95,
       "profile": "n64",
       "capacity": 2048,
       "scan_limit": 0,
       "search": {
         "bucket_width": 0.002,
-        "margin": 0.06,
-        "max_expansions": 256,
+        "margin": 0.055,
+        "max_expansions": 384,
         "route_beam": 1,
         "uncertainty_bonus": 0
       }
     },
     {
-      "name": "migration-6",
-      "phase": "migration",
+      "name": "recall-99",
+      "phase": "recommended",
       "target": 0.99,
       "profile": "n64",
       "capacity": 2048,
       "scan_limit": 0,
       "search": {
         "bucket_width": 0.002,
-        "margin": 0.12000000000000001,
-        "max_expansions": 512,
+        "margin": 0.08,
+        "max_expansions": 384,
         "route_beam": 1,
         "uncertainty_bonus": 0
       }
@@ -174,22 +167,50 @@
     "aggregation": "median of 3 best-of-5 repetition QPS",
     "same_index_reused": true
   },
-  "budget": {
-    "mode": "replay measured winners",
-    "original_campaign_budget": {
-      "migration_points": 7,
-      "additional_points": 14,
-      "selection": "same-session median QPS among measured points meeting distance-tolerance recall",
-      "tuning_rule": "per target: one capacity perturbation (128->32, otherwise128), one margin*1.25+0.005 and max_expansions*1.5 perturbation; frozen before measurement"
-    }
+  "training_file": "results/qg-builder-r7i-20261120/input/gist/train.f32",
+  "topology": {
+    "search_list_size": 400,
+    "passes": 2,
+    "seed": 20261120
   },
-  "recommended_points": {
-    "0.3": "migration-0",
-    "0.5": "migration-1",
-    "0.7": "migration-2",
-    "0.85": "migration-3",
-    "0.9": "migration-4",
-    "0.95": "migration-5",
-    "0.99": "migration-6"
-  }
+  "variant": "succinct",
+  "source_commit": "1551e0137f5d6594d4c33778492a818322453c0e",
+  "ann_metric": "euclidean",
+  "train_shape": [
+    1000000,
+    960
+  ],
+  "train_sha256": "1d9dfa933a86b1b78ef3de82eb286f85899866c428d373e42613783a13811038",
+  "files": [
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/gist/n64/provider.vectors",
+      "bytes": 3840000000,
+      "sha256": "1d9dfa933a86b1b78ef3de82eb286f85899866c428d373e42613783a13811038"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/gist/n64/provider.ids",
+      "bytes": 8000000,
+      "sha256": "6f8f1531c1170336132e3a5cf9fde98aa28840393edd4387ab4d7c7e743586fb"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/gist/n64/provider.edges",
+      "bytes": 202768560,
+      "sha256": "fdda909b704eace1fbc4372969fa7fc40585419ad4665dc8bf027c908cb4e4b5"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/gist/n64/provider.offsets",
+      "bytes": 8000008,
+      "sha256": "5499d01d58cd987afb320dccdc9e1ab1dec2ee4b64b13c46887321f573e50c33"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/gist/n64/n64.qg",
+      "bytes": 5952037920,
+      "sha256": "a970f0b46604092c0af07aeb928bb3062c6c5ef217994eda3e8e4bc1cfc6d294"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/gist/n64/n64.router",
+      "bytes": 7143104,
+      "sha256": "7dfac1eb482a07a75c42f9e29a45a8f07e7310f48ce6bcd6688d9c75affeb12f"
+    }
+  ]
 }
