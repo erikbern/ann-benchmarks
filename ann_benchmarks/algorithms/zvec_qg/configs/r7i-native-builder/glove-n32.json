@@ -1,0 +1,152 @@
+{
+  "schema_version": 2,
+  "engine": "QuantizedGraphIndex",
+  "dataset": "glove-100-angular",
+  "dimension": 100,
+  "train_count": 1183514,
+  "query_count": 10000,
+  "precision": "FP32",
+  "metric": "cosine",
+  "dataset_file": "data/glove-100-angular.hdf5",
+  "output_dir": "results/qg-builder-r7i-20261120/runs/succinct/glove/n32",
+  "provider_prefix": "results/qg-builder-r7i-20261120/runs/succinct/glove/n32/provider",
+  "queries_file": "results/qg-builder-r7i-20261120/input/glove/queries.f32",
+  "provider_format": "csr-fp32-le-v1",
+  "id_convention": "internal row equals original HDF5 training row",
+  "profiles": {
+    "n32": {
+      "name": "n32",
+      "index_prefix": "results/qg-builder-r7i-20261120/runs/succinct/glove/n32/n32",
+      "encoding": {
+        "codec": "native",
+        "max_neighbors": 32,
+        "threads": 32,
+        "rotation_views": 2,
+        "codebook": "hadamard",
+        "block_dimension": 6,
+        "rank": 8,
+        "training_samples": 1024,
+        "seed": 20261031,
+        "center_weight": 1.0
+      },
+      "router": {
+        "anchors": 65536,
+        "projected_dimension": 64,
+        "seed": 202610261259,
+        "rotation_views": 2
+      }
+    }
+  },
+  "points": [
+    {
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "max_expansions": 13,
+        "margin": 0.0,
+        "bucket_width": 0.004,
+        "route_beam": 1,
+        "uncertainty_bonus": 0.0
+      },
+      "name": "p-92d3dc771a28",
+      "phase": "tuning",
+      "target": 0.3
+    },
+    {
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.0,
+        "max_expansions": 24,
+        "route_beam": 1,
+        "uncertainty_bonus": 0.0
+      },
+      "name": "p-e678f711b0ae",
+      "phase": "tuning",
+      "target": 0.5
+    },
+    {
+      "profile": "n32",
+      "capacity": 128,
+      "scan_limit": 0,
+      "search": {
+        "bucket_width": 0.002,
+        "margin": 0.04,
+        "max_expansions": 64,
+        "route_beam": 1,
+        "uncertainty_bonus": 0.0
+      },
+      "name": "p-788d5f40540a",
+      "phase": "tuning",
+      "target": 0.7
+    }
+  ],
+  "targets": [
+    0.3,
+    0.5,
+    0.7
+  ],
+  "protocol": {
+    "cpu": 54,
+    "smt_sibling": 55,
+    "numa_node": 0,
+    "threads": 1,
+    "topk": 10,
+    "warmup_rounds": 1,
+    "rounds": 5,
+    "repetitions": 3,
+    "ann_distance_tolerance": 0.001,
+    "timing": "native reset + QG search (including internal exact callback) + sort + external ID mapping + result buffer copy; excludes Python, input conversion, independent distance verification, file IO",
+    "aggregation": "median of 3 best-of-5 repetition QPS",
+    "same_index_reused": true
+  },
+  "training_file": "results/qg-builder-r7i-20261120/input/glove/train.f32",
+  "topology": {
+    "search_list_size": 400,
+    "passes": 2,
+    "seed": 20261120
+  },
+  "variant": "succinct",
+  "source_commit": "1551e0137f5d6594d4c33778492a818322453c0e",
+  "ann_metric": "angular",
+  "train_shape": [
+    1183514,
+    100
+  ],
+  "train_sha256": "3cccad7d66dd35ffd7215e37503f2e1fa31b3aab917a45aa0a6eb4ef590ebcef",
+  "files": [
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/glove/n32/provider.vectors",
+      "bytes": 473405600,
+      "sha256": "499bce16280ef3d7f01c7118a320cccea59aad88d89a13628f1f7fc8401a4a72"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/glove/n32/provider.ids",
+      "bytes": 9468112,
+      "sha256": "25a799931216e32641f3bac766a992fe95a59ddb11b8b0dc11bca770055f5a28"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/glove/n32/provider.edges",
+      "bytes": 151440224,
+      "sha256": "20af32e8e4d1f0a5e4376f17855a3c81de536a82159938f30134888fc2cbaa61"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/glove/n32/provider.offsets",
+      "bytes": 9468120,
+      "sha256": "a60c8b94c4f4425ae5e6b6df9d43d2bb72172c99bf27593d09f9c6416c5fce9f"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/glove/n32/n32.qg",
+      "bytes": 1893623200,
+      "sha256": "10a5595cac1e83a0355d8a225d83b1162afef521bd75819293eca3fb74211d0a"
+    },
+    {
+      "path": "results/qg-builder-r7i-20261120/runs/succinct/glove/n32/n32.router",
+      "bytes": 17870896,
+      "sha256": "5c129110a38462d23c8a515428a2cbd7139c3bb71aee77e1294468f27f268038"
+    }
+  ]
+}
